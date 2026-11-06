@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.IOException;
@@ -24,8 +21,7 @@ final class NativeDeItemTransaction {
     static <T> T nativeCall(ClientSession clientSession, Operation<T> operation) throws IOException {
         NativeCastMaterial.enterTransaction(clientSession, operation);
         try {
-            T t = NativeDeItemTransaction.nativeMaterialOriginalCall(clientSession, operation);
-            return t;
+            return NativeDeItemTransaction.nativeMaterialOriginalCall(clientSession, operation);
         }
         finally {
             NativeCastMaterial.exitTransaction(clientSession, operation);
@@ -42,8 +38,7 @@ final class NativeDeItemTransaction {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static RuntimeInventory wireCopy(RuntimeInventory runtimeInventory) {
-        RuntimeInventory runtimeInventory2 = runtimeInventory;
-        synchronized (runtimeInventory2) {
+        synchronized (runtimeInventory) {
             RuntimeInventory runtimeInventory3 = new RuntimeInventory();
             LinkedHashMap<Long, RuntimeInventory.Item> linkedHashMap = new LinkedHashMap<Long, RuntimeInventory.Item>();
             for (RuntimeInventory.Item item : runtimeInventory.items()) {
@@ -62,16 +57,13 @@ final class NativeDeItemTransaction {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static <T> T nativeMaterialOriginalCall(ClientSession clientSession, Operation<T> operation) throws IOException {
-        Object object;
-        Object object2 = object = CombatAccess.field(clientSession, "sourceItemAdmissionGate");
-        synchronized (object2) {
+        Object object = CombatAccess.field(clientSession, "sourceItemAdmissionGate");
+        synchronized (object) {
             NativeDeItemPublication.requireCurrent(clientSession);
             NativeDeItemApplication.Owner owner = NativeDeItemApplication.transactionOwner(clientSession);
-            Object object3 = owner == null ? object : owner;
-            synchronized (object3) {
-                RuntimeInventory runtimeInventory;
-                RuntimeInventory runtimeInventory2 = runtimeInventory = clientSession.nativeDeInventory(0);
-                synchronized (runtimeInventory2) {
+            synchronized (owner == null ? object : owner) {
+                RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(0);
+                synchronized (runtimeInventory) {
                     return operation.call();
                 }
             }

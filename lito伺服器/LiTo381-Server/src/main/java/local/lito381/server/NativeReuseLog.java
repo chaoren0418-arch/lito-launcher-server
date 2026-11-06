@@ -1,66 +1,64 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
+import java.lang.System.Logger.Level;
+
 final class NativeReuseLog {
-    public static Logger getLogger(Class<?> clazz) {
-        return new Log(System.getLogger(clazz.getName()));
-    }
+   public static NativeReuseLog.Logger getLogger(Class<?> var0) {
+      return new NativeReuseLog.Log(System.getLogger(var0.getName()));
+   }
 
-    private NativeReuseLog() {
-    }
+   private NativeReuseLog() {
+   }
 
-    private record Log(System.Logger logger) implements Logger
-    {
-        @Override
-        public void error(String string, Throwable throwable) {
-            this.logger.log(System.Logger.Level.ERROR, string, throwable);
-        }
+   private record Log(System.Logger logger) implements NativeReuseLog.Logger {
+      @Override
+      public void error(String var1, Throwable var2) {
+         this.logger.log(Level.ERROR, var1, var2);
+      }
 
-        @Override
-        public void error(String string, Object object, Object object2) {
-            this.emit(System.Logger.Level.ERROR, string, object, object2);
-        }
+      @Override
+      public void error(String var1, Object var2, Object var3) {
+         this.emit(Level.ERROR, var1, var2, var3);
+      }
 
-        @Override
-        public void warn(String string, Object object, Object object2) {
-            this.emit(System.Logger.Level.WARNING, string, object, object2);
-        }
+      @Override
+      public void warn(String var1, Object var2, Object var3) {
+         this.emit(Level.WARNING, var1, var2, var3);
+      }
 
-        @Override
-        public void warn(String string, Object object, Object object2, Object object3) {
-            this.emit(System.Logger.Level.WARNING, string, object, object2, object3);
-        }
+      @Override
+      public void warn(String var1, Object var2, Object var3, Object var4) {
+         this.emit(Level.WARNING, var1, var2, var3, var4);
+      }
 
-        void emit(System.Logger.Level level, String object, Object ... objectArray) {
-            Throwable throwable = null;
-            for (Object object2 : objectArray) {
-                Throwable throwable2;
-                int n = ((String)object).indexOf("{}");
-                if (n >= 0) {
-                    object = ((String)object).substring(0, n) + String.valueOf(object2) + ((String)object).substring(n + 2);
-                    continue;
-                }
-                if (!(object2 instanceof Throwable)) continue;
-                throwable = throwable2 = (Throwable)object2;
+      void emit(Level var1, String var2, Object... var3) {
+         Throwable var4 = null;
+
+         for (Object var8 : var3) {
+            int var9 = var2.indexOf("{}");
+            if (var9 >= 0) {
+               var2 = var2.substring(0, var9) + var8 + var2.substring(var9 + 2);
+            } else if (var8 instanceof Throwable var10) {
+               var4 = var10;
             }
-            if (throwable == null) {
-                this.logger.log(level, (String)object);
-            } else {
-                this.logger.log(level, (String)object, throwable);
-            }
-        }
-    }
+         }
 
-    static interface Logger {
-        public void error(String var1, Throwable var2);
+         if (var4 == null) {
+            this.logger.log(var1, var2);
+         } else {
+            this.logger.log(var1, var2, var4);
+         }
+      }
+   }
 
-        public void error(String var1, Object var2, Object var3);
+   interface Logger {
+      void error(String var1, Throwable var2);
 
-        public void warn(String var1, Object var2, Object var3);
+      void error(String var1, Object var2, Object var3);
 
-        public void warn(String var1, Object var2, Object var3, Object var4);
-    }
+      void warn(String var1, Object var2, Object var3);
+
+      void warn(String var1, Object var2, Object var3, Object var4);
+   }
 }

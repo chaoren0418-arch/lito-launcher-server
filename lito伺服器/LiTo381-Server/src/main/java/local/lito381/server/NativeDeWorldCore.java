@@ -1,8 +1,11 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import java.util.Map.Entry;
+import local.lito381.server.NativeDeDeletionPorts.Monster;
+import local.lito381.server.NativeDeDeletionPorts.ObjectRef;
+import local.lito381.server.NativeDeDeletionPorts.Summon;
+import local.lito381.server.NativeDeDeletionPorts.Viewer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,6 +48,9 @@ import local.lito381.server.NativeDeWorldRegistryWizard;
 import local.lito381.server.NativeDeWorldScope;
 
 public class NativeDeWorldCore {
+    private int _weather = 4;
+    private boolean _worldChatEnabled = true;
+    private volatile boolean _processingContributionTotal = false;
     private final ConcurrentHashMap<String, NativeDeDeletionPorts.Viewer> _allPlayers = new ConcurrentHashMap();
     private final ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> _allObjects = new ConcurrentHashMap();
     private final List<Object> _allWars;
@@ -55,9 +61,6 @@ public class NativeDeWorldCore {
     private static final int MAX_SECTOR_RING = 4;
     private Collection<NativeDeDeletionPorts.ObjectRef> _allValues;
     private Collection<NativeDeDeletionPorts.Viewer> _allPlayerValues;
-    private int _weather = 4;
-    private boolean _worldChatEnabled = true;
-    private volatile boolean _processingContributionTotal = false;
     private List<Object> _allWarList;
 
     public NativeDeWorldCore() {
@@ -307,35 +310,38 @@ public class NativeDeWorldCore {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public void removeVisibleObject(NativeDeDeletionPorts.ObjectRef object) {
-        try {
-            if (object == null) {
-                return;
+    public void removeVisibleObject(ObjectRef object) {
+      try {
+         if (object == null) {
+            return;
+         }
+
+         synchronized (object) {
+            boolean[] removed = new boolean[]{false};
+            this._visibleBindings.compute(NativeDeWorldAccess.L1Object$getId(object), (objectId, binding) -> {
+               if (binding == null || binding.object() != object) {
+                  return binding;
+               }
+               this.removeVisibleMapEntry(binding.mapId(), object);
+               this.spatialIndexRemoveObjectAtSector(binding.mapId(), binding.sectorId(), object);
+               removed[0] = true;
+               return null;
+            });
+            if (!removed[0]) {
+               int mapId = NativeDeWorldAccess.L1Object$getMapId(object);
+               ConcurrentHashMap<Integer, ObjectRef> mapSlice = this._visibleObjects.get(mapId);
+               if (mapSlice != null && mapSlice.remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
+                  this.spatialIndexRemoveObjectAt(mapId, NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object), object);
+                  this.logBindingRepair(
+                     "remove-unbound", object, mapId, getSectorId(NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object))
+                  );
+               }
             }
-            NativeDeDeletionPorts.ObjectRef objectRef = object;
-            synchronized (objectRef) {
-                short mapId;
-                ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> mapSlice;
-                boolean[] removed = new boolean[]{false};
-                this._visibleBindings.compute(NativeDeWorldAccess.L1Object$getId(object), (objectId, binding) -> {
-                    if (binding == null || binding.object() != object) {
-                        return binding;
-                    }
-                    this.removeVisibleMapEntry(binding.mapId(), object);
-                    this.spatialIndexRemoveObjectAtSector(binding.mapId(), binding.sectorId(), object);
-                    removed[0] = true;
-                    return null;
-                });
-                if (!removed[0] && (mapSlice = this._visibleObjects.get(mapId = NativeDeWorldAccess.L1Object$getMapId(object))) != null && mapSlice.remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
-                    this.spatialIndexRemoveObjectAt(mapId, NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object), object);
-                    this.logBindingRepair("remove-unbound", object, mapId, NativeDeWorldCore.getSectorId(NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object)));
-                }
-            }
-        }
-        catch (Exception e) {
-            NativeDeWorldScope._log().error(e.getLocalizedMessage(), e);
-        }
-    }
+         }
+      } catch (Exception var8) {
+         NativeDeWorldScope._log().error(var8.getLocalizedMessage(), (Throwable)var8);
+      }
+   }
 
     public boolean isObjectRegistered(NativeDeDeletionPorts.ObjectRef object) {
         if (object == null) {
@@ -351,42 +357,41 @@ public class NativeDeWorldCore {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public boolean moveVisibleObject(NativeDeDeletionPorts.ObjectRef object, int newMapId) {
-        if (object == null) {
-            return false;
-        }
-        NativeDeDeletionPorts.ObjectRef objectRef = object;
-        synchronized (objectRef) {
+    public boolean moveVisibleObject(ObjectRef object, int newMapId) {
+      if (object == null) {
+         return false;
+      } else {
+         synchronized (object) {
             return this.relocateVisibleObject(object, NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object), newMapId);
-        }
-    }
+         }
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public boolean relocateVisibleObject(NativeDeDeletionPorts.ObjectRef object, int newX, int newY, int newMapId) {
-        try {
-            if (object == null) {
-                return false;
-            }
-            if (this.sliceForStructuralAccess(newMapId) == null) {
-                NativeDeWorldScope._log().error("relocateVisibleObject \u4e2d\u6b62\uff1a\u76ee\u6a19\u5730\u5716\u7121\u5206\u69fd dstMapId={} objId={}", (Object)newMapId, (Object)NativeDeWorldAccess.L1Object$getId(object));
-                return false;
-            }
-            NativeDeDeletionPorts.ObjectRef objectRef = object;
-            synchronized (objectRef) {
-                NativeDeWorldAccess.L1Object$setLocation(object, newX, newY, newMapId);
-                if (this.isVisibleBindingOwner(object)) {
-                    this.bindVisibleObject(object, newMapId, newX, newY);
-                }
-            }
-            return true;
-        }
-        catch (Exception e) {
-            NativeDeWorldScope._log().error(e.getLocalizedMessage(), e);
+    public boolean relocateVisibleObject(ObjectRef object, int newX, int newY, int newMapId) {
+      try {
+         if (object == null) {
             return false;
-        }
-    }
+         } else if (this.sliceForStructuralAccess(newMapId) == null) {
+            NativeDeWorldScope._log().error("relocateVisibleObject 中止：目標地圖無分槽 dstMapId={} objId={}", newMapId, NativeDeWorldAccess.L1Object$getId(object));
+            return false;
+         } else {
+            synchronized (object) {
+               NativeDeWorldAccess.L1Object$setLocation(object, newX, newY, newMapId);
+               if (this.isVisibleBindingOwner(object)) {
+                  this.bindVisibleObject(object, newMapId, newX, newY);
+               }
+            }
+
+            return true;
+         }
+      } catch (Exception var8) {
+         NativeDeWorldScope._log().error(var8.getLocalizedMessage(), (Throwable)var8);
+         return false;
+      }
+   }
 
     public void updateObjectSector(NativeDeDeletionPorts.ObjectRef obj, int oldX, int oldY, int oldMapId, int newX, int newY, int newMapId) {
         if (obj == null || NativeDeWorldAccess.L1Object$getId(obj) == 0) {
@@ -423,8 +428,7 @@ public class NativeDeWorldCore {
         if (object == null || NativeDeWorldAccess.L1Object$getId(object) == 0) {
             return false;
         }
-        NativeDeDeletionPorts.ObjectRef objectRef = object;
-        synchronized (objectRef) {
+        synchronized (object) {
             ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> destination = this.sliceForStructuralAccess(mapId);
             if (destination == null) {
                 return false;
@@ -483,9 +487,9 @@ public class NativeDeWorldCore {
     }
 
     private void spatialIndexPutObjectAtSector(NativeDeDeletionPorts.ObjectRef object, int mapId, int sectorId) {
-        ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> mapSectors = this._spatialIndex.computeIfAbsent(mapId, k -> new ConcurrentHashMap<>());
+        ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> mapSectors = this._spatialIndex.computeIfAbsent(mapId, k -> new ConcurrentHashMap());
         mapSectors.compute(sectorId, (key, bucket) -> {
-            ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> target = bucket != null ? bucket : new ConcurrentHashMap<>();
+            ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> target = bucket != null ? bucket : new ConcurrentHashMap();
             target.put(NativeDeWorldAccess.L1Object$getId(object), object);
             return target;
         });
@@ -530,7 +534,8 @@ public class NativeDeWorldCore {
             NativeDeWorldScope._log().warn("[World] sectorRing={} \u8d85\u904e MAX_SECTOR_RING={}\uff0c\u5df2 clamp", (Object)sectorRing, (Object)4);
             sectorRing = 4;
         }
-        if ((mapSectors = this._spatialIndex.get(mapId)) == null || mapSectors.isEmpty()) {
+        mapSectors = this._spatialIndex.get(mapId);
+        if (mapSectors == null || mapSectors.isEmpty()) {
             return;
         }
         int sx = centerX >> 5;
@@ -567,11 +572,10 @@ public class NativeDeWorldCore {
                 continue;
             }
             boolean staleEntry = false;
-            NativeDeDeletionPorts.ObjectRef objectRef = element;
-            synchronized (objectRef) {
+            synchronized (element) {
                 VisibleBinding binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(element));
                 if (binding == null || binding.object() != element || binding.mapId() != indexedMapId || binding.sectorId() != sectorId) {
-                    short actualMapId = NativeDeWorldAccess.L1Object$getMapId(element);
+                    int actualMapId = NativeDeWorldAccess.L1Object$getMapId(element);
                     int actualSectorId = NativeDeWorldCore.getSectorId(NativeDeWorldAccess.L1Object$getX(element), NativeDeWorldAccess.L1Object$getY(element));
                     boolean removed = bucket.remove(NativeDeWorldAccess.L1Object$getId(element), element);
                     if (removed) {
@@ -589,10 +593,11 @@ public class NativeDeWorldCore {
                             this.logBindingRepair("traversal-reconcile", element, actualMapId, actualSectorId);
                             break;
                         }
-                        case ALREADY_CONSISTENT: 
+                        case ALREADY_CONSISTENT:
                         case NOT_REGISTERED: {
-                            if (removed) break;
-                            NativeDeWorldScope.SPATIAL_TRAVERSAL_STALE_READ_COUNT().incrementAndGet();
+                            if (!removed) {
+                                NativeDeWorldScope.SPATIAL_TRAVERSAL_STALE_READ_COUNT().incrementAndGet();
+                            }
                             break;
                         }
                         case FAILED: {
@@ -614,21 +619,29 @@ public class NativeDeWorldCore {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    private SpatialReconcileResult reconcileVisibleObject(NativeDeDeletionPorts.ObjectRef object, int indexedMapId) {
-        NativeDeDeletionPorts.ObjectRef objectRef = object;
-        synchronized (objectRef) {
-            VisibleBinding binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
-            short actualMapId = NativeDeWorldAccess.L1Object$getMapId(object);
-            int actualSectorId = NativeDeWorldCore.getSectorId(NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object));
-            if (binding != null && binding.object() == object && binding.mapId() == actualMapId && binding.sectorId() == actualSectorId && this.isObjectInVisibleMap(object, actualMapId) && this.isSpatialEntryAt(object, actualMapId, actualSectorId)) {
-                return SpatialReconcileResult.ALREADY_CONSISTENT;
-            }
-            if (!(binding != null && binding.object() == object || this.isObjectInVisibleMap(object, indexedMapId) || this.isObjectInVisibleMap(object, actualMapId))) {
-                return SpatialReconcileResult.NOT_REGISTERED;
-            }
-            return this.bindVisibleObject(object, actualMapId, NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object)) ? SpatialReconcileResult.REPAIRED : SpatialReconcileResult.FAILED;
-        }
-    }
+    private NativeDeWorldCore.SpatialReconcileResult reconcileVisibleObject(ObjectRef object, int indexedMapId) {
+      synchronized (object) {
+         NativeDeWorldCore.VisibleBinding binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
+         int actualMapId = NativeDeWorldAccess.L1Object$getMapId(object);
+         int actualSectorId = getSectorId(NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object));
+         if (binding != null
+            && binding.object() == object
+            && binding.mapId() == actualMapId
+            && binding.sectorId() == actualSectorId
+            && this.isObjectInVisibleMap(object, actualMapId)
+            && this.isSpatialEntryAt(object, actualMapId, actualSectorId)) {
+            return NativeDeWorldCore.SpatialReconcileResult.ALREADY_CONSISTENT;
+         } else if ((binding == null || binding.object() != object)
+            && !this.isObjectInVisibleMap(object, indexedMapId)
+            && !this.isObjectInVisibleMap(object, actualMapId)) {
+            return NativeDeWorldCore.SpatialReconcileResult.NOT_REGISTERED;
+         } else {
+            return this.bindVisibleObject(object, actualMapId, NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object))
+               ? NativeDeWorldCore.SpatialReconcileResult.REPAIRED
+               : NativeDeWorldCore.SpatialReconcileResult.FAILED;
+         }
+      }
+   }
 
     private void logReconcileFailure(NativeDeDeletionPorts.ObjectRef object, int indexedMapId, int indexedSectorId, int actualMapId, int actualSectorId) {
         long failures = NativeDeWorldScope.SPATIAL_RECONCILE_FAILURE_COUNT().incrementAndGet();
@@ -670,19 +683,18 @@ public class NativeDeWorldCore {
         for (VisibleBinding visibleBinding : this._visibleBindings.values()) {
             if (visibleBinding == null || visibleBinding.object() == null) continue;
             NativeDeDeletionPorts.ObjectRef object = visibleBinding.object();
-            Object iterator = object;
-            synchronized (iterator) {
+            synchronized (object) {
                 ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> bucket2;
                 VisibleBinding current = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
                 if (current == null || current.object() != object) {
                     continue;
                 }
                 ++checked;
-                short actualMapId = NativeDeWorldAccess.L1Object$getMapId(object);
+                int actualMapId = NativeDeWorldAccess.L1Object$getMapId(object);
                 int actualSectorId = NativeDeWorldCore.getSectorId(NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object));
                 ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> visible = this._visibleObjects.get(actualMapId);
                 ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> sectors = this._spatialIndex.get(actualMapId);
-                ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> concurrentHashMap = bucket2 = sectors != null ? sectors.get(actualSectorId) : null;
+                bucket2 = sectors != null ? sectors.get(actualSectorId) : null;
                 if (current.mapId() != actualMapId || current.sectorId() != actualSectorId || visible == null || visible.get(NativeDeWorldAccess.L1Object$getId(object)) != object || bucket2 == null || bucket2.get(NativeDeWorldAccess.L1Object$getId(object)) != object) {
                     SpatialReconcileResult reconcile = this.reconcileVisibleObject(object, current.mapId());
                     if (reconcile == SpatialReconcileResult.REPAIRED) {
@@ -694,12 +706,11 @@ public class NativeDeWorldCore {
                 }
             }
         }
-        for (Map.Entry<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> entry : this._visibleObjects.entrySet()) {
-            int indexedMapId = entry.getKey();
-            for (NativeDeDeletionPorts.ObjectRef object : entry.getValue().values()) {
+        for (Map.Entry entry : this._visibleObjects.entrySet()) {
+            int indexedMapId = (Integer)entry.getKey();
+            for (NativeDeDeletionPorts.ObjectRef object : ((ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>)entry.getValue()).values()) {
                 if (object == null) continue;
-                NativeDeDeletionPorts.ObjectRef actualMapId = object;
-                synchronized (actualMapId) {
+                synchronized (object) {
                     VisibleBinding binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
                     short actualMapId2 = NativeDeWorldAccess.L1Object$getMapId(object);
                     if (binding == null || binding.object() != object || binding.mapId() != indexedMapId || actualMapId2 != indexedMapId) {
@@ -715,10 +726,11 @@ public class NativeDeWorldCore {
                             }
                             continue;
                         }
-                        if (entry.getValue().remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
+                        if (((ConcurrentHashMap)entry.getValue()).remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
                             ++repaired;
                         }
-                        if ((reconcile = this.reconcileVisibleObject(object, indexedMapId)) == SpatialReconcileResult.REPAIRED) {
+                        reconcile = this.reconcileVisibleObject(object, indexedMapId);
+                        if (reconcile == SpatialReconcileResult.REPAIRED) {
                             ++repaired;
                             this.logBindingRepair("full-audit-visible", object, actualMapId2, actualSectorId);
                         } else if (reconcile == SpatialReconcileResult.FAILED) {
@@ -728,16 +740,15 @@ public class NativeDeWorldCore {
                 }
             }
         }
-        for (Map.Entry<Integer, ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>>> entry : this._spatialIndex.entrySet()) {
-            int indexedMapId = entry.getKey();
-            for (Map.Entry<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> sectorEntry : entry.getValue().entrySet()) {
-                int indexedSectorId = sectorEntry.getKey();
-                for (NativeDeDeletionPorts.ObjectRef object : sectorEntry.getValue().values()) {
+        for (Map.Entry entry : this._spatialIndex.entrySet()) {
+            int indexedMapId = (Integer)entry.getKey();
+            for (Map.Entry sectorEntry : ((ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>>)entry.getValue()).entrySet()) {
+                int indexedSectorId = (Integer)sectorEntry.getKey();
+                for (NativeDeDeletionPorts.ObjectRef object : ((ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>)sectorEntry.getValue()).values()) {
                     if (object == null) continue;
-                    NativeDeDeletionPorts.ObjectRef objectRef = object;
-                    synchronized (objectRef) {
+                    synchronized (object) {
                         VisibleBinding binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
-                        short actualMapId = NativeDeWorldAccess.L1Object$getMapId(object);
+                        int actualMapId = NativeDeWorldAccess.L1Object$getMapId(object);
                         int actualSectorId = NativeDeWorldCore.getSectorId(NativeDeWorldAccess.L1Object$getX(object), NativeDeWorldAccess.L1Object$getY(object));
                         if (binding == null || binding.object() != object || binding.mapId() != indexedMapId || binding.sectorId() != indexedSectorId || actualMapId != indexedMapId || actualSectorId != indexedSectorId) {
                             SpatialReconcileResult reconcile;
@@ -751,10 +762,11 @@ public class NativeDeWorldCore {
                                 }
                                 continue;
                             }
-                            if (sectorEntry.getValue().remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
+                            if (((ConcurrentHashMap)sectorEntry.getValue()).remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
                                 ++repaired;
                             }
-                            if ((reconcile = this.reconcileVisibleObject(object, indexedMapId)) == SpatialReconcileResult.REPAIRED) {
+                            reconcile = this.reconcileVisibleObject(object, indexedMapId);
+                            if (reconcile == SpatialReconcileResult.REPAIRED) {
                                 ++repaired;
                                 this.logBindingRepair("full-audit-spatial", object, actualMapId, actualSectorId);
                             } else if (reconcile == SpatialReconcileResult.FAILED) {
@@ -763,7 +775,7 @@ public class NativeDeWorldCore {
                         }
                     }
                 }
-                entry.getValue().computeIfPresent(indexedSectorId, (key, bucket) -> bucket.isEmpty() ? null : bucket);
+                ((ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>>)entry.getValue()).computeIfPresent(indexedSectorId, (key, bucket) -> bucket.isEmpty() ? null : bucket);
             }
         }
         if (repaired > 0) {
@@ -809,12 +821,15 @@ public class NativeDeWorldCore {
         if (NativeDeWorldAccess.L1Object$getMapId(src) != NativeDeWorldAccess.L1Object$getMapId(tg)) {
             return false;
         }
-        return NativeDeWorldAccess.L1Object$getLocation(src).isInScreen(NativeDeWorldAccess.L1Object$getLocation(tg));
+        if (NativeDeWorldAccess.L1Object$getLocation(src).isInScreen(NativeDeWorldAccess.L1Object$getLocation(tg))) {
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<NativeDeDeletionPorts.ObjectRef> getVisibleObjects(NativeDeDeletionPorts.ObjectRef object, int radius) {
         NativeDeWorldMap map = NativeDeWorldAccess.L1Object$getMap(object);
-        NativeDeWorldLocation pt = NativeDeWorldAccess.L1Object$getLocation(object);
+        NativeDeWorldPoint pt = NativeDeWorldAccess.L1Object$getLocation(object);
         ArrayList<NativeDeDeletionPorts.ObjectRef> result = new ArrayList<NativeDeDeletionPorts.ObjectRef>();
         int mapId = map.getId();
         ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> mapSrc = this._visibleObjects.get(mapId);
@@ -827,7 +842,7 @@ public class NativeDeWorldCore {
         ArrayList<NativeDeDeletionPorts.ObjectRef> candidates = new ArrayList<NativeDeDeletionPorts.ObjectRef>();
         this.collectSpatialCandidates(mapId, pt.getX(), pt.getY(), this.resolveSectorRing(radius), candidates);
         try {
-            block6: for (NativeDeDeletionPorts.ObjectRef element : candidates) {
+            for (NativeDeDeletionPorts.ObjectRef element : candidates) {
                 if (element.equals(object)) continue;
                 if (NativeDeWorldAccess.L1Object$get_showId(object) != NativeDeWorldAccess.L1Object$get_showId(element)) {
                     boolean isShow = false;
@@ -838,19 +853,22 @@ public class NativeDeWorldCore {
                 }
                 if (mapId != NativeDeWorldAccess.L1Object$getMapId(element)) continue;
                 switch (radius) {
-                    case -1: {
-                        if (!pt.isInScreen(NativeDeWorldAccess.L1Object$getLocation(element))) continue block6;
-                        result.add(element);
-                        continue block6;
-                    }
-                    case 0: {
-                        if (!pt.isSamePoint(NativeDeWorldAccess.L1Object$getLocation(element))) continue block6;
-                        result.add(element);
-                        continue block6;
-                    }
+                    case -1:
+                        if (pt.isInScreen(NativeDeWorldAccess.L1Object$getLocation(element))) {
+                            result.add(element);
+                        }
+                        break;
+                    case 0:
+                        if (pt.isSamePoint(NativeDeWorldAccess.L1Object$getLocation(element))) {
+                            result.add(element);
+                        }
+                        break;
+                    default:
+                        if (pt.getTileLineDistance(NativeDeWorldAccess.L1Object$getLocation(element)) <= radius) {
+                            result.add(element);
+                        }
+                        break;
                 }
-                if (pt.getTileLineDistance(NativeDeWorldAccess.L1Object$getLocation(element)) > radius) continue;
-                result.add(element);
             }
         }
         catch (Exception e) {
@@ -859,56 +877,69 @@ public class NativeDeWorldCore {
         return result;
     }
 
-    public ArrayList<NativeDeDeletionPorts.ObjectRef> getVisiblePoint(NativeDeWorldLocation loc, int radius, int showid) {
-        ArrayList<NativeDeDeletionPorts.ObjectRef> result = new ArrayList<NativeDeDeletionPorts.ObjectRef>();
+    public ArrayList<ObjectRef> getVisiblePoint(NativeDeWorldLocation loc, int radius, int showid) {
+        ArrayList<ObjectRef> result = new ArrayList<>();
         int mapId = loc.getMapId();
         if (this.sliceForStructuralAccess(mapId) == null) {
-            NativeDeWorldScope._log().error("\u904a\u6232\u4e16\u754c\u5132\u5b58\u4e2d\u5fc3\u4e26\u672a\u5efa\u7acb\u8a72\u5730\u5716\u7de8\u865f\u8cc7\u6599\u6a94\u6848: " + mapId);
+            NativeDeWorldScope._log().error("遊戲世界儲存中心並未建立該地圖編號資料檔案: " + mapId);
+            return result;
+        } else {
+            ArrayList<ObjectRef> candidates = new ArrayList<>();
+            this.collectSpatialCandidates(mapId, loc.getX(), loc.getY(), this.resolveSectorRing(radius), candidates);
+
+            for (ObjectRef element : candidates) {
+                if (mapId != NativeDeWorldAccess.L1Object$getMapId(element)) {
+                    continue;
+                }
+                if (showid != NativeDeWorldAccess.L1Object$get_showId(element)) {
+                    continue;
+                }
+                if (loc.getTileLineDistance(NativeDeWorldAccess.L1Object$getLocation(element)) <= radius) {
+                    result.add(element);
+                }
+            }
+
             return result;
         }
-        ArrayList<NativeDeDeletionPorts.ObjectRef> candidates = new ArrayList<NativeDeDeletionPorts.ObjectRef>();
-        this.collectSpatialCandidates(mapId, loc.getX(), loc.getY(), this.resolveSectorRing(radius), candidates);
-        for (NativeDeDeletionPorts.ObjectRef element : candidates) {
-            if (mapId != NativeDeWorldAccess.L1Object$getMapId(element) || showid != NativeDeWorldAccess.L1Object$get_showId(element) || loc.getTileLineDistance(NativeDeWorldAccess.L1Object$getLocation(element)) > radius) continue;
-            result.add(element);
-        }
-        return result;
     }
 
-    public ArrayList<NativeDeDeletionPorts.ObjectRef> queryNearbyObjects(NativeDeDeletionPorts.ObjectRef src, int radius, Predicate<NativeDeDeletionPorts.ObjectRef> filter) {
-        ArrayList<NativeDeDeletionPorts.ObjectRef> result = new ArrayList<NativeDeDeletionPorts.ObjectRef>();
-        if (src == null) {
+    public ArrayList<ObjectRef> queryNearbyObjects(ObjectRef src, int radius, Predicate<ObjectRef> filter) {
+      ArrayList<ObjectRef> result = new ArrayList<>();
+      if (src == null) {
+         return result;
+      } else {
+         NativeDeWorldMap map = NativeDeWorldAccess.L1Object$getMap(src);
+         if (map == null) {
             return result;
-        }
-        NativeDeWorldMap map = NativeDeWorldAccess.L1Object$getMap(src);
-        if (map == null) {
-            return result;
-        }
-        int mapId = map.getId();
-        if (!this.hasVisibleObjectSlice(mapId)) {
-            return result;
-        }
-        NativeDeWorldLocation pt = NativeDeWorldAccess.L1Object$getLocation(src);
-        this.forEachSpatialObject(mapId, pt.getX(), pt.getY(), this.resolveSectorRing(radius), element -> {
-            if (element.equals(src)) {
-                return;
+         } else {
+            int mapId = map.getId();
+            if (!this.hasVisibleObjectSlice(mapId)) {
+               return result;
+            } else {
+               NativeDeWorldPoint pt = NativeDeWorldAccess.L1Object$getLocation(src);
+               this.forEachSpatialObject(mapId, pt.getX(), pt.getY(), this.resolveSectorRing(radius), element -> {
+                  if (element.equals(src)) {
+                     return;
+                  }
+                  if (mapId != NativeDeWorldAccess.L1Object$getMapId(element)) {
+                     return;
+                  }
+                  if (!passesShowIdForNearbyQuery(src, element)) {
+                     return;
+                  }
+                  if (!matchesNearbyRadius(pt, NativeDeWorldAccess.L1Object$getLocation(element), radius)) {
+                     return;
+                  }
+                  if (filter != null && !filter.test(element)) {
+                     return;
+                  }
+                  result.add(element);
+               });
+               return result;
             }
-            if (mapId != NativeDeWorldAccess.L1Object$getMapId(element)) {
-                return;
-            }
-            if (!NativeDeWorldCore.passesShowIdForNearbyQuery(src, element)) {
-                return;
-            }
-            if (!NativeDeWorldCore.matchesNearbyRadius(pt, NativeDeWorldAccess.L1Object$getLocation(element), radius)) {
-                return;
-            }
-            if (filter != null && !filter.test((NativeDeDeletionPorts.ObjectRef)element)) {
-                return;
-            }
-            result.add((NativeDeDeletionPorts.ObjectRef)element);
-        });
-        return result;
-    }
+         }
+      }
+   }
 
     public void forEachNearbyObject(NativeDeDeletionPorts.ObjectRef src, int radius, Predicate<NativeDeDeletionPorts.ObjectRef> filter, Consumer<NativeDeDeletionPorts.ObjectRef> action) {
         if (src == null || action == null) {
@@ -922,7 +953,7 @@ public class NativeDeWorldCore {
         if (!this.hasVisibleObjectSlice(mapId)) {
             return;
         }
-        NativeDeWorldLocation pt = NativeDeWorldAccess.L1Object$getLocation(src);
+        NativeDeWorldPoint pt = NativeDeWorldAccess.L1Object$getLocation(src);
         this.forEachSpatialObject(mapId, pt.getX(), pt.getY(), this.resolveSectorRing(radius), element -> {
             if (element.equals(src)) {
                 return;
@@ -962,12 +993,11 @@ public class NativeDeWorldCore {
             return;
         }
         NativeDeWorldPlayerFilter effectiveFilter = filter != null ? filter : NativeDeWorldPlayerFilter.NONE;
-        NativeDeWorldLocation pt = NativeDeWorldAccess.L1Object$getLocation(src);
+        NativeDeWorldPoint pt = NativeDeWorldAccess.L1Object$getLocation(src);
         this.forEachSpatialObject(mapId, pt.getX(), pt.getY(), this.resolveSectorRing(radius), element -> {
-            if (!(element instanceof NativeDeDeletionPorts.Viewer)) {
+            if (!(element instanceof NativeDeDeletionPorts.Viewer pc)) {
                 return;
             }
-            NativeDeDeletionPorts.Viewer pc = (NativeDeDeletionPorts.Viewer)element;
             if (element.equals(src)) {
                 return;
             }
@@ -998,10 +1028,9 @@ public class NativeDeWorldCore {
             return result;
         }
         this.forEachSpatialObject(mapId, loc.getX(), loc.getY(), 1, candidate -> {
-            if (!(candidate instanceof NativeDeDeletionPorts.Viewer)) {
+            if (!(candidate instanceof NativeDeDeletionPorts.Viewer element)) {
                 return;
             }
-            NativeDeDeletionPorts.Viewer element = (NativeDeDeletionPorts.Viewer)candidate;
             if (NativeDeWorldAccess.L1PcInstance$getOnlineStatus(element) == 2 || NativeDeWorldAccess.L1PcInstance$getOnlineStatus(element) == 3) {
                 return;
             }
@@ -1038,20 +1067,24 @@ public class NativeDeWorldCore {
         }
     }
 
-    public NativeDeDeletionPorts.Viewer getPlayer(String name) {
-        if (name == null) {
-            return null;
-        }
-        NativeDeDeletionPorts.Viewer exact = this._allPlayers.get(name);
-        if (exact != null) {
+    public Viewer getPlayer(String name) {
+      if (name == null) {
+         return null;
+      } else {
+         Viewer exact = this._allPlayers.get(name);
+         if (exact != null) {
             return exact;
-        }
-        for (NativeDeDeletionPorts.Viewer each : this.getAllPlayers()) {
-            if (!NativeDeWorldAccess.L1PcInstance$getName(each).equalsIgnoreCase(name)) continue;
-            return each;
-        }
-        return null;
-    }
+         } else {
+            for (Viewer each : this.getAllPlayers()) {
+               if (NativeDeWorldAccess.L1PcInstance$getName(each).equalsIgnoreCase(name)) {
+                  return each;
+               }
+            }
+
+            return null;
+         }
+      }
+   }
 
     public final Map<Integer, NativeDeDeletionPorts.ObjectRef> getAllVisibleObjects() {
         return this._allObjects;
@@ -1077,9 +1110,16 @@ public class NativeDeWorldCore {
         }
         int count = 0;
         for (NativeDeDeletionPorts.ObjectRef object : map.values()) {
-            VisibleBinding binding;
-            if (object == null || NativeDeWorldAccess.L1Object$getMapId(object) != mapId || (binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object))) == null || binding.object() != object || binding.mapId() != mapId || filter != null && !filter.test(object)) continue;
-            ++count;
+            if (object == null || NativeDeWorldAccess.L1Object$getMapId(object) != mapId) {
+                continue;
+            }
+            VisibleBinding binding = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
+            if (binding == null || binding.object() != object || binding.mapId() != mapId) {
+                continue;
+            }
+            if (filter == null || filter.test(object)) {
+                ++count;
+            }
         }
         return count;
     }
@@ -1094,7 +1134,7 @@ public class NativeDeWorldCore {
                 return;
             }
             if (filter == null || filter.test((NativeDeDeletionPorts.ObjectRef)object)) {
-                count[0] = count[0] + 1;
+                count[0]++;
             }
         });
         return count[0];
@@ -1110,19 +1150,24 @@ public class NativeDeWorldCore {
         return found[0];
     }
 
-    public boolean hasPlacementBlockerAt(int mapId, int x, int y, Predicate<NativeDeDeletionPorts.ObjectRef> filter) {
-        ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> bucket;
-        ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> sectors = this._spatialIndex.get(mapId);
-        ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> concurrentHashMap = bucket = sectors != null ? sectors.get(NativeDeWorldCore.getSectorId(x, y)) : null;
-        if (bucket == null) {
-            return false;
-        }
-        for (NativeDeDeletionPorts.ObjectRef object : bucket.values()) {
-            if (NativeDeWorldAccess.L1Object$getMapId(object) != mapId || NativeDeWorldAccess.L1Object$getX(object) != x || NativeDeWorldAccess.L1Object$getY(object) != y || filter != null && !filter.test(object)) continue;
-            return true;
-        }
-        return false;
-    }
+    public boolean hasPlacementBlockerAt(int mapId, int x, int y, Predicate<ObjectRef> filter) {
+      ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, ObjectRef>> sectors = this._spatialIndex.get(mapId);
+      ConcurrentHashMap<Integer, ObjectRef> bucket = sectors != null ? sectors.get(getSectorId(x, y)) : null;
+      if (bucket == null) {
+         return false;
+      } else {
+         for (ObjectRef object : bucket.values()) {
+            if (NativeDeWorldAccess.L1Object$getMapId(object) == mapId
+               && NativeDeWorldAccess.L1Object$getX(object) == x
+               && NativeDeWorldAccess.L1Object$getY(object) == y
+               && (filter == null || filter.test(object))) {
+               return true;
+            }
+         }
+
+         return false;
+      }
+   }
 
     private record VisibleBinding(NativeDeDeletionPorts.ObjectRef object, int mapId, int sectorId) {
     }

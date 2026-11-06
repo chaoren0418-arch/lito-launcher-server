@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -40,8 +40,7 @@ final class NativeDeCorpseTimers {
     static Owner of(NativePlayerLifetime nativePlayerLifetime, Deletion deletion, LongSupplier longSupplier) {
         Owner owner;
         boolean bl = false;
-        Object object = nativePlayerLifetime.admission;
-        synchronized (object) {
+        synchronized (nativePlayerLifetime.admission) {
             if (nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN) {
                 throw new RejectedExecutionException("corpse application closed");
             }
@@ -103,15 +102,15 @@ final class NativeDeCorpseTimers {
         final AtomicLong deferred = new AtomicLong();
         volatile boolean closed;
 
-        Owner(final NativePlayerLifetime nativePlayerLifetime, Deletion deletion, LongSupplier longSupplier) {
-            this.life = nativePlayerLifetime;
+        Owner(final NativePlayerLifetime life, Deletion deletion, LongSupplier longSupplier) {
+            this.life = life;
             this.deletion = Objects.requireNonNull(deletion);
             this.clock = Objects.requireNonNull(longSupplier);
             this.core = new NativeDeCorpseCore(new NativeDeCorpseCore.Port(){
 
                 @Override
                 public void auditDeletionStalls() {
-                    deletion.auditDeletionStalls();
+                    Owner.this.deletion.auditDeletionStalls();
                 }
 
                 @Override
@@ -121,10 +120,10 @@ final class NativeDeCorpseTimers {
 
                 @Override
                 public ScheduledFuture<?> fixed(Runnable runnable, long l, long l2) {
-                    if (closed || nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN) {
+                    if (closed || life.mode != NativePlayerLifetime.Mode.OPEN) {
                         throw new RejectedExecutionException("corpse owner closed");
                     }
-                    ScheduledFuture<?> scheduledFuture = nativePlayerLifetime.retry.scheduleAtFixedRate(() -> Owner.this.tick(runnable), l, l2, TimeUnit.MILLISECONDS);
+                    ScheduledFuture<?> scheduledFuture = life.retry.scheduleAtFixedRate(() -> Owner.this.tick(runnable), l, l2, TimeUnit.MILLISECONDS);
                     if (scheduledFuture != null) {
                         ticker.set(scheduledFuture);
                         if (closed) {
@@ -140,14 +139,13 @@ final class NativeDeCorpseTimers {
                  */
                 @Override
                 public Object reserve(NativeDeCorpseCore.Npc npc) {
-                    Object object = nativePlayerLifetime.admission;
-                    synchronized (object) {
-                        if (closed || nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN || nativePlayerLifetime.pending.get() >= NativePlayerCommit.GLOBAL) {
+                    synchronized (life.admission) {
+                        if (closed || life.mode != NativePlayerLifetime.Mode.OPEN || life.pending.get() >= NativePlayerCommit.GLOBAL) {
                             deferred.incrementAndGet();
                             return null;
                         }
                         Ticket ticket = new Ticket(Owner.this);
-                        nativePlayerLifetime.pending.incrementAndGet();
+                        life.pending.incrementAndGet();
                         tasks.add(ticket);
                         return ticket;
                     }
@@ -159,11 +157,9 @@ final class NativeDeCorpseTimers {
                 @Override
                 public boolean claim(NativeDeCorpseCore.Npc npc, long l, Object object) {
                     Ticket ticket = (Ticket)object;
-                    NativeDeCorpseCore.Npc npc2 = npc;
-                    synchronized (npc2) {
-                        Object object2 = nativePlayerLifetime.admission;
-                        synchronized (object2) {
-                            return !closed && nativePlayerLifetime.mode == NativePlayerLifetime.Mode.OPEN && !ticket.closed && npc.claimExpiredCorpseDeletion(l);
+                    synchronized (npc) {
+                        synchronized (life.admission) {
+                            return !closed && life.mode == NativePlayerLifetime.Mode.OPEN && !ticket.closed && npc.claimExpiredCorpseDeletion(l);
                         }
                     }
                 }
@@ -185,12 +181,11 @@ final class NativeDeCorpseTimers {
                 public boolean tryExecute(NativeDeCorpseCore.Task task) {
                     Ticket ticket = (Ticket)task.credit;
                     Job job = new Job(ticket, task);
-                    Ticket ticket2 = ticket;
-                    synchronized (ticket2) {
+                    synchronized (ticket) {
                         if (ticket.closed) {
                             return ticket.discarded;
                         }
-                        if (closed || nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN) {
+                        if (closed || life.mode != NativePlayerLifetime.Mode.OPEN) {
                             return false;
                         }
                         ticket.task = task;
@@ -198,12 +193,11 @@ final class NativeDeCorpseTimers {
                         ticket.phase = 2;
                     }
                     try {
-                        nativePlayerLifetime.workers.execute(job);
+                        life.workers.execute(job);
                         return true;
                     }
                     catch (RejectedExecutionException rejectedExecutionException) {
-                        Ticket ticket3 = ticket;
-                        synchronized (ticket3) {
+                        synchronized (ticket) {
                             if (ticket.closed && ticket.discarded) {
                                 return true;
                             }
@@ -214,7 +208,7 @@ final class NativeDeCorpseTimers {
                         }
                         return false;
                     }
-                    catch (Error | RuntimeException throwable) {
+                    catch (RuntimeException | Error throwable) {
                         ticket.close(true);
                         throw throwable;
                     }
@@ -222,7 +216,7 @@ final class NativeDeCorpseTimers {
 
                 @Override
                 public boolean isShutdown() {
-                    return closed || nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN;
+                    return closed || life.mode != NativePlayerLifetime.Mode.OPEN;
                 }
 
                 /*
@@ -230,11 +224,10 @@ final class NativeDeCorpseTimers {
                  */
                 @Override
                 public ScheduledFuture<?> retry(NativeDeCorpseCore.Task task, Runnable runnable, long l) {
-                    long l2;
                     Ticket ticket = (Ticket)task.credit;
-                    Object object = ticket;
-                    synchronized (object) {
-                        if (ticket.closed || closed || nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN) {
+                    long l2;
+                    synchronized (ticket) {
+                        if (ticket.closed || closed || life.mode != NativePlayerLifetime.Mode.OPEN) {
                             ticket.close(true);
                             throw new RejectedExecutionException("corpse retry owner closed");
                         }
@@ -243,19 +236,17 @@ final class NativeDeCorpseTimers {
                         l2 = ++ticket.epoch;
                     }
                     try {
-                        boolean scheduled;
-                        ScheduledFuture<?> scheduledFuture = nativePlayerLifetime.retry.schedule(() -> {
+                        ScheduledFuture<?> scheduledFuture = life.retry.schedule(() -> {
                             boolean run;
-                            Ticket ticket2 = ticket;
-                            synchronized (ticket2) {
-                                boolean bl2 = run = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2 && !closed && nativePlayerLifetime.mode == NativePlayerLifetime.Mode.OPEN;
+                            synchronized (ticket) {
+                                run = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2 && !closed && life.mode == NativePlayerLifetime.Mode.OPEN;
                                 if (run) {
                                     ticket.future = null;
                                     ticket.phase = 0;
                                 }
                             }
                             if (run) {
-                                nativePlayerLifetime.executeCommitted(runnable);
+                                life.executeCommitted(runnable);
                             } else {
                                 ticket.close(true);
                             }
@@ -264,9 +255,9 @@ final class NativeDeCorpseTimers {
                             ticket.close(false);
                             return null;
                         }
-                        Ticket ticket2 = ticket;
-                        synchronized (ticket2) {
-                            boolean bl2 = scheduled = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2;
+                        boolean scheduled;
+                        synchronized (ticket) {
+                            scheduled = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2;
                             if (scheduled) {
                                 ticket.future = scheduledFuture;
                             }
@@ -276,7 +267,7 @@ final class NativeDeCorpseTimers {
                         }
                         return scheduledFuture;
                     }
-                    catch (Error | RuntimeException throwable) {
+                    catch (RuntimeException | Error throwable) {
                         ticket.close(false);
                         throw throwable;
                     }
@@ -302,17 +293,10 @@ final class NativeDeCorpseTimers {
          */
         @Override
         public void track(NativeDeNpcVitalState nativeDeNpcVitalState) {
-            NativeDeCorpseState nativeDeCorpseState;
-            block8: {
-                block7: {
-                    if (!(nativeDeNpcVitalState instanceof NativeDeCorpseState)) break block7;
-                    nativeDeCorpseState = (NativeDeCorpseState)nativeDeNpcVitalState;
-                    if (nativeDeCorpseState.owner == this) break block8;
-                }
+            if (!(nativeDeNpcVitalState instanceof NativeDeCorpseState nativeDeCorpseState) || nativeDeCorpseState.owner != this) {
                 throw new IllegalArgumentException("corpse state belongs to another application owner");
             }
-            Object object = this.life.admission;
-            synchronized (object) {
+            synchronized (this.life.admission) {
                 if (this.closed || this.life.mode != NativePlayerLifetime.Mode.OPEN) {
                     throw new RejectedExecutionException("corpse application admission closed");
                 }
@@ -338,8 +322,7 @@ final class NativeDeCorpseTimers {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void tick(Runnable runnable) {
-            Object object = this.life.admission;
-            synchronized (object) {
+            synchronized (this.life.admission) {
                 if (this.closed || this.life.mode != NativePlayerLifetime.Mode.OPEN || this.life.pending.get() >= NativePlayerCommit.GLOBAL) {
                     this.deferred.incrementAndGet();
                     return;
@@ -365,22 +348,21 @@ final class NativeDeCorpseTimers {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void close(boolean bl) {
-            Object object = this.life.admission;
-            synchronized (object) {
+            synchronized (this.life.admission) {
                 this.closed = true;
             }
-            object = this.ticker.getAndSet(null);
-            this.cancel((ScheduledFuture<?>)object);
+            ScheduledFuture<?> future = this.ticker.getAndSet(null);
+            this.cancel(future);
             this.core.tracked.clear();
             for (Ticket ticket : (Ticket[])this.tasks.toArray(Ticket[]::new)) {
                 try {
                     boolean bl2;
-                    Ticket ticket2 = ticket;
-                    synchronized (ticket2) {
+                    synchronized (ticket) {
                         bl2 = !bl && (ticket.phase == 2 || ticket.running);
                     }
-                    if (bl2) continue;
-                    ticket.close(true);
+                    if (!bl2) {
+                        ticket.close(true);
+                    }
                 }
                 catch (Throwable throwable) {
                     CombatNpcDamageQueue.failed(throwable);
@@ -424,11 +406,10 @@ final class NativeDeCorpseTimers {
          */
         @Override
         public void run() {
+            Ticket ticket = this.ticket;
             boolean bl;
-            Ticket ticket;
-            Ticket ticket2 = ticket = this.ticket;
-            synchronized (ticket2) {
-                boolean bl2 = bl = !ticket.closed && ticket.job == this && ticket.owner.life.mode != NativePlayerLifetime.Mode.STOPPED;
+            synchronized (ticket) {
+                bl = !ticket.closed && ticket.job == this && ticket.owner.life.mode != NativePlayerLifetime.Mode.STOPPED;
                 if (bl) {
                     ticket.running = true;
                     ticket.phase = 3;
@@ -446,8 +427,7 @@ final class NativeDeCorpseTimers {
                 CombatNpcDamageQueue.failed(throwable);
             }
             finally {
-                ticket2 = ticket;
-                synchronized (ticket2) {
+                synchronized (ticket) {
                     ticket.running = false;
                     ticket.phase = 0;
                 }
@@ -479,11 +459,10 @@ final class NativeDeCorpseTimers {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void close(boolean bl) {
-            Job job;
             ScheduledFuture<?> scheduledFuture;
+            Job job;
             NativeDeCorpseCore.Task task = null;
-            Ticket ticket = this;
-            synchronized (ticket) {
+            synchronized (this) {
                 if (this.closed) {
                     return;
                 }

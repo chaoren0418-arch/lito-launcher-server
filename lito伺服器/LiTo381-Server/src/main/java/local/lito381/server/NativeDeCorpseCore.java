@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -87,8 +87,9 @@ implements Runnable {
             if (object == null) continue;
             try {
                 if (!this.port.claim(npc, l, object)) {
-                    if (!npc.destroyed()) continue;
-                    this.tracked.remove(npc);
+                    if (npc.destroyed()) {
+                        this.tracked.remove(npc);
+                    }
                     continue;
                 }
                 this.tracked.remove(npc);
@@ -97,11 +98,12 @@ implements Runnable {
             }
             catch (RuntimeException runtimeException) {
                 long l2 = this.deleteFailures.incrementAndGet();
-                this.port.log("error", "[NpcLifecycle] corpse delete failed: objectId={} npcId={} map={} x={} y={} count={}", npc.getId(), npc.getNpcId(), npc.getMapId(), npc.getX(), npc.getY(), l2, runtimeException);
+                this.port.log("error", "[NpcLifecycle] corpse delete failed: objectId={} npcId={} map={} x={} y={} count={}", npc.getId(), npc.getNpcId(), (int) npc.getMapId(), npc.getX(), npc.getY(), l2, runtimeException);
             }
             finally {
-                if (this.port.retained(object)) continue;
-                this.port.release(object);
+                if (!this.port.retained(object)) {
+                    this.port.release(object);
+                }
             }
         }
     }
@@ -224,12 +226,12 @@ implements Runnable {
                     this.npc.deleteMe();
                     if (!this.npc.destroyed() && this.npc.isDead()) {
                         long l = this.owner.deleteFailures.incrementAndGet();
-                        this.owner.port.log("error", "[NpcLifecycle] corpse delete returned without terminal removal: objectId={} npcId={} map={} x={} y={} count={}", this.npc.getId(), this.npc.getNpcId(), this.npc.getMapId(), this.npc.getX(), this.npc.getY(), l);
+                        this.owner.port.log("error", "[NpcLifecycle] corpse delete returned without terminal removal: objectId={} npcId={} map={} x={} y={} count={}", this.npc.getId(), this.npc.getNpcId(), (int) this.npc.getMapId(), this.npc.getX(), this.npc.getY(), l);
                     }
                 }
                 catch (RuntimeException runtimeException) {
                     long l = this.owner.deleteFailures.incrementAndGet();
-                    this.owner.port.log("error", "[NpcLifecycle] corpse delete failed: objectId={} npcId={} map={} x={} y={} count={}", this.npc.getId(), this.npc.getNpcId(), this.npc.getMapId(), this.npc.getX(), this.npc.getY(), l, runtimeException);
+                    this.owner.port.log("error", "[NpcLifecycle] corpse delete failed: objectId={} npcId={} map={} x={} y={} count={}", this.npc.getId(), this.npc.getNpcId(), (int) this.npc.getMapId(), this.npc.getX(), this.npc.getY(), l, runtimeException);
                 }
             }
             finally {

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -50,16 +50,13 @@ final class NativeDeAiTimers {
         if (ref == null || ref.kind() != 3 && ref.kind() != 4) {
             return null;
         }
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
-            Object object2;
+        synchronized (gameHub) {
             Object object3 = NativeProcHealingEncounter.room(gameHub, ref.room());
             if (!NativeProcHealingEncounter.mode(object3, ref) || ((BattleRules.MatchState)CombatAccess.field(object3, "match")).phase() != BattleRules.Phase.RUNNING) {
                 return null;
             }
-            Object object4 = object2 = NativeProcHealingEncounter.container(object3, ref);
-            synchronized (object4) {
-                BattleTimedStatus battleTimedStatus;
+            Object object2 = NativeProcHealingEncounter.container(object3, ref);
+            synchronized (object2) {
                 if (NativeProcHealingEncounter.generation(object2) != object) {
                     return null;
                 }
@@ -67,8 +64,8 @@ final class NativeDeAiTimers {
                 if (object5 == null) {
                     return null;
                 }
-                BattleTimedStatus battleTimedStatus2 = battleTimedStatus = (BattleTimedStatus)CombatAccess.field(object5, "damagePoison");
-                synchronized (battleTimedStatus2) {
+                BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(object5, "damagePoison");
+                synchronized (battleTimedStatus) {
                     if (NativeCombatAttacker.token(battleTimedStatus, false) != ref.owner() || NativePlayerCommit.integer(object5, "hp") <= 0 || !NativeDeAiState.current(battleTimedStatus, lease)) {
                         return null;
                     }
@@ -78,8 +75,8 @@ final class NativeDeAiTimers {
         }
     }
 
-    static NativeDeAiState.Facts facts(Live live, NativePlayerLifetime nativePlayerLifetime) {
-        return new NativeDeAiState.Facts(false, false, NativePlayerCommit.integer(live.actor(), "hp"), nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN, System.currentTimeMillis());
+    static NativeDeAiState.Facts facts(Live live, NativePlayerLifetime life) {
+        return new NativeDeAiState.Facts(false, false, NativePlayerCommit.integer(live.actor(), "hp"), life.mode != NativePlayerLifetime.Mode.OPEN, System.currentTimeMillis());
     }
 
     static NativeDeAiTimeline.State state(BattleTimedStatus battleTimedStatus) {
@@ -92,13 +89,12 @@ final class NativeDeAiTimers {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static Registry registry(NativePlayerLifetime nativePlayerLifetime) {
-        Object object = nativePlayerLifetime.admission;
-        synchronized (object) {
-            Registry registry = (Registry)CombatAccess.field(nativePlayerLifetime, FIELD);
+    static Registry registry(NativePlayerLifetime life) {
+        synchronized (life.admission) {
+            Registry registry = (Registry)CombatAccess.field(life, FIELD);
             if (registry == null) {
-                registry = new Registry(nativePlayerLifetime);
-                CombatAccess.set(nativePlayerLifetime, FIELD, registry);
+                registry = new Registry(life);
+                CombatAccess.set(life, FIELD, registry);
             }
             return registry;
         }
@@ -121,7 +117,7 @@ final class NativeDeAiTimers {
         });
     }
 
-    static NativeDeAiTimeline.Port quiet(final NativePlayerLifetime nativePlayerLifetime) {
+    static NativeDeAiTimeline.Port quiet(final NativePlayerLifetime life) {
         return new NativeDeAiTimeline.Port(){
 
             @Override
@@ -141,7 +137,7 @@ final class NativeDeAiTimers {
 
             @Override
             public boolean shutdown() {
-                return nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN;
+                return life.mode != NativePlayerLifetime.Mode.OPEN;
             }
 
             @Override
@@ -192,13 +188,13 @@ final class NativeDeAiTimers {
         return object;
     }
 
-    private static Object schedule(final GameHub gameHub, final NativeCombatAttacker.Ref ref, final Object object, final NativeDeAiState.Lease lease, long l, int n, boolean bl, final NativeDeAiWorkers.Ticket ticket) {
-        final NativePlayerLifetime nativePlayerLifetime = NativePlayerLifetime.of(gameHub);
-        final NativeDeAiTimeline.State state = NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> NativeDeAiTimers.state(live.status()));
+    private static Object schedule(final GameHub hub, final NativeCombatAttacker.Ref target, final Object generation, final NativeDeAiState.Lease lease, long l, int n, boolean bl, final NativeDeAiWorkers.Ticket prepaid) {
+        final NativePlayerLifetime life = NativePlayerLifetime.of(hub);
+        final NativeDeAiTimeline.State state = NativeDeAiTimers.withTarget(hub, target, generation, lease, live -> NativeDeAiTimers.state(live.status()));
         if (state == null) {
             return null;
         }
-        final Registry registry = NativeDeAiTimers.registry(nativePlayerLifetime);
+        final Registry registry = NativeDeAiTimers.registry(life);
         return NativeDeAiTimerProtocol.schedule(state, new NativeDeAiTimerProtocol.Port(){
 
             @Override
@@ -218,7 +214,7 @@ final class NativeDeAiTimers {
 
             @Override
             public boolean shutdown() {
-                return nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN;
+                return life.mode != NativePlayerLifetime.Mode.OPEN;
             }
 
             @Override
@@ -261,32 +257,30 @@ final class NativeDeAiTimers {
 
             @Override
             public Object install(long l, long l2, boolean bl, int n) {
-                Entry entry = NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> {
-                    Object object2 = state.lock;
-                    synchronized (object2) {
+                Entry entry = NativeDeAiTimers.withTarget(hub, target, generation, lease, live -> {
+                    synchronized (state.lock) {
                         if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.activeTimer != l2) {
                             return null;
                         }
-                        Object object3 = nativePlayerLifetime.admission;
-                        synchronized (object3) {
+                        synchronized (life.admission) {
                             Credit credit;
-                            if (nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN || ticket == null && nativePlayerLifetime.pending.get() >= NativePlayerCommit.GLOBAL || ticket != null && ticket.closed.get()) {
+                            if (life.mode != NativePlayerLifetime.Mode.OPEN || prepaid == null && life.pending.get() >= NativePlayerCommit.GLOBAL || prepaid != null && prepaid.closed.get()) {
                                 return null;
                             }
-                            if (ticket == null) {
-                                nativePlayerLifetime.pending.incrementAndGet();
-                                credit = new Credit(nativePlayerLifetime);
+                            if (prepaid == null) {
+                                life.pending.incrementAndGet();
+                                credit = new Credit(life);
                             } else {
-                                credit = ticket.credit;
-                                if (!ticket.detach()) {
+                                credit = prepaid.credit;
+                                if (!prepaid.detach()) {
                                     return null;
                                 }
                             }
-                            Entry installed = new Entry(registry, gameHub, new Work(ref, object, lease, l, bl), state, l2, credit);
+                            Entry installed = new Entry(registry, hub, new Work(target, generation, lease, l, bl), state, l2, credit);
                             registry.entries.add(installed);
                             tickets.put(installed.id, installed);
                             NativeDeAiTimers.index(timelines, lease.timeline(), installed);
-                            NativeDeAiTimers.index(generations, object, installed);
+                            NativeDeAiTimers.index(generations, generation, installed);
                             return installed;
                         }
                     }
@@ -295,7 +289,7 @@ final class NativeDeAiTimers {
                     return null;
                 }
                 try {
-                    ScheduledFuture<?> scheduledFuture = nativePlayerLifetime.retry.schedule(entry, (long)n, TimeUnit.MILLISECONDS);
+                    ScheduledFuture<?> scheduledFuture = life.retry.schedule(entry, (long)n, TimeUnit.MILLISECONDS);
                     if (scheduledFuture == null) {
                         entry.close(false);
                         return null;
@@ -325,17 +319,15 @@ final class NativeDeAiTimers {
     }
 
     static List<Work> claimReady(GameHub gameHub) {
-        Entry entry;
         Registry registry = NativeDeAiTimers.registry(NativePlayerLifetime.of(gameHub));
         ArrayList<Work> arrayList = new ArrayList<Work>();
+        Entry entry;
         while ((entry = registry.ready.poll()) != null) {
-            Work work;
             if (entry.closed.get()) continue;
             Entry entry2 = entry;
-            Work work2 = work = registry.life.mode != NativePlayerLifetime.Mode.OPEN ? null : NativeDeAiTimers.withTarget(gameHub, entry2.work.target(), entry2.work.generation(), entry2.work.lease(), live -> {
+            Work work = registry.life.mode != NativePlayerLifetime.Mode.OPEN ? null : NativeDeAiTimers.withTarget(gameHub, entry2.work.target(), entry2.work.generation(), entry2.work.lease(), live -> {
                 NativeDeAiTimeline.State state = NativeDeAiTimers.state(live.status());
-                Object object = state.lock;
-                synchronized (object) {
+                synchronized (state.lock) {
                     return NativeDeAiTimeline.owns(state, entry2.work.owner()) && state.chain == entry2.work.owner() && state.pending && state.pendingBackground == entry2.work.background() ? entry2.work : null;
                 }
             });
@@ -350,12 +342,13 @@ final class NativeDeAiTimers {
     }
 
     static NativeDeAiState.Result perform(GameHub gameHub, NativeCombatAttacker.Ref ref, Object object, NativeDeAiState.Lease lease, NativeDeAiState.Request request) {
-        NativePlayerLifetime nativePlayerLifetime = NativePlayerLifetime.of(gameHub);
-        NativeDeAiState.Result result = NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> NativeDeAiState.perform(live.status(), lease, NativeDeAiTimers.facts(live, nativePlayerLifetime), request));
+        NativePlayerLifetime life = NativePlayerLifetime.of(gameHub);
+        NativeDeAiState.Result result = NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> NativeDeAiState.perform(live.status(), lease, NativeDeAiTimers.facts(live, life), request));
         if (result != null) {
             for (NativeDeAiState.Effect effect : result.effects()) {
-                if (effect.kind() != NativeDeAiState.Kind.CANCEL_TIMER) continue;
-                NativeDeAiTimers.cancelFuture(effect.timer());
+                if (effect.kind() == NativeDeAiState.Kind.CANCEL_TIMER) {
+                    NativeDeAiTimers.cancelFuture(effect.timer());
+                }
             }
         }
         return result;
@@ -383,8 +376,7 @@ final class NativeDeAiTimers {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void retireStatus(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             NativeDeAiTimers.retireActorState(CombatAccess.field(battleTimedStatus, "sourceDeActorState"));
         }
     }
@@ -402,8 +394,8 @@ final class NativeDeAiTimers {
         }
     }
 
-    static void close(NativePlayerLifetime nativePlayerLifetime) {
-        Registry registry = (Registry)CombatAccess.field(nativePlayerLifetime, FIELD);
+    static void close(NativePlayerLifetime life) {
+        Registry registry = (Registry)CombatAccess.field(life, FIELD);
         if (registry != null) {
             registry.workersEnabled = false;
             for (Entry object : (Entry[])registry.entries.toArray(Entry[]::new)) {
@@ -430,8 +422,8 @@ final class NativeDeAiTimers {
         final Set<Entry> entries = ConcurrentHashMap.newKeySet();
         final ConcurrentLinkedQueue<Entry> ready = new ConcurrentLinkedQueue();
 
-        Registry(NativePlayerLifetime nativePlayerLifetime) {
-            this.life = nativePlayerLifetime;
+        Registry(NativePlayerLifetime life) {
+            this.life = life;
         }
     }
 
@@ -462,9 +454,8 @@ final class NativeDeAiTimers {
          */
         void future(ScheduledFuture<?> scheduledFuture) {
             boolean bl;
-            Entry entry = this;
-            synchronized (entry) {
-                boolean bl2 = bl = !this.closed.get() && !this.ready;
+            synchronized (this) {
+                bl = !this.closed.get() && !this.ready;
                 if (bl) {
                     this.future = scheduledFuture;
                 }
@@ -488,8 +479,7 @@ final class NativeDeAiTimers {
             if (!this.closed.compareAndSet(false, true)) {
                 return;
             }
-            Entry entry = this;
-            synchronized (entry) {
+            synchronized (this) {
                 scheduledFuture = this.future;
                 this.future = null;
             }
@@ -555,8 +545,7 @@ final class NativeDeAiTimers {
                 this.close(false);
                 return;
             }
-            Entry entry = this;
-            synchronized (entry) {
+            synchronized (this) {
                 if (this.closed.get()) {
                     return;
                 }
@@ -582,8 +571,8 @@ final class NativeDeAiTimers {
         final NativePlayerLifetime life;
         final AtomicBoolean released = new AtomicBoolean();
 
-        Credit(NativePlayerLifetime nativePlayerLifetime) {
-            this.life = nativePlayerLifetime;
+        Credit(NativePlayerLifetime life) {
+            this.life = life;
         }
 
         void release() {

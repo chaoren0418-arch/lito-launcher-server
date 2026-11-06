@@ -1238,7 +1238,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
                      0x7792_0314L, 33314, 32339)) {
             MemoryAccountRepository repository =
                     (MemoryAccountRepository) field(administrator.session, "accounts");
-            repository.grantAccessLevel("test", 200);
+            setField(administrator.session, "accounts", AccountAccessFixture.grant(repository, "test", 200));
             SourceAdministration.clear(administrator.session);
             setField(administrator.session, "account", "test");
             victim.packets();

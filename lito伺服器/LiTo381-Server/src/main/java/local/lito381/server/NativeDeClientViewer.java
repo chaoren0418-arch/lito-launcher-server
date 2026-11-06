@@ -1,201 +1,168 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
+// Decompiled with Vineflower 1.11.2; reviewed against formal bytecode.
 package local.lito381.server;
 
 import java.util.Set;
-import local.lito381.server.BattleTimedStatus;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.CombatNpcDamageQueue;
-import local.lito381.server.CombatPoisonAtomic;
-import local.lito381.server.GameHub;
-import local.lito381.server.NativeDeDeletionPorts;
-import local.lito381.server.NativeDeDeletionState;
-import local.lito381.server.NativeDeKnownState;
-import local.lito381.server.NativeDePerceptionOutput;
-import local.lito381.server.NativeDePerceptionPacket;
-import local.lito381.server.NativeDeVisibilityOutput;
-import local.lito381.server.NativeDeVisibilityRuntime;
-import local.lito381.server.NativeDeWorldContext;
-import local.lito381.server.NativePlayerCommit;
-import local.lito381.server.NativePlayerLifetime;
-import local.lito381.server.Protocol;
+import local.lito381.server.NativePlayerCommit.Binding;
+import local.lito381.server.NativePlayerLifetime.Mode;
 
-final class NativeDeClientViewer
-extends NativeDeKnownState {
-    static final String FIELD = "sourceDeKnownViewer";
-    final GameHub hub;
-    final NativePlayerLifetime life;
-    final NativePlayerCommit.Binding binding;
-    volatile boolean retired;
+final class NativeDeClientViewer extends NativeDeKnownState {
+   static final String FIELD = "sourceDeKnownViewer";
+   final GameHub hub;
+   final NativePlayerLifetime life;
+   final Binding binding;
+   volatile boolean retired;
 
-    private NativeDeClientViewer(GameHub gameHub, NativePlayerCommit.Binding binding) {
-        super(NativeDeClientViewer.objectId(binding.object()));
-        this.hub = gameHub;
-        this.life = NativePlayerLifetime.of(gameHub);
-        this.binding = binding;
-    }
+   private NativeDeClientViewer(GameHub var1, Binding var2) {
+      super(objectId(var2.object()));
+      this.hub = var1;
+      this.life = NativePlayerLifetime.of(var1);
+      this.binding = var2;
+   }
 
-    private static int objectId(long l) {
-        if (l <= 0L || l > 0xFFFFFFFFL) {
-            throw new IllegalArgumentException("source viewer object ID outside unsigned32");
-        }
-        return (int)l;
-    }
+   private static int objectId(long var0) {
+      if (var0 <= 0L || var0 > 4294967295L) {
+         throw new IllegalArgumentException("source viewer object ID outside unsigned32");
+      }
+      return (int)var0;
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static NativeDeClientViewer of(ClientSession clientSession) {
-        BattleTimedStatus battleTimedStatus;
-        GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        synchronized (battleTimedStatus2) {
-            if (!NativePlayerLifetime.of(gameHub).admits()) {
-                throw new IllegalStateException("viewer application closed");
+   static NativeDeClientViewer of(ClientSession var0) {
+      GameHub var1 = (GameHub)CombatAccess.field(var0, "hub");
+      BattleTimedStatus var2 = CombatPoisonAtomic.status(var0);
+      synchronized (var2) {
+         if (!NativePlayerLifetime.of(var1).admits()) {
+            throw new IllegalStateException("viewer application closed");
+         } else {
+            Binding var4 = Binding.capture(var0);
+            if (!Set.of("BATTLE", "WORLD").contains(var4.phase())) {
+               throw new IllegalStateException("viewer is outside a native scene");
+            } else {
+               NativeDeClientViewer var5 = (NativeDeClientViewer)CombatAccess.field(var2, "sourceDeKnownViewer");
+               if (var5 != null && !var5.retired && var5.binding.equals(var4) && var5.hub == var1) {
+                  return var5;
+               } else {
+                  if (var5 != null) {
+                     var5.retire();
+                  }
+
+                  NativeDeClientViewer var6 = new NativeDeClientViewer(var1, var4);
+                  CombatAccess.set(var2, "sourceDeKnownViewer", var6);
+                  return var6;
+               }
             }
-            NativePlayerCommit.Binding binding = NativePlayerCommit.Binding.capture(clientSession);
-            if (!Set.of("BATTLE", "WORLD").contains(binding.phase())) {
-                throw new IllegalStateException("viewer is outside a native scene");
-            }
-            NativeDeClientViewer nativeDeClientViewer = (NativeDeClientViewer)CombatAccess.field(battleTimedStatus, FIELD);
-            if (nativeDeClientViewer != null && !nativeDeClientViewer.retired && nativeDeClientViewer.binding.equals(binding) && nativeDeClientViewer.hub == gameHub) {
-                return nativeDeClientViewer;
-            }
-            if (nativeDeClientViewer != null) {
-                nativeDeClientViewer.retire();
-            }
-            NativeDeClientViewer nativeDeClientViewer2 = new NativeDeClientViewer(gameHub, binding);
-            CombatAccess.set(battleTimedStatus, FIELD, nativeDeClientViewer2);
-            return nativeDeClientViewer2;
-        }
-    }
+         }
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void retire(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeDeClientViewer nativeDeClientViewer = (NativeDeClientViewer)CombatAccess.field(battleTimedStatus, FIELD);
-            if (nativeDeClientViewer != null) {
-                CombatAccess.set(battleTimedStatus, FIELD, null);
-                try {
-                    nativeDeClientViewer.retire();
-                }
-                catch (Throwable throwable) {
-                    CombatNpcDamageQueue.failed(throwable);
-                }
-            }
-        }
-    }
+   static void retire(BattleTimedStatus var0) {
+      synchronized (var0) {
+         NativeDeClientViewer var2 = (NativeDeClientViewer)CombatAccess.field(var0, "sourceDeKnownViewer");
+         if (var2 != null) {
+            CombatAccess.set(var0, "sourceDeKnownViewer", null);
 
-    static void retireClient(ClientSession clientSession) {
-        if (clientSession == null) {
-            return;
-        }
-        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        if (battleTimedStatus != null) {
-            NativeDeClientViewer.retire(battleTimedStatus);
-        }
-    }
-
-    static void closeHub(GameHub gameHub) {
-        for (ClientSession clientSession : gameHub.connectedSessionsSnapshot()) {
-            NativeDeClientViewer.retireClient(clientSession);
-        }
-    }
-
-    private void retire() {
-        this.withKnownLock(() -> {
-            this.retired = true;
             try {
-                NativeDeWorldContext.detach(this);
+               var2.retire();
+            } catch (Throwable var5) {
+               CombatNpcDamageQueue.failed(var5);
             }
-            finally {
-                this.removeAllKnownObjects();
-            }
-            return null;
-        });
-    }
+         }
+      }
+   }
 
-    private ClientSession current() {
-        if (this.retired || this.life.mode == NativePlayerLifetime.Mode.STOPPED) {
-            return null;
-        }
-        for (ClientSession clientSession : this.hub.connectedSessionsSnapshot()) {
-            if (!this.binding.matches(clientSession)) continue;
-            return clientSession;
-        }
-        return null;
-    }
+   static void retireClient(ClientSession var0) {
+      if (var0 == null) { return; }
+      {
+         BattleTimedStatus var1 = CombatPoisonAtomic.status(var0);
+         if (var1 != null) {
+            retire(var1);
+         }
+      }
+   }
 
-    @Override
-    public boolean tryAddKnownObject(NativeDeDeletionPorts.ObjectRef objectRef) {
-        ClientSession clientSession = this.current();
-        if (clientSession == null) {
-            return false;
-        }
-        if (objectRef instanceof NativeDeDeletionState) {
-            NativeDeDeletionState nativeDeDeletionState = (NativeDeDeletionState)objectRef;
-            if (nativeDeDeletionState.deletionOwner.timer.life != this.life) {
-                return false;
-            }
-        }
-        return this.withKnownLock(() -> !this.retired && this.life.admits() && this.binding.matchesFast(clientSession) && super.tryAddKnownObject(objectRef));
-    }
+   static void closeHub(GameHub var0) {
+      for (ClientSession var2 : var0.connectedSessionsSnapshot()) {
+         retireClient(var2);
+      }
+   }
 
-    @Override
-    NativeDeDeletionPorts.OtherList get_otherList() {
-        throw new UnsupportedOperationException("native illusory ownership registry is not connected");
-    }
+   private void retire() {
+      this.withKnownLock(() -> {
+         this.retired = true;
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    void sendPackets(NativeDeDeletionPorts.Packet packet) {
-        Object object;
-        block12: {
-            block11: {
-                if (NativeDeVisibilityOutput.accepts(packet)) {
-                    NativeDeVisibilityOutput.send(this, packet);
-                    return;
-                }
-                if (packet instanceof NativeDePerceptionPacket) {
-                    NativeDePerceptionOutput.send(this, (NativeDePerceptionPacket)packet);
-                    return;
-                }
-                if (!(packet instanceof NativeDeDeletionPorts.RemoveObject)) break block11;
-                NativeDeDeletionPorts.RemoveObject removeObject = (NativeDeDeletionPorts.RemoveObject)packet;
-                object = removeObject.actor;
-                if (object instanceof NativeDeDeletionState) break block12;
-            }
-            throw new IllegalArgumentException("viewer accepts source NPC remove packets only");
-        }
-        NativeDeDeletionState nativeDeDeletionState = (NativeDeDeletionState)object;
-        if (nativeDeDeletionState.deletionOwner.timer.life != this.life) {
-            throw new IllegalArgumentException("foreign application remove packet");
-        }
-        object = this.current();
-        if (object == null) {
+         try {
+            NativeDeWorldContext.detach(this);
+         } finally {
+            this.removeAllKnownObjects();
+         }
+
+         return null;
+      });
+   }
+
+   private ClientSession current() {
+      if (this.retired || this.life.mode == Mode.STOPPED) { return null; }
+      for (ClientSession var2 : this.hub.connectedSessionsSnapshot()) {
+         if (this.binding.matches(var2)) { return var2; }
+      }
+      return null;
+   }
+
+   @Override
+   public boolean tryAddKnownObject(NativeDeDeletionPorts.ObjectRef var1) {
+      ClientSession var2 = this.current();
+      if (var2 == null) {
+         return false;
+      } else {
+         if (var1 instanceof NativeDeDeletionState var3 && var3.deletionOwner.timer.life != this.life) { return false; }
+         return this.withKnownLock(() -> !this.retired && this.life.admits() && this.binding.matchesFast(var2) && super.tryAddKnownObject(var1));
+      }
+   }
+
+   @Override
+   NativeDeDeletionPorts.OtherList get_otherList() {
+      throw new UnsupportedOperationException("native illusory ownership registry is not connected");
+   }
+
+   @Override
+   void sendPackets(NativeDeDeletionPorts.Packet var1) {
+      if (NativeDeVisibilityOutput.accepts(var1)) {
+         NativeDeVisibilityOutput.send(this, var1);
+         return;
+      } else if (var1 instanceof NativeDePerceptionPacket) {
+         NativeDePerceptionOutput.send(this, (NativeDePerceptionPacket)var1);
+         return;
+      } else if (!(var1 instanceof NativeDeDeletionPorts.RemoveObject var2 && var2.actor instanceof NativeDeDeletionState var3)) {
+         throw new IllegalArgumentException("viewer accepts source NPC remove packets only");
+      } else if (var3.deletionOwner.timer.life != this.life) {
+         throw new IllegalArgumentException("foreign application remove packet");
+      } else {
+         ClientSession var9 = this.current();
+         if (var9 == null) {
             throw new IllegalStateException("stale native viewer");
-        }
-        byte[] byArray = Protocol.removeObject(Integer.toUnsignedLong(nativeDeDeletionState.getId()));
-        Object object2 = object;
-        synchronized (object2) {
-            if (this.retired || this.life.mode == NativePlayerLifetime.Mode.STOPPED || !this.binding.matchesFast((ClientSession)object) || CombatAccess.field(CombatPoisonAtomic.status((ClientSession)object), FIELD) != this) {
-                throw new IllegalStateException("stale native viewer publication");
+         } else {
+            byte[] var5 = Protocol.removeObject(Integer.toUnsignedLong(var3.getId()));
+            synchronized (var9) {
+               if (this.retired
+                  || this.life.mode == Mode.STOPPED
+                  || !this.binding.matchesFast(var9)
+                  || CombatAccess.field(CombatPoisonAtomic.status(var9), "sourceDeKnownViewer") != this) {
+                  throw new IllegalStateException("stale native viewer publication");
+               }
+               {
+                  Object publicationTarget = var9;
+                  String publicationMethod = "sendEncryptedFrame";
+                  String publicationDescriptor = "([BLjava/lang/String;)V";
+                  Object[] var10003 = new Object[]{var5, "S_REMOVE_OBJECT source-De deletion id=" + Integer.toUnsignedLong(var3.getId())};
+                  NativeDeVisibilityRuntime.requirePublication(this);
+                  CombatAccess.call(publicationTarget, publicationMethod, publicationDescriptor, var10003);
+               }
             }
-            Object[] objectArray = new Object[]{byArray, "S_REMOVE_OBJECT source-De deletion id=" + Integer.toUnsignedLong(nativeDeDeletionState.getId())};
-            NativeDeVisibilityRuntime.requirePublication(this);
-            CombatAccess.call(object, "sendEncryptedFrame", "([BLjava/lang/String;)V", objectArray);
-        }
-    }
+         }
+      }
+   }
 
-    public void updateObject() {
-        NativeDeVisibilityRuntime.update(this);
-    }
+   public void updateObject() {
+      NativeDeVisibilityRuntime.update(this);
+   }
 }

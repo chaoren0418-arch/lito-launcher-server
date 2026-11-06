@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -45,29 +45,27 @@ final class NativeSourceMaterialPlan {
     }
 
     private ItemConsumeCommitResult appendGeneralConsumePlan(List<PlannedConsumption> list, ConsumeRequirement consumeRequirement) {
-        int n;
-        int n2;
         int n3 = consumeRequirement.itemId;
         long l = consumeRequirement.count;
         int n4 = consumeRequirement.minEnchant;
-        ArrayList<NativeMaterialItem> arrayList = new ArrayList<NativeMaterialItem>();
+        List<NativeMaterialItem> arrayList = new ArrayList<NativeMaterialItem>();
         Set set = Collections.newSetFromMap(new IdentityHashMap());
         Boolean bl = null;
         for (NativeMaterialItem nativeMaterialItem : this._items) {
             if (nativeMaterialItem == null || nativeMaterialItem.getItem() == null || nativeMaterialItem.getItemId() != n3 || nativeMaterialItem.get_char_objid() != this.ownerId() || nativeMaterialItem.isEquipped() || nativeMaterialItem.isSealed() || nativeMaterialItem.getCount() <= 0L || !set.add(nativeMaterialItem)) continue;
-            n2 = nativeMaterialItem.isStackable() ? 1 : 0;
+            boolean stackable = nativeMaterialItem.isStackable();
             if (bl == null) {
-                bl = n2 != 0;
-            } else if (bl.booleanValue() != (n2 != 0)) {
+                bl = stackable;
+            } else if (bl != stackable) {
                 _log.error("\u80cc\u5305\u540c itemId \u6df7\u7528 stackable \u5c6c\u6027\uff0c\u62d2\u7d55\u6263\u6b3e charId={} itemId={}", this.ownerId(), n3);
                 return ItemConsumeCommitResult.INVALID_REQUEST;
             }
-            if (n2 != 0) {
+            if (stackable) {
                 if (n4 > 0) {
                     return ItemConsumeCommitResult.INVALID_REQUEST;
                 }
             } else if (n4 >= 0) {
-                n = nativeMaterialItem.getEnchantLevel();
+                int n = nativeMaterialItem.getEnchantLevel();
                 if (n4 == 0 && n != 0 || n4 > 0 && n < n4) continue;
             }
             arrayList.add(nativeMaterialItem);
@@ -79,20 +77,19 @@ final class NativeSourceMaterialPlan {
         long l2 = l;
         if (bl.booleanValue()) {
             for (NativeMaterialItem nativeMaterialItem : arrayList) {
-                if (l2 != 0L) {
+                if (l2 == 0L) break;
+                {
                     long l3 = Math.min(l2, nativeMaterialItem.getCount());
                     list.add(new PlannedConsumption(nativeMaterialItem, l3));
                     l2 -= l3;
-                    continue;
                 }
-                break;
             }
         } else {
             if ((long)arrayList.size() < l) {
                 return ItemConsumeCommitResult.INSUFFICIENT_ITEMS;
             }
-            n2 = (int)l;
-            for (n = 0; n < n2; ++n) {
+            int n2 = (int)l;
+            for (int n = 0; n < n2; ++n) {
                 list.add(new PlannedConsumption((NativeMaterialItem)arrayList.get(n), 1L));
                 --l2;
             }

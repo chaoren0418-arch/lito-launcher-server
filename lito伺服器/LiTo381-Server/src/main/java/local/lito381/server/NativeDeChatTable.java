@@ -1,7 +1,5 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
+// Decompiled with Vineflower 1.11.2; reviewed against formal bytecode.
 package local.lito381.server;
 
 import java.sql.Connection;
@@ -12,116 +10,101 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import local.lito381.server.NativeDeChatData;
-import local.lito381.server.NativeDeChatResources;
-import local.lito381.server.NativeDeChatScope;
-import local.lito381.server.NativeDeTerrainScope;
-import local.lito381.server.NativeDeTerrainTimer;
-import local.lito381.server.NativeDeWorldLog;
+import local.lito381.server.NativeDeTerrainScope.Database;
 
 public class NativeDeChatTable {
-    private static final NativeDeWorldLog _log = NativeDeChatScope.Logs.getLogger(NativeDeChatTable.class);
-    private static final Map<Integer, NativeDeChatData> _npcChatAppearance = new HashMap<Integer, NativeDeChatData>();
-    private static final Map<Integer, NativeDeChatData> _npcChatDead = new HashMap<Integer, NativeDeChatData>();
-    private static final Map<Integer, NativeDeChatData> _npcChatHide = new HashMap<Integer, NativeDeChatData>();
-    private static final Map<Integer, NativeDeChatData> _npcChatGameTime = new HashMap<Integer, NativeDeChatData>();
-    private Collection<NativeDeChatData> _allTimeValues;
-    final NativeDeChatScope.Data nativeData = NativeDeChatScope.loadingData();
+   private static final NativeDeWorldLog _log = NativeDeChatScope.Logs.getLogger(NativeDeChatTable.class);
+   private static final Map<Integer, NativeDeChatData> _npcChatAppearance = new HashMap<>();
+   private static final Map<Integer, NativeDeChatData> _npcChatDead = new HashMap<>();
+   private static final Map<Integer, NativeDeChatData> _npcChatHide = new HashMap<>();
+   private static final Map<Integer, NativeDeChatData> _npcChatGameTime = new HashMap<>();
+   private Collection<NativeDeChatData> _allTimeValues;
+   final NativeDeChatScope.Data nativeData = NativeDeChatScope.loadingData();
 
-    public void load() {
-        NativeDeTerrainTimer nativeDeTerrainTimer;
-        block27: {
-            nativeDeTerrainTimer = new NativeDeTerrainTimer();
-            try (Connection connection = NativeDeTerrainScope.Database.get().getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `npcchat`");){
-                ResultSet resultSet = preparedStatement.executeQuery();
-                try {
-                    while (resultSet.next()) {
-                        int n = -1;
-                        try {
-                            n = resultSet.getInt("npc_id");
-                            NativeDeChatData nativeDeChatData = new NativeDeChatData();
-                            nativeDeChatData.setNpcId(n);
-                            nativeDeChatData.setChatTiming(resultSet.getInt("chat_timing"));
-                            nativeDeChatData.setStartDelayTime(resultSet.getInt("start_delay_time"));
-                            nativeDeChatData.setChatId1(resultSet.getString("chat_id1"));
-                            nativeDeChatData.setChatId2(resultSet.getString("chat_id2"));
-                            nativeDeChatData.setChatId3(resultSet.getString("chat_id3"));
-                            nativeDeChatData.setChatId4(resultSet.getString("chat_id4"));
-                            nativeDeChatData.setChatId5(resultSet.getString("chat_id5"));
-                            nativeDeChatData.setChatInterval(resultSet.getInt("chat_interval"));
-                            nativeDeChatData.setShout(resultSet.getBoolean("is_shout"));
-                            nativeDeChatData.setWorldChat(resultSet.getBoolean("is_world_chat"));
-                            nativeDeChatData.setRepeat(resultSet.getBoolean("is_repeat"));
-                            nativeDeChatData.setRepeatInterval(resultSet.getInt("repeat_interval"));
-                            nativeDeChatData.setGameTime(resultSet.getInt("game_time"));
-                            if (nativeDeChatData.getChatTiming() == 0) {
-                                NativeDeChatScope._npcChatAppearance(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                                continue;
-                            }
-                            if (nativeDeChatData.getChatTiming() == 1) {
-                                NativeDeChatScope._npcChatDead(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                                continue;
-                            }
-                            if (nativeDeChatData.getChatTiming() == 2) {
-                                NativeDeChatScope._npcChatHide(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                                continue;
-                            }
-                            if (nativeDeChatData.getChatTiming() != 3) continue;
-                            NativeDeChatScope._npcChatGameTime(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                            continue;
-                        }
-                        catch (Exception exception) {
-                            NativeDeChatScope.log().error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (npcid: " + n + ")", exception);
-                        }
-                    }
-                }
-                finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
+   public void load() {
+      NativeDeTerrainTimer var1 = new NativeDeTerrainTimer();
+
+      try (
+         Connection var2 = Database.get().getConnection();
+         PreparedStatement var3 = var2.prepareStatement("SELECT * FROM `npcchat`");
+         ResultSet var4 = var3.executeQuery();
+      ) {
+         while (var4.next()) {
+            int var5 = -1;
+
+            try {
+               var5 = var4.getInt("npc_id");
+               NativeDeChatData var6 = new NativeDeChatData();
+               var6.setNpcId(var5);
+               var6.setChatTiming(var4.getInt("chat_timing"));
+               var6.setStartDelayTime(var4.getInt("start_delay_time"));
+               var6.setChatId1(var4.getString("chat_id1"));
+               var6.setChatId2(var4.getString("chat_id2"));
+               var6.setChatId3(var4.getString("chat_id3"));
+               var6.setChatId4(var4.getString("chat_id4"));
+               var6.setChatId5(var4.getString("chat_id5"));
+               var6.setChatInterval(var4.getInt("chat_interval"));
+               var6.setShout(var4.getBoolean("is_shout"));
+               var6.setWorldChat(var4.getBoolean("is_world_chat"));
+               var6.setRepeat(var4.getBoolean("is_repeat"));
+               var6.setRepeatInterval(var4.getInt("repeat_interval"));
+               var6.setGameTime(var4.getInt("game_time"));
+               if (var6.getChatTiming() == 0) {
+                  NativeDeChatScope._npcChatAppearance(this).put(var6.getNpcId(), var6);
+               } else if (var6.getChatTiming() == 1) {
+                  NativeDeChatScope._npcChatDead(this).put(var6.getNpcId(), var6);
+               } else if (var6.getChatTiming() == 2) {
+                  NativeDeChatScope._npcChatHide(this).put(var6.getNpcId(), var6);
+               } else if (var6.getChatTiming() == 3) {
+                  NativeDeChatScope._npcChatGameTime(this).put(var6.getNpcId(), var6);
+               }
+            } catch (Exception var10) {
+               NativeDeChatScope.log().error("載入資料失敗，已略過該筆 (npcid: " + var5 + ")", (Throwable)var10);
+               continue;
             }
-            catch (SQLException sQLException) {
-                NativeDeChatScope.log().error("\u8f09\u5165 npcchat \u5931\u6557! \u8acb\u6aa2\u67e5\u8cc7\u6599\u8868!", sQLException);
-            }
-        }
-        int n = NativeDeChatScope._npcChatAppearance(this).size() + NativeDeChatScope._npcChatDead(this).size() + NativeDeChatScope._npcChatHide(this).size() + NativeDeChatScope._npcChatGameTime(this).size();
-        NativeDeChatScope.log().info("\u8f09\u5165 npcchat ok: " + n + " (" + nativeDeTerrainTimer.get() + "ms)");
-    }
+         }
+      } catch (SQLException var14) {
+         NativeDeChatScope.log().error("載入 npcchat 失敗! 請檢查資料表!", (Throwable)var14);
+      }
 
-    public NativeDeChatData getTemplateAppearance(int n) {
-        return NativeDeChatScope._npcChatAppearance(this).get(n);
-    }
+      int var15 = NativeDeChatScope._npcChatAppearance(this).size()
+         + NativeDeChatScope._npcChatDead(this).size()
+         + NativeDeChatScope._npcChatHide(this).size()
+         + NativeDeChatScope._npcChatGameTime(this).size();
+      NativeDeChatScope.log().info("載入 npcchat ok: " + var15 + " (" + var1.get() + "ms)");
+   }
 
-    public NativeDeChatData getTemplateDead(int n) {
-        return NativeDeChatScope._npcChatDead(this).get(n);
-    }
+   public NativeDeChatData getTemplateAppearance(int var1) {
+      return NativeDeChatScope._npcChatAppearance(this).get(var1);
+   }
 
-    public NativeDeChatData getTemplateHide(int n) {
-        return NativeDeChatScope._npcChatHide(this).get(n);
-    }
+   public NativeDeChatData getTemplateDead(int var1) {
+      return NativeDeChatScope._npcChatDead(this).get(var1);
+   }
 
-    public NativeDeChatData getTemplateGameTime(int n) {
-        return NativeDeChatScope._npcChatGameTime(this).get(n);
-    }
+   public NativeDeChatData getTemplateHide(int var1) {
+      return NativeDeChatScope._npcChatHide(this).get(var1);
+   }
 
-    public Collection<NativeDeChatData> all() {
-        try {
-            Collection<NativeDeChatData> collection = this._allTimeValues;
-            return collection != null ? collection : (this._allTimeValues = Collections.unmodifiableCollection(NativeDeChatScope._npcChatGameTime(this).values()));
-        }
-        catch (Exception exception) {
-            NativeDeChatScope.log().error(exception.getLocalizedMessage(), exception);
-            return null;
-        }
-    }
+   public NativeDeChatData getTemplateGameTime(int var1) {
+      return NativeDeChatScope._npcChatGameTime(this).get(var1);
+   }
 
-    public NativeDeChatData[] getAllGameTime() {
-        return NativeDeChatScope._npcChatGameTime(this).values().toArray(new NativeDeChatData[NativeDeChatScope._npcChatGameTime(this).size()]);
-    }
+   public Collection<NativeDeChatData> all() {
+      try {
+         Collection var1 = this._allTimeValues;
+         return var1 != null ? var1 : (this._allTimeValues = Collections.unmodifiableCollection(NativeDeChatScope._npcChatGameTime(this).values()));
+      } catch (Exception var2) {
+         NativeDeChatScope.log().error(var2.getLocalizedMessage(), (Throwable)var2);
+         return null;
+      }
+   }
 
-    public static NativeDeChatTable get() {
-        return NativeDeChatResources.table();
-    }
+   public NativeDeChatData[] getAllGameTime() {
+      return NativeDeChatScope._npcChatGameTime(this).values().toArray(new NativeDeChatData[NativeDeChatScope._npcChatGameTime(this).size()]);
+   }
+
+   public static NativeDeChatTable get() {
+      return NativeDeChatResources.table();
+   }
 }

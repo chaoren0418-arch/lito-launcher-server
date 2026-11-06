@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.sql.Connection;
@@ -11,192 +8,186 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import local.lito381.server.NativeDeNpcExecutor;
-import local.lito381.server.NativeDeNpcTemplate;
-import local.lito381.server.NativeDeNpcTemplateLoadScope;
 
 final class NativeDeNpcTemplateNpcLoader {
-    NativeDeNpcTemplateNpcLoader() {
-    }
+   static void load() {
+      NativeDeNpcTemplateLoadScope.context().families = sourceBuildFamily();
+      new NativeDeNpcTemplateNpcLoader().sourceLoadNpcData();
+   }
 
-    static void load() {
-        NativeDeNpcTemplateLoadScope.context().families = NativeDeNpcTemplateNpcLoader.sourceBuildFamily();
-        new NativeDeNpcTemplateNpcLoader().sourceLoadNpcData();
-    }
+   private void registerConstructorCache(String var1) {
+      NativeDeNpcTemplateLoadScope.context().requiredImplementations.add(Objects.toString(var1, "<null>"));
+   }
 
-    private void registerConstructorCache(String string) {
-        NativeDeNpcTemplateLoadScope.context().requiredImplementations.add(Objects.toString(string, "<null>"));
-    }
+   private void sourceLoadNpcData() {
+      NativeDeNpcTemplateLoadScope.npcs().clear();
 
-    private void sourceLoadNpcData() {
-        block28: {
-            NativeDeNpcTemplateLoadScope.npcs().clear();
-            try (Connection connection = NativeDeNpcTemplateLoadScope.Database.get().getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `npc`");){
-                ResultSet resultSet = preparedStatement.executeQuery();
-                try {
-                    while (resultSet.next()) {
-                        int n = -1;
-                        try {
-                            n = resultSet.getInt("npcid");
-                            NativeDeNpcTemplate nativeDeNpcTemplate = new NativeDeNpcTemplate();
-                            nativeDeNpcTemplate.set_npcId(n);
-                            nativeDeNpcTemplate.set_name(resultSet.getString("name"));
-                            nativeDeNpcTemplate.set_nameid(resultSet.getString("nameid"));
-                            String string = resultSet.getString("classname");
-                            nativeDeNpcTemplate.set_classname(string);
-                            nativeDeNpcTemplate.setNpcExecutor(this.addClass(n, string));
-                            nativeDeNpcTemplate.setImpl(resultSet.getString("impl"));
-                            nativeDeNpcTemplate.set_gfxid(resultSet.getInt("gfxid"));
-                            nativeDeNpcTemplate.set_level(resultSet.getInt("lvl"));
-                            nativeDeNpcTemplate.set_hp(resultSet.getInt("hp"));
-                            nativeDeNpcTemplate.set_mp(resultSet.getInt("mp"));
-                            nativeDeNpcTemplate.set_ac(resultSet.getInt("ac"));
-                            nativeDeNpcTemplate.set_str(resultSet.getByte("str"));
-                            nativeDeNpcTemplate.set_con(resultSet.getByte("con"));
-                            nativeDeNpcTemplate.set_dex(resultSet.getByte("dex"));
-                            nativeDeNpcTemplate.set_wis(resultSet.getByte("wis"));
-                            nativeDeNpcTemplate.set_int(resultSet.getByte("intel"));
-                            nativeDeNpcTemplate.set_mr(resultSet.getInt("mr"));
-                            nativeDeNpcTemplate.set_exp(resultSet.getInt("exp"));
-                            nativeDeNpcTemplate.set_lawful(resultSet.getInt("lawful"));
-                            nativeDeNpcTemplate.set_size(resultSet.getString("size"));
-                            nativeDeNpcTemplate.set_weakAttr(resultSet.getInt("weakAttr"));
-                            nativeDeNpcTemplate.set_ranged(resultSet.getInt("ranged"));
-                            nativeDeNpcTemplate.setTamable(resultSet.getBoolean("tamable"));
-                            nativeDeNpcTemplate.set_passispeed(resultSet.getInt("passispeed"));
-                            nativeDeNpcTemplate.set_atkspeed(resultSet.getInt("atkspeed"));
-                            nativeDeNpcTemplate.setAtkMagicSpeed(resultSet.getInt("atk_magic_speed"));
-                            nativeDeNpcTemplate.setSubMagicSpeed(resultSet.getInt("sub_magic_speed"));
-                            nativeDeNpcTemplate.set_undead(resultSet.getInt("undead"));
-                            nativeDeNpcTemplate.set_poisonatk(resultSet.getInt("poison_atk"));
-                            nativeDeNpcTemplate.set_paralysisatk(resultSet.getInt("paralysis_atk"));
-                            nativeDeNpcTemplate.set_agro(resultSet.getBoolean("agro"));
-                            nativeDeNpcTemplate.set_agrososc(resultSet.getBoolean("agrososc"));
-                            nativeDeNpcTemplate.set_agrocoi(resultSet.getBoolean("agrocoi"));
-                            Integer n2 = NativeDeNpcTemplateLoadScope.families().get(resultSet.getString("family"));
-                            if (n2 == null) {
-                                nativeDeNpcTemplate.set_family(0);
-                            } else {
-                                nativeDeNpcTemplate.set_family(n2);
-                            }
-                            int n3 = resultSet.getInt("agrofamily");
-                            if (nativeDeNpcTemplate.get_family() == 0 && n3 == 1) {
-                                nativeDeNpcTemplate.set_agrofamily(0);
-                            } else {
-                                nativeDeNpcTemplate.set_agrofamily(n3);
-                            }
-                            nativeDeNpcTemplate.set_agrogfxid1(resultSet.getInt("agrogfxid1"));
-                            nativeDeNpcTemplate.set_agrogfxid2(resultSet.getInt("agrogfxid2"));
-                            nativeDeNpcTemplate.set_picupitem(resultSet.getBoolean("picupitem"));
-                            nativeDeNpcTemplate.set_digestitem(resultSet.getInt("digestitem"));
-                            nativeDeNpcTemplate.set_bravespeed(resultSet.getBoolean("bravespeed"));
-                            nativeDeNpcTemplate.set_hprinterval(resultSet.getInt("hprinterval"));
-                            nativeDeNpcTemplate.set_hpr(resultSet.getInt("hpr"));
-                            nativeDeNpcTemplate.set_mprinterval(resultSet.getInt("mprinterval"));
-                            nativeDeNpcTemplate.set_mpr(resultSet.getInt("mpr"));
-                            nativeDeNpcTemplate.set_teleport(resultSet.getBoolean("teleport"));
-                            nativeDeNpcTemplate.set_randomlevel(resultSet.getInt("randomlevel"));
-                            nativeDeNpcTemplate.set_randomhp(resultSet.getInt("randomhp"));
-                            nativeDeNpcTemplate.set_randommp(resultSet.getInt("randommp"));
-                            nativeDeNpcTemplate.set_randomac(resultSet.getInt("randomac"));
-                            nativeDeNpcTemplate.set_randomexp(resultSet.getInt("randomexp"));
-                            nativeDeNpcTemplate.set_randomlawful(resultSet.getInt("randomlawful"));
-                            nativeDeNpcTemplate.set_damagereduction(resultSet.getInt("damage_reduction"));
-                            nativeDeNpcTemplate.set_hard(resultSet.getBoolean("hard"));
-                            nativeDeNpcTemplate.set_doppel(resultSet.getBoolean("doppel"));
-                            nativeDeNpcTemplate.set_IsTU(resultSet.getBoolean("IsTU"));
-                            nativeDeNpcTemplate.set_IsErase(resultSet.getBoolean("IsErase"));
-                            nativeDeNpcTemplate.setBowActId(resultSet.getInt("bowActId"));
-                            nativeDeNpcTemplate.setKarma(resultSet.getInt("karma"));
-                            nativeDeNpcTemplate.setTransformId(resultSet.getInt("transform_id"));
-                            nativeDeNpcTemplate.setTransformGfxId(resultSet.getInt("transform_gfxid"));
-                            nativeDeNpcTemplate.setLightSize(resultSet.getInt("light_size"));
-                            nativeDeNpcTemplate.setAmountFixed(resultSet.getBoolean("amount_fixed"));
-                            nativeDeNpcTemplate.setChangeHead(resultSet.getBoolean("change_head"));
-                            nativeDeNpcTemplate.setCantResurrect(resultSet.getBoolean("cant_resurrect"));
-                            nativeDeNpcTemplate.setBoss(resultSet.getBoolean("boss"));
-                            this.registerConstructorCache(nativeDeNpcTemplate.getImpl());
-                            NativeDeNpcTemplateLoadScope.npcs().put(n, nativeDeNpcTemplate);
-                            continue;
-                        }
-                        catch (Exception exception) {
-                            NativeDeNpcTemplateLoadScope.log().error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (npcid: " + n + ")", exception);
-                        }
-                    }
-                }
-                finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            }
-            catch (SQLException sQLException) {
-                NativeDeNpcTemplateLoadScope.log().error(sQLException.getLocalizedMessage(), sQLException);
-            }
-        }
-    }
+      try (
+         Connection var1 = NativeDeNpcTemplateLoadScope.Database.get().getConnection();
+         PreparedStatement var2 = var1.prepareStatement("SELECT * FROM `npc`");
+         ResultSet var3 = var2.executeQuery();
+      ) {
+         while (var3.next()) {
+            int var4 = -1;
 
-    private NativeDeNpcExecutor addClass(int n, String string) {
-        block7: {
             try {
-                if (string.equals("0")) break block7;
-                String string2 = string;
-                String[] stringArray = null;
-                if (string.indexOf(" ") != -1) {
-                    stringArray = string.split(" ");
-                    try {
-                        string2 = stringArray[0];
-                    }
-                    catch (Exception exception) {
-                        // empty catch block
-                    }
-                }
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("com.lineage.data.npc.");
-                stringBuilder.append(string2);
-                Class<?> clazz = NativeDeNpcTemplateLoadScope.resolveClass(stringBuilder.toString());
-                NativeDeNpcExecutor nativeDeNpcExecutor = (NativeDeNpcExecutor)clazz.getMethod("get", new Class[0]).invoke(null, new Object[0]);
-                if (stringArray != null) {
-                    nativeDeNpcExecutor.set_set(stringArray);
-                }
-                return nativeDeNpcExecutor;
-            }
-            catch (ClassNotFoundException classNotFoundException) {
-                String string3 = "\u767c\u751f[NPC\u6a94\u6848]\u932f\u8aa4, \u6aa2\u67e5\u6a94\u6848\u662f\u5426\u5b58\u5728:" + string + " NpcId:" + n;
-                NativeDeNpcTemplateLoadScope.log().error(string3);
-            }
-            catch (Exception exception) {
-                NativeDeNpcTemplateLoadScope.log().error(exception.getLocalizedMessage(), exception);
-            }
-        }
-        return null;
-    }
+               var4 = var3.getInt("npcid");
+               NativeDeNpcTemplate var5 = new NativeDeNpcTemplate();
+               var5.set_npcId(var4);
+               var5.set_name(var3.getString("name"));
+               var5.set_nameid(var3.getString("nameid"));
+               String var6 = var3.getString("classname");
+               var5.set_classname(var6);
+               var5.setNpcExecutor(this.addClass(var4, var6));
+               var5.setImpl(var3.getString("impl"));
+               var5.set_gfxid(var3.getInt("gfxid"));
+               var5.set_level(var3.getInt("lvl"));
+               var5.set_hp(var3.getInt("hp"));
+               var5.set_mp(var3.getInt("mp"));
+               var5.set_ac(var3.getInt("ac"));
+               var5.set_str(var3.getByte("str"));
+               var5.set_con(var3.getByte("con"));
+               var5.set_dex(var3.getByte("dex"));
+               var5.set_wis(var3.getByte("wis"));
+               var5.set_int(var3.getByte("intel"));
+               var5.set_mr(var3.getInt("mr"));
+               var5.set_exp(var3.getInt("exp"));
+               var5.set_lawful(var3.getInt("lawful"));
+               var5.set_size(var3.getString("size"));
+               var5.set_weakAttr(var3.getInt("weakAttr"));
+               var5.set_ranged(var3.getInt("ranged"));
+               var5.setTamable(var3.getBoolean("tamable"));
+               var5.set_passispeed(var3.getInt("passispeed"));
+               var5.set_atkspeed(var3.getInt("atkspeed"));
+               var5.setAtkMagicSpeed(var3.getInt("atk_magic_speed"));
+               var5.setSubMagicSpeed(var3.getInt("sub_magic_speed"));
+               var5.set_undead(var3.getInt("undead"));
+               var5.set_poisonatk(var3.getInt("poison_atk"));
+               var5.set_paralysisatk(var3.getInt("paralysis_atk"));
+               var5.set_agro(var3.getBoolean("agro"));
+               var5.set_agrososc(var3.getBoolean("agrososc"));
+               var5.set_agrocoi(var3.getBoolean("agrocoi"));
+               Integer var7 = NativeDeNpcTemplateLoadScope.families().get(var3.getString("family"));
+               if (var7 == null) {
+                  var5.set_family(0);
+               } else {
+                  var5.set_family(var7);
+               }
 
-    private static Map<String, Integer> sourceBuildFamily() {
-        HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
-        try (Connection connection = NativeDeNpcTemplateLoadScope.Database.get().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
-             ResultSet resultSet = preparedStatement.executeQuery();){
-            int n = 1;
-            while (resultSet.next()) {
-                String string = "";
-                try {
-                    string = resultSet.getString("family");
-                    int n2 = n++;
-                    if (string.equalsIgnoreCase("orc")) {
-                        NativeDeNpcTemplateLoadScope.orc(n2);
-                    }
-                    hashMap.put(string, n2);
-                }
-                catch (Exception exception) {
-                    NativeDeNpcTemplateLoadScope.log().error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (family: " + string + ", id: " + n + ")", exception);
-                }
+               int var8 = var3.getInt("agrofamily");
+               if (var5.get_family() == 0 && var8 == 1) {
+                  var5.set_agrofamily(0);
+               } else {
+                  var5.set_agrofamily(var8);
+               }
+
+               var5.set_agrogfxid1(var3.getInt("agrogfxid1"));
+               var5.set_agrogfxid2(var3.getInt("agrogfxid2"));
+               var5.set_picupitem(var3.getBoolean("picupitem"));
+               var5.set_digestitem(var3.getInt("digestitem"));
+               var5.set_bravespeed(var3.getBoolean("bravespeed"));
+               var5.set_hprinterval(var3.getInt("hprinterval"));
+               var5.set_hpr(var3.getInt("hpr"));
+               var5.set_mprinterval(var3.getInt("mprinterval"));
+               var5.set_mpr(var3.getInt("mpr"));
+               var5.set_teleport(var3.getBoolean("teleport"));
+               var5.set_randomlevel(var3.getInt("randomlevel"));
+               var5.set_randomhp(var3.getInt("randomhp"));
+               var5.set_randommp(var3.getInt("randommp"));
+               var5.set_randomac(var3.getInt("randomac"));
+               var5.set_randomexp(var3.getInt("randomexp"));
+               var5.set_randomlawful(var3.getInt("randomlawful"));
+               var5.set_damagereduction(var3.getInt("damage_reduction"));
+               var5.set_hard(var3.getBoolean("hard"));
+               var5.set_doppel(var3.getBoolean("doppel"));
+               var5.set_IsTU(var3.getBoolean("IsTU"));
+               var5.set_IsErase(var3.getBoolean("IsErase"));
+               var5.setBowActId(var3.getInt("bowActId"));
+               var5.setKarma(var3.getInt("karma"));
+               var5.setTransformId(var3.getInt("transform_id"));
+               var5.setTransformGfxId(var3.getInt("transform_gfxid"));
+               var5.setLightSize(var3.getInt("light_size"));
+               var5.setAmountFixed(var3.getBoolean("amount_fixed"));
+               var5.setChangeHead(var3.getBoolean("change_head"));
+               var5.setCantResurrect(var3.getBoolean("cant_resurrect"));
+               var5.setBoss(var3.getBoolean("boss"));
+               this.registerConstructorCache(var5.getImpl());
+               NativeDeNpcTemplateLoadScope.npcs().put(var4, var5);
+            } catch (Exception var12) {
+               NativeDeNpcTemplateLoadScope.log().error("載入資料失敗，已略過該筆 (npcid: " + var4 + ")", (Throwable)var12);
+               continue;
             }
-        }
-        catch (SQLException sQLException) {
-            NativeDeNpcTemplateLoadScope.log().error(sQLException.getLocalizedMessage(), sQLException);
-        }
-        return hashMap;
-    }
+         }
+      } catch (SQLException var16) {
+         NativeDeNpcTemplateLoadScope.log().error(var16.getLocalizedMessage(), (Throwable)var16);
+      }
+   }
+
+   private NativeDeNpcExecutor addClass(int var1, String var2) {
+      try {
+         if (!var2.equals("0")) {
+            String var3 = var2;
+            String[] var11 = null;
+            if (var2.indexOf(" ") != -1) {
+               var11 = var2.split(" ");
+
+               try {
+                  var3 = var11[0];
+               } catch (Exception var8) {
+               }
+            }
+
+            StringBuilder var5 = new StringBuilder();
+            var5.append("com.lineage.data.npc.");
+            var5.append(var3);
+            Class var6 = NativeDeNpcTemplateLoadScope.resolveClass(var5.toString());
+            NativeDeNpcExecutor var7 = (NativeDeNpcExecutor)var6.getMethod("get").invoke(null);
+            if (var11 != null) {
+               var7.set_set(var11);
+            }
+
+            return var7;
+         }
+      } catch (ClassNotFoundException var9) {
+         String var4 = "發生[NPC檔案]錯誤, 檢查檔案是否存在:" + var2 + " NpcId:" + var1;
+         NativeDeNpcTemplateLoadScope.log().error(var4);
+      } catch (Exception var10) {
+         NativeDeNpcTemplateLoadScope.log().error(var10.getLocalizedMessage(), (Throwable)var10);
+      }
+
+      return null;
+   }
+
+   private static Map<String, Integer> sourceBuildFamily() {
+      Map<String, Integer> var0 = new HashMap<>();
+
+      try (
+         Connection var1 = NativeDeNpcTemplateLoadScope.Database.get().getConnection();
+         PreparedStatement var2 = var1.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
+         ResultSet var3 = var2.executeQuery();
+      ) {
+         int var4 = 1;
+
+         while (var3.next()) {
+            String var5 = "";
+
+            try {
+               var5 = var3.getString("family");
+               int var6 = var4++;
+               if (var5.equalsIgnoreCase("orc")) {
+                  NativeDeNpcTemplateLoadScope.orc(var6);
+               }
+
+               var0.put(var5, var6);
+            } catch (Exception var10) {
+               NativeDeNpcTemplateLoadScope.log().error("載入資料失敗，已略過該筆 (family: " + var5 + ", id: " + var4 + ")", (Throwable)var10);
+               continue;
+            }
+         }
+      } catch (SQLException var14) {
+         NativeDeNpcTemplateLoadScope.log().error(var14.getLocalizedMessage(), (Throwable)var14);
+      }
+
+      return var0;
+   }
 }

@@ -577,8 +577,8 @@ final class ClientSession implements Runnable {
     private final ServerConfig config;
     private final AccountRepository accounts;
     private final GameStateStore state;
-    private final CaptureLog capture;
-    private final CaptureLog.Connection captureConnection;
+    private final ModernCaptureLog capture;
+    private final ModernCaptureLog.Connection captureConnection;
     private final GameHub hub;
     private final BattleCompanion battleCompanion;
     private final List<BattleCompanion> tamedCompanions = new ArrayList<>();
@@ -942,6 +942,17 @@ final class ClientSession implements Runnable {
     ClientSession(Socket socket, Endpoint endpoint, int boundChannelId,
                   ServerConfig config, AccountRepository accounts,
                   GameStateStore state, CaptureLog capture, GameHub hub) {
+        this(socket, endpoint, boundChannelId, config, accounts, state, new ModernCaptureLog(capture), hub);
+    }
+
+    ClientSession(Socket socket, Endpoint endpoint, ServerConfig config, AccountRepository accounts,
+                  GameStateStore state, ModernCaptureLog capture, GameHub hub) {
+        this(socket, endpoint, -1, config, accounts, state, capture, hub);
+    }
+
+    ClientSession(Socket socket, Endpoint endpoint, int boundChannelId,
+                  ServerConfig config, AccountRepository accounts,
+                  GameStateStore state, ModernCaptureLog capture, GameHub hub) {
         if (boundChannelId < -1 || boundChannelId >= GameHub.CHANNEL_COUNT
                 || endpoint == Endpoint.LOGIN && boundChannelId != -1) {
             throw new IllegalArgumentException("invalid bound channel endpoint");
@@ -88468,7 +88479,7 @@ final class ClientSession implements Runnable {
     private static String packetNote(byte[] payload) {
         if (payload.length == 0) return "empty";
         int opcode = payload[0] & 0xFF;
-        String masked = CaptureLog.maskedClientPayload(opcode, payload);
+        String masked = ModernCaptureLog.maskedClientPayload(opcode, payload);
         return masked == null ? String.format("C opcode 0x%02X", opcode)
                 : masked.substring("MASKED_".length()) + " sensitive fields masked";
     }

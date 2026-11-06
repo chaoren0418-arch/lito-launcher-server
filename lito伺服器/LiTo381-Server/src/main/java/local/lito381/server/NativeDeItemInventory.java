@@ -1,14 +1,10 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.lang.ref.WeakReference;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Locale;
@@ -16,616 +12,610 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
-import local.lito381.server.InventoryCatalog;
-import local.lito381.server.NativeDeArmorTemplate;
-import local.lito381.server.NativeDeItemApplication;
-import local.lito381.server.NativeDeItemDefinitionsResources;
-import local.lito381.server.NativeDeItemStateCopy;
-import local.lito381.server.NativeDeItemTemplate;
-import local.lito381.server.NativeDeItemTemplatesResources;
-import local.lito381.server.NativeDeWeaponTemplate;
-import local.lito381.server.NativeDeWorldKinds;
-import local.lito381.server.RuntimeInventory;
-import local.lito381.server.SourceWeaponCombatTraits;
-import local.lito381.server.SourceWeaponPhysicalStats;
+import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.Map.Entry;
+import local.lito381.server.InventoryCatalog.Definition;
+import local.lito381.server.NativeDeItemApplication.Owner;
+import local.lito381.server.NativeDeItemDefinitionsResources.Snapshot;
+import local.lito381.server.RuntimeInventory.Item;
 
-final class NativeDeItemInventory
-extends AbstractMap<Long, RuntimeInventory.Item> {
-    final RuntimeInventory inventory;
-    final NativeDeItemTemplatesResources.Snapshot templates;
-    final NativeDeItemDefinitionsResources.Snapshot definitions;
-    volatile NativeDeItemApplication.Owner owner;
-    String rentalCharacter;
-    String rentalAccount;
-    private long mutationRevision;
-    private WeakReference<NativeDeItemInventory> copySource;
-    private long copyRevision;
-    private final LinkedHashMap<Long, EntryState> entries = new LinkedHashMap();
+final class NativeDeItemInventory extends AbstractMap<Long, Item> {
+   final RuntimeInventory inventory;
+   final NativeDeItemTemplatesResources.Snapshot templates;
+   final Snapshot definitions;
+   volatile Owner owner;
+   String rentalCharacter;
+   String rentalAccount;
+   private long mutationRevision;
+   private WeakReference<NativeDeItemInventory> copySource;
+   private long copyRevision;
+   private final LinkedHashMap<Long, NativeDeItemInventory.EntryState> entries = new LinkedHashMap<>();
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static NativeDeItemInventory bind(RuntimeInventory runtimeInventory, NativeDeItemTemplatesResources.Snapshot snapshot, NativeDeItemDefinitionsResources.Snapshot snapshot2) {
-        Objects.requireNonNull(snapshot);
-        Objects.requireNonNull(snapshot2);
-        RuntimeInventory runtimeInventory2 = runtimeInventory;
-        synchronized (runtimeInventory2) {
-            Map map = runtimeInventory.nativeDeItems();
-            if (map instanceof NativeDeItemInventory) {
-                NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)map;
-                if (nativeDeItemInventory.templates != snapshot || nativeDeItemInventory.definitions != snapshot2) {
-                    throw new IllegalStateException("inventory already captures another source generation");
-                }
-                return nativeDeItemInventory;
+   static NativeDeItemInventory bind(RuntimeInventory var0, NativeDeItemTemplatesResources.Snapshot var1, Snapshot var2) {
+      Objects.requireNonNull(var1);
+      Objects.requireNonNull(var2);
+      synchronized (var0) {
+         if (var0.nativeDeItems() instanceof NativeDeItemInventory var9) {
+            if (var9.templates != var1 || var9.definitions != var2) {
+               throw new IllegalStateException("inventory already captures another source generation");
             }
-            NativeDeItemInventory nativeDeItemInventory = new NativeDeItemInventory(runtimeInventory, snapshot, snapshot2);
-            for (RuntimeInventory.Item item : runtimeInventory.items()) {
-                nativeDeItemInventory.put(item.objectId(), item);
+            return var9;
+         } else {
+            NativeDeItemInventory var4 = new NativeDeItemInventory(var0, var1, var2);
+
+            for (Item var6 : var0.items()) {
+               var4.put(var6.objectId(), var6);
             }
-            runtimeInventory.nativeDeBind(nativeDeItemInventory);
-            return nativeDeItemInventory;
-        }
-    }
 
-    private NativeDeItemInventory(RuntimeInventory runtimeInventory, NativeDeItemTemplatesResources.Snapshot snapshot, NativeDeItemDefinitionsResources.Snapshot snapshot2) {
-        this.inventory = runtimeInventory;
-        this.templates = snapshot;
-        this.definitions = snapshot2;
-    }
+            var0.nativeDeBind(var4);
+            return var4;
+         }
+      }
+   }
 
-    private NativeDeItemTemplate template(long l) {
-        return l > 0L && l <= Integer.MAX_VALUE ? this.templates.table().getTemplate((int)l) : null;
-    }
+   private NativeDeItemInventory(RuntimeInventory var1, NativeDeItemTemplatesResources.Snapshot var2, Snapshot var3) {
+      this.inventory = var1;
+      this.templates = var2;
+      this.definitions = var3;
+   }
 
-    private NativeDeItemTemplate template(InventoryCatalog.Definition definition) {
-        NativeDeItemTemplate nativeDeItemTemplate = this.template(definition.catalogId());
-        if (nativeDeItemTemplate == null || nativeDeItemTemplate instanceof NativeDeWeaponTemplate != definition.weapon() || nativeDeItemTemplate instanceof NativeDeArmorTemplate != definition.armor()) {
-            return null;
-        }
-        return nativeDeItemTemplate;
-    }
+   private NativeDeItemTemplate template(long var1) {
+      return var1 > 0L && var1 <= 2147483647L ? this.templates.table().getTemplate((int)var1) : null;
+   }
 
-    static boolean shuffle(RuntimeInventory runtimeInventory, Random random) {
-        Object object = runtimeInventory.nativeDeItems();
-        if (!(object instanceof NativeDeItemInventory)) {
-            return false;
-        }
-        NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)object;
-        if (random == null) {
-            throw new IllegalArgumentException("missing inventory random");
-        }
-        ArrayList<Map.Entry<Long, EntryState>> shuffled = new ArrayList<Map.Entry<Long, EntryState>>(nativeDeItemInventory.entries.entrySet());
-        Collections.shuffle(shuffled, random);
-        nativeDeItemInventory.entries.clear();
-        Iterator<Map.Entry<Long, EntryState>> iterator = shuffled.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Long, EntryState> entry = iterator.next();
-            nativeDeItemInventory.entries.put(entry.getKey(), entry.getValue());
-        }
-        ++nativeDeItemInventory.mutationRevision;
-        return true;
-    }
+   private NativeDeItemTemplate template(Definition var1) {
+      NativeDeItemTemplate var2 = this.template(var1.catalogId());
+      return var2 != null && var2 instanceof NativeDeWeaponTemplate == var1.weapon() && var2 instanceof NativeDeArmorTemplate == var1.armor() ? var2 : null;
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    NativeDeWorldKinds.Item actor(long l) {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            EntryState entryState = this.entries.get(l);
-            return entryState == null ? null : entryState.actor;
-        }
-    }
+   static boolean shuffle(RuntimeInventory var0, Random var1) {
+      if (!(var0.nativeDeItems() instanceof NativeDeItemInventory var2)) {
+         return false;
+      } else if (var1 == null) {
+         throw new IllegalArgumentException("missing inventory random");
+      } else {
+         ArrayList<Entry<Long, NativeDeItemInventory.EntryState>> var6 = new ArrayList<>(var2.entries.entrySet());
+         Collections.shuffle(var6, var1);
+         var2.entries.clear();
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    Set<Long> opaqueObjects() {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            LinkedHashSet linkedHashSet = new LinkedHashSet();
-            this.entries.forEach((l, entryState) -> {
-                if (entryState.actor == null) {
-                    linkedHashSet.add(l);
-                }
-            });
-            return Collections.unmodifiableSet(linkedHashSet);
-        }
-    }
+         for (Entry var5 : var6) {
+            var2.entries.put((Long)var5.getKey(), (NativeDeItemInventory.EntryState)var5.getValue());
+         }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static RuntimeInventory preserveCopy(RuntimeInventory runtimeInventory, RuntimeInventory runtimeInventory2) {
-        RuntimeInventory runtimeInventory3 = runtimeInventory;
-        synchronized (runtimeInventory3) {
-            Map map = runtimeInventory.nativeDeItems();
-            if (!(map instanceof NativeDeItemInventory)) {
-                return runtimeInventory2;
+         var2.mutationRevision++;
+         return true;
+      }
+   }
+
+   local.lito381.server.NativeDeWorldKinds.Item actor(long var1) {
+      synchronized (this.inventory) {
+         NativeDeItemInventory.EntryState var4 = this.entries.get(var1);
+         return var4 == null ? null : var4.actor;
+      }
+   }
+
+   Set<Long> opaqueObjects() {
+      synchronized (this.inventory) {
+         LinkedHashSet var2 = new LinkedHashSet();
+         this.entries.forEach((var1, var2x) -> {
+            if (var2x.actor == null) {
+               var2.add(var1);
             }
-            NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)map;
-            map = new NativeDeItemInventory(runtimeInventory2, nativeDeItemInventory.templates, nativeDeItemInventory.definitions);
-            ((NativeDeItemInventory)map).owner = nativeDeItemInventory.owner;
-            ((NativeDeItemInventory)map).rentalCharacter = nativeDeItemInventory.rentalCharacter;
-            ((NativeDeItemInventory)map).rentalAccount = nativeDeItemInventory.rentalAccount;
-            ((NativeDeItemInventory)map).copySource = new WeakReference<NativeDeItemInventory>(nativeDeItemInventory);
-            ((NativeDeItemInventory)map).copyRevision = nativeDeItemInventory.mutationRevision;
-            for (RuntimeInventory.Item item : runtimeInventory2.items()) {
-                EntryState entryState = nativeDeItemInventory.entries.get(item.objectId());
-                if (entryState == null) {
-                    throw new IllegalStateException("copy introduced an unknown object");
-                }
-                BoundItem boundItem = null;
-                if (entryState.actor != null) {
-                    boundItem = new BoundItem((NativeDeItemInventory)map, item);
-                    NativeDeItemStateCopy.copy(entryState.actor, boundItem);
-                }
-                ((NativeDeItemInventory)map).entries.put(item.objectId(), new EntryState(item, boundItem));
+         });
+         return Collections.unmodifiableSet(var2);
+      }
+   }
+
+   static RuntimeInventory preserveCopy(RuntimeInventory var0, RuntimeInventory var1) {
+      synchronized (var0) {
+         if (!(var0.nativeDeItems() instanceof NativeDeItemInventory var3)) { return var1; }
+            NativeDeItemInventory var11 = new NativeDeItemInventory(var1, var3.templates, var3.definitions);
+            var11.owner = var3.owner;
+            var11.rentalCharacter = var3.rentalCharacter;
+            var11.rentalAccount = var3.rentalAccount;
+            var11.copySource = new WeakReference<>(var3);
+            var11.copyRevision = var3.mutationRevision;
+
+            for (Item var6 : var1.items()) {
+               NativeDeItemInventory.EntryState var7 = var3.entries.get(var6.objectId());
+               if (var7 == null) {
+                  throw new IllegalStateException("copy introduced an unknown object");
+               }
+
+               NativeDeItemInventory.BoundItem var8 = null;
+               if (var7.actor != null) {
+                  var8 = new NativeDeItemInventory.BoundItem(var11, var6);
+                  NativeDeItemStateCopy.copy(var7.actor, var8);
+               }
+
+               var11.entries.put(var6.objectId(), new NativeDeItemInventory.EntryState(var6, var8));
             }
-            runtimeInventory2.nativeDeBind(map);
-            return runtimeInventory2;
-        }
-    }
 
-    private RuntimeInventory.Item snapshot(EntryState entryState) {
-        if (entryState.actor == null) {
-            return entryState.view;
-        }
-        BoundItem boundItem = entryState.actor;
-        RuntimeInventory.Item item = entryState.view;
-        RuntimeInventory.Item item2 = new RuntimeInventory.Item(item.objectId(), item.definition(), Math.toIntExact(boundItem.getCount()), boundItem.isEquipped(), boundItem.get_durability(), boundItem.getEnchantLevel(), boundItem.isIdentified(), NativeDeItemInventory.packetBless(boundItem.getBless()), item.sourceBound(), item.tournamentReward(), boundItem.getChargeCount(), item.expiresAtEpochMillis(), boundItem.isSealed(), item.litoOwned());
-        if (!item2.equals(item)) {
-            entryState.view = item2;
-        }
-        return entryState.view;
-    }
+            var1.nativeDeBind(var11);
+            return var1;
+      }
+   }
 
-    static int packetBless(int n) {
-        return n == 0 ? 1 : (n == 1 ? 0 : n);
-    }
+   private Item snapshot(NativeDeItemInventory.EntryState var1) {
+      if (var1.actor == null) {
+         return var1.view;
+      } else {
+         NativeDeItemInventory.BoundItem var2 = var1.actor;
+         Item var3 = var1.view;
+         Item var4 = new Item(
+            var3.objectId(),
+            var3.definition(),
+            Math.toIntExact(var2.getCount()),
+            var2.isEquipped(),
+            var2.get_durability(),
+            var2.getEnchantLevel(),
+            var2.isIdentified(),
+            packetBless(var2.getBless()),
+            var3.sourceBound(),
+            var3.tournamentReward(),
+            var2.getChargeCount(),
+            var3.expiresAtEpochMillis(),
+            var2.isSealed(),
+            var3.litoOwned()
+         );
+         if (!var4.equals(var3)) {
+            var1.view = var4;
+         }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public RuntimeInventory.Item get(Object object) {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            EntryState entryState = this.entries.get(object);
-            return entryState == null ? null : this.snapshot(entryState);
-        }
-    }
+         return var1.view;
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public int size() {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            return this.entries.size();
-        }
-    }
+   static int packetBless(int var0) {
+      return var0 == 0 ? 1 : (var0 == 1 ? 0 : var0);
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public boolean containsKey(Object object) {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            return this.entries.containsKey(object);
-        }
-    }
+   public Item get(Object var1) {
+      synchronized (this.inventory) {
+         NativeDeItemInventory.EntryState var3 = this.entries.get(var1);
+         return var3 == null ? null : this.snapshot(var3);
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public RuntimeInventory.Item put(Long l, RuntimeInventory.Item item) {
-        Objects.requireNonNull(item);
-        if (l == null || l.longValue() != item.objectId()) {
-            throw new IllegalArgumentException("inventory object identity mismatch");
-        }
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            EntryState entryState = this.entries.get(l);
-            RuntimeInventory.Item item2 = entryState == null ? null : this.snapshot(entryState);
-            NativeDeItemTemplate nativeDeItemTemplate = this.template(item.definition());
-            if (entryState == null) {
-                BoundItem boundItem = nativeDeItemTemplate == null ? null : new BoundItem(this, item);
-                this.entries.put(l, new EntryState(item, boundItem));
+   @Override
+   public int size() {
+      synchronized (this.inventory) {
+         return this.entries.size();
+      }
+   }
+
+   @Override
+   public boolean containsKey(Object var1) {
+      synchronized (this.inventory) {
+         return this.entries.containsKey(var1);
+      }
+   }
+
+   public Item put(Long var1, Item var2) {
+      Objects.requireNonNull(var2);
+      if (var1 != null && var1 == var2.objectId()) {
+         synchronized (this.inventory) {
+            NativeDeItemInventory.EntryState var4 = this.entries.get(var1);
+            Item var5 = var4 == null ? null : this.snapshot(var4);
+            NativeDeItemTemplate var6 = this.template(var2.definition());
+            if (var4 == null) {
+               NativeDeItemInventory.BoundItem var7 = var6 == null ? null : new NativeDeItemInventory.BoundItem(this, var2);
+               this.entries.put(var1, new NativeDeItemInventory.EntryState(var2, var7));
             } else {
-                if (entryState.actor != null && nativeDeItemTemplate == null) {
-                    throw new IllegalArgumentException("bound item morph has no captured source template");
-                }
-                if (entryState.actor == null && nativeDeItemTemplate != null) {
-                    entryState.actor = new BoundItem(this, item);
-                } else if (entryState.actor != null) {
-                    entryState.actor.apply(item, nativeDeItemTemplate);
-                }
-                entryState.view = item;
-            }
-            this.updatePhysical(l, item2, item);
-            ++this.mutationRevision;
-            return item2;
-        }
-    }
+               if (var4.actor != null && var6 == null) {
+                  throw new IllegalArgumentException("bound item morph has no captured source template");
+               }
 
-    private void updatePhysical(long l, RuntimeInventory.Item item, RuntimeInventory.Item item2) {
-        Map map = this.inventory.nativeDePhysical();
-        SourceWeaponPhysicalStats sourceWeaponPhysicalStats = (SourceWeaponPhysicalStats)map.get(l);
-        if (sourceWeaponPhysicalStats == null) {
-            return;
-        }
-        if (item != null && item.definition().catalogId() != item2.definition().catalogId()) {
-            map.remove(l);
-        } else {
-            sourceWeaponPhysicalStats = sourceWeaponPhysicalStats.withEnchantLevel(item2.enchantLevel()).withDurability(item2.durability());
-            if (item2.blessing() <= 2) {
-                SourceWeaponCombatTraits sourceWeaponCombatTraits = sourceWeaponPhysicalStats.combatTraits();
-                sourceWeaponPhysicalStats = sourceWeaponPhysicalStats.withCombatTraits(new SourceWeaponCombatTraits(sourceWeaponCombatTraits.material(), item2.blessing(), sourceWeaponCombatTraits.attributeKind(), sourceWeaponCombatTraits.attributeLevel(), sourceWeaponCombatTraits.attributeDamage(), sourceWeaponCombatTraits.doubleDamageChance(), sourceWeaponCombatTraits.doubleDamageMultiplier(), sourceWeaponCombatTraits.maximumDamageChance(), sourceWeaponCombatTraits.doubleDamageEffect(), sourceWeaponCombatTraits.maximumDamageEffect(), sourceWeaponCombatTraits.inventoryGfx()));
-            }
-            map.put(l, sourceWeaponPhysicalStats);
-        }
-    }
+               if (var4.actor == null && var6 != null) {
+                  var4.actor = new NativeDeItemInventory.BoundItem(this, var2);
+               } else if (var4.actor != null) {
+                  var4.actor.apply(var2, var6);
+               }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public RuntimeInventory.Item remove(Object object) {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            EntryState entryState = (EntryState)this.entries.remove(object);
-            this.inventory.nativeDePhysical().remove(object);
-            if (entryState != null) {
-                ++this.mutationRevision;
+               var4.view = var2;
             }
-            return entryState == null ? null : this.snapshot(entryState);
-        }
-    }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public void clear() {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            if (!this.entries.isEmpty()) {
-                ++this.mutationRevision;
-            }
-            this.entries.clear();
-            this.inventory.nativeDePhysical().clear();
-        }
-    }
+            this.updatePhysical(var1, var5, var2);
+            this.mutationRevision++;
+            return var5;
+         }
+      } else {
+         throw new IllegalArgumentException("inventory object identity mismatch");
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    @Override
-    public Set<Map.Entry<Long, RuntimeInventory.Item>> entrySet() {
-        RuntimeInventory runtimeInventory = this.inventory;
-        synchronized (runtimeInventory) {
-            LinkedHashSet linkedHashSet = new LinkedHashSet();
-            this.entries.forEach((l, entryState) -> linkedHashSet.add(new AbstractMap.SimpleImmutableEntry<Long, RuntimeInventory.Item>((Long)l, this.snapshot((EntryState)entryState))));
-            return Collections.unmodifiableSet(linkedHashSet);
-        }
-    }
+   private void updatePhysical(long var1, Item var3, Item var4) {
+      Map var5 = this.inventory.nativeDePhysical();
+      SourceWeaponPhysicalStats var6 = (SourceWeaponPhysicalStats)var5.get(var1);
+      if (var6 != null) {
+         if (var3 != null && var3.definition().catalogId() != var4.definition().catalogId()) {
+            var5.remove(var1);
+         } else {
+            var6 = var6.withEnchantLevel(var4.enchantLevel()).withDurability(var4.durability());
+            if (var4.blessing() <= 2) {
+               SourceWeaponCombatTraits var7 = var6.combatTraits();
+               var6 = var6.withCombatTraits(
+                  new SourceWeaponCombatTraits(
+                     var7.material(),
+                     var4.blessing(),
+                     var7.attributeKind(),
+                     var7.attributeLevel(),
+                     var7.attributeDamage(),
+                     var7.doubleDamageChance(),
+                     var7.doubleDamageMultiplier(),
+                     var7.maximumDamageChance(),
+                     var7.doubleDamageEffect(),
+                     var7.maximumDamageEffect(),
+                     var7.inventoryGfx()
+                  )
+               );
+            }
 
-    private void changed(BoundItem boundItem) {
-        EntryState entryState = this.entries.get(Integer.toUnsignedLong(boundItem.getId()));
-        if (entryState == null || entryState.actor != boundItem) {
-            throw new IllegalStateException("source item is detached from its inventory");
-        }
-        RuntimeInventory.Item item = entryState.view;
-        RuntimeInventory.Item item2 = this.snapshot(entryState);
-        this.updatePhysical(item2.objectId(), item, item2);
-        ++this.mutationRevision;
-    }
+            var5.put(var1, var6);
+         }
+      }
+   }
 
-    void validateReplacement(RuntimeInventory runtimeInventory) {
-        NativeDeItemInventory nativeDeItemInventory;
-        NativeDeItemInventory nativeDeItemInventory2 = nativeDeItemInventory = this.copySource == null ? null : (NativeDeItemInventory)this.copySource.get();
-        if (nativeDeItemInventory != null && nativeDeItemInventory.inventory == runtimeInventory && nativeDeItemInventory.mutationRevision != this.copyRevision) {
-            throw new IllegalStateException("live source item changed after native inventory copy");
-        }
-    }
+   public Item remove(Object var1) {
+      synchronized (this.inventory) {
+         NativeDeItemInventory.EntryState var3 = this.entries.remove(var1);
+         this.inventory.nativeDePhysical().remove(var1);
+         if (var3 != null) {
+            this.mutationRevision++;
+         }
 
-    void ownerFields(int n) {
-        for (EntryState entryState : this.entries.values()) {
-            if (entryState.actor == null) continue;
-            entryState.actor.setItemOwnerId(n);
-            entryState.actor.set_char_objid(n);
-        }
-    }
+         return var3 == null ? null : this.snapshot(var3);
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static RuntimeInventory rentalSnapshot(RuntimeInventory runtimeInventory, String string) {
-        RuntimeInventory runtimeInventory2 = runtimeInventory;
-        synchronized (runtimeInventory2) {
-            Object object = runtimeInventory.nativeDeItems();
-            if (object instanceof NativeDeItemInventory) {
-                NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)object;
-                object = nativeDeItemInventory.owner;
-                String string2 = Objects.requireNonNull(string).toLowerCase(Locale.ROOT);
-                if (object != null && !((NativeDeItemApplication.Owner)object).source.toLowerCase(Locale.ROOT).equals(string2) || nativeDeItemInventory.rentalCharacter != null && !nativeDeItemInventory.rentalCharacter.equals(string2)) {
-                    throw new IllegalArgumentException("rental source character differs from capsule");
-                }
-                if (object != null) {
-                    nativeDeItemInventory.rentalAccount = ((NativeDeItemApplication.Owner)object).account.toLowerCase(Locale.ROOT);
-                }
-                nativeDeItemInventory.rentalCharacter = string2;
-                nativeDeItemInventory.owner = null;
-                nativeDeItemInventory.copySource = null;
-                nativeDeItemInventory.ownerFields(0);
-            }
-            return runtimeInventory;
-        }
-    }
+   @Override
+   public void clear() {
+      synchronized (this.inventory) {
+         if (!this.entries.isEmpty()) {
+            this.mutationRevision++;
+         }
 
-    private void requireAttached(BoundItem boundItem) {
-        EntryState entryState = this.entries.get(Integer.toUnsignedLong(boundItem.getId()));
-        if (entryState == null || entryState.actor != boundItem) {
-            throw new IllegalStateException("source item is detached from its inventory");
-        }
-        if (this.rentalCharacter != null) {
-            throw new IllegalStateException("rental source item awaits authenticated character admission");
-        }
-        NativeDeItemApplication.Owner owner = this.owner;
-        if (owner != null) {
-            owner.requireActive(this.inventory);
-        }
-    }
+         this.entries.clear();
+         this.inventory.nativeDePhysical().clear();
+      }
+   }
 
-    private static final class EntryState {
-        RuntimeInventory.Item view;
-        BoundItem actor;
+   @Override
+   public Set<Entry<Long, Item>> entrySet() {
+      synchronized (this.inventory) {
+         LinkedHashSet var2 = new LinkedHashSet();
+         this.entries.forEach((var2x, var3) -> var2.add(new SimpleImmutableEntry<>(var2x, this.snapshot(var3))));
+         return Collections.unmodifiableSet(var2);
+      }
+   }
 
-        EntryState(RuntimeInventory.Item item, BoundItem boundItem) {
-            this.view = item;
-            this.actor = boundItem;
-        }
-    }
+   private void changed(NativeDeItemInventory.BoundItem var1) {
+      NativeDeItemInventory.EntryState var2 = this.entries.get(Integer.toUnsignedLong(var1.getId()));
+      if (var2 != null && var2.actor == var1) {
+         Item var3 = var2.view;
+         Item var4 = this.snapshot(var2);
+         this.updatePhysical(var4.objectId(), var3, var4);
+         this.mutationRevision++;
+      } else {
+         throw new IllegalStateException("source item is detached from its inventory");
+      }
+   }
 
-    static final class BoundItem
-    extends NativeDeWorldKinds.Item {
-        private final NativeDeItemInventory store;
+   void validateReplacement(RuntimeInventory var1) {
+      NativeDeItemInventory var2 = this.copySource == null ? null : this.copySource.get();
+      if (var2 != null && var2.inventory == var1 && var2.mutationRevision != this.copyRevision) {
+         throw new IllegalStateException("live source item changed after native inventory copy");
+      }
+   }
 
-        BoundItem(NativeDeItemInventory nativeDeItemInventory, RuntimeInventory.Item item) {
-            super((int)item.objectId());
-            this.store = nativeDeItemInventory;
-            this.apply(item, Objects.requireNonNull(nativeDeItemInventory.template(item.definition())));
-        }
+   void ownerFields(int var1) {
+      for (NativeDeItemInventory.EntryState var3 : this.entries.values()) {
+         if (var3.actor != null) {
+            var3.actor.setItemOwnerId(var1);
+            var3.actor.set_char_objid(var1);
+         }
+      }
+   }
 
-        private void apply(RuntimeInventory.Item item, NativeDeItemTemplate nativeDeItemTemplate) {
-            boolean bl;
-            boolean bl2 = bl = this.getItem() == null;
-            if (this.getItem() != nativeDeItemTemplate) {
-                super.setItem(nativeDeItemTemplate);
+   static RuntimeInventory rentalSnapshot(RuntimeInventory var0, String var1) {
+      synchronized (var0) {
+         if (var0.nativeDeItems() instanceof NativeDeItemInventory var3) {
+            Owner var8 = var3.owner;
+            String var5 = Objects.requireNonNull(var1).toLowerCase(Locale.ROOT);
+            if (var8 != null && !var8.source.toLowerCase(Locale.ROOT).equals(var5) || var3.rentalCharacter != null && !var3.rentalCharacter.equals(var5)) {
+               throw new IllegalArgumentException("rental source character differs from capsule");
             }
-            if (bl || this.getCount() != (long)item.quantity()) {
-                super.setCount(item.quantity());
-            }
-            if (this.isEquipped() != item.equipped()) {
-                super.setEquipped(item.equipped());
-            }
-            if (this.get_durability() != item.durability()) {
-                super.set_durability(item.durability());
-            }
-            if (this.getEnchantLevel() != item.enchantLevel()) {
-                super.setEnchantLevel(item.enchantLevel());
-            }
-            if (this.isIdentified() != item.identified()) {
-                super.setIdentified(item.identified());
-            }
-            if (this.getBless() != NativeDeItemInventory.packetBless(item.blessing())) {
-                super.setBless(NativeDeItemInventory.packetBless(item.blessing()));
-            }
-            if (this.getChargeCount() != item.chargeCount()) {
-                super.setChargeCount(item.chargeCount());
-            }
-            if (this.isSealed() != item.sealed()) {
-                super.setSealed(item.sealed());
-            }
-        }
 
-        private void check() {
-            this.store.requireAttached(this);
-        }
+            if (var8 != null) {
+               var3.rentalAccount = var8.account.toLowerCase(Locale.ROOT);
+            }
 
-        private void validate(int n, boolean bl, int n2, int n3, boolean bl2, int n4, int n5, boolean bl3) {
-            RuntimeInventory.Item item = this.store.entries.get((Object)Long.valueOf((long)Integer.toUnsignedLong((int)this.getId()))).view;
-            new RuntimeInventory.Item(item.objectId(), item.definition(), n, bl, n2, n3, bl2, NativeDeItemInventory.packetBless(n4), item.sourceBound(), item.tournamentReward(), n5, item.expiresAtEpochMillis(), bl3, item.litoOwned());
-        }
+            var3.rentalCharacter = var5;
+            var3.owner = null;
+            var3.copySource = null;
+            var3.ownerFields(0);
+         }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setCount(long l) {
-            if (this.store == null) {
-                super.setCount(l);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                if (l < 0L || l > Integer.MAX_VALUE) {
-                    throw new IllegalArgumentException("native item count range");
-                }
-                if (l == 0L) {
-                    this.store.remove(Integer.toUnsignedLong(this.getId()));
-                    super.setCount(0L);
-                    return;
-                }
-                super.setCount(l);
-                this.store.changed(this);
-            }
-        }
+         return var0;
+      }
+   }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setEquipped(boolean bl) {
-            if (this.store == null) {
-                super.setEquipped(bl);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                super.setEquipped(bl);
-                this.store.changed(this);
-            }
-        }
+   private void requireAttached(NativeDeItemInventory.BoundItem var1) {
+      NativeDeItemInventory.EntryState var2 = this.entries.get(Integer.toUnsignedLong(var1.getId()));
+      if (var2 == null || var2.actor != var1) {
+         throw new IllegalStateException("source item is detached from its inventory");
+      } else if (this.rentalCharacter != null) {
+         throw new IllegalStateException("rental source item awaits authenticated character admission");
+      } else {
+         Owner var3 = this.owner;
+         if (var3 != null) {
+            var3.requireActive(this.inventory);
+         }
+      }
+   }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setIdentified(boolean bl) {
-            if (this.store == null) {
-                super.setIdentified(bl);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                super.setIdentified(bl);
-                this.store.changed(this);
-            }
-        }
+   static final class BoundItem extends local.lito381.server.NativeDeWorldKinds.Item {
+      private final NativeDeItemInventory store;
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setSealed(boolean bl) {
-            if (this.store == null) {
-                super.setSealed(bl);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                super.setSealed(bl);
-                this.store.changed(this);
-            }
-        }
+      BoundItem(NativeDeItemInventory var1, Item var2) {
+         super((int)var2.objectId());
+         this.store = var1;
+         this.apply(var2, Objects.requireNonNull(var1.template(var2.definition())));
+      }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setEnchantLevel(int n) {
-            if (this.store == null) {
-                super.setEnchantLevel(n);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                this.validate(Math.toIntExact(this.getCount()), this.isEquipped(), this.get_durability(), n, this.isIdentified(), this.getBless(), this.getChargeCount(), this.isSealed());
-                super.setEnchantLevel(n);
-                this.store.changed(this);
-            }
-        }
+      private void apply(Item var1, NativeDeItemTemplate var2) {
+         boolean var3 = this.getItem() == null;
+         if (this.getItem() != var2) {
+            super.setItem(var2);
+         }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void set_durability(int n) {
-            if (this.store == null) {
-                super.set_durability(n);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                this.validate(Math.toIntExact(this.getCount()), this.isEquipped(), n, this.getEnchantLevel(), this.isIdentified(), this.getBless(), this.getChargeCount(), this.isSealed());
-                super.set_durability(n);
-                this.store.changed(this);
-            }
-        }
+         if (var3 || this.getCount() != var1.quantity()) {
+            super.setCount(var1.quantity());
+         }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setBless(int n) {
-            if (this.store == null) {
-                super.setBless(n);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                this.validate(Math.toIntExact(this.getCount()), this.isEquipped(), this.get_durability(), this.getEnchantLevel(), this.isIdentified(), n, this.getChargeCount(), this.isSealed());
-                super.setBless(n);
-                this.store.changed(this);
-            }
-        }
+         if (this.isEquipped() != var1.equipped()) {
+            super.setEquipped(var1.equipped());
+         }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setChargeCount(int n) {
-            if (this.store == null) {
-                super.setChargeCount(n);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                this.validate(Math.toIntExact(this.getCount()), this.isEquipped(), this.get_durability(), this.getEnchantLevel(), this.isIdentified(), this.getBless(), n, this.isSealed());
-                super.setChargeCount(n);
-                this.store.changed(this);
-            }
-        }
+         if (this.get_durability() != var1.durability()) {
+            super.set_durability(var1.durability());
+         }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setItem(NativeDeItemTemplate nativeDeItemTemplate) {
-            if (this.store == null) {
-                super.setItem(nativeDeItemTemplate);
-                return;
-            }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                if (nativeDeItemTemplate != this.getItem()) {
-                    throw new IllegalArgumentException("morph requires native definition and captured source template together");
-                }
-                super.setItem(nativeDeItemTemplate);
-                this.store.changed(this);
-            }
-        }
+         if (this.getEnchantLevel() != var1.enchantLevel()) {
+            super.setEnchantLevel(var1.enchantLevel());
+         }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void setItemId(int n) {
-            if (this.store == null) {
-                super.setItemId(n);
-                return;
+         if (this.isIdentified() != var1.identified()) {
+            super.setIdentified(var1.identified());
+         }
+
+         if (this.getBless() != NativeDeItemInventory.packetBless(var1.blessing())) {
+            super.setBless(NativeDeItemInventory.packetBless(var1.blessing()));
+         }
+
+         if (this.getChargeCount() != var1.chargeCount()) {
+            super.setChargeCount(var1.chargeCount());
+         }
+
+         if (this.isSealed() != var1.sealed()) {
+            super.setSealed(var1.sealed());
+         }
+      }
+
+      private void check() {
+         this.store.requireAttached(this);
+      }
+
+      private void validate(int var1, boolean var2, int var3, int var4, boolean var5, int var6, int var7, boolean var8) {
+         Item var9 = this.store.entries.get(Integer.toUnsignedLong(this.getId())).view;
+         new Item(
+            var9.objectId(),
+            var9.definition(),
+            var1,
+            var2,
+            var3,
+            var4,
+            var5,
+            NativeDeItemInventory.packetBless(var6),
+            var9.sourceBound(),
+            var9.tournamentReward(),
+            var7,
+            var9.expiresAtEpochMillis(),
+            var8,
+            var9.litoOwned()
+         );
+      }
+
+      @Override
+      public void setCount(long var1) {
+         if (this.store == null) {
+            super.setCount(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               if (var1 < 0L || var1 > 2147483647L) {
+                  throw new IllegalArgumentException("native item count range");
+               } else if (var1 == 0L) {
+                  this.store.remove(Integer.toUnsignedLong(this.getId()));
+                  super.setCount(0L);
+               } else {
+                  super.setCount(var1);
+                  this.store.changed(this);
+               }
             }
-            RuntimeInventory runtimeInventory = this.store.inventory;
-            synchronized (runtimeInventory) {
-                this.check();
-                if (n != this.getItemId()) {
-                    throw new IllegalArgumentException("source item ID must match captured template");
-                }
+         }
+      }
+
+      @Override
+      public void setEquipped(boolean var1) {
+         if (this.store == null) {
+            super.setEquipped(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               super.setEquipped(var1);
+               this.store.changed(this);
             }
-        }
-    }
+         }
+      }
+
+      @Override
+      public void setIdentified(boolean var1) {
+         if (this.store == null) {
+            super.setIdentified(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               super.setIdentified(var1);
+               this.store.changed(this);
+            }
+         }
+      }
+
+      @Override
+      public void setSealed(boolean var1) {
+         if (this.store == null) {
+            super.setSealed(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               super.setSealed(var1);
+               this.store.changed(this);
+            }
+         }
+      }
+
+      @Override
+      public void setEnchantLevel(int var1) {
+         if (this.store == null) {
+            super.setEnchantLevel(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               this.validate(
+                  Math.toIntExact(this.getCount()),
+                  this.isEquipped(),
+                  this.get_durability(),
+                  var1,
+                  this.isIdentified(),
+                  this.getBless(),
+                  this.getChargeCount(),
+                  this.isSealed()
+               );
+               super.setEnchantLevel(var1);
+               this.store.changed(this);
+            }
+         }
+      }
+
+      @Override
+      public void set_durability(int var1) {
+         if (this.store == null) {
+            super.set_durability(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               this.validate(
+                  Math.toIntExact(this.getCount()),
+                  this.isEquipped(),
+                  var1,
+                  this.getEnchantLevel(),
+                  this.isIdentified(),
+                  this.getBless(),
+                  this.getChargeCount(),
+                  this.isSealed()
+               );
+               super.set_durability(var1);
+               this.store.changed(this);
+            }
+         }
+      }
+
+      @Override
+      public void setBless(int var1) {
+         if (this.store == null) {
+            super.setBless(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               this.validate(
+                  Math.toIntExact(this.getCount()),
+                  this.isEquipped(),
+                  this.get_durability(),
+                  this.getEnchantLevel(),
+                  this.isIdentified(),
+                  var1,
+                  this.getChargeCount(),
+                  this.isSealed()
+               );
+               super.setBless(var1);
+               this.store.changed(this);
+            }
+         }
+      }
+
+      @Override
+      public void setChargeCount(int var1) {
+         if (this.store == null) {
+            super.setChargeCount(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               this.validate(
+                  Math.toIntExact(this.getCount()),
+                  this.isEquipped(),
+                  this.get_durability(),
+                  this.getEnchantLevel(),
+                  this.isIdentified(),
+                  this.getBless(),
+                  var1,
+                  this.isSealed()
+               );
+               super.setChargeCount(var1);
+               this.store.changed(this);
+            }
+         }
+      }
+
+      @Override
+      public void setItem(NativeDeItemTemplate var1) {
+         if (this.store == null) {
+            super.setItem(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               if (var1 != this.getItem()) {
+                  throw new IllegalArgumentException("morph requires native definition and captured source template together");
+               } else {
+                  super.setItem(var1);
+                  this.store.changed(this);
+               }
+            }
+         }
+      }
+
+      @Override
+      public void setItemId(int var1) {
+         if (this.store == null) {
+            super.setItemId(var1);
+         } else {
+            synchronized (this.store.inventory) {
+               this.check();
+               if (var1 != this.getItemId()) {
+                  throw new IllegalArgumentException("source item ID must match captured template");
+               }
+            }
+         }
+      }
+   }
+
+   private static final class EntryState {
+      Item view;
+      NativeDeItemInventory.BoundItem actor;
+
+      EntryState(Item var1, NativeDeItemInventory.BoundItem var2) {
+         this.view = var1;
+         this.actor = var2;
+      }
+   }
 }

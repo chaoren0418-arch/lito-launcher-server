@@ -73,10 +73,6 @@ final class NativeRoomRules {
         long id = (long) get(room, "id");
         if (!rules.mode().isBattleScene()) return "此模式不是戰鬥房。";
         int humans = players.size();
-        @SuppressWarnings("unchecked")
-        List<GameHub.RoomVirtualPlayer> virtuals =
-                (List<GameHub.RoomVirtualPlayer>) get(room, "virtualPlayers");
-        int virtualCount = virtuals == null ? 0 : virtuals.size();
         // Only the default deathmatch test room may substitute ArenaBot for an opponent.
         if (activeBot(hub, id)) {
             Map<?, ?> forces = (Map<?, ?>) get(room, "forces");
@@ -84,20 +80,14 @@ final class NativeRoomRules {
                     ? "無法開始：單人測試請選紅隊，ArenaBot 位於藍隊。" : "";
         }
         int minimum = Math.max(rules.minimumPlayers(), rules.teamBased() ? 2 : 1);
-        int combatants = humans + virtualCount;
-        if (combatants < minimum) {
+        if (humans < minimum) {
             return "無法開始：至少需要 " + minimum + " 位參戰玩家，目前 "
-                    + combatants + " 位（觀戰者不計；GM 假人計入）。";
+                    + humans + " 位（觀戰者與假人不計）。";
         }
         if (rules.teamBased()) {
             Map<?, ?> forces = (Map<?, ?>) get(room, "forces");
             int red = 0, blue = 0;
             for (ClientSession p : players) { if (Integer.valueOf(1).equals(forces.get(p))) blue++; else red++; }
-            if (virtuals != null) {
-                for (GameHub.RoomVirtualPlayer virtual : virtuals) {
-                    if (virtual.force() == 1) blue++; else red++;
-                }
-            }
             if (red == 0 || blue == 0) return "無法開始：紅隊與藍隊都必須有參戰玩家。";
             var settings = (GameHub.RoomSettings) get(room, "settings");
             if ((settings.attributes() & GameHub.RoomSettings.EQUAL_SIDES) != 0 && red != blue)

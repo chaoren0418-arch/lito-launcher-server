@@ -37,7 +37,8 @@ final class BattleAnimationCatalog {
     }
 
     private static final class Holder {
-        private static final BattleAnimationCatalog INSTANCE = load(DEFAULT_RESOURCE);
+        private static final BattleAnimationCatalog INSTANCE =
+                load(SharedClientResources.animationResource(DEFAULT_RESOURCE));
     }
 
     static BattleAnimationCatalog load(String resource) {
@@ -147,13 +148,16 @@ final class BattleAnimationCatalog {
 
     record Animation(int spriteId, int actionId, int frameCount, int frameRate) {
         long durationMillis() {
-            if (frameCount <= 0 || frameRate <= 0) return 0;
-            return Math.round(frameCount * 40.0 * (24.0 / frameRate));
+            if (frameCount <= 0 || frameRate <= 0) {
+                long zero = 0L;
+                return SharedClientResources.duration(spriteId, actionId, zero);
+            }
+            long computed = Math.round(frameCount * 40.0 * (24.0 / frameRate));
+            return SharedClientResources.duration(spriteId, actionId, computed);
         }
     }
 }
 
-/** Canonical 3.81 action ids used by Sprite and the classic server. */
 final class BattleActionCodes {
     static final int WALK = 0;
     static final int ATTACK = 1;

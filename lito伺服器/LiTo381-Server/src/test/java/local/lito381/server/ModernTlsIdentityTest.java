@@ -104,11 +104,18 @@ class ModernTlsIdentityTest {
         return target;
     }
 
-    @Test void sameMainModernDispatchRejectsInvalidInputBeforeNativeStartup() {
+    @Test void formalMainRejectsUnsupportedModernArgumentsBeforeNativeStartup() {
         assertThrows(java.io.IOException.class, () -> Main.main(new String[]{"--modern-config"}));
-        assertThrows(java.io.IOException.class, () -> Main.main(new String[]{"--modern-config", "relative.properties"}));
+        var failure = assertThrows(IllegalArgumentException.class,
+                () -> Main.main(new String[]{"--modern-config", "relative.properties"}));
+        assertEquals("unsupported argument: relative.properties", failure.getMessage());
+    }
+
+    @Test void dedicatedModernEntryRejectsInvalidInputWithoutLeakingThePath() {
+        assertThrows(java.io.IOException.class, () -> ModernMain.run(new String[]{"--modern-config"}));
+        assertThrows(java.io.IOException.class, () -> ModernMain.run(new String[]{"--modern-config", "relative.properties"}));
         var failure = assertThrows(java.io.IOException.class,
-                () -> Main.main(new String[]{"--modern-config", "relative-secret-marker.properties"}));
+                () -> ModernMain.run(new String[]{"--modern-config", "relative-secret-marker.properties"}));
         assertFalse(failure.toString().contains("secret-marker"));
         assertNull(failure.getCause());
     }

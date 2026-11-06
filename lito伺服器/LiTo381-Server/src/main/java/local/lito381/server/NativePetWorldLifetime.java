@@ -32,10 +32,12 @@ final class NativePetWorldLifetime {
   try{NativeLightAction.commitPair(pc,pc,()->{
    // Preserve the established player -> hub -> population order. The native
    // Light batch queues network publication until all these monitors exit.
+   NativeWorldMaterialPolicy.run(pc,target.actor!=null,Protocol.spellSelector(packet).skillId(),()->{
    synchronized(target.hub){if(target.population==null){if(target.valid())body.run();return;}synchronized(target.population){
     if(!target.valid())return;var prior=current.get();current.set(target);
     try{body.run();}finally{target.publicationEpoch=bindEpoch(target.actor);target.publicationPresent=target.actor!=null&&(boolean)CombatAccess.field(target.actor,"present");if(prior==null)current.remove();else current.set(prior);}
    }}
+   });
   });}finally{if(inherited==null)ingress.remove();else ingress.set(inherited);}
  }
  static boolean captureOutput(ClientSession receiver,byte[]plain,String note){

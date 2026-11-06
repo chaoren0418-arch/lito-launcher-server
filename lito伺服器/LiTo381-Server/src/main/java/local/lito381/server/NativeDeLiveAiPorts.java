@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.IOException;
@@ -19,42 +16,14 @@ final class NativeDeLiveAiPorts {
 
     record Config(boolean wakeupEnable, int wakeupInterval, int wakeupDuration) {
         static Config load() {
-            Config config;
-            block9: {
-                InputStream inputStream = NativeDeLiveAiPorts.class.getResourceAsStream("/combat/de-ai-controls.properties");
-                try {
-                    if (inputStream == null) {
-                        throw new IllegalStateException("De AI controls absent");
-                    }
-                    Properties properties = new Properties();
-                    properties.load(inputStream);
-                    config = new Config(Boolean.parseBoolean(properties.getProperty("DeWakeupEnable", "true")), Integer.parseInt(properties.getProperty("DeWakeupInterval", "60")), Integer.parseInt(properties.getProperty("DeWakeupDuration", "5")));
-                    if (inputStream == null) break block9;
-                }
-                catch (Throwable throwable) {
-                    try {
-                        if (inputStream != null) {
-                            try {
-                                inputStream.close();
-                            }
-                            catch (Throwable throwable2) {
-                                throwable.addSuppressed(throwable2);
-                            }
-                        }
-                        throw throwable;
-                    }
-                    catch (IOException iOException) {
-                        throw new IllegalStateException(iOException);
-                    }
-                }
-                try {
-                    inputStream.close();
-                }
-                catch (IOException iOException) {
-                    throw new IllegalStateException(iOException);
-                }
+            try (java.io.InputStream input = NativeDeLiveAiPorts.class.getResourceAsStream("/combat/de-ai-controls.properties")) {
+                if (input == null) throw new IllegalStateException("De AI controls absent");
+                java.util.Properties properties = new java.util.Properties();
+                properties.load(input);
+                return new Config(Boolean.parseBoolean(properties.getProperty("DeWakeupEnable", "true")), Integer.parseInt(properties.getProperty("DeWakeupInterval", "60")), Integer.parseInt(properties.getProperty("DeWakeupDuration", "5")));
+            } catch (java.io.IOException error) {
+                throw new IllegalStateException(error);
             }
-            return config;
         }
     }
 

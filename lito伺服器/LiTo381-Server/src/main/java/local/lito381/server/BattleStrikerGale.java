@@ -9,6 +9,7 @@ final class BattleStrikerGale {
     private BattleStrikerGale() {}
 
     static boolean playerWeaponEligible(int weaponType) {
+        weaponType = CombatRules.weaponActionType(weaponType);
         return weaponType == BOW_WEAPON_TYPE
                 || weaponType == GAUNTLET_WEAPON_TYPE;
     }
@@ -27,6 +28,6 @@ final class BattleStrikerGale {
             throw new IllegalArgumentException("negative Striker Gale damage");
         }
         if (damage == 0 || !statusActive || !rangedEligible) return damage;
-        return (int) (damage * DAMAGE_MULTIPLIER);
+        return (int) (damage * CombatRules.replace(DAMAGE_MULTIPLIER, "STRIKER_DMG2"));
     }
 }

@@ -1,188 +1,204 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import local.lito381.server.NativeDeCharacterFields;
-import local.lito381.server.NativeDeDeletionPorts;
-import local.lito381.server.NativeDeDeletionState;
-import local.lito381.server.NativeDeNpcConstructionGeometry;
-import local.lito381.server.NativeDeNpcConstructionPorts;
-import local.lito381.server.NativeDeWorldKinds;
+import local.lito381.server.NativeDeDeletionPorts.Hate;
+import local.lito381.server.NativeDeDeletionPorts.Monster;
+import local.lito381.server.NativeDeDeletionPorts.Summon;
+import local.lito381.server.NativeDeDeletionPorts.Viewer;
+import local.lito381.server.NativeDeNpcConstructionPorts.Party;
+import local.lito381.server.NativeDeWorldKinds.Pet;
 
-public class NativeDeNpcHateList
-implements NativeDeDeletionPorts.Hate {
-    private final Map<NativeDeCharacterFields, Integer> _hateMap;
+public class NativeDeNpcHateList implements Hate {
+   private final Map<NativeDeCharacterFields, Integer> _hateMap;
 
-    private NativeDeNpcHateList(Map<NativeDeCharacterFields, Integer> map) {
-        this._hateMap = map;
-    }
+   private NativeDeNpcHateList(Map<NativeDeCharacterFields, Integer> var1) {
+      this._hateMap = var1;
+   }
 
-    public NativeDeNpcHateList() {
-        this._hateMap = new ConcurrentHashMap<NativeDeCharacterFields, Integer>();
-    }
+   public NativeDeNpcHateList() {
+      this._hateMap = new ConcurrentHashMap<>();
+   }
 
-    public void add(NativeDeCharacterFields nativeDeCharacterFields, int n) {
-        if (nativeDeCharacterFields == null) {
-            return;
-        }
-        this._hateMap.merge(nativeDeCharacterFields, n, Integer::sum);
-    }
+   public void add(NativeDeCharacterFields var1, int var2) {
+      if (var1 != null) {
+         this._hateMap.merge(var1, var2, Integer::sum);
+      }
+   }
 
-    public boolean isHate(NativeDeCharacterFields nativeDeCharacterFields) {
-        return this._hateMap.containsKey(nativeDeCharacterFields);
-    }
+   public boolean isHate(NativeDeCharacterFields var1) {
+      return this._hateMap.containsKey(var1);
+   }
 
-    public int get(NativeDeCharacterFields nativeDeCharacterFields) {
-        Integer n = this._hateMap.get(nativeDeCharacterFields);
-        return n != null ? n : 0;
-    }
+   public int get(NativeDeCharacterFields var1) {
+      Integer var2 = this._hateMap.get(var1);
+      return var2 != null ? var2 : 0;
+   }
 
-    public boolean containsKey(NativeDeCharacterFields nativeDeCharacterFields) {
-        return this._hateMap.containsKey(nativeDeCharacterFields);
-    }
+   public boolean containsKey(NativeDeCharacterFields var1) {
+      return this._hateMap.containsKey(var1);
+   }
 
-    public void remove(NativeDeCharacterFields nativeDeCharacterFields) {
-        if (nativeDeCharacterFields == null) {
-            return;
-        }
-        this._hateMap.remove(nativeDeCharacterFields);
-    }
+   public void remove(NativeDeCharacterFields var1) {
+      if (var1 != null) {
+         this._hateMap.remove(var1);
+      }
+   }
 
-    @Override
-    public void clear() {
-        this._hateMap.clear();
-    }
+   @Override
+   public void clear() {
+      this._hateMap.clear();
+   }
 
-    public boolean isEmpty() {
-        return this._hateMap.isEmpty();
-    }
+   public boolean isEmpty() {
+      return this._hateMap.isEmpty();
+   }
 
-    public NativeDeCharacterFields getMaxHateCharacter() {
-        NativeDeCharacterFields nativeDeCharacterFields = null;
-        int n = Integer.MIN_VALUE;
-        for (Map.Entry<NativeDeCharacterFields, Integer> entry : this._hateMap.entrySet()) {
-            NativeDeCharacterFields nativeDeCharacterFields2 = entry.getKey();
-            Integer n2 = entry.getValue();
-            if (nativeDeCharacterFields2 == null || n2 == null || n >= n2) continue;
-            nativeDeCharacterFields = nativeDeCharacterFields2;
-            n = n2;
-        }
-        return nativeDeCharacterFields;
-    }
+   public NativeDeCharacterFields getMaxHateCharacter() {
+      NativeDeCharacterFields var1 = null;
+      int var2 = Integer.MIN_VALUE;
 
-    public void removeInvalidCharacter(NativeDeDeletionState nativeDeDeletionState) {
-        for (NativeDeCharacterFields nativeDeCharacterFields : this._hateMap.keySet()) {
-            NativeDeCharacterFields nativeDeCharacterFields2;
-            if (nativeDeCharacterFields == null || nativeDeCharacterFields.isDead()) {
-                this._hateMap.remove(nativeDeCharacterFields);
-                continue;
+      for (Entry var4 : this._hateMap.entrySet()) {
+         NativeDeCharacterFields var5 = (NativeDeCharacterFields)var4.getKey();
+         Integer var6 = (Integer)var4.getValue();
+         if (var5 != null && var6 != null && var2 < var6) {
+            var1 = var5;
+            var2 = var6;
+         }
+      }
+
+      return var1;
+   }
+
+   public void removeInvalidCharacter(NativeDeDeletionState var1) {
+      for (NativeDeCharacterFields var3 : this._hateMap.keySet()) {
+         if (var3 == null || var3.isDead()) { this._hateMap.remove(var3); continue; }
+            if ((var1 instanceof Pet || var1 instanceof Summon) && var3 instanceof Monster var7) {
+               if (var7.destroyed()
+                  || NativeDeNpcConstructionGeometry.mapId(var7) != NativeDeNpcConstructionGeometry.mapId(var1)
+                  || NativeDeNpcConstructionGeometry.showId(var7) != NativeDeNpcConstructionGeometry.showId(var1)
+                  || NativeDeNpcConstructionGeometry.location(var1).getTileDistance(NativeDeNpcConstructionGeometry.location(var7)) > 30) {
+                  this._hateMap.remove(var3);
+               }
+               continue;
+            } else if (var3 instanceof Viewer var6) {
+               if (NativeDeNpcConstructionGeometry.mapId(var6) != NativeDeNpcConstructionGeometry.mapId(var1)
+                  || NativeDeNpcConstructionGeometry.showId(var6) != NativeDeNpcConstructionGeometry.showId(var1)) {
+                  this._hateMap.remove(var3);
+               }
+               continue;
+            } else if (var3 instanceof Pet var5) {
+               if (NativeDeNpcConstructionGeometry.mapId(var5) != NativeDeNpcConstructionGeometry.mapId(var1)
+                  || NativeDeNpcConstructionGeometry.showId(var5) != NativeDeNpcConstructionGeometry.showId(var1)) {
+                  this._hateMap.remove(var3);
+               }
+               continue;
+            } else if (var3 instanceof Summon var4) {
+               if (NativeDeNpcConstructionGeometry.mapId(var4) != NativeDeNpcConstructionGeometry.mapId(var1)
+                  || NativeDeNpcConstructionGeometry.showId(var4) != NativeDeNpcConstructionGeometry.showId(var1)) {
+                  this._hateMap.remove(var3);
+               }
+               continue;
+            } else if (!var1.knownsObject(var3)) {
+               this._hateMap.remove(var3);
             }
-            if ((nativeDeDeletionState instanceof NativeDeWorldKinds.Pet || nativeDeDeletionState instanceof NativeDeDeletionPorts.Summon) && nativeDeCharacterFields instanceof NativeDeDeletionPorts.Monster) {
-                nativeDeCharacterFields2 = (NativeDeDeletionPorts.Monster)nativeDeCharacterFields;
-                if (!nativeDeCharacterFields2.destroyed() && NativeDeNpcConstructionGeometry.mapId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.mapId(nativeDeDeletionState) && NativeDeNpcConstructionGeometry.showId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.showId(nativeDeDeletionState) && NativeDeNpcConstructionGeometry.location(nativeDeDeletionState).getTileDistance(NativeDeNpcConstructionGeometry.location(nativeDeCharacterFields2)) <= 30) continue;
-                this._hateMap.remove(nativeDeCharacterFields);
-                continue;
+
+      }
+   }
+
+   public int getTotalHate() {
+      int var1 = 0;
+
+      for (Integer var3 : this._hateMap.values()) {
+         if (var3 != null) {
+            var1 += var3;
+         }
+      }
+
+      return var1;
+   }
+
+   public int getTotalLawfulHate() {
+      int var1 = 0;
+
+      for (Entry var3 : this._hateMap.entrySet()) {
+         if (var3.getKey() instanceof Viewer && var3.getValue() != null) {
+            var1 += (Integer)var3.getValue();
+         }
+      }
+
+      return var1;
+   }
+
+   public int getPartyHate(Party var1) {
+      int var2 = 0;
+
+      for (Entry var4 : this._hateMap.entrySet()) {
+         Viewer var5 = null;
+         if (var4.getKey() instanceof Viewer) {
+            var5 = (Viewer)var4.getKey();
+         }
+
+         if (var4.getKey() instanceof NativeDeDeletionState) {
+            NativeDeCharacterFields var6 = ((NativeDeDeletionState)var4.getKey()).getMaster();
+            if (var6 instanceof Viewer) {
+               var5 = (Viewer)var6;
             }
-            if (nativeDeCharacterFields instanceof NativeDeDeletionPorts.Viewer) {
-                nativeDeCharacterFields2 = (NativeDeDeletionPorts.Viewer)nativeDeCharacterFields;
-                if (NativeDeNpcConstructionGeometry.mapId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.mapId(nativeDeDeletionState) && NativeDeNpcConstructionGeometry.showId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.showId(nativeDeDeletionState)) continue;
-                this._hateMap.remove(nativeDeCharacterFields);
-                continue;
-            }
-            if (nativeDeCharacterFields instanceof NativeDeWorldKinds.Pet) {
-                nativeDeCharacterFields2 = (NativeDeWorldKinds.Pet)nativeDeCharacterFields;
-                if (NativeDeNpcConstructionGeometry.mapId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.mapId(nativeDeDeletionState) && NativeDeNpcConstructionGeometry.showId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.showId(nativeDeDeletionState)) continue;
-                this._hateMap.remove(nativeDeCharacterFields);
-                continue;
-            }
-            if (nativeDeCharacterFields instanceof NativeDeDeletionPorts.Summon) {
-                nativeDeCharacterFields2 = (NativeDeDeletionPorts.Summon)nativeDeCharacterFields;
-                if (NativeDeNpcConstructionGeometry.mapId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.mapId(nativeDeDeletionState) && NativeDeNpcConstructionGeometry.showId(nativeDeCharacterFields2) == NativeDeNpcConstructionGeometry.showId(nativeDeDeletionState)) continue;
-                this._hateMap.remove(nativeDeCharacterFields);
-                continue;
-            }
-            if (nativeDeDeletionState.knownsObject(nativeDeCharacterFields)) continue;
-            this._hateMap.remove(nativeDeCharacterFields);
-        }
-    }
+         }
 
-    public int getTotalHate() {
-        int n = 0;
-        for (Integer n2 : this._hateMap.values()) {
-            if (n2 == null) continue;
-            n += n2.intValue();
-        }
-        return n;
-    }
+         if (var5 != null && var1.isMember(var5) && var4.getValue() != null) {
+            var2 += (Integer)var4.getValue();
+         }
+      }
 
-    public int getTotalLawfulHate() {
-        int n = 0;
-        for (Map.Entry<NativeDeCharacterFields, Integer> entry : this._hateMap.entrySet()) {
-            if (!(entry.getKey() instanceof NativeDeDeletionPorts.Viewer) || entry.getValue() == null) continue;
-            n += entry.getValue().intValue();
-        }
-        return n;
-    }
+      return var2;
+   }
 
-    public int getPartyHate(NativeDeNpcConstructionPorts.Party party) {
-        int n = 0;
-        for (Map.Entry<NativeDeCharacterFields, Integer> entry : this._hateMap.entrySet()) {
-            NativeDeCharacterFields nativeDeCharacterFields;
-            NativeDeDeletionPorts.Viewer viewer = null;
-            if (entry.getKey() instanceof NativeDeDeletionPorts.Viewer) {
-                viewer = (NativeDeDeletionPorts.Viewer)entry.getKey();
-            }
-            if (entry.getKey() instanceof NativeDeDeletionState && (nativeDeCharacterFields = ((NativeDeDeletionState)entry.getKey()).getMaster()) instanceof NativeDeDeletionPorts.Viewer) {
-                viewer = (NativeDeDeletionPorts.Viewer)nativeDeCharacterFields;
-            }
-            if (viewer == null || !party.isMember(viewer) || entry.getValue() == null) continue;
-            n += entry.getValue().intValue();
-        }
-        return n;
-    }
+   public int getPartyLawfulHate(Party var1) {
+      int var2 = 0;
 
-    public int getPartyLawfulHate(NativeDeNpcConstructionPorts.Party party) {
-        int n = 0;
-        for (Map.Entry<NativeDeCharacterFields, Integer> entry : this._hateMap.entrySet()) {
-            NativeDeDeletionPorts.Viewer viewer = null;
-            if (entry.getKey() instanceof NativeDeDeletionPorts.Viewer) {
-                viewer = (NativeDeDeletionPorts.Viewer)entry.getKey();
-            }
-            if (viewer == null || !party.isMember(viewer) || entry.getValue() == null) continue;
-            n += entry.getValue().intValue();
-        }
-        return n;
-    }
+      for (Entry var4 : this._hateMap.entrySet()) {
+         Viewer var5 = null;
+         if (var4.getKey() instanceof Viewer) {
+            var5 = (Viewer)var4.getKey();
+         }
 
-    public NativeDeNpcHateList copy() {
-        return new NativeDeNpcHateList(new ConcurrentHashMap<NativeDeCharacterFields, Integer>(this._hateMap));
-    }
+         if (var5 != null && var1.isMember(var5) && var4.getValue() != null) {
+            var2 += (Integer)var4.getValue();
+         }
+      }
 
-    public Set<Map.Entry<NativeDeCharacterFields, Integer>> entrySet() {
-        return this._hateMap.entrySet();
-    }
+      return var2;
+   }
 
-    public ArrayList<NativeDeCharacterFields> toTargetArrayList() {
-        return new ArrayList<NativeDeCharacterFields>(this._hateMap.keySet());
-    }
+   public NativeDeNpcHateList copy() {
+      return new NativeDeNpcHateList(new ConcurrentHashMap<>(this._hateMap));
+   }
 
-    public ArrayList<Integer> toHateArrayList() {
-        return new ArrayList<Integer>(this._hateMap.values());
-    }
+   public Set<Entry<NativeDeCharacterFields, Integer>> entrySet() {
+      return this._hateMap.entrySet();
+   }
 
-    public void copyToPairedLists(ArrayList<NativeDeCharacterFields> arrayList, ArrayList<Integer> arrayList2) {
-        arrayList.clear();
-        arrayList2.clear();
-        for (Map.Entry<NativeDeCharacterFields, Integer> entry : this._hateMap.entrySet()) {
-            arrayList.add(entry.getKey());
-            Integer n = entry.getValue();
-            arrayList2.add(n != null ? n : 0);
-        }
-    }
+   public ArrayList<NativeDeCharacterFields> toTargetArrayList() {
+      return new ArrayList<>(this._hateMap.keySet());
+   }
+
+   public ArrayList<Integer> toHateArrayList() {
+      return new ArrayList<>(this._hateMap.values());
+   }
+
+   public void copyToPairedLists(ArrayList<NativeDeCharacterFields> var1, ArrayList<Integer> var2) {
+      var1.clear();
+      var2.clear();
+
+      for (Entry var4 : this._hateMap.entrySet()) {
+         var1.add((NativeDeCharacterFields)var4.getKey());
+         Integer var5 = (Integer)var4.getValue();
+         var2.add(var5 != null ? var5 : 0);
+      }
+   }
 }

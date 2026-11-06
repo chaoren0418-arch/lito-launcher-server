@@ -1,76 +1,69 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
+// Decompiled with Vineflower 1.11.2; reviewed against formal bytecode.
 package local.lito381.server;
 
 import java.util.Objects;
 import java.util.function.Consumer;
-import local.lito381.server.NativeDeDeletionPorts;
-import local.lito381.server.NativeDeInitializerKernel;
-import local.lito381.server.NativeDeInstanceState;
-import local.lito381.server.NativeDeObjectFields;
-import local.lito381.server.NativeDePerceptionPacket;
-import local.lito381.server.NativeDePerceptionScope;
-import local.lito381.server.NativeDeWorldContext;
-import local.lito381.server.NativeDeWorldPlayerFilter;
 
 final class NativeDeInstanceScope {
-    private static final ThreadLocal<NativeDeInstanceState> current = new ThreadLocal();
+   private static final ThreadLocal<NativeDeInstanceState> current = new ThreadLocal<>();
 
-    static NativeDeInstanceState actor() {
-        return Objects.requireNonNull(current.get(), "De initializer subject absent");
-    }
+   static NativeDeInstanceState actor() {
+      return Objects.requireNonNull(current.get(), "De initializer subject absent");
+   }
 
-    static void run(NativeDeInstanceState nativeDeInstanceState, Runnable runnable) {
-        NativeDeInstanceState nativeDeInstanceState2 = current.get();
-        current.set(Objects.requireNonNull(nativeDeInstanceState));
-        try {
-            NativeDePerceptionScope.callNested(nativeDeInstanceState, () -> {
-                runnable.run();
-                return null;
-            });
-        }
-        finally {
-            if (nativeDeInstanceState2 == null) {
-                current.remove();
-            } else {
-                current.set(nativeDeInstanceState2);
-            }
-        }
-    }
+   static void run(NativeDeInstanceState var0, Runnable var1) {
+      NativeDeInstanceState var2 = current.get();
+      current.set(Objects.requireNonNull(var0));
 
-    static boolean present() {
-        return current.get() != null;
-    }
+      try {
+         NativeDePerceptionScope.callNested(var0, () -> {
+            var1.run();
+            return null;
+         });
+      } finally {
+         if (var2 == null) {
+            current.remove();
+         } else {
+            current.set(var2);
+         }
+      }
+   }
 
-    static NativeDeInitializerKernel.Log log() {
-        return NativeDeInstanceScope.actor().construction.initialization().log();
-    }
+   static boolean present() {
+      return current.get() != null;
+   }
 
-    static void send(NativeDeDeletionPorts.Viewer viewer, NativeDePerceptionPacket nativeDePerceptionPacket) {
-        viewer.sendPackets(nativeDePerceptionPacket);
-    }
+   static NativeDeInitializerKernel.Log log() {
+      return actor().construction.initialization().log();
+   }
 
-    private NativeDeInstanceScope() {
-    }
+   static void send(NativeDeDeletionPorts.Viewer var0, NativeDePerceptionPacket var1) {
+      var0.sendPackets(var1);
+   }
 
-    static final class World {
-        World() {
-        }
+   private NativeDeInstanceScope() {
+   }
 
-        static World get() {
-            return new World();
-        }
+   static final class World {
+      static NativeDeInstanceScope.World get() {
+         return new NativeDeInstanceScope.World();
+      }
 
-        void forEachNearbyPlayer(NativeDeObjectFields nativeDeObjectFields, int n, NativeDeWorldPlayerFilter nativeDeWorldPlayerFilter, Consumer<NativeDeDeletionPorts.Viewer> consumer) {
-            NativeDeDeletionPorts.Services services;
-            NativeDeInstanceState nativeDeInstanceState = NativeDeInstanceScope.actor();
-            if (nativeDeObjectFields != nativeDeInstanceState || !((services = nativeDeInstanceState.deletionOwner.services) instanceof NativeDeWorldContext)) {
-                throw new IllegalArgumentException("De broadcast requires the owning concrete World");
-            }
-            NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)services;
-            nativeDeWorldContext.call("forEachNearbyPlayer", "(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V", new Object[]{nativeDeObjectFields, n, nativeDeWorldPlayerFilter, consumer});
-        }
-    }
+      void forEachNearbyPlayer(NativeDeObjectFields var1, int var2, NativeDeWorldPlayerFilter var3, Consumer<NativeDeDeletionPorts.Viewer> var4) {
+         NativeDeInstanceState var5 = NativeDeInstanceScope.actor();
+         if (var1 == var5 && var5.deletionOwner.services instanceof NativeDeWorldContext var6) {
+         } else {
+            throw new IllegalArgumentException("De broadcast requires the owning concrete World");
+         }
+         var6.call(
+            "forEachNearbyPlayer",
+            "(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V",
+            var1,
+            var2,
+            var3,
+            var4
+         );
+      }
+   }
 }

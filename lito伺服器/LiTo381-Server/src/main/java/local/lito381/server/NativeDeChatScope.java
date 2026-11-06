@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -32,8 +32,7 @@ final class NativeDeChatScope {
         Data data2 = loading.get();
         loading.set(data);
         try {
-            T t = supplier.get();
-            return t;
+            return supplier.get();
         }
         finally {
             if (data2 == null) {
@@ -56,8 +55,7 @@ final class NativeDeChatScope {
         actor.set(nativeDeNpcConstructionState);
         runtime.set(owner);
         try {
-            T t = NativeDeVisibilityScope.call(owner.visibility, supplier);
-            return t;
+            return NativeDeVisibilityScope.call(owner.visibility, supplier);
         }
         finally {
             if (nativeDeNpcConstructionState2 == null) {

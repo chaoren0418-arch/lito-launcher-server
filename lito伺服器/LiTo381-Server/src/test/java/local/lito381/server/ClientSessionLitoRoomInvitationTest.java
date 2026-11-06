@@ -105,7 +105,7 @@ final class ClientSessionLitoRoomInvitationTest {
             assertEquals("ROOM", field(target, "phase").toString());
             assertNull(field(target, "acceptedLitoRoomInvitation"));
             assertTrue(hub.roomMembers(roomId).contains(target));
-            CaptureLog targetCapture = (CaptureLog) field(target, "capture");
+            ModernCaptureLog targetCapture = (ModernCaptureLog) field(target, "capture");
             assertTrue(Files.readString(targetCapture.path()).contains(
                     "S_LITO_JOIN_RESULT accepted room=" + roomId
                             + " trigger=invite-accept"));
@@ -177,7 +177,7 @@ final class ClientSessionLitoRoomInvitationTest {
                                   GameStateStore state, GameHub hub,
                                   String captureDirectory) throws Exception {
         return new ClientSession(socket, ClientSession.Endpoint.GAME, config, null, state,
-                new CaptureLog(temporary.resolve(captureDirectory)), hub);
+                new ModernCaptureLog(temporary.resolve(captureDirectory)), hub);
     }
 
     private static ServerSocket listener() throws Exception {

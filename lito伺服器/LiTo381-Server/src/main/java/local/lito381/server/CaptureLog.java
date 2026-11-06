@@ -17,27 +17,10 @@ final class CaptureLog implements AutoCloseable {
     private static final AtomicInteger INSTANCE_SEQUENCE = new AtomicInteger();
     private final BufferedWriter writer;
     private final Path path;
-    private final String captureId;
-    private long connectionSequence;
-    private long frameSequence;
-
-    /** Immutable identity of one connection within this capture instance, never an account identity. */
-    static final class Connection {
-        private final CaptureLog owner;
-        private final long id;
-        private final String endpoint;
-
-        private Connection(CaptureLog owner, long id, String endpoint) {
-            this.owner = owner;
-            this.id = id;
-            this.endpoint = endpoint;
-        }
-    }
 
     CaptureLog(Path root) throws IOException {
         String runId = DIRECTORY_TIME.format(Instant.now()) + "-p" + ProcessHandle.current().pid()
                 + "-" + INSTANCE_SEQUENCE.incrementAndGet();
-        captureId = runId;
         Path directory = root.resolve(runId);
         Files.createDirectories(directory);
         path = directory.resolve("frames.jsonl");
@@ -45,40 +28,14 @@ final class CaptureLog implements AutoCloseable {
                 StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
     }
 
-    synchronized Connection connection(String endpoint) {
-        if (endpoint == null) throw new IllegalArgumentException("missing capture endpoint");
-        connectionSequence = Math.incrementExact(connectionSequence);
-        return new Connection(this, connectionSequence, endpoint);
-    }
-
-    /** Retains the legacy caller API without inferring a connection or phase. */
     synchronized void frame(String direction, byte[] plain, int wireLength, String note) throws IOException {
-        frame(null, null, "legacy_unattributed", direction, plain, wireLength, note);
-    }
-
-    /**
-     * Phase is the caller's literal snapshot before acquiring this log's monitor.
-     * Sequence orders serialization attempts within capture_id, not socket delivery or BIN decoding;
-     * a failed write may consume a sequence number. This monitor also serializes flush and close.
-     */
-    synchronized void frame(Connection connection, String phase, String observation,
-                            String direction, byte[] plain, int wireLength, String note) throws IOException {
-        if (connection != null && connection.owner != this) {
-            throw new IllegalArgumentException("connection belongs to another capture");
-        }
         int opcode = plain.length == 0 ? -1 : plain[0] & 0xFF;
         String sensitive = direction.equals("client_to_server")
                 ? maskedClientPayload(opcode, plain)
                 : direction.equals("server_to_client")
                 ? maskedServerPayload(opcode, plain) : null;
         String payload = sensitive == null ? Protocol.hex(plain) : sensitive;
-        frameSequence = Math.incrementExact(frameSequence);
-        writer.write("{\"capture_id\":\"" + captureId + "\",\"sequence\":" + frameSequence
-                + ",\"connection_id\":" + (connection == null ? "null" : connection.id)
-                + ",\"endpoint\":" + nullableString(connection == null ? null : connection.endpoint)
-                + ",\"phase\":" + nullableString(phase)
-                + ",\"observation\":" + nullableString(observation)
-                + ",\"time\":\"" + Instant.now() + "\",\"direction\":\"" + direction
+        writer.write("{\"time\":\"" + Instant.now() + "\",\"direction\":\"" + direction
                 + "\",\"opcode\":\"" + (opcode < 0 ? "none" : String.format("0x%02X", opcode))
                 + "\",\"wire_length\":" + wireLength + ",\"plain\":\"" + payload
                 + "\",\"note\":\"" + escape(note) + "\"}\n");
@@ -123,10 +80,6 @@ final class CaptureLog implements AutoCloseable {
     }
 
     @Override public synchronized void close() throws IOException { writer.close(); }
-
-    private static String nullableString(String value) {
-        return value == null ? "null" : "\"" + escape(value) + "\"";
-    }
 
     private static String escape(String value) {
         if (value == null) return "";

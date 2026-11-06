@@ -1,8 +1,9 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import local.lito381.server.NativeDeDeletionPorts.Packet;
+import local.lito381.server.NativeDeDeletionPorts.RemoveObject;
+import local.lito381.server.NativePlayerLifetime.Mode;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -26,31 +27,26 @@ final class NativeDeVisibilityOutput {
      * Enabled force condition propagation
      * Lifted jumps to return sites
      */
-    static boolean accepts(NativeDeDeletionPorts.Packet packet) {
-        if (packet instanceof NativeDeVisibilityPacket) return true;
-        if (!(packet instanceof NativeDeDeletionPorts.RemoveObject)) return false;
-        NativeDeDeletionPorts.RemoveObject removeObject = (NativeDeDeletionPorts.RemoveObject)packet;
-        if (removeObject.actor instanceof NativeDeDeletionState) return false;
-        return true;
-    }
+    static boolean accepts(Packet var0) {
+      return var0 instanceof NativeDeVisibilityPacket || var0 instanceof RemoveObject var1 && !(var1.actor instanceof NativeDeDeletionState);
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void send(NativeDeClientViewer nativeDeClientViewer, NativeDeDeletionPorts.Packet packet) {
-        byte[] byArray;
-        Object object;
         ClientSession clientSession = NativeDeVisibilityRuntime.client(nativeDeClientViewer);
         if (clientSession == null) {
             throw new IllegalStateException("stale visibility viewer");
         }
         NativeDeWorldContext.Entry entry = NativeDeWorldContext.entry(nativeDeClientViewer);
+        byte[] byArray;
         NativeDeVisibilityPacket nativeDeVisibilityPacket = null;
-        if (packet instanceof NativeDeVisibilityPacket) {
-            object = (NativeDeVisibilityPacket)packet;
-            nativeDeVisibilityPacket = (NativeDeVisibilityPacket) object;
+        NativeDeDeletionPorts.RemoveObject removeObject;
+        if (packet instanceof NativeDeVisibilityPacket object) {
+            nativeDeVisibilityPacket = object;
             try {
-                byArray = ((NativeDeVisibilityPacket)object).prepareForWrite();
+                byArray = object.prepareForWrite();
             }
             catch (IOException iOException) {
                 throw new UncheckedIOException(iOException);
@@ -65,7 +61,7 @@ final class NativeDeVisibilityOutput {
                 }
             }
         } else if (packet instanceof NativeDeDeletionPorts.RemoveObject) {
-            NativeDeDeletionPorts.RemoveObject removeObject = (NativeDeDeletionPorts.RemoveObject)packet;
+            removeObject = (NativeDeDeletionPorts.RemoveObject)packet;
             if (NativeDeWorldContext.entry((NativeDeDeletionPorts.ObjectRef)removeObject.actor).context != entry.context) {
                 throw new IllegalArgumentException("foreign generic source remove");
             }
@@ -73,8 +69,7 @@ final class NativeDeVisibilityOutput {
         } else {
             throw new IllegalArgumentException("unsupported source visibility packet");
         }
-        object = clientSession;
-        synchronized (object) {
+        synchronized (clientSession) {
             if (nativeDeClientViewer.retired || entry.context.closed || nativeDeClientViewer.life.mode == NativePlayerLifetime.Mode.STOPPED || !nativeDeClientViewer.binding.matchesFast(clientSession) || CombatAccess.field(CombatPoisonAtomic.status(clientSession), "sourceDeKnownViewer") != nativeDeClientViewer || nativeDeVisibilityPacket != null && !nativeDeVisibilityPacket.isValidForWrite()) {
                 throw new IllegalStateException("retired visibility publication");
             }

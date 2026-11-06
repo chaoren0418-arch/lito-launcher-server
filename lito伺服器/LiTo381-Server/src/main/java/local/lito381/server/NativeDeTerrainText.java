@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.BufferedReader;
@@ -25,9 +22,9 @@ public class NativeDeTerrainText {
         int n5 = n2 > 0 ? n2 : n;
         String string = _map_dir + n5 + ".txt";
         try {
-            String string2;
             LineNumberReader lineNumberReader = new LineNumberReader(new BufferedReader(new NativeDeTerrainFileReader(string)));
             int n6 = 0;
+            String string2;
             while ((string2 = lineNumberReader.readLine()) != null) {
                 if (string2.trim().length() == 0 || string2.startsWith("#")) continue;
                 int n7 = 0;
@@ -45,12 +42,7 @@ public class NativeDeTerrainText {
                 }
                 ++n6;
             }
-            try {
-                lineNumberReader.close();
-            }
-            catch (java.io.IOException iOException) {
-                throw new IllegalStateException(iOException);
-            }
+            lineNumberReader.close();
         }
         catch (Exception exception) {
             _log.error("\u6307\u5b9a\u5730\u5716\u52a0\u8f09\u969c\u7919\u6578\u64da\u7570\u5e38: mapId={} fileMapId={} \u6a94\u6848={} \u539f\u56e0={}", (Object)n, (Object)n5, (Object)string, (Object)exception.toString(), (Object)exception);
@@ -59,7 +51,7 @@ public class NativeDeTerrainText {
     }
 
     public Map<Integer, NativeDeTerrainV1> read() {
-        HashMap<Integer, NativeDeTerrainV1> hashMap = new HashMap<Integer, NativeDeTerrainV1>();
+        Map<Integer, NativeDeTerrainV1> hashMap = new HashMap<Integer, NativeDeTerrainV1>();
         Map<Integer, NativeDeTerrainData> map = NativeDeTerrainTable.get().getMaps();
         for (Integer n : map.keySet()) {
             NativeDeTerrainData nativeDeTerrainData = map.get(n);
@@ -73,8 +65,9 @@ public class NativeDeTerrainText {
             catch (Exception exception) {
                 _log.error("\u5730\u5716\u8cc7\u6599\u751f\u6210\u6578\u64da\u8f09\u5165\u7570\u5e38: mapId={} \u539f\u56e0={}", (Object)n2, (Object)exception.toString(), (Object)exception);
             }
-            if (nativeDeTerrainV1 == null) continue;
-            hashMap.put(n2, nativeDeTerrainV1);
+            if (nativeDeTerrainV1 != null) {
+                hashMap.put(n2, nativeDeTerrainV1);
+            }
         }
         return hashMap;
     }

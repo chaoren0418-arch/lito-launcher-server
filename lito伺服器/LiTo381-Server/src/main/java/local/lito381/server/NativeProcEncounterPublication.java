@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -40,16 +40,14 @@ final class NativeProcEncounterPublication {
                 CombatAccess.call(clientSession, string, "(Llocal/lito381/server/" + string2 + ";ILjava/lang/String;ILlocal/lito381/server/NativeProcEncounterPublication$Context;)I", context.outcome, context.palette, "equipment-proc-healing skill=" + context.plan.skill(), context.damage, context);
             }
             catch (RuntimeException runtimeException) {
-                if (NativeProcEncounterPublication.hasStale(runtimeException)) break block3;
-                throw runtimeException;
+                if (!NativeProcEncounterPublication.hasStale(runtimeException)) throw runtimeException;
             }
         }
     }
 
     private static boolean hasStale(Throwable throwable) {
         for (Throwable throwable2 = throwable; throwable2 != null; throwable2 = throwable2.getCause()) {
-            if (!(throwable2 instanceof Stale)) continue;
-            return true;
+            if (throwable2 instanceof Stale) return true;
         }
         return false;
     }
@@ -70,12 +68,12 @@ final class NativeProcEncounterPublication {
             throw new Stale();
         }
         ArrayList<ClientSession> arrayList = new ArrayList<ClientSession>();
-        GameHub gameHub = context.hub;
-        synchronized (gameHub) {
+        synchronized (context.hub) {
             for (ClientSession clientSession : list) {
-                Viewer viewer;
                 NativePlayerCommit.Binding binding = NativePlayerCommit.Binding.capture(clientSession);
-                if (binding.room() != context.plan.target().room() || !binding.phase().equals("BATTLE") || (viewer = context.viewers.get(clientSession)) != null && !viewer.binding().equals(binding)) continue;
+                if (binding.room() != context.plan.target().room() || !binding.phase().equals("BATTLE")) continue;
+                Viewer viewer = context.viewers.get(clientSession);
+                if (viewer != null && !viewer.binding().equals(binding)) continue;
                 int n = context.hub.forceOf(binding.room(), clientSession);
                 context.viewers.putIfAbsent(clientSession, new Viewer(binding, n));
                 arrayList.add(clientSession);
@@ -100,8 +98,7 @@ final class NativeProcEncounterPublication {
         if (viewer == null || !viewer.binding().matches(clientSession) || !context.valid()) {
             return false;
         }
-        GameHub gameHub = context.hub;
-        synchronized (gameHub) {
+        synchronized (context.hub) {
             return context.hub.roomMembers(context.plan.target().room()).contains(clientSession) && context.hub.forceOf(context.plan.target().room(), clientSession) == viewer.force();
         }
     }
@@ -119,8 +116,7 @@ final class NativeProcEncounterPublication {
         if (!context.valid()) {
             throw new Stale();
         }
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
+        synchronized (gameHub) {
             Object object = CombatAccess.field(context.room, "guardianTowers");
             return ((List<BattleGuardianTower.Snapshot>)CombatAccess.call(object, "snapshots", "()Ljava/util/List;", new Object[0])).stream().filter(snapshot -> snapshot.force() == context.force).toList();
         }
@@ -165,7 +161,6 @@ final class NativeProcEncounterPublication {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void lawful(ClientSession clientSession, int n, String string, Context context) {
-        GameStateStore.LawfulMutation lawfulMutation;
         int n2 = context.plan.npc().lawful();
         if (n2 == 0 || !context.valid()) {
             return;
@@ -174,14 +169,11 @@ final class NativeProcEncounterPublication {
         if (clientSession2 == null) {
             return;
         }
-        Object object = context.hub;
-        synchronized (object) {
-            BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession2);
-            synchronized (battleTimedStatus) {
-                Object object2 = context.container;
-                synchronized (object2) {
-                    BattleTimedStatus battleTimedStatus2 = context.timed;
-                    synchronized (battleTimedStatus2) {
+        GameStateStore.LawfulMutation lawfulMutation;
+        synchronized (context.hub) {
+            synchronized (CombatPoisonAtomic.status(clientSession2)) {
+                synchronized (context.container) {
+                    synchronized (context.timed) {
                         if (!(context.plan.caster().matches(clientSession2) && context.valid() && ((Set)CombatAccess.field(context.room, "members")).contains(clientSession2) && ((Set)CombatAccess.field(context.room, "battleRoster")).contains(clientSession2))) {
                             return;
                         }
@@ -203,7 +195,7 @@ final class NativeProcEncounterPublication {
         if (!lawfulMutation.changed() || !context.plan.caster().matches(clientSession2)) {
             return;
         }
-        object = Protocol.changeAlignment(context.plan.caster().object(), lawfulMutation.after());
+        byte[] object = Protocol.changeAlignment(context.plan.caster().object(), lawfulMutation.after());
         for (ClientSession clientSession3 : NativeProcEncounterPublication.members(context.hub, context.plan.target().room(), context)) {
             if (!context.plan.caster().matches(clientSession2)) break;
             NativeProcEncounterPublication.send(clientSession3, (byte[])object, "S_CHANGE_ALIGNMENT equipment-encounter-healing npc=" + n + " lawful=" + lawfulMutation.before() + "->" + lawfulMutation.after() + " source=" + string, context);
@@ -253,15 +245,12 @@ final class NativeProcEncounterPublication {
          */
         boolean valid() {
             NativeCombatAttacker.Ref ref = this.plan.target();
-            GameHub gameHub = this.hub;
-            synchronized (gameHub) {
+            synchronized (this.hub) {
                 if (NativeProcHealingEncounter.room(this.hub, ref.room()) != this.room || !NativeProcHealingEncounter.mode(this.room, ref) || NativeProcHealingEncounter.container(this.room, ref) != this.container) {
                     return false;
                 }
-                Object object = this.container;
-                synchronized (object) {
-                    BattleTimedStatus battleTimedStatus = this.timed;
-                    synchronized (battleTimedStatus) {
+                synchronized (this.container) {
+                    synchronized (this.timed) {
                         if (NativeProcHealingEncounter.generation(this.container) != this.plan.generation() || NativeCombatAttacker.token(this.timed, false) != this.afterToken) {
                             return false;
                         }

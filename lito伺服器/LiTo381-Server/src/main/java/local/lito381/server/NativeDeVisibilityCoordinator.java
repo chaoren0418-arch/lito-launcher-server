@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.Collection;
@@ -35,9 +32,10 @@ public final class NativeDeVisibilityCoordinator {
             for (NativeDeDeletionPorts.Viewer viewer : collection) {
                 if (viewer == null) continue;
                 try {
-                    if (!NativeDeVisibilityCheck.check(viewer)) continue;
-                    NativeDeVisibilityCoordinator.updateForPc(viewer);
-                    NativeDeVisibilityScope._pcUpdateCount$set(NativeDeVisibilityScope._pcUpdateCount() + 1L);
+                    if (NativeDeVisibilityCheck.check(viewer)) {
+                        NativeDeVisibilityCoordinator.updateForPc(viewer);
+                        NativeDeVisibilityScope._pcUpdateCount$set(NativeDeVisibilityScope._pcUpdateCount() + 1L);
+                    }
                 }
                 catch (Exception exception) {
                     NativeDeVisibilityScope.log().warn("VisibilityCoordinator \u8655\u7406\u73a9\u5bb6 {} \u7570\u5e38", (Object)NativeDeVisibilityAccess.L1PcInstance$getName(viewer), (Object)exception);

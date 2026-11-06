@@ -1,8 +1,9 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import java.lang.System.Logger.Level;
+import java.util.Map.Entry;
+import local.lito381.server.NativeDeNpcTemplateResources.Counts;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -54,8 +55,9 @@ final class NativeDeTerrainResources {
                 String string;
                 while ((string = bufferedReader.readLine()) != null) {
                     String[] stringArray = string.split("\t");
-                    if (stringArray.length == 2 && treeMap.put(Integer.parseInt(stringArray[0]), stringArray[1]) == null) continue;
-                    throw new IllegalStateException("invalid source terrain index");
+                    if (stringArray.length != 2 || treeMap.put(Integer.parseInt(stringArray[0]), stringArray[1]) != null) {
+                        throw new IllegalStateException("invalid source terrain index");
+                    }
                 }
             }
         }
@@ -81,36 +83,36 @@ final class NativeDeTerrainResources {
         return NativeDeTerrainResources.verifiedAsset(inputStream, n, string2);
     }
 
-    static Reader verifiedAsset(InputStream inputStream, final int n, final String string) throws IOException {
-        GZIPInputStream gZIPInputStream;
-        MessageDigest messageDigest;
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-        }
-        catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-            throw new AssertionError((Object)noSuchAlgorithmException);
-        }
-        try {
-            gZIPInputStream = new GZIPInputStream(inputStream);
-        }
-        catch (Throwable throwable) {
-            try {
-                inputStream.close();
-            }
-            catch (Throwable throwable2) {
-                throwable.addSuppressed(throwable2);
-            }
-            if (throwable instanceof IOException) {
-                IOException iOException = (IOException)throwable;
-                throw iOException;
-            }
-            throw NativeDeWorldContext.failure(throwable);
-        }
-        final DigestInputStream digestInputStream = new DigestInputStream(gZIPInputStream, messageDigest);
-        return new FilterReader(new InputStreamReader((InputStream)digestInputStream, Charset.defaultCharset())){
-            boolean closed;
+    static Reader verifiedAsset(InputStream input, final int id, final String expected) throws IOException {
+      final MessageDigest digest;
+      try {
+         digest = MessageDigest.getInstance("SHA-256");
+      } catch (NoSuchAlgorithmException var9) {
+         throw new AssertionError(var9);
+      }
 
-            @Override
+      GZIPInputStream var4;
+      try {
+         var4 = new GZIPInputStream(input);
+      } catch (Throwable var8) {
+         try {
+            input.close();
+         } catch (Throwable var7) {
+            var8.addSuppressed(var7);
+         }
+
+         if (var8 instanceof IOException var6) {
+            throw var6;
+         }
+
+         throw NativeDeWorldContext.failure(var8);
+      }
+
+      final DigestInputStream checked = new DigestInputStream(var4, digest);
+      return new FilterReader(new InputStreamReader(checked, Charset.defaultCharset())) {
+         boolean closed;
+
+         @Override
             public void close() throws IOException {
                 if (this.closed) {
                     return;
@@ -118,9 +120,9 @@ final class NativeDeTerrainResources {
                 this.closed = true;
                 Throwable throwable = null;
                 try {
-                    digestInputStream.transferTo(OutputStream.nullOutputStream());
-                    if (!HexFormat.of().formatHex(messageDigest.digest()).equals(string)) {
-                        throw new IOException("source terrain digest mismatch " + n);
+                    checked.transferTo(OutputStream.nullOutputStream());
+                    if (!HexFormat.of().formatHex(digest.digest()).equals(expected)) {
+                        throw new IOException("source terrain digest mismatch " + id);
                     }
                 }
                 catch (Throwable throwable2) {
@@ -132,8 +134,9 @@ final class NativeDeTerrainResources {
                 catch (Throwable throwable3) {
                     if (throwable == null) {
                         throwable = throwable3;
+                    } else {
+                        throwable.addSuppressed(throwable3);
                     }
-                    throwable.addSuppressed(throwable3);
                 }
                 if (throwable instanceof IOException) {
                     IOException iOException = (IOException)throwable;
@@ -143,8 +146,8 @@ final class NativeDeTerrainResources {
                     throw NativeDeWorldContext.failure(throwable);
                 }
             }
-        };
-    }
+      };
+   }
 
     static Snapshot read(String string3, NativeDeTerrainScope.Sql sql, NativeDeNpcTemplateResources.Counts counts, NativeDeWorldLog nativeDeWorldLog) throws SQLException {
         AtomicLong atomicLong = new AtomicLong();
@@ -173,14 +176,14 @@ final class NativeDeTerrainResources {
     }
 
     static synchronized void load(ServerConfig serverConfig) throws Exception {
-        Snapshot snapshot;
         if (current != null) {
             return;
         }
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string3 = SharedDatabase.identifier(properties.getProperty("database.static.database"));
         NativeDeNpcTemplateResources.Counts counts = new NativeDeNpcTemplateResources.Counts();
-        current = snapshot = NativeDeTerrainResources.read(string3, () -> NativeDeNpcTemplateResources.owned(DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), counts), counts, (string, string2, objectArray) -> System.getLogger(NativeDeTerrainResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO, string2 + " " + Arrays.toString(objectArray)));
+        Snapshot snapshot = NativeDeTerrainResources.read(string3, () -> NativeDeNpcTemplateResources.owned(DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), counts), counts, (string, string2, objectArray) -> System.getLogger(NativeDeTerrainResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO, string2 + " " + Arrays.toString(objectArray)));
+        current = snapshot;
     }
 
     static void addMaps(Set<Integer> set) {

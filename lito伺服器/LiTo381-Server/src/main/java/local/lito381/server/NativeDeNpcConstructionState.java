@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.Objects;
@@ -363,11 +360,14 @@ extends NativeDeNpcTemplateState {
         if (n <= 0) {
             n = 960;
         }
-        return NativeDePerceptionSpeed.calculate(this, n, switch (n2) {
-            case 0 -> NativeDePerceptionSpeed.ActionType.MOVE;
-            case 1 -> NativeDePerceptionSpeed.ActionType.ATTACK;
-            default -> NativeDePerceptionSpeed.ActionType.SPELL;
-        });
+        NativeDePerceptionSpeed.ActionType action;
+        switch (n2) {
+            case 0: action = NativeDePerceptionSpeed.ActionType.MOVE; break;
+            case 1: action = NativeDePerceptionSpeed.ActionType.ATTACK; break;
+            case 2:
+            default: action = NativeDePerceptionSpeed.ActionType.SPELL;
+        }
+        return NativeDePerceptionSpeed.calculate(this, n, action);
     }
 
     protected final long tryAcquireAiOwner() {
@@ -432,7 +432,7 @@ extends NativeDeNpcTemplateState {
         if (nativeDeChatData == null) {
             return;
         }
-        this.cancelNpcChatTimer();
+        this.cancelNpcChatTimer$own();
         NativeDeChatTimer nativeDeChatTimer = new NativeDeChatTimer(this, nativeDeChatData);
         this._monitorFuture = !nativeDeChatData.isRepeat() ? this.scheduleNpcChatTimer(nativeDeChatTimer, nativeDeChatData.getStartDelayTime(), 0L) : this.scheduleNpcChatTimer(nativeDeChatTimer, nativeDeChatData.getStartDelayTime(), nativeDeChatData.getRepeatInterval());
     }
@@ -461,8 +461,7 @@ extends NativeDeNpcTemplateState {
         return null;
     }
 
-    @Override
-    void cancelNpcChatTimer() {
+    private void cancelNpcChatTimer$own() {
         NativeDeChatRuntime.cancel(this);
     }
 

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -27,11 +27,10 @@ final class NativeDeInstanceNames {
         if (name == null || name instanceof NativeDeInstanceName) {
             return name;
         }
-        NativeDeDeletionPorts.Services services = construction.owner().services;
-        if (!(services instanceof NativeDeWorldContext)) {
+        if (construction.owner().services instanceof NativeDeWorldContext nativeDeWorldContext) {
+        } else {
             throw new IllegalArgumentException("source mutable names require a concrete World");
         }
-        NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)services;
         return NativeDeInstanceNames.name(nativeDeWorldContext, name);
     }
 
@@ -48,15 +47,13 @@ final class NativeDeInstanceNames {
             if (nativeDeWorldContext.closed) {
                 throw new IllegalStateException("source name World closed");
             }
-            NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-            synchronized (nativeDeWorldContext2) {
+            synchronized (nativeDeWorldContext) {
                 NativeDeInstanceNames nativeDeInstanceNames = (NativeDeInstanceNames)CombatAccess.field(nativeDeWorldContext, FIELD);
                 if (nativeDeInstanceNames == null) {
                     nativeDeInstanceNames = new NativeDeInstanceNames();
                     CombatAccess.set(nativeDeWorldContext, FIELD, nativeDeInstanceNames);
                 }
-                NativeDeInitializerKernel.Name name3 = nativeDeInstanceNames.values.computeIfAbsent(name2, name -> new NativeDeInstanceName(name.get_deobjid(), name.get_name(), name.get_classId(), name.get_sex(), name.get_clanid(), name.get_weaponType(), name.getTitle(), name.getDeShop()));
-                return name3;
+                return nativeDeInstanceNames.values.computeIfAbsent(name2, name -> new NativeDeInstanceName(name.get_deobjid(), name.get_name(), name.get_classId(), name.get_sex(), name.get_clanid(), name.get_weaponType(), name.getTitle(), name.getDeShop()));
             }
         }
         finally {
@@ -68,8 +65,7 @@ final class NativeDeInstanceNames {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void close(NativeDeWorldContext nativeDeWorldContext) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
+        synchronized (nativeDeWorldContext) {
             NativeDeInstanceNames nativeDeInstanceNames = (NativeDeInstanceNames)CombatAccess.field(nativeDeWorldContext, FIELD);
             if (nativeDeInstanceNames != null) {
                 nativeDeInstanceNames.values.clear();

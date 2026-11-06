@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -34,8 +34,7 @@ final class NativeDeItemDefinitionsScope {
         Context context2 = current.get();
         current.set(context);
         try {
-            T t = supplier.get();
-            return t;
+            return supplier.get();
         }
         finally {
             if (context2 == null) {

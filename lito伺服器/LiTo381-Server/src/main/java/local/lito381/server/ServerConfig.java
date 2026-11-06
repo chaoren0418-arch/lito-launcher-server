@@ -246,6 +246,7 @@ record ServerConfig(
         Properties p = new Properties();
         try (Reader reader = Files.newBufferedReader(source, StandardCharsets.UTF_8)) {
             p.load(reader);
+            UnifiedConfiguration.loaded(p, path);
         }
         Path base = source.getParent();
         applyExternalSourceServers(p, base);
@@ -907,6 +908,13 @@ record ServerConfig(
      */
     private static void applyExternalSourceServers(Properties target, Path base)
             throws IOException {
+        try {
+            if (SharedDatabase.applySources(target, base)) return;
+        } catch (Exception failure) {
+            // The formal ASM call propagates the original exception unchanged.
+            // Keep the IOException API while preserving even non-IO checked failures.
+            ServerConfig.<IOException>rethrowSourceFailure(failure);
+        }
         String configured = optional(target, "source.servers.file");
         if (configured.isEmpty()) return;
         Path source = resolve(base, configured);
@@ -944,6 +952,11 @@ record ServerConfig(
             target.setProperty("database.source.resource.databases",
                     String.join(",", resourceDatabases));
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends Throwable> void rethrowSourceFailure(Throwable failure) throws E {
+        throw (E) failure;
     }
 
     private static String requiredExternal(Properties p, String key) {

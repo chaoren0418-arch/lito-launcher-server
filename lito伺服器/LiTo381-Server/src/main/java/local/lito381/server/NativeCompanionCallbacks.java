@@ -44,8 +44,7 @@ final class NativeCompanionCallbacks {
         if (binding == null || battleCompanion == null) {
             return null;
         }
-        BattleCompanion battleCompanion2 = battleCompanion;
-        synchronized (battleCompanion2) {
+        synchronized (battleCompanion) {
             return new Stamp(binding, battleCompanion.snapshot().objectId(), NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(battleCompanion, "timedStatus"), true));
         }
     }
@@ -58,10 +57,9 @@ final class NativeCompanionCallbacks {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void advance(Object object) {
-        BattleTimedStatus battleTimedStatus;
         BattleCompanion battleCompanion = (BattleCompanion)object;
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus = (BattleTimedStatus)CombatAccess.field(battleCompanion, "timedStatus");
-        synchronized (battleTimedStatus2) {
+        BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(battleCompanion, "timedStatus");
+        synchronized (battleTimedStatus) {
             CombatPoisonLifecycle.State state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, true);
             CombatAccess.set(state, "sourceNpcOwner", new Object());
         }
@@ -83,8 +81,7 @@ final class NativeCompanionCallbacks {
         }
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         for (ClientSession clientSession2 : gameHub.roomMembers(stamp.master.room())) {
-            if (clientSession2 != clientSession) continue;
-            return true;
+            if (clientSession2 == clientSession) return true;
         }
         return false;
     }
@@ -117,30 +114,26 @@ final class NativeCompanionCallbacks {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private static boolean ready(ClientSession clientSession, Object object, BattleCompanion battleCompanion, VarHandle varHandle) {
-        Object object2;
-        boolean bl;
         Stamp stamp = NativeCompanionCallbacks.stamp(object);
         if (battleCompanion == null || stamp == null || !stamp.claimed.get() || varHandle.getVolatile(clientSession) != object) {
             return false;
         }
-        boolean bl2 = bl = CombatAccess.field(clientSession, "battleCompanion") == battleCompanion;
+        boolean bl = CombatAccess.field(clientSession, "battleCompanion") == battleCompanion;
         if (!bl) {
             List<?> companions = (List<?>) CombatAccess.field(clientSession, "tamedCompanions");
-            object2 = companions;
-            List<?> list = companions;
-            synchronized (list) {
+            synchronized (companions) {
                 for (int i = 0; i < companions.size(); ++i) {
-                    if (companions.get(i) != battleCompanion) continue;
-                    bl = true;
-                    break;
+                    if (companions.get(i) == battleCompanion) {
+                        bl = true;
+                        break;
+                    }
                 }
             }
         }
         if (!bl || !NativeCompanionCallbacks.master(clientSession, stamp)) {
             return false;
         }
-        object2 = battleCompanion;
-        synchronized (object2) {
+        synchronized (battleCompanion) {
             return battleCompanion.snapshot().objectId() == stamp.companion && stamp.life == NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(battleCompanion, "timedStatus"), false) && varHandle.getVolatile(clientSession) == object;
         }
     }

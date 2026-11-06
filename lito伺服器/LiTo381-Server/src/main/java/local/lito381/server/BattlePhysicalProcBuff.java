@@ -30,14 +30,16 @@ final class BattlePhysicalProcBuff {
             if (roll != 0) {
                 throw new IllegalArgumentException("inactive Burning Spirit has a roll");
             }
-            return Outcome.inactive(active, eligible, BURNING_SPIRIT_CHANCE);
+            return Outcome.inactive(active, eligible,
+                    CombatRules.replaceInt(BURNING_SPIRIT_CHANCE, "BURNING_CHANCE"));
         }
         if (roll < 1 || roll > 100) {
             throw new IllegalArgumentException("invalid Burning Spirit roll");
         }
-        boolean triggered = roll <= BURNING_SPIRIT_CHANCE;
-        return new Outcome(true, true, BURNING_SPIRIT_CHANCE, roll,
-                triggered, triggered ? BURNING_SPIRIT_MULTIPLIER : 1.0D);
+        boolean triggered = roll <= CombatRules.replaceInt(BURNING_SPIRIT_CHANCE, "BURNING_CHANCE");
+        return new Outcome(true, true,
+                CombatRules.replaceInt(BURNING_SPIRIT_CHANCE, "BURNING_CHANCE"), roll,
+                triggered, triggered ? CombatRules.replace(BURNING_SPIRIT_MULTIPLIER, "BURNING_DMG") : 1.0D);
     }
 
     /**
@@ -50,19 +52,21 @@ final class BattlePhysicalProcBuff {
             if (roll != 0) {
                 throw new IllegalArgumentException("inactive Elemental Fire has a roll");
             }
-            return Outcome.inactive(active, eligible, ELEMENTAL_FIRE_CHANCE);
+            return Outcome.inactive(active, eligible,
+                    CombatRules.replaceInt(ELEMENTAL_FIRE_CHANCE, "ELEMENTAL_FIRE_RND"));
         }
         if (roll < 1 || roll > 100) {
             throw new IllegalArgumentException("invalid Elemental Fire roll");
         }
-        boolean triggered = roll <= ELEMENTAL_FIRE_CHANCE;
-        return new Outcome(true, true, ELEMENTAL_FIRE_CHANCE, roll,
-                triggered, triggered ? ELEMENTAL_FIRE_MULTIPLIER : 1.0D);
+        boolean triggered = roll <= CombatRules.replaceInt(ELEMENTAL_FIRE_CHANCE, "ELEMENTAL_FIRE_RND");
+        return new Outcome(true, true,
+                CombatRules.replaceInt(ELEMENTAL_FIRE_CHANCE, "ELEMENTAL_FIRE_RND"), roll,
+                triggered, triggered ? CombatRules.replace(ELEMENTAL_FIRE_MULTIPLIER, "ELEMENTAL_FIRE") : 1.0D);
     }
 
     /** Soul of Flame is an always-on candidate in the retained max family. */
     static double soulOfFlameMultiplier(boolean active) {
-        return active ? SOUL_OF_FLAME_MULTIPLIER : 1.0D;
+        return active ? CombatRules.replace(SOUL_OF_FLAME_MULTIPLIER, "SOUL_OF_FLAME_DAMAGE") : 1.0D;
     }
 
     /**
@@ -77,13 +81,15 @@ final class BattlePhysicalProcBuff {
             if (roll != 0) {
                 throw new IllegalArgumentException("inactive Double Brake has a roll");
             }
-            return Outcome.inactive(active, eligible, DOUBLE_BRAKE_CHANCE);
+            return Outcome.inactive(active, eligible,
+                    CombatRules.replaceInt(DOUBLE_BRAKE_CHANCE, "DOUBLE_BREAK_CHANCE"));
         }
         if (roll < 1 || roll > 100) {
             throw new IllegalArgumentException("invalid Double Brake roll");
         }
-        boolean triggered = roll <= DOUBLE_BRAKE_CHANCE;
-        return new Outcome(true, true, DOUBLE_BRAKE_CHANCE, roll,
-                triggered, triggered ? DOUBLE_BRAKE_MULTIPLIER : 1.0D);
+        boolean triggered = roll <= CombatRules.replaceInt(DOUBLE_BRAKE_CHANCE, "DOUBLE_BREAK_CHANCE");
+        return new Outcome(true, true,
+                CombatRules.replaceInt(DOUBLE_BRAKE_CHANCE, "DOUBLE_BREAK_CHANCE"), roll,
+                triggered, triggered ? CombatRules.replace(DOUBLE_BRAKE_MULTIPLIER, "DOUBLE_BREAK_DMG") : 1.0D);
     }
 }

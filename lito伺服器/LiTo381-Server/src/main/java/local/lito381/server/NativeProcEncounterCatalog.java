@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -44,19 +44,20 @@ final class NativeProcEncounterCatalog {
                 throw new IOException("invalid NPC receiver resource version");
             }
             while ((string = bufferedReader.readLine()) != null) {
-                Type type;
                 String[] stringArray = string.split("\t", -1);
                 if (stringArray.length != 4 || stringArray[0].isEmpty() || !stringArray[2].startsWith("com/lineage/server/model/Instance/")) {
                     throw new IOException("invalid NPC receiver resource row");
                 }
+                Type type;
                 try {
                     type = new Type(NativeProcHealingKernel.Kind.valueOf(stringArray[1]), stringArray[2], Receiver.valueOf(stringArray[3]));
                 }
                 catch (IllegalArgumentException illegalArgumentException) {
                     throw new IOException("invalid NPC receiver kind", illegalArgumentException);
                 }
-                if (type.kind() != NativeProcHealingKernel.Kind.PLAYER && linkedHashMap.putIfAbsent(stringArray[0], type) == null) continue;
+                if (type.kind() == NativeProcHealingKernel.Kind.PLAYER || linkedHashMap.putIfAbsent(stringArray[0], type) != null) {
                 throw new IOException("duplicate/invalid NPC receiver implementation");
+                }
             }
         }
         if (linkedHashMap.isEmpty()) {
@@ -72,8 +73,9 @@ final class NativeProcEncounterCatalog {
             while (resultSet.next()) {
                 String string2 = resultSet.getString(2);
                 Npc npc = new Npc(resultSet.getInt(1), string2, resultSet.getInt(3), resultSet.getInt(4), string2 == null ? null : map.get(string2));
-                if (linkedHashMap.putIfAbsent(npc.id(), npc) == null) continue;
+                if (linkedHashMap.putIfAbsent(npc.id(), npc) != null) {
                 throw new SQLException("duplicate encounter NPC=" + npc.id());
+                }
             }
         }
         if (linkedHashMap.isEmpty()) {
@@ -86,25 +88,25 @@ final class NativeProcEncounterCatalog {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static synchronized void load(ServerConfig serverConfig) throws Exception {
-        Catalog catalog;
         if (current != null) {
             return;
         }
         Map<String, Type> map = NativeProcEncounterCatalog.readTypes(NativeProcEncounterCatalog.class.getResourceAsStream(RESOURCE));
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string = SharedDatabase.identifier(properties.getProperty("database.static.database"));
-        try (Connection connection = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
-            connection.setReadOnly(true);
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(4);
+        Catalog catalog;
+        try (Connection object = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
+            object.setReadOnly(true);
+            object.setAutoCommit(false);
+            object.setTransactionIsolation(4);
             try {
-                catalog = NativeProcEncounterCatalog.read(connection, string, map);
+                catalog = NativeProcEncounterCatalog.read((Connection)object, string, map);
             }
             finally {
-                connection.rollback();
+                object.rollback();
             }
         }
-        Object object = NativeProcNpcCatalog.catalog();
+        NativeProcNpcCatalog.Catalog object = NativeProcNpcCatalog.catalog();
         if (((NativeProcNpcCatalog.Catalog)object).npcs().size() != catalog.npcs().size()) {
             throw new SQLException("NPC static snapshots changed during startup");
         }
@@ -113,8 +115,9 @@ final class NativeProcEncounterCatalog {
             if (npc2 == null || npc2.undead() != npc.undead() || !Objects.equals(npc2.implementation(), npc.implementation())) {
                 throw new SQLException("NPC static metadata changed during startup id=" + npc.id());
             }
-            if (npc.type() == null || ((NativeProcNpcCatalog.Catalog)object).implementations().get(npc.implementation()) == npc.kind()) continue;
+            if (npc.type() != null && ((NativeProcNpcCatalog.Catalog)object).implementations().get(npc.implementation()) != npc.kind()) {
             throw new SQLException("source NPC hierarchy changed without kind qualification");
+            }
         }
         current = catalog;
     }

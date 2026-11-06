@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -62,8 +62,7 @@ final class NativeDeAiWorkers {
      */
     static void enable(GameHub gameHub, boolean bl) {
         NativeDeAiTimers.Registry registry = NativeDeAiTimers.registry(NativePlayerLifetime.of(gameHub));
-        Object object = registry.life.admission;
-        synchronized (object) {
+        synchronized (registry.life.admission) {
             registry.workersEnabled = bl && registry.life.mode == NativePlayerLifetime.Mode.OPEN;
         }
         if (bl) {
@@ -80,10 +79,8 @@ final class NativeDeAiWorkers {
             }
             NativeDeAiTimers.Work work = entry.work;
             Ticket ticket = NativeDeAiTimers.withTarget(gameHub, work.target(), work.generation(), work.lease(), live -> {
-                Object object = entry.state.lock;
-                synchronized (object) {
-                    Object object2 = registry.life.admission;
-                    synchronized (object2) {
+                synchronized (entry.state.lock) {
+                    synchronized (registry.life.admission) {
                         if (!registry.workersEnabled || registry.life.mode != NativePlayerLifetime.Mode.OPEN || !NativeDeAiTimeline.owns(entry.state, work.owner()) || entry.state.chain != work.owner() || entry.state.stop || !entry.state.pending || entry.state.pendingBackground != work.background() || entry.state.activeTimer != 0L || entry.state.executing || !entry.detach()) {
                             return null;
                         }
@@ -93,9 +90,9 @@ final class NativeDeAiWorkers {
             });
             if (ticket == null) {
                 entry.close(true);
-                continue;
+            } else {
+                NativeDeAiWorkers.dispatch(ticket);
             }
-            NativeDeAiWorkers.dispatch(ticket);
         }
     }
 
@@ -103,8 +100,8 @@ final class NativeDeAiWorkers {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private static void dispatch(Ticket ticket) {
-        AtomicBoolean atomicBoolean = new AtomicBoolean();
-        NativeDeAiWorkerProtocol.Port port = NativeDeAiWorkers.port(ticket, atomicBoolean);
+        AtomicBoolean disposition = new AtomicBoolean();
+        NativeDeAiWorkerProtocol.Port port = NativeDeAiWorkers.port(ticket, disposition);
         try {
             NativeDeAiWorkerProtocol.dispatch(ticket.state, port, ticket.work.owner(), ticket.work.background());
         }
@@ -113,7 +110,7 @@ final class NativeDeAiWorkers {
             ticket.close(true);
         }
         finally {
-            if (!atomicBoolean.get()) {
+            if (!disposition.get()) {
                 ticket.close(true);
             }
         }
@@ -123,8 +120,8 @@ final class NativeDeAiWorkers {
         return NativeDeAiWorkers.port(ticket, new AtomicBoolean());
     }
 
-    private static NativeDeAiWorkerProtocol.Port port(final Ticket ticket, final AtomicBoolean atomicBoolean) {
-        final NativePlayerLifetime nativePlayerLifetime = ticket.registry.life;
+    private static NativeDeAiWorkerProtocol.Port port(final Ticket t, final AtomicBoolean disposition) {
+        final NativePlayerLifetime life = t.registry.life;
         return new NativeDeAiWorkerProtocol.Port(){
 
             @Override
@@ -144,7 +141,7 @@ final class NativeDeAiWorkers {
 
             @Override
             public boolean shutdown() {
-                return nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN;
+                return life.mode != NativePlayerLifetime.Mode.OPEN;
             }
 
             @Override
@@ -177,20 +174,20 @@ final class NativeDeAiWorkers {
 
             @Override
             public Object schedule(long l, int n, boolean bl) {
-                Object object = NativeDeAiTimers.reschedule(ticket, n);
-                atomicBoolean.set(object != null || ticket.closed.get());
+                Object object = NativeDeAiTimers.reschedule(t, n);
+                disposition.set(object != null || t.closed.get());
                 return object;
             }
 
             @Override
             public boolean tryExecute(long l, boolean bl) {
-                if (ticket.closed.get()) {
+                if (t.closed.get()) {
                     return false;
                 }
                 try {
-                    nativePlayerLifetime.workers.execute(new Task(ticket));
+                    life.workers.execute(new Task(t));
                     submitted.incrementAndGet();
-                    atomicBoolean.set(true);
+                    disposition.set(true);
                     return true;
                 }
                 catch (RejectedExecutionException rejectedExecutionException) {
@@ -216,12 +213,12 @@ final class NativeDeAiWorkers {
 
             @Override
             public void active(long l) {
-                NativeDeAiWorkers.body(ticket, false);
+                NativeDeAiWorkers.body(t, false);
             }
 
             @Override
             public void background(long l) {
-                NativeDeAiWorkers.body(ticket, true);
+                NativeDeAiWorkers.body(t, true);
             }
         };
     }
@@ -245,31 +242,30 @@ final class NativeDeAiWorkers {
             }
         }
         finally {
-            AtomicBoolean atomicBoolean = new AtomicBoolean();
+            AtomicBoolean disposition = new AtomicBoolean();
             Ticket ticket2 = NativeDeAiTimers.withTarget(ticket.hub, work.target(), work.generation(), work.lease(), live -> {
-                Object object = ticket.state.lock;
-                synchronized (object) {
-                    Object object2 = ticket.registry.life.admission;
-                    synchronized (object2) {
+                synchronized (ticket.state.lock) {
+                    synchronized (ticket.registry.life.admission) {
                         NativeDeAiState.Result finishResult = NativeDeAiState.perform(live.status(), work.lease(), NativeDeAiTimers.facts(live, ticket.registry.life), new NativeDeAiState.Request(NativeDeAiState.Op.FINISH, work.owner(), 0L));
                         if (finishResult == null) {
                             return null;
                         }
-                        atomicBoolean.set(true);
+                        disposition.set(true);
                         Ticket nextTicket = null;
                         for (NativeDeAiState.Effect effect : finishResult.effects()) {
-                            if (effect.kind() != NativeDeAiState.Kind.WORKER) continue;
-                            if (ticket.registry.life.mode == NativePlayerLifetime.Mode.OPEN && ticket.detach()) {
-                                nextTicket = NativeDeAiWorkers.register(ticket.hub, new NativeDeAiTimers.Work(work.target(), work.generation(), work.lease(), effect.owner(), effect.background()), ticket.state, ticket.registry, ticket.credit);
-                                continue;
+                            if (effect.kind() == NativeDeAiState.Kind.WORKER) {
+                                if (ticket.registry.life.mode == NativePlayerLifetime.Mode.OPEN && ticket.detach()) {
+                                    nextTicket = NativeDeAiWorkers.register(ticket.hub, new NativeDeAiTimers.Work(work.target(), work.generation(), work.lease(), effect.owner(), effect.background()), ticket.state, ticket.registry, ticket.credit);
+                                } else {
+                                    NativeDeAiTimeline.stop(ticket.state, NativeDeAiTimers.quiet(ticket.registry.life), effect.owner());
+                                }
                             }
-                            NativeDeAiTimeline.stop(ticket.state, NativeDeAiTimers.quiet(ticket.registry.life), effect.owner());
                         }
                         return nextTicket;
                     }
                 }
             });
-            if (!atomicBoolean.get()) {
+            if (!disposition.get()) {
                 NativeDeAiTimeline.finish(ticket.state, NativeDeAiTimers.quiet(ticket.registry.life), work.owner());
             }
             if (ticket2 != null) {

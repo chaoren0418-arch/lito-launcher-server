@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.Objects;
@@ -48,25 +45,18 @@ final class NativeDeObjectScope {
         return current.get() != null;
     }
 
-    static NativeDeWorldContext context(NativeDeObjectFields nativeDeObjectFields) {
-        if (nativeDeObjectFields instanceof NativeDeObjectFields) {
-            NativeDeCharacterFields nativeDeCharacterFields;
-            NativeDeObjectFields nativeDeObjectFields2 = nativeDeObjectFields;
-            NativeDeWorldContext.Entry entry = (NativeDeWorldContext.Entry)CombatAccess.field(nativeDeObjectFields2, "sourceDeWorldEntry");
-            if (entry != null) {
-                return entry.context;
-            }
-            if (nativeDeObjectFields2 instanceof NativeDeDeletionState) {
-                NativeDeDeletionState deletionState = (NativeDeDeletionState)nativeDeObjectFields2;
-                NativeDeDeletionPorts.Services services = deletionState.deletionOwner.services;
-                if (services instanceof NativeDeWorldContext) {
-                    NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)services;
-                    return nativeDeWorldContext;
+    static NativeDeWorldContext context(NativeDeObjectFields actor) {
+        if (actor instanceof NativeDeObjectFields) {
+            NativeDeObjectFields object = (NativeDeObjectFields)(Object)actor;
+            NativeDeWorldContext.Entry entry = (NativeDeWorldContext.Entry)CombatAccess.field(object, "sourceDeWorldEntry");
+            if (entry != null) return entry.context;
+            if (object instanceof NativeDeDeletionState state) {
+                if (state.deletionOwner.services instanceof NativeDeWorldContext context) {
+                    return context;
                 }
             }
-            if (nativeDeObjectFields2 instanceof NativeDeClientViewer) {
-                nativeDeCharacterFields = (NativeDeClientViewer)nativeDeObjectFields2;
-                return (NativeDeWorldContext)CombatAccess.field(((NativeDeClientViewer)nativeDeCharacterFields).hub, "sourceDeWorldContext");
+            if (object instanceof NativeDeClientViewer viewer) {
+                return (NativeDeWorldContext)CombatAccess.field(viewer.hub, "sourceDeWorldContext");
             }
         }
         return NativeDeWorldScope.present() ? NativeDeWorldScope.owner() : null;
@@ -81,10 +71,12 @@ final class NativeDeObjectScope {
         }
 
         void updateObjectSector(NativeDeObjectFields nativeDeObjectFields, int n, int n2, int n3, int n4, int n5, int n6) {
-            if (!(nativeDeObjectFields instanceof NativeDeObjectFields)) {
+            NativeDeObjectFields nativeDeObjectFields2;
+            if (nativeDeObjectFields instanceof NativeDeObjectFields) {
+                nativeDeObjectFields2 = (NativeDeObjectFields)(Object)nativeDeObjectFields;
+            } else {
                 return;
             }
-            NativeDeObjectFields nativeDeObjectFields2 = nativeDeObjectFields;
             NativeDeWorldContext.Entry entry = (NativeDeWorldContext.Entry)CombatAccess.field(nativeDeObjectFields2, "sourceDeWorldEntry");
             if (entry == null) {
                 return;

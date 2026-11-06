@@ -34,7 +34,7 @@ final class BattleClearMindStatus {
         long second = TimeUnit.SECONDS.toNanos(1);
         int remaining = (int) Math.min(0xFFFFL,
                 Math.max(1L, (remainingNanos + second - 1) / second));
-        return new Snapshot(wisdomModifier, remaining);
+        return new Snapshot(CombatBuffLeases.value(wisdomModifier, 137, "WIS"), remaining);
     }
 
     synchronized boolean expire(long nowNanos) {

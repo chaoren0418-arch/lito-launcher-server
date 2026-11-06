@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -6,6 +6,7 @@ package local.lito381.server;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import com.lineage.server.model.proc.ProcRandomHelper;
 
 public class NativeDeItemEquipProc {
     private final int id;
@@ -157,29 +158,23 @@ public class NativeDeItemEquipProc {
     }
 
     public int calculateDamage() {
-        return this.hasDamageEffect() ? NativeDeItemEquipProc.addZeroToInclusive(this.flatDamage, this.randDamage, ThreadLocalRandom.current()) : 0;
+        return this.hasDamageEffect() ? ProcRandomHelper.addZeroToInclusive(this.flatDamage, this.randDamage, ThreadLocalRandom.current()) : 0;
     }
 
     public int calculateHpRecover() {
         if (this.healHp <= 0 && this.healHpRand <= 0) {
             return 0;
         }
-        return NativeDeItemEquipProc.addZeroToInclusive(this.healHp, this.healHpRand, ThreadLocalRandom.current());
+        return ProcRandomHelper.addZeroToInclusive(this.healHp, this.healHpRand, ThreadLocalRandom.current());
     }
 
     public int calculateMpRecover() {
         if (this.healMp <= 0 && this.healMpRand <= 0) {
             return 0;
         }
-        return NativeDeItemEquipProc.addZeroToInclusive(this.healMp, this.healMpRand, ThreadLocalRandom.current());
+        return ProcRandomHelper.addZeroToInclusive(this.healMp, this.healMpRand, ThreadLocalRandom.current());
     }
 
-    private static int addZeroToInclusive(int fix, int rnd, Random random) {
-        if (rnd <= 0) {
-            return Math.max(0, fix);
-        }
-        return fix + random.nextInt(rnd + 1);
-    }
 
     public String toString() {
         return String.format("EquipProc[id=%d, itemId=%d, enchant=%d, group=%d, onAttack=%d%%, onHurt=%d%%, dmg=%d+%d, heal=%d+%d/%d+%d mode=%d, skill=%d/%ds target=%d, gfx=%d/%d]", this.id, this.itemId, this.enchantLevel, this.procGroup, this.onAttackChance, this.onHurtChance, this.flatDamage, this.randDamage, this.healHp, this.healHpRand, this.healMp, this.healMpRand, this.healMode, this.triggerSkill, this.skillTimeSec, this.skillTarget, this.gfxId, this.gfxMode);

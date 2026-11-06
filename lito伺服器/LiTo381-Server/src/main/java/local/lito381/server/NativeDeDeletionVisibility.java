@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -41,6 +41,37 @@ public final class NativeDeDeletionVisibility {
     Snapshot snapshot(long nowNanos) {
         Marker marker = this._marker;
         return new Snapshot(marker.phase, NativeDeDeletionVisibility.elapsedMillis(marker.deleteStartedNanos, nowNanos), NativeDeDeletionVisibility.elapsedMillis(marker.phaseStartedNanos, nowNanos));
+    }
+
+    public static final class Snapshot {
+        private final Phase _phase;
+        private final long _deleteAgeMillis;
+        private final long _phaseAgeMillis;
+
+        public Snapshot(Phase phase, long deleteAgeMillis, long phaseAgeMillis) {
+            this._phase = phase == null ? Phase.ACTIVE : phase;
+            this._deleteAgeMillis = Math.max(0L, deleteAgeMillis);
+            this._phaseAgeMillis = Math.max(0L, phaseAgeMillis);
+        }
+
+        public Phase phase() {
+            return this._phase;
+        }
+
+        public long deleteAgeMillis() {
+            return this._deleteAgeMillis;
+        }
+
+        public long phaseAgeMillis() {
+            return this._phaseAgeMillis;
+        }
+
+        public boolean deletionInProgress() {
+            return switch (this._phase) {
+                case DELETE_CLAIMED, DESTROYED_MARKED, VIEWERS_CAPTURED, WORLD_REMOVED, REMOVE_PUBLISHED -> true;
+                default -> false;
+            };
+        }
     }
 
     public static RepairKind classifyRepair(Snapshot snapshot, boolean deletionStarted, long stallMillis) {
@@ -98,37 +129,6 @@ public final class NativeDeDeletionVisibility {
         FAILED,
         REGISTRATION_ABORTED;
 
-    }
-
-    public static final class Snapshot {
-        private final Phase _phase;
-        private final long _deleteAgeMillis;
-        private final long _phaseAgeMillis;
-
-        public Snapshot(Phase phase, long deleteAgeMillis, long phaseAgeMillis) {
-            this._phase = phase == null ? Phase.ACTIVE : phase;
-            this._deleteAgeMillis = Math.max(0L, deleteAgeMillis);
-            this._phaseAgeMillis = Math.max(0L, phaseAgeMillis);
-        }
-
-        public Phase phase() {
-            return this._phase;
-        }
-
-        public long deleteAgeMillis() {
-            return this._deleteAgeMillis;
-        }
-
-        public long phaseAgeMillis() {
-            return this._phaseAgeMillis;
-        }
-
-        public boolean deletionInProgress() {
-            return switch (this._phase) {
-                case DELETE_CLAIMED, DESTROYED_MARKED, VIEWERS_CAPTURED, WORLD_REMOVED, REMOVE_PUBLISHED -> true;
-                default -> false;
-            };
-        }
     }
 
     public static enum RepairKind {
