@@ -53,3 +53,4 @@
 - 2026-11-06 — #259 T020i-12: semantic-diff stack／暫存資料流正規化＋switch-map 依內容配對（code，codex-local，PR 已合併）→ [報告](reports/issue-259.md)
 - 2026-11-06 — #69 T020-B08: 戰鬥併入暫存（existing-native，30 類）（code，codex-local，PR #94 已合併）→ [報告](reports/issue-69.md)
 - 2026-11-06 — #78 T020-A-land: A 暫存區併入 src/main（里程碑「原始碼建出正式版」）（code，codex-local，PR #264 已合併）→ [報告](reports/issue-78.md)
+- 2026-11-06 — #64 T020-B03: 戰鬥併入暫存（new-java，51 類）（code，codex-local，PR #80 已合併）→ [報告](reports/issue-64.md)
