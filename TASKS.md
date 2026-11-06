@@ -19,11 +19,11 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 2. 結算後實驗庫 `p24_accounts_lito_exp.character_lito` 的勝敗有變化，附 `SELECT` 前後對照；
 3. 每個失敗或異常步驟都寫成一列「現象／步驟／證據」，作為 M2 盤點的來源（失敗不擋 M1 完成，但必須如實記錄）。
 
-| # | ID | 內容 | 負責 | 狀態 |
-|---|---|---|---|---|
-| 1 | T013 | 把 `docs/acceptance/CHECKLIST.md` 改成實驗環境版：正式 JAR＋#83 實驗 schema，不用 `config/server.properties` 與正式 DB；拿掉不存在的 `--check`／`--smoke`；補「技能」步驟、GM 魔杖滑鼠點選、`ddraw.dll`／`litoddraw.dll` 入口名稱 | codex-local | todo |
-| 2 | T014 | 正式 JAR 的實驗設定與啟動預檢：在 `scratch/t014/` 寫實驗設定（`bind=127.0.0.1`、`game.bind=127.0.0.2`、`port=42083`、#83 的實驗 schema 與受限帳號、全新的 runtime 目錄），以正式 JAR 啟動並保存完整主控台輸出到啟動完成；登入器連上實驗伺服器 | dot | todo（等 T013） |
-| 3 | T011 | 依 CHECKLIST 在實驗環境跑一次，寫 `docs/acceptance/0.6.71.md`（dot 執行並截圖，使用者觀看驗收） | dot | todo（等 T014） |
+| # | ID | Issue | 內容 | 負責 | 狀態 |
+|---|---|---|---|---|---|
+| 1 | T013 | #283 | 把 `docs/acceptance/CHECKLIST.md` 改成實驗環境版：正式 JAR＋#83 實驗 schema，不用 `config/server.properties` 與正式 DB；拿掉不存在的 `--check`／`--smoke`；補「技能」步驟、GM 魔杖滑鼠點選、`ddraw.dll`／`litoddraw.dll` 入口名稱 | codex-local | todo |
+| 2 | T014 | #284 | 正式 JAR 的實驗設定與啟動預檢：在 `scratch/t014/` 寫實驗設定（`bind=127.0.0.1`、`game.bind=127.0.0.2`、`port=42083`、#83 的實驗 schema 與受限帳號、全新的 runtime 目錄），以正式 JAR 啟動並保存完整主控台輸出到啟動完成；登入器連上實驗伺服器 | dot | todo（可與 T013 並行） |
+| 3 | T011 | #285 | 依 CHECKLIST 在實驗環境跑一次，寫 `docs/acceptance/0.6.71.md`（dot 執行並截圖，使用者觀看驗收） | dot | todo（等 T014） |
 
 ## M2 客戶缺口（M1 完成後封頂）
 
