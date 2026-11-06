@@ -92,8 +92,11 @@ final class BlockExpressions implements Opcodes {
         }
         for(int i=0;i<code.size();i++) {
             AbstractInsnNode n=code.get(i);int op=n.getOpcode();
-            if(op==JSR||op==RET||op==DUP_X1||op==DUP_X2||op==DUP2_X1||op==DUP2_X2||op==SWAP)
+            if(op==JSR||op==RET||!FourthNormalizations.enabled("value-flow")
+                    && (op==DUP_X1||op==DUP_X2||op==DUP2_X1||op==DUP2_X2||op==SWAP))
                 throw new IllegalArgumentException("unsupported shuffle/subroutine");
+            if (op >= DUP && op <= SWAP && FourthNormalizations.annotated(n))
+                throw new IllegalArgumentException("annotated shuffle");
             if(n instanceof JumpInsnNode j)leaders.add(pos.get(j.label));
             if(n instanceof TableSwitchInsnNode s){leaders.add(pos.get(s.dflt));for(LabelNode l:s.labels)leaders.add(pos.get(l));}
             if(n instanceof LookupSwitchInsnNode s){leaders.add(pos.get(s.dflt));for(LabelNode l:s.labels)leaders.add(pos.get(l));}
@@ -138,7 +141,14 @@ final class BlockExpressions implements Opcodes {
                 count++;
             }
             // No reads in any other block (including handlers), hence not live at the exit.
-            if(ok&&count>0){temps.add(e.getKey());reads.put(e.getKey(),count);}
+            // A single dead save after DUP is transport too. Its producer and all
+            // remaining stack uses stay in the ordered expression/event graph.
+            if(ok&&(count>0||FourthNormalizations.enabled("value-flow"))){temps.add(e.getKey());reads.put(e.getKey(),count);}
+        }
+        Set<Integer> deferred = new HashSet<>();
+        if (FourthNormalizations.enabled("value-flow")) {
+            deferred.addAll(TemporaryValues.eligible(m));
+            deferred.removeAll(temps);
         }
         List<Block> result=new ArrayList<>();
         boolean monitor=code.stream().anyMatch(n->n.getOpcode()==MONITORENTER);
@@ -147,6 +157,7 @@ final class BlockExpressions implements Opcodes {
             Frame<BasicValue> entry=frames[m.instructions.indexOf(code.get(start))];
             if(entry==null)throw new IllegalArgumentException("unreachable block");
             Evaluator eval=new Evaluator(m,jar,temps,reads,pos,block,monitor);
+            eval.deferred = deferred;
             eval.storedValues=storedValues;
             Frame<Val> f=new Frame<>(m.maxLocals,m.maxStack);
             f.setReturn(eval.newValue(Type.getReturnType(m.desc)));
@@ -160,8 +171,10 @@ final class BlockExpressions implements Opcodes {
                 AbstractInsnNode n=code.get(i);int op=n.getOpcode();
                 if(op==DUP||op==DUP2) {
                     if(FourthNormalizations.annotated(n))throw new IllegalArgumentException("annotated copy");
-                    Val v=f.getStack(f.getStackSize()-1);eval.copy(v.expr,1);
-                    if(op==DUP2&&v.getSize()==1)eval.copy(f.getStack(f.getStackSize()-2).expr,1);
+                    if (!FourthNormalizations.enabled("value-flow")) {
+                        Val v=f.getStack(f.getStackSize()-1);eval.copy(v.expr,1);
+                        if(op==DUP2&&v.getSize()==1)eval.copy(f.getStack(f.getStackSize()-2).expr,1);
+                    }
                 } else if(op==POP||op==POP2) {
                     List<Val> args=new ArrayList<>();Val v=f.getStack(f.getStackSize()-1);args.add(v);
                     if(op==POP2&&v.getSize()==1)args.add(0,f.getStack(f.getStackSize()-2));
@@ -169,6 +182,7 @@ final class BlockExpressions implements Opcodes {
                 } else if(op==GOTO||op==RETURN||op==NOP)eval.event(n,List.of(),null);
                 f.execute(n,eval);
             }
+            eval.finish();
             List<Expr> exit=new ArrayList<>();for(int i=0;i<f.getStackSize();i++)exit.add(f.getStack(i).expr);
             AbstractInsnNode last=code.get(end-1);int op=last.getOpcode();List<Integer> edges=new ArrayList<>();
             if(last instanceof JumpInsnNode j){edges.add(block[pos.get(j.label)]);if(op!=GOTO)edges.add(k+1);}
@@ -184,6 +198,8 @@ final class BlockExpressions implements Opcodes {
         final Map<Expr,Integer> copies=new HashMap<>();final MethodNode m;final JarIndex jar;
         final Set<Integer> temps;final Map<Integer,Integer> reads;final Map<AbstractInsnNode,Integer> pos;final int[] blocks;final boolean monitor;
         boolean storedValues;
+        Set<Integer> deferred = Set.of();
+        final List<Event> bindings = new ArrayList<>();
         Evaluator(MethodNode m,JarIndex jar,Set<Integer> temps,Map<Integer,Integer> reads,Map<AbstractInsnNode,Integer> pos,int[] blocks,boolean monitor){
             super(ASM9);this.m=m;this.jar=jar;this.temps=temps;this.reads=reads;this.pos=pos;this.blocks=blocks;this.monitor=monitor;
         }
@@ -199,12 +215,26 @@ final class BlockExpressions implements Opcodes {
             return type==null?null:new Val(type,new Expr("event",id,type.getSize()));
         }
         @Override public Val newValue(Type type){BasicValue v=types.newValue(type);return v==null?null:new Val(v,new Expr("unset",0,v.getSize()));}
-        @Override public Val newOperation(AbstractInsnNode n)throws AnalyzerException{return event(n,List.of(),types.newOperation(n));}
+        @Override public Val newOperation(AbstractInsnNode n)throws AnalyzerException{
+            BasicValue type = types.newOperation(n);
+            if (FourthNormalizations.enabled("value-flow") && !FourthNormalizations.annotated(n)
+                    && DiscardedLoads.literal(n))
+                return new Val(type,new Expr("literal:"+ClassComparer.graphInsn(n,jar),0,type.getSize()));
+            return event(n,List.of(),type);
+        }
         @Override public Val copyOperation(AbstractInsnNode n,Val v)throws AnalyzerException{
             types.copyOperation(n,v.type);
             if(n instanceof VarInsnNode x) {
                 if(LocalWebs.store(n.getOpcode())) {
-                    if(temps.contains(x.var)){copy(v.expr,reads.get(x.var)-1);return v;}
+                    if(temps.contains(x.var)){
+                        if (!FourthNormalizations.enabled("value-flow")) copy(v.expr,reads.get(x.var)-1);
+                        return v;
+                    }
+                    if (deferred.contains(x.var)) {
+                        bindings.add(new Event(ClassComparer.graphInsn(n,jar),
+                                List.of(new Expr("local",x.var,v.getSize()),v.expr),List.of()));
+                        return v;
+                    }
                     Val stored=event(n,List.of(v),v.type);
                     // STORE is still an ordered, slot-labelled event. Its local now
                     // holds exactly the input value: DUP;STORE and STORE;LOAD agree.
@@ -213,6 +243,21 @@ final class BlockExpressions implements Opcodes {
                 if(FourthNormalizations.annotated(n))return event(n,List.of(v),v.type);
             }
             return v;
+        }
+        void finish() {
+            if (bindings.isEmpty()) return;
+            // These locals have one dominating definition and cannot be observed by
+            // a handler. Bind their exact values at the normal block exit, ordered
+            // by producer identity rather than the physical STORE shuffle.
+            bindings.sort(Comparator.comparing((Event e) -> e.args.get(1).kind)
+                    .thenComparingInt(e -> e.args.get(1).id).thenComparingInt(e -> e.args.get(0).id));
+            int at = events.size();
+            if (at > 0) {
+                String last = events.get(at-1).text;
+                if (last.startsWith("IF") || last.startsWith("GOTO") || last.startsWith("TABLESWITCH")
+                        || last.startsWith("LOOKUPSWITCH") || last.endsWith("RETURN") || last.equals("ATHROW")) at--;
+            }
+            events.addAll(at,bindings);
         }
         @Override public Val unaryOperation(AbstractInsnNode n,Val v)throws AnalyzerException{return event(n,List.of(v),types.unaryOperation(n,v.type));}
         @Override public Val binaryOperation(AbstractInsnNode n,Val a,Val b)throws AnalyzerException{return event(n,List.of(a,b),types.binaryOperation(n,a.type,b.type));}

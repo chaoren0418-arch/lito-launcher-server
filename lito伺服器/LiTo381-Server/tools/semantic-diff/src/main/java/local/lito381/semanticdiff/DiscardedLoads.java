@@ -39,4 +39,8 @@ final class DiscardedLoads implements Opcodes {
         }
         return 0;
     }
+
+    static boolean literal(AbstractInsnNode n) {
+        return !(n instanceof VarInsnNode) && n.getOpcode() != DUP && width(n) > 0;
+    }
 }

@@ -29,6 +29,7 @@ final class JarIndex {
     boolean exact(String owner,MethodNode m) { return exactMethods.getOrDefault(owner,Set.of()).contains(m.name+m.desc); }
     private final java.util.Set<String> resolving = new java.util.HashSet<>();
     private final Map<String, Map<String, String>> switchFields = new TreeMap<>();
+    private final Map<String, SwitchMaps.Model> switchMaps = new TreeMap<>();
     final Map<MethodNode, String> methodOwners = new java.util.IdentityHashMap<>();
     final Map<MethodNode, MethodNode> beforeWebs = new java.util.IdentityHashMap<>();
     private final Map<String, byte[]> dependencies = new TreeMap<>();
@@ -155,11 +156,13 @@ final class JarIndex {
             index.syntheticMethods.put(e.getKey(), syntheticMap(e.getValue(), Set.of()));
             ClassNode node = new ClassNode();
             new ClassReader(e.getValue()).accept(node, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
-            Map<String, String> fields = new LinkedHashMap<>();
-            for (var f : node.fields) if (f.name.startsWith("$SwitchMap$")
-                    && f.desc.equals("[I"))
-                fields.put(f.name, "$SwitchMap$#" + fields.size());
-            index.switchFields.put(node.name, fields);
+            if (node.fields.stream().noneMatch(f -> f.name.startsWith("$SwitchMap$") && f.desc.equals("[I"))) continue;
+            node = new ClassNode();
+            new ClassReader(e.getValue()).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+            SwitchMaps.Model maps = SwitchMaps.inspect(node);
+            if (maps != null) {
+                index.switchMaps.put(node.name, maps);
+            }
         }
         return index;
     }
@@ -206,7 +209,22 @@ final class JarIndex {
     }
 
     String remapField(String owner, String name, String desc) {
+        if (desc.equals("[I")) switchModel(owner);
         return desc.equals("[I") ? switchFields.getOrDefault(owner, Map.of()).getOrDefault(name, name) : name;
+    }
+
+    private SwitchMaps.Model switchModel(String owner) {
+        SwitchMaps.Model model = switchMaps.get(owner);
+        if (model == null || switchFields.containsKey(owner)) return model;
+        // Resolve after addClasspath. A values()/ordinal() spelling alone does not
+        // establish that the referenced class is an enum with compiler-owned maps.
+        for (SwitchMaps.Segment segment : model.segments()) {
+            ClassNode type = header(segment.enumName());
+            if (type == null || (type.access & org.objectweb.asm.Opcodes.ACC_ENUM) == 0
+                    || !"java/lang/Enum".equals(type.superName)) return null;
+        }
+        switchFields.put(owner,model.names());
+        return model;
     }
 
     ClassNode readTree(String internalName) {
@@ -219,6 +237,7 @@ final class JarIndex {
         // SKIP_DEBUG drops LineNumberTable / LocalVariable(Type)Table / SourceFile /
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        SwitchMaps.normalize(node, switchModel(internalName));
         // Preserve the existing handler proof's discovery of discarded lock locals.
         for (MethodNode m : node.methods) PureRethrowHandlers.normalize(m);
         // Run before trimming try ranges or deleting labels: adjacency is a proof guard.

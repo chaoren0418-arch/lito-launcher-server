@@ -128,6 +128,7 @@ final class CfgComparison implements Opcodes {
     }
     private static Origin origin(List<Block> graph,Map<Integer,Map<Predecessor,List<Expr>>> inputs,
             int id,Expr value,Set<StackPosition> visiting,Map<StackPosition,Origin> cache) {
+        if (value.kind().startsWith("literal:")) return new Origin(-1,value,value.kind());
         if(value.kind().equals("event")) {
             Event e=graph.get(id).events().get(value.id());
             if(e.args().isEmpty()&&e.catches().isEmpty() && (e.text().equals("CONST null")

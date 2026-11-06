@@ -373,11 +373,13 @@ final class ClassComparer {
         if (TransportComparison.same(lm, rm, leftJar, rJar, leftJar.approved(leftJar.layouts, lm))) return null;
         if (BlockExpressions.same(lm, rm, leftJar, rJar)) return null;
         if (effects) {
+            // Transport is accepted only with the ordered operand/exception proof.
+            // A DUP count cannot justify deleting an arbitrary subset of ASTOREs.
             // Keep the existing explicitly approved effects heuristic on physical slots.
             // The default data-flow proof above already used the normalized webs.
             lm = leftJar.beforeWebs.getOrDefault(lm,lm);
             rm = rJar.beforeWebs.getOrDefault(rm,rm);
-            d = cmpList("effects sequence", effectsSequence(lm, leftJar, tempStores(lm, rm)), effectsSequence(rm, rJar, tempStores(rm, lm)));
+            d = cmpList("effects sequence", effectsSequence(lm, leftJar, Set.of()), effectsSequence(rm, rJar, Set.of()));
             if (d == null) d = cmp("effects constants", constants(lm, leftJar).toString(), constants(rm, rJar).toString());
             if (d == null) d = cmpList("effects tryCatch", catchTypes(lm, leftJar), catchTypes(rm, rJar));
             if (d == null) d = cmp("effects branches", Integer.toString(branches(lm)), Integer.toString(branches(rm)));
@@ -432,32 +434,6 @@ final class ClassComparer {
         return l == Opcodes.ACC_PUBLIC || l == r
                 || r == Opcodes.ACC_PRIVATE && (l == 0 || l == Opcodes.ACC_PROTECTED)
                 || r == 0 && l == Opcodes.ACC_PROTECTED;
-    }
-
-    private static Set<AbstractInsnNode> tempStores(MethodNode m, MethodNode other) {
-        long dups = java.util.Arrays.stream(other.instructions.toArray()).filter(n -> n.getOpcode() == Opcodes.DUP).count();
-        Set<AbstractInsnNode> result = Collections.newSetFromMap(new IdentityHashMap<>());
-        if (dups == 0) return result;
-        for (AbstractInsnNode n : m.instructions) if (n instanceof VarInsnNode v && v.getOpcode() == Opcodes.ASTORE) {
-            if (n.visibleTypeAnnotations != null || n.invisibleTypeAnnotations != null) continue;
-            int writes = 0, reads = 0; AbstractInsnNode read = null;
-            for (AbstractInsnNode x : m.instructions) {
-                if (x instanceof VarInsnNode t && t.var == v.var) {
-                    if (t.getOpcode() == Opcodes.ASTORE) writes++;
-                    else if (t.getOpcode() == Opcodes.ALOAD) { reads++; read = t; }
-                    else { writes += 2; }
-                }
-                if (x instanceof IincInsnNode t && t.var == v.var) writes += 2;
-            }
-            if (writes != 1 || reads != 1) continue;
-            AbstractInsnNode x = n.getNext();
-            while (x != null && x != read && !(x instanceof LabelNode) && !(x instanceof JumpInsnNode)
-                    && !(x instanceof TableSwitchInsnNode) && !(x instanceof LookupSwitchInsnNode)
-                    && !(x instanceof IincInsnNode) && !(x.getOpcode() >= Opcodes.ISTORE && x.getOpcode() <= Opcodes.ASTORE)
-                    && x.getOpcode() != Opcodes.PUTFIELD && x.getOpcode() != Opcodes.PUTSTATIC) x = x.getNext();
-            if (x == read) result.add(n);
-        }
-        return result.size() <= dups ? result : Set.of();
     }
 
     static String methodIdentity(MethodNode m, JarIndex jar) {

@@ -1,5 +1,17 @@
 # ASM 語意比對
 
+## T020i-12（Issue #259）
+
+兩側預設以同一套值編號比較 stack／local 搬移。區塊內沿用原值表示式，純常數以型別及完整值表示；DUP／DUP2／DUP_X*／SWAP 由 ASM Frame 保留精確 operand 順序與寬度。呼叫、欄位與陣列操作、monitor、throw、return、分支及有序例外邊繼續比較完整引數。常數可預先壓入，呼叫與讀寫操作維持原順序。
+
+跨區塊暫存先經 LocalWebs 分開重用槽位，再要求唯一寫入、每個讀取的唯一 reaching definition 均為該寫入、型別／寬度一致、無重疊 wide 槽位或指令註解。handler 的正常後繼可到達的寫入／讀取一律排除。符合者的保存值綁定依生產者編號放在正常區塊出口，區塊內讀取直接沿用原值。所有跨邊 stack 關聯及 local 一對一映射仍須通過。`ASTORE; ALOAD; IFNULL; ALOAD; CHECKCAST; ARETURN` 另沿用唯一前驅證明轉為 DUP 形式，cast 與例外涵蓋保留。
+
+舊 `tempStores` 依對側 DUP 數量選擇性消除 ASTORE 的摘要規則已移除。effects 方法先嘗試完整區塊資料流證明，失敗後既有核准摘要保留全部 ASTORE，再由 paths／CFG 嘗試完整證明。連續多個 store 與只有寫入的死暫存由同一套值來源分析處理，生產者呼叫及其他 stack 用途仍保留；paths 使用原有逐路徑 Frame。
+
+switch-map 只接受完整可辨識的 enum `values → ARRAYLENGTH → NEWARRAY → PUTSTATIC` 與 `enum constant → ordinal → case value → IASTORE` 初始化，逐項驗證 NoSuchFieldError 的涵蓋範圍、跳轉及無後續讀取的 handler 暫存。名稱依 enum 類別與完整「常數→case 值」內容雜湊，宣告、跨類別欄位引用及 field handle 共用映射。`<clinit>` 的完整 enum 段依內容識別排序，段內指令及 catch 順序保留。未知形狀、額外呼叫、重複內容欄位或未涵蓋的 switch 欄位保留原名；case 值／常數集合不同持續 DIFF。
+
+診斷停用為 `-Dsemanticdiff.disable=value-flow` 與 `switch-content`。`TwelfthSelfTest` 接入 `selftest.sh`，同份 framed JAR 用於雙向 CLI、直接 paths／CFG 與 platform-parent 隔離 ClassLoader。包含四連 store、跨區塊讀取、型別重用、handler 可觀察 local、各種 stack shuffle、寬值、null/cast return、預壓 receiver／常數、switch 順序與內容反例。
+
 ## T020i-10（Issue #235）
 
 `--deviations` 支援 `類別#左側方法描述子 private-rename 右側方法名 # approved: <url>`。方向固定為左側 Java 改名版本、右側正式原名版本。僅當兩側均宣告 private 實例方法、兩側祖先鏈均有右側同名同描述子的非 private 實例方法，且左側完全沒有右側原名宣告時配對；右側也不能已宣告左側名稱與描述子。缺祖先 classpath 或任一條件不成立時保留 ONLY_LEFT／ONLY_RIGHT 方法差異，整類仍為 DIFF。祖先可由 `--left-classpath`／`--right-classpath` 提供，不載入應用程式。
@@ -44,7 +56,7 @@ CFG 保留 STORE 事件、槽位與順序，但後續 LOAD 的值來源沿用該
 - `lambda$…$N` 用描述子與正規化內容的 SHA-256 識別，包含方法 metadata 與 try 表；相同內容的重複方法合併，呼叫及 bootstrap handle 同步引用內容識別。名稱前綴、數字與已遮罩的 SYNTHETIC 不影響識別。不同本體或不同呼叫目標仍 DIFF；循環 lambda 參照會報錯，避免遞迴失控。精確核准的原名仍固定，不會藉內容配對擴大授權。
 - invokedynamic 的 bootstrap 參數只對「同一類別、private、非 static、非建構子」的實例 method handle 統一 H5/H7；外部 owner、public、一般呼叫指令與 LDC handle 保持原狀。
 - Object 子類建構子的 `ALOAD 0; Object.<init>()V` 前移至開頭。直線前綴以堆疊追蹤確認 this 只作自身已宣告欄位的 PUTFIELD receiver，其餘計算不得使用 this；無法安全解析、分支或非法 this 用法報錯。非 Object 父類不套用。
-- 每類名稱以 `$SwitchMap$` 開頭且描述子為 `[I` 的欄位依 class 欄位表宣告順序重命名，不要求 ACC_SYNTHETIC；宣告及跨類別欄位引用／handle 共用映射。不是各方法各自重編，因此交換兩個 switch map 的使用仍 DIFF。
+- 名稱以 `$SwitchMap$` 開頭且描述子為 `[I` 的欄位使用本頁 T020i-12 的完整內容配對，宣告及跨類別欄位引用／handle 共用映射。
 - try 區間向內裁掉 LABEL／LINE／FRAME、NOP、GOTO、區域 xLOAD／xSTORE、數字／字串常數，以及方法內沒有 MONITORENTER 時的 return 系列。Class／MethodType／MethodHandle／condy 常數保留可能拋例外的邊界。空區間刪除，handler 不移動；未使用的標籤移除，同位置標籤共用識別。
 
 新增三個必須明確傳入的精確清單：
@@ -61,7 +73,7 @@ CFG 保留 STORE 事件、槽位與順序，但後續 LOAD 的值來源沿用該
 
 layout 比較使用細分至指令的 CFG，收縮無註解的 GOTO 接邊，匹配指令、具分支角色的正常後繼、依表順序的例外後繼及 handler 型別／註解。保留不可達區塊並驗證全圖同構，區域槽位採全圖一對一映射、參數與 wide 別名固定；不忽略新增 ASTORE／ALOAD。搜尋超過上限或遇到舊式 JSR／RET 子程序時明確報錯。effects 與 layout／建構子例外重疊會拒絕。
 
-`effects` 額外允許對側存在 DUP 時，省去單次寫入、單次讀取、同一直線片段且中間無其他寫入的 ASTORE 暫存。讀取兩次、沒有對應 DUP、標註的 store 均不放寬。這仍是明確核准方法的摘要比較，不是任意堆疊等價證明。
+`effects` 的 ASTORE 搬移現由本頁 T020i-12 的完整資料流證明處理。核准摘要本身仍保留全部 ASTORE。
 
 JSON／Markdown 分列 `SAME_LAYOUT`、`DEVIATION` 與逐方法 `approvedMethods`，即使整類 DIFF 也列出。類別狀態優先序為 DIFF、DEVIATION、SAME_LAYOUT、SAME_EFFECTS、SAME；各方法結果完整保留。交集須加總這五項，不可只算舊三項。`AdvancedSelfTest` 已接入 `selftest.sh`；無法達成 #76 預期 0 DIFF 的固定輸入差異與規格衝突見 `docs/reports/issue-153.md`。
 
