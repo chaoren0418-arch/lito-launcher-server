@@ -1,71 +1,55 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import local.lito381.server.BattleTimedStatus;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.NativeCombatAttacker;
 
 final class NativeProcNpcState {
-    private final Object life;
-    private final Map<Integer, Long> deadlines = new HashMap<Integer, Long>();
+   private final Object life;
+   private final Map<Integer, Long> deadlines = new HashMap<>();
 
-    private NativeProcNpcState(Object object) {
-        this.life = object;
-    }
+   private NativeProcNpcState(Object var1) {
+      this.life = var1;
+   }
 
-    private static NativeProcNpcState owned(BattleTimedStatus battleTimedStatus) {
-        if (!Thread.holdsLock(battleTimedStatus)) {
-            throw new IllegalStateException("NPC Proc state requires status monitor");
-        }
-        Object object = NativeCombatAttacker.token(battleTimedStatus, true);
-        NativeProcNpcState nativeProcNpcState = (NativeProcNpcState)CombatAccess.field(battleTimedStatus, "sourceProcNpcState");
-        if (nativeProcNpcState == null || nativeProcNpcState.life != object) {
-            nativeProcNpcState = new NativeProcNpcState(object);
-            CombatAccess.set(battleTimedStatus, "sourceProcNpcState", nativeProcNpcState);
-        }
-        return nativeProcNpcState;
-    }
+   private static NativeProcNpcState owned(BattleTimedStatus var0) {
+      if (!Thread.holdsLock(var0)) {
+         throw new IllegalStateException("NPC Proc state requires status monitor");
+      } else {
+         Object var1 = NativeCombatAttacker.token(var0, true);
+         NativeProcNpcState var2 = (NativeProcNpcState)CombatAccess.field(var0, "sourceProcNpcState");
+         if (var2 == null || var2.life != var1) {
+            var2 = new NativeProcNpcState(var1);
+            CombatAccess.set(var0, "sourceProcNpcState", var2);
+         }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean active(BattleTimedStatus battleTimedStatus, int n, long l) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeProcNpcState nativeProcNpcState = NativeProcNpcState.owned(battleTimedStatus);
-            nativeProcNpcState.deadlines.values().removeIf(l2 -> l >= l2);
-            return nativeProcNpcState.deadlines.containsKey(n);
-        }
-    }
+         return var2;
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void activate(BattleTimedStatus battleTimedStatus, int n, long l, int n2) {
-        if (!Set.of(Integer.valueOf(164), Integer.valueOf(170), Integer.valueOf(173), Integer.valueOf(4012)).contains(n) || l < 0L || n2 <= 0) {
-            throw new IllegalArgumentException("unsupported NPC Proc modifier");
-        }
-        long l2 = Math.addExact(l, TimeUnit.SECONDS.toNanos(n2));
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeProcNpcState.owned((BattleTimedStatus)battleTimedStatus).deadlines.put(n, l2);
-        }
-    }
+   static boolean active(BattleTimedStatus var0, int var1, long var2) {
+      synchronized (var0) {
+         NativeProcNpcState var5 = owned(var0);
+         var5.deadlines.values().removeIf(var2x -> var2 >= var2x);
+         return var5.deadlines.containsKey(var1);
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void clear(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            CombatAccess.set(battleTimedStatus, "sourceProcNpcState", null);
-        }
-    }
+   static void activate(BattleTimedStatus var0, int var1, long var2, int var4) {
+      if (!Set.of(164, 170, 173, 4012).contains(var1) || var2 < 0L || var4 <= 0) {
+         throw new IllegalArgumentException("unsupported NPC Proc modifier");
+      }
+      long var5 = Math.addExact(var2, TimeUnit.SECONDS.toNanos(var4));
+      synchronized (var0) {
+         owned(var0).deadlines.put(var1, var5);
+      }
+   }
+
+   static void clear(BattleTimedStatus var0) {
+      synchronized (var0) {
+         CombatAccess.set(var0, "sourceProcNpcState", null);
+      }
+   }
 }

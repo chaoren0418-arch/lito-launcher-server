@@ -80,15 +80,15 @@ final class NativeLitoMapTableCatalog {
     private NativeLitoMapTableCatalog() {}
 
     static List<Entry> active() {
-        return ACTIVE;
+        return ResourceDatabase.maps(ACTIVE);
     }
 
     static Entry forMap(int mapId) {
-        return BY_MAP.get(mapId);
+        return ResourceDatabase.map(BY_MAP.get(mapId), mapId);
     }
 
     static boolean isActive(int mapId) {
-        return BY_MAP.containsKey(mapId);
+        return ResourceDatabase.mapActive(BY_MAP.containsKey(mapId), mapId);
     }
 
     static Set<Integer> resourceOnlyMapIds() {

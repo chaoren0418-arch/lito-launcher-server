@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.HashSet;
@@ -27,8 +24,7 @@ final class NativeDePerceptionJobs {
      */
     static Owner owner(NativeDeWorldContext nativeDeWorldContext) {
         NativePlayerLifetime nativePlayerLifetime = nativeDeWorldContext.life;
-        Object object = nativePlayerLifetime.admission;
-        synchronized (object) {
+        synchronized (nativePlayerLifetime.admission) {
             Owner owner = (Owner)CombatAccess.field(nativePlayerLifetime, FIELD);
             if (owner != null) {
                 if (owner.context != nativeDeWorldContext) {
@@ -49,7 +45,6 @@ final class NativeDePerceptionJobs {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean request(NativeDePerceptionState nativeDePerceptionState, NativeDeClientViewer nativeDeClientViewer) {
-        Task task;
         if (nativeDeClientViewer == null || nativeDePerceptionState.deletionOwner.timer.life != nativeDeClientViewer.life) {
             return false;
         }
@@ -58,8 +53,8 @@ final class NativeDePerceptionJobs {
             return false;
         }
         Owner owner = NativeDePerceptionJobs.owner(nativeDeWorldContext);
-        Object object = owner.life.admission;
-        synchronized (object) {
+        Task task;
+        synchronized (owner.life.admission) {
             Key key = new Key(nativeDePerceptionState, nativeDeClientViewer);
             if (owner.closed || !owner.life.admits() || nativeDeWorldContext.closed || owner.life.pending.get() >= NativePlayerCommit.GLOBAL || owner.keys.contains(key)) {
                 owner.rejected.incrementAndGet();
@@ -71,8 +66,7 @@ final class NativeDePerceptionJobs {
             owner.life.pending.incrementAndGet();
             owner.accepted.incrementAndGet();
         }
-        object = task;
-        synchronized (object) {
+        synchronized (task) {
             if (task.closed) {
                 return true;
             }
@@ -85,7 +79,7 @@ final class NativeDePerceptionJobs {
                 owner.rejected.incrementAndGet();
                 return false;
             }
-            catch (Error | RuntimeException throwable) {
+            catch (RuntimeException | Error throwable) {
                 task.finish();
                 throw throwable;
             }
@@ -107,24 +101,17 @@ final class NativeDePerceptionJobs {
         }
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void stop(NativePlayerLifetime nativePlayerLifetime) {
-        Object admissionLock = nativePlayerLifetime.admission;
-        synchronized (admissionLock) {
-            Owner owner = (Owner)CombatAccess.field(nativePlayerLifetime, FIELD);
-            if (owner == null) {
-                // ** MonitorExit[var3_1] (shouldn't be in output)
-                return;
-            }
+    static void stop(NativePlayerLifetime life) {
+        Owner owner;
+        Task[] tasks;
+        synchronized (life.admission) {
+            owner = (Owner)CombatAccess.field(life, FIELD);
+            if (owner == null) return;
             owner.closed = true;
-            Task[] taskArray2 = (Task[])owner.tasks.toArray(Task[]::new);
-            // ** MonitorExit[var3_1] (shouldn't be in output)
-            for (Task task : taskArray2) {
-                task.cancel();
-            }
-            return;
+            tasks = owner.tasks.toArray(Task[]::new);
+        }
+        for (Task task : tasks) {
+            task.cancel();
         }
     }
 
@@ -132,8 +119,7 @@ final class NativeDePerceptionJobs {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Snapshot snapshot(NativePlayerLifetime nativePlayerLifetime) {
-        Object object = nativePlayerLifetime.admission;
-        synchronized (object) {
+        synchronized (nativePlayerLifetime.admission) {
             Owner owner = (Owner)CombatAccess.field(nativePlayerLifetime, FIELD);
             return owner == null ? new Snapshot(false, true, 0, 0L, 0L, 0L, 0L) : new Snapshot(true, owner.closed, owner.tasks.size(), owner.accepted.get(), owner.rejected.get(), owner.stale.get(), owner.failed.get());
         }
@@ -177,9 +163,8 @@ final class NativeDePerceptionJobs {
         @Override
         public void run() {
             boolean bl;
-            Task task = this;
-            synchronized (task) {
-                boolean bl2 = bl = !this.closed && this.owner.life.mode != NativePlayerLifetime.Mode.STOPPED;
+            synchronized (this) {
+                bl = !this.closed && this.owner.life.mode != NativePlayerLifetime.Mode.STOPPED;
                 if (bl) {
                     this.running = true;
                 }
@@ -202,8 +187,7 @@ final class NativeDePerceptionJobs {
                 CombatNpcDamageQueue.failed(throwable);
             }
             finally {
-                task = this;
-                synchronized (task) {
+                synchronized (this) {
                     this.running = false;
                 }
                 this.finish();
@@ -214,8 +198,7 @@ final class NativeDePerceptionJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void cancel() {
-            Task task = this;
-            synchronized (task) {
+            synchronized (this) {
                 if (this.running || this.closed) {
                     return;
                 }
@@ -228,15 +211,13 @@ final class NativeDePerceptionJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void finish() {
-            Object object = this;
-            synchronized (object) {
+            synchronized (this) {
                 if (this.closed) {
                     return;
                 }
                 this.closed = true;
             }
-            object = this.owner.life.admission;
-            synchronized (object) {
+            synchronized (this.owner.life.admission) {
                 this.owner.tasks.remove(this);
                 this.owner.keys.remove(this.key);
                 if (this.owner.life.pending.decrementAndGet() < 0L) {

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -41,8 +41,9 @@ public final class SharedClientResources {
                 long l = Long.parseLong(stringArray[0]);
                 long l2 = Long.parseLong(stringArray[1]);
                 long l3 = Long.parseLong(stringArray[2]);
-                if (l >= 0L && l < 30285L && l2 >= 0L && l2 < 100L && l3 >= 0L && hashMap.put(l * 100L + l2, l3) == null) continue;
-                throw new IllegalStateException("Invalid or duplicate common animation duration");
+                if (l < 0L || l >= 30285L || l2 < 0L || l2 >= 100L || l3 < 0L || hashMap.put(l * 100L + l2, l3) != null) {
+                    throw new IllegalStateException("Invalid or duplicate common animation duration");
+                }
             }
         }
         catch (IOException iOException) {

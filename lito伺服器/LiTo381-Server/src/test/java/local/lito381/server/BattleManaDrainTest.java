@@ -24,12 +24,12 @@ final class BattleManaDrainTest {
     @Test
     void genericProbabilityUsesWizardDiceMagicHitMrCapAndBossDivisor() {
         int ordinary = BattleManaDrain.probability(
-                1, 47, 8, 1, 3, 15, 12, -1, sides -> 6);
+                3, 47, 8, 1, 3, 15, 12, -1, sides -> 6);
         assertEquals(50, ordinary);
         assertEquals(10, BattleManaDrain.probability(
-                1, 47, 8, 1, 3, 15, 12, 5, sides -> 6));
+                3, 47, 8, 1, 3, 15, 12, 5, sides -> 6));
         assertEquals(0, BattleManaDrain.probability(
-                1, 47, 8, 1, 3, 15, 12, 0, sides -> 6));
+                3, 47, 8, 1, 3, 15, 12, 0, sides -> 6));
         assertTrue(BattleManaDrain.succeeds(50, 50));
         assertFalse(BattleManaDrain.succeeds(50, 51));
     }

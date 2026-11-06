@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -167,6 +167,8 @@ Runnable {
         }
     }
 
+    // #72 approved ctor-prologue-order: Java 17 assigns construction after super.
+    // Name validation must still happen before any superclass constructor effects.
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate) {
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
         this.construction = construction;
@@ -211,135 +213,18 @@ Runnable {
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name) {
-        super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
-        this.construction = construction;
-        this._deAiScheduleLock = new Object();
-        this._deAiChainToken = 0L;
-        this._deAiTickPending = false;
-        this._deAiTickExecuting = false;
-        this._deAiStopRequested = false;
-        this._deAiWakeupRequested = false;
-        this._deAiRestartRequested = false;
-        this._deAiTimerSequence = 0L;
-        this._deAiActiveTimerToken = 0L;
-        this._deAiPendingBackground = false;
-        this._deAiWorkerRetryAttempt = 0;
-        this._isBackgroundMode = false;
-        this._lastWakeupTime = System.currentTimeMillis();
-        this._runFuture = null;
-        this._delayedMoveGenerationSequence = 0L;
-        this._delayedMoveGeneration = 0L;
-        this._delayedMoveTimerSequence = 0L;
-        this._delayedMoveActiveTimerToken = 0L;
-        this._delayedMoveFuture = null;
-        this._deNextActionUntilMs = 0L;
-        this.deRepathThrottle = new DeRepathThrottle();
-        this._spawnLocationChecked = false;
-        this._clanid = 0;
-        this._aiType = 0;
-        this._clan_name = null;
-        this._emblem = null;
-        this.deName = null;
-        this._isMorphEnable = false;
-        this._isDollEnable = false;
-        this._classRestrict = null;
-        this._initFailed = false;
-        this._currentWeapon = 0;
-        this._isAutoBuffEnabled = false;
-        this._autoBuffInterval = 0;
-        this._autoBuffChance = 0;
-        this._lastAutoBuffTime = 0L;
-        this._deathGeneration = new AtomicLong();
-        this.deName = NativeDeInstanceNames.name(construction, name);
+        this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate);
         this.startNpc();
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name, boolean bl) {
-        super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
-        this.construction = construction;
-        this._deAiScheduleLock = new Object();
-        this._deAiChainToken = 0L;
-        this._deAiTickPending = false;
-        this._deAiTickExecuting = false;
-        this._deAiStopRequested = false;
-        this._deAiWakeupRequested = false;
-        this._deAiRestartRequested = false;
-        this._deAiTimerSequence = 0L;
-        this._deAiActiveTimerToken = 0L;
-        this._deAiPendingBackground = false;
-        this._deAiWorkerRetryAttempt = 0;
-        this._isBackgroundMode = false;
-        this._lastWakeupTime = System.currentTimeMillis();
-        this._runFuture = null;
-        this._delayedMoveGenerationSequence = 0L;
-        this._delayedMoveGeneration = 0L;
-        this._delayedMoveTimerSequence = 0L;
-        this._delayedMoveActiveTimerToken = 0L;
-        this._delayedMoveFuture = null;
-        this._deNextActionUntilMs = 0L;
-        this.deRepathThrottle = new DeRepathThrottle();
-        this._spawnLocationChecked = false;
-        this._clanid = 0;
-        this._aiType = 0;
-        this._clan_name = null;
-        this._emblem = null;
-        this.deName = null;
-        this._isMorphEnable = false;
-        this._isDollEnable = false;
-        this._classRestrict = null;
-        this._initFailed = false;
-        this._currentWeapon = 0;
-        this._isAutoBuffEnabled = false;
-        this._autoBuffInterval = 0;
-        this._autoBuffChance = 0;
-        this._lastAutoBuffTime = 0L;
-        this._deathGeneration = new AtomicLong();
-        this.deName = NativeDeInstanceNames.name(construction, name);
+        this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate);
         this._isMorphEnable = bl;
         this.startNpc();
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name, boolean bl, String string) {
-        super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
-        this.construction = construction;
-        this._deAiScheduleLock = new Object();
-        this._deAiChainToken = 0L;
-        this._deAiTickPending = false;
-        this._deAiTickExecuting = false;
-        this._deAiStopRequested = false;
-        this._deAiWakeupRequested = false;
-        this._deAiRestartRequested = false;
-        this._deAiTimerSequence = 0L;
-        this._deAiActiveTimerToken = 0L;
-        this._deAiPendingBackground = false;
-        this._deAiWorkerRetryAttempt = 0;
-        this._isBackgroundMode = false;
-        this._lastWakeupTime = System.currentTimeMillis();
-        this._runFuture = null;
-        this._delayedMoveGenerationSequence = 0L;
-        this._delayedMoveGeneration = 0L;
-        this._delayedMoveTimerSequence = 0L;
-        this._delayedMoveActiveTimerToken = 0L;
-        this._delayedMoveFuture = null;
-        this._deNextActionUntilMs = 0L;
-        this.deRepathThrottle = new DeRepathThrottle();
-        this._spawnLocationChecked = false;
-        this._clanid = 0;
-        this._aiType = 0;
-        this._clan_name = null;
-        this._emblem = null;
-        this.deName = null;
-        this._isMorphEnable = false;
-        this._isDollEnable = false;
-        this._classRestrict = null;
-        this._initFailed = false;
-        this._currentWeapon = 0;
-        this._isAutoBuffEnabled = false;
-        this._autoBuffInterval = 0;
-        this._autoBuffChance = 0;
-        this._lastAutoBuffTime = 0L;
-        this._deathGeneration = new AtomicLong();
-        this.deName = NativeDeInstanceNames.name(construction, name);
+        this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate);
         this._isMorphEnable = bl;
         this._isDollEnable = false;
         this._classRestrict = string;
@@ -347,6 +232,14 @@ Runnable {
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name, boolean bl, boolean bl2, String string) {
+        this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate);
+        this._isMorphEnable = bl;
+        this._isDollEnable = bl2;
+        this._classRestrict = string;
+        this.startNpc();
+    }
+
+    private NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeInitializerKernel.Name name, NativeDeNpcTemplate nativeDeNpcTemplate) {
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
         this.construction = construction;
         this._deAiScheduleLock = new Object();
@@ -386,13 +279,8 @@ Runnable {
         this._autoBuffChance = 0;
         this._lastAutoBuffTime = 0L;
         this._deathGeneration = new AtomicLong();
-        this.deName = NativeDeInstanceNames.name(construction, name);
-        this._isMorphEnable = bl;
-        this._isDollEnable = bl2;
-        this._classRestrict = string;
-        this.startNpc();
+        this.deName = name;
     }
-
     private void startNpc() {
         NativeDeInstanceInitialization.init(this, this.deName, this._isMorphEnable, this._classRestrict);
         if (this.getLevel() <= 0) {
@@ -449,7 +337,8 @@ Runnable {
 
     @Override
     public void set_deName(NativeDeInitializerKernel.Name name) {
-        this.deName = name = NativeDeInstanceNames.name(this.construction, name);
+        name = NativeDeInstanceNames.name(this.construction, name);
+        this.deName = name;
     }
 
     @Override
@@ -523,7 +412,7 @@ Runnable {
     public void setDead(boolean bl) {
         this.withVitalMutation(() -> {
             boolean bl2 = !bl && this.isDead();
-            this.sourceNpcSetDead(bl);
+            ((NativeDeNpcVitalState)this).sourceNpcSetDead(bl);
             if (bl2 && !this.isDead()) {
                 this._deathGeneration.incrementAndGet();
             }
@@ -595,17 +484,19 @@ Runnable {
 
     @Override
     public String getName() {
-        return (String)NativeDeLiveAiScope.call(this, () -> this.sourceAi$getName());
+        NativeDeInstanceState actor = this;
+        return (String)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$getName());
     }
 
     private void sourceAi$updateNextActionTime(int n) {
-        long l;
-        this._deNextActionUntilMs = l = System.currentTimeMillis() + (long)Math.max(0, n);
+        long l = System.currentTimeMillis() + (long)Math.max(0, n);
+        this._deNextActionUntilMs = l;
     }
 
     public void updateNextActionTime(int n) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$updateNextActionTime(n);
+            actor.sourceAi$updateNextActionTime(n);
             return null;
         });
     }
@@ -620,7 +511,8 @@ Runnable {
 
     @Override
     public int calcSleepTime(int n, int n2) {
-        return (Integer)NativeDeLiveAiScope.call(this, () -> this.sourceAi$calcSleepTime(n, n2));
+        NativeDeInstanceState actor = this;
+        return (Integer)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$calcSleepTime(n, n2));
     }
 
     private void sourceAi$wakeup() {
@@ -637,8 +529,9 @@ Runnable {
 
     @Override
     public void wakeup() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$wakeup();
+            actor.sourceAi$wakeup();
             return null;
         });
     }
@@ -648,8 +541,7 @@ Runnable {
      */
     private void sourceAi$wakeup(long l) {
         boolean bl = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested) {
                 return;
             }
@@ -676,8 +568,9 @@ Runnable {
     }
 
     private void wakeup(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$wakeup(l);
+            actor.sourceAi$wakeup(l);
             return null;
         });
     }
@@ -690,8 +583,7 @@ Runnable {
         if (this.isDead() || this.destroyed() || this.getCurrentHp() <= 0) {
             return;
         }
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             l = this.tryAcquireAiOwner();
             if (l == 0L) {
                 if (this._deAiStopRequested && this.currentAiOwnerToken() == this._deAiChainToken) {
@@ -716,8 +608,9 @@ Runnable {
 
     @Override
     public void startAI() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$startAI();
+            actor.sourceAi$startAI();
             return null;
         });
     }
@@ -746,7 +639,8 @@ Runnable {
     }
 
     private boolean checkNeedActive() {
-        return (Boolean)NativeDeLiveAiScope.call(this, () -> this.sourceAi$checkNeedActive());
+        NativeDeInstanceState actor = this;
+        return (Boolean)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$checkNeedActive());
     }
 
     /*
@@ -755,8 +649,7 @@ Runnable {
     private void sourceAi$onBackgroundTick() {
         long l = this.currentAiOwnerToken();
         boolean bl = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (this.isAiOwner(l) && this._deAiChainToken == l && !this._deAiStopRequested && this._isBackgroundMode && !this._deAiTickPending && !this._deAiTickExecuting) {
                 this._deAiTickPending = true;
                 this._deAiPendingBackground = true;
@@ -769,8 +662,9 @@ Runnable {
     }
 
     public void onBackgroundTick() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$onBackgroundTick();
+            actor.sourceAi$onBackgroundTick();
             return null;
         });
     }
@@ -801,8 +695,9 @@ Runnable {
     }
 
     private void runBackgroundTick(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$runBackgroundTick(l);
+            actor.sourceAi$runBackgroundTick(l);
             return null;
         });
     }
@@ -813,8 +708,9 @@ Runnable {
 
     @Override
     public void run() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$run();
+            actor.sourceAi$run();
             return null;
         });
     }
@@ -873,8 +769,9 @@ Runnable {
     }
 
     private void runAiTick(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$runAiTick(l);
+            actor.sourceAi$runAiTick(l);
             return null;
         });
     }
@@ -890,7 +787,8 @@ Runnable {
     }
 
     private int normalizeDeSleepTime(long l) {
-        return (Integer)NativeDeLiveAiScope.call(this, () -> this.sourceAi$normalizeDeSleepTime(l));
+        NativeDeInstanceState actor = this;
+        return (Integer)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$normalizeDeSleepTime(l));
     }
 
     /*
@@ -900,22 +798,21 @@ Runnable {
         if (!this.isAiOwner(l)) {
             return false;
         }
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             return this.isAiOwner(l) && this._deAiChainToken == l && !this._deAiStopRequested;
         }
     }
 
     private boolean isDeAiChain(long l) {
-        return (Boolean)NativeDeLiveAiScope.call(this, () -> this.sourceAi$isDeAiChain(l));
+        NativeDeInstanceState actor = this;
+        return (Boolean)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$isDeAiChain(l));
     }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private boolean sourceAi$beginAiTick(long l) {
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || !this._deAiTickPending || this._deAiPendingBackground || this._deAiTickExecuting || this._deAiStopRequested || this._deAiActiveTimerToken != 0L) {
                 return false;
             }
@@ -927,15 +824,15 @@ Runnable {
     }
 
     private boolean beginAiTick(long l) {
-        return (Boolean)NativeDeLiveAiScope.call(this, () -> this.sourceAi$beginAiTick(l));
+        NativeDeInstanceState actor = this;
+        return (Boolean)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$beginAiTick(l));
     }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private boolean sourceAi$beginBackgroundTick(long l) {
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || !this._deAiTickPending || !this._deAiPendingBackground || this._deAiTickExecuting || this._deAiStopRequested || this._deAiActiveTimerToken != 0L) {
                 return false;
             }
@@ -947,7 +844,8 @@ Runnable {
     }
 
     private boolean beginBackgroundTick(long l) {
-        return (Boolean)NativeDeLiveAiScope.call(this, () -> this.sourceAi$beginBackgroundTick(l));
+        NativeDeInstanceState actor = this;
+        return (Boolean)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$beginBackgroundTick(l));
     }
 
     /*
@@ -956,8 +854,7 @@ Runnable {
     private void sourceAi$finishAiTick(long l) {
         boolean bl = false;
         boolean bl2 = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (this._deAiChainToken != l) {
                 return;
             }
@@ -983,8 +880,9 @@ Runnable {
     }
 
     private void finishAiTick(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$finishAiTick(l);
+            actor.sourceAi$finishAiTick(l);
             return null;
         });
     }
@@ -993,8 +891,7 @@ Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void sourceAi$enterBackgroundMode(long l) {
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested) {
                 return;
             }
@@ -1008,8 +905,9 @@ Runnable {
     }
 
     private void enterBackgroundMode(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$enterBackgroundMode(l);
+            actor.sourceAi$enterBackgroundMode(l);
             return null;
         });
     }
@@ -1019,8 +917,9 @@ Runnable {
     }
 
     private void submitAiTick(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$submitAiTick(l);
+            actor.sourceAi$submitAiTick(l);
             return null;
         });
     }
@@ -1030,7 +929,8 @@ Runnable {
     }
 
     private ScheduledFuture<?> scheduleAiTick(long l, int n) {
-        return (ScheduledFuture)NativeDeLiveAiScope.call(this, () -> this.sourceAi$scheduleAiTick(l, n));
+        NativeDeInstanceState actor = this;
+        return (ScheduledFuture)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$scheduleAiTick(l, n));
     }
 
     /*
@@ -1042,26 +942,27 @@ Runnable {
             this.stopAiOwner(l);
             return null;
         }
-        Object scheduleLock = this._deAiScheduleLock;
-        ScheduledFuture<?> scheduledFuture;
-        synchronized (scheduleLock) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested || !this._deAiTickPending || this._deAiPendingBackground != bl) {
                 return null;
             }
             if (this._deAiActiveTimerToken != 0L) {
                 return this._runFuture;
             }
-            this._deAiActiveTimerToken = l2 = this.nextAiTimerTokenLocked();
+            l2 = this.nextAiTimerTokenLocked();
+            this._deAiActiveTimerToken = l2;
         }
         try {
-            scheduledFuture = NativeDeLiveAiScope.Clock.get().aiSchedule(() -> NativeDeLiveAiScope.call(this, () -> {
-                this.sourceAi$lambda$scheduleAiTick$0(l, l2, bl);
-                return null;
-            }), Math.max(0, n), l);
+            ScheduledFuture<?> scheduledFuture = NativeDeLiveAiScope.Clock.get().aiSchedule(() -> {
+                NativeDeInstanceState actor = this;
+                NativeDeLiveAiScope.call(this, () -> {
+                    actor.sourceAi$lambda$scheduleAiTick$0(l, l2, bl);
+                    return null;
+                });
+            }, Math.max(0, n), l);
             if (scheduledFuture != null) {
                 boolean bl2 = false;
-                Object object = this._deAiScheduleLock;
-                synchronized (object) {
+                synchronized (this._deAiScheduleLock) {
                     if (this.isAiOwner(l) && this._deAiChainToken == l && !this._deAiStopRequested && this._deAiActiveTimerToken == l2) {
                         this._runFuture = scheduledFuture;
                         bl2 = true;
@@ -1089,20 +990,21 @@ Runnable {
     }
 
     private ScheduledFuture<?> scheduleAiTick(long l, int n, boolean bl) {
-        return (ScheduledFuture)NativeDeLiveAiScope.call(this, () -> this.sourceAi$scheduleAiTick(l, n, bl));
+        NativeDeInstanceState actor = this;
+        return (ScheduledFuture)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$scheduleAiTick(l, n, bl));
     }
 
     private long sourceAi$nextAiTimerTokenLocked() {
-        long l;
-        ++this._deAiTimerSequence;
-        if ((l = this._deAiTimerSequence++) == 0L) {
-            l = this._deAiTimerSequence;
+        long l = ++this._deAiTimerSequence;
+        if (l == 0L) {
+            l = ++this._deAiTimerSequence;
         }
         return l;
     }
 
     private long nextAiTimerTokenLocked() {
-        return (Long)NativeDeLiveAiScope.call(this, () -> this.sourceAi$nextAiTimerTokenLocked());
+        NativeDeInstanceState actor = this;
+        return (Long)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$nextAiTimerTokenLocked());
     }
 
     /*
@@ -1110,8 +1012,7 @@ Runnable {
      */
     private void sourceAi$onAiTimer(long l, long l2, boolean bl) {
         boolean bl2 = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested || this._deAiActiveTimerToken != l2 || !this._deAiTickPending || this._deAiPendingBackground != bl) {
                 return;
             }
@@ -1130,8 +1031,9 @@ Runnable {
     }
 
     private void onAiTimer(long l, long l2, boolean bl) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$onAiTimer(l, l2, bl);
+            actor.sourceAi$onAiTimer(l, l2, bl);
             return null;
         });
     }
@@ -1141,8 +1043,7 @@ Runnable {
      */
     private void sourceAi$failAiTimer(long l, long l2) {
         boolean bl = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (this.isAiOwner(l) && this._deAiChainToken == l && this._deAiActiveTimerToken == l2) {
                 this._deAiActiveTimerToken = 0L;
                 this._runFuture = null;
@@ -1155,8 +1056,9 @@ Runnable {
     }
 
     private void failAiTimer(long l, long l2) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$failAiTimer(l, l2);
+            actor.sourceAi$failAiTimer(l, l2);
             return null;
         });
     }
@@ -1165,8 +1067,7 @@ Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void sourceAi$dispatchAiWork(long l, boolean bl) {
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested || !this._deAiTickPending || this._deAiPendingBackground != bl || this._deAiTickExecuting || this._deAiActiveTimerToken != 0L) {
                 return;
             }
@@ -1191,8 +1092,9 @@ Runnable {
     }
 
     private void dispatchAiWork(long l, boolean bl) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$dispatchAiWork(l, bl);
+            actor.sourceAi$dispatchAiWork(l, bl);
             return null;
         });
     }
@@ -1201,8 +1103,7 @@ Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private int sourceAi$nextAiRetryDelay(long l, boolean bl) {
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested || !this._deAiTickPending || this._deAiPendingBackground != bl) {
                 return -1;
             }
@@ -1213,7 +1114,8 @@ Runnable {
     }
 
     private int nextAiRetryDelay(long l, boolean bl) {
-        return (Integer)NativeDeLiveAiScope.call(this, () -> this.sourceAi$nextAiRetryDelay(l, bl));
+        NativeDeInstanceState actor = this;
+        return (Integer)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$nextAiRetryDelay(l, bl));
     }
 
     /*
@@ -1225,8 +1127,7 @@ Runnable {
             return;
         }
         boolean bl = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (this.isAiOwner(l) && this._deAiChainToken == l && !this._deAiStopRequested && !this._deAiTickPending && this._deAiActiveTimerToken == 0L) {
                 this._deAiTickPending = true;
                 this._deAiPendingBackground = false;
@@ -1239,8 +1140,9 @@ Runnable {
     }
 
     private void scheduleNextAiTick(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$scheduleNextAiTick(l);
+            actor.sourceAi$scheduleNextAiTick(l);
             return null;
         });
     }
@@ -1255,8 +1157,7 @@ Runnable {
             return;
         }
         boolean bl = false;
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested) {
                 return;
             }
@@ -1277,8 +1178,9 @@ Runnable {
     }
 
     private void ensureAiScheduled() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$ensureAiScheduled();
+            actor.sourceAi$ensureAiScheduled();
             return null;
         });
     }
@@ -1289,8 +1191,9 @@ Runnable {
 
     @Override
     public void stopAI() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$stopAI();
+            actor.sourceAi$stopAI();
             return null;
         });
     }
@@ -1306,8 +1209,9 @@ Runnable {
 
     @Deprecated
     public void setAiRunning(boolean bl) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$setAiRunning(bl);
+            actor.sourceAi$setAiRunning(bl);
             return null;
         });
     }
@@ -1319,8 +1223,7 @@ Runnable {
         if (l == 0L) {
             return;
         }
-        Object object = this._deAiScheduleLock;
-        synchronized (object) {
+        synchronized (this._deAiScheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l) {
                 return;
             }
@@ -1342,8 +1245,9 @@ Runnable {
     }
 
     private void stopAiOwner(long l) {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$stopAiOwner(l);
+            actor.sourceAi$stopAiOwner(l);
             return null;
         });
     }
@@ -1371,7 +1275,8 @@ Runnable {
     }
 
     private boolean completeAiStopLocked(long l) {
-        return (Boolean)NativeDeLiveAiScope.call(this, () -> this.sourceAi$completeAiStopLocked(l));
+        NativeDeInstanceState actor = this;
+        return (Boolean)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$completeAiStopLocked(l));
     }
 
     private void sourceAi$setNpcSpeed() {
@@ -1391,8 +1296,9 @@ Runnable {
             if (!this.getDolls().isEmpty()) {
                 for (Object object : this.getDolls().values().toArray()) {
                     NativeDeLiveAiPorts.Doll doll = (NativeDeLiveAiPorts.Doll)object;
-                    if (doll == null) continue;
-                    doll.setNpcMoveSpeed();
+                    if (doll != null) {
+                        doll.setNpcMoveSpeed();
+                    }
                 }
             }
         }
@@ -1402,18 +1308,23 @@ Runnable {
     }
 
     public void setNpcSpeed() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$setNpcSpeed();
+            actor.sourceAi$setNpcSpeed();
             return null;
         });
     }
 
     private boolean sourceAi$isBusy() {
-        return (NativeDeLiveAiPorts.Combat)this._combatBehavior != null && ((NativeDeLiveAiPorts.Combat)this._combatBehavior).hasTarget();
+        if ((NativeDeLiveAiPorts.Combat)this._combatBehavior != null && ((NativeDeLiveAiPorts.Combat)this._combatBehavior).hasTarget()) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isBusy() {
-        return (Boolean)NativeDeLiveAiScope.call(this, () -> this.sourceAi$isBusy());
+        NativeDeInstanceState actor = this;
+        return (Boolean)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$isBusy());
     }
 
     private int sourceAi$getSleepTime() {
@@ -1422,7 +1333,8 @@ Runnable {
 
     @Override
     public int getSleepTime() {
-        return (Integer)NativeDeLiveAiScope.call(this, () -> this.sourceAi$getSleepTime());
+        NativeDeInstanceState actor = this;
+        return (Integer)NativeDeLiveAiScope.call(this, () -> actor.sourceAi$getSleepTime());
     }
 
     private void sourceAi$checkSpawnLocation() {
@@ -1434,8 +1346,8 @@ Runnable {
                 for (int j = 0; j < 8; ++j) {
                     int n = this.getX() + NativeDeLiveAiScope.HEADING_TABLE_X[j] * i;
                     int n2 = this.getY() + NativeDeLiveAiScope.HEADING_TABLE_Y[j] * i;
-                    if (!NativeDeLiveAiScope.isPassable(this.getMap(), n, n2, null)) continue;
-                    ArrayList<NativeDeDeletionPorts.Viewer> arrayList = NativeDeLiveAiScope.World.get().getRecognizePlayer(this);
+                    if (NativeDeLiveAiScope.isPassable(this.getMap(), n, n2, null)) {
+                    java.util.Collection<NativeDeDeletionPorts.Viewer> arrayList = NativeDeLiveAiScope.World.get().getRecognizePlayer(this);
                     if (!NativeDeLiveAiScope.World.get().relocateVisibleObject(this, n, n2, this.getMapId())) {
                         NativeDeLiveAiScope.log().warn("\u5047\u4eba\u51fa\u751f\u9ede\u4fee\u6b63\u5931\u6557 name={} target=({}, {}, map={})", (Object)this.getName(), (Object)n, (Object)n2, (Object)this.getMapId());
                         return;
@@ -1446,6 +1358,7 @@ Runnable {
                         NativeDeLiveAiScope.update(viewer);
                     }
                     return;
+                    }
                 }
             }
             if (this.getHomeX() != 0 && this.getHomeY() != 0 && !NativeDeLiveAiScope.World.get().relocateVisibleObject(this, this.getHomeX(), this.getHomeY(), this.getMapId())) {
@@ -1458,8 +1371,9 @@ Runnable {
     }
 
     private void checkSpawnLocation() {
+        NativeDeInstanceState actor = this;
         NativeDeLiveAiScope.call(this, () -> {
-            this.sourceAi$checkSpawnLocation();
+            actor.sourceAi$checkSpawnLocation();
             return null;
         });
     }

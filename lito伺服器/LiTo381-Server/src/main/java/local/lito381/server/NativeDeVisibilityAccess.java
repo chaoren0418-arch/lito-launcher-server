@@ -1,8 +1,11 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import local.lito381.server.NativeDeDeletionPorts.ObjectRef;
+import local.lito381.server.NativeDeDeletionPorts.Packet;
+import local.lito381.server.NativeDeDeletionPorts.Viewer;
+import local.lito381.server.NativeDeDeletionVisibility.Snapshot;
+import local.lito381.server.NativeDeVisibilityPorts.Follower;
 
 import java.util.List;
 import local.lito381.server.CombatAccess;
@@ -95,16 +98,11 @@ final class NativeDeVisibilityAccess {
         return ((NativeDeObjectFields)objectRef).getMapId();
     }
 
-    static int L1NpcInstance$getNpcId(NativeDeDeletionPorts.ObjectRef objectRef) {
-        int n;
-        if (objectRef instanceof NativeDeNpcConstructionState) {
-            NativeDeNpcConstructionState nativeDeNpcConstructionState = (NativeDeNpcConstructionState)objectRef;
-            n = nativeDeNpcConstructionState.getNpcId();
-        } else {
-            n = ((NativeDeResurrectionEffects)CombatAccess.field(objectRef, "effects")).npcId((NativeDeNpcVitalState)objectRef);
-        }
-        return n;
-    }
+    static int L1NpcInstance$getNpcId(ObjectRef var0) {
+      return var0 instanceof NativeDeNpcConstructionState var1
+         ? var1.getNpcId()
+         : ((NativeDeResurrectionEffects)CombatAccess.field(var0, "effects")).npcId((NativeDeNpcVitalState)var0);
+   }
 
     static boolean L1NpcInstance$isViewerRegistered(NativeDeDeletionPorts.ObjectRef objectRef, NativeDeDeletionPorts.Viewer viewer) {
         return ((NativeDeDeletionState)objectRef).isViewerRegistered(viewer);

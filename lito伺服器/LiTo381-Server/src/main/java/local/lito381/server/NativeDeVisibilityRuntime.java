@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.Objects;
@@ -33,8 +30,7 @@ final class NativeDeVisibilityRuntime {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Owner owner(NativeDeWorldContext nativeDeWorldContext, NativeDeVisibilityPorts.Services services) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
+        synchronized (nativeDeWorldContext) {
             nativeDeWorldContext.admit();
             Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
             if (owner == null) {
@@ -51,8 +47,7 @@ final class NativeDeVisibilityRuntime {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Owner owner(NativeDeWorldContext nativeDeWorldContext) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
+        synchronized (nativeDeWorldContext) {
             Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
             return owner != null ? owner : NativeDeVisibilityRuntime.owner(nativeDeWorldContext, NativeDeVisibilityPorts.NATIVE);
         }
@@ -77,10 +72,10 @@ final class NativeDeVisibilityRuntime {
         }
         boolean bl = NativeDeVisibilityScope.present() || NativeDeLiveAiScope.present() && NativeDeLiveAiScope.context() == nativeDeWorldContext;
         NativePlayerCommit.Frame frame = NativePlayerCommit.frame();
-        NativeDeVisibilityJobs.Credit credit = (bl |= frame != null && frame.queue.life == nativeDeWorldContext.life) ? null : NativeDeVisibilityJobs.Credit.reserve(owner);
+        bl |= frame != null && frame.queue.life == nativeDeWorldContext.life;
+        NativeDeVisibilityJobs.Credit credit = bl ? null : NativeDeVisibilityJobs.Credit.reserve(owner);
         try {
-            T t = credit == null ? NativeDeVisibilityScope.call(owner, supplier) : NativeDeVisibilityJobs.with(credit, () -> NativeDeVisibilityScope.call(owner, supplier));
-            return t;
+            return credit == null ? NativeDeVisibilityScope.call(owner, supplier) : NativeDeVisibilityJobs.with(credit, () -> NativeDeVisibilityScope.call(owner, supplier));
         }
         finally {
             if (credit != null) {
@@ -127,9 +122,8 @@ final class NativeDeVisibilityRuntime {
 
     static void start(NativeDeWorldContext nativeDeWorldContext) {
         NativeDeVisibilityRuntime.call(nativeDeWorldContext, () -> {
-            Owner owner;
-            Owner owner2 = owner = NativeDeVisibilityRuntime.owner(nativeDeWorldContext);
-            synchronized (owner2) {
+            Owner owner = NativeDeVisibilityRuntime.owner(nativeDeWorldContext);
+            synchronized (owner) {
                 if (owner.timer == null) {
                     owner.timer = new NativeDeVisibilityTimer();
                     owner.timer.start();
@@ -141,9 +135,8 @@ final class NativeDeVisibilityRuntime {
 
     static void stop(NativeDeWorldContext nativeDeWorldContext) {
         NativeDeVisibilityRuntime.call(nativeDeWorldContext, () -> {
-            Owner owner;
-            Owner owner2 = owner = NativeDeVisibilityRuntime.owner(nativeDeWorldContext);
-            synchronized (owner2) {
+            Owner owner = NativeDeVisibilityRuntime.owner(nativeDeWorldContext);
+            synchronized (owner) {
                 if (owner.timer != null) {
                     CombatAccess.call(owner.timer, "cancelTimer", "()V", new Object[0]);
                     owner.timer = null;
@@ -157,8 +150,7 @@ final class NativeDeVisibilityRuntime {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void close(NativeDeWorldContext nativeDeWorldContext) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
+        synchronized (nativeDeWorldContext) {
             Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
             if (owner == null) {
                 return;
@@ -176,16 +168,14 @@ final class NativeDeVisibilityRuntime {
     }
 
     static int online(NativeDeDeletionPorts.Viewer viewer) {
-        NativeDeClientViewer nativeDeClientViewer;
-        if (viewer instanceof NativeDeClientViewer && NativeDeVisibilityRuntime.client(nativeDeClientViewer = (NativeDeClientViewer)viewer) == null) {
+        if (viewer instanceof NativeDeClientViewer nativeDeClientViewer && NativeDeVisibilityRuntime.client(nativeDeClientViewer) == null) {
             return 0;
         }
         return NativeDeWorldContext.entry((NativeDeDeletionPorts.ObjectRef)viewer).onlineStatus;
     }
 
     static NativeDeWorldConnection connection(NativeDeDeletionPorts.Viewer viewer) {
-        NativeDeClientViewer nativeDeClientViewer;
-        if (viewer instanceof NativeDeClientViewer && NativeDeVisibilityRuntime.client(nativeDeClientViewer = (NativeDeClientViewer)viewer) == null) {
+        if (viewer instanceof NativeDeClientViewer nativeDeClientViewer && NativeDeVisibilityRuntime.client(nativeDeClientViewer) == null) {
             return null;
         }
         return NativeDeWorldContext.entry((NativeDeDeletionPorts.ObjectRef)viewer).connection;
@@ -210,8 +200,7 @@ final class NativeDeVisibilityRuntime {
                 if (queue.closed || !nativeDeClientViewer.binding.matchesFast(clientSession)) {
                     throw new RejectedExecutionException("retired source PC HP read");
                 }
-                int n = NativePlayerCommit.integer(clientSession, bl ? "playerMaxHp" : "playerHp");
-                return n;
+                return NativePlayerCommit.integer(clientSession, bl ? "playerMaxHp" : "playerHp");
             }
             finally {
                 queue.vitalLock.unlock();

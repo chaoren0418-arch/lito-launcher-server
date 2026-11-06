@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -37,8 +37,7 @@ final class NativeDeAiState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Lease acquire(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             return NativeDeAiState.owned(battleTimedStatus).lease();
         }
     }
@@ -47,8 +46,7 @@ final class NativeDeAiState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean current(BattleTimedStatus battleTimedStatus, Lease lease) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             return NativeDeAiState.owned(battleTimedStatus).matches(lease);
         }
     }
@@ -62,8 +60,7 @@ final class NativeDeAiState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static View snapshot(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             return NativeDeAiState.view(NativeDeAiState.owned(battleTimedStatus));
         }
     }
@@ -74,14 +71,13 @@ final class NativeDeAiState {
     static Result perform(BattleTimedStatus battleTimedStatus, Lease lease, final Facts facts, Request request) {
         Objects.requireNonNull(facts);
         Objects.requireNonNull(request);
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             Holder holder = NativeDeAiState.owned(battleTimedStatus);
             if (!holder.matches(lease)) {
                 return null;
             }
             NativeDeAiTimeline.State state = holder.core;
-            final ArrayList<Effect> arrayList = new ArrayList<Effect>();
+            final ArrayList<Effect> effects = new ArrayList<Effect>();
             NativeDeAiTimeline.Port port = new NativeDeAiTimeline.Port(){
 
                 @Override
@@ -111,22 +107,22 @@ final class NativeDeAiState {
 
                 @Override
                 public void removeBackground() {
-                    arrayList.add(new Effect(Kind.REMOVE_BACKGROUND, 0L, 0, false, null));
+                    effects.add(new Effect(Kind.REMOVE_BACKGROUND, 0L, 0, false, null));
                 }
 
                 @Override
                 public void addBackground() {
-                    arrayList.add(new Effect(Kind.ADD_BACKGROUND, 0L, 0, true, null));
+                    effects.add(new Effect(Kind.ADD_BACKGROUND, 0L, 0, true, null));
                 }
 
                 @Override
                 public void dispatch(long l, boolean bl) {
-                    arrayList.add(new Effect(Kind.WORKER, l, 0, bl, null));
+                    effects.add(new Effect(Kind.WORKER, l, 0, bl, null));
                 }
 
                 @Override
                 public Object schedule(long l, int n, boolean bl) {
-                    arrayList.add(new Effect(Kind.TIMER, l, n, bl, null));
+                    effects.add(new Effect(Kind.TIMER, l, n, bl, null));
                     return null;
                 }
 
@@ -137,7 +133,7 @@ final class NativeDeAiState {
 
                 @Override
                 public void cancel(Object object) {
-                    arrayList.add(new Effect(Kind.CANCEL_TIMER, 0L, 0, false, object));
+                    effects.add(new Effect(Kind.CANCEL_TIMER, 0L, 0, false, object));
                 }
             };
             long l = 0L;
@@ -158,7 +154,7 @@ final class NativeDeAiState {
                     NativeDeAiTimeline.wakeup(state, port);
                     break;
                 }
-                case BEGIN_ACTIVE: 
+                case BEGIN_ACTIVE:
                 case BEGIN_BACKGROUND: {
                     l = NativeDeAiTimeline.begin(state, request.owner(), request.op() == Op.BEGIN_BACKGROUND) ? 1L : 0L;
                     break;
@@ -167,7 +163,7 @@ final class NativeDeAiState {
                     NativeDeAiTimeline.background(state, port, request.owner());
                     break;
                 }
-                case TIMER_ACTIVE: 
+                case TIMER_ACTIVE:
                 case TIMER_BACKGROUND: {
                     NativeDeAiTimeline.timer(state, port, request.owner(), request.timer(), request.op() == Op.TIMER_BACKGROUND);
                     break;
@@ -176,7 +172,7 @@ final class NativeDeAiState {
                     NativeDeAiTimeline.failTimer(state, port, request.owner(), request.timer());
                     break;
                 }
-                case RETRY_ACTIVE: 
+                case RETRY_ACTIVE:
                 case RETRY_BACKGROUND: {
                     l = NativeDeAiTimeline.retry(state, request.owner(), request.op() == Op.RETRY_BACKGROUND);
                     break;
@@ -189,7 +185,7 @@ final class NativeDeAiState {
                     NativeDeAiTimeline.ensure(state, port);
                 }
             }
-            return new Result(NativeDeAiState.view(holder), l, arrayList);
+            return new Result(NativeDeAiState.view(holder), l, effects);
         }
     }
 

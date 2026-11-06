@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.ArrayList;
@@ -37,8 +34,7 @@ final class NativeDeLiveAiScope {
         NativeDeInstanceState nativeDeInstanceState2 = current.get();
         current.set(Objects.requireNonNull(nativeDeInstanceState));
         try {
-            Object object = NativeDePerceptionScope.callNested(nativeDeInstanceState, supplier);
-            return object;
+            return NativeDePerceptionScope.callNested(nativeDeInstanceState, supplier);
         }
         finally {
             if (nativeDeInstanceState2 == null) {

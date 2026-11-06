@@ -199,12 +199,6 @@ final class BattleRules {
         // option0 is the server model's independent S_D5 subtype-2 mode; it is
         // not one of the four editable C_CC/C_DD option bytes.
         Mode mode = Mode.fromWire(settings.option0() & 0x7F);
-        return decode(mode, selectedMapId, controls);
-    }
-
-    /** Shared rule construction without manufacturing a native room-dialog packet model. */
-    static RuleSet decode(Mode mode, int selectedMapId, BattleControlCatalog controls) {
-        java.util.Objects.requireNonNull(mode, "mode");
         if (!mode.maps().contains(selectedMapId)) {
             throw new IllegalArgumentException(
                     "map " + selectedMapId + " does not belong to native mode " + mode.wireId());

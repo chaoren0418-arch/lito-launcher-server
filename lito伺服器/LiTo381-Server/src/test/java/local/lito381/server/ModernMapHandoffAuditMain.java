@@ -38,7 +38,7 @@ public final class ModernMapHandoffAuditMain {
         Files.writeString(out.resolve("qualified-legacy-dm-worlds.properties"),text,StandardCharsets.UTF_8);
         var natives=new ArrayList<String>();var births=BattleControlCatalog.defaultPlayerSpawns();
         for(var mode:BattleRules.Mode.values())if(mode.isBattleScene())for(int id:mode.maps()) {
-            var rule=BattleRules.decode(mode,id,BattleControlCatalog.defaults());var arena=ArenaMapCatalog.forMap(id);
+            var rule=BattleRules.decode(new GameHub.RoomSettings("", "", 2, mode.wireId(), 0, 0, 0, 0),id,BattleControlCatalog.defaults());var arena=ArenaMapCatalog.forMap(id);
             var row=births.stream().filter(s->s.modeId()==mode.wireId()&&s.mapId()==id).toList();
             var nativeEntry=NativeLitoMapTableCatalog.forMap(id);
             natives.add("{\"mode\":"+mode.wireId()+",\"logical\":"+id+",\"native_name\":"+quote(nativeEntry.name())+",\"native_category\":"+quote(nativeEntry.category())+",\"native_sector_count\":"+arena.loadedSectors().size()+",\"native_builtin_rule_seconds\":"+rule.timeLimitSeconds()+",\"native_builtin_goal\":"+rule.goal()+",\"native_builtin_minimum_players\":"+rule.minimumPlayers()+",\"native_player_spawn_count\":"+row.size()+",\"native_spawns\":["+row.stream().map(s->"["+s.x()+","+s.y()+"]").collect(Collectors.joining(","))+"]}");

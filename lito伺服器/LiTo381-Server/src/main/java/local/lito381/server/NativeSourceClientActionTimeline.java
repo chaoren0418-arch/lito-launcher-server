@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -40,8 +40,7 @@ public final class NativeSourceClientActionTimeline {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     public long getActionDelayMs() {
-        Object object = this._mutationLock;
-        synchronized (object) {
+        synchronized (this._mutationLock) {
             Deadline deadline = this.latestVisibleWindow(this._nanoClock.getAsLong());
             if (deadline == null) {
                 return 0L;
@@ -67,9 +66,7 @@ public final class NativeSourceClientActionTimeline {
         }
         long l2 = TimeUnit.MILLISECONDS.toNanos(l);
         long l3 = NativeSourcePacketExecutionContext.getArrivalNanos();
-        Object object = this._mutationLock;
-        synchronized (object) {
-            long l4;
+        synchronized (this._mutationLock) {
             long l5 = this._nanoClock.getAsLong();
             Deadline deadline = this.latestVisibleWindow(l5);
             Deadline deadline2 = this._nextIngressActionAtNanos.get();
@@ -77,13 +74,13 @@ public final class NativeSourceClientActionTimeline {
             long l7 = 0L;
             boolean bl = false;
             if (NativeSourceClientActionTimeline.isActiveAt(deadline, l5)) {
-                l4 = deadline.nanos() - l5;
+                long l4 = deadline.nanos() - l5;
                 bl = true;
                 l6 = l4;
                 l7 = l4;
             }
             if (NativeSourceClientActionTimeline.isActiveAt(deadline2, l3)) {
-                l4 = deadline2.nanos() - l3;
+                long l4 = deadline2.nanos() - l3;
                 if (deadline2.kind() != ActionKind.SKILL && (l2 <= 0L || l4 > l2)) {
                     return null;
                 }
@@ -101,34 +98,36 @@ public final class NativeSourceClientActionTimeline {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public ActionBlockSnapshot getActionBlockSnapshot() {
-        boolean bl = NativeSourcePacketExecutionContext.hasArrivalNanos();
-        long l = NativeSourcePacketExecutionContext.getArrivalNanos();
-        Object object = this._mutationLock;
-        synchronized (object) {
-            long l2 = this._nanoClock.getAsLong();
-            Deadline deadline = this._nextIngressActionAtNanos.get();
-            Deadline deadline2 = this.latestVisibleWindow(l2);
-            long l3 = bl ? l : l2;
-            return new ActionBlockSnapshot(NativeSourceClientActionTimeline.activeKindName(deadline, l3), NativeSourceClientActionTimeline.remainingMillis(deadline, l3), NativeSourceClientActionTimeline.activeKindName(deadline2, l2), NativeSourceClientActionTimeline.remainingMillis(deadline2, l2), bl);
-        }
-    }
+   public NativeSourceClientActionTimeline.ActionBlockSnapshot getActionBlockSnapshot() {
+      boolean var1 = NativeSourcePacketExecutionContext.hasArrivalNanos();
+      long var2 = NativeSourcePacketExecutionContext.getArrivalNanos();
+      synchronized (this._mutationLock) {
+         long var5 = this._nanoClock.getAsLong();
+         NativeSourceClientActionTimeline.Deadline var7 = this._nextIngressActionAtNanos.get();
+         NativeSourceClientActionTimeline.Deadline var8 = this.latestVisibleWindow(var5);
+         long var9 = var1 ? var2 : var5;
+         return new NativeSourceClientActionTimeline.ActionBlockSnapshot(
+            activeKindName(var7, var9), remainingMillis(var7, var9), activeKindName(var8, var5), remainingMillis(var8, var5), var1
+         );
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public ActionBlockSnapshot getMovementBlockSnapshot() {
-        boolean bl = NativeSourcePacketExecutionContext.hasArrivalNanos();
-        long l = NativeSourcePacketExecutionContext.getArrivalNanos();
-        Object object = this._mutationLock;
-        synchronized (object) {
-            long l2 = this._nanoClock.getAsLong();
-            Deadline deadline = this._nextIngressMoveAtNanos.get();
-            Deadline deadline2 = this._nextVisibleMoveAtNanos.get();
-            long l3 = bl ? l : l2;
-            return new ActionBlockSnapshot(NativeSourceClientActionTimeline.activeKindName(deadline, l3), NativeSourceClientActionTimeline.remainingMillis(deadline, l3), NativeSourceClientActionTimeline.activeKindName(deadline2, l2), NativeSourceClientActionTimeline.remainingMillis(deadline2, l2), bl);
-        }
-    }
+   public NativeSourceClientActionTimeline.ActionBlockSnapshot getMovementBlockSnapshot() {
+      boolean var1 = NativeSourcePacketExecutionContext.hasArrivalNanos();
+      long var2 = NativeSourcePacketExecutionContext.getArrivalNanos();
+      synchronized (this._mutationLock) {
+         long var5 = this._nanoClock.getAsLong();
+         NativeSourceClientActionTimeline.Deadline var7 = this._nextIngressMoveAtNanos.get();
+         NativeSourceClientActionTimeline.Deadline var8 = this._nextVisibleMoveAtNanos.get();
+         long var9 = var1 ? var2 : var5;
+         return new NativeSourceClientActionTimeline.ActionBlockSnapshot(
+            activeKindName(var7, var9), remainingMillis(var7, var9), activeKindName(var8, var5), remainingMillis(var8, var5), var1
+         );
+      }
+   }
 
     private static String activeKindName(Deadline deadline, long l) {
         return NativeSourceClientActionTimeline.isActiveAt(deadline, l) ? deadline.kind().name() : "NONE";
@@ -153,8 +152,7 @@ public final class NativeSourceClientActionTimeline {
         boolean bl = NativeSourcePacketExecutionContext.hasArrivalNanos();
         long l2 = NativeSourcePacketExecutionContext.getArrivalNanos();
         long l3 = TimeUnit.MILLISECONDS.toNanos(NativeSourceClientActionTimeline.resolvedDuration(l));
-        Object object = this._mutationLock;
-        synchronized (object) {
+        synchronized (this._mutationLock) {
             long l4 = this._nanoClock.getAsLong();
             long l5 = bl ? l2 : l4;
             Deadline deadline = this._nextIngressMoveAtNanos.get();
@@ -179,86 +177,81 @@ public final class NativeSourceClientActionTimeline {
         return new Deadline(NativeSourceClientActionTimeline.addDuration(l3, l2), ActionKind.MOVE, l);
     }
 
-    private Reservation tryReserve(AtomicReference<Deadline> atomicReference, long l, ActionKind actionKind, boolean bl) {
-        long l2 = NativeSourcePacketExecutionContext.getArrivalNanos();
-        boolean bl2 = NativeSourcePacketExecutionContext.hasArrivalNanos();
-        long l3 = TimeUnit.MILLISECONDS.toNanos(NativeSourceClientActionTimeline.resolvedDuration(l));
-        Object object = this._mutationLock;
-        synchronized (object) {
-            Deadline deadline;
-            boolean bl3;
-            Deadline deadline2;
-            Deadline deadline3;
-            long l4 = this._nanoClock.getAsLong();
-            long l5 = bl2 ? l2 : l4;
-            AtomicReference<Deadline> atomicReference2 = actionKind == ActionKind.MOVE ? this._nextVisibleMoveAtNanos : this._nextVisibleActionAtNanos;
-            Deadline deadline4 = deadline3 = actionKind == ActionKind.MOVE ? this._nextVisibleActionAtNanos.get() : this._nextVisibleMoveAtNanos.get();
-            if (NativeSourceClientActionTimeline.isActiveAt(deadline3, l4) && actionKind == ActionKind.ATTACK) {
-                return null;
-            }
-            if (NativeSourceClientActionTimeline.isStaleSkillPacket(bl2, actionKind, l5, l4, l3)) {
+    private Reservation tryReserve(AtomicReference<Deadline> ingress, long durationMillis, ActionKind kind, boolean allowInterrupt) {
+        long arrival = NativeSourcePacketExecutionContext.getArrivalNanos();
+        boolean hasArrival = NativeSourcePacketExecutionContext.hasArrivalNanos();
+        long duration = TimeUnit.MILLISECONDS.toNanos(resolvedDuration(durationMillis));
+        synchronized (this._mutationLock) {
+            long now = this._nanoClock.getAsLong();
+            long actionTime = hasArrival ? arrival : now;
+            AtomicReference<Deadline> visible = kind == ActionKind.MOVE ? this._nextVisibleMoveAtNanos : this._nextVisibleActionAtNanos;
+            Deadline other = kind == ActionKind.MOVE ? this._nextVisibleActionAtNanos.get() : this._nextVisibleMoveAtNanos.get();
+            if (isActiveAt(other, now) && kind == ActionKind.ATTACK) return null;
+            if (isStaleSkillPacket(hasArrival, kind, actionTime, now, duration)) {
                 STALE_SKILL_REJECT_COUNT.incrementAndGet();
                 return null;
             }
-            Deadline deadline5 = atomicReference2.get();
-            if (NativeSourceClientActionTimeline.conflictsWithSkillAtIngress(bl2, actionKind, l5, deadline5)) {
-                NativeSourceClientActionTimeline.recordSkillConflict(actionKind, deadline5);
+            Deadline initialVisible = visible.get();
+            if (conflictsWithSkillAtIngress(hasArrival, kind, actionTime, initialVisible)) {
+                recordSkillConflict(kind, initialVisible);
                 return null;
             }
-            Deadline deadline6 = new Deadline(NativeSourceClientActionTimeline.addDuration(l5, l3), actionKind);
-            do {
-                if ((bl3 = NativeSourceClientActionTimeline.isActiveAt(deadline = atomicReference2.get(), l4)) && !NativeSourceClientActionTimeline.canInterrupt(actionKind, deadline, bl)) {
-                    NativeSourceClientActionTimeline.recordSkillConflict(actionKind, deadline);
+            Deadline next = new Deadline(addDuration(actionTime, duration), kind);
+            while (true) {
+                Deadline previousVisible = visible.get();
+                boolean visibleActive = isActiveAt(previousVisible, now);
+                if (visibleActive && !canInterrupt(kind, previousVisible, allowInterrupt)) {
+                    recordSkillConflict(kind, previousVisible);
                     return null;
                 }
-                deadline2 = atomicReference.get();
-                boolean bl4 = NativeSourceClientActionTimeline.isActiveAt(deadline2, l5);
-                if (!bl4 || NativeSourceClientActionTimeline.canInterrupt(actionKind, deadline2, bl)) continue;
-                NativeSourceClientActionTimeline.recordSkillConflict(actionKind, deadline2);
-                return null;
-            } while (!atomicReference.compareAndSet(deadline2, deadline6));
-            VisibleWindow visibleWindow = this.replaceVisibleWindow(atomicReference2, deadline, l3, l4, actionKind);
-            if (visibleWindow == null) {
-                atomicReference.compareAndSet(deadline6, deadline2);
-                return null;
-            }
-            if (actionKind == ActionKind.SKILL) {
-                if (bl3) {
-                    NativeSourceClientActionTimeline.recordSkillInterruption(deadline.kind());
-                } else if (NativeSourceClientActionTimeline.isActiveAt(deadline3, l4)) {
-                    NativeSourceClientActionTimeline.recordSkillInterruption(deadline3.kind());
+                Deadline previous = ingress.get();
+                boolean ingressActive = isActiveAt(previous, actionTime);
+                if (ingressActive && !canInterrupt(kind, previous, allowInterrupt)) {
+                    recordSkillConflict(kind, previous);
+                    return null;
+                }
+                if (ingress.compareAndSet(previous, next)) {
+                    VisibleWindow window = this.replaceVisibleWindow(visible, previousVisible, duration, now, kind);
+                    if (window == null) {
+                        ingress.compareAndSet(next, previous);
+                        return null;
+                    }
+                    if (kind == ActionKind.SKILL) {
+                        if (visibleActive) recordSkillInterruption(previousVisible.kind());
+                        else if (isActiveAt(other, now)) recordSkillInterruption(other.kind());
+                    }
+                    return new Reservation(this._mutationLock, ingress, previous, next, visible, window.previous(), window.reservedUntil(), this._nanoClock, duration);
                 }
             }
-            return new Reservation(this._mutationLock, atomicReference, deadline2, deadline6, atomicReference2, visibleWindow.previous(), visibleWindow.reservedUntil(), this._nanoClock, l3);
         }
     }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public void reserveAction(long l) {
-        long l2 = TimeUnit.MILLISECONDS.toNanos(NativeSourceClientActionTimeline.resolvedDuration(l));
-        Object object = this._mutationLock;
-        synchronized (object) {
-            long l3 = this._nanoClock.getAsLong();
-            Deadline deadline = new Deadline(NativeSourceClientActionTimeline.addDuration(NativeSourceClientActionTimeline.resolveActionTimeNanos(l3), l2), ActionKind.ATTACK);
-            NativeSourceClientActionTimeline.maxSet(this._nextIngressActionAtNanos, deadline);
-            this.reserveVisibleWindow(l2, l3, ActionKind.ATTACK);
-        }
-    }
+   public void reserveAction(long var1) {
+      long var3 = TimeUnit.MILLISECONDS.toNanos(resolvedDuration(var1));
+      synchronized (this._mutationLock) {
+         long var6 = this._nanoClock.getAsLong();
+         NativeSourceClientActionTimeline.Deadline var8 = new NativeSourceClientActionTimeline.Deadline(
+            addDuration(resolveActionTimeNanos(var6), var3), NativeSourceClientActionTimeline.ActionKind.ATTACK
+         );
+         maxSet(this._nextIngressActionAtNanos, var8);
+         this.reserveVisibleWindow(var3, var6, NativeSourceClientActionTimeline.ActionKind.ATTACK);
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    public void clear() {
-        Object object = this._mutationLock;
-        synchronized (object) {
-            this._nextIngressActionAtNanos.set(null);
-            this._nextIngressMoveAtNanos.set(null);
-            this._nextVisibleActionAtNanos.set(null);
-            this._nextVisibleMoveAtNanos.set(null);
-        }
-    }
+   public void clear() {
+      synchronized (this._mutationLock) {
+         this._nextIngressActionAtNanos.set(null);
+         this._nextIngressMoveAtNanos.set(null);
+         this._nextVisibleActionAtNanos.set(null);
+         this._nextVisibleMoveAtNanos.set(null);
+      }
+   }
 
     private static long resolvedDuration(long l) {
         return Math.max(0L, l);
@@ -280,27 +273,28 @@ public final class NativeSourceClientActionTimeline {
         return atomicReference.compareAndSet(deadline, deadline2) ? new VisibleWindow(deadline, deadline2) : null;
     }
 
-    private VisibleWindow reserveVisibleWindow(long l, long l2, ActionKind actionKind) {
-        Deadline deadline;
-        Deadline deadline2;
-        do {
-            deadline2 = this._nextVisibleActionAtNanos.get();
-            long l3 = deadline2 == null ? 0L : Math.max(0L, deadline2.nanos() - l2);
-            long l4 = l3 + l;
-            deadline = new Deadline(NativeSourceClientActionTimeline.addDuration(l2, l4), actionKind);
-        } while (!this._nextVisibleActionAtNanos.compareAndSet(deadline2, deadline));
-        return new VisibleWindow(deadline2, deadline);
+    private VisibleWindow reserveVisibleWindow(long duration, long now, ActionKind kind) {
+        while (true) {
+            Deadline previous = this._nextVisibleActionAtNanos.get();
+            long remaining = previous == null ? 0L : Math.max(0L, previous.nanos() - now);
+            long total = remaining + duration;
+            Deadline reserved = new Deadline(addDuration(now, total), kind);
+            if (this._nextVisibleActionAtNanos.compareAndSet(previous, reserved)) {
+                return new VisibleWindow(previous, reserved);
+            }
+        }
     }
 
-    private static void maxSet(AtomicReference<Deadline> atomicReference, Deadline deadline) {
-        boolean bl;
-        do {
-            Deadline deadline2;
-            boolean bl2 = bl = (deadline2 = atomicReference.get()) != null && !NativeSourceClientActionTimeline.isAfter(deadline.nanos(), deadline2.nanos());
-            if (bl) continue;
-            bl = atomicReference.compareAndSet(deadline2, deadline);
-        } while (!bl);
-    }
+   private static void maxSet(AtomicReference<NativeSourceClientActionTimeline.Deadline> var0, NativeSourceClientActionTimeline.Deadline var1) {
+      boolean var2;
+      do {
+         NativeSourceClientActionTimeline.Deadline var3 = (NativeSourceClientActionTimeline.Deadline)var0.get();
+         var2 = var3 != null && !isAfter(var1.nanos(), var3.nanos());
+         if (!var2) {
+            var2 = var0.compareAndSet(var3, var1);
+         }
+      } while (!var2);
+   }
 
     private static boolean isAfter(long l, long l2) {
         return l - l2 > 0L;
@@ -309,30 +303,30 @@ public final class NativeSourceClientActionTimeline {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    private boolean canReserve(AtomicReference<Deadline> atomicReference, ActionKind actionKind, boolean bl) {
-        long l = NativeSourcePacketExecutionContext.getArrivalNanos();
-        boolean bl2 = NativeSourcePacketExecutionContext.hasArrivalNanos();
-        Object object = this._mutationLock;
-        synchronized (object) {
-            long l2 = this._nanoClock.getAsLong();
-            long l3 = bl2 ? l : l2;
-            Deadline deadline = this._nextVisibleActionAtNanos.get();
-            if (NativeSourceClientActionTimeline.conflictsWithSkillAtIngress(bl2, actionKind, l3, deadline)) {
-                NativeSourceClientActionTimeline.recordSkillConflict(actionKind, deadline);
-                return false;
+   private boolean canReserve(AtomicReference<NativeSourceClientActionTimeline.Deadline> var1, NativeSourceClientActionTimeline.ActionKind var2, boolean var3) {
+      long var4 = NativeSourcePacketExecutionContext.getArrivalNanos();
+      boolean var6 = NativeSourcePacketExecutionContext.hasArrivalNanos();
+      synchronized (this._mutationLock) {
+         long var8 = this._nanoClock.getAsLong();
+         long var10 = var6 ? var4 : var8;
+         NativeSourceClientActionTimeline.Deadline var12 = this._nextVisibleActionAtNanos.get();
+         if (conflictsWithSkillAtIngress(var6, var2, var10, var12)) {
+            recordSkillConflict(var2, var12);
+            return false;
+         } else if (isActiveAt(var12, var8) && !canInterrupt(var2, var12, var3)) {
+            recordSkillConflict(var2, var12);
+            return false;
+         } else {
+            NativeSourceClientActionTimeline.Deadline var13 = (NativeSourceClientActionTimeline.Deadline)var1.get();
+            if (isActiveAt(var13, var10) && !canInterrupt(var2, var13, var3)) {
+               recordSkillConflict(var2, var13);
+               return false;
+            } else {
+               return true;
             }
-            if (NativeSourceClientActionTimeline.isActiveAt(deadline, l2) && !NativeSourceClientActionTimeline.canInterrupt(actionKind, deadline, bl)) {
-                NativeSourceClientActionTimeline.recordSkillConflict(actionKind, deadline);
-                return false;
-            }
-            Deadline deadline2 = atomicReference.get();
-            if (NativeSourceClientActionTimeline.isActiveAt(deadline2, l3) && !NativeSourceClientActionTimeline.canInterrupt(actionKind, deadline2, bl)) {
-                NativeSourceClientActionTimeline.recordSkillConflict(actionKind, deadline2);
-                return false;
-            }
-            return true;
-        }
-    }
+         }
+      }
+   }
 
     private static boolean isActiveAt(Deadline deadline, long l) {
         return deadline != null && NativeSourceClientActionTimeline.isAfter(deadline.nanos(), l);
@@ -432,8 +426,7 @@ public final class NativeSourceClientActionTimeline {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         public boolean commitAtRuntime() {
-            Object object = this._mutationLock;
-            synchronized (object) {
+            synchronized (this._mutationLock) {
                 if (!this._cancelOpen.get()) {
                     return false;
                 }
@@ -455,8 +448,7 @@ public final class NativeSourceClientActionTimeline {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         public boolean cancel() {
-            Object object = this._mutationLock;
-            synchronized (object) {
+            synchronized (this._mutationLock) {
                 if (!this._cancelOpen.compareAndSet(true, false)) {
                     return false;
                 }

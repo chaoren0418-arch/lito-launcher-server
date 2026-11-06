@@ -278,7 +278,7 @@ final class InventoryCatalog {
         private static final int MAX_NATIVE_STATUS_ROWS = 16;
 
         NativeArmorStatus {
-            if (displayArmorClass < 0 || displayArmorClass > 0xFF
+            if (displayArmorClass < 0 || displayArmorClass > Integer.MAX_VALUE
                     || material < 0 || material > 0xFF || unitWeight < 0
                     || classMask < 0 || classMask > 0x7F
                     || safeEnchant < -1 || safeEnchant > 0x7F
@@ -296,7 +296,7 @@ final class InventoryCatalog {
                     Math.min(0xFFFF_FFFFL,
                             Math.multiplyExact(quantity, (long) unitWeight) / 1_000L));
             Protocol.Writer out = new Protocol.Writer()
-                    .c(0x13).c(displayArmorClass).c(material).d(weight);
+                    .c(0x13).c(Math.min(displayArmorClass, 255)).c(material).d(weight);
             // Tag 0x13 renders one armor row and its material renders one row
             // after decoding has completed.
             int rows = 2;
@@ -508,6 +508,7 @@ final class InventoryCatalog {
 
         /** Exact same-family S_Ability selector, or -1 for ordinary items. */
         int controlAbilityType() {
+            if (catalogId == 120284L) return 5;
             if (catalogId == RING_OF_TELEPORT_CONTROL) return 1;
             if (catalogId == RING_OF_POLYMORPH_CONTROL) return 2;
             if (catalogId == RING_OF_SUMMON_CONTROL) return 5;

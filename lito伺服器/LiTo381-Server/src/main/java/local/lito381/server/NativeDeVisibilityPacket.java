@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.ByteArrayOutputStream;
@@ -93,8 +90,6 @@ extends NativeDeDeletionPorts.Packet {
     }
 
     protected final synchronized byte[] getBytes() {
-        byte[] byArray;
-        int n;
         IllegalStateException illegalStateException = this._constructionFailure;
         if (illegalStateException != null) {
             throw illegalStateException;
@@ -105,18 +100,19 @@ extends NativeDeDeletionPorts.Packet {
         }
         int n2 = this._bao.size();
         int n3 = 8 - (n2 & 7) & 7;
+        byte[] byArray;
         try {
-            for (n = 0; n < n3; ++n) {
+            for (int n = 0; n < n3; ++n) {
                 this._bao.write(0);
             }
             byArray = this._bao.toByteArray();
         }
-        catch (Error | RuntimeException throwable) {
+        catch (RuntimeException | Error throwable) {
             long l = NativeDeVisibilityScope.FINALIZE_FAILURE_COUNT().incrementAndGet();
             NativeDeVisibilityScope.log().warn("[PacketSafety] payload finalization failed: packet={} rawLength={} thread={} failures={}", (Object)this.getDiagnosticContext(), (Object)n2, (Object)Thread.currentThread().getName(), (Object)l, (Object)throwable);
             throw throwable;
         }
-        n = n2 + n3;
+        int n = n2 + n3;
         if (byArray.length != n || (byArray.length & 7) != 0) {
             long l = NativeDeVisibilityScope.FINALIZE_INVARIANT_COUNT().incrementAndGet();
             NativeDeVisibilityScope.log().warn("[PacketSafety] payload finalization invariant failed: packet={} rawLength={} padding={} actualLength={} thread={} violations={}", (Object)this.getDiagnosticContext(), (Object)n2, (Object)n3, (Object)byArray.length, (Object)Thread.currentThread().getName(), (Object)l);

@@ -35,16 +35,16 @@ final class NativeLitoTownPortalCatalog {
 
     static Route find(int mapId, int x, int y) {
         Map<Point, Route> routes = ROUTES.get(mapId);
-        return routes == null ? null : routes.get(new Point(x, y));
+        return ResourceDatabase.portal(routes == null ? null : routes.get(new Point(x, y)), mapId, x, y);
     }
 
     static List<Route> routesForMap(int mapId) {
         Map<Point, Route> routes = ROUTES.get(mapId);
-        return routes == null ? List.of() : List.copyOf(routes.values());
+        return ResourceDatabase.portals(routes == null ? List.of() : List.copyOf(routes.values()), mapId);
     }
 
     static int routeCount() {
-        return ROUTES.values().stream().mapToInt(Map::size).sum();
+        return ResourceDatabase.portalCount(ROUTES.values().stream().mapToInt(Map::size).sum());
     }
 
     private static RouteData routes(int mapId, String rows) {

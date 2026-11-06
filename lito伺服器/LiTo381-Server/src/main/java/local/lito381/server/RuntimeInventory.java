@@ -405,7 +405,7 @@ final class RuntimeInventory {
         }
     }
 
-    private final LinkedHashMap<Long, Item> items;
+    private Map<Long, Item> items;
     private final Map<Long, SourceWeaponPhysicalStats> sourcePhysicalWeapons;
 
     RuntimeInventory() {
@@ -413,7 +413,7 @@ final class RuntimeInventory {
         this.sourcePhysicalWeapons = new LinkedHashMap<>();
     }
 
-    private RuntimeInventory(LinkedHashMap<Long, Item> items,
+    private RuntimeInventory(Map<Long, Item> items,
                              Map<Long, SourceWeaponPhysicalStats> sourcePhysicalWeapons) {
         this.items = items;
         this.sourcePhysicalWeapons = sourcePhysicalWeapons == null
@@ -553,9 +553,9 @@ final class RuntimeInventory {
         return inventory;
     }
 
-    RuntimeInventory copy() {
-        return new RuntimeInventory(
-                new LinkedHashMap<>(items), sourcePhysicalWeapons);
+    synchronized RuntimeInventory copy() {
+        return NativeDeItemInventory.preserveCopy(this, new RuntimeInventory(
+                new LinkedHashMap<>(items), sourcePhysicalWeapons));
     }
 
     /**
@@ -564,8 +564,8 @@ final class RuntimeInventory {
      * Tournament prizes. Source consumables, projectiles and every bought
      * LiTo match item are excluded.
      */
-    RuntimeInventory sourceEquipmentOnly() {
-        LinkedHashMap<Long, Item> retained = new LinkedHashMap<>();
+    synchronized RuntimeInventory sourceEquipmentOnly() {
+        Map<Long, Item> retained = new LinkedHashMap<>();
         for (Map.Entry<Long, Item> entry : items.entrySet()) {
             Item item = entry.getValue();
             if ((item.sourceBound()
@@ -592,7 +592,7 @@ final class RuntimeInventory {
         }
         RuntimeInventory result = new RuntimeInventory(retained, retainedWeapons);
         result.validateSourcePhysicalWeapons();
-        return result;
+        return NativeDeItemInventory.preserveCopy(this, result);
     }
 
     /**
@@ -601,9 +601,9 @@ final class RuntimeInventory {
      * caller must atomically persist matching source tombstones before using
      * the returned inventory.
      */
-    RuntimeInventory withoutObjects(Set<Long> objectIds) {
-        if (objectIds == null || objectIds.isEmpty()) return copy();
-        LinkedHashMap<Long, Item> retained = new LinkedHashMap<>(items);
+    synchronized RuntimeInventory withoutObjects(Set<Long> objectIds) {
+        if (objectIds == null || objectIds.isEmpty()) return NativeDeItemInventory.preserveCopy(this, copy());
+        Map<Long, Item> retained = new LinkedHashMap<>(items);
         for (Long objectId : objectIds) {
             if (objectId != null) retained.remove(objectId);
         }
@@ -612,10 +612,10 @@ final class RuntimeInventory {
         for (Long objectId : objectIds) {
             if (objectId != null) retainedWeapons.remove(objectId);
         }
-        return new RuntimeInventory(retained, retainedWeapons);
+        return NativeDeItemInventory.preserveCopy(this, new RuntimeInventory(retained, retainedWeapons));
     }
 
-    private void validateSourcePhysicalWeapons() {
+    private synchronized void validateSourcePhysicalWeapons() {
         for (Map.Entry<Long, SourceWeaponPhysicalStats> entry
                 : sourcePhysicalWeapons.entrySet()) {
             Item item = items.get(entry.getKey());
@@ -630,27 +630,27 @@ final class RuntimeInventory {
         }
     }
 
-    List<Item> items() {
+    synchronized List<Item> items() {
         return List.copyOf(items.values());
     }
 
-    long countCatalog(long catalogId) {
+    synchronized long countCatalog(long catalogId) {
         if (catalogId <= 0) return 0;
         return items.values().stream()
                 .filter(item -> item.definition().catalogId() == catalogId)
                 .mapToLong(Item::quantity).sum();
     }
 
-    Item item(long objectId) {
+    synchronized Item item(long objectId) {
         return items.get(objectId);
     }
 
-    int size() {
+    synchronized int size() {
         return items.size();
     }
 
     /** Exact L1Inventory saturating aggregate for LiTo-owned runtime items. */
-    int totalWeight() {
+    synchronized int totalWeight() {
         int total = 0;
         for (Item item : items.values()) {
             total = BattleInventoryWeight.addWeight(total,
@@ -660,12 +660,13 @@ final class RuntimeInventory {
         return total;
     }
 
-    void clear() {
+    synchronized void clear() {
         items.clear();
     }
 
     /** Retained {@code L1Inventory.shuffle}; affects subsequent first-stack lookup. */
-    void shuffle(Random random) {
+    synchronized void shuffle(Random random) {
+        if (NativeDeItemInventory.shuffle(this, random)) return;
         if (random == null) throw new IllegalArgumentException("missing inventory random");
         List<Map.Entry<Long, Item>> shuffled = new ArrayList<>(items.entrySet());
         Collections.shuffle(shuffled, random);
@@ -675,22 +676,22 @@ final class RuntimeInventory {
         }
     }
 
-    boolean add(InventoryCatalog.Definition definition, long quantity) {
+    synchronized boolean add(InventoryCatalog.Definition definition, long quantity) {
         return add(definition, quantity, RuntimeInventory::nextObjectId);
     }
 
-    boolean add(InventoryCatalog.Definition definition, long quantity, LongSupplier allocator) {
+    synchronized boolean add(InventoryCatalog.Definition definition, long quantity, LongSupplier allocator) {
         if (definition == null || quantity <= 0 || quantity > Integer.MAX_VALUE || allocator == null) {
             return false;
         }
         return addState(definition, PersistentItem.defaults(definition, (int) quantity), allocator);
     }
 
-    boolean addTournamentReward(InventoryCatalog.Definition definition, long quantity) {
+    synchronized boolean addTournamentReward(InventoryCatalog.Definition definition, long quantity) {
         return addTournamentReward(definition, quantity, RuntimeInventory::nextObjectId);
     }
 
-    boolean addTournamentReward(InventoryCatalog.Definition definition, long quantity,
+    synchronized boolean addTournamentReward(InventoryCatalog.Definition definition, long quantity,
                                 LongSupplier allocator) {
         if (definition == null || quantity <= 0 || quantity > Integer.MAX_VALUE
                 || allocator == null) {
@@ -704,7 +705,7 @@ final class RuntimeInventory {
     }
 
     /** Native one-way system grant: identified, exact enchant, and merge-safe. */
-    boolean addSystemReward(InventoryCatalog.Definition definition, long quantity,
+    synchronized boolean addSystemReward(InventoryCatalog.Definition definition, long quantity,
                             int enchantLevel) {
         if (definition == null || quantity <= 0 || quantity > Integer.MAX_VALUE
                 || enchantLevel < -128 || enchantLevel > 127
@@ -725,11 +726,11 @@ final class RuntimeInventory {
      *
      * @return admitted/allocated object id, or zero when the state cannot be admitted
      */
-    long addDistinctState(InventoryCatalog.Definition definition, PersistentItem state) {
+    synchronized long addDistinctState(InventoryCatalog.Definition definition, PersistentItem state) {
         return addDistinctState(definition, state, RuntimeInventory::nextObjectId);
     }
 
-    long addDistinctState(InventoryCatalog.Definition definition, PersistentItem state,
+    synchronized long addDistinctState(InventoryCatalog.Definition definition, PersistentItem state,
                           LongSupplier allocator) {
         if (definition == null || state == null || allocator == null
                 || state.quantity() <= 0
@@ -752,11 +753,11 @@ final class RuntimeInventory {
     }
 
     /** Transfers one native object without discarding its mutable item state. */
-    boolean add(Item source, long quantity) {
+    synchronized boolean add(Item source, long quantity) {
         return add(source, quantity, RuntimeInventory::nextObjectId);
     }
 
-    boolean add(Item source, long quantity, LongSupplier allocator) {
+    synchronized boolean add(Item source, long quantity, LongSupplier allocator) {
         if (source == null || quantity <= 0 || quantity > source.quantity()
                 || quantity > Integer.MAX_VALUE || allocator == null) {
             return false;
@@ -779,7 +780,7 @@ final class RuntimeInventory {
      * do not split the stack in the original server.  A new stack keeps the
      * transferred object id and state when the whole ground object moves.
      */
-    boolean addTransferred(Item source, long quantity) {
+    synchronized boolean addTransferred(Item source, long quantity) {
         return addTransferred(source, quantity, RuntimeInventory::nextObjectId);
     }
 
@@ -789,25 +790,25 @@ final class RuntimeInventory {
      * native NPC digest timer.  A stack merge therefore returns the already
      * owned stack rather than the sender's object id.
      */
-    Item addTransferredResult(Item source, long quantity) {
+    synchronized Item addTransferredResult(Item source, long quantity) {
         return addTransferredResult(source, quantity, RuntimeInventory::nextObjectId);
     }
 
-    Item addTransferredResult(Item source, long quantity, LongSupplier allocator) {
+    synchronized Item addTransferredResult(Item source, long quantity, LongSupplier allocator) {
         return addTransferResult(source, quantity, allocator, true);
     }
 
     /** Native ground pickup uses storeTradeItem without a tradability gate. */
-    Item addGroundTransferredResult(Item source, long quantity) {
+    synchronized Item addGroundTransferredResult(Item source, long quantity) {
         return addTransferResult(
                 source, quantity, RuntimeInventory::nextObjectId, false);
     }
 
-    boolean addGroundTransferred(Item source, long quantity) {
+    synchronized boolean addGroundTransferred(Item source, long quantity) {
         return addGroundTransferredResult(source, quantity) != null;
     }
 
-    private Item addTransferResult(Item source, long quantity,
+    private synchronized Item addTransferResult(Item source, long quantity,
                                    LongSupplier allocator,
                                    boolean requireTransferable) {
         if (source == null || quantity <= 0 || quantity > source.quantity()
@@ -844,11 +845,11 @@ final class RuntimeInventory {
         throw new IllegalStateException("transferred item admitted without destination object");
     }
 
-    boolean addTransferred(Item source, long quantity, LongSupplier allocator) {
+    synchronized boolean addTransferred(Item source, long quantity, LongSupplier allocator) {
         return addTransferredResult(source, quantity, allocator) != null;
     }
 
-    private boolean addState(InventoryCatalog.Definition definition,
+    private synchronized boolean addState(InventoryCatalog.Definition definition,
                              PersistentItem state, LongSupplier allocator) {
         if (definition == null || state == null || allocator == null
                 || ((state.durability() > 0 || state.enchantLevel() != 0)
@@ -907,7 +908,7 @@ final class RuntimeInventory {
         return true;
     }
 
-    boolean decrementCharge(long objectId) {
+    synchronized boolean decrementCharge(long objectId) {
         Item existing = items.get(objectId);
         if (existing == null || existing.chargeCount() <= 0) return false;
         items.put(objectId, existing.withChargeCount(existing.chargeCount() - 1));
@@ -919,7 +920,7 @@ final class RuntimeInventory {
                 || definition.sourceArmor();
     }
 
-    boolean remove(long objectId, long quantity) {
+    synchronized boolean remove(long objectId, long quantity) {
         Item existing = items.get(objectId);
         if (existing == null || sourcePhysicalWeapons.containsKey(objectId)
                 || existing.sourceBound() && !existing.litoOwned()
@@ -933,7 +934,7 @@ final class RuntimeInventory {
         return true;
     }
 
-    boolean removeCatalog(long catalogId, long quantity) {
+    synchronized boolean removeCatalog(long catalogId, long quantity) {
         if (catalogId <= 0 || quantity <= 0) return false;
         long available = items.values().stream()
                 .filter(item -> item.definition().catalogId() == catalogId)
@@ -959,7 +960,7 @@ final class RuntimeInventory {
         return remaining == 0;
     }
 
-    Item removeEntire(long objectId) {
+    synchronized Item removeEntire(long objectId) {
         Item item = items.get(objectId);
         if (item != null && item.sourceBound() && !item.litoOwned()
                 && (item.definition().weapon() || item.definition().sourceArmor()
@@ -970,7 +971,7 @@ final class RuntimeInventory {
     }
 
     /** Native death lifecycle removal; caller must persist source tombstones. */
-    Item removeEntireForDeath(long objectId) {
+    synchronized Item removeEntireForDeath(long objectId) {
         Item removed = items.remove(objectId);
         if (removed != null) sourcePhysicalWeapons.remove(objectId);
         return removed;
@@ -983,7 +984,7 @@ final class RuntimeInventory {
      * transfer gate; callers must persist source tombstones before publishing
      * the resulting inventory.
      */
-    List<Item> expireTimedItems(long nowEpochMillis) {
+    synchronized List<Item> expireTimedItems(long nowEpochMillis) {
         if (nowEpochMillis < 0) {
             throw new IllegalArgumentException("negative timed-item scan timestamp");
         }
@@ -1003,7 +1004,7 @@ final class RuntimeInventory {
     }
 
     /** Internal retained attack debit; generic inventory mutations remain blocked. */
-    Item consumeSourceProjectile(long objectId) {
+    synchronized Item consumeSourceProjectile(long objectId) {
         Item existing = items.get(objectId);
         if (existing == null || !existing.sourceBound()
                 || !existing.definition().projectile() || existing.equipped()) {
@@ -1016,7 +1017,7 @@ final class RuntimeInventory {
     }
 
     /** Preserves the native object id while a closed physical letter becomes open. */
-    boolean replaceDefinition(long objectId, InventoryCatalog.Definition definition) {
+    synchronized boolean replaceDefinition(long objectId, InventoryCatalog.Definition definition) {
         Item item = items.get(objectId);
         if (item == null || definition == null || item.quantity() != 1
                 || definition.stackable()) {
@@ -1026,13 +1027,13 @@ final class RuntimeInventory {
         return true;
     }
 
-    List<Item> repairableWeapons() {
+    synchronized List<Item> repairableWeapons() {
         return items.values().stream()
                 .filter(item -> item.definition().weapon() && item.durability() > 0)
                 .toList();
     }
 
-    boolean damageWeapon(long objectId, int durability) {
+    synchronized boolean damageWeapon(long objectId, int durability) {
         Item item = items.get(objectId);
         if (item == null || !item.definition().weapon()
                 || durability <= 0 || durability > 0x7F) {
@@ -1042,14 +1043,14 @@ final class RuntimeInventory {
         return true;
     }
 
-    boolean damageFirstWeapon(int durability) {
+    synchronized boolean damageFirstWeapon(int durability) {
         Item item = items.values().stream()
                 .filter(candidate -> candidate.definition().weapon())
                 .findFirst().orElse(null);
         return item != null && damageWeapon(item.objectId(), durability);
     }
 
-    boolean repairWeapon(long objectId) {
+    synchronized boolean repairWeapon(long objectId) {
         Item item = items.get(objectId);
         if (item == null || !item.definition().weapon() || item.durability() <= 0) {
             return false;
@@ -1059,7 +1060,7 @@ final class RuntimeInventory {
     }
 
     /** Retained Hone executor recovers one point, for damaged weapons or armor. */
-    boolean recoverDamage(long objectId) {
+    synchronized boolean recoverDamage(long objectId) {
         Item item = items.get(objectId);
         if (item == null || (!item.definition().weapon() && !item.definition().armor())
                 || item.durability() <= 0) {
@@ -1069,7 +1070,7 @@ final class RuntimeInventory {
         return true;
     }
 
-    boolean createMagicalWeapon(long objectId) {
+    synchronized boolean createMagicalWeapon(long objectId) {
         Item item = items.get(objectId);
         InventoryCatalog.NativeWeaponStatus status = item == null ? null
                 : InventoryCatalog.nativeWeaponStatus(item.definition().catalogId());
@@ -1081,14 +1082,14 @@ final class RuntimeInventory {
         return true;
     }
 
-    boolean identify(long objectId) {
+    synchronized boolean identify(long objectId) {
         Item item = items.get(objectId);
         if (item == null) return false;
         if (!item.identified()) items.put(objectId, item.withIdentified(true));
         return true;
     }
 
-    boolean setBlessing(long objectId, int blessing) {
+    synchronized boolean setBlessing(long objectId, int blessing) {
         Item item = items.get(objectId);
         if (item == null || blessing < BLESSING_BLESSED
                 || blessing > BLESSING_UNIDENTIFIED) {
@@ -1099,7 +1100,7 @@ final class RuntimeInventory {
     }
 
     /** Converts every unsealed native cursed display state to ordinary. */
-    List<Item> removeCurses() {
+    synchronized List<Item> removeCurses() {
         List<Item> changed = new ArrayList<>();
         for (Map.Entry<Long, Item> entry : List.copyOf(items.entrySet())) {
             Item item = entry.getValue();
@@ -1111,7 +1112,7 @@ final class RuntimeInventory {
         return List.copyOf(changed);
     }
 
-    List<Item> toggleWeapon(long objectId) {
+    synchronized List<Item> toggleWeapon(long objectId) {
         return toggleWeaponInternal(objectId, false);
     }
 
@@ -1121,7 +1122,7 @@ final class RuntimeInventory {
      * {@link #qualifySourceWeapon(long, SourceWeaponPhysicalStats)} before the
      * candidate inventory can become live.
      */
-    List<Item> toggleSourceWeaponForEvaluation(long objectId) {
+    synchronized List<Item> toggleSourceWeaponForEvaluation(long objectId) {
         Item selected = items.get(objectId);
         if (selected == null || !selected.sourceBound() || selected.litoOwned()
                 || !selected.definition().weapon()) {
@@ -1130,7 +1131,7 @@ final class RuntimeInventory {
         return toggleWeaponInternal(objectId, true);
     }
 
-    private List<Item> toggleWeaponInternal(long objectId,
+    private synchronized List<Item> toggleWeaponInternal(long objectId,
                                             boolean allowUnqualifiedSource) {
         Item selected = items.get(objectId);
         if (selected == null || !selected.definition().weapon()
@@ -1154,7 +1155,7 @@ final class RuntimeInventory {
     }
 
     /** Binds exact source combat provenance to a staged runtime object. */
-    void qualifySourceWeapon(long objectId, SourceWeaponPhysicalStats weapon) {
+    synchronized void qualifySourceWeapon(long objectId, SourceWeaponPhysicalStats weapon) {
         Item item = items.get(objectId);
         if (item == null || weapon == null || !weapon.present()
                 || !item.sourceBound() || item.litoOwned()
@@ -1168,7 +1169,7 @@ final class RuntimeInventory {
     }
 
     /** Native polymorph equipment pass: remove every currently wielded weapon. */
-    List<Item> unequipWeapons() {
+    synchronized List<Item> unequipWeapons() {
         List<Item> changed = new ArrayList<>();
         for (Map.Entry<Long, Item> entry : List.copyOf(items.entrySet())) {
             Item item = entry.getValue();
@@ -1180,7 +1181,7 @@ final class RuntimeInventory {
         return List.copyOf(changed);
     }
 
-    List<Item> toggleLight(long objectId) {
+    synchronized List<Item> toggleLight(long objectId) {
         Item selected = items.get(objectId);
         if (selected == null || !selected.definition().light()) return List.of();
         Item replacement = selected.withEquipped(!selected.equipped());
@@ -1193,7 +1194,7 @@ final class RuntimeInventory {
      * LiTo 3.81's base equipment model exposes two ring positions; a third
      * equip request is rejected without replacing either authoritative item.
      */
-    List<Item> toggleRing(long objectId) {
+    synchronized List<Item> toggleRing(long objectId) {
         Item selected = items.get(objectId);
         if (selected == null || !selected.definition().ring()
                 || selected.definition().sourceArmor()) return List.of();
@@ -1205,7 +1206,7 @@ final class RuntimeInventory {
         return List.of(replacement);
     }
 
-    int equippedRingCount() {
+    synchronized int equippedRingCount() {
         return (int) items.values().stream()
                 .filter(Item::equipped)
                 .filter(item -> item.definition().ring())
@@ -1218,7 +1219,7 @@ final class RuntimeInventory {
      * collapses several positions, so decisions use NativeArmorStatus's
      * retained armor type instead.
      */
-    List<Item> toggleSourceArmor(long objectId) {
+    synchronized List<Item> toggleSourceArmor(long objectId) {
         Item selected = items.get(objectId);
         if (selected == null || !selected.sourceBound()
                 || !selected.definition().sourceArmor()) return List.of();
@@ -1226,7 +1227,7 @@ final class RuntimeInventory {
     }
 
     /** Applies the same retained armor-slot topology to a LiTo-owned armor. */
-    List<Item> toggleNativeArmor(long objectId) {
+    synchronized List<Item> toggleNativeArmor(long objectId) {
         Item selected = items.get(objectId);
         if (selected == null || !selected.definition().sourceArmor()) return List.of();
         InventoryCatalog.NativeArmorStatus status =
@@ -1243,7 +1244,7 @@ final class RuntimeInventory {
         return List.of(replacement);
     }
 
-    int equippedSourceArmorCount() {
+    synchronized int equippedSourceArmorCount() {
         return (int) items.values().stream()
                 .filter(Item::equipped)
                 .filter(item -> item.sourceBound()
@@ -1252,7 +1253,7 @@ final class RuntimeInventory {
     }
 
     /** Exact retained {@code getHasteItemEquipped() > 0} armor predicate. */
-    boolean hasEquippedHasteArmor() {
+    synchronized boolean hasEquippedHasteArmor() {
         return items.values().stream()
                 .filter(Item::equipped)
                 .map(Item::definition)
@@ -1261,7 +1262,7 @@ final class RuntimeInventory {
                 .anyMatch(InventoryCatalog.NativeArmorStatus::haste);
     }
 
-    Item equippedSourceArmor(int armorType) {
+    synchronized Item equippedSourceArmor(int armorType) {
         return items.values().stream()
                 .filter(Item::equipped)
                 .filter(item -> item.sourceBound()
@@ -1272,7 +1273,7 @@ final class RuntimeInventory {
     }
 
     /** LiTo-owned armor effects not already represented in the source snapshot. */
-    NativeArmorBonuses equippedNativeArmorBonuses() {
+    synchronized NativeArmorBonuses equippedNativeArmorBonuses() {
         int armorClass = 0;
         int hitPoints = 0;
         int manaPoints = 0;
@@ -1293,7 +1294,7 @@ final class RuntimeInventory {
                 armorClass, hitPoints, manaPoints, charisma);
     }
 
-    RentalEquipmentBonuses equippedRentalBonuses() {
+    synchronized RentalEquipmentBonuses equippedRentalBonuses() {
         return RentalEquipmentBonuses.from(items());
     }
 
@@ -1301,7 +1302,7 @@ final class RuntimeInventory {
             int armorClassModifier, int maximumHp,
             int maximumMp, int charisma) {}
 
-    private boolean nativeArmorEquipBlocked(Item selected, int armorType) {
+    private synchronized boolean nativeArmorEquipBlocked(Item selected, int armorType) {
         if (armorType == 3 && (hasEquippedNativeArmorType(2)
                 || hasEquippedNativeArmorType(4))) return true;
         if (armorType == 2 && hasEquippedNativeArmorType(4)) return true;
@@ -1318,17 +1319,17 @@ final class RuntimeInventory {
         };
     }
 
-    private boolean nativeArmorRemovalBlocked(int armorType) {
+    private synchronized boolean nativeArmorRemovalBlocked(int armorType) {
         if (armorType == 3 && hasEquippedNativeArmorType(2)) return true;
         return (armorType == 2 || armorType == 3)
                 && hasEquippedNativeArmorType(4);
     }
 
-    private boolean hasEquippedNativeArmorType(int armorType) {
+    private synchronized boolean hasEquippedNativeArmorType(int armorType) {
         return equippedNativeArmorTypeCount(armorType) > 0;
     }
 
-    private int equippedNativeArmorTypeCount(int... armorTypes) {
+    private synchronized int equippedNativeArmorTypeCount(int... armorTypes) {
         int count = 0;
         for (Item item : items.values()) {
             if (!item.equipped() || !item.definition().sourceArmor()) continue;
@@ -1343,7 +1344,7 @@ final class RuntimeInventory {
         return count;
     }
 
-    private boolean hasEquippedNativeArmorCatalog(long catalogId) {
+    private synchronized boolean hasEquippedNativeArmorCatalog(long catalogId) {
         return items.values().stream()
                 .anyMatch(item -> item.equipped()
                         && item.definition().sourceArmor()
@@ -1351,23 +1352,23 @@ final class RuntimeInventory {
     }
 
     /** Compatibility name retained for existing control-ability callers. */
-    List<Item> toggleControlRing(long objectId) {
+    synchronized List<Item> toggleControlRing(long objectId) {
         return toggleRing(objectId);
     }
 
     /** Compatibility name; the physical native limit applies to all rings. */
-    int equippedControlRingCount() {
+    synchronized int equippedControlRingCount() {
         return equippedRingCount();
     }
 
-    boolean controlAbilityEnabled(int abilityType) {
+    synchronized boolean controlAbilityEnabled(int abilityType) {
         if (abilityType < 0 || abilityType >= 6) return false;
         return items.values().stream()
                 .filter(Item::equipped)
                 .anyMatch(item -> item.definition().controlAbilityType() == abilityType);
     }
 
-    int activeLightRange() {
+    synchronized int activeLightRange() {
         return items.values().stream()
                 .filter(Item::equipped)
                 .map(Item::definition)
@@ -1376,7 +1377,7 @@ final class RuntimeInventory {
                 .max().orElse(0);
     }
 
-    int activeFireResistance() {
+    synchronized int activeFireResistance() {
         int total = items.values().stream()
                 .filter(Item::equipped)
                 .filter(item -> !item.definition().sourceArmor())
@@ -1385,7 +1386,7 @@ final class RuntimeInventory {
         return Math.max(-128, Math.min(127, total));
     }
 
-    int equippedWalkAction() {
+    synchronized int equippedWalkAction() {
         return items.values().stream()
                 .filter(Item::equipped)
                 .map(Item::definition)
@@ -1394,26 +1395,26 @@ final class RuntimeInventory {
                 .findFirst().orElse(BattleActionCodes.WALK);
     }
 
-    boolean hasEquippedWeapon() {
+    synchronized boolean hasEquippedWeapon() {
         return items.values().stream()
                 .anyMatch(item -> item.equipped() && item.definition().weapon());
     }
 
     /** Exact equipped-instance lookup used by retained item-specific spell costs. */
-    boolean hasEquippedCatalog(long catalogId) {
+    synchronized boolean hasEquippedCatalog(long catalogId) {
         if (catalogId <= 0 || catalogId > 0xFFFF_FFFFL) return false;
         return items.values().stream()
                 .anyMatch(item -> item.equipped()
                         && item.definition().catalogId() == catalogId);
     }
 
-    Item equippedWeaponItem() {
+    synchronized Item equippedWeaponItem() {
         return items.values().stream()
                 .filter(item -> item.equipped() && item.definition().weapon())
                 .findFirst().orElse(null);
     }
 
-    SourceWeaponPhysicalStats equippedPhysicalWeapon() {
+    synchronized SourceWeaponPhysicalStats equippedPhysicalWeapon() {
         Item item = equippedWeaponItem();
         if (item == null) return SourceWeaponPhysicalStats.none();
         SourceWeaponPhysicalStats exactSource = sourcePhysicalWeapons.get(item.objectId());
@@ -1489,7 +1490,7 @@ final class RuntimeInventory {
                         + " for type " + weaponType);
     }
 
-    private SourceProjectilePhysicalStats qualifiedRuntimeProjectile(int weaponType) {
+    private synchronized SourceProjectilePhysicalStats qualifiedRuntimeProjectile(int weaponType) {
         int nativeUseType = weaponType == 10 ? 0xFD : 0xFE;
         for (Item item : items.values()) {
             if (item.equipped() || item.quantity() <= 0
@@ -1508,7 +1509,7 @@ final class RuntimeInventory {
         return SourceProjectilePhysicalStats.none();
     }
 
-    boolean hasQualifiedPhysicalWeapon(long objectId) {
+    synchronized boolean hasQualifiedPhysicalWeapon(long objectId) {
         Item item = items.get(objectId);
         if (item == null || !item.definition().weapon()) return false;
         return !item.sourceBound() || sourcePhysicalWeapons.containsKey(objectId);
@@ -1538,7 +1539,7 @@ final class RuntimeInventory {
         };
     }
 
-    Map<Long, Integer> catalogCounts() {
+    synchronized Map<Long, Integer> catalogCounts() {
         Map<Long, Integer> result = new LinkedHashMap<>();
         for (Item item : items.values()) {
             result.merge(item.definition().catalogId(), item.quantity(), Math::addExact);
@@ -1546,7 +1547,7 @@ final class RuntimeInventory {
         return result;
     }
 
-    Map<Long, List<Integer>> catalogEnchantments() {
+    synchronized Map<Long, List<Integer>> catalogEnchantments() {
         Map<Long, List<Integer>> result = new LinkedHashMap<>();
         Map<Long, List<Integer>> staged = new LinkedHashMap<>();
         for (Item item : items.values()) {
@@ -1566,7 +1567,7 @@ final class RuntimeInventory {
         return Map.copyOf(result);
     }
 
-    Map<Long, List<PersistentItem>> catalogItemStates() {
+    synchronized Map<Long, List<PersistentItem>> catalogItemStates() {
         Map<Long, List<PersistentItem>> staged = new LinkedHashMap<>();
         Map<Long, Boolean> nonDefault = new LinkedHashMap<>();
         for (Item item : items.values()) {
@@ -1591,7 +1592,7 @@ final class RuntimeInventory {
         return definition.equals(builtIn) ? null : definition;
     }
 
-    private void applyCatalogEnchantments(Map<Long, List<Integer>> enchantments) {
+    private synchronized void applyCatalogEnchantments(Map<Long, List<Integer>> enchantments) {
         if (enchantments == null || enchantments.isEmpty()) return;
         Map<Long, Integer> indexes = new LinkedHashMap<>();
         for (Map.Entry<Long, Item> entry : List.copyOf(items.entrySet())) {
@@ -1608,7 +1609,7 @@ final class RuntimeInventory {
         }
     }
 
-    private long uniqueObjectId(LongSupplier allocator) {
+    private synchronized long uniqueObjectId(LongSupplier allocator) {
         for (int attempt = 0; attempt < 1_024; attempt++) {
             long candidate = allocator.getAsLong();
             if (candidate > 0 && candidate <= 0xFFFF_FFFFL && !items.containsKey(candidate)) {
@@ -1619,7 +1620,7 @@ final class RuntimeInventory {
     }
 
     /** Admits one persisted/transferred native id without silently renumbering it. */
-    private long admittedStableObjectId(long objectId) {
+    private synchronized long admittedStableObjectId(long objectId) {
         if (objectId <= 0 || objectId > 0xFFFF_FFFFL || items.containsKey(objectId)) {
             return 0;
         }
@@ -1647,10 +1648,7 @@ final class RuntimeInventory {
         return this.sourcePhysicalWeapons;
     }
 
-    synchronized void nativeDeBind(Map bound) {
-        this.items.clear();
-        if (bound != null) {
-            this.items.putAll(bound);
-        }
+    synchronized void nativeDeBind(Map nativeItems) {
+        items = nativeItems;
     }
 }

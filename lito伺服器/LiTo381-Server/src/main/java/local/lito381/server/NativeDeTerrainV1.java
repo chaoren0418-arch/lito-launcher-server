@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.Map;
@@ -231,7 +228,10 @@ public class NativeDeTerrainV1 {
         if (n3 == 0 || (n3 & 0xFFFFFF80) != 0) {
             return false;
         }
-        return (n3 & 3) != 0;
+        if ((n3 & 3) == 0) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isPassable(int n, int n2, int n3, NativeDeCharacterFields nativeDeCharacterFields) {
@@ -262,9 +262,9 @@ public class NativeDeTerrainV1 {
                 case 6: {
                     return (n7 & 1) != 0;
                 }
-                case 1: 
-                case 3: 
-                case 5: 
+                case 1:
+                case 3:
+                case 5:
                 case 7: {
                     return (n7 & 3) != 0;
                 }
@@ -298,6 +298,7 @@ public class NativeDeTerrainV1 {
                 this.set_door_1(n, n2, bl);
                 break;
             }
+            default: { break; }
         }
     }
 
@@ -392,7 +393,7 @@ public class NativeDeTerrainV1 {
             }
             int n6 = this.accessTile(n4, n5);
             switch (n6) {
-                case 0: 
+                case 0:
                 case 3: {
                     return false;
                 }

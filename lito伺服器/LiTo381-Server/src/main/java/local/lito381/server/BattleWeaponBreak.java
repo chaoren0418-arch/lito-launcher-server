@@ -19,9 +19,9 @@ final class BattleWeaponBreak {
         if (sourceDamage < 0 || stacks < 0 || stacks > MAX_STACKS) {
             throw new IllegalArgumentException("invalid Weapon Break damage input");
         }
-        if (sourceDamage == 0 || stacks == 0) return sourceDamage;
-        int result = sourceDamage * (100 - stacks * PERCENT_PER_STACK) / 100;
-        return Math.max(1, result);
+        if (stacks == 0) return sourceDamage;
+        double result = (double) sourceDamage * (100 - stacks * PERCENT_PER_STACK) / 100.0;
+        return (int) Math.max(1.0, result);
     }
 
     static int playerWeaponDamage(int effectiveIntelligence, int oneBasedRoll) {

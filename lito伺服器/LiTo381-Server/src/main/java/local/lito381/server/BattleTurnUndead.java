@@ -30,19 +30,7 @@ final class BattleTurnUndead {
     }
 
     static int magicLevel(int characterType, int playerLevel) {
-        if (playerLevel < 0) {
-            throw new IllegalArgumentException("player level must not be negative");
-        }
-        return switch (characterType) {
-            case 0 -> Math.min(2, playerLevel / 10);       // royal
-            case 1 -> Math.min(10, playerLevel >> 2);     // wizard
-            case 2, 6 -> Math.min(6, playerLevel >> 3);   // elf / illusionist
-            case 3 -> playerLevel / 50;                   // knight
-            case 4 -> Math.min(2, playerLevel / 12);      // dark elf
-            case 5 -> Math.min(4, playerLevel / 9);       // dragon knight
-            default -> throw new IllegalArgumentException(
-                    "unsupported classic character type");
-        };
+        return CombatRules.magicLevel(characterType, playerLevel);
     }
 
     static int probability(int characterType, int playerLevel, int effectiveIntelligence,
@@ -56,7 +44,7 @@ final class BattleTurnUndead {
         if (bossModifier == 0) return 0;
         int diceCount = magicBonus(effectiveIntelligence)
                 + magicLevel(characterType, playerLevel)
-                + (characterType == 1 ? 1 : -1);
+                + (characterType == 3 ? 1 : -1);
         diceCount = Math.max(diceCount, 1);
         int probability = 0;
         for (int index = 0; index < diceCount; index++) {

@@ -19,7 +19,7 @@ final class NativeNpcPhysicalSource {
   try(var statement=connection.prepareStatement(sql);var row=statement.executeQuery()){
    while(row.next()){
     int id=row.getInt("npcid");if(rows.containsKey(id)||invalid.contains(id))throw new SQLException("duplicate source NPC physical row: "+id);
-    try{rows.put(id,SourceNpcPhysicalStats.fromSourceRow(id,row.getInt("ac"),row.getString("size"),row.getInt("damage_reduction"),row.getBoolean("hard"),row.getInt("undead"),row.getInt("weakAttr"),row.getInt("mr"),row.getBoolean("IsTU"),row.getInt("lawful"),row.getBoolean("tamable"),row.getBoolean("boss"),row.getInt("mp"),row.getInt("str"),row.getInt("dex"),row.getBoolean("IsErase"),row.getInt("ranged"),row.getInt("bowActId"),row.getInt("poison_atk"),row.getInt("paralysis_atk")));}
+    try{rows.put(id,SourceNpcPhysicalStats.fromSourceRow(id,row.getInt("ac"),physicalSize(row.getString("size")),row.getInt("damage_reduction"),row.getBoolean("hard"),row.getInt("undead"),row.getInt("weakAttr"),row.getInt("mr"),row.getBoolean("IsTU"),row.getInt("lawful"),row.getBoolean("tamable"),row.getBoolean("boss"),row.getInt("mp"),row.getInt("str"),row.getInt("dex"),row.getBoolean("IsErase"),row.getInt("ranged"),row.getInt("bowActId"),row.getInt("poison_atk"),row.getInt("paralysis_atk")));}
     catch(IllegalArgumentException invalidRow){invalid.add(id);}
    }
   }
@@ -33,5 +33,6 @@ final class NativeNpcPhysicalSource {
   if(snapshot.invalid.contains(id))throw new SQLException("invalid source NPC physical row: "+id,new IllegalArgumentException("invalid source NPC physical snapshot"));
   var result=snapshot.rows.get(id);if(result==null)throw new SQLException("source NPC physical row was not found: "+id);return result;
  }
+ static String physicalSize(String size){return "".equals(size)?"small":size;}
  private NativeNpcPhysicalSource(){}
 }

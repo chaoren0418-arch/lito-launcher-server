@@ -83,8 +83,7 @@ final class BattlePolymorphCatalog {
         return CATALOG.allForms();
     }
 
-    /** Deterministic 1..1,000,000 selector for the retained no-control-ring path. */
-    static Form randomForm(int weightedRoll) {
+    static Form nativePackagedRandomForm(int weightedRoll) {
         if (weightedRoll < 1 || weightedRoll > RANDOM_TOTAL_WEIGHT) {
             throw new IllegalArgumentException("random polymorph roll outside native range");
         }
@@ -94,6 +93,13 @@ final class BattlePolymorphCatalog {
             if (weightedRoll <= cumulative) return form;
         }
         throw new IllegalStateException("native polymorph weights do not cover roll");
+    }
+
+    /** Deterministic 1..1,000,000 selector for the retained no-control-ring path. */
+    static Form randomForm(int weightedRoll) {
+        Form selected = NativePolymorphSource.selectOrNull(weightedRoll);
+        if (selected != null) return selected;
+        return nativePackagedRandomForm(weightedRoll);
     }
 
     static int scrollDurationSeconds(int blessing) {

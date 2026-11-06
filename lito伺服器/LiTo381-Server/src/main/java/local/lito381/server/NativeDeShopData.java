@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 public class NativeDeShopData {
@@ -52,6 +49,9 @@ public class NativeDeShopData {
         if (n < this._xMin || n > this._xMax) {
             return false;
         }
-        return n2 >= this._yMin && n2 <= this._yMax;
+        if (n2 < this._yMin || n2 > this._yMax) {
+            return false;
+        }
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -48,14 +48,14 @@ final class NativeDeChatResources {
     }
 
     static synchronized void load(ServerConfig serverConfig) throws Exception {
-        Snapshot snapshot;
         if (current != null) {
             return;
         }
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string3 = SharedDatabase.identifier(properties.getProperty("database.static.database"));
         NativeDeNpcTemplateResources.Counts counts = new NativeDeNpcTemplateResources.Counts();
-        current = snapshot = NativeDeChatResources.read(string3, () -> NativeDeNpcTemplateResources.owned(DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), counts), counts, (string, string2, objectArray) -> System.getLogger(NativeDeChatResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO, string2 + " " + Arrays.toString(objectArray)));
+        Snapshot snapshot = NativeDeChatResources.read(string3, () -> NativeDeNpcTemplateResources.owned(DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), counts), counts, (string, string2, objectArray) -> System.getLogger(NativeDeChatResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO, string2 + " " + Arrays.toString(objectArray)));
+        current = snapshot;
     }
 
     static Snapshot snapshot() {

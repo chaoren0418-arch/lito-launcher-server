@@ -49,9 +49,6 @@ final class NativeAcceptedState {
         return object2;
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     static Incoming capture(ClientSession clientSession, boolean bl) {
         if (!bl) {
             return Incoming.empty();
@@ -59,40 +56,36 @@ final class NativeAcceptedState {
         BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
         Object object = null;
         Object object2 = null;
-        Object object3 = battleTimedStatus;
-        synchronized (object3) {
+        synchronized (battleTimedStatus) {
             if (NativePlayerCommit.number(battleTimedStatus, "sleepExpiresAtNanos") != 0L) {
                 object = NativeAcceptedState.token(battleTimedStatus, SLEEP);
             }
         }
-        Object object4 = object3 = (BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus");
-        synchronized (object4) {
-            if (((BattleInvisibilityStatus)object3).active()) {
+        BattleInvisibilityStatus object3 = (BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus");
+        synchronized (object3) {
+            if (object3.active()) {
                 object2 = NativeAcceptedState.token(object3, INVIS);
             }
         }
         return new Incoming(true, object, object2);
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     static void invisible(ClientSession clientSession, boolean bl) {
-        BattleInvisibilityStatus battleInvisibilityStatus;
         if (!CombatRules.loaded()) {
             CombatAccess.set(clientSession, "invisible", bl);
             return;
         }
-        BattleInvisibilityStatus battleInvisibilityStatus2 = battleInvisibilityStatus = (BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus");
-        synchronized (battleInvisibilityStatus2) {
+        BattleInvisibilityStatus battleInvisibilityStatus = (BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus");
+        synchronized (battleInvisibilityStatus) {
             CombatAccess.set(clientSession, "invisible", battleInvisibilityStatus.active());
         }
     }
 
     static boolean isStale(Throwable throwable) {
         for (Throwable throwable2 = throwable; throwable2 != null; throwable2 = throwable2.getCause()) {
-            if (!(throwable2 instanceof Stale)) continue;
-            return true;
+            if (throwable2 instanceof Stale) {
+                return true;
+            }
         }
         return false;
     }
@@ -112,9 +105,6 @@ final class NativeAcceptedState {
         }
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     static void sleep(ClientSession clientSession, String string) {
         NativePlayerCommit.Frame frame = NativePlayerCommit.frame();
         if (frame == null) {
@@ -137,8 +127,7 @@ final class NativeAcceptedState {
         try {
             frame.queue.vitalLock.lock();
             try {
-                BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-                synchronized (battleTimedStatus2) {
+                synchronized (battleTimedStatus) {
                     if (NativePlayerCommit.validFrame(clientSession) && CombatAccess.field(battleTimedStatus, SLEEP) == incoming.sleep && battleTimedStatus.cancelSleep()) {
                         object = CombatAccess.field(battleTimedStatus, SLEEP);
                     }
@@ -158,9 +147,6 @@ final class NativeAcceptedState {
         }
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     static void reveal(ClientSession clientSession, String string) {
         NativePlayerCommit.Frame frame = NativePlayerCommit.frame();
         if (frame == null) {
@@ -184,10 +170,8 @@ final class NativeAcceptedState {
         try {
             frame.queue.vitalLock.lock();
             try {
-                BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-                synchronized (battleTimedStatus2) {
-                    BattleInvisibilityStatus battleInvisibilityStatus2 = battleInvisibilityStatus;
-                    synchronized (battleInvisibilityStatus2) {
+                synchronized (battleTimedStatus) {
+                    synchronized (battleInvisibilityStatus) {
                         if (NativePlayerCommit.validFrame(clientSession) && battleInvisibilityStatus.cancelCaptured(incoming.invisible)) {
                             CombatAccess.set(clientSession, "invisible", battleInvisibilityStatus.active());
                             object = CombatAccess.field(battleInvisibilityStatus, INVIS);
@@ -211,9 +195,6 @@ final class NativeAcceptedState {
         }
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     private static void publish(NativePlayerCommit.Frame frame, Object object, boolean bl, Runnable runnable) {
         Publication publication = NativeAcceptedState.publication.get();
         NativeAcceptedState.publication.set(new Publication(frame, object, bl, publication));
@@ -242,7 +223,7 @@ final class NativeAcceptedState {
         boolean bl = NativePlayerCommit.validFrame(publication.frame.pc);
         if (bl) {
             Object object = publication.sleep ? CombatPoisonAtomic.status(publication.frame.pc) : CombatAccess.field(publication.frame.pc, "invisibilityStatus");
-            boolean bl2 = bl = CombatAccess.field(object, publication.sleep ? SLEEP : INVIS) == publication.released;
+            bl = CombatAccess.field(object, publication.sleep ? SLEEP : INVIS) == publication.released;
         }
         if (!bl) {
             droppedPackets.incrementAndGet();

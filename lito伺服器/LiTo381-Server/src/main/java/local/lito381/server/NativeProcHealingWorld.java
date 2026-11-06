@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -38,8 +38,6 @@ final class NativeProcHealingWorld {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean apply(ClientSession clientSession, NativeCombatAttacker.Ref ref, NativeArmorProc.Rule rule) {
-        boolean bl;
-        GameHub gameHub;
         if (ref == null || ref.kind() != 1 || rule.skill() <= 0) {
             return false;
         }
@@ -58,16 +56,15 @@ final class NativeProcHealingWorld {
         long l = System.nanoTime();
         int n2 = NativeProcHealBonus.catalog().bonus(NativeProcHealingPlayer.intelligence(clientSession, l));
         int n3 = NativeProcHealingKernel.calculate(skill.damageDice(), skill.damageValue(), n2, NativePlayerCommit.integer(clientSession, "playerLawful"), 10, n -> ThreadLocalRandom.current().nextInt(n));
-        GameHub gameHub2 = gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        synchronized (gameHub2) {
+        GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
+        boolean bl;
+        synchronized (gameHub) {
             CombatMonsterCurseLifecycle.Actor actor = CombatMonsterCurseLifecycle.actor(gameHub, ref.map(), ref.instance(), ref.id());
             if (actor == null) {
                 return true;
             }
-            ClassicWorldMonsterPopulation classicWorldMonsterPopulation = actor.population();
-            synchronized (classicWorldMonsterPopulation) {
-                BattleTimedStatus battleTimedStatus = actor.timed();
-                synchronized (battleTimedStatus) {
+            synchronized (actor.population()) {
+                synchronized (actor.timed()) {
                     if (!NativePlayerCommit.validFrame(clientSession) || ref.owner() != NativeCombatAttacker.token(actor.timed(), false) || !actor.valid(ref.epoch())) {
                         return true;
                     }
@@ -90,7 +87,6 @@ final class NativeProcHealingWorld {
     }
 
     private static void graphics(ClientSession clientSession, NativePlayerCommit.Binding binding, NativeCombatAttacker.Ref ref, int n, int n2) {
-        Object object;
         if (!(n2 > 0 && NativePlayerCommit.validFrame(clientSession) && binding.matches(clientSession) && NativeCombatAttacker.alive(clientSession, ref) && NativeProcPlayerState.show(clientSession))) {
             return;
         }
@@ -98,20 +94,17 @@ final class NativeProcHealingWorld {
         ArrayList<ClientSession> arrayList = new ArrayList<ClientSession>();
         arrayList.add(clientSession);
         if (!((BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus")).active()) {
-            java.util.Iterator<ClientSession> members = gameHub.classicWorldMembers(binding.map(), binding.instance()).iterator();
-            object = members;
-            while (members.hasNext()) {
-                ClientSession clientSession2 = members.next();
-                if (clientSession2 == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L) continue;
-                arrayList.add(clientSession2);
+            var iterator = gameHub.classicWorldMembers(binding.map(), binding.instance()).iterator();
+            while (iterator.hasNext()) {
+                ClientSession clientSession2 = iterator.next();
+                if (clientSession2 != clientSession && Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) <= 10L) { arrayList.add(clientSession2); }
             }
         }
-        object = Protocol.effectObject(ref.id(), n2);
+        byte[] object = Protocol.effectObject(ref.id(), n2);
         for (ClientSession clientSession3 : arrayList) {
             NativePlayerCommit.Binding binding2 = NativePlayerCommit.Binding.capture(clientSession3);
             if (!NativePlayerCommit.validFrame(clientSession) || !binding.matches(clientSession) || !NativeCombatAttacker.alive(clientSession, ref)) break;
-            if (!binding2.matches(clientSession3)) continue;
-            NativePlayerCommit.safeSend(clientSession3, (byte[])object, "S_EFFECT equipment-NPC-healing skill=" + n + " target=" + ref.id());
+            if (binding2.matches(clientSession3)) NativePlayerCommit.safeSend(clientSession3, (byte[])object, "S_EFFECT equipment-NPC-healing skill=" + n + " target=" + ref.id());
         }
     }
 
@@ -138,11 +131,7 @@ final class NativeProcHealingWorld {
     }
 
     static boolean allow(CombatMonsterCurseLifecycle.Actor actor, CombatNpcDamageQueue.Event event) {
-        CombatWorldCommit.Plan plan = event.physical();
-        if (!(plan instanceof Plan)) {
-            return true;
-        }
-        Plan plan2 = (Plan)plan;
+        if (event.physical() instanceof Plan plan2) { } else { return true; }
         if (plan2.guardian() && event.damage() <= 0) {
             return false;
         }
@@ -150,9 +139,9 @@ final class NativeProcHealingWorld {
             return false;
         }
         for (ClientSession clientSession : actor.hub().connectedSessionsSnapshot()) {
-            Object object;
-            if (!plan2.owner().matchesFast(clientSession) || (object = CombatAccess.field(CombatPoisonAtomic.status(clientSession), "sourcePoisonLifecycle")) == null || CombatAccess.field(object, "sourcePlayerOwner") != plan2.owner().owner()) continue;
-            return true;
+            if (!plan2.owner().matchesFast(clientSession)) continue;
+            Object object = CombatAccess.field(CombatPoisonAtomic.status(clientSession), "sourcePoisonLifecycle");
+            if (object != null && CombatAccess.field(object, "sourcePlayerOwner") == plan2.owner().owner()) return true;
         }
         return false;
     }

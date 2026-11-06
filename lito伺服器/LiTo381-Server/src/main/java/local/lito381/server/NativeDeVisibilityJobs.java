@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.concurrent.Delayed;
@@ -29,8 +26,7 @@ final class NativeDeVisibilityJobs {
         Credit credit2 = current.get();
         current.set(credit);
         try {
-            T t = supplier.get();
-            return t;
+            return supplier.get();
         }
         finally {
             if (credit2 == null) {
@@ -56,21 +52,18 @@ final class NativeDeVisibilityJobs {
         ReentrantReadWriteLock.ReadLock readLock = owner.context.admission.readLock();
         readLock.lock();
         try {
-            Object object;
             owner.context.admit();
             Credit credit = NativeDeVisibilityJobs.acquire(owner);
             Ticket ticket = new Ticket(owner, runnable, credit);
             owner.tickets.add(ticket);
-            if (runnable instanceof NativeDeVisibilityTimer) {
-                object = (NativeDeVisibilityTimer)runnable;
-                owner.timer = (NativeDeVisibilityTimer)object;
+            if (runnable instanceof NativeDeVisibilityTimer timer) {
+                owner.timer = timer;
             }
             try {
                 ticket.future(owner.context.life.retry.scheduleAtFixedRate(ticket::pulse, Math.max(0L, l), l2, TimeUnit.MILLISECONDS));
-                object = ticket;
-                return (Ticket)object;
+                return ticket;
             }
-            catch (Error | RuntimeException throwable) {
+            catch (RuntimeException | Error throwable) {
                 ticket.cancel(false);
                 throw throwable;
             }
@@ -95,8 +88,7 @@ final class NativeDeVisibilityJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         static Credit reserve(NativeDeVisibilityRuntime.Owner owner) {
-            Object object = owner.context.life.admission;
-            synchronized (object) {
+            synchronized (owner.context.life.admission) {
                 if (owner.closed || owner.context.closed || !owner.context.life.admits() || owner.context.life.pending.get() >= NativePlayerCommit.GLOBAL) {
                     throw new RejectedExecutionException("visibility closed or shared budget exhausted");
                 }
@@ -109,8 +101,7 @@ final class NativeDeVisibilityJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         boolean retain() {
-            Object object = this.owner.context.life.admission;
-            synchronized (object) {
+            synchronized (this.owner.context.life.admission) {
                 if (this.refs == 0) {
                     return false;
                 }
@@ -123,8 +114,7 @@ final class NativeDeVisibilityJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void release() {
-            Object object = this.owner.context.life.admission;
-            synchronized (object) {
+            synchronized (this.owner.context.life.admission) {
                 if (--this.refs == 0 && this.owner.context.life.pending.decrementAndGet() < 0L) {
                     throw new IllegalStateException("visibility shared credit underflow");
                 }
@@ -156,8 +146,7 @@ final class NativeDeVisibilityJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void future(ScheduledFuture<?> scheduledFuture) {
-            Ticket ticket = this;
-            synchronized (ticket) {
+            synchronized (this) {
                 this.future = scheduledFuture;
                 if (this.ended) {
                     scheduledFuture.cancel(false);
@@ -169,8 +158,7 @@ final class NativeDeVisibilityJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         void pulse() {
-            Ticket ticket = this;
-            synchronized (ticket) {
+            synchronized (this) {
                 block9: {
                     Dispatch dispatch;
                     if (this.ended) {
@@ -186,16 +174,18 @@ final class NativeDeVisibilityJobs {
                     if (!this.credit.retain()) {
                         return;
                     }
-                    this.work = dispatch = new Dispatch(this);
+                    dispatch = new Dispatch(this);
+                    this.work = dispatch;
                     try {
                         this.owner.context.life.workers.execute(dispatch);
                     }
-                    catch (Error | RuntimeException throwable) {
+                    catch (RuntimeException | Error throwable) {
                         this.work = null;
                         this.credit.release();
                         this.owner.context.count("visibility.workerRejected").incrementAndGet();
-                        if (throwable instanceof RejectedExecutionException) break block9;
-                        throw throwable;
+                        if (!(throwable instanceof RejectedExecutionException)) {
+                            throw throwable;
+                        }
                     }
                 }
             }
@@ -205,9 +195,9 @@ final class NativeDeVisibilityJobs {
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         private boolean end(boolean bl, Throwable throwable) {
+            Dispatch dispatch;
             ScheduledFuture<?> scheduledFuture;
-            Ticket ticket = this;
-            synchronized (ticket) {
+            synchronized (this) {
                 if (this.ended) {
                     return false;
                 }
@@ -215,7 +205,7 @@ final class NativeDeVisibilityJobs {
                 this.cancelled = bl;
                 this.failure = throwable;
                 scheduledFuture = this.future;
-                Dispatch dispatch = this.work;
+                dispatch = this.work;
                 if (dispatch != null && dispatch.state.compareAndSet(0, 2)) {
                     this.owner.context.life.workers.remove(dispatch);
                     this.work = null;
@@ -315,8 +305,7 @@ final class NativeDeVisibilityJobs {
                 CombatNpcDamageQueue.failed(throwable);
             }
             finally {
-                Ticket ticket = this.ticket;
-                synchronized (ticket) {
+                synchronized (this.ticket) {
                     this.state.set(2);
                     this.ticket.work = null;
                 }

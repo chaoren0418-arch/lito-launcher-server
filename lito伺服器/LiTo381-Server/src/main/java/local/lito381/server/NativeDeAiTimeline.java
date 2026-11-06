@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -37,8 +37,7 @@ final class NativeDeAiTimeline {
         if (port.dead() || port.destroyed() || port.hp() <= 0) {
             return;
         }
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             l = NativeDeAiTimeline.acquire(state);
             if (l == 0L) {
                 if (state.stop && state.owner.get() == state.chain) {
@@ -68,8 +67,7 @@ final class NativeDeAiTimeline {
         if (l == 0L) {
             return;
         }
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l) {
                 return;
             }
@@ -121,8 +119,7 @@ final class NativeDeAiTimeline {
     static void finish(State state, Port port, long l) {
         boolean bl = false;
         boolean bl2 = false;
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (state.chain != l) {
                 return;
             }
@@ -151,8 +148,7 @@ final class NativeDeAiTimeline {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean begin(State state, long l, boolean bl) {
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || !state.pending || state.pendingBackground != bl || state.executing || state.stop || state.activeTimer != 0L) {
                 return false;
             }
@@ -167,8 +163,7 @@ final class NativeDeAiTimeline {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void background(State state, Port port, long l) {
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop) {
                 return;
             }
@@ -182,10 +177,9 @@ final class NativeDeAiTimeline {
     }
 
     static long nextTimer(State state) {
-        long l;
-        ++state.timerSequence;
-        if ((l = state.timerSequence++) == 0L) {
-            l = state.timerSequence;
+        long l = ++state.timerSequence;
+        if (l == 0L) {
+            l = ++state.timerSequence;
         }
         return l;
     }
@@ -194,8 +188,7 @@ final class NativeDeAiTimeline {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void timer(State state, Port port, long l, long l2, boolean bl) {
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop || state.activeTimer != l2 || !state.pending || state.pendingBackground != bl) {
                 return;
             }
@@ -215,8 +208,7 @@ final class NativeDeAiTimeline {
      */
     static void failTimer(State state, Port port, long l, long l2) {
         boolean bl = false;
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (NativeDeAiTimeline.owns(state, l) && state.chain == l && state.activeTimer == l2) {
                 state.activeTimer = 0L;
                 state.future = null;
@@ -232,8 +224,7 @@ final class NativeDeAiTimeline {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static int retry(State state, long l, boolean bl) {
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop || !state.pending || state.pendingBackground != bl) {
                 return -1;
             }
@@ -252,8 +243,7 @@ final class NativeDeAiTimeline {
             return;
         }
         boolean bl = false;
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (NativeDeAiTimeline.owns(state, l) && state.chain == l && !state.stop && !state.pending && state.activeTimer == 0L) {
                 state.pending = true;
                 state.pendingBackground = false;
@@ -275,8 +265,7 @@ final class NativeDeAiTimeline {
             return;
         }
         boolean bl = false;
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop) {
                 return;
             }
@@ -309,8 +298,7 @@ final class NativeDeAiTimeline {
             return;
         }
         boolean bl = false;
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop) {
                 return;
             }

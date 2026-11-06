@@ -109,6 +109,7 @@ final class BattlePhysicalDefense {
         int totalReduction = Math.addExact(acReduction,
                 Math.addExact(effectiveArmorReduction, effectiveDirectionalReduction));
         int damage = Math.max(0, rawDamage - totalReduction);
+        damage = CombatRules.damageAfterExtraAc(damage, armorClass);
         return new PlayerOutcome(damage, acMaximum, acRoll, acReduction,
                 armorReduction, attackerIgnoreReduction,
                 effectiveArmorReduction, effectiveDirectionalReduction);

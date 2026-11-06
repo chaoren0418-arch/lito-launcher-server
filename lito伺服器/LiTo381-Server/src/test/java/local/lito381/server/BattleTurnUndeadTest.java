@@ -31,9 +31,9 @@ final class BattleTurnUndeadTest {
 
     @Test void reproducesAllClassicClassMagicLevels() {
         assertEquals(2, BattleTurnUndead.magicLevel(0, 50));
-        assertEquals(10, BattleTurnUndead.magicLevel(1, 50));
+        assertEquals(1, BattleTurnUndead.magicLevel(1, 50));
         assertEquals(6, BattleTurnUndead.magicLevel(2, 50));
-        assertEquals(1, BattleTurnUndead.magicLevel(3, 50));
+        assertEquals(10, BattleTurnUndead.magicLevel(3, 50));
         assertEquals(2, BattleTurnUndead.magicLevel(4, 50));
         assertEquals(4, BattleTurnUndead.magicLevel(5, 50));
         assertEquals(6, BattleTurnUndead.magicLevel(6, 50));
@@ -41,7 +41,7 @@ final class BattleTurnUndeadTest {
 
     @Test void wizardUsesPlusOneDiceAndCapsAtNinety() {
         int probability = BattleTurnUndead.probability(
-                1, 50, 18, 2, 3, 0, 7, -1, sides -> sides);
+                3, 50, 18, 2, 3, 0, 7, -1, sides -> sides);
         assertEquals(90, probability);
         assertTrue(BattleTurnUndead.succeeds(probability, 90));
         assertFalse(BattleTurnUndead.succeeds(probability, 91));
@@ -62,10 +62,10 @@ final class BattleTurnUndeadTest {
 
     @Test void appliesBossModifierAfterNinetyPercentCap() {
         int probability = BattleTurnUndead.probability(
-                1, 50, 18, 2, 3, 0, 7, 3, sides -> sides);
+                3, 50, 18, 2, 3, 0, 7, 3, sides -> sides);
         assertEquals(30, probability);
         assertEquals(0, BattleTurnUndead.probability(
-                1, 50, 18, 2, 3, 0, 7, 0, sides -> sides));
+                3, 50, 18, 2, 3, 0, 7, 0, sides -> sides));
     }
 
     @Test void rejectsInvalidRollsAndTypes() {
@@ -73,7 +73,7 @@ final class BattleTurnUndeadTest {
                 () -> BattleTurnUndead.magicLevel(7, 50));
         assertThrows(IllegalArgumentException.class,
                 () -> BattleTurnUndead.probability(
-                        1, 50, 18, 0, 0, 0, 7, -1, sides -> 0));
+                        3, 50, 18, 0, 0, 0, 7, -1, sides -> 0));
         assertThrows(IllegalArgumentException.class,
                 () -> BattleTurnUndead.succeeds(91, 1));
     }

@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.util.Collections;
@@ -16,658 +13,643 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.CombatNpcDamageQueue;
-import local.lito381.server.NativeDeDeletionPorts;
-import local.lito381.server.NativeDeInstanceState;
-import local.lito381.server.NativeDeLiveAiPorts;
-import local.lito381.server.NativeDeLiveAiScope;
-import local.lito381.server.NativeDeWorldContext;
-import local.lito381.server.NativePlayerCommit;
-import local.lito381.server.NativePlayerLifetime;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 
 final class NativeDeLiveAiJobs {
-    static final String FIELD = "sourceDeLiveAiJobs";
-    static final String BINDING = "sourceDeLiveAiBinding";
-    private static final ThreadLocal<Ticket> current = new ThreadLocal();
-    private static final ThreadLocal<PulseCredit> pulseCredit = new ThreadLocal();
+   static final String FIELD = "sourceDeLiveAiJobs";
+   static final String BINDING = "sourceDeLiveAiBinding";
+   private static final ThreadLocal<NativeDeLiveAiJobs.Ticket> current = new ThreadLocal<>();
+   private static final ThreadLocal<NativeDeLiveAiJobs.PulseCredit> pulseCredit = new ThreadLocal<>();
 
-    static Binding find(NativeDeInstanceState nativeDeInstanceState) {
-        return (Binding)CombatAccess.field(nativeDeInstanceState, BINDING);
-    }
+   static NativeDeLiveAiJobs.Binding find(NativeDeInstanceState var0) {
+      return (NativeDeLiveAiJobs.Binding)CombatAccess.field(var0, "sourceDeLiveAiBinding");
+   }
 
-    static Binding binding(NativeDeInstanceState nativeDeInstanceState) {
-        return Objects.requireNonNull(NativeDeLiveAiJobs.find(nativeDeInstanceState), "De AI environment not bound");
-    }
+   static NativeDeLiveAiJobs.Binding binding(NativeDeInstanceState var0) {
+      return Objects.requireNonNull(find(var0), "De AI environment not bound");
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void configure(NativeDeInstanceState nativeDeInstanceState, NativeDeLiveAiPorts.Environment environment, NativeDeLiveAiPorts.Config config) {
-        Objects.requireNonNull(environment);
-        Objects.requireNonNull(config);
-        Object object = nativeDeInstanceState.deletionOwner.services;
-        if (!(object instanceof NativeDeWorldContext)) {
-            throw new IllegalArgumentException("concrete World required");
-        }
-        NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)object;
-        object = nativeDeWorldContext.admission.readLock();
-        ((ReentrantReadWriteLock.ReadLock)object).lock();
-        try {
-            nativeDeWorldContext.admit();
-            Object object2 = nativeDeWorldContext.life.admission;
-            synchronized (object2) {
-                if (NativeDeLiveAiJobs.find(nativeDeInstanceState) != null) {
-                    throw new IllegalStateException("De AI binding is immutable");
-                }
-                Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
-                if (owner == null) {
-                    owner = new Owner(nativeDeWorldContext);
-                    CombatAccess.set(nativeDeWorldContext, FIELD, owner);
-                }
-                if (owner.closed) {
-                    throw new RejectedExecutionException("De AI closed");
-                }
-                Binding binding = new Binding(nativeDeInstanceState, owner, environment, config);
-                owner.bindings.add(binding);
-                CombatAccess.set(nativeDeInstanceState, BINDING, binding);
+   static void configure(NativeDeInstanceState var0, NativeDeLiveAiPorts.Environment var1, NativeDeLiveAiPorts.Config var2) {
+      Objects.requireNonNull(var1);
+      Objects.requireNonNull(var2);
+      if (var0.deletionOwner.services instanceof NativeDeWorldContext var3) {
+         ReadLock var14 = var3.admission.readLock();
+         var14.lock();
+
+         try {
+            var3.admit();
+            synchronized (var3.life.admission) {
+               if (find(var0) != null) {
+                  throw new IllegalStateException("De AI binding is immutable");
+               }
+
+               NativeDeLiveAiJobs.Owner var6 = (NativeDeLiveAiJobs.Owner)CombatAccess.field(var3, "sourceDeLiveAiJobs");
+               if (var6 == null) {
+                  var6 = new NativeDeLiveAiJobs.Owner(var3);
+                  CombatAccess.set(var3, "sourceDeLiveAiJobs", var6);
+               }
+
+               if (var6.closed) {
+                  throw new RejectedExecutionException("De AI closed");
+               }
+
+               NativeDeLiveAiJobs.Binding var7 = new NativeDeLiveAiJobs.Binding(var0, var6, var1, var2);
+               var6.bindings.add(var7);
+               CombatAccess.set(var0, "sourceDeLiveAiBinding", var7);
             }
-        }
-        finally {
-            ((ReentrantReadWriteLock.ReadLock)object).unlock();
-        }
-    }
+         } finally {
+            var14.unlock();
+         }
+      } else {
+         throw new IllegalArgumentException("concrete World required");
+      }
+   }
 
-    static boolean admits(NativeDeInstanceState nativeDeInstanceState) {
-        Binding binding = NativeDeLiveAiJobs.find(nativeDeInstanceState);
-        return binding != null && !binding.closed && !binding.owner.closed && !binding.owner.context.closed && binding.owner.life.admits() && !nativeDeInstanceState.destroyed() && !nativeDeInstanceState.deletionStarted() && CombatAccess.field(nativeDeInstanceState, "sourceDeWorldEntry") != null && binding.owner.context.world().isObjectRegistered(nativeDeInstanceState);
-    }
+   static boolean admits(NativeDeInstanceState var0) {
+      NativeDeLiveAiJobs.Binding var1 = find(var0);
+      return var1 != null
+         && !var1.closed
+         && !var1.owner.closed
+         && !var1.owner.context.closed
+         && var1.owner.life.admits()
+         && !var0.destroyed()
+         && !var0.deletionStarted()
+         && CombatAccess.field(var0, "sourceDeWorldEntry") != null
+         && var1.owner.context.world().isObjectRegistered(var0);
+   }
 
-    private static Credit credit(Binding binding) {
-        Ticket ticket = current.get();
-        if (ticket != null && ticket.binding == binding && !ticket.finished) {
-            ++ticket.credit.refs;
-            return ticket.credit;
-        }
-        PulseCredit pulseCredit = NativeDeLiveAiJobs.pulseCredit.get();
-        if (pulseCredit != null && pulseCredit.binding() == binding) {
-            ++pulseCredit.credit().refs;
-            return pulseCredit.credit();
-        }
-        if (binding.owner.life.pending.get() >= NativePlayerCommit.GLOBAL) {
+   private static NativeDeLiveAiJobs.Credit credit(NativeDeLiveAiJobs.Binding var0) {
+      NativeDeLiveAiJobs.Ticket var1 = current.get();
+      if (var1 != null && var1.binding == var0 && !var1.finished) {
+         var1.credit.refs++;
+         return var1.credit;
+      } else {
+         NativeDeLiveAiJobs.PulseCredit var2 = pulseCredit.get();
+         if (var2 != null && var2.binding() == var0) {
+            var2.credit().refs++;
+            return var2.credit();
+         } else if (var0.owner.life.pending.get() >= NativePlayerCommit.GLOBAL) {
             return null;
-        }
-        binding.owner.life.pending.incrementAndGet();
-        return new Credit(binding.owner);
-    }
+         } else {
+            var0.owner.life.pending.incrementAndGet();
+            return new NativeDeLiveAiJobs.Credit(var0.owner);
+         }
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    private static Ticket reserve(NativeDeInstanceState nativeDeInstanceState, Runnable runnable, boolean bl, long l) {
-        Binding binding = NativeDeLiveAiJobs.find(nativeDeInstanceState);
-        if (binding == null) {
-            return null;
-        }
-        Object object = binding.owner.life.admission;
-        synchronized (object) {
-            if (!NativeDeLiveAiJobs.admits(nativeDeInstanceState)) {
-                ++binding.owner.rejected;
-                return null;
-            }
-            Credit credit = NativeDeLiveAiJobs.credit(binding);
-            if (credit == null) {
-                ++binding.owner.rejected;
-                return null;
-            }
-            Ticket ticket = new Ticket(binding, runnable, credit, bl, l);
-            binding.owner.tickets.add(ticket);
-            ++binding.tasks;
-            return ticket;
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean execute(NativeDeInstanceState nativeDeInstanceState, Runnable runnable) {
-        Ticket ticket = NativeDeLiveAiJobs.reserve(nativeDeInstanceState, runnable, false, 0L);
-        if (ticket == null) {
-            return false;
-        }
-        Ticket ticket2 = ticket;
-        synchronized (ticket2) {
-            if (ticket.finished) {
-                return true;
-            }
-            try {
-                ticket.binding.owner.life.workers.execute(ticket);
-                Object object = ticket.binding.owner.life.admission;
-                synchronized (object) {
-                    ++ticket.binding.owner.submitted;
-                }
-                return true;
-            }
-            catch (RejectedExecutionException rejectedExecutionException) {
-                ticket.finish();
-                return false;
-            }
-            catch (Error | RuntimeException throwable) {
-                ticket.finish();
-                throw throwable;
-            }
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static ScheduledFuture<?> schedule(NativeDeInstanceState nativeDeInstanceState, Runnable runnable, long l, long l2) {
-        Ticket ticket = NativeDeLiveAiJobs.reserve(nativeDeInstanceState, runnable, true, l2);
-        if (ticket == null) {
-            throw new RejectedExecutionException("De AI timer closed or budget exhausted");
-        }
-        try {
-            ScheduledFuture<?> scheduledFuture = ticket.binding.owner.life.retry.schedule(ticket, Math.max(0L, l), TimeUnit.MILLISECONDS);
-            ticket.install(scheduledFuture);
-            Object object = ticket.binding.owner.life.admission;
-            synchronized (object) {
-                ++ticket.binding.owner.scheduled;
-            }
-            return ticket;
-        }
-        catch (Error | RuntimeException throwable) {
-            ticket.finish();
-            throw throwable;
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void background(NativeDeInstanceState nativeDeInstanceState, boolean bl) {
-        Binding binding = NativeDeLiveAiJobs.find(nativeDeInstanceState);
-        if (binding == null) {
-            return;
-        }
-        Owner owner = binding.owner;
-        ScheduledFuture<?> scheduledFuture = null;
-        Credit credit = null;
-        Object object = owner.life.admission;
-        synchronized (object) {
-            if (bl) {
-                if (binding.closed || owner.closed || !owner.life.admits()) {
-                    return;
-                }
-                owner.background.add(binding);
-                if (owner.heartbeat == null) {
-                    Credit credit2 = NativeDeLiveAiJobs.credit(binding);
-                    if (credit2 == null) {
-                        owner.background.remove(binding);
-                        throw new RejectedExecutionException("De AI heartbeat budget exhausted");
-                    }
-                    try {
-                        owner.heartbeat = owner.life.retry.scheduleAtFixedRate(() -> NativeDeLiveAiJobs.pulse(owner), 10L, 10L, TimeUnit.SECONDS);
-                        owner.heartbeatCredit = credit2;
-                    }
-                    catch (Error | RuntimeException throwable) {
-                        owner.background.remove(binding);
-                        credit2.release();
-                        throw throwable;
-                    }
-                }
+   private static NativeDeLiveAiJobs.Ticket reserve(NativeDeInstanceState var0, Runnable var1, boolean var2, long var3) {
+      NativeDeLiveAiJobs.Binding var5 = find(var0);
+      if (var5 == null) {
+         return null;
+      } else {
+         synchronized (var5.owner.life.admission) {
+            if (!admits(var0)) {
+               var5.owner.rejected++;
+               return null;
             } else {
-                owner.background.remove(binding);
-                if (owner.background.isEmpty()) {
-                    scheduledFuture = owner.heartbeat;
-                    credit = owner.heartbeatCredit;
-                    owner.heartbeat = null;
-                    owner.heartbeatCredit = null;
-                }
+               NativeDeLiveAiJobs.Credit var7 = credit(var5);
+               if (var7 == null) {
+                  var5.owner.rejected++;
+                  return null;
+               } else {
+                  NativeDeLiveAiJobs.Ticket var8 = new NativeDeLiveAiJobs.Ticket(var5, var1, var7, var2, var3);
+                  var5.owner.tickets.add(var8);
+                  var5.tasks++;
+                  return var8;
+               }
             }
-        }
-        if (scheduledFuture != null) {
-            scheduledFuture.cancel(false);
-        }
-        if (credit != null) {
-            credit.release();
-        }
-    }
+         }
+      }
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void pulse(Owner owner) {
-        Object admissionLock = owner.life.admission;
-        synchronized (admissionLock) {
-            if (owner.closed || !owner.life.admits()) {
-                // ** MonitorExit[var3_1] (shouldn't be in output)
-                return;
+   static boolean execute(NativeDeInstanceState var0, Runnable var1) {
+      NativeDeLiveAiJobs.Ticket var2 = reserve(var0, var1, false, 0L);
+      if (var2 == null) {
+         return false;
+      } else {
+         synchronized (var2) {
+            if (var2.finished) {
+               return true;
+            } else {
+               boolean var10000;
+               try {
+                  var2.binding.owner.life.workers.execute(var2);
+                  synchronized (var2.binding.owner.life.admission) {
+                     var2.binding.owner.submitted++;
+                  }
+
+                  var10000 = true;
+               } catch (RejectedExecutionException var8) {
+                  var2.finish();
+                  return false;
+               } catch (RuntimeException | Error var9) {
+                  var2.finish();
+                  throw var9;
+               }
+
+               return var10000;
             }
-            Credit credit = owner.heartbeatCredit;
-            if (credit == null) {
-                // ** MonitorExit[var3_1] (shouldn't be in output)
-                return;
+         }
+      }
+   }
+
+   static ScheduledFuture<?> schedule(NativeDeInstanceState var0, Runnable var1, long var2, long var4) {
+      NativeDeLiveAiJobs.Ticket var6 = reserve(var0, var1, true, var4);
+      if (var6 == null) {
+         throw new RejectedExecutionException("De AI timer closed or budget exhausted");
+      } else {
+         try {
+            ScheduledFuture var7 = var6.binding.owner.life.retry.schedule(var6, Math.max(0L, var2), TimeUnit.MILLISECONDS);
+            var6.install(var7);
+            synchronized (var6.binding.owner.life.admission) {
+               var6.binding.owner.scheduled++;
             }
-            ++credit.refs;
-            Binding[] bindingArray2 = (Binding[])owner.background.toArray(Binding[]::new);
-            // ** MonitorExit[var3_1] (shouldn't be in output)
-            try {
-                for (Binding binding : bindingArray2) {
-                    Credit credit2;
-                    if (binding.actor.isDead() || binding.actor.getMap() == null || !NativeDeLiveAiJobs.admits(binding.actor)) {
-                        NativeDeLiveAiJobs.background(binding.actor, false);
-                        continue;
-                    }
-                    Object object = owner.life.admission;
-                    synchronized (object) {
-                        if (owner.closed || binding.closed || !owner.life.admits()) {
-                            continue;
-                        }
-                        credit2 = NativeDeLiveAiJobs.credit(binding);
-                    }
-                    if (credit2 == null) continue;
-                    object = pulseCredit.get();
-                    pulseCredit.set(new PulseCredit(binding, credit2));
-                    try {
-                        binding.actor.onBackgroundTick();
-                    }
-                    catch (Exception exception) {
-                        CombatNpcDamageQueue.failed(exception);
-                    }
-                    finally {
-                        if (object == null) {
-                            pulseCredit.remove();
-                        } else {
-                            pulseCredit.set((PulseCredit)object);
-                        }
-                        credit2.release();
-                    }
-                }
+
+            return var6;
+         } catch (RuntimeException | Error var11) {
+            var6.finish();
+            throw var11;
+         }
+      }
+   }
+
+   static void background(NativeDeInstanceState var0, boolean var1) {
+      NativeDeLiveAiJobs.Binding var2 = find(var0);
+      if (var2 == null) {
+         return;
+      }
+      NativeDeLiveAiJobs.Owner var3 = var2.owner;
+      ScheduledFuture var4 = null;
+      NativeDeLiveAiJobs.Credit var5 = null;
+      synchronized (var3.life.admission) {
+         if (var1) {
+            if (var2.closed || var3.closed || !var3.life.admits()) {
+               return;
             }
-            finally {
-                credit.release();
+
+            var3.background.add(var2);
+            if (var3.heartbeat == null) {
+               NativeDeLiveAiJobs.Credit var7 = credit(var2);
+               if (var7 == null) {
+                  var3.background.remove(var2);
+                  throw new RejectedExecutionException("De AI heartbeat budget exhausted");
+               }
+
+               try {
+                  var3.heartbeat = var3.life.retry.scheduleAtFixedRate(() -> pulse(var3), 10L, 10L, TimeUnit.SECONDS);
+                  var3.heartbeatCredit = var7;
+               } catch (RuntimeException | Error var10) {
+                  var3.background.remove(var2);
+                  var7.release();
+                  throw var10;
+               }
             }
+         } else {
+            var3.background.remove(var2);
+            if (var3.background.isEmpty()) {
+               var4 = var3.heartbeat;
+               var5 = var3.heartbeatCredit;
+               var3.heartbeat = null;
+               var3.heartbeatCredit = null;
+            }
+         }
+      }
+
+      if (var4 != null) {
+         var4.cancel(false);
+      }
+
+      if (var5 != null) {
+         var5.release();
+      }
+
+   }
+
+   static void pulse(NativeDeLiveAiJobs.Owner var0) {
+      NativeDeLiveAiJobs.Binding[] var1;
+      NativeDeLiveAiJobs.Credit var2;
+      synchronized (var0.life.admission) {
+         if (var0.closed || !var0.life.admits()) {
             return;
-        }
-    }
+         }
 
-    static void retireDeleted(NativeDeInstanceState nativeDeInstanceState) {
-        if (nativeDeInstanceState.deletionStarted() || nativeDeInstanceState.destroyed()) {
-            NativeDeLiveAiJobs.retire(nativeDeInstanceState);
-        }
-    }
-
-    static void stop(NativeDeDeletionPorts.ObjectRef objectRef) {
-        if (objectRef instanceof NativeDeInstanceState) {
-            NativeDeInstanceState nativeDeInstanceState = (NativeDeInstanceState)objectRef;
-            NativeDeLiveAiJobs.retire(nativeDeInstanceState);
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void retire(NativeDeInstanceState nativeDeInstanceState) {
-        Ticket[] ticketArray;
-        nativeDeInstanceState.stopAI();
-        Binding binding = NativeDeLiveAiJobs.find(nativeDeInstanceState);
-        if (binding == null) {
+         var2 = var0.heartbeatCredit;
+         if (var2 == null) {
             return;
-        }
-        NativeDeLiveAiJobs.background(nativeDeInstanceState, false);
-        Object object = binding.owner.life.admission;
-        synchronized (object) {
-            binding.closed = true;
-            binding.owner.bindings.remove(binding);
-            ticketArray = (Ticket[])binding.owner.tickets.stream().filter(ticket -> ticket.binding == binding).toArray(Ticket[]::new);
-        }
-        for (Ticket ticket2 : ticketArray) {
-            ticket2.cancel(false);
-        }
-        Object object2 = binding.owner.life.admission;
-        synchronized (object2) {
-            if (binding.tasks == 0) {
-                CombatAccess.set(nativeDeInstanceState, BINDING, null);
-            }
-        }
-    }
+         }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void close(NativeDeWorldContext nativeDeWorldContext) {
-        Credit credit;
-        ScheduledFuture<?> scheduledFuture;
-        Ticket[] ticketArray;
-        Binding[] bindingArray;
-        Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
-        if (owner == null) {
-            return;
-        }
-        Object object = owner.life.admission;
-        synchronized (object) {
-            owner.closed = true;
-            Binding[] bindingArray2 = bindingArray = (Binding[])owner.bindings.toArray(Binding[]::new);
-            int n = bindingArray2.length;
-            for (int i = 0; i < n; ++i) {
-                Binding binding = bindingArray2[i];
-                binding.closed = true;
+         var2.refs++;
+         var1 = var0.background.toArray(NativeDeLiveAiJobs.Binding[]::new);
+      }
+
+      try {
+         for (NativeDeLiveAiJobs.Binding var6 : var1) {
+            if (var6.actor.isDead() || var6.actor.getMap() == null || !admits(var6.actor)) { background(var6.actor, false); continue; }
+               NativeDeLiveAiJobs.Credit var7;
+               synchronized (var0.life.admission) {
+                  if (var0.closed || var6.closed || !var0.life.admits()) {
+                     continue;
+                  }
+
+                  var7 = credit(var6);
+               }
+
+               if (var7 == null) { continue; }
+                  NativeDeLiveAiJobs.PulseCredit var28 = pulseCredit.get();
+                  pulseCredit.set(new NativeDeLiveAiJobs.PulseCredit(var6, var7));
+
+                  try {
+                     var6.actor.onBackgroundTick();
+                  } catch (Exception var22) {
+                     CombatNpcDamageQueue.failed(var22);
+                  } finally {
+                     if (var28 == null) {
+                        pulseCredit.remove();
+                     } else {
+                        pulseCredit.set(var28);
+                     }
+
+                     var7.release();
+                  }
+
+
+         }
+      } finally {
+         var2.release();
+      }
+   }
+
+   static void retireDeleted(NativeDeInstanceState var0) {
+      if (var0.deletionStarted() || var0.destroyed()) {
+         retire(var0);
+      }
+   }
+
+   static void stop(NativeDeDeletionPorts.ObjectRef var0) {
+      if (var0 instanceof NativeDeInstanceState var1) {
+         retire(var1);
+      }
+   }
+
+   static void retire(NativeDeInstanceState var0) {
+      var0.stopAI();
+      NativeDeLiveAiJobs.Binding var1 = find(var0);
+      if (var1 == null) {
+         return;
+      }
+      background(var0, false);
+      NativeDeLiveAiJobs.Ticket[] var2;
+      synchronized (var1.owner.life.admission) {
+         var1.closed = true;
+         var1.owner.bindings.remove(var1);
+         var2 = var1.owner.tickets.stream().filter(var1x -> var1x.binding == var1).toArray(NativeDeLiveAiJobs.Ticket[]::new);
+      }
+
+      for (NativeDeLiveAiJobs.Ticket var6 : var2) {
+         var6.cancel(false);
+      }
+
+      synchronized (var1.owner.life.admission) {
+         if (var1.tasks == 0) {
+            CombatAccess.set(var0, "sourceDeLiveAiBinding", null);
+         }
+      }
+
+   }
+
+   static void close(NativeDeWorldContext var0) {
+      NativeDeLiveAiJobs.Owner var1 = (NativeDeLiveAiJobs.Owner)CombatAccess.field(var0, "sourceDeLiveAiJobs");
+      if (var1 == null) {
+         return;
+      }
+      NativeDeLiveAiJobs.Binding[] var2;
+      NativeDeLiveAiJobs.Ticket[] var3;
+      ScheduledFuture var4;
+      NativeDeLiveAiJobs.Credit var5;
+      synchronized (var1.life.admission) {
+         var1.closed = true;
+         var2 = var1.bindings.toArray(NativeDeLiveAiJobs.Binding[]::new);
+
+         for (NativeDeLiveAiJobs.Binding var10 : var2) {
+            var10.closed = true;
+         }
+
+         var3 = var1.tickets.toArray(NativeDeLiveAiJobs.Ticket[]::new);
+         var1.bindings.clear();
+         var1.background.clear();
+         var4 = var1.heartbeat;
+         var5 = var1.heartbeatCredit;
+         var1.heartbeat = null;
+         var1.heartbeatCredit = null;
+      }
+
+      if (var4 != null) {
+         var4.cancel(false);
+      }
+
+      if (var5 != null) {
+         var5.release();
+      }
+
+      for (NativeDeLiveAiJobs.Binding var24 : var2) {
+         NativeDeLiveAiScope.call(var24.actor, () -> {
+            var24.actor.stopAI();
+            return null;
+         });
+      }
+
+      for (NativeDeLiveAiJobs.Ticket var25 : var3) {
+         var25.cancel(false);
+      }
+
+      synchronized (var1.life.admission) {
+         for (NativeDeLiveAiJobs.Binding var27 : var2) {
+            if (var27.tasks == 0) {
+               CombatAccess.set(var27.actor, "sourceDeLiveAiBinding", null);
             }
-            ticketArray = (Ticket[])owner.tickets.toArray(Ticket[]::new);
-            owner.bindings.clear();
-            owner.background.clear();
-            scheduledFuture = owner.heartbeat;
-            credit = owner.heartbeatCredit;
-            owner.heartbeat = null;
-            owner.heartbeatCredit = null;
-        }
-        if (scheduledFuture != null) {
-            scheduledFuture.cancel(false);
-        }
-        if (credit != null) {
-            credit.release();
-        }
-        for (Binding binding : bindingArray) {
-            NativeDeLiveAiScope.call(binding.actor, () -> {
-                binding.actor.stopAI();
-                return null;
+         }
+      }
+
+      CombatAccess.set(var0, "sourceDeLiveAiJobs", null);
+
+   }
+
+   static NativeDeLiveAiJobs.Snapshot snapshot(NativeDeWorldContext var0) {
+      synchronized (var0.life.admission) {
+         NativeDeLiveAiJobs.Owner var2 = (NativeDeLiveAiJobs.Owner)CombatAccess.field(var0, "sourceDeLiveAiJobs");
+         return var2 == null
+            ? new NativeDeLiveAiJobs.Snapshot(false, true, 0, 0, 0, 0L, 0L, 0L, 0L)
+            : new NativeDeLiveAiJobs.Snapshot(
+               true,
+               var2.closed,
+               var2.bindings.size(),
+               var2.tickets.size(),
+               var2.background.size(),
+               var2.submitted,
+               var2.scheduled,
+               var2.completed,
+               var2.rejected
+            );
+      }
+   }
+
+   private NativeDeLiveAiJobs() {
+   }
+
+   static final class Binding {
+      final NativeDeInstanceState actor;
+      final NativeDeLiveAiJobs.Owner owner;
+      final NativeDeLiveAiPorts.Environment environment;
+      final NativeDeLiveAiPorts.Config config;
+      volatile boolean closed;
+      int tasks;
+
+      Binding(NativeDeInstanceState var1, NativeDeLiveAiJobs.Owner var2, NativeDeLiveAiPorts.Environment var3, NativeDeLiveAiPorts.Config var4) {
+         this.actor = var1;
+         this.owner = var2;
+         this.environment = var3;
+         this.config = var4;
+      }
+   }
+
+   static final class Credit {
+      final NativeDeLiveAiJobs.Owner owner;
+      int refs = 1;
+
+      Credit(NativeDeLiveAiJobs.Owner var1) {
+         this.owner = var1;
+      }
+
+      void release() {
+         synchronized (this.owner.life.admission) {
+            if (--this.refs == 0 && this.owner.life.pending.decrementAndGet() < 0L) {
+               throw new IllegalStateException("De AI credit underflow");
+            } else if (this.refs < 0) {
+               throw new IllegalStateException("De AI reference underflow");
+            }
+         }
+      }
+   }
+
+   static final class Owner {
+      final NativeDeWorldContext context;
+      final NativePlayerLifetime life;
+      final Set<NativeDeLiveAiJobs.Ticket> tickets = new HashSet<>();
+      final Set<NativeDeLiveAiJobs.Binding> bindings = Collections.newSetFromMap(new IdentityHashMap<>());
+      final Set<NativeDeLiveAiJobs.Binding> background = Collections.newSetFromMap(new IdentityHashMap<>());
+      boolean closed;
+      ScheduledFuture<?> heartbeat;
+      NativeDeLiveAiJobs.Credit heartbeatCredit;
+      long submitted;
+      long scheduled;
+      long completed;
+      long rejected;
+
+      Owner(NativeDeWorldContext var1) {
+         this.context = var1;
+         this.life = var1.life;
+      }
+   }
+
+   private record PulseCredit(NativeDeLiveAiJobs.Binding binding, NativeDeLiveAiJobs.Credit credit) {
+   }
+
+   record Snapshot(boolean present, boolean closed, int bindings, int tasks, int background, long submitted, long scheduled, long completed, long rejected) {
+   }
+
+   static final class Ticket implements Runnable, ScheduledFuture<Object> {
+      final NativeDeLiveAiJobs.Binding binding;
+      final Runnable action;
+      final NativeDeLiveAiJobs.Credit credit;
+      final boolean timer;
+      final long ownerToken;
+      volatile ScheduledFuture<?> delegate;
+      boolean running;
+      boolean cancelled;
+      volatile boolean finished;
+      volatile Throwable failure;
+
+      Ticket(NativeDeLiveAiJobs.Binding var1, Runnable var2, NativeDeLiveAiJobs.Credit var3, boolean var4, long var5) {
+         this.binding = var1;
+         this.action = var2;
+         this.credit = var3;
+         this.timer = var4;
+         this.ownerToken = var5;
+      }
+
+      void install(ScheduledFuture<?> var1) {
+         boolean var2;
+         synchronized (this) {
+            this.delegate = var1;
+            var2 = this.finished;
+         }
+
+         if (var2) {
+            var1.cancel(false);
+         }
+      }
+
+      @Override
+      public void run() {
+         synchronized (this) {
+            if (this.finished) {
+               return;
+            }
+
+            this.running = true;
+         }
+
+         NativeDeLiveAiJobs.Ticket var1 = NativeDeLiveAiJobs.current.get();
+         NativeDeLiveAiJobs.current.set(this);
+
+         try {
+            this.binding.owner.life.executeCommitted(() -> {
+               if (NativeDeLiveAiJobs.admits(this.binding.actor)) {
+                  NativeDeLiveAiScope.call(this.binding.actor, () -> {
+                     this.action.run();
+                     return null;
+                  });
+               } else {
+                  this.discard();
+                  NativeDeLiveAiJobs.retire(this.binding.actor);
+               }
             });
-        }
-        for (Ticket ticket : ticketArray) {
-            ticket.cancel(false);
-        }
-        Object object2 = owner.life.admission;
-        synchronized (object2) {
-            for (Binding binding : bindingArray) {
-                if (binding.tasks != 0) continue;
-                CombatAccess.set(binding.actor, BINDING, null);
+         } catch (Throwable var15) {
+            this.failure = var15;
+            CombatNpcDamageQueue.failed(var15);
+         } finally {
+            if (var1 == null) {
+               NativeDeLiveAiJobs.current.remove();
+            } else {
+               NativeDeLiveAiJobs.current.set(var1);
             }
-        }
-        CombatAccess.set(nativeDeWorldContext, FIELD, null);
-    }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static Snapshot snapshot(NativeDeWorldContext nativeDeWorldContext) {
-        Object object = nativeDeWorldContext.life.admission;
-        synchronized (object) {
-            Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
-            return owner == null ? new Snapshot(false, true, 0, 0, 0, 0L, 0L, 0L, 0L) : new Snapshot(true, owner.closed, owner.bindings.size(), owner.tickets.size(), owner.background.size(), owner.submitted, owner.scheduled, owner.completed, owner.rejected);
-        }
-    }
-
-    private NativeDeLiveAiJobs() {
-    }
-
-    static final class Binding {
-        final NativeDeInstanceState actor;
-        final Owner owner;
-        final NativeDeLiveAiPorts.Environment environment;
-        final NativeDeLiveAiPorts.Config config;
-        volatile boolean closed;
-        int tasks;
-
-        Binding(NativeDeInstanceState nativeDeInstanceState, Owner owner, NativeDeLiveAiPorts.Environment environment, NativeDeLiveAiPorts.Config config) {
-            this.actor = nativeDeInstanceState;
-            this.owner = owner;
-            this.environment = environment;
-            this.config = config;
-        }
-    }
-
-    static final class Owner {
-        final NativeDeWorldContext context;
-        final NativePlayerLifetime life;
-        final Set<Ticket> tickets = new HashSet<Ticket>();
-        final Set<Binding> bindings = Collections.newSetFromMap(new IdentityHashMap());
-        final Set<Binding> background = Collections.newSetFromMap(new IdentityHashMap());
-        boolean closed;
-        ScheduledFuture<?> heartbeat;
-        Credit heartbeatCredit;
-        long submitted;
-        long scheduled;
-        long completed;
-        long rejected;
-
-        Owner(NativeDeWorldContext nativeDeWorldContext) {
-            this.context = nativeDeWorldContext;
-            this.life = nativeDeWorldContext.life;
-        }
-    }
-
-    static final class Ticket
-    implements Runnable,
-    ScheduledFuture<Object> {
-        final Binding binding;
-        final Runnable action;
-        final Credit credit;
-        final boolean timer;
-        final long ownerToken;
-        volatile ScheduledFuture<?> delegate;
-        boolean running;
-        boolean cancelled;
-        volatile boolean finished;
-        volatile Throwable failure;
-
-        Ticket(Binding binding, Runnable runnable, Credit credit, boolean bl, long l) {
-            this.binding = binding;
-            this.action = runnable;
-            this.credit = credit;
-            this.timer = bl;
-            this.ownerToken = l;
-        }
-
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        void install(ScheduledFuture<?> scheduledFuture) {
-            boolean bl;
-            Ticket ticket = this;
-            synchronized (ticket) {
-                this.delegate = scheduledFuture;
-                bl = this.finished;
+            synchronized (this) {
+               this.running = false;
             }
-            if (bl) {
-                scheduledFuture.cancel(false);
-            }
-        }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void run() {
-            Ticket ticket = this;
-            synchronized (ticket) {
-                if (this.finished) {
-                    return;
-                }
-                this.running = true;
-            }
-            ticket = current.get();
-            current.set(this);
-            try {
-                this.binding.owner.life.executeCommitted(() -> {
-                    if (NativeDeLiveAiJobs.admits(this.binding.actor)) {
-                        NativeDeLiveAiScope.call(this.binding.actor, () -> {
-                            this.action.run();
-                            return null;
-                        });
-                    } else {
-                        this.discard();
-                        NativeDeLiveAiJobs.retire(this.binding.actor);
-                    }
-                });
-            }
-            catch (Throwable throwable) {
-                this.failure = throwable;
-                CombatNpcDamageQueue.failed(throwable);
-            }
-            finally {
-                if (ticket == null) {
-                    current.remove();
-                } else {
-                    current.set(ticket);
-                }
-                Ticket ticket2 = this;
-                synchronized (ticket2) {
-                    this.running = false;
-                }
-                this.finish();
-            }
-        }
+            this.finish();
+         }
+      }
 
-        void discard() {
-            Runnable runnable = this.action;
-            if (runnable instanceof NativeDeLiveAiScope.Pool.ShutdownDiscardable) {
-                NativeDeLiveAiScope.Pool.ShutdownDiscardable shutdownDiscardable = (NativeDeLiveAiScope.Pool.ShutdownDiscardable)runnable;
-                NativeDeLiveAiScope.call(this.binding.actor, () -> {
-                    shutdownDiscardable.discardOnShutdown();
-                    return null;
-                });
-            } else if (this.timer) {
-                NativeDeLiveAiScope.call(this.binding.actor, () -> {
-                    CombatAccess.call(this.binding.actor, "stopAiOwner", "(J)V", this.ownerToken);
-                    return null;
-                });
-            }
-        }
+      void discard() {
+         if (this.action instanceof NativeDeLiveAiScope.Pool.ShutdownDiscardable var1) {
+            NativeDeLiveAiScope.call(this.binding.actor, () -> {
+               var1.discardOnShutdown();
+               return null;
+            });
+         } else if (this.timer) {
+            NativeDeLiveAiScope.call(this.binding.actor, () -> {
+               CombatAccess.call(this.binding.actor, "stopAiOwner", "(J)V", this.ownerToken);
+               return null;
+            });
+         }
+      }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        void finish() {
-            Object object = this;
-            synchronized (object) {
-                if (this.finished) {
-                    return;
-                }
-                this.finished = true;
-                this.notifyAll();
+      void finish() {
+         synchronized (this) {
+            if (this.finished) {
+               return;
             }
-            object = this.binding.owner.life.admission;
-            synchronized (object) {
-                this.binding.owner.tickets.remove(this);
-                --this.binding.tasks;
-                ++this.binding.owner.completed;
-                if (this.binding.closed && this.binding.tasks == 0) {
-                    CombatAccess.set(this.binding.actor, NativeDeLiveAiJobs.BINDING, null);
-                }
-            }
-            this.credit.release();
-        }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public boolean cancel(boolean bl) {
-            Ticket ticket = this;
-            synchronized (ticket) {
-                if (this.finished || this.running) {
-                    return false;
-                }
-                this.cancelled = true;
-                ScheduledFuture<?> scheduledFuture = this.delegate;
-                if (scheduledFuture != null && scheduledFuture.cancel(false)) {
-                    this.binding.owner.life.cancelledTimers.incrementAndGet();
-                }
-                if (!this.timer) {
-                    this.binding.owner.life.workers.remove(this);
-                }
-                this.finish();
+            this.finished = true;
+            this.notifyAll();
+         }
+
+         synchronized (this.binding.owner.life.admission) {
+            this.binding.owner.tickets.remove(this);
+            this.binding.tasks--;
+            this.binding.owner.completed++;
+            if (this.binding.closed && this.binding.tasks == 0) {
+               CombatAccess.set(this.binding.actor, "sourceDeLiveAiBinding", null);
             }
+         }
+
+         this.credit.release();
+      }
+
+      @Override
+      public boolean cancel(boolean var1) {
+         synchronized (this) {
+            if (this.finished || this.running) {
+               return false;
+            }
+
+            this.cancelled = true;
+            ScheduledFuture var3 = this.delegate;
+            if (var3 != null && var3.cancel(false)) {
+               this.binding.owner.life.cancelledTimers.incrementAndGet();
+            }
+
             if (!this.timer) {
-                this.discard();
+               this.binding.owner.life.workers.remove(this);
             }
-            return true;
-        }
 
-        @Override
-        public synchronized boolean isDone() {
-            return this.finished;
-        }
+            this.finish();
+         }
 
-        @Override
-        public synchronized boolean isCancelled() {
-            return this.cancelled;
-        }
+         if (!this.timer) {
+            this.discard();
+         }
 
-        @Override
-        public long getDelay(TimeUnit timeUnit) {
-            ScheduledFuture<?> scheduledFuture = this.delegate;
-            return scheduledFuture == null ? 0L : scheduledFuture.getDelay(timeUnit);
-        }
+         return true;
+      }
 
-        @Override
-        public int compareTo(Delayed delayed) {
-            return Long.compare(this.getDelay(TimeUnit.NANOSECONDS), delayed.getDelay(TimeUnit.NANOSECONDS));
-        }
+      @Override
+      public synchronized boolean isDone() {
+         return this.finished;
+      }
 
-        @Override
-        public synchronized Object get() throws InterruptedException, ExecutionException {
-            while (!this.finished) {
-                this.wait();
-            }
-            if (this.cancelled) {
-                throw new CancellationException();
-            }
-            if (this.failure != null) {
-                throw new ExecutionException(this.failure);
-            }
+      @Override
+      public synchronized boolean isCancelled() {
+         return this.cancelled;
+      }
+
+      @Override
+      public long getDelay(TimeUnit var1) {
+         ScheduledFuture var2 = this.delegate;
+         return var2 == null ? 0L : var2.getDelay(var1);
+      }
+
+      public int compareTo(Delayed var1) {
+         return Long.compare(this.getDelay(TimeUnit.NANOSECONDS), var1.getDelay(TimeUnit.NANOSECONDS));
+      }
+
+      @Override
+      public synchronized Object get() throws InterruptedException, ExecutionException {
+         while (!this.finished) {
+            this.wait();
+         }
+
+         if (this.cancelled) {
+            throw new CancellationException();
+         } else if (this.failure != null) {
+            throw new ExecutionException(this.failure);
+         } else {
             return null;
-        }
+         }
+      }
 
-        @Override
-        public synchronized Object get(long l, TimeUnit timeUnit) throws InterruptedException, TimeoutException, ExecutionException {
-            long l2 = System.nanoTime() + timeUnit.toNanos(l);
-            while (!this.finished) {
-                long l3 = l2 - System.nanoTime();
-                if (l3 <= 0L) {
-                    throw new TimeoutException();
-                }
-                TimeUnit.NANOSECONDS.timedWait(this, l3);
+      @Override
+      public synchronized Object get(long var1, TimeUnit var3) throws InterruptedException, TimeoutException, ExecutionException {
+         long var4 = System.nanoTime() + var3.toNanos(var1);
+
+         while (!this.finished) {
+            long var6 = var4 - System.nanoTime();
+            if (var6 <= 0L) {
+               throw new TimeoutException();
             }
-            if (this.cancelled) {
-                throw new CancellationException();
-            }
-            if (this.failure != null) {
-                throw new ExecutionException(this.failure);
-            }
+
+            TimeUnit.NANOSECONDS.timedWait(this, var6);
+         }
+
+         if (this.cancelled) {
+            throw new CancellationException();
+         } else if (this.failure != null) {
+            throw new ExecutionException(this.failure);
+         } else {
             return null;
-        }
-    }
-
-    static final class Credit {
-        final Owner owner;
-        int refs = 1;
-
-        Credit(Owner owner) {
-            this.owner = owner;
-        }
-
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        void release() {
-            Object object = this.owner.life.admission;
-            synchronized (object) {
-                if (--this.refs == 0 && this.owner.life.pending.decrementAndGet() < 0L) {
-                    throw new IllegalStateException("De AI credit underflow");
-                }
-                if (this.refs < 0) {
-                    throw new IllegalStateException("De AI reference underflow");
-                }
-            }
-        }
-    }
-
-    private record PulseCredit(Binding binding, Credit credit) {
-    }
-
-    record Snapshot(boolean present, boolean closed, int bindings, int tasks, int background, long submitted, long scheduled, long completed, long rejected) {
-    }
+         }
+      }
+   }
 }

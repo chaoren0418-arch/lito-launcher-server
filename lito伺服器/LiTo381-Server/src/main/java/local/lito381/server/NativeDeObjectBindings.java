@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import local.lito381.server.CombatAccess;
@@ -22,11 +19,13 @@ final class NativeDeObjectBindings {
         return nativeDeWorldLocation;
     }
 
-    static void showChanged(NativeDeObjectFields nativeDeObjectFields, int n) {
-        NativeDeObjectFields nativeDeObjectFields2;
-        NativeDeWorldContext.Entry entry;
-        if (nativeDeObjectFields instanceof NativeDeObjectFields && (entry = (NativeDeWorldContext.Entry)CombatAccess.field(nativeDeObjectFields2 = nativeDeObjectFields, "sourceDeWorldEntry")) != null) {
-            entry.showId = n;
+    static void showChanged(NativeDeObjectFields actor, int showId) {
+        if (actor instanceof NativeDeObjectFields) {
+            NativeDeObjectFields object = (NativeDeObjectFields)(Object)actor;
+            NativeDeWorldContext.Entry entry = (NativeDeWorldContext.Entry)CombatAccess.field(object, "sourceDeWorldEntry");
+            if (entry != null) {
+                entry.showId = showId;
+            }
         }
     }
 

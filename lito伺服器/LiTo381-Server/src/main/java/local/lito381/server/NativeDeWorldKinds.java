@@ -1,8 +1,10 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import local.lito381.server.NativeDeDeletionPorts.ObjectRef;
+import local.lito381.server.NativeDeDeletionPorts.Viewer;
+import local.lito381.server.NativeDeItemAbility.AbilityType;
+import local.lito381.server.NativeDeItemMetadata.Logs;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -90,9 +92,9 @@ final class NativeDeWorldKinds {
         }
 
         @Override
-        protected int getId() {
-            return this.nativeObjectId;
-        }
+      protected int getId() {
+         return this.nativeObjectId;
+      }
     }
 
     static class Item
@@ -228,50 +230,50 @@ final class NativeDeWorldKinds {
         }
 
         public boolean isIdentified() {
-            return this._isIdentified;
-        }
+         return this._isIdentified;
+      }
 
-        public void setIdentified(boolean bl) {
-            this._isIdentified = bl;
-            this.invalidateStatusBytesCache();
-        }
+        public void setIdentified(boolean var1) {
+         this._isIdentified = var1;
+         this.invalidateStatusBytesCache();
+      }
 
         public String getName() {
-            return this._item.getNameId();
-        }
+         return this._item.getNameId();
+      }
 
         public long getCount() {
-            return this._count;
-        }
+         return this._count;
+      }
 
-        public void setCount(long l) {
-            this._count = l;
-            this._countMutationVersion.incrementAndGet();
-        }
+        public void setCount(long var1) {
+         this._count = var1;
+         this._countMutationVersion.incrementAndGet();
+      }
 
         public long getCountMutationVersion() {
-            return this._countMutationVersion.get();
-        }
+         return this._countMutationVersion.get();
+      }
 
         public String getGamNo() {
-            return this._gamno;
-        }
+         return this._gamno;
+      }
 
-        public void setGamNo(String string) {
-            this._gamno = string;
-        }
+        public void setGamNo(String var1) {
+         this._gamno = var1;
+      }
 
         public String getLotto() {
-            return this._lotto;
-        }
+         return this._lotto;
+      }
 
-        public void setLotto(String string) {
-            this._lotto = string;
-        }
+        public void setLotto(String var1) {
+         this._lotto = var1;
+      }
 
         public boolean isEquipped() {
-            return this._isEquipped;
-        }
+         return this._isEquipped;
+      }
 
         public void setEquipped(boolean bl) {
             if (this._isEquipped == bl) {
@@ -282,384 +284,444 @@ final class NativeDeWorldKinds {
         }
 
         public NativeDeItemTemplate getItem() {
-            return this._item;
-        }
+         return this._item;
+      }
 
-        public void setItem(NativeDeItemTemplate nativeDeItemTemplate) {
-            this._item = nativeDeItemTemplate;
-            this._itemId = nativeDeItemTemplate.getItemId();
-            if (nativeDeItemTemplate.getGreaterTier() > 0) {
-                this.setGreater(nativeDeItemTemplate.getGreaterTier());
-            }
-            this.markAbilityDirty();
-            this.loadDarkItem();
-        }
+        public void setItem(NativeDeItemTemplate var1) {
+         this._item = var1;
+         this._itemId = var1.getItemId();
+         if (var1.getGreaterTier() > 0) {
+            this.setGreater(var1.getGreaterTier());
+         }
+
+         this.markAbilityDirty();
+         this.loadDarkItem();
+      }
 
         public void markAbilityDirty() {
-            this._abilityDirty = true;
-            this.invalidateStatusBytesCache();
-        }
+         this._abilityDirty = true;
+         this.invalidateStatusBytesCache();
+      }
 
         private void invalidateStatusBytesCache() {
-            this._cachedStatusBytes = null;
-            this._cachedStatusWeightOffset = -1;
-        }
+         this._cachedStatusBytes = null;
+         this._cachedStatusWeightOffset = -1;
+      }
 
         public void invalidateItemStatusCache() {
-            this.invalidateStatusBytesCache();
-        }
+         this.invalidateStatusBytesCache();
+      }
 
         public boolean isAbilityDirty() {
-            return this._abilityDirty;
-        }
+         return this._abilityDirty;
+      }
 
         public void beginAbilityBatchLoad() {
-            this._abilityLock.lock();
-            try {
-                this._abilityBatchLoading = true;
-            }
-            finally {
-                this._abilityLock.unlock();
-            }
-        }
+         this._abilityLock.lock();
+
+         try {
+            this._abilityBatchLoading = true;
+         } finally {
+            this._abilityLock.unlock();
+         }
+      }
 
         private boolean applyMagicStoneExpiryIfNeeded() {
-            if (this._magicStoneItemId <= 0) {
-                return false;
-            }
-            if (this._magicStoneTime != null && System.currentTimeMillis() >= this._magicStoneTime.getTime()) {
-                this.clearMagicStoneFieldsOnly();
-                this._pendingMagicStoneExpiryGeneration = ++this._magicStoneGeneration;
-                this._magicStoneExpiryStartedNanos = System.nanoTime();
-                this._magicStoneExpirySubmitAttempts = 0;
-                this._magicStoneExpirySubmissionInFlight = false;
-                this._magicStoneExpiryRetryScheduled = false;
-                this._magicStoneExpiryExhausted = false;
-                return true;
-            }
+         if (this._magicStoneItemId <= 0) {
             return false;
-        }
-
-        private void clearMagicStoneFieldsOnly() {
-            this._magicStoneItemId = 0;
-            this._magicStoneLevel = 0;
-            this._magicStoneTime = null;
-            this.cancelMagicStoneExpiryTimer();
-        }
-
-        private void beginMagicStoneMutationLocked() {
-            ++this._magicStoneGeneration;
-            this._pendingMagicStoneExpiryGeneration = -1L;
+         } else if (this._magicStoneTime != null && System.currentTimeMillis() >= this._magicStoneTime.getTime()) {
+            this.clearMagicStoneFieldsOnly();
+            this._pendingMagicStoneExpiryGeneration = ++this._magicStoneGeneration;
+            this._magicStoneExpiryStartedNanos = System.nanoTime();
             this._magicStoneExpirySubmitAttempts = 0;
             this._magicStoneExpirySubmissionInFlight = false;
             this._magicStoneExpiryRetryScheduled = false;
             this._magicStoneExpiryExhausted = false;
-        }
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+        private void clearMagicStoneFieldsOnly() {
+         this._magicStoneItemId = 0;
+         this._magicStoneLevel = 0;
+         this._magicStoneTime = null;
+         this.cancelMagicStoneExpiryTimer();
+      }
+
+        private void beginMagicStoneMutationLocked() {
+         this._magicStoneGeneration++;
+         this._pendingMagicStoneExpiryGeneration = -1L;
+         this._magicStoneExpirySubmitAttempts = 0;
+         this._magicStoneExpirySubmissionInFlight = false;
+         this._magicStoneExpiryRetryScheduled = false;
+         this._magicStoneExpiryExhausted = false;
+      }
 
         private void cancelMagicStoneExpiryTimer() {
-            if (this._magicStoneExpireFuture != null) {
-                this._magicStoneExpireFuture.cancel(false);
-                this._magicStoneExpireFuture = null;
-            }
-        }
+         if (this._magicStoneExpireFuture != null) {
+            this._magicStoneExpireFuture.cancel(false);
+            this._magicStoneExpireFuture = null;
+         }
+      }
 
-        private void hydrateAllAbilities(NativeDeItemTemplate nativeDeItemTemplate) {
-            int n;
-            int n2;
-            int n3;
-            int n4;
-            int n5;
-            int n6;
-            int n7;
-            int n8;
-            int n9;
-            int n10;
-            int n11;
-            NativeDeItemTemplate nativeDeItemTemplate2;
-            int n12;
-            int n13;
-            int n14;
-            byte by;
-            byte by2;
-            byte by3;
-            byte by4;
-            byte by5;
-            this._ability.clear();
-            byte by6 = nativeDeItemTemplate.get_addstr();
-            if (by6 != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.STR, by6);
+        private void hydrateAllAbilities(NativeDeItemTemplate var1) {
+         this._ability.clear();
+         byte var2 = var1.get_addstr();
+         if (var2 != 0) {
+            this._ability.add(AbilityType.STR, var2);
+         }
+
+         byte var3 = var1.get_adddex();
+         if (var3 != 0) {
+            this._ability.add(AbilityType.DEX, var3);
+         }
+
+         byte var4 = var1.get_addcon();
+         if (var4 != 0) {
+            this._ability.add(AbilityType.CON, var4);
+         }
+
+         byte var5 = var1.get_addint();
+         if (var5 != 0) {
+            this._ability.add(AbilityType.INT, var5);
+         }
+
+         byte var6 = var1.get_addwis();
+         if (var6 != 0) {
+            this._ability.add(AbilityType.WIS, var6);
+         }
+
+         byte var7 = var1.get_addcha();
+         if (var7 != 0) {
+            this._ability.add(AbilityType.CHA, var7);
+         }
+
+         int var8 = var1.get_addhp();
+         if (var8 != 0) {
+            this._ability.add(AbilityType.HP, var8);
+         }
+
+         int var9 = var1.get_addmp();
+         if (var9 != 0) {
+            this._ability.add(AbilityType.MP, var9);
+         }
+
+         int var10 = var1.get_addsp();
+         if (var10 != 0) {
+            this._ability.add(AbilityType.SP, var10);
+         }
+
+         if (var1 instanceof NativeDeArmorTemplate var11) {
+            int var12 = var11.get_ac();
+            if (var12 != 0) {
+               this._ability.add(AbilityType.AC, var12);
             }
-            if ((by5 = nativeDeItemTemplate.get_adddex()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.DEX, by5);
+
+            int var13 = var11.get_mdef();
+            if (var13 != 0) {
+               this._ability.add(AbilityType.MR, var13);
             }
-            if ((by4 = nativeDeItemTemplate.get_addcon()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.CON, by4);
+
+            int var14 = var11.get_defense_fire();
+            if (var14 != 0) {
+               this._ability.add(AbilityType.DEF_FIRE, var14);
             }
-            if ((by3 = nativeDeItemTemplate.get_addint()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.INT, by3);
+
+            int var15 = var11.get_defense_water();
+            if (var15 != 0) {
+               this._ability.add(AbilityType.DEF_WATER, var15);
             }
-            if ((by2 = nativeDeItemTemplate.get_addwis()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.WIS, by2);
+
+            int var16 = var11.get_defense_earth();
+            if (var16 != 0) {
+               this._ability.add(AbilityType.DEF_EARTH, var16);
             }
-            if ((by = nativeDeItemTemplate.get_addcha()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.CHA, by);
+
+            int var17 = var11.get_defense_wind();
+            if (var17 != 0) {
+               this._ability.add(AbilityType.DEF_WIND, var17);
             }
-            if ((n14 = nativeDeItemTemplate.get_addhp()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.HP, n14);
+
+            int var18 = var11.get_regist_freeze();
+            if (var18 != 0) {
+               this._ability.add(AbilityType.REGIST_FREEZE, var18);
             }
-            if ((n13 = nativeDeItemTemplate.get_addmp()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.MP, n13);
+
+            int var19 = var11.get_regist_stone();
+            if (var19 != 0) {
+               this._ability.add(AbilityType.REGIST_STONE, var19);
             }
-            if ((n12 = nativeDeItemTemplate.get_addsp()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.SP, n12);
+
+            int var20 = var11.get_regist_sleep();
+            if (var20 != 0) {
+               this._ability.add(AbilityType.REGIST_SLEEP, var20);
             }
-            if (nativeDeItemTemplate instanceof NativeDeArmorTemplate) {
-                int n15;
-                nativeDeItemTemplate2 = (NativeDeArmorTemplate)nativeDeItemTemplate;
-                n11 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_ac();
-                if (n11 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.AC, n11);
-                }
-                if ((n10 = nativeDeItemTemplate2.get_mdef()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.MR, n10);
-                }
-                if ((n9 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_defense_fire()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.DEF_FIRE, n9);
-                }
-                if ((n8 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_defense_water()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.DEF_WATER, n8);
-                }
-                if ((n7 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_defense_earth()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.DEF_EARTH, n7);
-                }
-                if ((n6 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_defense_wind()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.DEF_WIND, n6);
-                }
-                if ((n5 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_regist_freeze()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.REGIST_FREEZE, n5);
-                }
-                if ((n4 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_regist_stone()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.REGIST_STONE, n4);
-                }
-                if ((n15 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_regist_sleep()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.REGIST_SLEEP, n15);
-                }
-                if ((n3 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_regist_blind()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.REGIST_BLIND, n3);
-                }
-                if ((n2 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_regist_stun()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.REGIST_STUN, n2);
-                }
-                if ((n = ((NativeDeArmorTemplate)nativeDeItemTemplate2).get_regist_sustain()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.REGIST_SUSTAIN, n);
-                }
+
+            int var21 = var11.get_regist_blind();
+            if (var21 != 0) {
+               this._ability.add(AbilityType.REGIST_BLIND, var21);
             }
-            if (nativeDeItemTemplate instanceof NativeDeWeaponTemplate) {
-                nativeDeItemTemplate2 = (NativeDeWeaponTemplate)nativeDeItemTemplate;
-                this._ability.set(NativeDeItemAbility.AbilityType.BASE_DMG_SMALL, nativeDeItemTemplate2.getDmgSmall());
-                this._ability.set(NativeDeItemAbility.AbilityType.BASE_DMG_LARGE, nativeDeItemTemplate2.getDmgLarge());
+
+            int var22 = var11.get_regist_stun();
+            if (var22 != 0) {
+               this._ability.add(AbilityType.REGIST_STUN, var22);
             }
-            if (nativeDeItemTemplate instanceof NativeDeWeaponTemplate) {
-                nativeDeItemTemplate2 = (NativeDeWeaponTemplate)nativeDeItemTemplate;
-                n11 = ((NativeDeWeaponTemplate)nativeDeItemTemplate2).getHitModifier();
-                n10 = ((NativeDeWeaponTemplate)nativeDeItemTemplate2).getDmgModifier();
-                n9 = ((NativeDeWeaponTemplate)nativeDeItemTemplate2).getAddHitup();
-                n8 = ((NativeDeWeaponTemplate)nativeDeItemTemplate2).getAddDmgup();
-                n7 = ((NativeDeWeaponTemplate)nativeDeItemTemplate2).getAddBowHitup();
-                n6 = ((NativeDeWeaponTemplate)nativeDeItemTemplate2).getAddBowDmgup();
-                if (n11 != 0 || n9 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.HIT, n11 + n9);
-                }
-                if (n10 != 0 || n8 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.DMG, n10 + n8);
-                }
-                if (n11 != 0 || n7 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.BOW_HIT, n11 + n7);
-                }
-                if (n10 != 0 || n6 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.BOW_DMG, n10 + n6);
-                }
-            } else if (nativeDeItemTemplate instanceof NativeDeArmorTemplate) {
-                nativeDeItemTemplate2 = (NativeDeArmorTemplate)nativeDeItemTemplate;
-                n11 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).getHitModifierByArmor();
-                n10 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).getDmgModifierByArmor();
-                n9 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).getAddHitup();
-                n8 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).getAddDmgup();
-                if (n11 != 0 || n9 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.HIT, n11 + n9);
-                }
-                if (n10 != 0 || n8 != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.DMG, n10 + n8);
-                }
-                if ((n7 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).getBowHitModifierByArmor() + ((NativeDeArmorTemplate)nativeDeItemTemplate2).getAddBowHitup()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.BOW_HIT, n7);
-                }
-                if ((n6 = ((NativeDeArmorTemplate)nativeDeItemTemplate2).getBowDmgModifierByArmor() + ((NativeDeArmorTemplate)nativeDeItemTemplate2).getAddBowDmgup()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.BOW_DMG, n6);
-                }
+
+            int var23 = var11.get_regist_sustain();
+            if (var23 != 0) {
+               this._ability.add(AbilityType.REGIST_SUSTAIN, var23);
             }
-            int n16 = nativeDeItemTemplate.getAddStunSuccess();
-            if (n16 != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.STUN_SUCCESS, n16);
+         }
+
+         if (var1 instanceof NativeDeWeaponTemplate var32) {
+            this._ability.set(AbilityType.BASE_DMG_SMALL, var32.getDmgSmall());
+            this._ability.set(AbilityType.BASE_DMG_LARGE, var32.getDmgLarge());
+         }
+
+         if (var1 instanceof NativeDeWeaponTemplate var33) {
+            int var36 = var33.getHitModifier();
+            int var39 = var33.getDmgModifier();
+            int var42 = var33.getAddHitup();
+            int var45 = var33.getAddDmgup();
+            int var48 = var33.getAddBowHitup();
+            int var51 = var33.getAddBowDmgup();
+            if (var36 != 0 || var42 != 0) {
+               this._ability.add(AbilityType.HIT, var36 + var42);
             }
-            if ((n11 = nativeDeItemTemplate.getMagicDmgModifier()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.MAGIC_DMG_MODIFIER, n11);
+
+            if (var39 != 0 || var45 != 0) {
+               this._ability.add(AbilityType.DMG, var39 + var45);
             }
-            if ((n10 = nativeDeItemTemplate.getAddPotionRecovery()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.POTION_RECOVERY, n10);
+
+            if (var36 != 0 || var48 != 0) {
+               this._ability.add(AbilityType.BOW_HIT, var36 + var48);
             }
-            if ((n9 = nativeDeItemTemplate.getAddPoisonResist()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.POISON_RESIST, n9);
+
+            if (var39 != 0 || var51 != 0) {
+               this._ability.add(AbilityType.BOW_DMG, var39 + var51);
             }
-            if ((n8 = nativeDeItemTemplate.getAddExpRate()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.EXP_RATE, n8);
+         } else if (var1 instanceof NativeDeArmorTemplate var34) {
+            int var37 = var34.getHitModifierByArmor();
+            int var40 = var34.getDmgModifierByArmor();
+            int var43 = var34.getAddHitup();
+            int var46 = var34.getAddDmgup();
+            if (var37 != 0 || var43 != 0) {
+               this._ability.add(AbilityType.HIT, var37 + var43);
             }
-            if ((n7 = nativeDeItemTemplate.getAddPierce()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.PIERCE, n7);
+
+            if (var40 != 0 || var46 != 0) {
+               this._ability.add(AbilityType.DMG, var40 + var46);
             }
-            if ((n6 = nativeDeItemTemplate.getMagicBow()) != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.MAGIC_BOW, n6);
+
+            int var49 = var34.getBowHitModifierByArmor() + var34.getAddBowHitup();
+            if (var49 != 0) {
+               this._ability.add(AbilityType.BOW_HIT, var49);
             }
-            n5 = nativeDeItemTemplate.getArrowSpr();
-            this._ability.add(NativeDeItemAbility.AbilityType.ARROW_SPR, n5);
-            n4 = nativeDeItemTemplate.getAddMagicHit();
-            if (n4 != 0) {
-                this._ability.add(NativeDeItemAbility.AbilityType.MAGIC_HIT, n4);
+
+            int var52 = var34.getBowDmgModifierByArmor() + var34.getAddBowDmgup();
+            if (var52 != 0) {
+               this._ability.add(AbilityType.BOW_DMG, var52);
             }
-            if (nativeDeItemTemplate instanceof NativeDeWeaponTemplate) {
-                int n17;
-                int n18;
-                int n19;
-                int n20;
-                int n21;
-                int n22;
-                NativeDeWeaponTemplate nativeDeWeaponTemplate = (NativeDeWeaponTemplate)nativeDeItemTemplate;
-                n3 = nativeDeWeaponTemplate.getAddIgnoreReduction();
-                if (n3 != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.IGNORE_REDUCTION, n3);
-                }
-                if ((n2 = nativeDeWeaponTemplate.getAddPvpDmg()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.PVP_DMG, n2);
-                }
-                if ((n = nativeDeWeaponTemplate.getAddPvpRedux()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.PVP_REDUX, n);
-                }
-                if ((n22 = nativeDeWeaponTemplate.getAddBossDmg()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.DMG_BOSS, n22);
-                }
-                if ((n21 = nativeDeWeaponTemplate.getAddBossRedux()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.BOSS_REDUX, n21);
-                }
-                if ((n20 = nativeDeWeaponTemplate.getAddDodge()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.DODGE, n20);
-                }
-                if ((n19 = nativeDeWeaponTemplate.getAddEr()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.ER, n19);
-                }
-                if ((n18 = nativeDeWeaponTemplate.getAddAdenaRate()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.ADENA_RATE, n18);
-                }
-                if ((n17 = nativeDeWeaponTemplate.getAddDropRate()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.DROP_RATE, n17);
-                }
-            } else if (nativeDeItemTemplate instanceof NativeDeArmorTemplate) {
-                int n23;
-                int n24;
-                int n25;
-                int n26;
-                int n27;
-                int n28;
-                int n29;
-                int n30;
-                NativeDeArmorTemplate nativeDeArmorTemplate = (NativeDeArmorTemplate)nativeDeItemTemplate;
-                n3 = nativeDeArmorTemplate.getAddIgnoreReduction();
-                if (n3 != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.IGNORE_REDUCTION, n3);
-                }
-                if ((n2 = nativeDeArmorTemplate.getAddPvpRedux()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.PVP_REDUX, n2);
-                }
-                if ((n = nativeDeArmorTemplate.getAddPvpDmg()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.PVP_DMG, n);
-                }
-                if ((n30 = nativeDeArmorTemplate.getAddBossDmg()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.DMG_BOSS, n30);
-                }
-                if ((n29 = nativeDeArmorTemplate.getAddBossRedux()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.BOSS_REDUX, n29);
-                }
-                if ((n28 = nativeDeItemTemplate.getAddMeleeRedux()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.MELEE_REDUX, n28);
-                }
-                if ((n27 = nativeDeItemTemplate.getAddBowRedux()) != 0) {
-                    this._ability.add(NativeDeItemAbility.AbilityType.BOW_REDUX, n27);
-                }
-                if ((n26 = nativeDeArmorTemplate.getAddDodge()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.DODGE, n26);
-                }
-                if ((n25 = nativeDeArmorTemplate.getAddEr()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.ER, n25);
-                }
-                if ((n24 = nativeDeArmorTemplate.getAddAdenaRate()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.ADENA_RATE, n24);
-                }
-                if ((n23 = nativeDeArmorTemplate.getAddDropRate()) != 0) {
-                    this._ability.set(NativeDeItemAbility.AbilityType.DROP_RATE, n23);
-                }
+         }
+
+         int var35 = var1.getAddStunSuccess();
+         if (var35 != 0) {
+            this._ability.add(AbilityType.STUN_SUCCESS, var35);
+         }
+
+         int var38 = var1.getMagicDmgModifier();
+         if (var38 != 0) {
+            this._ability.add(AbilityType.MAGIC_DMG_MODIFIER, var38);
+         }
+
+         int var41 = var1.getAddPotionRecovery();
+         if (var41 != 0) {
+            this._ability.add(AbilityType.POTION_RECOVERY, var41);
+         }
+
+         int var44 = var1.getAddPoisonResist();
+         if (var44 != 0) {
+            this._ability.add(AbilityType.POISON_RESIST, var44);
+         }
+
+         int var47 = var1.getAddExpRate();
+         if (var47 != 0) {
+            this._ability.add(AbilityType.EXP_RATE, var47);
+         }
+
+         int var50 = var1.getAddPierce();
+         if (var50 != 0) {
+            this._ability.add(AbilityType.PIERCE, var50);
+         }
+
+         int var53 = var1.getMagicBow();
+         if (var53 != 0) {
+            this._ability.add(AbilityType.MAGIC_BOW, var53);
+         }
+
+         int var54 = var1.getArrowSpr();
+         this._ability.add(AbilityType.ARROW_SPR, var54);
+         int var55 = var1.getAddMagicHit();
+         if (var55 != 0) {
+            this._ability.add(AbilityType.MAGIC_HIT, var55);
+         }
+
+         if (var1 instanceof NativeDeWeaponTemplate var56) {
+            int var58 = var56.getAddIgnoreReduction();
+            if (var58 != 0) {
+               this._ability.set(AbilityType.IGNORE_REDUCTION, var58);
             }
-        }
+
+            int var60 = var56.getAddPvpDmg();
+            if (var60 != 0) {
+               this._ability.set(AbilityType.PVP_DMG, var60);
+            }
+
+            int var62 = var56.getAddPvpRedux();
+            if (var62 != 0) {
+               this._ability.set(AbilityType.PVP_REDUX, var62);
+            }
+
+            int var24 = var56.getAddBossDmg();
+            if (var24 != 0) {
+               this._ability.set(AbilityType.DMG_BOSS, var24);
+            }
+
+            int var25 = var56.getAddBossRedux();
+            if (var25 != 0) {
+               this._ability.set(AbilityType.BOSS_REDUX, var25);
+            }
+
+            int var26 = var56.getAddDodge();
+            if (var26 != 0) {
+               this._ability.set(AbilityType.DODGE, var26);
+            }
+
+            int var27 = var56.getAddEr();
+            if (var27 != 0) {
+               this._ability.set(AbilityType.ER, var27);
+            }
+
+            int var28 = var56.getAddAdenaRate();
+            if (var28 != 0) {
+               this._ability.set(AbilityType.ADENA_RATE, var28);
+            }
+
+            int var29 = var56.getAddDropRate();
+            if (var29 != 0) {
+               this._ability.set(AbilityType.DROP_RATE, var29);
+            }
+         } else if (var1 instanceof NativeDeArmorTemplate var57) {
+            int var59 = var57.getAddIgnoreReduction();
+            if (var59 != 0) {
+               this._ability.set(AbilityType.IGNORE_REDUCTION, var59);
+            }
+
+            int var61 = var57.getAddPvpRedux();
+            if (var61 != 0) {
+               this._ability.set(AbilityType.PVP_REDUX, var61);
+            }
+
+            int var63 = var57.getAddPvpDmg();
+            if (var63 != 0) {
+               this._ability.set(AbilityType.PVP_DMG, var63);
+            }
+
+            int var64 = var57.getAddBossDmg();
+            if (var64 != 0) {
+               this._ability.set(AbilityType.DMG_BOSS, var64);
+            }
+
+            int var65 = var57.getAddBossRedux();
+            if (var65 != 0) {
+               this._ability.set(AbilityType.BOSS_REDUX, var65);
+            }
+
+            int var66 = var1.getAddMeleeRedux();
+            if (var66 != 0) {
+               this._ability.add(AbilityType.MELEE_REDUX, var66);
+            }
+
+            int var67 = var1.getAddBowRedux();
+            if (var67 != 0) {
+               this._ability.add(AbilityType.BOW_REDUX, var67);
+            }
+
+            int var68 = var57.getAddDodge();
+            if (var68 != 0) {
+               this._ability.set(AbilityType.DODGE, var68);
+            }
+
+            int var69 = var57.getAddEr();
+            if (var69 != 0) {
+               this._ability.set(AbilityType.ER, var69);
+            }
+
+            int var30 = var57.getAddAdenaRate();
+            if (var30 != 0) {
+               this._ability.set(AbilityType.ADENA_RATE, var30);
+            }
+
+            int var31 = var57.getAddDropRate();
+            if (var31 != 0) {
+               this._ability.set(AbilityType.DROP_RATE, var31);
+            }
+         }
+      }
 
         public int getItemId() {
-            return this._itemId;
-        }
+         return this._itemId;
+      }
 
-        public void setItemId(int n) {
-            this._itemId = n;
-        }
+        public void setItemId(int var1) {
+         this._itemId = var1;
+      }
 
-        public void setDropSourceName(String string) {
-            this._dropSourceName = string;
-        }
+        public void setDropSourceName(String var1) {
+         this._dropSourceName = var1;
+      }
 
         public String getDropSourceName() {
-            return this._dropSourceName;
-        }
+         return this._dropSourceName;
+      }
 
         public NativeDeDarkItem getDarkItem() {
-            return this._darkItem;
-        }
+         return this._darkItem;
+      }
 
-        public void setDarkItem(NativeDeDarkItem nativeDeDarkItem) {
-            this._darkItem = nativeDeDarkItem;
-            this.markAbilityDirty();
-        }
+        public void setDarkItem(NativeDeDarkItem var1) {
+         this._darkItem = var1;
+         this.markAbilityDirty();
+      }
 
         public void loadDarkItem() {
-            if (this.getId() > 0) {
-                NativeDeItemMetadata nativeDeItemMetadata = this.nativeMetadata;
-                this._darkItem = nativeDeItemMetadata.getDarkItem(this.getId());
-                if (this._darkItem != null) {
-                    this.markAbilityDirty();
-                }
+         if (this.getId() > 0) {
+            NativeDeItemMetadata var1 = this.nativeMetadata;
+            this._darkItem = var1.getDarkItem(this.getId());
+            if (this._darkItem != null) {
+               this.markAbilityDirty();
             }
-        }
+         }
+      }
 
         public boolean isStackable() {
-            return this._item.isStackable();
-        }
+         return this._item.isStackable();
+      }
 
         @Override
-        public void onAction(NativeDeDeletionPorts.Viewer viewer) {
-        }
+      public void onAction(Viewer var1) {
+      }
 
         public int getEnchantLevel() {
-            return this._enchantLevel;
-        }
+         return this._enchantLevel;
+      }
 
-        public void setEnchantLevel(int n) {
-            this._enchantLevel = n;
-            this.markAbilityDirty();
-        }
+        public void setEnchantLevel(int var1) {
+         this._enchantLevel = var1;
+         this.markAbilityDirty();
+      }
 
         public int get_gfxid() {
             int n = this._item.getGfxId();
@@ -667,58 +729,57 @@ final class NativeDeWorldKinds {
         }
 
         public int get_durability() {
-            return this._durability;
-        }
+         return this._durability;
+      }
 
         public int getChargeCount() {
-            return this._chargeCount;
-        }
+         return this._chargeCount;
+      }
 
-        public void setChargeCount(int n) {
-            this._chargeCount = n;
-            this.invalidateStatusBytesCache();
-        }
+        public void setChargeCount(int var1) {
+         this._chargeCount = var1;
+         this.invalidateStatusBytesCache();
+      }
 
         public int getRemainingTime() {
-            return this._remainingTime.get();
-        }
+         return this._remainingTime.get();
+      }
 
-        public void setRemainingTime(int n) {
-            this._remainingTime.set(n);
-            this.invalidateStatusBytesCache();
-        }
+        public void setRemainingTime(int var1) {
+         this._remainingTime.set(var1);
+         this.invalidateStatusBytesCache();
+      }
 
-        private boolean compareAndSetRemainingTime(int n, int n2) {
-            if (!this._remainingTime.compareAndSet(n, n2)) {
-                return false;
-            }
+        private boolean compareAndSetRemainingTime(int var1, int var2) {
+         if (!this._remainingTime.compareAndSet(var1, var2)) {
+            return false;
+         } else {
             this.invalidateStatusBytesCache();
             return true;
-        }
+         }
+      }
 
         /*
          * WARNING - Removed try catching itself - possible behaviour change.
          */
-        public void setLastUsed(Timestamp timestamp) {
-            Object object = this._delayEffectStateLock;
-            synchronized (object) {
-                this._lastUsed = timestamp;
-            }
-        }
+        public void setLastUsed(Timestamp var1) {
+         synchronized (this._delayEffectStateLock) {
+            this._lastUsed = var1;
+         }
+      }
 
         public Timestamp getLastUsed() {
-            return this._lastUsed;
-        }
+         return this._lastUsed;
+      }
 
         /*
          * WARNING - Removed try catching itself - possible behaviour change.
          */
         public long getDelayEffectRuntimeRemainingMillis() {
-            Object object = this._delayEffectStateLock;
-            synchronized (object) {
-                return this.getDelayEffectRuntimeRemainingMillisAt(System.nanoTime());
-            }
-        }
+         synchronized (this._delayEffectStateLock) {
+            return this.getDelayEffectRuntimeRemainingMillisAt(System.nanoTime());
+         }
+      }
 
         long getDelayEffectRuntimeRemainingMillisAt(long l) {
             Long l2 = this._delayEffectRuntimeDeadlineNanos.get();
@@ -735,307 +796,332 @@ final class NativeDeWorldKinds {
         /*
          * WARNING - Removed try catching itself - possible behaviour change.
          */
-        public void reserveDelayEffectRuntime(int n) {
-            Object object = this._delayEffectStateLock;
-            synchronized (object) {
-                this.reserveDelayEffectRuntimeAt(n, System.nanoTime());
-            }
-        }
+        public void reserveDelayEffectRuntime(int var1) {
+         synchronized (this._delayEffectStateLock) {
+            this.reserveDelayEffectRuntimeAt(var1, System.nanoTime());
+         }
+      }
 
-        void reserveDelayEffectRuntimeAt(int n, long l) {
-            long l2 = TimeUnit.MILLISECONDS.toNanos(Math.max(0L, (long)n));
-            this._delayEffectRuntimeDeadlineNanos.set(l + l2);
-        }
+        void reserveDelayEffectRuntimeAt(int var1, long var2) {
+         long var4 = TimeUnit.MILLISECONDS.toNanos(Math.max(0L, (long)var1));
+         this._delayEffectRuntimeDeadlineNanos.set(var2 + var4);
+      }
 
-        public long getDelayEffectRemainingMillis(int n, long l) {
-            return this.getDelayEffectRemainingMillisAt(n, l, System.nanoTime());
-        }
-
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        long getDelayEffectRemainingMillisAt(int n, long l, long l2) {
-            Object object = this._delayEffectStateLock;
-            synchronized (object) {
-                long l3;
-                long l4 = 0L;
-                Timestamp timestamp = this._lastUsed;
-                if (timestamp != null && n > 0 && (l3 = l - timestamp.getTime()) < (long)n) {
-                    long l5 = (long)n - l3;
-                    l4 = l5 > 0L ? l5 : Long.MAX_VALUE;
-                }
-                return Math.max(l4, this.getDelayEffectRuntimeRemainingMillisAt(l2));
-            }
-        }
+        public long getDelayEffectRemainingMillis(int var1, long var2) {
+         return this.getDelayEffectRemainingMillisAt(var1, var2, System.nanoTime());
+      }
 
         /*
          * WARNING - Removed try catching itself - possible behaviour change.
          */
-        Timestamp markDelayEffectUsedAt(int n, long l, long l2) {
-            Object object = this._delayEffectStateLock;
-            synchronized (object) {
-                Timestamp timestamp;
-                this.reserveDelayEffectRuntimeAt(n, l2);
-                this._lastUsed = timestamp = new Timestamp(l);
-                return timestamp;
+        long getDelayEffectRemainingMillisAt(int var1, long var2, long var4) {
+         synchronized (this._delayEffectStateLock) {
+            long var7 = 0L;
+            Timestamp var9 = this._lastUsed;
+            if (var9 != null && var1 > 0) {
+               long var10 = var2 - var9.getTime();
+               if (var10 < var1) {
+                  long var12 = var1 - var10;
+                  var7 = var12 > 0L ? var12 : Long.MAX_VALUE;
+               }
             }
-        }
+
+            return Math.max(var7, this.getDelayEffectRuntimeRemainingMillisAt(var4));
+         }
+      }
+
+        /*
+         * WARNING - Removed try catching itself - possible behaviour change.
+         */
+        Timestamp markDelayEffectUsedAt(int var1, long var2, long var4) {
+         synchronized (this._delayEffectStateLock) {
+            this.reserveDelayEffectRuntimeAt(var1, var4);
+            Timestamp var7 = new Timestamp(var2);
+            this._lastUsed = var7;
+            return var7;
+         }
+      }
 
         public int getLastWeight() {
-            return this._lastWeight;
-        }
+         return this._lastWeight;
+      }
 
-        public void setLastWeight(int n) {
-            this._lastWeight = n;
-        }
+        public void setLastWeight(int var1) {
+         this._lastWeight = var1;
+      }
 
-        public void setBless(int n) {
-            this._bless = n;
-            this.markAbilityDirty();
-        }
+        public void setBless(int var1) {
+         this._bless = var1;
+         this.markAbilityDirty();
+      }
 
         public int getBless() {
-            return this._bless;
-        }
+         return this._bless;
+      }
 
         public boolean isSealed() {
-            return this._isSealed;
-        }
+         return this._isSealed;
+      }
 
-        public void setSealed(boolean bl) {
-            this._isSealed = bl;
-        }
+        public void setSealed(boolean var1) {
+         this._isSealed = var1;
+      }
 
-        public void setAttrEnchantKind(int n) {
-            this._attrEnchantKind = n;
-            this.markAbilityDirty();
-        }
+        public void setAttrEnchantKind(int var1) {
+         this._attrEnchantKind = var1;
+         this.markAbilityDirty();
+      }
 
         public int getAttrEnchantKind() {
-            return this._attrEnchantKind;
-        }
+         return this._attrEnchantKind;
+      }
 
-        public void setAttrEnchantLevel(int n) {
-            this._attrEnchantLevel = n;
-            this.markAbilityDirty();
-        }
+        public void setAttrEnchantLevel(int var1) {
+         this._attrEnchantLevel = var1;
+         this.markAbilityDirty();
+      }
 
         public int getAttrEnchantLevel() {
-            return this._attrEnchantLevel;
-        }
+         return this._attrEnchantLevel;
+      }
 
         public int getGreater() {
-            return this._greater;
-        }
+         return this._greater;
+      }
 
-        public void setGreater(int n) {
-            this._greater = n;
-            this.markAbilityDirty();
-        }
+        public void setGreater(int var1) {
+         this._greater = var1;
+         this.markAbilityDirty();
+      }
 
         public int getEnchantSaveMode() {
-            return this._enchantSaveMode;
-        }
+         return this._enchantSaveMode;
+      }
 
-        public void setEnchantSaveMode(int n) {
-            this._enchantSaveMode = n;
-        }
+        public void setEnchantSaveMode(int var1) {
+         this._enchantSaveMode = var1;
+      }
 
         public int getUpdateSaveMode() {
-            return this._updateSaveMode;
-        }
+         return this._updateSaveMode;
+      }
 
-        public void setUpdateSaveMode(int n) {
-            this._updateSaveMode = n;
-        }
+        public void setUpdateSaveMode(int var1) {
+         this._updateSaveMode = var1;
+      }
 
-        public void set_durability(int n) {
-            if (n < 0) {
-                n = 0;
-            }
-            if (n > 127) {
-                n = 127;
-            }
-            if (this._durability != n) {
-                this._durability = n;
-                this.markAbilityDirty();
-            }
-        }
+        public void set_durability(int var1) {
+         if (var1 < 0) {
+            var1 = 0;
+         }
+
+         if (var1 > 127) {
+            var1 = 127;
+         }
+
+         if (this._durability != var1) {
+            this._durability = var1;
+            this.markAbilityDirty();
+         }
+      }
 
         public int getWeight() {
-            int n = this.getItem().getWeight();
-            if (n < 0 || this.getCount() <= 0L) {
-                return Integer.MAX_VALUE;
-            }
-            if (n == 0) {
-                return 0;
-            }
+         int var1 = this.getItem().getWeight();
+         if (var1 < 0 || this.getCount() <= 0L) {
+            return Integer.MAX_VALUE;
+         } else if (var1 == 0) {
+            return 0;
+         } else {
             try {
-                long l = Math.max(Math.multiplyExact(this.getCount(), (long)n) / 1000L, 1L);
-                return l >= Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)l;
+               long var2 = Math.max(Math.multiplyExact(this.getCount(), (long)var1) / 1000L, 1L);
+               return var2 >= 2147483647L ? Integer.MAX_VALUE : (int)var2;
+            } catch (ArithmeticException var4) {
+               return Integer.MAX_VALUE;
             }
-            catch (ArithmeticException arithmeticException) {
-                return Integer.MAX_VALUE;
-            }
-        }
+         }
+      }
 
-        public LastStatus getLastStatus() {
-            return this._lastStatus;
-        }
+        public NativeDeWorldKinds.Item.LastStatus getLastStatus() {
+         return this._lastStatus;
+      }
 
         public int getRecordingColumns() {
-            int n = 0;
-            if (this.getCount() != this._lastStatus.count) {
-                n += 16;
-            }
-            if (this.getItemId() != this._lastStatus.itemId) {
-                n += 64;
-            }
-            if (this.isEquipped() != this._lastStatus.isEquipped) {
-                n += 8;
-            }
-            if (this.getEnchantLevel() != this._lastStatus.enchantLevel) {
-                n += 4;
-            }
-            if (this.get_durability() != this._lastStatus.durability) {
-                ++n;
-            }
-            if (this.getChargeCount() != this._lastStatus.chargeCount) {
-                n += 128;
-            }
-            if (this.getLastUsed() != this._lastStatus.lastUsed) {
-                n += 32;
-            }
-            if (this.isIdentified() != this._lastStatus.isIdentified) {
-                n += 2;
-            }
-            if (this.getRemainingTime() != this._lastStatus.remainingTime) {
-                n += 256;
-            }
-            if (this.getBless() != this._lastStatus.bless) {
-                n += 512;
-            }
-            if (this.getAttrEnchantKind() != this._lastStatus.attrEnchantKind) {
-                n += 1024;
-            }
-            if (this.getAttrEnchantLevel() != this._lastStatus.attrEnchantLevel) {
-                n += 2048;
-            }
-            if (this.getGreater() != this._lastStatus.greater) {
-                n += 4096;
-            }
-            return n;
-        }
+         int var1 = 0;
+         if (this.getCount() != this._lastStatus.count) {
+            var1 += 16;
+         }
+
+         if (this.getItemId() != this._lastStatus.itemId) {
+            var1 += 64;
+         }
+
+         if (this.isEquipped() != this._lastStatus.isEquipped) {
+            var1 += 8;
+         }
+
+         if (this.getEnchantLevel() != this._lastStatus.enchantLevel) {
+            var1 += 4;
+         }
+
+         if (this.get_durability() != this._lastStatus.durability) {
+            var1++;
+         }
+
+         if (this.getChargeCount() != this._lastStatus.chargeCount) {
+            var1 += 128;
+         }
+
+         if (this.getLastUsed() != this._lastStatus.lastUsed) {
+            var1 += 32;
+         }
+
+         if (this.isIdentified() != this._lastStatus.isIdentified) {
+            var1 += 2;
+         }
+
+         if (this.getRemainingTime() != this._lastStatus.remainingTime) {
+            var1 += 256;
+         }
+
+         if (this.getBless() != this._lastStatus.bless) {
+            var1 += 512;
+         }
+
+         if (this.getAttrEnchantKind() != this._lastStatus.attrEnchantKind) {
+            var1 += 1024;
+         }
+
+         if (this.getAttrEnchantLevel() != this._lastStatus.attrEnchantLevel) {
+            var1 += 2048;
+         }
+
+         if (this.getGreater() != this._lastStatus.greater) {
+            var1 += 4096;
+         }
+
+         return var1;
+      }
 
         public NativeDeItemAbility getAbility() {
-            return this._ability;
-        }
+         return this._ability;
+      }
 
         public NativeDeItemVipTemplate getAppliedVipTemplate() {
-            return this._appliedVipTemplate;
-        }
+         return this._appliedVipTemplate;
+      }
 
-        public void setAppliedVipTemplate(NativeDeItemVipTemplate nativeDeItemVipTemplate) {
-            this._appliedVipTemplate = nativeDeItemVipTemplate;
-        }
+        public void setAppliedVipTemplate(NativeDeItemVipTemplate var1) {
+         this._appliedVipTemplate = var1;
+      }
 
         public int[] getInlayCards() {
-            return this._inlayCards != null ? (int[])this._inlayCards.clone() : new int[5];
-        }
+         return this._inlayCards != null ? (int[])this._inlayCards.clone() : new int[5];
+      }
 
-        public void setInlayCards(int[] nArray) {
-            if (nArray != null && nArray.length >= 5) {
-                this._inlayCards = (int[])nArray.clone();
-                this.markAbilityDirty();
-            }
-        }
+        public void setInlayCards(int[] var1) {
+         if (var1 != null && var1.length >= 5) {
+            this._inlayCards = (int[])var1.clone();
+            this.markAbilityDirty();
+         }
+      }
 
         public int getOpenSlotCount() {
-            if (this._inlayCards == null) {
-                return 0;
+         if (this._inlayCards == null) {
+            return 0;
+         } else {
+            int var1 = 0;
+
+            for (int var5 : this._inlayCards) {
+               if (var5 >= 1) {
+                  var1++;
+               }
             }
-            int n = 0;
-            for (int n2 : this._inlayCards) {
-                if (n2 < 1) continue;
-                ++n;
-            }
-            return n;
-        }
+
+            return var1;
+         }
+      }
 
         public int getFirstClosedSlotIndex() {
-            if (this._inlayCards == null) {
-                return -1;
-            }
-            for (int i = 0; i < this._inlayCards.length; ++i) {
-                if (this._inlayCards[i] != 0) continue;
-                return i;
-            }
+         if (this._inlayCards == null) {
             return -1;
-        }
+         } else {
+            for (int var1 = 0; var1 < this._inlayCards.length; var1++) {
+               if (this._inlayCards[var1] == 0) {
+                  return var1;
+               }
+            }
+
+            return -1;
+         }
+      }
 
         public int getFirstEmptySlotIndex() {
-            if (this._inlayCards == null) {
-                return -1;
-            }
-            for (int i = 0; i < this._inlayCards.length; ++i) {
-                if (this._inlayCards[i] != 1) continue;
-                return i;
-            }
+         if (this._inlayCards == null) {
             return -1;
-        }
+         } else {
+            for (int var1 = 0; var1 < this._inlayCards.length; var1++) {
+               if (this._inlayCards[var1] == 1) {
+                  return var1;
+               }
+            }
+
+            return -1;
+         }
+      }
 
         public int getOpenSlots() {
-            return this.getOpenSlotCount();
-        }
+         return this.getOpenSlotCount();
+      }
 
         public int getMagicStoneItemId() {
-            return this._magicStoneItemId;
-        }
+         return this._magicStoneItemId;
+      }
 
         public int getMagicStoneLevel() {
-            return this._magicStoneLevel;
-        }
+         return this._magicStoneLevel;
+      }
 
         public Timestamp getMagicStoneTime() {
-            return this._magicStoneTime;
-        }
+         return this._magicStoneTime;
+      }
 
         public void clearMagicStone() {
-            this._abilityLock.lock();
-            try {
-                this.beginMagicStoneMutationLocked();
-                this.clearMagicStoneFieldsOnly();
-                this.markAbilityDirty();
-            }
-            finally {
-                this._abilityLock.unlock();
-            }
-        }
+         this._abilityLock.lock();
 
-        private byte[] materializeStatusBytes(byte[] byArray, int n) {
-            if (n < 0) {
-                return byArray;
-            }
-            int n2 = this.getWeight();
-            byte[] byArray2 = (byte[])byArray.clone();
-            byArray2[n] = (byte)(n2 & 0xFF);
-            byArray2[n + 1] = (byte)(n2 >> 8 & 0xFF);
-            byArray2[n + 2] = (byte)(n2 >> 16 & 0xFF);
-            byArray2[n + 3] = (byte)(n2 >> 24 & 0xFF);
-            return byArray2;
-        }
+         try {
+            this.beginMagicStoneMutationLocked();
+            this.clearMagicStoneFieldsOnly();
+            this.markAbilityDirty();
+         } finally {
+            this._abilityLock.unlock();
+         }
+      }
+
+        private byte[] materializeStatusBytes(byte[] var1, int var2) {
+         if (var2 < 0) {
+            return var1;
+         } else {
+            int var3 = this.getWeight();
+            byte[] var4 = (byte[])var1.clone();
+            var4[var2] = (byte)(var3 & 0xFF);
+            var4[var2 + 1] = (byte)(var3 >> 8 & 0xFF);
+            var4[var2 + 2] = (byte)(var3 >> 16 & 0xFF);
+            var4[var2 + 3] = (byte)(var3 >> 24 & 0xFF);
+            return var4;
+         }
+      }
 
         public int getMr() {
-            return this._ability.get(NativeDeItemAbility.AbilityType.MR);
-        }
+         return this._ability.get(AbilityType.MR);
+      }
 
         public int getItemOwnerId() {
-            return this._itemOwnerId;
-        }
+         return this._itemOwnerId;
+      }
 
-        public void setItemOwnerId(int n) {
-            this._itemOwnerId = n;
-        }
+        public void setItemOwnerId(int var1) {
+         this._itemOwnerId = var1;
+      }
 
         private void terminalizeEquipmentLocked(EquipmentTimerLease equipmentTimerLease) {
             if (this._activeEquipmentTimer != equipmentTimerLease) {
@@ -1052,101 +1138,115 @@ final class NativeDeWorldKinds {
         }
 
         private void cancelActiveEquipmentTimerLocked() {
-            ++this._equipmentTimerGeneration;
-            EquipmentTimerLease equipmentTimerLease = this._activeEquipmentTimer;
-            this._activeEquipmentTimer = null;
-            this._equipmentTimerFuture = null;
-            if (equipmentTimerLease != null && equipmentTimerLease.future != null) {
-                equipmentTimerLease.future.cancel(false);
-            }
-        }
+         this._equipmentTimerGeneration++;
+         NativeDeWorldKinds.Item.EquipmentTimerLease var1 = this._activeEquipmentTimer;
+         this._activeEquipmentTimer = null;
+         this._equipmentTimerFuture = null;
+         if (var1 != null && var1.future != null) {
+            var1.future.cancel(false);
+         }
+      }
 
         private void stopEquipmentTimerSerialized() {
-            this._equipmentTimerLock.lock();
-            try {
-                this.cancelActiveEquipmentTimerLocked();
-            }
-            finally {
-                this._equipmentTimerLock.unlock();
-            }
-        }
+         this._equipmentTimerLock.lock();
+
+         try {
+            this.cancelActiveEquipmentTimerLocked();
+         } finally {
+            this._equipmentTimerLock.unlock();
+         }
+      }
 
         public boolean isNowLighting() {
-            return this._isNowLighting;
-        }
+         return this._isNowLighting;
+      }
 
-        public void setNowLighting(boolean bl) {
-            this._isNowLighting = bl;
-        }
+        public void setNowLighting(boolean var1) {
+         this._isNowLighting = var1;
+      }
 
         public boolean isEquippedTemp() {
-            return this._isEquippedTemp;
-        }
+         return this._isEquippedTemp;
+      }
 
-        public void set_isEquippedTemp(boolean bl) {
-            this._isEquippedTemp = bl;
-        }
+        public void set_isEquippedTemp(boolean var1) {
+         this._isEquippedTemp = var1;
+      }
 
-        public void setIsMatch(boolean bl) {
-            this._isMatch = bl;
-            this.markAbilityDirty();
-        }
+        public void setIsMatch(boolean var1) {
+         this._isMatch = var1;
+         this.markAbilityDirty();
+      }
 
         public boolean isMatch() {
-            return this._isMatch;
-        }
+         return this._isMatch;
+      }
 
-        public void set_char_objid(int n) {
-            this._char_objid = n;
-        }
+        public void set_char_objid(int var1) {
+         this._char_objid = var1;
+      }
 
         public int get_char_objid() {
-            return this._char_objid;
-        }
+         return this._char_objid;
+      }
 
-        public void set_time(Timestamp timestamp) {
-            this._time = timestamp;
-        }
+        public void set_time(Timestamp var1) {
+         this._time = var1;
+      }
 
         public Timestamp get_time() {
-            return this._time;
-        }
+         return this._time;
+      }
 
         public final int getEquipWindow() {
-            return this._equipWindow;
-        }
+         return this._equipWindow;
+      }
 
-        public final void setEquipWindow(int n) {
-            this._equipWindow = n;
-        }
+        public final void setEquipWindow(int var1) {
+         this._equipWindow = var1;
+      }
 
         public List<Integer> getAwakenPowerIds() {
-            return new ArrayList<Integer>(this._awakenPowerIds);
-        }
+         return new ArrayList<>(this._awakenPowerIds);
+      }
 
-        public void setAwakenPowerIds(List<Integer> list) {
-            this._awakenPowerIds.clear();
-            if (list != null) {
-                for (Integer n : list) {
-                    if (n == null || n <= 0) continue;
-                    this._awakenPowerIds.add(n);
-                }
+        public void setAwakenPowerIds(List<Integer> var1) {
+         this._awakenPowerIds.clear();
+         if (var1 != null) {
+            for (Integer var3 : var1) {
+               if (var3 != null && var3 > 0) {
+                  this._awakenPowerIds.add(var3);
+               }
             }
-        }
+         }
+      }
 
-        public void addAwakenPowerId(int n) {
-            if (n > 0 && !this._awakenPowerIds.contains(n)) {
-                this._awakenPowerIds.add(n);
-            }
-        }
+        public void addAwakenPowerId(int var1) {
+         if (var1 > 0 && !this._awakenPowerIds.contains(var1)) {
+            this._awakenPowerIds.add(var1);
+         }
+      }
 
         public void clearAwakenPowerIds() {
-            this._awakenPowerIds.clear();
-        }
+         this._awakenPowerIds.clear();
+      }
 
         public static String getMonitorLine() {
-            return String.format("L1ItemInstance scheduled=%d submit=%d active=%d done=%d skip=%d rejected=%d magicStoneExpire=%d magicStonePersist=%d magicStoneRefresh=%d equipmentTimer=%d error=%d", SCHEDULED_COUNT.get(), SUBMITTED_COUNT.get(), ACTIVE_COUNT.get(), COMPLETED_COUNT.get(), SKIP_COUNT.get(), REJECTED_COUNT.get(), MAGIC_STONE_SCHEDULE_COUNT.get(), MAGIC_STONE_PERSIST_COUNT.get(), MAGIC_STONE_REFRESH_COUNT.get(), EQUIPMENT_TIMER_COUNT.get(), ERROR_COUNT.get());
-        }
+         return String.format(
+            "L1ItemInstance scheduled=%d submit=%d active=%d done=%d skip=%d rejected=%d magicStoneExpire=%d magicStonePersist=%d magicStoneRefresh=%d equipmentTimer=%d error=%d",
+            SCHEDULED_COUNT.get(),
+            SUBMITTED_COUNT.get(),
+            ACTIVE_COUNT.get(),
+            COMPLETED_COUNT.get(),
+            SKIP_COUNT.get(),
+            REJECTED_COUNT.get(),
+            MAGIC_STONE_SCHEDULE_COUNT.get(),
+            MAGIC_STONE_PERSIST_COUNT.get(),
+            MAGIC_STONE_REFRESH_COUNT.get(),
+            EQUIPMENT_TIMER_COUNT.get(),
+            ERROR_COUNT.get()
+         );
+      }
 
         private static /* synthetic */ void lambda$monitoredTask$0(Runnable runnable) {
             ACTIVE_COUNT.incrementAndGet();
@@ -1168,9 +1268,9 @@ final class NativeDeWorldKinds {
         }
 
         @Override
-        protected int getId() {
-            return this.nativeObjectId;
-        }
+      protected int getId() {
+         return this.nativeObjectId;
+      }
 
         public Item(int n) {
             this(n, NativeDeItemMetadata.empty(n));
@@ -1196,72 +1296,72 @@ final class NativeDeWorldKinds {
             public int greater;
 
             public void updateAll() {
-                this.count = Item.this.getCount();
-                this.itemId = Item.this.getItemId();
-                this.isEquipped = Item.this.isEquipped();
-                this.isIdentified = Item.this.isIdentified();
-                this.enchantLevel = Item.this.getEnchantLevel();
-                this.durability = Item.this.get_durability();
-                this.chargeCount = Item.this.getChargeCount();
-                this.remainingTime = Item.this.getRemainingTime();
-                this.lastUsed = Item.this.getLastUsed();
-                this.bless = Item.this.getBless();
-                this.attrEnchantKind = Item.this.getAttrEnchantKind();
-                this.attrEnchantLevel = Item.this.getAttrEnchantLevel();
-                this.greater = Item.this.getGreater();
-            }
+            this.count = Item.this.getCount();
+            this.itemId = Item.this.getItemId();
+            this.isEquipped = Item.this.isEquipped();
+            this.isIdentified = Item.this.isIdentified();
+            this.enchantLevel = Item.this.getEnchantLevel();
+            this.durability = Item.this.get_durability();
+            this.chargeCount = Item.this.getChargeCount();
+            this.remainingTime = Item.this.getRemainingTime();
+            this.lastUsed = Item.this.getLastUsed();
+            this.bless = Item.this.getBless();
+            this.attrEnchantKind = Item.this.getAttrEnchantKind();
+            this.attrEnchantLevel = Item.this.getAttrEnchantLevel();
+            this.greater = Item.this.getGreater();
+         }
 
             public void updateCount() {
-                this.count = Item.this.getCount();
-            }
+            this.count = Item.this.getCount();
+         }
 
             public void updateItemId() {
-                this.itemId = Item.this.getItemId();
-            }
+            this.itemId = Item.this.getItemId();
+         }
 
             public void updateEquipped() {
-                this.isEquipped = Item.this.isEquipped();
-            }
+            this.isEquipped = Item.this.isEquipped();
+         }
 
             public void updateIdentified() {
-                this.isIdentified = Item.this.isIdentified();
-            }
+            this.isIdentified = Item.this.isIdentified();
+         }
 
             public void updateEnchantLevel() {
-                this.enchantLevel = Item.this.getEnchantLevel();
-            }
+            this.enchantLevel = Item.this.getEnchantLevel();
+         }
 
             public void updateDuraility() {
-                this.durability = Item.this.get_durability();
-            }
+            this.durability = Item.this.get_durability();
+         }
 
             public void updateChargeCount() {
-                this.chargeCount = Item.this.getChargeCount();
-            }
+            this.chargeCount = Item.this.getChargeCount();
+         }
 
             public void updateRemainingTime() {
-                this.remainingTime = Item.this.getRemainingTime();
-            }
+            this.remainingTime = Item.this.getRemainingTime();
+         }
 
             public void updateLastUsed() {
-                this.lastUsed = Item.this.getLastUsed();
-            }
+            this.lastUsed = Item.this.getLastUsed();
+         }
 
             public void updateBless() {
-                this.bless = Item.this.getBless();
-            }
+            this.bless = Item.this.getBless();
+         }
 
             public void updateAttrEnchantKind() {
-                this.attrEnchantKind = Item.this.getAttrEnchantKind();
-            }
+            this.attrEnchantKind = Item.this.getAttrEnchantKind();
+         }
 
             public void updateAttrEnchantLevel() {
-                this.attrEnchantLevel = Item.this.getAttrEnchantLevel();
-            }
+            this.attrEnchantLevel = Item.this.getAttrEnchantLevel();
+         }
 
             public void updateGreater() {
-                this.greater = Item.this.getGreater();
-            }
+            this.greater = Item.this.getGreater();
+         }
         }
 
         private static final class EquipmentTimerLease {

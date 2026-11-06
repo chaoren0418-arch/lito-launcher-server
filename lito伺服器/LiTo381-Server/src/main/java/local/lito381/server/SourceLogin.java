@@ -47,13 +47,22 @@ final class SourceLogin {
                 for(var endpoint:ClientSession.Endpoint.values()) {
                     ServerSocket server=new ServerSocket();opened.add(server);
                     String address=endpoint==ClientSession.Endpoint.LOGIN?config.bind():config.gameBind();
-                    server.bind(new InetSocketAddress(InetAddress.getByName(address),port),16);
+                    NativeServerLifetime.bindSource(server,new InetSocketAddress(InetAddress.getByName(address),port),16,hub);
                     tasks.add(()->{
+                        try {
                         try { while(!server.isClosed()) {
-                            Socket socket=server.accept();
-                            try {clients.submit(new ClientSession(socket,endpoint,config,accounts,state,capture,hub));}
+                            // javac scans this compile-time-only branch for captures but emits no code.
+                            // Preserve the formal capture descriptor before acceptSocket first uses hub.
+                            if (false) {
+                                Object[] captureOrder={clients,endpoint,config,accounts,state,capture};
+                            }
+                            Socket socket=NativeServerLifetime.acceptSocket(server,hub);
+                            try {NativeServerLifetime.submitAccepted(clients,new ClientSession(socket,endpoint,config,accounts,state,capture,hub));}
                             catch(Exception e){socket.close();throw e;}
                         }} catch(Exception e){if(!server.isClosed())System.out.println("[LiTo] source-listener failed: "+e.getClass().getSimpleName());}
+                            NativeServerLifetime.abortAccept();
+                            return;
+                        } catch(Throwable failure){NativeServerLifetime.abortAccept();throw failure;}
                     });
                 }
                 System.out.println("[LiTo] source-login id="+id+" name="+binding.name()+" port="+port+" auth=selected-source-only");

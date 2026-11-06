@@ -34,7 +34,7 @@ class TournamentRoomPolicyTest {
         assertTrue(GameHub.canJoinRoom(0, 80, null));
         assertThrows(NullPointerException.class, () -> GameHub.canJoinRoom(3, 80, null));
         var masked = new GameHub.RoomSettings("room", "", 100, 0x81, 0, 0, 0, 0);
-        assertEquals(BattleRules.decode(BattleRules.Mode.DEATHMATCH, 564, BattleControlCatalog.defaults()),
+        assertEquals(BattleRules.decode(settings, 564, BattleControlCatalog.defaults()),
                 BattleRules.decode(masked, 564, BattleControlCatalog.defaults()));
     }
 
@@ -44,7 +44,8 @@ class TournamentRoomPolicyTest {
             if (!mode.isBattleScene()) continue;
             for (int map : mode.maps()) {
                 var actual = TournamentRoomPolicy.rules(mode.wireId(), map);
-                assertEquals(BattleRules.decode(mode, map, BattleControlCatalog.defaults()), actual);
+                assertEquals(BattleRules.decode(new GameHub.RoomSettings("", "", 2,
+                        mode.wireId(), 0, 0, 0, 0), map, BattleControlCatalog.defaults()), actual);
                 assertTrue(seen.add(mode.wireId() + ":" + map));
                 assertTrue(actual.minimumPlayers() >= 1 && actual.minimumPlayers() <= 100);
                 assertTrue(actual.timeLimitSeconds() >= 1 && actual.timeLimitSeconds() <= 86400);

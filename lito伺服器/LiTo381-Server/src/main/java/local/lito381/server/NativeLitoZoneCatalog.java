@@ -24,17 +24,17 @@ final class NativeLitoZoneCatalog {
     private NativeLitoZoneCatalog() {}
 
     static List<Color> colors() {
-        return COLORS;
+        return ResourceDatabase.colors(COLORS);
     }
 
     static List<Zone> zones() {
-        return ZONES;
+        return ResourceDatabase.zones(ZONES);
     }
 
     static Zone forMap(int mapId) {
-        return ZONES.stream()
+        return ResourceDatabase.zone(ZONES.stream()
                 .filter(zone -> zone.mapId() == mapId)
                 .findFirst()
-                .orElse(null);
+                .orElse(null), mapId);
     }
 }

@@ -7,9 +7,25 @@ import java.util.function.Supplier;
 /** Independent source curse channel in the existing transient status container. */
 final class CombatCurseLifecycle {
  private static final int INITIAL=1,WAITING=2,APPLYING=3,ACTIVE=4;
- private record Target(long id,String source,String account,String name,Object phase,long room,long map,long instance){
-  static Target take(ClientSession pc){return new Target(pc.playerObjectId(),pc.sourceCharacterIdentity(),pc.sourceAccountIdentity(),pc.selectedCharacterName(),CombatAccess.field(pc,"phase"),number(pc,"currentRoomId"),number(pc,"classicWorldMapId"),number(pc,"classicWorldInstanceId"));}
-  boolean valid(ClientSession pc){return id==pc.playerObjectId()&&source.equals(pc.sourceCharacterIdentity())&&account.equals(pc.sourceAccountIdentity())&&name.equals(pc.selectedCharacterName())&&phase==CombatAccess.field(pc,"phase")&&room==number(pc,"currentRoomId")&&map==number(pc,"classicWorldMapId")&&instance==number(pc,"classicWorldInstanceId");}
+ @AsRecord(components={"id","source","account","name","phase","room","map","instance"})
+ private static final class Target {
+  private final long id;private final String source;private final String account;private final String name;
+  private final Object phase;private final long room;private final long map;private final long instance;
+  private volatile Object nativeRoleOwner;
+  private Target(long id,String source,String account,String name,Object phase,long room,long map,long instance){
+   this.id=id;this.source=source;this.account=account;this.name=name;this.phase=phase;this.room=room;this.map=map;this.instance=instance;
+  }
+  public long id(){return id;}public String source(){return source;}public String account(){return account;}public String name(){return name;}
+  public Object phase(){return phase;}public long room(){return room;}public long map(){return map;}public long instance(){return instance;}
+  static Target take(ClientSession pc){
+   Target t=new Target(pc.playerObjectId(),pc.sourceCharacterIdentity(),pc.sourceAccountIdentity(),pc.selectedCharacterName(),CombatAccess.field(pc,"phase"),number(pc,"currentRoomId"),number(pc,"classicWorldMapId"),number(pc,"classicWorldInstanceId"));
+   t.nativeRoleOwner=NativePlayerCommit.owner(pc);
+   return t;
+  }
+  boolean valid(ClientSession pc){
+   if(nativeRoleOwner!=NativePlayerCommit.owner(pc))return false;
+   return id==pc.playerObjectId()&&source.equals(pc.sourceCharacterIdentity())&&account.equals(pc.sourceAccountIdentity())&&name.equals(pc.selectedCharacterName())&&phase==CombatAccess.field(pc,"phase")&&room==number(pc,"currentRoomId")&&map==number(pc,"classicWorldMapId")&&instance==number(pc,"classicWorldInstanceId");
+  }
  }
  private record Snapshot(long starts,long ends,boolean locked){
   static Snapshot take(BattleTimedStatus t){return new Snapshot(number(t,"paralysisActivatesAtNanos"),number(t,"paralysisExpiresAtNanos"),(boolean)CombatAccess.field(t,"paralysisLockEmitted"));}
@@ -55,7 +71,11 @@ final class CombatCurseLifecycle {
    try{synchronized(context.timed){if(!applied){if(context.state.current()!=transition)throw new IllegalStateException("curse cleanup lost exact lease");after.apply(context.timed);applied=true;}}
     while(true){Palette p;synchronized(this){p=palettes.poll();}if(p==null)break;if(context.valid()&&lease.target.valid(context.pc)){int color=(int)CombatAccess.call(context.pc,"currentPoisonPalette","(J)I",p.now!=0?p.now:System.nanoTime());if(p.recipient==null)CombatPoisonLifecycle.rawPalette(context.pc,color,p.reason);else sendPacket(p.recipient,Protocol.poison(context.pc.playerObjectId(),color),p.reason.replace(" type="+p.intended+" reason="," type="+color+" reason="));colorPublished=true;}}
     if(terminal&&lease.managed&&context.valid()&&lease.target.valid(context.pc)){if(!colorPublished){CombatPoisonLifecycle.rawPalette(context.pc,(int)CombatAccess.call(context.pc,"currentPoisonPalette","(J)I",context.now!=0?context.now:System.nanoTime()),"source-curse-cleanup");colorPublished=true;}synchronized(this){if(!releaseRegistered&&number(context.pc,"playerHp")>0){var release=new Release(context.pc,Protocol.paralysis(Protocol.ParalysisMode.PARALYSIS_RELEASE),"S_PARALYSE mode=3 reason=source-curse-cleanup",context.now!=0?context.now:System.nanoTime());releaseRegistered=true;release.colorRequired.set(true);release.colorReady.set(true);releases.add(release);}}}
-    List<Release> ready;synchronized(this){if(!(terminal||colorPublished))return;ready=List.copyOf(releases);for(var r:ready)r.colorReady.set(true);releases.clear();if(terminal)sealed=true;}for(var r:ready)r.send();
+    List<Release> ready;synchronized(this){if(!(terminal||colorPublished))return;ready=List.copyOf(releases);for(var r:ready)r.colorReady.set(true);releases.clear();if(terminal)sealed=true;}
+    for(var r:ready){
+     if(!context.valid()||!lease.target.valid(context.pc))continue;
+     r.send();
+    }
    }finally{synchronized(this){draining=false;}}
   }
  }

@@ -1,75 +1,72 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
+// Decompiled with Vineflower 1.11.2; reviewed against formal bytecode.
 package local.lito381.server;
 
 import java.util.concurrent.RejectedExecutionException;
-import local.lito381.server.NativeDeAiTimeline;
 
 final class NativeDeAiTimerProtocol {
-    private NativeDeAiTimerProtocol() {
-    }
+   private NativeDeAiTimerProtocol() {
+   }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static Object schedule(NativeDeAiTimeline.State state, Port port, long l, int n, boolean bl) {
-        long l2;
-        if (port.shutdown()) {
-            NativeDeAiTimeline.stop(state, port, l);
-            return null;
-        }
-        Object object = state.lock;
-        synchronized (object) {
-            if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop || !state.pending || state.pendingBackground != bl) {
-                return null;
+   static Object schedule(NativeDeAiTimeline.State var0, NativeDeAiTimerProtocol.Port var1, long var2, int var4, boolean var5) {
+      if (var1.shutdown()) {
+         NativeDeAiTimeline.stop(var0, var1, var2);
+         return null;
+      } else {
+         long var6;
+         synchronized (var0.lock) {
+            if (!NativeDeAiTimeline.owns(var0, var2) || var0.chain != var2 || var0.stop || !var0.pending || var0.pendingBackground != var5) {
+               return null;
             }
-            if (state.activeTimer != 0L) {
-                return state.future;
+
+            if (var0.activeTimer != 0L) {
+               return var0.future;
             }
-            state.activeTimer = l2 = NativeDeAiTimeline.nextTimer(state);
-        }
-        try {
-            object = port.install(l, l2, bl, Math.max(0, n));
-            if (object != null) {
-                boolean bl2 = false;
-                Object object2 = state.lock;
-                synchronized (object2) {
-                    if (NativeDeAiTimeline.owns(state, l) && state.chain == l && !state.stop && state.activeTimer == l2) {
-                        state.future = object;
-                        bl2 = true;
-                    }
-                }
-                if (!bl2) {
-                    port.cancel(object);
-                    return null;
-                }
-                return object;
+
+            var6 = NativeDeAiTimeline.nextTimer(var0);
+            var0.activeTimer = var6;
+         }
+
+         try {
+            Object var16 = var1.install(var2, var6, var5, Math.max(0, var4));
+            if (var16 != null) {
+               boolean var9 = false;
+               synchronized (var0.lock) {
+                  if (NativeDeAiTimeline.owns(var0, var2) && var0.chain == var2 && !var0.stop && var0.activeTimer == var6) {
+                     var0.future = var16;
+                     var9 = true;
+                  }
+               }
+
+               if (!var9) {
+                  var1.cancel(var16);
+                  return null;
+               }
+
+               return var16;
             }
-            port.failure(Failure.NULL_FUTURE);
-        }
-        catch (RejectedExecutionException rejectedExecutionException) {
-            port.failure(Failure.REJECTED);
-        }
-        catch (RuntimeException runtimeException) {
-            port.failure(Failure.ERROR);
-        }
-        NativeDeAiTimeline.failTimer(state, port, l, l2);
-        return null;
-    }
 
-    static interface Port
-    extends NativeDeAiTimeline.Port {
-        public Object install(long var1, long var3, boolean var5, int var6);
+            var1.failure(NativeDeAiTimerProtocol.Failure.NULL_FUTURE);
+         } catch (RejectedExecutionException var13) {
+            var1.failure(NativeDeAiTimerProtocol.Failure.REJECTED);
+         } catch (RuntimeException var14) {
+            var1.failure(NativeDeAiTimerProtocol.Failure.ERROR);
+         }
 
-        public void failure(Failure var1);
-    }
+         NativeDeAiTimeline.failTimer(var0, var1, var2, var6);
+         return null;
+      }
+   }
 
-    static enum Failure {
-        NULL_FUTURE,
-        REJECTED,
-        ERROR;
+   static enum Failure {
+      NULL_FUTURE,
+      REJECTED,
+      ERROR;
+   }
 
-    }
+   interface Port extends NativeDeAiTimeline.Port {
+      Object install(long var1, long var3, boolean var5, int var6);
+
+      void failure(NativeDeAiTimerProtocol.Failure var1);
+   }
 }

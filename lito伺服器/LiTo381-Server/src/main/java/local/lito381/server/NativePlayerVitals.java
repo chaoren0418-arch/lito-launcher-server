@@ -1,71 +1,57 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
-import local.lito381.server.AccountRepository;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.SourceAdministration;
-
 final class NativePlayerVitals {
-    private static final ThreadLocal<Integer> minimum = new ThreadLocal();
+   private static final ThreadLocal<Integer> minimum = new ThreadLocal<>();
 
-    NativePlayerVitals() {
-    }
+   static int minimum() {
+      Integer var0 = minimum.get();
+      return var0 == null ? 0 : var0;
+   }
 
-    static int minimum() {
-        Integer n = minimum.get();
-        return n == null ? 0 : n;
-    }
+   static NativePlayerVitals.Result calculate(int var0, int var1, int var2, int var3, boolean var4) {
+      long var5 = Math.min((long)var0 - (long)var2, (long)var1);
+      int var7 = Math.max(0, Math.min(var0, Math.min(Math.max(0, var3), var1)));
+      if (var5 <= (long)var7) {
+         if (var7 > 0) {
+            return new NativePlayerVitals.Result(var7, false);
+         }
+         if (var4) {
+            return new NativePlayerVitals.Result(var1, false);
+         }
+         return new NativePlayerVitals.Result(0, true);
+      }
+      return new NativePlayerVitals.Result((int)Math.min(2147483647L, var5), false);
+   }
 
-    static Result calculate(int n, int n2, int n3, int n4, boolean bl) {
-        int n5;
-        long l = Math.min((long)n - (long)n3, (long)n2);
-        if (l <= (long)(n5 = Math.max(0, Math.min(n, Math.min(Math.max(0, n4), n2))))) {
-            if (n5 > 0) {
-                return new Result(n5, false);
-            }
-            if (bl) {
-                return new Result(n2, false);
-            }
-            return new Result(0, true);
-        }
-        return new Result((int)Math.min(Integer.MAX_VALUE, l), false);
-    }
+   static boolean gm(ClientSession var0) {
+      AccountRepository var1 = (AccountRepository)CombatAccess.call(var0, "selectedSourceAccounts", "()Llocal/lito381/server/AccountRepository;");
+      return SourceAdministration.accessLevel(var1, var0.accountName(), var0) >= 200;
+   }
 
-    static boolean gm(ClientSession clientSession) {
-        AccountRepository accountRepository = (AccountRepository)CombatAccess.call(clientSession, "selectedSourceAccounts", "()Llocal/lito381/server/AccountRepository;", new Object[0]);
-        return SourceAdministration.accessLevel(accountRepository, clientSession.accountName(), clientSession) >= 200;
-    }
+   static void nonlethal(ClientSession var0, int var1, ClientSession var2, boolean var3) {
+      Integer var4 = minimum.get();
+      minimum.set(1);
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void nonlethal(ClientSession clientSession, int n, ClientSession clientSession2, boolean bl) {
-        Integer n2 = minimum.get();
-        minimum.set(1);
-        try {
-            if (bl) {
-                CombatAccess.call(clientSession, "takeClassicWorldPlayerDamage", "(ILlocal/lito381/server/ClientSession;ZZ)V", n, clientSession2, false, false);
-            } else {
-                CombatAccess.call(clientSession, "takePlayerDamage", "(ILlocal/lito381/server/ClientSession;ZZJ)V", n, clientSession2, false, false, 0L);
-            }
-        }
-        finally {
-            if (n2 == null) {
-                minimum.remove();
-            } else {
-                minimum.set(n2);
-            }
-        }
-    }
+      try {
+         if (var3) {
+            CombatAccess.call(var0, "takeClassicWorldPlayerDamage", "(ILlocal/lito381/server/ClientSession;ZZ)V", var1, var2, false, false);
+         } else {
+            CombatAccess.call(var0, "takePlayerDamage", "(ILlocal/lito381/server/ClientSession;ZZJ)V", var1, var2, false, false, 0L);
+         }
+      } finally {
+         if (var4 == null) {
+            minimum.remove();
+         } else {
+            minimum.set(var4);
+         }
+      }
+   }
 
-    static boolean idle() {
-        return minimum.get() == null;
-    }
+   static boolean idle() {
+      return minimum.get() == null;
+   }
 
-    record Result(int after, boolean fatal) {
-    }
+   record Result(int after, boolean fatal) {
+   }
 }

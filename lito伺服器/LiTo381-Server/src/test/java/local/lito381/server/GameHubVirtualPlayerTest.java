@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 final class GameHubVirtualPlayerTest {
-    @Test void deRosterHonorsCapacityServerNamesBalanceAndAutomaticReadiness()
+    @Test void deRosterHonorsCapacityAndBalanceWithoutReplacingRealPlayers()
             throws Exception {
         ServerConfig config = config();
         GameHub.RoomSettings settings = new GameHub.RoomSettings(
@@ -37,8 +37,9 @@ final class GameHubVirtualPlayerTest {
             long force0 = update.added().stream().filter(player -> player.force() == 0).count();
             long force1 = update.added().stream().filter(player -> player.force() == 1).count();
             assertTrue(Math.abs(force0 - force1) <= 1);
-            assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED,
+            assertEquals(GameHub.ReadyTransition.NONE,
                     hub.requestOwnerStart(roomId, owner).transition());
+            assertFalse(hub.battleStarted(roomId));
         }
     }
 
@@ -67,7 +68,7 @@ final class GameHubVirtualPlayerTest {
         }
     }
 
-    @Test void siegeVirtualRosterSatisfiesNativeFifteenPerForceMinimum()
+    @Test void siegeVirtualRosterDoesNotSatisfyNativeFifteenPerForceMinimum()
             throws Exception {
         ServerConfig config = ServerConfig.load(Path.of(
                 "src/test/resources/server-config/config/"
@@ -83,8 +84,9 @@ final class GameHubVirtualPlayerTest {
             assertEquals(29, hub.addRoomVirtualPlayers(
                     roomId, owner, "太陽神", 29).added().size());
 
-            assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED,
+            assertEquals(GameHub.ReadyTransition.NONE,
                     hub.requestOwnerStart(roomId, owner).transition());
+            assertFalse(hub.battleStarted(roomId));
         }
     }
 
@@ -100,7 +102,7 @@ final class GameHubVirtualPlayerTest {
                 "INSERT INTO `commands` VALUES ('de', 200, 'L1SpawnDe'"));
     }
 
-    @Test void everyNativeBattleModeAndMapStartsWithDatabaseCommandVirtualRoster()
+    @Test void everyNativeBattleModeAndMapRequiresItsRealPlayerMinimumAlongsideVirtualRoster()
             throws Exception {
         ServerConfig config = config();
         Method countdownWork = GameHub.class.getDeclaredMethod("countdownWork", long.class);
@@ -117,7 +119,7 @@ final class GameHubVirtualPlayerTest {
                             "GM matrix", "", 100,
                             mode.teamBased() ? GameHub.RoomSettings.EQUAL_SIDES : 0,
                             mode.wireId(), 0, 0, 0, 0, List.of()));
-                    int capacity = Math.max(2, defaults.minimumPlayers());
+                    int capacity = 100; // 同時容納真人最低人數與原本的假人名單。
                     long roomId = hub.createRoom(0, new GameHub.RoomSettings(
                             "GM matrix", "", capacity,
                             mode.teamBased() ? GameHub.RoomSettings.EQUAL_SIDES : 0,
@@ -130,8 +132,24 @@ final class GameHubVirtualPlayerTest {
                             roomId, owner, "太陽神", virtualCount);
                     assertTrue(update.accepted(), mode + "/" + mapId);
                     assertEquals(virtualCount, update.added().size(), mode + "/" + mapId);
-                    assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED,
-                            hub.requestOwnerStart(roomId, owner).transition(), mode + "/" + mapId);
+                    GameHub.ReadyUpdate ready = hub.requestOwnerStart(roomId, owner);
+                    assertEquals(defaults.minimumPlayers() > 1
+                                    ? GameHub.ReadyTransition.NONE : GameHub.ReadyTransition.COUNTDOWN_STARTED,
+                            ready.transition(), mode + "/" + mapId);
+                    // 正式規則只計真人；補足真人並明確分隊後，保留原 40 組開戰／出生點驗證。
+                    if (defaults.minimumPlayers() > 1) {
+                        hub.setForce(roomId, owner, 0);
+                        for (int index = 1; index < defaults.minimumPlayers(); index++) {
+                            ClientSession peer = session(config, hub);
+                            hub.connect(peer);
+                            hub.enterChannel(0, peer);
+                            assertTrue(hub.tryJoinRoom(roomId, peer).joined(), mode + "/" + mapId);
+                            hub.setForce(roomId, peer, mode.teamBased() ? index % 2 : 0);
+                            ready = hub.setReady(roomId, peer, true);
+                        }
+                        assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED,
+                                ready.transition(), mode + "/" + mapId);
+                    }
 
                     long future = System.nanoTime() + 10_000_000_000L;
                     countdownWork.invoke(hub, future);

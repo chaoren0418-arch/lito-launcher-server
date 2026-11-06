@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -77,11 +77,11 @@ final class NativeServerLifetime {
     }
 
     static void install(GameHub gameHub, ExecutorService executorService, List<ServerSocket> list, CaptureLog captureLog, LitoMapRepository litoMapRepository, AccountRepository accountRepository) {
-        NativeServerLifetime nativeServerLifetime;
         if (main.get() != null || NativePlayerLifetime.of((GameHub)gameHub).application != null) {
             throw new IllegalStateException("native application already installed");
         }
-        NativePlayerLifetime.of((GameHub)gameHub).application = nativeServerLifetime = new NativeServerLifetime(gameHub, executorService, list, captureLog, litoMapRepository, accountRepository);
+        NativeServerLifetime nativeServerLifetime = new NativeServerLifetime(gameHub, executorService, list, captureLog, litoMapRepository, accountRepository);
+        NativePlayerLifetime.of(gameHub).application = nativeServerLifetime;
         main.set(nativeServerLifetime);
         Runtime.getRuntime().addShutdownHook(nativeServerLifetime.hook);
     }
@@ -97,35 +97,36 @@ final class NativeServerLifetime {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static void login(GameHub gameHub, ServerSocket serverSocket) {
-        NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(gameHub);
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
-            if (nativeServerLifetime.closing) {
-                NativeServerLifetime.closeSocketQuiet(serverSocket);
-                throw new IllegalStateException("application admission closed during startup");
-            }
-            nativeServerLifetime.login = serverSocket;
-        }
-    }
+   static void login(GameHub var0, ServerSocket var1) {
+      NativeServerLifetime var2 = of(var0);
+      synchronized (var2.fence) {
+         if (var2.closing) {
+            closeSocketQuiet(var1);
+            throw new IllegalStateException("application admission closed during startup");
+         } else {
+            var2.login = var1;
+         }
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static boolean addListener(List<ServerSocket> list, ServerSocket serverSocket) {
-        NativeServerLifetime nativeServerLifetime = main.get();
-        if (nativeServerLifetime == null) {
-            return list.add(serverSocket);
-        }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
-            if (nativeServerLifetime.closing) {
-                NativeServerLifetime.closeSocketQuiet(serverSocket);
-                throw new IllegalStateException("application admission closed during listener startup");
+   static boolean addListener(List<ServerSocket> var0, ServerSocket var1) {
+      NativeServerLifetime var2 = main.get();
+      if (var2 == null) {
+         return var0.add(var1);
+      } else {
+         synchronized (var2.fence) {
+            if (var2.closing) {
+               closeSocketQuiet(var1);
+               throw new IllegalStateException("application admission closed during listener startup");
+            } else {
+               return var0.add(var1);
             }
-            return list.add(serverSocket);
-        }
-    }
+         }
+      }
+   }
 
     static void bindSource(ServerSocket serverSocket, SocketAddress socketAddress, int n, GameHub gameHub) throws IOException {
         NativeServerLifetime.bind(NativeServerLifetime.of(gameHub), serverSocket, socketAddress, n);
@@ -143,8 +144,7 @@ final class NativeServerLifetime {
             NativeServerLifetime.bindNative(serverSocket, socketAddress, n);
             return;
         }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
+        synchronized (nativeServerLifetime.fence) {
             if (nativeServerLifetime.closing) {
                 NativeServerLifetime.closeSocketQuiet(serverSocket);
                 throw new IOException("listener admission closed");
@@ -172,38 +172,36 @@ final class NativeServerLifetime {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static Socket acceptSocket(ServerSocket serverSocket, GameHub gameHub) throws IOException {
-        NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(gameHub);
-        Socket socket = serverSocket.accept();
-        if (nativeServerLifetime == null) {
-            return socket;
-        }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
-            if (nativeServerLifetime.closing) {
-                try {
-                    socket.close();
-                }
-                catch (IOException iOException) {
-                    // empty catch block
-                }
-                throw new SocketException("application admission closed after accept");
+   static Socket acceptSocket(ServerSocket var0, GameHub var1) throws IOException {
+      NativeServerLifetime var2 = of(var1);
+      Socket var3 = var0.accept();
+      if (var2 == null) {
+         return var3;
+      } else {
+         synchronized (var2.fence) {
+            if (var2.closing) {
+               try {
+                  var3.close();
+               } catch (IOException var7) {
+               }
+
+               throw new SocketException("application admission closed after accept");
+            } else if (accepting.get() != null) {
+               try {
+                  var3.close();
+               } catch (IOException var8) {
+               }
+
+               throw new IllegalStateException("nested application accept");
+            } else {
+               var2.accepts++;
+               accepting.set(var2);
+               acceptedSocket.set(var3);
+               return var3;
             }
-            if (accepting.get() != null) {
-                try {
-                    socket.close();
-                }
-                catch (IOException iOException) {
-                    // empty catch block
-                }
-                throw new IllegalStateException("nested application accept");
-            }
-            ++nativeServerLifetime.accepts;
-            accepting.set(nativeServerLifetime);
-            acceptedSocket.set(socket);
-            return socket;
-        }
-    }
+         }
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
@@ -213,8 +211,7 @@ final class NativeServerLifetime {
         try {
             Future<?> future = executorService.submit(runnable);
             bl = true;
-            Future<?> future2 = future;
-            return future2;
+            return future;
         }
         finally {
             NativeServerLifetime.leaveAccept(bl);
@@ -244,8 +241,7 @@ final class NativeServerLifetime {
                 // empty catch block
             }
         }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
+        synchronized (nativeServerLifetime.fence) {
             if (--nativeServerLifetime.accepts < 0) {
                 throw new IllegalStateException("accepted socket receipt underflow");
             }
@@ -267,85 +263,85 @@ final class NativeServerLifetime {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static boolean enterSession(ClientSession clientSession) {
-        NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(clientSession);
-        if (nativeServerLifetime == null) {
-            return true;
-        }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
-            if (nativeServerLifetime.closing) {
-                try {
-                    ((Socket)CombatAccess.field(clientSession, "socket")).close();
-                }
-                catch (Exception exception) {
-                    // empty catch block
-                }
-                return false;
+   static boolean enterSession(ClientSession var0) {
+      NativeServerLifetime var1 = of(var0);
+      if (var1 == null) {
+         return true;
+      } else {
+         synchronized (var1.fence) {
+            if (var1.closing) {
+               try {
+                  ((Socket)CombatAccess.field(var0, "socket")).close();
+               } catch (Exception var5) {
+               }
+
+               return false;
+            } else {
+               var1.sessions.add(var0);
+               session.set(var1);
+               return true;
             }
-            nativeServerLifetime.sessions.add(clientSession);
-            session.set(nativeServerLifetime);
-            return true;
-        }
-    }
+         }
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static void leaveSession(ClientSession clientSession) {
-        NativeServerLifetime nativeServerLifetime = session.get();
-        if (nativeServerLifetime != null) {
-            nativeServerLifetime.sessions.remove(clientSession);
-            session.remove();
-            Object object = nativeServerLifetime.fence;
-            synchronized (object) {
-                nativeServerLifetime.fence.notifyAll();
-            }
-        }
-    }
+   static void leaveSession(ClientSession var0) {
+      NativeServerLifetime var1 = session.get();
+      if (var1 != null) {
+         var1.sessions.remove(var0);
+         session.remove();
+         synchronized (var1.fence) {
+            var1.fence.notifyAll();
+         }
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static boolean enterPacket(ClientSession clientSession) {
-        NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(clientSession);
-        if (nativeServerLifetime == null) {
-            packets.get().push(UNOWNED);
-            return true;
-        }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
-            if (!nativeServerLifetime.closing) {
-                ++nativeServerLifetime.handlers;
-                packets.get().push(nativeServerLifetime);
-                return true;
+   static boolean enterPacket(ClientSession var0) {
+      NativeServerLifetime var1 = of(var0);
+      if (var1 == null) {
+         packets.get().push(UNOWNED);
+         return true;
+      } else {
+         synchronized (var1.fence) {
+            if (!var1.closing) {
+               var1.handlers++;
+               packets.get().push(var1);
+               return true;
             }
-        }
-        NativeServerLifetime.awaitCleanup(clientSession);
-        CombatAccess.set(clientSession, "quitRequested", true);
-        return false;
-    }
+         }
+
+         awaitCleanup(var0);
+         CombatAccess.set(var0, "quitRequested", true);
+         return false;
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static void leavePacket() {
-        ArrayDeque<Object> arrayDeque = packets.get();
-        Object object = arrayDeque.pop();
-        if (arrayDeque.isEmpty()) {
-            packets.remove();
-        }
-        if (object instanceof NativeServerLifetime) {
-            NativeServerLifetime nativeServerLifetime = (NativeServerLifetime)object;
-            Object object2 = nativeServerLifetime.fence;
-            synchronized (object2) {
-                if (--nativeServerLifetime.handlers < 0) {
-                    throw new IllegalStateException("native packet receipt underflow");
-                }
-                nativeServerLifetime.fence.notifyAll();
+   static void leavePacket() {
+      ArrayDeque var0 = packets.get();
+      Object var1 = var0.pop();
+      if (var0.isEmpty()) {
+         packets.remove();
+      }
+
+      if (var1 instanceof NativeServerLifetime var2) {
+         synchronized (var2.fence) {
+            if (--var2.handlers < 0) {
+               throw new IllegalStateException("native packet receipt underflow");
             }
-        }
-    }
+
+            var2.fence.notifyAll();
+         }
+      }
+   }
 
     static void awaitCleanup(ClientSession clientSession) {
         NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(clientSession);
@@ -410,8 +406,7 @@ final class NativeServerLifetime {
             } else {
                 nativeServerLifetime.releaseIfDone();
             }
-            List<Runnable> list = List.of();
-            return list;
+            return List.of();
         }
         finally {
             main.remove();
@@ -435,99 +430,100 @@ final class NativeServerLifetime {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void closeApplication() {
-        this.ensureExternal();
-        Object object = this.control;
-        synchronized (object) {
-            if (this.networkDone) {
-                return;
+      this.ensureExternal();
+      synchronized (this.control) {
+         if (this.networkDone) return;
+
+            synchronized (this.fence) {
+               this.closing = true;
+               closeSocketQuiet(this.login);
+
+               for (ServerSocket var4 : List.copyOf(this.listeners)) {
+                  closeSocketQuiet(var4);
+               }
+
+               for (ServerSocket var31 : this.sourceListeners) {
+                  closeSocketQuiet(var31);
+               }
             }
-            Object object2 = this.fence;
-            synchronized (object2) {
-                this.closing = true;
-                NativeServerLifetime.closeSocketQuiet(this.login);
-                for (ServerSocket serverSocket : List.copyOf(this.listeners)) {
-                    NativeServerLifetime.closeSocketQuiet(serverSocket);
-                }
-                for (ServerSocket serverSocket : this.sourceListeners) {
-                    NativeServerLifetime.closeSocketQuiet(serverSocket);
-                }
-            }
-            ScheduledExecutorService battleClock = (ScheduledExecutorService)CombatAccess.field(this.hub, "battleClock");
-            battleClock.shutdownNow();
-            boolean bl = false;
+
+            ScheduledExecutorService var28 = (ScheduledExecutorService)CombatAccess.field(this.hub, "battleClock");
+            var28.shutdownNow();
+            boolean var30 = false;
+
             try {
-                long l = System.nanoTime() + TimeUnit.SECONDS.toNanos(30L);
-                Object clientSessionArray = this.fence;
-                synchronized (this.fence) {
-                    while (this.accepts != 0 || this.handlers != 0) {
-                        long l2 = l - System.nanoTime();
-                        if (l2 <= 0L) {
-                            throw new IllegalStateException("accepted constructors/packet handlers remain active; application resources fenced");
-                        }
-                        TimeUnit.NANOSECONDS.timedWait(this.fence, l2);
-                    }
-                    // ** MonitorExit[var6_9] (shouldn't be in output)
-                    if (!battleClock.awaitTermination(3L, TimeUnit.SECONDS)) {
-                        throw new IllegalStateException("battle clock remains active; application resources fenced");
-                    }
-                    if (!this.combatDone) {
-                        this.hub.close();
-                        if (!NativePlayerLifetime.snapshot(this.hub).terminated()) {
-                            throw new IllegalStateException("combat workers remain active; application resources fenced");
-                        }
-                        this.combatDone = true;
-                        this.damageFinished.countDown();
-                    }
-                    for (ClientSession clientSession : (ClientSession[])this.sessions.toArray(ClientSession[]::new)) {
-                        try {
-                            ((Socket)CombatAccess.field(clientSession, "socket")).close();
-                        }
-                        catch (IOException iOException) {
-                            // empty catch block
-                        }
-                    }
-                    this.clients.shutdown();
-                    if (!this.clients.awaitTermination(3L, TimeUnit.SECONDS)) {
-                        this.clients.shutdownNow();
-                        if (!this.clients.awaitTermination(3L, TimeUnit.SECONDS)) {
-                            throw new IllegalStateException("session executor remains active; application resources fenced");
-                        }
-                    }
-                    long l3 = System.nanoTime() + TimeUnit.SECONDS.toNanos(6L);
-                    Object object3 = this.fence;
-                    synchronized (object3) {
-                        while (!this.sessions.isEmpty()) {
-                            long l4 = l3 - System.nanoTime();
-                            if (l4 <= 0L) {
-                                throw new IllegalStateException("session cleanup remains active; application resources fenced");
-                            }
-                            TimeUnit.NANOSECONDS.timedWait(this.fence, l4);
-                        }
-                    }
-                    this.networkDone = true;
-                    this.releaseIfDone();
-                }
+               long var32 = System.nanoTime() + TimeUnit.SECONDS.toNanos(30L);
+               synchronized (this.fence) {
+                  while (this.accepts != 0 || this.handlers != 0) {
+                     long var7 = var32 - System.nanoTime();
+                     if (var7 <= 0L) {
+                        throw new IllegalStateException("accepted constructors/packet handlers remain active; application resources fenced");
+                     }
+
+                     TimeUnit.NANOSECONDS.timedWait(this.fence, var7);
+                  }
+               }
+
+               if (!var28.awaitTermination(3L, TimeUnit.SECONDS)) {
+                  throw new IllegalStateException("battle clock remains active; application resources fenced");
+               }
+
+               if (!this.combatDone) {
+                  this.hub.close();
+                  if (!NativePlayerLifetime.snapshot(this.hub).terminated()) {
+                     throw new IllegalStateException("combat workers remain active; application resources fenced");
+                  }
+
+                  this.combatDone = true;
+                  this.damageFinished.countDown();
+               }
+
+               for (ClientSession var9 : this.sessions.toArray(ClientSession[]::new)) {
+                  try {
+                     ((Socket)CombatAccess.field(var9, "socket")).close();
+                  } catch (IOException var21) {
+                  }
+               }
+
+               this.clients.shutdown();
+               if (!this.clients.awaitTermination(3L, TimeUnit.SECONDS)) {
+                  this.clients.shutdownNow();
+                  if (!this.clients.awaitTermination(3L, TimeUnit.SECONDS)) {
+                     throw new IllegalStateException("session executor remains active; application resources fenced");
+                  }
+               }
+
+               long var34 = System.nanoTime() + TimeUnit.SECONDS.toNanos(6L);
+               synchronized (this.fence) {
+                  while (!this.sessions.isEmpty()) {
+                     long var37 = var34 - System.nanoTime();
+                     if (var37 <= 0L) {
+                        throw new IllegalStateException("session cleanup remains active; application resources fenced");
+                     }
+
+                     TimeUnit.NANOSECONDS.timedWait(this.fence, var37);
+                  }
+               }
+
+               this.networkDone = true;
+               this.releaseIfDone();
+            } catch (InterruptedException var24) {
+               var30 = true;
+               throw new IllegalStateException("application close interrupted; resources fenced", var24);
+            } finally {
+               if (var30) {
+                  Thread.currentThread().interrupt();
+               }
             }
-            catch (InterruptedException interruptedException) {
-                bl = true;
-                throw new IllegalStateException("application close interrupted; resources fenced", interruptedException);
-            }
-            finally {
-                if (bl) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-            {
-            }
-        }
-    }
+
+      }
+   }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void closeOwned(AutoCloseable autoCloseable) throws Exception {
-        Object object = this.resourceFence;
-        synchronized (object) {
+        synchronized (this.resourceFence) {
             if (!this.safe()) {
                 throw new IllegalStateException("accepted work/session cleanup remains active; resource close fenced");
             }
@@ -566,8 +562,7 @@ final class NativeServerLifetime {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void releaseIfDone() {
-        Object object = this.resourceFence;
-        synchronized (object) {
+        synchronized (this.resourceFence) {
             if (!(this.safe() && this.closeAttempted.contains(this.capture) && this.closeAttempted.contains(this.maps) && this.closeAttempted.contains(this.accounts))) {
                 return;
             }
@@ -585,34 +580,37 @@ final class NativeServerLifetime {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    private void retry() {
-        Object object = this.fence;
-        synchronized (object) {
-            if (this.retryStarted || this.finished) {
-                return;
+   private void retry() {
+      synchronized (this.fence) {
+         if (this.retryStarted || this.finished) {
+            return;
+         }
+
+         this.retryStarted = true;
+      }
+
+      Thread var4 = new Thread(() -> {
+         int var1 = 0;
+
+         while (!this.finished) {
+            try {
+               this.closeApplication();
+               this.closeResources();
+               return;
+            } catch (Throwable var5) {
+               var1++;
+               if (var1 == 1 || (var1 & var1 - 1) == 0) {
+                  System.err.println("[LiTo] deferred application close still fenced: " + var5);
+               }
+
+               try {
+                  Thread.sleep(2000L);
+               } catch (InterruptedException var4x) {
+               }
             }
-            this.retryStarted = true;
-        }
-        object = new Thread(() -> {
-            int n = 0;
-            while (!this.finished) {
-                try {
-                    this.closeApplication();
-                    this.closeResources();
-                    return;
-                }
-                catch (Throwable throwable) {
-                    if (++n == 1 || (n & n - 1) == 0) {
-                        System.err.println("[LiTo] deferred application close still fenced: " + String.valueOf(throwable));
-                    }
-                    try {
-                        Thread.sleep(2000L);
-                    }
-                    catch (InterruptedException interruptedException) {}
-                }
-            }
-        }, "LiTo-native-close-retry");
-        ((Thread)object).setDaemon(true);
-        ((Thread)object).start();
-    }
+         }
+      }, "LiTo-native-close-retry");
+      var4.setDaemon(true);
+      var4.start();
+   }
 }

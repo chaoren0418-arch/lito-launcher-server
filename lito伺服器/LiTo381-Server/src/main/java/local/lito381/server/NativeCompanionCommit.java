@@ -23,19 +23,18 @@ final class NativeCompanionCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean valid(ClientSession clientSession, BattleCompanion battleCompanion, NativePlayerCommit.Binding binding) {
-        boolean bl;
         if (clientSession == null || battleCompanion == null || binding == null) {
             return false;
         }
-        boolean bl2 = bl = CombatAccess.field(clientSession, "battleCompanion") == battleCompanion;
+        boolean bl = CombatAccess.field(clientSession, "battleCompanion") == battleCompanion;
         if (!bl) {
-            List list;
-            List list2 = list = (List)CombatAccess.field(clientSession, "tamedCompanions");
-            synchronized (list2) {
+            List list = (List)CombatAccess.field(clientSession, "tamedCompanions");
+            synchronized (list) {
                 for (int i = 0; i < list.size(); ++i) {
-                    if (list.get(i) != battleCompanion) continue;
-                    bl = true;
-                    break;
+                    if (list.get(i) == battleCompanion) {
+                        bl = true;
+                        break;
+                    }
                 }
             }
         }

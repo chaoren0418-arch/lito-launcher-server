@@ -88,7 +88,7 @@ final class ClientSessionLitoChannelSelectionIntegrationTest {
         try (GameHub hub = new GameHub(config)) {
             ClientSession session = new ClientSession(
                     null, ClientSession.Endpoint.GAME, config, null, state,
-                    null, hub);
+                    LocalResources.discardCapture(), hub);
             hub.connect(session);
             setPhase(session, "CHANNEL");
             setField(session, "account", "NavigationUser");
@@ -169,7 +169,7 @@ final class ClientSessionLitoChannelSelectionIntegrationTest {
              Socket server = listener.accept()) {
             ClientSession departing = new ClientSession(
                     null, ClientSession.Endpoint.GAME, config, null, state,
-                    null, hub);
+                    LocalResources.discardCapture(), hub);
             hub.connect(departing);
             setPhase(departing, "CHANNEL");
             setField(departing, "account", "test");
@@ -314,7 +314,7 @@ final class ClientSessionLitoChannelSelectionIntegrationTest {
         try (GameHub hub = new GameHub(config)) {
             ClientSession session = new ClientSession(
                     null, ClientSession.Endpoint.GAME, config, null, state,
-                    null, hub);
+                    LocalResources.discardCapture(), hub);
             hub.connect(session);
             setPhase(session, "CHANNEL");
             setField(session, "account", "test");

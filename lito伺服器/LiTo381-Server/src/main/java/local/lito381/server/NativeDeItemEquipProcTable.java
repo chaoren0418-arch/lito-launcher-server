@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -71,15 +71,14 @@ public class NativeDeItemEquipProcTable {
         if (list == null || list.isEmpty()) {
             return Collections.emptyList();
         }
-        ArrayList<NativeDeItemEquipProc> arrayList = new ArrayList<NativeDeItemEquipProc>();
-        ArrayList<NativeDeItemEquipProc> arrayList2 = new ArrayList<NativeDeItemEquipProc>();
+        List<NativeDeItemEquipProc> arrayList = new ArrayList<NativeDeItemEquipProc>();
+        List<NativeDeItemEquipProc> arrayList2 = new ArrayList<NativeDeItemEquipProc>();
         for (NativeDeItemEquipProc nativeDeItemEquipProc : list) {
             if (nativeDeItemEquipProc.getEnchantLevel() == n2 && n2 >= 0) {
                 arrayList.add(nativeDeItemEquipProc);
-                continue;
+            } else if (nativeDeItemEquipProc.getEnchantLevel() == -1) {
+                arrayList2.add(nativeDeItemEquipProc);
             }
-            if (nativeDeItemEquipProc.getEnchantLevel() != -1) continue;
-            arrayList2.add(nativeDeItemEquipProc);
         }
         if (!arrayList.isEmpty()) {
             return List.copyOf(arrayList);

@@ -30,39 +30,39 @@ import local.lito381.server.Protocol;
 final class NativeCastTimeline {
     private static final ThreadLocal<Arrival> packet = new ThreadLocal();
 
-    static byte[] readFrame(InputStream inputStream, int n, ClientSession clientSession) throws IOException {
+    static byte[] readFrame(InputStream inputStream, int n, ClientSession pc) throws IOException {
         byte[] byArray = Protocol.readFrame(inputStream, n);
-        clientSession.nativeCastTimelineState().received = byArray == null ? null : new Arrival(clientSession, System.nanoTime(), System.currentTimeMillis(), Thread.currentThread().getId());
+        pc.nativeCastTimelineState().received = byArray == null ? null : new Arrival(pc, System.nanoTime(), System.currentTimeMillis(), Thread.currentThread().getId());
         return byArray;
     }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static void handle(ClientSession clientSession, byte[] byArray) throws Exception {
-        State state = clientSession.nativeCastTimelineState();
+    static void handle(ClientSession pc, byte[] byArray) throws Exception {
+        State state = pc.nativeCastTimelineState();
         Arrival arrival = state.received;
         if (arrival != null && arrival.readerThread == Thread.currentThread().getId()) {
             state.received = null;
         } else {
-            arrival = new Arrival(clientSession, System.nanoTime(), System.currentTimeMillis(), Thread.currentThread().getId());
+            arrival = new Arrival(pc, System.nanoTime(), System.currentTimeMillis(), Thread.currentThread().getId());
         }
         Arrival arrival2 = packet.get();
         packet.set(arrival);
         try {
-            clientSession.nativeTimelineHandle(byArray);
+            pc.nativeTimelineHandle(byArray);
         }
         finally {
             NativeCastTimeline.restore(arrival2);
         }
     }
 
-    static Arrival capture(ClientSession clientSession) {
+    static Arrival capture(ClientSession pc) {
         Arrival arrival = packet.get();
         if (arrival == null) {
             packet.remove();
         }
-        return arrival != null && arrival.pc == clientSession ? arrival : null;
+        return arrival != null && arrival.pc == pc ? arrival : null;
     }
 
     static Arrival detach() {
@@ -79,39 +79,38 @@ final class NativeCastTimeline {
         }
     }
 
-    static boolean legacyWindShackle(ClientSession clientSession, int n, String string) {
-        if (NativeLightAction.timelineIngress(clientSession)) {
+    static boolean legacyWindShackle(ClientSession pc, int n, String string) {
+        if (NativeLightAction.timelineIngress(pc)) {
             return true;
         }
-        return clientSession.nativeCastLegacyWindShackleAction(n, string);
+        return pc.nativeCastLegacyWindShackleAction(n, string);
     }
 
-    static int interval(ClientSession clientSession, int n) {
-        BattleAnimationCatalog.Animation animation = BattleAnimationCatalog.get().requireTimedAction(clientSession.battleGfx(), n);
+    static int interval(ClientSession pc, int n) {
+        BattleAnimationCatalog.Animation animation = BattleAnimationCatalog.get().requireTimedAction(pc.battleGfx(), n);
         int n2 = NativeSourceSpriteActionSpeed.calculate(animation.frameCount(), animation.frameRate());
         if (n2 <= 0) {
             return 0;
         }
         long l = System.nanoTime();
-        BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(clientSession, "timedStatus");
+        BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(pc, "timedStatus");
         BattleTimedStatus.Speed speed = battleTimedStatus.speed(l);
         int n3 = battleTimedStatus.brave(l).mode();
-        BattleWindShackleStatus battleWindShackleStatus = (BattleWindShackleStatus)CombatAccess.field(clientSession, "windShackleStatus");
+        BattleWindShackleStatus battleWindShackleStatus = (BattleWindShackleStatus)CombatAccess.field(pc, "windShackleStatus");
         NativeSourceActionIntervalCalculator.SpeedState speedState = new NativeSourceActionIntervalCalculator.SpeedState(speed.type() == 1, speed.type() == 2, n3 == 4 || n3 == 5, n3 == 6, n3 == 1, false, n3 == 3, battleWindShackleStatus.snapshot(l).active());
         return NativeSourceActionIntervalCalculator.calculate(n2, NativeSourceActionIntervalCalculator.ActionType.SPELL, speedState);
     }
 
-    static boolean admit(final ClientSession clientSession, final BattleSpellCatalog.LightSpell lightSpell, Arrival arrival) {
-        int n;
-        if (!clientSession.nativePlayerActionLock().isHeldByCurrentThread()) {
+    static boolean admit(final ClientSession pc, final BattleSpellCatalog.LightSpell spell, Arrival arrival) {
+        if (!pc.nativePlayerActionLock().isHeldByCurrentThread()) {
             throw new IllegalStateException("cast admission requires actual action lock");
         }
-        State state = clientSession.nativeCastTimelineState();
-        NativeDeItemApplication.Owner owner = NativeDeItemApplication.publicationOwner(clientSession);
+        State state = pc.nativeCastTimelineState();
+        NativeDeItemApplication.Owner owner = NativeDeItemApplication.publicationOwner(pc);
         if (owner == null) {
             return false;
         }
-        NativeReuseActor nativeReuseActor = NativeReuseGate.actor(clientSession);
+        NativeReuseActor nativeReuseActor = NativeReuseGate.actor(pc);
         if (nativeReuseActor == null) {
             return false;
         }
@@ -119,7 +118,8 @@ final class NativeCastTimeline {
             state.timeline.clear();
             state.owner = owner;
         }
-        if ((n = NativeCastTimeline.interval(clientSession, lightSpell.actionId())) <= 0) {
+        int n = NativeCastTimeline.interval(pc, spell.actionId());
+        if (n <= 0) {
             return false;
         }
         boolean[] blArray = new boolean[1];
@@ -129,41 +129,40 @@ final class NativeCastTimeline {
                     return false;
                 }
                 long l = System.nanoTime();
-                for (Long l2 : ((Map<?, Long>)CombatAccess.field(clientSession, "spellReadyNanos")).values()) {
-                    if (l2 - l <= 0L) continue;
-                    return false;
+                for (Long l2 : ((Map<?, Long>)CombatAccess.field(pc, "spellReadyNanos")).values()) {
+                    if (l2 - l > 0L) return false;
                 }
                 return state.timeline.canReserveSkillAction();
             }, () -> {
                 if (nativeReuseActor.isSkillDelay()) {
                     return null;
                 }
-                final NativeSourceClientActionTimeline.Reservation reservation = state.timeline.tryReserveSkillAction(n);
-                if (reservation == null) {
+                final NativeSourceClientActionTimeline.Reservation action = state.timeline.tryReserveSkillAction(n);
+                if (action == null) {
                     return null;
                 }
-                final NativeSourceSkillDelay.Lease lease = NativeSourceSkillDelay.tryReserveSkillUse(nativeReuseActor, lightSpell.reuseDelayMillis());
-                if (lease == null) {
-                    reservation.cancel();
+                final NativeSourceSkillDelay.Lease reuse = NativeSourceSkillDelay.tryReserveSkillUse(nativeReuseActor, spell.reuseDelayMillis());
+                if (reuse == null) {
+                    action.cancel();
                     return null;
                 }
                 return new NativeSourceSkillCastAdmission.Reservation(){
 
                     @Override
                     public void commit() {
-                        if (!reservation.commitAtRuntime()) {
-                            NativeReuseLog.getLogger(NativeCastTimeline.class).error("Skill action runtime rebase lost exact token skillId={} player={}", lightSpell.skillId(), clientSession.selectedCharacterName());
+                        if (!action.commitAtRuntime()) {
+                            NativeReuseLog.getLogger(NativeCastTimeline.class).error("Skill action runtime rebase lost exact token skillId={} player={}", spell.skillId(), pc.selectedCharacterName());
                         }
-                        lease.commit();
+                        reuse.commit();
                     }
 
                     @Override
                     public void cancel() {
-                        reservation.cancel();
-                        lease.cancel();
+                        action.cancel();
+                        reuse.cancel();
                     }
                 };
-            }, () -> NativeCastMaterial.commit(clientSession, lightSpell.skillId()));
+            }, () -> NativeCastMaterial.commit(pc, spell.skillId()));
             blArray[0] = result == NativeSourceSkillCastAdmission.Result.ACCEPTED;
         };
         if (arrival == null) {
@@ -177,17 +176,16 @@ final class NativeCastTimeline {
     private NativeCastTimeline() {
     }
 
-    static boolean admitSelf(final ClientSession clientSession, final int n, int n2, int n3, Arrival arrival) {
-        int n4;
-        if (!clientSession.nativePlayerActionLock().isHeldByCurrentThread()) {
+    static boolean admitSelf(final ClientSession pc, final int skillId, int n2, int n3, Arrival arrival) {
+        if (!pc.nativePlayerActionLock().isHeldByCurrentThread()) {
             throw new IllegalStateException("cast admission requires actual action lock");
         }
-        State state = clientSession.nativeCastTimelineState();
-        NativeDeItemApplication.Owner owner = NativeDeItemApplication.publicationOwner(clientSession);
+        State state = pc.nativeCastTimelineState();
+        NativeDeItemApplication.Owner owner = NativeDeItemApplication.publicationOwner(pc);
         if (owner == null) {
             return false;
         }
-        NativeReuseActor nativeReuseActor = NativeReuseGate.actor(clientSession);
+        NativeReuseActor nativeReuseActor = NativeReuseGate.actor(pc);
         if (nativeReuseActor == null) {
             return false;
         }
@@ -195,7 +193,8 @@ final class NativeCastTimeline {
             state.timeline.clear();
             state.owner = owner;
         }
-        if ((n4 = NativeCastTimeline.interval(clientSession, n2)) <= 0) {
+        int n4 = NativeCastTimeline.interval(pc, n2);
+        if (n4 <= 0) {
             return false;
         }
         boolean[] blArray = new boolean[1];
@@ -205,41 +204,40 @@ final class NativeCastTimeline {
                     return false;
                 }
                 long l = System.nanoTime();
-                for (Long l2 : ((Map<?, Long>)CombatAccess.field(clientSession, "spellReadyNanos")).values()) {
-                    if (l2 - l <= 0L) continue;
-                    return false;
+                for (Long l2 : ((Map<?, Long>)CombatAccess.field(pc, "spellReadyNanos")).values()) {
+                    if (l2 - l > 0L) return false;
                 }
                 return state.timeline.canReserveSkillAction();
             }, () -> {
                 if (nativeReuseActor.isSkillDelay()) {
                     return null;
                 }
-                final NativeSourceClientActionTimeline.Reservation reservation = state.timeline.tryReserveSkillAction(n4);
-                if (reservation == null) {
+                final NativeSourceClientActionTimeline.Reservation action = state.timeline.tryReserveSkillAction(n4);
+                if (action == null) {
                     return null;
                 }
-                final NativeSourceSkillDelay.Lease lease = NativeSourceSkillDelay.tryReserveSkillUse(nativeReuseActor, n3);
-                if (lease == null) {
-                    reservation.cancel();
+                final NativeSourceSkillDelay.Lease reuse = NativeSourceSkillDelay.tryReserveSkillUse(nativeReuseActor, n3);
+                if (reuse == null) {
+                    action.cancel();
                     return null;
                 }
                 return new NativeSourceSkillCastAdmission.Reservation(){
 
                     @Override
                     public void commit() {
-                        if (!reservation.commitAtRuntime()) {
-                            NativeReuseLog.getLogger(NativeCastTimeline.class).error("Skill action runtime rebase lost exact token skillId={} player={}", n, clientSession.selectedCharacterName());
+                        if (!action.commitAtRuntime()) {
+                            NativeReuseLog.getLogger(NativeCastTimeline.class).error("Skill action runtime rebase lost exact token skillId={} player={}", skillId, pc.selectedCharacterName());
                         }
-                        lease.commit();
+                        reuse.commit();
                     }
 
                     @Override
                     public void cancel() {
-                        reservation.cancel();
-                        lease.cancel();
+                        action.cancel();
+                        reuse.cancel();
                     }
                 };
-            }, () -> NativeCastMaterial.commit(clientSession, n));
+            }, () -> NativeCastMaterial.commit(pc, skillId));
             blArray[0] = result == NativeSourceSkillCastAdmission.Result.ACCEPTED;
         };
         if (arrival == null) {

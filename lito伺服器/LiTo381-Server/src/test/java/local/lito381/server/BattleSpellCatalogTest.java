@@ -1308,13 +1308,13 @@ final class BattleSpellCatalogTest {
         assertEquals("weakness", spell.key());
 
         assertEquals(10, spell.probability(
-                1, 40, 8, 0, 0, 0, -1, sides -> 1));
+                3, 40, 8, 0, 0, 0, -1, sides -> 1));
         assertEquals(2, spell.probability(
-                1, 40, 8, 0, 0, 0, 5, sides -> 1));
+                3, 40, 8, 0, 0, 0, 5, sides -> 1));
         assertEquals(90, spell.probability(
-                1, 40, 8, 0, 0, 0, -1, sides -> sides));
+                3, 40, 8, 0, 0, 0, -1, sides -> sides));
         assertEquals(18, spell.probability(
-                1, 40, 8, 0, 0, 0, 5, sides -> sides));
+                3, 40, 8, 0, 0, 0, 5, sides -> sides));
         assertEquals(10, spell.effectiveMpCost(12, 0));
         assertEquals(5, spell.effectiveMpCost(17, 0));
         assertEquals(3, spell.effectiveMpCost(17, 2));
@@ -1372,13 +1372,13 @@ final class BattleSpellCatalogTest {
         assertEquals("disease", spell.key());
 
         assertEquals(10, spell.probability(
-                1, 40, 8, 0, 0, 0, -1, sides -> 1));
+                3, 40, 8, 0, 0, 0, -1, sides -> 1));
         assertEquals(2, spell.probability(
-                1, 40, 8, 0, 0, 0, 5, sides -> 1));
+                3, 40, 8, 0, 0, 0, 5, sides -> 1));
         assertEquals(90, spell.probability(
-                1, 40, 8, 0, 0, 0, -1, sides -> sides));
+                3, 40, 8, 0, 0, 0, -1, sides -> sides));
         assertEquals(18, spell.probability(
-                1, 40, 8, 0, 0, 0, 5, sides -> sides));
+                3, 40, 8, 0, 0, 0, 5, sides -> sides));
         assertEquals(10, spell.effectiveMpCost(12, 0));
         assertEquals(5, spell.effectiveMpCost(17, 0));
         assertEquals(3, spell.effectiveMpCost(17, 2));
@@ -1442,15 +1442,15 @@ final class BattleSpellCatalogTest {
         assertEquals("decay-potion", spell.key());
 
         assertEquals(10, spell.probability(
-                1, 52, 8, 0, 0, 0, false, sides -> 1));
+                3, 52, 8, 0, 0, 0, false, sides -> 1));
         assertEquals(80, spell.probability(
-                1, 52, 8, 0, 0, 0, false, sides -> sides));
+                3, 52, 8, 0, 0, 0, false, sides -> sides));
         assertEquals(67, spell.probability(
-                1, 52, 8, 2, 3, 20, false, sides -> sides));
+                3, 52, 8, 2, 3, 20, false, sides -> sides));
         assertEquals(1, spell.probability(
-                1, 52, 8, 0, 0, 100, false, sides -> 1));
+                3, 52, 8, 0, 0, 100, false, sides -> 1));
         assertEquals(0, spell.probability(
-                1, 52, 8, 0, 0, 0, true, sides -> sides));
+                3, 52, 8, 0, 0, 0, true, sides -> sides));
         assertEquals(80, spell.effectiveMpCost(12, 0));
         assertEquals(73, spell.effectiveMpCost(19, 0));
         assertEquals(71, spell.effectiveMpCost(19, 2));

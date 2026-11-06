@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 public class NativeDeNpcMobSkill
@@ -164,9 +161,12 @@ implements Cloneable {
         this.triRange[n] = n2;
     }
 
-    public boolean isTriggerDistance(int n, int n2) {
-        int n3 = this.getTriggerRange(n);
-        return n3 < 0 && n2 <= Math.abs(n3) || n3 > 0 && n2 >= n3;
+    public boolean isTriggerDistance(int index, int distance) {
+        int range = this.getTriggerRange(index);
+        if ((range < 0 && distance <= Math.abs(range)) || (range > 0 && distance >= range)) {
+            return true;
+        }
+        return false;
     }
 
     public int getTriggerCount(int n) {

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -35,8 +35,7 @@ final class NativeDeEquipment {
      */
     static Lease bind(BattleTimedStatus battleTimedStatus, NativeDeActorState.Lease lease, Values values) {
         Objects.requireNonNull(values);
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             if (!NativeDeActorState.current(battleTimedStatus, lease)) {
                 return null;
             }
@@ -50,45 +49,10 @@ final class NativeDeEquipment {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static View snapshot(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             Holder holder = (Holder)CombatAccess.field(NativeDeEquipment.root(battleTimedStatus), FIELD);
             return holder == null ? null : new View(holder.lease(), holder.values());
         }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static View perform(BattleTimedStatus battleTimedStatus, Lease lease, Request request) {
-        Objects.requireNonNull(request);
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            Holder holder = (Holder)CombatAccess.field(NativeDeEquipment.root(battleTimedStatus), FIELD);
-            if (holder == null || !holder.matches(lease)) {
-                return null;
-            }
-            switch (request.op()) {
-                case APPLY_WEAPON: {
-                    NativeDeWeaponKernel.apply(holder, request.value());
-                    break;
-                }
-                case REFRESH_OWN_SPEED: {
-                    NativeDeSpriteCatalog.Catalog catalog = NativeDeSprites.catalog();
-                    holder.set(Op.ATTACK, catalog.attack(holder.tempGfx, holder.weapon + 1));
-                    holder.set(Op.MOVE, catalog.move(holder.tempGfx, holder.weapon));
-                    break;
-                }
-                default: {
-                    holder.set(request.op(), request.value());
-                }
-            }
-            return new View(holder.lease(), holder.values());
-        }
-    }
-
-    static View perform(GameHub gameHub, NativeCombatAttacker.Ref ref, Object object, NativeDeAiState.Lease lease, Lease lease2, Request request) {
-        return NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> NativeDeEquipment.perform(live.status(), lease2, request));
     }
 
     private static final class Holder
@@ -191,6 +155,40 @@ final class NativeDeEquipment {
         public void status(int n) {
             this.set(Op.STATUS, n);
         }
+    }
+
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static View perform(BattleTimedStatus battleTimedStatus, Lease lease, Request request) {
+        Objects.requireNonNull(request);
+        synchronized (battleTimedStatus) {
+            Holder holder = (Holder)CombatAccess.field(NativeDeEquipment.root(battleTimedStatus), FIELD);
+            if (holder == null || !holder.matches(lease)) {
+                return null;
+            }
+            switch (request.op()) {
+                case APPLY_WEAPON: {
+                    NativeDeWeaponKernel.apply(holder, request.value());
+                    break;
+                }
+                case REFRESH_OWN_SPEED: {
+                    NativeDeSpriteCatalog.Catalog catalog = NativeDeSprites.catalog();
+                    holder.set(Op.ATTACK, catalog.attack(holder.tempGfx, holder.weapon + 1));
+                    holder.set(Op.MOVE, catalog.move(holder.tempGfx, holder.weapon));
+                    break;
+                }
+                default: {
+                    holder.set(request.op(), request.value());
+                }
+            }
+            return new View(holder.lease(), holder.values());
+        }
+    }
+
+    static View perform(GameHub gameHub, NativeCombatAttacker.Ref ref, Object object, NativeDeAiState.Lease lease, Lease lease2, Request request) {
+        return NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> NativeDeEquipment.perform(live.status(), lease2, request));
     }
 
     record Values(int tempGfx, int gfx, int weapon, int status, int rawRange, int rawBow, int attack, int move, Template template) {Values {

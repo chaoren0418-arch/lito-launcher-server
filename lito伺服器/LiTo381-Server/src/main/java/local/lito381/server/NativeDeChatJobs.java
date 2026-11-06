@@ -1,8 +1,10 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
 package local.lito381.server;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import local.lito381.server.NativeDeVisibilityJobs.Credit;
 
 import java.util.Objects;
 import java.util.Set;
@@ -37,8 +39,7 @@ final class NativeDeChatJobs {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Owner owner(NativeDeWorldContext nativeDeWorldContext) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
+        synchronized (nativeDeWorldContext) {
             nativeDeWorldContext.admit();
             Owner owner = NativeDeChatJobs.find(nativeDeWorldContext);
             if (owner == null) {
@@ -68,8 +69,7 @@ final class NativeDeChatJobs {
         NativeDeVisibilityJobs.Credit credit2 = current.get();
         current.set(credit);
         try {
-            Object object = NativeDeVisibilityJobs.with(credit, () -> NativeDeChatScope.call(owner, nativeDeNpcConstructionState, supplier));
-            return (T)object;
+            return (T)NativeDeVisibilityJobs.with(credit, () -> NativeDeChatScope.call(owner, nativeDeNpcConstructionState, supplier));
         }
         finally {
             if (credit2 == null) {
@@ -89,8 +89,7 @@ final class NativeDeChatJobs {
         }
         NativeDeVisibilityJobs.Credit credit = NativeDeChatJobs.acquire(owner);
         try {
-            T t = NativeDeChatJobs.with(owner, nativeDeNpcConstructionState, credit, supplier);
-            return t;
+            return NativeDeChatJobs.with(owner, nativeDeNpcConstructionState, credit, supplier);
         }
         finally {
             credit.release();
@@ -110,8 +109,7 @@ final class NativeDeChatJobs {
             }
             Ticket ticket = new Ticket(owner, nativeDeNpcConstructionState, Objects.requireNonNull(runnable), NativeDeChatJobs.acquire(owner), bl, l);
             owner.tickets.add(ticket);
-            Ticket ticket2 = ticket;
-            return ticket2;
+            return ticket;
         }
         finally {
             readLock.unlock();
@@ -134,7 +132,7 @@ final class NativeDeChatJobs {
             ticket.cancel(false);
             return false;
         }
-        catch (Error | RuntimeException throwable) {
+        catch (RuntimeException | Error throwable) {
             ticket.cancel(false);
             throw throwable;
         }
@@ -146,7 +144,7 @@ final class NativeDeChatJobs {
             ticket.install(l2 > 0L ? owner.context.life.retry.scheduleAtFixedRate(ticket, Math.max(0L, l), l2, TimeUnit.MILLISECONDS) : owner.context.life.retry.schedule(ticket, Math.max(0L, l), TimeUnit.MILLISECONDS));
             return ticket;
         }
-        catch (Error | RuntimeException throwable) {
+        catch (RuntimeException | Error throwable) {
             ticket.cancel(false);
             throw throwable;
         }
@@ -156,8 +154,9 @@ final class NativeDeChatJobs {
         Owner owner = NativeDeChatJobs.find(NativeDeWorldContext.entry((NativeDeDeletionPorts.ObjectRef)nativeDeNpcConstructionState).context);
         if (owner != null) {
             for (Ticket ticket : (Ticket[])owner.tickets.toArray(Ticket[]::new)) {
-                if (ticket.actor != nativeDeNpcConstructionState) continue;
-                ticket.cancel(false);
+                if (ticket.actor == nativeDeNpcConstructionState) {
+                    ticket.cancel(false);
+                }
             }
         }
     }
@@ -177,207 +176,200 @@ final class NativeDeChatJobs {
     private NativeDeChatJobs() {
     }
 
-    static final class Owner {
-        final NativeDeWorldContext context;
-        final NativeDeVisibilityRuntime.Owner visibility;
-        final Set<Ticket> tickets = ConcurrentHashMap.newKeySet();
-        volatile boolean closed;
+   static final class Owner {
+      final NativeDeWorldContext context;
+      final NativeDeVisibilityRuntime.Owner visibility;
+      final Set<NativeDeChatJobs.Ticket> tickets = ConcurrentHashMap.newKeySet();
+      volatile boolean closed;
 
-        Owner(NativeDeWorldContext nativeDeWorldContext) {
-            this.context = nativeDeWorldContext;
-            this.visibility = NativeDeVisibilityRuntime.owner(nativeDeWorldContext);
-        }
-    }
+      Owner(NativeDeWorldContext var1) {
+         this.context = var1;
+         this.visibility = NativeDeVisibilityRuntime.owner(var1);
+      }
+   }
 
-    static final class Ticket
-    implements Runnable,
-    ScheduledFuture<Object> {
-        final Owner owner;
-        final NativeDeNpcConstructionState actor;
-        final Runnable action;
-        final NativeDeVisibilityJobs.Credit credit;
-        final boolean timer;
-        final long period;
-        volatile ScheduledFuture<?> delegate;
-        boolean running;
-        boolean ended;
-        boolean cancelled;
-        boolean discarded;
-        Throwable failure;
+   static final class Ticket implements Runnable, ScheduledFuture<Object> {
+      final NativeDeChatJobs.Owner owner;
+      final NativeDeNpcConstructionState actor;
+      final Runnable action;
+      final Credit credit;
+      final boolean timer;
+      final long period;
+      volatile ScheduledFuture<?> delegate;
+      boolean running;
+      boolean ended;
+      boolean cancelled;
+      boolean discarded;
+      Throwable failure;
 
-        Ticket(Owner owner, NativeDeNpcConstructionState nativeDeNpcConstructionState, Runnable runnable, NativeDeVisibilityJobs.Credit credit, boolean bl, long l) {
-            this.owner = owner;
-            this.actor = nativeDeNpcConstructionState;
-            this.action = runnable;
-            this.credit = credit;
-            this.timer = bl;
-            this.period = l;
-        }
+      Ticket(NativeDeChatJobs.Owner var1, NativeDeNpcConstructionState var2, Runnable var3, Credit var4, boolean var5, long var6) {
+         this.owner = var1;
+         this.actor = var2;
+         this.action = var3;
+         this.credit = var4;
+         this.timer = var5;
+         this.period = var6;
+      }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        void install(ScheduledFuture<?> scheduledFuture) {
-            Ticket ticket = this;
-            synchronized (ticket) {
-                this.delegate = scheduledFuture;
-                if (this.ended) {
-                    scheduledFuture.cancel(false);
-                }
+      void install(ScheduledFuture<?> var1) {
+         synchronized (this) {
+            this.delegate = var1;
+            if (this.ended) {
+               var1.cancel(false);
             }
-        }
+         }
+      }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        @Override
-        public void run() {
-            Object object = this;
-            synchronized (object) {
-                if (this.ended || this.running) {
-                    return;
-                }
-                if (!this.credit.retain()) {
-                    throw new IllegalStateException("NPC chat receipt lost");
-                }
-                this.running = true;
+      @Override
+      public void run() {
+         synchronized (this) {
+            if (this.ended || this.running) {
+               return;
             }
-            object = null;
-            try {
-                NativeDeChatJobs.with(this.owner, this.actor, this.credit, () -> {
-                    if (NativeDeChatJobs.admits(this.owner, this.actor)) {
-                        this.action.run();
-                    } else {
-                        this.discard();
-                    }
-                    return null;
-                });
-            }
-            catch (Throwable throwable) {
-                object = throwable;
-                CombatNpcDamageQueue.failed(throwable);
-            }
-            finally {
-                Ticket ticket = this;
-                synchronized (ticket) {
-                    this.running = false;
-                }
-                if (this.period <= 0L || object != null || !NativeDeChatJobs.admits(this.owner, this.actor)) {
-                    this.end(false, (Throwable)object);
-                }
-                this.credit.release();
-            }
-        }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        void discard() {
-            Runnable runnable = this;
-            synchronized (runnable) {
-                if (this.discarded) {
-                    return;
-                }
-                this.discarded = true;
+            if (!this.credit.retain()) {
+               throw new IllegalStateException("NPC chat receipt lost");
             }
-            Runnable runnable2 = this.action;
-            if (runnable2 instanceof NativeDeChatScope.Pool.ShutdownDiscardable) {
-                NativeDeChatScope.Pool.ShutdownDiscardable discardable = (NativeDeChatScope.Pool.ShutdownDiscardable)runnable2;
-                NativeDeChatScope.call(this.owner, this.actor, () -> {
-                    discardable.discardOnShutdown();
-                    return null;
-                });
-            }
-        }
 
-        /*
-         * WARNING - Removed try catching itself - possible behaviour change.
-         */
-        boolean end(boolean bl, Throwable throwable) {
-            boolean bl2;
-            Ticket ticket = this;
-            synchronized (ticket) {
-                if (this.ended) {
-                    return false;
-                }
-                this.ended = true;
-                this.cancelled = bl;
-                this.failure = throwable;
-                boolean bl3 = bl2 = !this.running;
-                if (this.delegate != null) {
-                    this.delegate.cancel(false);
-                }
-                if (!this.timer) {
-                    this.owner.context.life.workers.remove(this);
-                }
-                this.notifyAll();
+            this.running = true;
+         }
+
+         Throwable var1 = null;
+
+         try {
+            NativeDeChatJobs.with(this.owner, this.actor, this.credit, () -> {
+               if (NativeDeChatJobs.admits(this.owner, this.actor)) {
+                  this.action.run();
+               } else {
+                  this.discard();
+               }
+
+               return null;
+            });
+         } catch (Throwable var15) {
+            var1 = var15;
+            CombatNpcDamageQueue.failed(var15);
+         } finally {
+            synchronized (this) {
+               this.running = false;
             }
-            this.owner.tickets.remove(this);
+
+            if (this.period <= 0L || var1 != null || !NativeDeChatJobs.admits(this.owner, this.actor)) {
+               this.end(false, var1);
+            }
+
             this.credit.release();
-            if (bl2) {
-                this.discard();
+         }
+      }
+
+      void discard() {
+         synchronized (this) {
+            if (this.discarded) {
+               return;
             }
-            return true;
-        }
 
-        @Override
-        public boolean cancel(boolean bl) {
-            return this.end(true, null);
-        }
+            this.discarded = true;
+         }
 
-        @Override
-        public synchronized boolean isDone() {
-            return this.ended;
-        }
+         if (this.action instanceof NativeDeChatScope.Pool.ShutdownDiscardable var1) {
+            NativeDeChatScope.call(this.owner, this.actor, () -> {
+               var1.discardOnShutdown();
+               return null;
+            });
+         }
+      }
 
-        @Override
-        public synchronized boolean isCancelled() {
-            return this.cancelled;
-        }
-
-        @Override
-        public long getDelay(TimeUnit timeUnit) {
-            ScheduledFuture<?> scheduledFuture = this.delegate;
-            return scheduledFuture == null ? 0L : scheduledFuture.getDelay(timeUnit);
-        }
-
-        @Override
-        public int compareTo(Delayed delayed) {
-            return Long.compare(this.getDelay(TimeUnit.NANOSECONDS), delayed.getDelay(TimeUnit.NANOSECONDS));
-        }
-
-        @Override
-        public synchronized Object get() throws InterruptedException, ExecutionException {
-            while (!this.ended) {
-                this.wait();
+      boolean end(boolean var1, Throwable var2) {
+         boolean var3;
+         synchronized (this) {
+            if (this.ended) {
+               return false;
             }
-            if (this.cancelled) {
-                throw new CancellationException();
+
+            this.ended = true;
+            this.cancelled = var1;
+            this.failure = var2;
+            var3 = !this.running;
+            if (this.delegate != null) {
+               this.delegate.cancel(false);
             }
-            if (this.failure != null) {
-                throw new ExecutionException(this.failure);
+
+            if (!this.timer) {
+               this.owner.context.life.workers.remove(this);
             }
+
+            this.notifyAll();
+         }
+
+         this.owner.tickets.remove(this);
+         this.credit.release();
+         if (var3) {
+            this.discard();
+         }
+
+         return true;
+      }
+
+      @Override
+      public boolean cancel(boolean var1) {
+         return this.end(true, null);
+      }
+
+      @Override
+      public synchronized boolean isDone() {
+         return this.ended;
+      }
+
+      @Override
+      public synchronized boolean isCancelled() {
+         return this.cancelled;
+      }
+
+      @Override
+      public long getDelay(TimeUnit var1) {
+         ScheduledFuture var2 = this.delegate;
+         return var2 == null ? 0L : var2.getDelay(var1);
+      }
+
+      public int compareTo(Delayed var1) {
+         return Long.compare(this.getDelay(TimeUnit.NANOSECONDS), var1.getDelay(TimeUnit.NANOSECONDS));
+      }
+
+      @Override
+      public synchronized Object get() throws InterruptedException, ExecutionException {
+         while (!this.ended) {
+            this.wait();
+         }
+
+         if (this.cancelled) {
+            throw new CancellationException();
+         } else if (this.failure != null) {
+            throw new ExecutionException(this.failure);
+         } else {
             return null;
-        }
+         }
+      }
 
-        @Override
-        public synchronized Object get(long l, TimeUnit timeUnit) throws InterruptedException, ExecutionException, TimeoutException {
-            long l2 = System.nanoTime() + timeUnit.toNanos(l);
-            while (!this.ended) {
-                long l3 = l2 - System.nanoTime();
-                if (l3 <= 0L) {
-                    throw new TimeoutException();
-                }
-                TimeUnit.NANOSECONDS.timedWait(this, l3);
+      @Override
+      public synchronized Object get(long var1, TimeUnit var3) throws InterruptedException, ExecutionException, TimeoutException {
+         long var4 = System.nanoTime() + var3.toNanos(var1);
+
+         while (!this.ended) {
+            long var6 = var4 - System.nanoTime();
+            if (var6 <= 0L) {
+               throw new TimeoutException();
             }
-            if (this.cancelled) {
-                throw new CancellationException();
-            }
-            if (this.failure != null) {
-                throw new ExecutionException(this.failure);
-            }
+
+            TimeUnit.NANOSECONDS.timedWait(this, var6);
+         }
+
+         if (this.cancelled) {
+            throw new CancellationException();
+         } else if (this.failure != null) {
+            throw new ExecutionException(this.failure);
+         } else {
             return null;
-        }
-
-    }
+         }
+      }
+   }
 }

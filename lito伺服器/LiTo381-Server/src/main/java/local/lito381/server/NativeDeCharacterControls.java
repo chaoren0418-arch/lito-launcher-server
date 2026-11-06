@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -41,12 +41,10 @@ final class NativeDeCharacterControls {
         if (n != null) {
             return n;
         }
-        Class<NativeDeCharacterControls> clazz = NativeDeCharacterControls.class;
         synchronized (NativeDeCharacterControls.class) {
             if (current == null) {
                 current = NativeDeCharacterControls.read(NativeDeCharacterControls.class.getClassLoader().getResourceAsStream(RESOURCE));
             }
-            // ** MonitorExit[var1_1] (shouldn't be in output)
             return current;
         }
     }

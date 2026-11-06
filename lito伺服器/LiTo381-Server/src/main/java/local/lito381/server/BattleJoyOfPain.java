@@ -16,7 +16,9 @@ final class BattleJoyOfPain {
             throw new IllegalArgumentException("invalid Joy of Pain HP state");
         }
         int retained = (defenderMaximumHp - defenderCurrentHp
-                - defenderEquipmentAddedHp) / MISSING_HP_DIVISOR;
-        return Math.max(0, Math.min(retained, MAXIMUM_FEEDBACK_DAMAGE));
+                - defenderEquipmentAddedHp)
+                / CombatRules.replaceInt(MISSING_HP_DIVISOR, "JOY_OF_PAIN_COUNTDMG");
+        return Math.max(0, Math.min(retained,
+                CombatRules.replaceInt(MAXIMUM_FEEDBACK_DAMAGE, "JOY_OF_PAIN_DMG")));
     }
 }

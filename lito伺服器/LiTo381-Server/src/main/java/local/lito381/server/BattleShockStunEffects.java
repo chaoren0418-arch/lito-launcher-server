@@ -38,7 +38,7 @@ final class BattleShockStunEffects {
     synchronized Placement place(long targetObjectId, int x, int y,
                                  long nowNanos, int durationSeconds) {
         if (targetObjectId == 0 || x < 0 || x > 0xFFFF || y < 0 || y > 0xFFFF
-                || nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 4) {
+                || nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
             throw new IllegalArgumentException("invalid Shock Stun effect placement");
         }
         Effect previous = byTarget.remove(targetObjectId);

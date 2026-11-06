@@ -629,17 +629,19 @@ final class ClassicWorldNpcCatalog {
 
     static List<StaticNpc> all(int mapId) {
         List<StaticNpc> source = BY_MAP.getOrDefault(mapId, List.of());
-        if (mapId == ClassicWorldRescueFollowers.MAP_ID) {
+        if (mapId == 4) {
             source = append(source, dukeSoldier());
         }
-        if (mapId == ClassicWorldMonsterGuardCatalog.MAP_ID) {
+        if (mapId == 4) {
             source = appendAll(source, ClassicWorldMonsterGuardCatalog.all());
         }
         List<StaticNpc> scarecrows = switch (mapId) {
             case 4, 304 -> ClassicWorldScarecrowCatalog.forMap(mapId);
             default -> List.of();
         };
-        return scarecrows.isEmpty() ? source : appendAll(source, scarecrows);
+        return CombatSpecialBuffs.npcs(
+                scarecrows.isEmpty() ? source : appendAll(source, scarecrows),
+                mapId);
     }
 
     static List<StaticNpc> fixedMerchants(int mapId) {

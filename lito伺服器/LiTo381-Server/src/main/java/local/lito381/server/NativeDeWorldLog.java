@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 interface NativeDeWorldLog {
@@ -162,28 +159,8 @@ interface NativeDeWorldLog {
     default public void info(String string, Object ... objectArray) {
         this.emit("info", string, objectArray);
     }
-
-    default public void debug(String string) {
-        this.emit("debug", string, new Object[0]);
-    }
-
-    default public void debug(String string, Object object) {
-        this.emit("debug", string, new Object[]{object});
-    }
-
-    default public void debug(String string, Object object, Object object2) {
-        this.emit("debug", string, new Object[]{object, object2});
-    }
-
-    default public void debug(String string, Object object, Object object2, Object object3) {
-        this.emit("debug", string, new Object[]{object, object2, object3});
-    }
-
-    default public void debug(String string, Throwable throwable) {
-        this.emit("debug", string, new Object[]{throwable});
-    }
-
-    default public void debug(String string, Object ... objectArray) {
-        this.emit("debug", string, objectArray);
+    // 主控 #74／#153 核准偏離：補足正式 A02 呼叫的介面方法。
+    default void debug(String message, Object a, Object b) {
+        emit("debug", message, new Object[]{a, b});
     }
 }

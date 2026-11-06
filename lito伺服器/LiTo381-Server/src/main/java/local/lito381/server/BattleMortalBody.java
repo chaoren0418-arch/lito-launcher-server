@@ -14,7 +14,7 @@ final class BattleMortalBody {
                         || triggered || baseDamage != 0
                         || totalReduction != 0 || reflectedDamage != 0))
                     || (triggered && (!active || roll == 0
-                        || baseDamage <= 0 || reflectedDamage <= 0))
+                        || baseDamage < 0 || reflectedDamage <= 0))
                     || (!triggered && (baseDamage != 0
                         || totalReduction != 0 || reflectedDamage != 0))) {
                 throw new IllegalArgumentException(

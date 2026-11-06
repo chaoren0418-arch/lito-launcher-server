@@ -35,7 +35,7 @@ final class BattleIronSkinStatus {
         long second = TimeUnit.SECONDS.toNanos(1);
         int remaining = (int) Math.min(0xFFFFL,
                 Math.max(1L, (remainingNanos + second - 1) / second));
-        return new Snapshot(true, armorClass, remaining);
+        return new Snapshot(true, CombatBuffLeases.value(armorClass, 168, "AC"), remaining);
     }
 
     synchronized int armorClass(long nowNanos) {

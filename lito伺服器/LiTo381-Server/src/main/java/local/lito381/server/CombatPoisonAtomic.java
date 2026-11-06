@@ -11,15 +11,32 @@ final class CombatPoisonAtomic {
   return npc(pc,object,npc,poison,paralysis,now,source,null);
  }
  static NpcState npc(ClientSession pc,long object,int npc,int poison,int paralysis,long now,String source,CombatPoisonLifecycle.Scope scope){
-  if(!CombatRules.loaded())return nativeState(pc,object,npc,poison,paralysis,now,source);
-  synchronized(status(pc)){var result=nativeState(pc,object,npc,poison,paralysis,now,source);if(result.applied()){CombatAccess.set(pc,"poisonAttacker",null);CombatPoisonLifecycle.installed(pc,scope,now);}return result;}
+  NativeCombatOrigin.Install install=NativeCombatOrigin.enterNpc(pc,object);
+  try{
+   if(!CombatRules.loaded()){var result=NativeCombatOrigin.npcState(pc,object,npc,poison,paralysis,now,source);NativeCombatOrigin.leaveInstall(install);return result;}
+   NpcState result;
+   synchronized(status(pc)){result=NativeCombatOrigin.npcState(pc,object,npc,poison,paralysis,now,source);if(result.applied()){CombatAccess.set(pc,"poisonAttacker",null);CombatPoisonLifecycle.installed(pc,scope,now);}}
+   NativeCombatOrigin.leaveInstall(install);
+   return result;
+  }catch(Throwable failure){NativeCombatOrigin.leaveInstall(install);throw failure;}
  }
  static boolean player(BattleTimedStatus t,long now,int seconds,int interval,ClientSession pc,ClientSession caster){
   return player(t,now,seconds,interval,pc,caster,null);
  }
  static boolean player(BattleTimedStatus t,long now,int seconds,int interval,ClientSession pc,ClientSession caster,CombatPoisonLifecycle.Scope scope){
-  if(!CombatRules.loaded())return t.activatePoison(now,seconds,interval);
-  synchronized(t){if(occupied(pc,now))return false;boolean applied=t.activatePoison(now,seconds,interval);if(applied){clear(pc);CombatAccess.set(pc,"poisonAttacker",caster);CombatPoisonLifecycle.installed(pc,scope,now);}return applied;}
+  NativeCombatOrigin.Install install=NativeCombatOrigin.enterPlayer(pc,caster);
+  try{
+   if(!CombatRules.loaded()){boolean applied=NativeCombatOrigin.activatePlayer(t,now,seconds,interval,pc);NativeCombatOrigin.leaveInstall(install);return applied;}
+   boolean applied;
+   synchronized(t){
+    if(occupied(pc,now)){applied=false;}else{
+    applied=NativeCombatOrigin.activatePlayer(t,now,seconds,interval,pc);
+    if(applied){clear(pc);CombatAccess.set(pc,"poisonAttacker",caster);CombatPoisonLifecycle.installed(pc,scope,now);}
+    }
+   }
+   NativeCombatOrigin.leaveInstall(install);
+   return applied;
+  }catch(Throwable failure){NativeCombatOrigin.leaveInstall(install);throw failure;}
  }
  static BattleTimedStatus.PoisonPoll poll(BattleTimedStatus t,long now,int interval,ClientSession pc){return CombatPoisonLifecycle.poll(t,now,interval,pc,null);}
  static BattleTimedStatus.PoisonPoll nativePoll(BattleTimedStatus t,long now,int interval,ClientSession pc){

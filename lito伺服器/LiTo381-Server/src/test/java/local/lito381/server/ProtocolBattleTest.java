@@ -2572,7 +2572,7 @@ class ProtocolBattleTest {
         assertEquals(40318, poison.itemConsumeId());
         assertEquals(1, poison.itemConsumeCount());
         assertEquals(90, poison.probability(
-                1, 52, 18, 2, 3, 20, false, sides -> sides));
+                3, 52, 18, 2, 3, 20, false, sides -> sides));
         assertEquals(1, poison.probability(
                 3, 1, 1, 0, 0, 100, false, sides -> 1));
         assertEquals(0, poison.probability(

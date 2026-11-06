@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -23,7 +23,6 @@ final class NativeProcPlayerState {
     }
 
     private static NativeProcPlayerState owned(ClientSession clientSession) {
-        Identity identity;
         BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
         if (!Thread.holdsLock(battleTimedStatus)) {
             throw new IllegalStateException("Proc state requires player status monitor");
@@ -33,7 +32,8 @@ final class NativeProcPlayerState {
             nativeProcPlayerState = new NativeProcPlayerState();
             CombatAccess.set(battleTimedStatus, "sourceProcPlayerState", nativeProcPlayerState);
         }
-        if (!(identity = new Identity(clientSession.sourceCharacterIdentity(), clientSession.sourceAccountIdentity(), clientSession.selectedCharacterName())).equals(nativeProcPlayerState.identity)) {
+        Identity identity = new Identity(clientSession.sourceCharacterIdentity(), clientSession.sourceAccountIdentity(), clientSession.selectedCharacterName());
+        if (!identity.equals(nativeProcPlayerState.identity)) {
             nativeProcPlayerState.modifiers.clear();
             nativeProcPlayerState.show = true;
             nativeProcPlayerState.identity = identity;
@@ -45,9 +45,8 @@ final class NativeProcPlayerState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean active(ClientSession clientSession, int n, long l) {
-        BattleTimedStatus battleTimedStatus;
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        synchronized (battleTimedStatus2) {
+        BattleTimedStatus status = CombatPoisonAtomic.status(clientSession);
+        synchronized (status) {
             NativeProcPlayerState nativeProcPlayerState = NativeProcPlayerState.owned(clientSession);
             nativeProcPlayerState.modifiers.values().removeIf(l2 -> l >= l2);
             return nativeProcPlayerState.modifiers.containsKey(n);
@@ -58,8 +57,7 @@ final class NativeProcPlayerState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean remove(ClientSession clientSession, int n) {
-        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        synchronized (battleTimedStatus) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
             return NativeProcPlayerState.owned((ClientSession)clientSession).modifiers.remove(n) != null;
         }
     }
@@ -72,8 +70,7 @@ final class NativeProcPlayerState {
             throw new IllegalArgumentException("unsupported Proc healing modifier");
         }
         long l2 = Math.addExact(l, TimeUnit.SECONDS.toNanos(n2));
-        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        synchronized (battleTimedStatus) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
             if (binding == null || !binding.matches(clientSession)) {
                 return false;
             }
@@ -86,8 +83,7 @@ final class NativeProcPlayerState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void show(ClientSession clientSession, boolean bl) {
-        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        synchronized (battleTimedStatus) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
             NativeProcPlayerState.owned((ClientSession)clientSession).show = bl;
         }
     }
@@ -96,8 +92,7 @@ final class NativeProcPlayerState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean show(ClientSession clientSession) {
-        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-        synchronized (battleTimedStatus) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
             return NativeProcPlayerState.owned((ClientSession)clientSession).show;
         }
     }
@@ -106,8 +101,7 @@ final class NativeProcPlayerState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void clear(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             NativeProcPlayerState nativeProcPlayerState = (NativeProcPlayerState)CombatAccess.field(battleTimedStatus, "sourceProcPlayerState");
             if (nativeProcPlayerState != null) {
                 nativeProcPlayerState.modifiers.clear();
@@ -123,8 +117,7 @@ final class NativeProcPlayerState {
         if (battleTimedStatus == null) {
             return;
         }
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             CombatAccess.set(battleTimedStatus, "sourceProcPlayerState", null);
         }
     }

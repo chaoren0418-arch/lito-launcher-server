@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.lang.reflect.Field;
@@ -31,8 +28,9 @@ final class NativeDeItemStateCopy {
                 if (object instanceof ScheduledFuture || field.getType().getSimpleName().equals("EquipmentTimerLease") && object != null) {
                     throw new IllegalStateException("active source item lifetime cannot be duplicated");
                 }
-                if ((!field.getName().equals("_magicStoneExpirySubmissionInFlight") && !field.getName().equals("_magicStoneExpiryRetryScheduled") || !Boolean.TRUE.equals(object)) && (!field.getName().equals("_pendingMagicStoneExpiryGeneration") || (Long)object < 0L)) continue;
-                throw new IllegalStateException("pending source item expiry cannot be duplicated");
+                if (((field.getName().equals("_magicStoneExpirySubmissionInFlight") || field.getName().equals("_magicStoneExpiryRetryScheduled")) && Boolean.TRUE.equals(object)) || (field.getName().equals("_pendingMagicStoneExpiryGeneration") && (Long)object >= 0L)) {
+                    throw new IllegalStateException("pending source item expiry cannot be duplicated");
+                }
             }
             IdentityHashMap identityHashMap = new IdentityHashMap();
             identityHashMap.put(item, item2);
