@@ -1592,7 +1592,9 @@ final class GameHub implements AutoCloseable {
     synchronized long createRoom(int n, RoomSettings roomSettings) {
         Channel channel = this.requiredChannel(n);
         Room room = this.ensureDefaultRoom(channel);
-        if (null != null && room.members.isEmpty() && !room.battleStarted) {
+        // The candidate disables reuse while retaining the original branch.
+        Room reusableRoom = null;
+        if (reusableRoom != null && room.members.isEmpty() && !room.battleStarted) {
             room.settings = roomSettings;
             room.selectedMapId = BattleRules.decode(roomSettings, this.battleControls).mapId();
             room.ready.clear();
@@ -1789,10 +1791,11 @@ final class GameHub implements AutoCloseable {
             return RoomJoinOutcome.rejected(RoomJoinFailure.FULL);
         }
         // Channel membership was already atomically admitted by TournamentPresence.
+        requiredChannel(channelId).members.add(session);
         room.members.add(session);
         if (room.owner == null) room.owner = session;
         room.ready.remove(session);
-        if (!session.isObserver() && room.match.rules().teamBased()) {
+        if (!session.isObserver() && room.match.rules().mode() == BattleRules.Mode.SIEGE_WAR) {
             room.forces.put(session, smallerSiegeForce(room, session));
         }
         return new RoomJoinOutcome(true, new ArrayList<>(room.members), combatantsBefore,
@@ -1891,7 +1894,6 @@ final class GameHub implements AutoCloseable {
             Channel departed = channels.get(membership);
             if (departed != null) departed.members.remove(session);
         }
-        selectedCharacters.remove(session);
         if (state != null && !departingSourceIdentity.isBlank()) {
             String identity = departingSourceIdentity;
             boolean stillActive = selectedCharacters.keySet().stream()
@@ -7206,8 +7208,8 @@ final class GameHub implements AutoCloseable {
         }
         // A single-player development battle represents ArenaBot as object 2,
         // force 1, without allocating a ClientSession.
-        if (NativeRoomRules.bot(room.match.rules().mode(), this, room.id)
-                && combatants.size() == 1 && virtuals.isEmpty() && winningForce == 1) winners.add(2L);
+        if (combatants.size() == NativeRoomRules.botSingle(this, roomId)
+                && virtuals.isEmpty() && winningForce == 1) winners.add(2L);
         return new BattleRules.Resolution(true, false, winners, losers, "builder-forcewin");
     }
 
@@ -11287,6 +11289,7 @@ final class GameHub implements AutoCloseable {
         try {
             long nowNanos = System.nanoTime();
             for (GroundTick tick : groundTicks(nowNanos)) {
+                if (NativeSourceGroundNpc.dispatch(this, tick)) continue;
                 try {
                     if (tick.npcCasterObjectId > 0 && tick.target != null) {
                         tick.target.serverTimeAttackGroundPulse(
@@ -11294,7 +11297,7 @@ final class GameHub implements AutoCloseable {
                     } else if (tick.bot) {
                         tick.caster.serverGroundBotPulse(tick.roomId, tick.skillId);
                     } else if (tick.target != null) {
-                        tick.target.serverGroundPulse(tick.roomId, tick.caster, tick.skillId);
+                        NativeSourceGroundOrigin.dispatch(tick.target, tick.roomId, tick.caster, tick.skillId, tick);
                     }
                 } catch (IOException error) {
                     System.out.println("[LiTo] ground-effect send failed room=" + tick.roomId
@@ -11330,6 +11333,8 @@ final class GameHub implements AutoCloseable {
                 }
             }
             for (CubeTick tick : cubeTicks(nowNanos)) {
+                if (NativeSourceCubeRemainder.dispatch(this, tick)) continue;
+                if (NativeSourceCubeNpc.dispatch(this, tick)) continue;
                 try {
                     switch (tick.event.kind()) {
                         case CUBE_EXPIRED -> {
@@ -11374,6 +11379,7 @@ final class GameHub implements AutoCloseable {
                 }
             }
             for (CubeQuakeTick tick : cubeQuakeTicks(nowNanos)) {
+                if (NativeSourceCubeStatus.dispatch(this, tick)) continue;
                 try {
                     switch (tick.event.kind()) {
                         case CUBE_EXPIRED -> {
@@ -11413,6 +11419,7 @@ final class GameHub implements AutoCloseable {
                 }
             }
             for (CubeShockTick tick : cubeShockTicks(nowNanos)) {
+                if (NativeSourceCubeStatus.dispatch(this, tick)) continue;
                 try {
                     switch (tick.event.kind()) {
                         case CUBE_EXPIRED -> {
@@ -11452,6 +11459,8 @@ final class GameHub implements AutoCloseable {
                 }
             }
             for (CubeHarmonyTick tick : cubeHarmonyTicks(nowNanos)) {
+                if (NativeSourceCubeRemainder.dispatch(this, tick)) continue;
+                if (NativeSourceCubeNpc.dispatch(this, tick)) continue;
                 try {
                     switch (tick.event.kind()) {
                         case CUBE_EXPIRED -> {
@@ -11590,8 +11599,8 @@ final class GameHub implements AutoCloseable {
                         : BattleCubeIgnitionEffects.Relation.ENEMY;
             };
             for (BattleCubeIgnitionEffects.Event event
-                    : room.cubeIgnitionEffects.advance(
-                            nowNanos, actors, alliance)) {
+                    : NativeSourceCubeOrigin.advance(room.cubeIgnitionEffects,
+                            nowNanos, actors, alliance, this)) {
                 result.add(new CubeTick(room.id, -1, -1, recipients,
                         sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -11653,7 +11662,7 @@ final class GameHub implements AutoCloseable {
                         : BattleCubeIgnitionEffects.Relation.ENEMY;
             };
             for (BattleCubeIgnitionEffects.Event event
-                    : effects.advance(nowNanos, actors, alliance)) {
+                    : NativeSourceCubeOrigin.advance(effects, nowNanos, actors, alliance, this)) {
                 result.add(new CubeTick(0, key.mapId(), key.instanceId(),
                         recipients, sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -11738,8 +11747,8 @@ final class GameHub implements AutoCloseable {
                         return false;
                     };
             for (BattleCubeQuakeEffects.Event event
-                    : room.cubeQuakeEffects.advance(
-                            nowNanos, actors, alliance, protection)) {
+                    : NativeSourceCubeStatus.advance(room.cubeQuakeEffects,
+                            nowNanos, actors, alliance, protection, this)) {
                 result.add(new CubeQuakeTick(room.id, -1, -1, recipients,
                         sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -11812,7 +11821,7 @@ final class GameHub implements AutoCloseable {
                                     targetId, callbackNanos);
                     };
             for (BattleCubeQuakeEffects.Event event
-                    : effects.advance(nowNanos, actors, alliance, protection)) {
+                    : NativeSourceCubeStatus.advance(effects, nowNanos, actors, alliance, protection, this)) {
                 result.add(new CubeQuakeTick(0, key.mapId(), key.instanceId(),
                         recipients, sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -11877,8 +11886,8 @@ final class GameHub implements AutoCloseable {
                         : BattleCubeShockEffects.Relation.ENEMY;
             };
             for (BattleCubeShockEffects.Event event
-                    : room.cubeShockEffects.advance(
-                            nowNanos, actors, alliance)) {
+                    : NativeSourceCubeStatus.advance(room.cubeShockEffects,
+                            nowNanos, actors, alliance, this)) {
                 result.add(new CubeShockTick(room.id, -1, -1, recipients,
                         sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -11939,7 +11948,7 @@ final class GameHub implements AutoCloseable {
                 return BattleCubeShockEffects.Relation.ENEMY;
             };
             for (BattleCubeShockEffects.Event event
-                    : effects.advance(nowNanos, actors, alliance)) {
+                    : NativeSourceCubeStatus.advance(effects, nowNanos, actors, alliance, this)) {
                 result.add(new CubeShockTick(0, key.mapId(), key.instanceId(),
                         recipients, sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -12003,8 +12012,8 @@ final class GameHub implements AutoCloseable {
                         : BattleCubeHarmonyEffects.Relation.ENEMY;
             };
             for (BattleCubeHarmonyEffects.Event event
-                    : room.cubeHarmonyEffects.advance(
-                            nowNanos, actors, alliance)) {
+                    : NativeSourceCubeOrigin.advance(room.cubeHarmonyEffects,
+                            nowNanos, actors, alliance, this)) {
                 result.add(new CubeHarmonyTick(room.id, -1, -1, recipients,
                         sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -12065,7 +12074,7 @@ final class GameHub implements AutoCloseable {
                 return BattleCubeHarmonyEffects.Relation.ENEMY;
             };
             for (BattleCubeHarmonyEffects.Event event
-                    : effects.advance(nowNanos, actors, alliance)) {
+                    : NativeSourceCubeOrigin.advance(effects, nowNanos, actors, alliance, this)) {
                 result.add(new CubeHarmonyTick(0, key.mapId(), key.instanceId(),
                         recipients, sessions.get(event.cube().casterObjectId()),
                         sessions.get(event.targetObjectId()), event));
@@ -12325,8 +12334,9 @@ final class GameHub implements AutoCloseable {
                     actors.add(new BattleGroundEffects.Actor(2, bot.x(), bot.y(), true, true));
                 }
             }
-            for (BattleGroundEffects.Pulse pulse : room.groundEffects.advance(nowNanos, actors)) {
-                ClientSession caster = sessions.get(pulse.casterObjectId());
+            for (BattleGroundEffects.Pulse pulse : NativeSourceGroundNpc.advance(room.groundEffects, nowNanos, actors, this)) {
+                if (NativeSourceGroundNpc.schedule(room, pulse, (List) result)) continue;
+                ClientSession caster = NativeSourceGroundOrigin.caster(sessions.get(pulse.casterObjectId()), pulse);
                 if (caster == null) {
                     boolean npcCaster = room.match.rules().mode()
                             == BattleRules.Mode.TIME_ATTACK
@@ -12343,7 +12353,7 @@ final class GameHub implements AutoCloseable {
                 }
                 if (pulse.bot()) {
                     if (combatants.size() < 2 && pulse.targetObjectId() == 2 && room.botHp > 0) {
-                        result.add(new GroundTick(room.id, caster, null, true, pulse.skillId()));
+                        result.add(new GroundTick(room.id, caster, null, true, pulse.skillId(), pulse));
                     }
                     continue;
                 }
@@ -12353,7 +12363,7 @@ final class GameHub implements AutoCloseable {
                         && !room.match.canAttack(caster.playerObjectId(), target.playerObjectId())) {
                     continue;
                 }
-                result.add(new GroundTick(room.id, caster, target, false, pulse.skillId()));
+                result.add(new GroundTick(room.id, caster, target, false, pulse.skillId(), pulse));
             }
         }
         return result;
@@ -12436,15 +12446,15 @@ final class GameHub implements AutoCloseable {
     }
 
     private synchronized List<BotTick> botTicks(long l) {
-        ArrayList<BotTick> arrayList = new ArrayList<BotTick>();
+        List<BotTick> arrayList = new ArrayList<>();
         for (Room room : this.rooms.values()) {
-            Object object;
+            ArenaMapCatalog.Point botPosition;
             List<ClientSession> list = room.combatants();
-            if (!room.battleStarted || room.disconnectResolutionPending || list.size() != 1 || room.botHp <= 0 || room.match.rules().mode() == BattleRules.Mode.PET_RACE || room.match.rules().mode() == BattleRules.Mode.QUEST_BATTLE || room.match.rules().mode() == BattleRules.Mode.TIME_ATTACK || room.cubeQuakeEffects.movementStopped(2L, l) || LiToBotEffects.blind(this, room.id, l) && (object = this.botPosition(room.id)) != null && Math.max(Math.abs(((ArenaMapCatalog.Point)object).x() - list.get(0).battleX()), Math.abs(((ArenaMapCatalog.Point)object).y() - list.get(0).battleY())) > 1) continue;
-            object = new int[]{0, 1, 0, -1};
+            if (!room.battleStarted || room.disconnectResolutionPending || list.size() != 1 || room.botHp <= 0 || room.match.rules().mode() == BattleRules.Mode.PET_RACE || room.match.rules().mode() == BattleRules.Mode.QUEST_BATTLE || room.match.rules().mode() == BattleRules.Mode.TIME_ATTACK || room.cubeQuakeEffects.movementStopped(2L, l) || LiToBotEffects.blind(this, room.id, l) && (botPosition = this.botPosition(room.id)) != null && Math.max(Math.abs(botPosition.x() - list.get(0).battleX()), Math.abs(botPosition.y() - list.get(0).battleY())) > 1) continue;
+            int[] offsets = {0, 1, 0, -1};
             room.botStep = room.botStep + 1 & 3;
             ArenaMapCatalog.Point point = ArenaMapCatalog.forMap(room.match.rules().mapId()).botSpawn();
-            arrayList.add(new BotTick(room.id, list.get(0), point.x() + ((int[])object)[room.botStep], point.y(), Math.max(0, Math.addExact(Math.max(0, this.aiDamage + LiToBotEffects.damageModifier(this, room.id, l)), room.botArmBreakerStatus.meleeDamageModifier(l)))));
+            arrayList.add(new BotTick(room.id, list.get(0), point.x() + offsets[room.botStep], point.y(), Math.max(0, Math.addExact(Math.max(0, this.aiDamage + LiToBotEffects.damageModifier(this, room.id, l)), room.botArmBreakerStatus.meleeDamageModifier(l)))));
         }
         return arrayList;
     }
@@ -12795,8 +12805,8 @@ final class GameHub implements AutoCloseable {
     private void resolveBattleDisconnectSafely(long roomId, long generation) {
         try {
             BattleDisconnectWork work = battleDisconnectWork(roomId, generation);
-            if (work == null) return;
             TeamDisconnectSettlement.freezeWork(work, this);
+            if (work == null) return;
             if (work.resolution().ended()) {
                 for (ClientSession recipient : work.recipients()) {
                     try {

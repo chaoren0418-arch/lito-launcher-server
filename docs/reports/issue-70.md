@@ -1,1008 +1,1237 @@
-# Issue #70 / T020-B09 — #216 後 Java 修正與完整重驗
+# Issue #70　B09 在 #254／#259 後重建與移植補正
 
 ## 結論
 
-**尚未通過 B09 驗收、不可 B-land；剩餘差異交 `needs:claude` 裁定。** 已在指定 worktree／`task/70`，由 `31ddb09` 合併 `origin/main@43a4f7a`（含 #203／#216；合併提交 `d8c4d97`），沒有切換或建立分支。#216 已到齊，不再列為等待合併的阻塞。 交付前再同步工作期間新增的 `origin/main@b70c573`（B01／B07；合併提交 `c56de76`）；核對此次合併未變動三份 B09 Java、工具、註解、reference、lib、batches 或核准清單，因此完整 362-entry 結果仍適用。
+**未達 B09 驗收，尚不可 B-land。** 本輪在指定 worktree 與 `task/70`，以 `3920ab5` 合併 `origin/main@f795017`，其中含 #254／PR #260 與 #259／PR #265。依最新主控裁定保留 T029 inventory 的求值順序，使用新工具重驗，同時修正盤點確認的 Java 漏接。主控裁定見下方連結。
 
-最終完整 **362 entries：357 SAME、2 SAME_PATHS、3 DIFF**；類別 missing／extra／ONLY_LEFT／ONLY_RIGHT 全 0。方法診斷仍有 **346 DIFF、9 ONLY_LEFT、63 ONLY_RIGHT**，72 個配對缺口全含 `lambda$`，不可視為通過。T029 八方法為 **5 SAME、1 SAME_EFFECTS、1 SAME_PATHS、1 DIFF**。CLI exit 0 只表示報告成功產生。
+[2026-11-06 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6670996283)
+
+
+完整 **362 entries** 的類別結果為 360 SAME、1 SAME_CFG、1 DIFF。類別 missing／extra／ONLY_LEFT／ONLY_RIGHT 全為 0。方法診斷仍有 **255 DIFF、9 ONLY_LEFT、63 ONLY_RIGHT**。CLI exit 0 表示報表產生成功。
 
 ## 做了什麼
 
-- `ClientSession` 的 T029 inventory：檢查正式版完整 javap 指令與完整 effects 後，修正 MAP、light、BRAVE、WISDOM、ELVEN_BRAVE、BLUE_MPR、BLIND、BREATH、WHISTLE、LIQUOR 十處條件，從 `NativeWorldPotionPhase.allowed(this)` 恢復正式版 `phase == BATTLE`。HEAL 是正式版唯一保留該 helper 的分支，維持原樣。
-- `nativeLightCommit`：改用具型別的 LightSpell 暫存，消除八次多餘 CHECKCAST；保留 Phase、Long 轉型。將 checked exception 的原樣轉拋縮到 `commitSpellReady` 呼叫，沿用已核准的 `rethrowUnchecked`，移除多出的 IOException 宣告；**完整方法 SAME_PATHS，不用 Exceptions 豁免**。
-- `GameHub#battleDisconnectWork`：刪房通知接收者改成候選的 `new ArrayList<>(channel.members)`，不再重新呼叫 `channelMembers(room.channelId)`。其餘堆疊／local 差異仍保留 DIFF，沒有冒稱整個方法通過。
-- 合併衝突僅在 metadata 清單：移除舊 pending，採用 #216 已核准的四筆 `enclosing-method`。僅豁免 outerMethod／outerMethodDesc；outerClass、其他 metadata、欄位、方法照比。最終清單內容與 main 相同。
-- 修掉 Protocol.java 原第 17405 行的檔尾多餘空白行。保留前輪 31 個方法移植、登入 SourceLogin.allowed 守門、核准 helper、5 個 AsRecord 與 AsmFinal。
-- 本輪只手改三份本批 staged Java、核准條目及本報告；沒有改工具、src/main、pom.xml 或 docs/REPORT.md。main 合併帶入的上游改動另計。
+- 補入 `SourceLogin.account` 的八處漏呼叫，涵蓋 login 的五處、requestLitoCharacterInfo、enterChannel、authorizesAuthenticatedEndpointTransfer。handoff 先讀取 hub、帳號與其餘參數，再呼叫 account 包裝，依候選完整 javap 保留求值順序。另修正既有六個 handoff 方法及 auto-select lambda 的逆序暫存。
+- setReady 的兩個提早 return 補 feedback。joinRoom 的九個提早 return 補 joined，正常出口的 joined 移到日誌與 LobbyRoomDirectory.refresh 之後。startBattle 依候選保留舊條件求值後取得 activeBot，forceWinner 使用 botSingle。
+- 依完整指令差異補入 inventory、warehouse、rentalTownInventory 的 NativeDeItemApplication.replace，以及 scene／poison 寫入接線。修正 resetBattleVitals、respawnAtBattleSpawn 的 playerMaxHp 讀取位置，先取值再 advance。各方法寫入收據保存在 scratch。
+- GameHub 補 ground／cube 的 advance、schedule、caster、dispatch 與完整 pulse 傳遞，保持 dispatch 位於每個 IOException catch 範圍之前。修正加入房間的 channel 成員登記、SIEGE_WAR 條件、disconnect 重複移除與 freezeWork 的呼叫位置。botTicks 改為具型別區域變數，消除多餘轉型。
+- 四個 wave 方法以 raw List 參數對齊候選的 Signature metadata，迭代處保留 Snapshot 型別。say 沿用既有 rethrowUnchecked，縮小 checked throws 至候選的 IOException。
+- movementUnlock 的 sendEncrypted 仍需 checked throws，依本輪明示核准加入精確 Exceptions 條目。核准僅忽略該方法的 Exceptions 屬性。
+- 四個 enclosing-method 條目、前輪 Protocol EOF 修正、五個 AsRecord 與 AsmFinal 已在起點保留。本輪手改兩份 staged Java、exceptions-exempt 與本報告。
 
-## 已驗證／怎麼驗證
+## 已驗證
 
-Microsoft OpenJDK 17.0.17、ASM 9.7。每次使用全新輸出目錄，由來源編譯 semantic-diff、AsRecord、註解與三份 staged Java；候選在 classpath 前、正式版在後。官方 AsRecord `scanned=362 converted=6`（五個 record 加 AsmFinal）。實際 class 集合與 batches.json B09 的 362 個 verify_entries 精確相等。未覆寫候選 class bytes、未以二進位修補代替 Java。
+Microsoft OpenJDK 17.0.17、ASM 9.7。從 Java 原始碼重新編譯三個外層類別、semantic-diff、AsRecord 與 annotation，使用全新的應用程式、工具及 annotation 輸出目錄。javac 成功，AsRecord `scanned=362 converted=6`，產物 class 集合與 B09 verify_entries 精確相等。建置流程直接以 staged Java 編出的 classes 套用核准 AsRecord 轉換。
 
-使用完整 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`；effects 僅兩個既有核准方法、extra-method 僅 rethrowUnchecked，metadata 僅四筆 enclosing-method。沒有整類 metadata、Exceptions、layout、method-diff 或 deviation 豁免。
+驗收啟用完整 T029 `--allow-methods`／正式 `--allow-right`、兩筆既有 effects、一筆既有 extra helper、四筆 enclosing-method 與一筆 movementUnlock Exceptions。其餘核准模式未啟用。
+
 
 | 階段 | 類別結果 | 方法 DIFF | 方法 ONLY_LEFT／ONLY_RIGHT |
-|---|---|---:|---|
-| 前輪 #203 | 353 SAME、2 SAME_PATHS、7 DIFF | 356 | 9／63 |
-| 本輪 #216 基線，未改 Java | 357 SAME、2 SAME_PATHS、3 DIFF | 347 | 9／63 |
-| 本輪 Java 修正後 | 357 SAME、2 SAME_PATHS、3 DIFF | 346 | 9／63 |
+|---|---|---|---|
+| 前輪 #216 | 357 SAME、2 SAME_PATHS、3 DIFF | 346 | 9／63 |
+| 本輪 #259 基線，Java 尚未修改 | 360 SAME、2 DIFF | 333 | 9／63 |
+| 本輪交付 | 360 SAME、1 SAME_CFG、1 DIFF | 255 | 9／63 |
 
-方法結果列只包含後備證明與失敗診斷，不是全部方法數。最終診斷分布：
+
+比對前後完整方法鍵，原 DIFF 有 78 個通過，新增 DIFF 為 0。方法診斷與後備證明的分布如下，此表僅計 methodResults 所列紀錄。
 
 | 狀態 | 數量 |
-|---|---:|
-| DIFF | 346 |
+|---|---|
+| DIFF | 255 |
 | ONLY_LEFT | 9 |
 | ONLY_RIGHT | 63 |
 | ORPHAN_IGNORED | 8 |
-| SAME_CFG | 51 |
-| SAME_PATHS | 72 |
+| SAME_CFG | 42 |
+| SAME_PATHS | 39 |
 
-四個 healing record 全 SAME；Protocol 的 162 entries 全 SAME。三個未過 entry 是 ClientSession、ClientSession$1、GameHub。51 個 SAME_CFG 方法仍位於有其他差異的類別中，因此類別摘要 SAME_CFG=0 不表示沒有方法通過。
 
 ### T029 八方法
 
-| 方法 | 對正式版結果 |
+| 方法與完整描述子 | 對正式版結果 |
 |---|---|
 | `local/lito381/server/ClientSession#exitRoom(Z)V` | SAME |
 | `local/lito381/server/ClientSession#exitRoomBeforePolyMe(Z)V` | SAME_EFFECTS |
-| `local/lito381/server/ClientSession#run()V` | SAME_PATHS |
+| `local/lito381/server/ClientSession#run()V` | SAME |
 | `local/lito381/server/ClientSession#sendRoomParticipant(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$LitoForce;Ljava/lang/String;)V` | SAME |
-| `local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | DIFF |
+| `local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | SAME_EFFECTS |
 | `local/lito381/server/Protocol#litoRoomParticipant(JLjava/lang/String;Llocal/lito381/server/Protocol$LitoForce;IILlocal/lito381/server/GameStateStore$TournamentStatistics;Ljava/lang/String;IILlocal/lito381/server/Protocol$LitoParticipantState;ILlocal/lito381/server/GameStateStore$TournamentAwards;)[B` | SAME |
 | `local/lito381/server/Protocol#magicDollCustomIcon(IIZ)[B` | SAME |
 | `local/lito381/server/Protocol#magicDollIcon(I)[B` | SAME |
 
-### T029 inventory：剩餘最小完整 effects 差異
 
-正式版完整方法的 javap 已檢查。handoff 區段的求值順序是 `hub → accountName() → stateCharacter() → rentalTownInventory → SourceLogin.account() → stageRentalBattleHandoff()`；staged 已維持同一呼叫／欄位讀取順序，差別是 javac 在每次求值後立即 ASTORE，正式 ASM patch 先把四個值留在 stack，再反序存到 slots 34、33、32、35。不能直接改成 `SourceLogin.account(this, accountName())` 作第一個引數：那會將 SourceLogin.account 提前到 stateCharacter／inventory 之前，改變求值及例外順序。
+### movementUnlock 的精確 Exceptions 核准
 
-本輪沒有為消除 ASTORE 診斷而加入未核准 helper、移動 SourceLogin.account 或直接 patch class。十處階段條件修正後，**完整 effects sequence 的所有差異只剩下面這一個 hunk**；不再含 NativeWorldPotionPhase 差異。正式有四次連續 ASTORE，既有 tempStores 正規化略去其中一次，因此 effects 右側為三次。此證據不是 SAME_EFFECTS，方法仍為 DIFF：`effects sequence[43]`；paths 因 normal control-flow cycle 拒絕，CFG 回報 **unsupported shuffle/subroutine**。依本輪明示退回規則交主控判定是否需擴充保守堆疊證明；不自行新增核准。
+javap 的方法宣告如下，左側 Java 需保留 sendEncrypted 的 checked throws，核准條目只處理該屬性。
 
-```diff
---- staged-effects
-+++ formal-effects
-@@ -40,14 +40,13 @@
- INVOKEDYNAMIC makeConcatWithConstants(J)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[LiTo] C_USE_ITEM rental-town transfer-stone deferred object=\u0001 result=exactly-one-configured-battle-endpoint-required"]
- INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
- RETURN
- GETFIELD local/lito381/server/ClientSession.hub
--ASTORE
- INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;
--ASTORE
- INVOKESPECIAL local/lito381/server/ClientSession.stateCharacter()Ljava/lang/String;
--ASTORE
- GETFIELD local/lito381/server/ClientSession.rentalTownInventory
-+ASTORE
-+ASTORE
- ASTORE
- INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
- INVOKEVIRTUAL local/lito381/server/GameHub.stageRentalBattleHandoff(Ljava/lang/String;Ljava/lang/String;Llocal/lito381/server/RuntimeInventory;)Z
- GETSTATIC java/lang/System.out
-```
-
-正式 handoff 區段完整指令（188–224；後續是 boolean 結果存取與既有拒絕分支）：
 
 ```text
-     188: aload_0
-     189: getfield      #3441               // Field hub:Llocal/lito381/server/GameHub;
-     192: aload_0
-     193: invokevirtual #4839               // Method accountName:()Ljava/lang/String;
-     196: aload_0
-     197: invokevirtual #4562               // Method stateCharacter:()Ljava/lang/String;
-     200: aload_0
-     201: getfield      #13611              // Field rentalTownInventory:Llocal/lito381/server/RuntimeInventory;
-     204: astore        34
-     206: astore        33
-     208: astore        32
-     210: astore        35
-     212: aload         35
-     214: aload_0
-     215: aload         32
-     217: invokestatic  #10597              // Method local/lito381/server/SourceLogin.account:(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
-     220: aload         33
-     222: aload         34
-     224: invokevirtual #13779              // Method local/lito381/server/GameHub.stageRentalBattleHandoff:(Ljava/lang/String;Ljava/lang/String;Llocal/lito381/server/RuntimeInventory;)Z
+candidate
+private void movementUnlock(byte[]);
+    descriptor: ([B)V
+
+staged
+private void movementUnlock(byte[]) throws java.io.IOException;
+    descriptor: ([B)V
 ```
 
-### light：CHECKCAST 與逐路徑事件
 
-候選 javap 的 Phase cast 在 offset 4、Long cast 在 offset 36，沒有 LightSpell cast。修正前 staged 多八次 LightSpell cast（skillId 四處、mpCost 兩處、durationSeconds 一處、reuseDelayMillis 一處），會增加比較模型的可拋出路徑。原來 110／90 是**路徑多重集合的筆數**，不是「多出 20 個指令事件」。
+### light、disconnect、switch-map 與 healing records
 
-修正後官方比較器先套用核准純轉拋／helper 正規化，完整 PathComparison 為 **90 對 90、每條路徑的有序事件、引數 expression 與 multiplicity 全相等**，不是只比較數目。另外將兩邊完整排序輸出逐字核對，相同；CHECKCAST 皆恰好為 Phase、Long。`nativeLightCommit` 官方 CLI 與獨立逐方法診斷都 SAME_PATHS，沒有啟用 Exceptions 豁免。
+light 的比較重新核對完整逐路徑事件、引數及 multiplicity。以下為實際收據。
 
-### 登入、disconnect、switch-map 與 lambda
 
-- `sourceApplicationRun` 保留守門與窄 try，#216 後仍是整個方法 handler／控制流程 DIFF，paths 有迴圈、CFG 為 labelled CFGs differ；完整代表差異見附錄。
-- `battleDisconnectWork` 修正 channel 成員來源後，第一個差異仍為 ASTORE／ALOAD 對 DUP；另有 botHp receiver 的 ALOAD／DUP，完整差異見附錄。沒有據此認定為等價。
-- switch-map 四個使用方法仍為 DIFF：acceptsLitoRosterBroadcast、serverClassicWorldDspyFollowerTick、attack、sourceNpcPoisonState；ClientSession$1 的 `<clinit>` 也保留 DIFF。附 accepts 方法與整個 holder 初始化的完整差異。
-- 72 個 lambda 配對缺口未解決；附兩個方向的完整本體代表，以及 invokedynamic 呼叫點代表。不將它們與已核准 ORPHAN_IGNORED 混計。
+```text
+LIGHT_PATHS left=90 right=90 equal=true
+LIGHT_CASTS LEFT [CHECKCAST local/lito381/server/ClientSession$Phase, CHECKCAST java/lang/Long]
+LIGHT_CASTS RIGHT [CHECKCAST local/lito381/server/ClientSession$Phase, CHECKCAST java/lang/Long]
+```
 
-以下以第一個診斷互斥分型，**不是根因裁定**；涵蓋所有 346 DIFF 與 72 配對缺口：
 
-| 類型 | 數量 |
-|---|---:|
-| lambda 配對缺口 | 72 |
-| switch-map 欄位對應 | 4 |
-| 指令資料流與控制流程 | 159 |
-| 例外涵蓋與 handler | 171 |
-| lambda／invokedynamic 內容 | 8 |
-| 其他 Exceptions 宣告 | 2 |
-| 登入守門與整體 handler | 1 |
-| T029 effects 暫存 | 1 |
-
-### 固定輸入與產物
-
-| 檔案 | SHA-256 |
+| 項目 | 結果 |
 |---|---|
-| `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| `scratch/issue-70/target/verified216.jar` | `eeb1b8d0bba82e6852bc6020eb17f119de44ae41d27147040cd4deae7e0d75f3` |
+| acceptsLitoRosterBroadcast()Z | SAME |
+| movementUnlock([B)V | SAME |
+| nativeLightCommit(Llocal/lito381/server/BattleSpellCatalog$LightSpell;Ljava/lang/Object;J)Ljava/lang/Integer; | SAME_PATHS |
+| sourceApplicationRun()V | DIFF |
+| <clinit>()V | SAME |
+| battleDisconnectWork(JJ)Llocal/lito381/server/GameHub$BattleDisconnectWork; | SAME |
+| ClientSession$1CompanionHealing | SAME |
+| ClientSession$1PlayerHealing | SAME |
+| ClientSession$2CompanionHealing | SAME |
+| ClientSession$2PlayerHealing | SAME |
 
-### 完整 PR 格式檢查
+## 呼叫點完整對照
 
-修掉 Protocol 檔尾後，對 **完整 PR 累積差異**執行 `git diff --check origin/main`（包含工作樹修改），提交後再執行 `git diff --check origin/main...HEAD`；兩者皆 exit 0。範圍包含前輪累積的三份 staged Java、extra-methods-approved 與本報告，並非只檢查本輪未提交差異。metadata-exempt 最終與 main 相同，不產生 PR 差異。實際收據為 `scratch/issue-70/full-pr-diff-check.txt`。
+以下掃描候選 JAR 中 B09 三個外層類別及其內部類別的全部 INVOKESTATIC 呼叫點。位置為 javap 對應的有效指令序號，排除 label／frame／line。每列列出同一完整方法及目標的所有位置。Protocol 沒有這兩組呼叫。
+
+候選 exitRoom 的 restoreBot 由 T029 正式版的 exitRoomBeforePolyMe 承接，兩者分別按核准目標驗證。sourceApplicationRun 的 restoreBot 仍為 3 對 4 份線性複本，整個方法保留 DIFF，等待 handler／finally 路徑核對。其餘呼叫點數相同仍需完整方法通過。
+
+
+### SourceLogin.account
+
+| 完整呼叫端 | 目標 | 候選位置 | staged 位置 | 完整方法結果 |
+|---|---|---|---|---|
+| `local/lito381/server/ClientSession#activatePendingRentalBattleHandoff(Ljava/lang/String;)Z` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 25 | 25 | SAME |
+| `local/lito381/server/ClientSession#administratorBan([B)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 35 | 37 | SAME |
+| `local/lito381/server/ClientSession#authorizesAuthenticatedEndpointTransfer(Ljava/lang/String;)Z` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 29 | 31 | DIFF |
+| `local/lito381/server/ClientSession#enterChannel([B)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 330 | 328 | SAME |
+| `local/lito381/server/ClientSession#handleRentalTownTeleportAction(Llocal/lito381/server/NativeLitoRentalTownNpcCatalog$Npc;Ljava/lang/String;)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 34 | 34 | SAME |
+| `local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 14 | 14 | SAME |
+| `local/lito381/server/ClientSession#login([B)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 161,196,208,250,396 | 160,191,199,241,387 | SAME |
+| `local/lito381/server/ClientSession#redirectToChannelPort(I)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 34,62 | 34,62 | SAME |
+| `local/lito381/server/ClientSession#rentalItemSelectionContext()Z` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 27 | 35 | SAME_PATHS |
+| `local/lito381/server/ClientSession#requestLitoCharacterInfo([B)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 102 | 102 | SAME |
+| `local/lito381/server/ClientSession#requestQuit()V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 64,84 | 64,84 | SAME |
+| `local/lito381/server/ClientSession#selectClassicServer([B)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 67 | 67 | SAME |
+| `local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 95 | 95 | SAME_EFFECTS |
+| `local/lito381/server/GameHub#acceptAuthenticatedAccount(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession$Endpoint;Ljava/lang/String;)Z` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 3 | 2 | SAME |
+| `local/lito381/server/GameHub#releaseAuthenticatedAccountForTransfer(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Z` | `local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;` | 3 | 2 | SAME |
+
+### NativeRoomRules.*
+
+| 完整呼叫端 | 目標 | 候選位置 | staged 位置 | 完整方法結果 |
+|---|---|---|---|---|
+| `local/lito381/server/ClientSession#changeRoomMode(Llocal/lito381/server/Protocol$LitoModeStepDirection;)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/ClientSession;)Z` | 127,131 | 127,131 | SAME |
+| `local/lito381/server/ClientSession#completeRestartReturn(Z)V` | `local/lito381/server/NativeRoomRules.restoreBot(Llocal/lito381/server/ClientSession;)V` | 110 | 111 | DIFF |
+| `local/lito381/server/ClientSession#exitRoom(Z)V` | `local/lito381/server/NativeRoomRules.restoreBot(Llocal/lito381/server/ClientSession;)V` | 241 | 無 | SAME |
+| `local/lito381/server/ClientSession#findUser([B)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/GameHub;J)Z` | 65 | 65 | SAME |
+| `local/lito381/server/ClientSession#handleGmChatCommandBeforeTravel(Ljava/lang/String;)Z` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/ClientSession;)Z` | 212,330 | 204,322 | DIFF |
+| `local/lito381/server/ClientSession#joinRoom([BLjava/lang/String;Z)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/GameHub;J)Z` | 468,569 | 468,569 | SAME |
+| `local/lito381/server/ClientSession#joinRoom([BLjava/lang/String;Z)V` | `local/lito381/server/NativeRoomRules.joined(Llocal/lito381/server/ClientSession;)V` | 42,59,114,147,179,200,223,243,310,618 | 42,59,114,147,179,200,223,243,310,618 | SAME |
+| `local/lito381/server/ClientSession#nativePlacementPortalBody(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V` | `local/lito381/server/NativeRoomRules.restoreBot(Llocal/lito381/server/ClientSession;)V` | 107 | 110 | DIFF |
+| `local/lito381/server/ClientSession#sendPortalWorldRebuild()V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/ClientSession;)Z` | 127,346 | 127,346 | SAME |
+| `local/lito381/server/ClientSession#sendRoomUser([B)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/GameHub;J)Z` | 110 | 110 | SAME |
+| `local/lito381/server/ClientSession#sendRoomWho([B)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/GameHub;J)Z` | 105 | 105 | SAME |
+| `local/lito381/server/ClientSession#setReady([B)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/ClientSession;)Z` | 153 | 153 | SAME |
+| `local/lito381/server/ClientSession#setReady([B)V` | `local/lito381/server/NativeRoomRules.feedback(Llocal/lito381/server/ClientSession;)V` | 5,45,207 | 5,45,207 | SAME |
+| `local/lito381/server/ClientSession#sourceApplicationRun()V` | `local/lito381/server/NativeRoomRules.restoreBot(Llocal/lito381/server/ClientSession;)V` | 350,686,1022,1332 | 394,716,1026 | DIFF |
+| `local/lito381/server/ClientSession#sourcePoisonBody$serverEndBattle(Llocal/lito381/server/BattleRules$Resolution;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | `local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/ClientSession;)Z` | 261 | 264 | SAME |
+| `local/lito381/server/ClientSession#startBattle()V` | `local/lito381/server/NativeRoomRules.activeBot(Llocal/lito381/server/ClientSession;)Z` | 246 | 244 | DIFF |
+| `local/lito381/server/GameHub#<init>(Llocal/lito381/server/ServerConfig;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/AccountRepository;)V` | `local/lito381/server/NativeRoomRules.install(Llocal/lito381/server/GameHub;Llocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;)V` | 454 | 456 | SAME |
+| `local/lito381/server/GameHub#battleDisconnectWork(JJ)Llocal/lito381/server/GameHub$BattleDisconnectWork;` | `local/lito381/server/NativeRoomRules.botHp(Ljava/lang/Object;Llocal/lito381/server/GameHub;)I` | 311 | 312 | SAME |
+| `local/lito381/server/GameHub#countdownWork(J)Llocal/lito381/server/GameHub$CountdownWork;` | `local/lito381/server/NativeRoomRules.botHp(Ljava/lang/Object;Llocal/lito381/server/GameHub;)I` | 137 | 137 | SAME |
+| `local/lito381/server/GameHub#endBattle(J)V` | `local/lito381/server/NativeRoomRules.botHp(Ljava/lang/Object;Llocal/lito381/server/GameHub;)I` | 78 | 78 | SAME |
+| `local/lito381/server/GameHub#ensureDefaultRoom(Llocal/lito381/server/GameHub$Channel;)Llocal/lito381/server/GameHub$Room;` | `local/lito381/server/NativeRoomRules.enabled(Llocal/lito381/server/GameHub;)Z` | 1 | 1 | SAME |
+| `local/lito381/server/GameHub#forceWinner(JI)Llocal/lito381/server/BattleRules$Resolution;` | `local/lito381/server/NativeRoomRules.botSingle(Llocal/lito381/server/GameHub;J)I` | 109 | 109 | SAME |
+| `local/lito381/server/GameHub#nativeRosterReady(Llocal/lito381/server/GameHub$Room;Ljava/util/List;)Z` | `local/lito381/server/NativeRoomRules.rosterReady(Llocal/lito381/server/GameHub;Ljava/lang/Object;Ljava/util/List;)Z` | 3 | 3 | SAME |
+| `local/lito381/server/GameHub#resetOrRemove(Llocal/lito381/server/GameHub$Room;)V` | `local/lito381/server/NativeRoomRules.botHp(Ljava/lang/Object;Llocal/lito381/server/GameHub;)I` | 52 | 52 | SAME |
+| `local/lito381/server/GameHub#winningForce(JLlocal/lito381/server/BattleRules$Resolution;)I` | `local/lito381/server/NativeRoomRules.botSingle(Llocal/lito381/server/GameHub;J)I` | 84 | 84 | SAME_CFG |
+
+## 剩餘差異與待驗證
+
+剩餘方法包含尚未完成的 Java 移植。缺呼叫涉及 NativeSkillConsumption、NativeCastMaterial、NativeSelectedPlayerIntent、CombatWorldPhysical、NativeCompanionCallbacks 等。這些需要本機繼續按候選補入，尚未逐一修完。sourceApplicationRun、跨區塊 stack／POP、boolean 匯合及 lambda 配對則仍需主控檢查完整差異。
+
+下表的四種標記依完整正規化線性指令分類。缺／多呼叫按目標與次數計算，finally 複製也可能改變線性次數。順序標記包含區塊排列。純形狀待裁定表示呼叫序列相同，仍須檢查引數、欄位、常數、metadata 與控制流程。本輪未逐一完成所有剩餘方法的語意根因裁定，所有列均保留官方 DIFF。
+
+
+| 標記 | 方法數 |
+|---|---|
+| 多呼叫 | 1 |
+| 純形狀待裁定 | 31 |
+| 缺呼叫 | 200 |
+| 順序不同 | 23 |
+
+| 完整方法 | 呼叫序列標記 | 首項診斷 |
+|---|---|---|
+| `local/lito381/server/ClientSession#answerAsk([B)V` | 缺呼叫 | method answerAsk([B)V: length left=0 right=109; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#applyBattleCompanionFeedbackDamage(Llocal/lito381/server/BattleCompanion;ILjava/util/List;Ljava/lang/String;)Llocal/lito381/server/BattleCompanion$Damage;` | 純形狀待裁定 | method applyBattleCompanionFeedbackDamage(Llocal/lito381/server/BattleCompanion;ILjava/util/List;Ljava/lang/String;)Llocal/lito381/server/BattleCompanion$Damage; insn[6]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#applyClassicWorldMonsterCompanionDamageInternal(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;IJLjava/lang/String;Z)Llocal/lito381/server/BattleCompanion$Damage;` | 純形狀待裁定 | method applyClassicWorldMonsterCompanionDamageInternal(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;IJLjava/lang/String;Z)Llocal/lito381/server/BattleCompanion$Damage; insn[40]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#applyJoyOfPainClassicWorldMonsterFeedback(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleJoyOfPainStatus$Lease;ILjava/lang/String;)V` | 缺呼叫 | method applyJoyOfPainClassicWorldMonsterFeedback(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleJoyOfPainStatus$Lease;ILjava/lang/String;)V insn[0]: left=ALOAD 1 right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#attackClassicWorld(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;)V` | 缺呼叫 | method attackClassicWorld(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;)V: left=1471:[1475:java/lang/Exception  ] right=1591:[1595:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#attackClassicWorldPlayer(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;Llocal/lito381/server/ClientSession;)V` | 缺呼叫 | method attackClassicWorldPlayer(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;Llocal/lito381/server/ClientSession;)V insn[1]: left=GETFIELD local/lito381/server/ClientSession.classicWorldMapId:I right=INVOKESTATIC local/lito381/server/CombatDragon.normalAttack(Llocal/lito381/server/ClientSession;)V; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#authorizesAuthenticatedEndpointTransfer(Ljava/lang/String;)Z` | 純形狀待裁定 | method authorizesAuthenticatedEndpointTransfer(Ljava/lang/String;)Z insn[11]: left=CONST Integer:0 right=ALOAD 0; path event multisets differ (left=157, right=205); labelled CFGs differ |
+| `local/lito381/server/ClientSession#autoSelectPendingRentalBattleHandoff()Z` | 純形狀待裁定 | method autoSelectPendingRentalBattleHandoff()Z insn[21]: left=INVOKEDYNAMIC test(Llocal/lito381/server/ClientSession;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/in… right=INVOKEDYNAMIC test(Llocal/lito381/server/ClientSession;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/in…; path event multisets differ (left=29, right=29); labelled CFGs differ |
+| `local/lito381/server/ClientSession#callClanDestinationOccupied(Llocal/lito381/server/ClientSession$PendingCallClan;IIJ)Z` | 缺呼叫 | method callClanDestinationOccupied(Llocal/lito381/server/ClientSession$PendingCallClan;IIJ)Z insn[3]: left=IF_ACMPNE L81 right=IF_ACMPNE L82; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#classicWorldCompanionSnapshots()Ljava/util/List;` | 純形狀待裁定 | method classicWorldCompanionSnapshots()Ljava/util/List;: left=21:[32:java/lang/Throwable  ] right=19:[32:java/lang/Throwable  ]; path event multisets differ (left=17, right=17); labelled CFGs differ |
+| `local/lito381/server/ClientSession#classicWorldMonsterPhysicalSkillHit(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPhysicalSkillCatalog$Definition;Llocal/lito381/server/ClientSession$ClassicWorldMonsterPhysicalTarget;J)Llocal/lito381/server/ClientSession$ClassicWorldMonsterPhysicalHit;` | 缺呼叫 | method classicWorldMonsterPhysicalSkillHit(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPhysicalSkillCatalog$Definition;Llocal/lito381/server/ClientSession$ClassicWorldMonsterPhysicalTarget;J)Llocal/lito381/server/ClientSession$ClassicWorldMonsterPhysicalHit;: left=276:[283:java/lang/Exception  ] right=281:[288:java/lang/Exception  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#cleanupClassicWorldTransientCompanionsOnDisconnect()V` | 純形狀待裁定 | method cleanupClassicWorldTransientCompanionsOnDisconnect()V insn[8]: left=INVOKEDYNAMIC test()Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/Me… right=INVOKEDYNAMIC test()Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/Me…; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#clearNativeMagicDollAutoSkills(JLjava/lang/String;Z)V` | 缺呼叫 | method clearNativeMagicDollAutoSkills(JLjava/lang/String;Z)V insn[6]: left=IFEQ L121 right=IFEQ L123; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#commitClassicWorldMonsterCounterBarrier(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleCounterBarrier$Decision;)V` | 缺呼叫 | method commitClassicWorldMonsterCounterBarrier(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleCounterBarrier$Decision;)V insn[141]: left=INVOKESTATIC local/lito381/server/Protocol.hitRatio(JII)[B right=INVOKESTATIC local/lito381/server/NativeBattleTamedLifecycle.visualHitRatio(JII)[B; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#commitNativeMagicDollClassicWorldProcDamage(JILjava/lang/String;)V` | 缺呼叫 | method commitNativeMagicDollClassicWorldProcDamage(JILjava/lang/String;)V insn[0]: left=ILOAD 3 right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#completeClassicWorldPortal(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V` | 純形狀待裁定 | method completeClassicWorldPortal(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V insn[6]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/L… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/L…; path event multisets differ (left=3, right=3); labelled CFGs differ |
+| `local/lito381/server/ClientSession#completeClassicWorldRescueFollowerIfReady()Z` | 缺呼叫 | method completeClassicWorldRescueFollowerIfReady()Z: left=153:[169:java/io/IOException  , 169:java/lang/RuntimeException  ] right=155:[171:java/io/IOException  , 171:java/lang/RuntimeException  ]; paths rejected: expression size limit 32768 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#completeClassicWorldRoiFollowerIfReady()Z` | 缺呼叫 | method completeClassicWorldRoiFollowerIfReady()Z: left=37:[100:java/io/IOException  , 100:java/lang/RuntimeException  ] right=39:[102:java/io/IOException  , 102:java/lang/RuntimeException  ]; path event multisets differ (left=374, right=374); labelled CFGs differ |
+| `local/lito381/server/ClientSession#completePortal([B)V` | 缺呼叫 | method completePortal([B)V insn[322]: left=ALOAD 0 right=NEW local/lito381/server/Protocol$Writer; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#completeRestartReturn(Z)V` | 缺呼叫 | method completeRestartReturn(Z)V insn[109]: left=ISTORE 5 right=ALOAD 0; path event multisets differ (left=2693, right=2693); labelled CFGs differ |
+| `local/lito381/server/ClientSession#confirmDeath([B)V` | 缺呼叫 | method confirmDeath([B)V insn[23]: left=INVOKEVIRTUAL local/lito381/server/GameHub.playerDefeated(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleRules$Resolution; right=INVOKESTATIC local/lito381/server/CombatPoisonLifecycle.defeated(Llocal/lito381/server/GameHub;JLlocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleRules$Resolution;; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#consumeClassicWorldDeathSafe(ILjava/lang/String;)Z` | 純形狀待裁定 | method consumeClassicWorldDeathSafe(ILjava/lang/String;)Z insn[9]: left=IFEQ L34 right=IFEQ L32; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#distributeClassicWorldMonsterDrops(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Ljava/util/List;Ljava/util/Map;)V` | 缺呼叫 | method distributeClassicWorldMonsterDrops(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Ljava/util/List;Ljava/util/Map;)V insn[20]: left=INVOKESPECIAL local/lito381/server/ClientSession.activeMagicDollPowers()Llocal/lito381/server/NativeMagicDollPowers; right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicCastleEquipmentEnchant(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` | 缺呼叫 | method handleClassicCastleEquipmentEnchant(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V insn[12]: left=IF_ACMPNE L69 right=IF_ACMPNE L71; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldCkewCompletionAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleClassicWorldCkewCompletionAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[38]: left=IF_ACMPNE L67 right=IF_ACMPNE L69; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldCompanionAction(Llocal/lito381/server/Protocol$HypertextActionRequest;)V` | 缺呼叫 | method handleClassicWorldCompanionAction(Llocal/lito381/server/Protocol$HypertextActionRequest;)V insn[1]: left=GETFIELD local/lito381/server/ClientSession.observer:Z right=INVOKESTATIC local/lito381/server/NativeCompanionCommit.captureMaster(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativePlayerCommit$Binding;; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldDesireCaveAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleClassicWorldDesireCaveAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[8]: left=IF_ACMPNE L34 right=IF_ACMPNE L36; path event multisets differ (left=600, right=600); labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldHotelAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` | 缺呼叫 | method handleClassicWorldHotelAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V insn[3]: left=IF_ACMPNE L29 right=IF_ACMPNE L31; path event multisets differ (left=1066, right=1066); labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldKamylaAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleClassicWorldKamylaAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[25]: left=IF_ACMPNE L51 right=IF_ACMPNE L53; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldNpcAction(Llocal/lito381/server/Protocol$HypertextActionRequest;)V` | 缺呼叫 | method handleClassicWorldNpcAction(Llocal/lito381/server/Protocol$HypertextActionRequest;)V insn[118]: left=IFNULL L129 right=IFNULL L131; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldRescueStaticAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldRescueFollowers$Definition;)V` | 缺呼叫 | method handleClassicWorldRescueStaticAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldRescueFollowers$Definition;)V: left=131:[171:java/io/IOException  , 171:java/lang/RuntimeException  ] right=137:[178:java/io/IOException  , 178:java/lang/RuntimeException  ]; path event multisets differ (left=2868, right=2868); labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldShipGraveAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleClassicWorldShipGraveAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[6]: left=IFEQ L229 right=IFEQ L231; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldStoryAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleClassicWorldStoryAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[50]: left=INVOKEVIRTUAL local/lito381/server/GameHub.classicWorldNpcGfx(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)I right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleClassicWorldWaterDragonGateAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` | 缺呼叫 | method handleClassicWorldWaterDragonGateAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V insn[3]: left=IF_ACMPNE L29 right=IF_ACMPNE L31; path event multisets differ (left=2032, right=2032); labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleGmChatCommandBeforeTravel(Ljava/lang/String;)Z` | 缺呼叫 | method handleGmChatCommandBeforeTravel(Ljava/lang/String;)Z: left=41:[45:java/lang/NumberFormatException  ] right=47:[51:java/lang/NumberFormatException  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleIvoryTowerElfAttributeAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleIvoryTowerElfAttributeAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[72]: left=IF_ACMPNE L101 right=IF_ACMPNE L103; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleIvoryTowerPriceAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleIvoryTowerPriceAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[49]: left=IF_ICMPLT L79 right=IF_ICMPLT L81; path event multisets differ (left=2863, right=2863); labelled CFGs differ |
+| `local/lito381/server/ClientSession#handlePendingRewardAction(Llocal/lito381/server/Protocol$HypertextActionRequest;)V` | 缺呼叫 | method handlePendingRewardAction(Llocal/lito381/server/Protocol$HypertextActionRequest;)V insn[98]: left=ALOAD 5 right=ALOAD 0; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#handleSilentCavernFullHeal(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z` | 缺呼叫 | method handleSilentCavernFullHeal(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)Z insn[15]: left=IF_ACMPNE L41 right=IF_ACMPNE L43; path event multisets differ (left=291, right=291); labelled CFGs differ |
+| `local/lito381/server/ClientSession#hypertextAction([B)V` | 缺呼叫 | method hypertextAction([B)V insn[422]: left=ALOAD 2 right=INVOKESTATIC local/lito381/server/NativePlayerCommit$Binding.capture(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativePlayerCommit$Binding;; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#hypertextInputResult([B)V` | 缺呼叫 | method hypertextInputResult([B)V: left=500:[539:java/lang/Exception  ] right=504:[543:java/lang/Exception  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#loadPersistentState()V` | 順序不同 | method loadPersistentState()V: left=557:[576:java/lang/Exception  ] right=556:[576:java/lang/Exception  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#loadSqlTournamentProfiles()V` | 缺呼叫 | method loadSqlTournamentProfiles()V: left=1:[5:java/lang/Exception  ] right=3:[7:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#maintainNativeMagicDollAutoSkills(JLjava/lang/String;)V` | 缺呼叫 | method maintainNativeMagicDollAutoSkills(JLjava/lang/String;)V insn[21]: left=IFEQ L367 right=IFEQ L371; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#move([B)V` | 缺呼叫 | method move([B)V insn[45]: left=INVOKESPECIAL local/lito381/server/ClientSession.rejectWhileParalyzed(Ljava/lang/String;)Z right=INVOKESPECIAL local/lito381/server/ClientSession.nativeRejectMovementLocked(Ljava/lang/String;)Z; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaBattleSleepBody([BLlocal/lito381/server/BattleSpellCatalog$SleepSpell;)V` | 缺呼叫 | method nativeAreaBattleSleepBody([BLlocal/lito381/server/BattleSpellCatalog$SleepSpell;)V: length left=0 right=9; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaBattleSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V` | 缺呼叫 | method nativeAreaBattleSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V: length left=0 right=24; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaFreezeAcceptedBattle(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V` | 純形狀待裁定 | method nativeAreaFreezeAcceptedBattle(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V insn[8]: left=DUP right=IFEQ L11; path event multisets differ (left=18, right=32); labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaFreezeAcceptedWorld(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V` | 純形狀待裁定 | method nativeAreaFreezeAcceptedWorld(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V insn[8]: left=DUP right=IFEQ L11; path event multisets differ (left=18, right=32); labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaFreezeOriginalWorld([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V` | 缺呼叫 | method nativeAreaFreezeOriginalWorld([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V: left=78:[302:java/lang/Exception  ] right=80:[308:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaWorldSleepBody([BLlocal/lito381/server/BattleSpellCatalog$SleepSpell;)V` | 缺呼叫 | method nativeAreaWorldSleepBody([BLlocal/lito381/server/BattleSpellCatalog$SleepSpell;)V: length left=0 right=6; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeAreaWorldSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V` | 缺呼叫 | method nativeAreaWorldSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V: length left=0 right=58; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeBattleControlledCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeBattleControlledCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: length left=82 right=0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCompanionTargetuseClassicWorldAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V` | 缺呼叫 | method nativeCompanionTargetuseClassicWorldAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V: left=518:[687:java/lang/Exception  ] right=542:[715:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCompanionTargetuseClassicWorldAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)V` | 順序不同 | method nativeCompanionTargetuseClassicWorldAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)V: left=626:[631:java/lang/Exception  ] right=630:[635:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCompanionTargetuseClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V` | 缺呼叫 | method nativeCompanionTargetuseClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V: left=424:[680:java/lang/Exception  ] right=437:[697:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCubeHarmonyBody([BLlocal/lito381/server/BattleSpellCatalog$CubeHarmonySpell;)V` | 缺呼叫 | method nativeCubeHarmonyBody([BLlocal/lito381/server/BattleSpellCatalog$CubeHarmonySpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCubeIgnitionBody([BLlocal/lito381/server/BattleSpellCatalog$CubeIgnitionSpell;)V` | 缺呼叫 | method nativeCubeIgnitionBody([BLlocal/lito381/server/BattleSpellCatalog$CubeIgnitionSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCubeQuakeBody([BLlocal/lito381/server/BattleSpellCatalog$CubeQuakeSpell;)V` | 缺呼叫 | method nativeCubeQuakeBody([BLlocal/lito381/server/BattleSpellCatalog$CubeQuakeSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeCubeShockBody([BLlocal/lito381/server/BattleSpellCatalog$CubeShockSpell;)V` | 缺呼叫 | method nativeCubeShockBody([BLlocal/lito381/server/BattleSpellCatalog$CubeShockSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeFreezeAcceptedOriginalWorld([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V` | 順序不同 | method nativeFreezeAcceptedOriginalWorld([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V: left=329:[334:java/lang/Exception  ] right=342:[347:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMassTeleportAnswerBody(Llocal/lito381/server/Protocol$AskAnswer;)V` | 缺呼叫 | method nativeMassTeleportAnswerBody(Llocal/lito381/server/Protocol$AskAnswer;)V insn[1]: left=ALOAD 1 right=GETFIELD local/lito381/server/ClientSession.pendingMassTeleport:Llocal/lito381/server/ClientSession$PendingMassTeleport;; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialAbsoluteBarrierBody([BLlocal/lito381/server/BattleSpellCatalog$AbsoluteBarrierSpell;)V` | 缺呼叫 | method nativeMaterialAbsoluteBarrierBody([BLlocal/lito381/server/BattleSpellCatalog$AbsoluteBarrierSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialAdditionalFireBody([BLlocal/lito381/server/BattleSpellCatalog$AdditionalFireSpell;)V` | 缺呼叫 | method nativeMaterialAdditionalFireBody([BLlocal/lito381/server/BattleSpellCatalog$AdditionalFireSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V` | 缺呼叫 | method nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V insn[0]: left=ALOAD 0 right=ILOAD 3; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialAreaWindBody([BLlocal/lito381/server/BattleSpellCatalog$WindShackleSpell;I)V` | 缺呼叫 | method nativeMaterialAreaWindBody([BLlocal/lito381/server/BattleSpellCatalog$WindShackleSpell;I)V insn[0]: left=ALOAD 0 right=ILOAD 3; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialArmorBreakBody([BLlocal/lito381/server/BattleSpellCatalog$ArmorBreakSpell;)V` | 缺呼叫 | method nativeMaterialArmorBreakBody([BLlocal/lito381/server/BattleSpellCatalog$ArmorBreakSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialAwakenBody([BLlocal/lito381/server/BattleSpellCatalog$AwakenSpell;)V` | 缺呼叫 | method nativeMaterialAwakenBody([BLlocal/lito381/server/BattleSpellCatalog$AwakenSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialBlindBody([BLlocal/lito381/server/BattleSpellCatalog$BlindSpell;)V` | 缺呼叫 | method nativeMaterialBlindBody([BLlocal/lito381/server/BattleSpellCatalog$BlindSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialBloodlustBody([BLlocal/lito381/server/BattleSpellCatalog$BloodlustSpell;)V` | 缺呼叫 | method nativeMaterialBloodlustBody([BLlocal/lito381/server/BattleSpellCatalog$BloodlustSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialCallNatureBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V` | 缺呼叫 | method nativeMaterialCallNatureBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialCancellationBody([BLlocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialCancellationBody([BLlocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V insn[0]: left=ALOAD 0 right=CONST null; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialClearMindBody([BLlocal/lito381/server/BattleSpellCatalog$ClearMindSpell;)V` | 缺呼叫 | method nativeMaterialClearMindBody([BLlocal/lito381/server/BattleSpellCatalog$ClearMindSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialCounterMagicBody([BLlocal/lito381/server/BattleSpellCatalog$CounterMagicSpell;)V` | 缺呼叫 | method nativeMaterialCounterMagicBody([BLlocal/lito381/server/BattleSpellCatalog$CounterMagicSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialCounterMirrorBody([BLlocal/lito381/server/BattleSpellCatalog$CounterMirrorSpell;)V` | 缺呼叫 | method nativeMaterialCounterMirrorBody([BLlocal/lito381/server/BattleSpellCatalog$CounterMirrorSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialDecayPotionBody([BLlocal/lito381/server/BattleSpellCatalog$DecayPotionSpell;)V` | 缺呼叫 | method nativeMaterialDecayPotionBody([BLlocal/lito381/server/BattleSpellCatalog$DecayPotionSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialEarthBindBody([BLlocal/lito381/server/BattleSpellCatalog$BindSpell;)V` | 缺呼叫 | method nativeMaterialEarthBindBody([BLlocal/lito381/server/BattleSpellCatalog$BindSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialElementalProtectionBody([BLlocal/lito381/server/BattleSpellCatalog$ElementalProtectionSpell;)V` | 缺呼叫 | method nativeMaterialElementalProtectionBody([BLlocal/lito381/server/BattleSpellCatalog$ElementalProtectionSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialElementalSummonBody([BLlocal/lito381/server/BattleSpellCatalog$ElementalSummonSpell;)V` | 缺呼叫 | method nativeMaterialElementalSummonBody([BLlocal/lito381/server/BattleSpellCatalog$ElementalSummonSpell;)V: length left=0 right=8; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialEnchantVenomBody([BLlocal/lito381/server/BattleSpellCatalog$EnchantVenomSpell;)V` | 缺呼叫 | method nativeMaterialEnchantVenomBody([BLlocal/lito381/server/BattleSpellCatalog$EnchantVenomSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialEntangleBody([BLlocal/lito381/server/BattleSpellCatalog$EntangleSpell;I)V` | 缺呼叫 | method nativeMaterialEntangleBody([BLlocal/lito381/server/BattleSpellCatalog$EntangleSpell;I)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialEraseBody([BLlocal/lito381/server/BattleSpellCatalog$EraseMagicSpell;I)V` | 缺呼叫 | method nativeMaterialEraseBody([BLlocal/lito381/server/BattleSpellCatalog$EraseMagicSpell;I)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialExoticVitalizeBody([BLlocal/lito381/server/BattleSpellCatalog$ExoticVitalizeSpell;)V` | 缺呼叫 | method nativeMaterialExoticVitalizeBody([BLlocal/lito381/server/BattleSpellCatalog$ExoticVitalizeSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialGroundBody([BLlocal/lito381/server/BattleSpellCatalog$GroundSpell;)V` | 缺呼叫 | method nativeMaterialGroundBody([BLlocal/lito381/server/BattleSpellCatalog$GroundSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialInvisibilityBody([BLlocal/lito381/server/BattleSpellCatalog$InvisibilitySpell;)V` | 缺呼叫 | method nativeMaterialInvisibilityBody([BLlocal/lito381/server/BattleSpellCatalog$InvisibilitySpell;)V insn[0]: left=ALOAD 0 right=CONST null; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialItemWeaponEnchantBody([BLlocal/lito381/server/BattleSpellCatalog$ItemWeaponEnchantSpell;)V` | 缺呼叫 | method nativeMaterialItemWeaponEnchantBody([BLlocal/lito381/server/BattleSpellCatalog$ItemWeaponEnchantSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialMagicResistanceBody([BLlocal/lito381/server/BattleSpellCatalog$MagicResistanceSpell;)V` | 缺呼叫 | method nativeMaterialMagicResistanceBody([BLlocal/lito381/server/BattleSpellCatalog$MagicResistanceSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialMagicalWeaponBody([BLlocal/lito381/server/BattleSpellCatalog$MagicalWeaponSpell;)V` | 缺呼叫 | method nativeMaterialMagicalWeaponBody([BLlocal/lito381/server/BattleSpellCatalog$MagicalWeaponSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialMassTeleportBody([BLlocal/lito381/server/BattleSpellCatalog$MassTeleportSpell;)V` | 缺呼叫 | method nativeMaterialMassTeleportBody([BLlocal/lito381/server/BattleSpellCatalog$MassTeleportSpell;)V: length left=81 right=0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialParalysisScopeBody([BLlocal/lito381/server/BattleSpellCatalog$ParalysisSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialParalysisScopeBody([BLlocal/lito381/server/BattleSpellCatalog$ParalysisSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialPhysicalProcBuffBody([BLlocal/lito381/server/BattleSpellCatalog$PhysicalProcBuffSpell;)V` | 缺呼叫 | method nativeMaterialPhysicalProcBuffBody([BLlocal/lito381/server/BattleSpellCatalog$PhysicalProcBuffSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialPoisonScopeBody([BLlocal/lito381/server/BattleSpellCatalog$PoisonSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialPoisonScopeBody([BLlocal/lito381/server/BattleSpellCatalog$PoisonSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialPolymorphBody([BLlocal/lito381/server/BattleSpellCatalog$PolymorphSpell;)V` | 缺呼叫 | method nativeMaterialPolymorphBody([BLlocal/lito381/server/BattleSpellCatalog$PolymorphSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialProtectionBody([BLlocal/lito381/server/BattleSpellCatalog$DamageProtectionSpell;)V` | 缺呼叫 | method nativeMaterialProtectionBody([BLlocal/lito381/server/BattleSpellCatalog$DamageProtectionSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialResistElementalBody([BLlocal/lito381/server/BattleSpellCatalog$ResistElementalSpell;)V` | 缺呼叫 | method nativeMaterialResistElementalBody([BLlocal/lito381/server/BattleSpellCatalog$ResistElementalSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialResurrectionBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V` | 缺呼叫 | method nativeMaterialResurrectionBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialReturnNatureBody([BLlocal/lito381/server/BattleSpellCatalog$ReturnToNatureSpell;I)V` | 缺呼叫 | method nativeMaterialReturnNatureBody([BLlocal/lito381/server/BattleSpellCatalog$ReturnToNatureSpell;I)V: length left=0 right=3; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$SilenceSpell;)V` | 缺呼叫 | method nativeMaterialSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$SilenceSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialSummonBody([BLlocal/lito381/server/BattleSpellCatalog$SummonSpell;)V` | 缺呼叫 | method nativeMaterialSummonBody([BLlocal/lito381/server/BattleSpellCatalog$SummonSpell;)V: length left=0 right=10; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialTamingBody([BLlocal/lito381/server/BattleSpellCatalog$TamingSpell;)V` | 缺呼叫 | method nativeMaterialTamingBody([BLlocal/lito381/server/BattleSpellCatalog$TamingSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialTargetNegativeBody([BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)V` | 缺呼叫 | method nativeMaterialTargetNegativeBody([BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)V: left=491:[496:java/lang/Exception  ] right=523:[528:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWaterLifeBody([BLlocal/lito381/server/BattleSpellCatalog$WaterLifeSpell;)V` | 缺呼叫 | method nativeMaterialWaterLifeBody([BLlocal/lito381/server/BattleSpellCatalog$WaterLifeSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWeaknessBody([BLlocal/lito381/server/BattleSpellCatalog$WeaknessSpell;)V` | 缺呼叫 | method nativeMaterialWeaknessBody([BLlocal/lito381/server/BattleSpellCatalog$WeaknessSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWeaponBreakBody([BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V` | 缺呼叫 | method nativeMaterialWeaponBreakBody([BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldBlindBody([BLlocal/lito381/server/BattleSpellCatalog$BlindSpell;)V` | 缺呼叫 | method nativeMaterialWorldBlindBody([BLlocal/lito381/server/BattleSpellCatalog$BlindSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialWorldCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V insn[2]: left=ALOAD 2 right=INVOKESTATIC local/lito381/server/NativeSelectedPlayerIntent.object(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$ObjectSpellRequest;)Z; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldDecayPotionBody([BLlocal/lito381/server/BattleSpellCatalog$DecayPotionSpell;)V` | 缺呼叫 | method nativeMaterialWorldDecayPotionBody([BLlocal/lito381/server/BattleSpellCatalog$DecayPotionSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldEarthBindBody([BLlocal/lito381/server/BattleSpellCatalog$BindSpell;)V` | 缺呼叫 | method nativeMaterialWorldEarthBindBody([BLlocal/lito381/server/BattleSpellCatalog$BindSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldGroundBody([BLlocal/lito381/server/BattleSpellCatalog$GroundSpell;)V` | 缺呼叫 | method nativeMaterialWorldGroundBody([BLlocal/lito381/server/BattleSpellCatalog$GroundSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldNpcCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialWorldNpcCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V insn[2]: left=ALOAD 2 right=INVOKESTATIC local/lito381/server/NativeSelectedPlayerIntent.object(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$ObjectSpellRequest;)Z; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldParalysisScopeBody([BLlocal/lito381/server/BattleSpellCatalog$ParalysisSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialWorldParalysisScopeBody([BLlocal/lito381/server/BattleSpellCatalog$ParalysisSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldPoisonScopeBody([BLlocal/lito381/server/BattleSpellCatalog$PoisonSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 缺呼叫 | method nativeMaterialWorldPoisonScopeBody([BLlocal/lito381/server/BattleSpellCatalog$PoisonSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldResurrectionBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V` | 缺呼叫 | method nativeMaterialWorldResurrectionBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$SilenceSpell;)V` | 缺呼叫 | method nativeMaterialWorldSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$SilenceSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldWeaknessBody([BLlocal/lito381/server/BattleSpellCatalog$WeaknessSpell;)V` | 缺呼叫 | method nativeMaterialWorldWeaknessBody([BLlocal/lito381/server/BattleSpellCatalog$WeaknessSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialWorldWeaponBreakBody([BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V` | 缺呼叫 | method nativeMaterialWorldWeaponBreakBody([BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V: length left=0 right=2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeMaterialZombieBody([BLlocal/lito381/server/BattleSpellCatalog$CreateZombieSpell;)V` | 缺呼叫 | method nativeMaterialZombieBody([BLlocal/lito381/server/BattleSpellCatalog$CreateZombieSpell;)V: length left=0 right=7; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativePlacementPortalBody(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V` | 純形狀待裁定 | method nativePlacementPortalBody(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V insn[77]: left=DUP right=ISTORE 6; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeRawOriginal_useLightningWand(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$TargetLocationInventoryUse;)V` | 順序不同 | method nativeRawOriginal_useLightningWand(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$TargetLocationInventoryUse;)V insn[1]: left=IFNULL L640 right=IFNULL L17; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeResurrectionAnswerBody(Llocal/lito381/server/Protocol$AskAnswer;)V` | 缺呼叫 | method nativeResurrectionAnswerBody(Llocal/lito381/server/Protocol$AskAnswer;)V insn[1]: left=ALOAD 1 right=GETFIELD local/lito381/server/ClientSession.pendingResurrection:Llocal/lito381/server/ClientSession$PendingResurrection;; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSelfShieldBody([BLlocal/lito381/server/BattleSpellCatalog$ShieldSpell;)V` | 缺呼叫 | method nativeSelfShieldBody([BLlocal/lito381/server/BattleSpellCatalog$ShieldSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 2; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSelfWeightBody([BLlocal/lito381/server/BattleSpellCatalog$WeightSpell;)V` | 缺呼叫 | method nativeSelfWeightBody([BLlocal/lito381/server/BattleSpellCatalog$WeightSpell;)V insn[0]: left=ALOAD 0 right=ALOAD 1; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeShockPlayerBattleBody([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V` | 順序不同 | method nativeShockPlayerBattleBody([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V: left=289:[294:java/lang/Exception  ] right=314:[319:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeShockPlayerOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V` | 順序不同 | method nativeShockPlayerOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V: left=289:[294:java/lang/Exception  ] right=314:[319:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeShockPlayerOriginalWorld([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V` | 順序不同 | method nativeShockPlayerOriginalWorld([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V: left=307:[312:java/lang/Exception  ] right=320:[325:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeShockPlayerWorldBody([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V` | 順序不同 | method nativeShockPlayerWorldBody([BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;)V: left=307:[312:java/lang/Exception  ] right=319:[324:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceCompanionClockTick(JJLjava/lang/Object;)V` | 純形狀待裁定 | method nativeSourceCompanionClockTick(JJLjava/lang/Object;)V: left=50:[58:java/lang/Throwable  ] right=48:[56:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_attack(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;)V` | 順序不同 | method nativeSourceControlledOriginal_attack(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;)V: left=514:[519:java/lang/Exception  ] right=546:[551:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_nativeAreaFreezeOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V` | 缺呼叫 | method nativeSourceControlledOriginal_nativeAreaFreezeOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V: left=260:[266:java/lang/Exception  ] right=262:[268:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V` | 順序不同 | method nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V: left=489:[494:java/lang/Exception  ] right=508:[513:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_nativeSourceLightningOriginalBody(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$DirectionalLineSpell;)V` | 缺呼叫 | method nativeSourceControlledOriginal_nativeSourceLightningOriginalBody(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$DirectionalLineSpell;)V: left=645:[769:java/lang/Throwable  ] right=663:[789:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_useAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V` | 缺呼叫 | method nativeSourceControlledOriginal_useAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V: left=728:[734:java/lang/Exception  ] right=757:[763:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_useAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;IIII)V` | 順序不同 | method nativeSourceControlledOriginal_useAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;IIII)V: left=463:[468:java/lang/Exception  ] right=484:[489:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_useCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V` | 缺呼叫 | method nativeSourceControlledOriginal_useCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V: left=162:[168:java/lang/Exception  ] right=166:[172:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V` | 順序不同 | method nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V: left=391:[396:java/lang/Exception  ] right=408:[413:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceFireWeaponOriginalBody([BLlocal/lito381/server/BattleSpellCatalog$FireWeaponSpell;)V` | 順序不同 | method nativeSourceFireWeaponOriginalBody([BLlocal/lito381/server/BattleSpellCatalog$FireWeaponSpell;)V: left=213:[388:java/lang/Throwable  ] right=216:[393:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceHealingOriginalGroup([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V` | 缺呼叫 | method nativeSourceHealingOriginalGroup([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V: left=217:[353:java/lang/Throwable  ] right=220:[358:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceHealingOriginalNature([BLlocal/lito381/server/BattleSpellCatalog$NaturesBlessingSpell;I)V` | 缺呼叫 | method nativeSourceHealingOriginalNature([BLlocal/lito381/server/BattleSpellCatalog$NaturesBlessingSpell;I)V: left=274:[403:java/lang/Throwable  ] right=283:[414:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceRemainingOriginal133([BLlocal/lito381/server/BattleSpellCatalog$ElementalFallDownSpell;I)V` | 順序不同 | method nativeSourceRemainingOriginal133([BLlocal/lito381/server/BattleSpellCatalog$ElementalFallDownSpell;I)V: left=436:[441:java/lang/Exception  ] right=455:[460:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceRemainingOriginal18([BLlocal/lito381/server/BattleSpellCatalog$TurnUndeadSpell;)V` | 順序不同 | method nativeSourceRemainingOriginal18([BLlocal/lito381/server/BattleSpellCatalog$TurnUndeadSpell;)V: left=231:[236:java/lang/Exception  ] right=239:[244:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceRemainingOriginal39([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V` | 順序不同 | method nativeSourceRemainingOriginal39([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V: left=288:[293:java/lang/Exception  ] right=291:[296:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceSingleNpcLifeDrain(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;ILjava/lang/String;Llocal/lito381/server/NativeSourcePhysicalNpc$Commit;)I` | 純形狀待裁定 | method nativeSourceSingleNpcLifeDrain(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;ILjava/lang/String;Llocal/lito381/server/NativeSourcePhysicalNpc$Commit;)I: left=14:[41:java/lang/Throwable  ] right=12:[40:java/lang/Throwable  ]; path event multisets differ (left=22, right=22); labelled CFGs differ |
+| `local/lito381/server/ClientSession#nativeSourceWindShotOriginalBody([BLlocal/lito381/server/BattleSpellCatalog$WindShotSpell;)V` | 順序不同 | method nativeSourceWindShotOriginalBody([BLlocal/lito381/server/BattleSpellCatalog$WindShotSpell;)V: left=162:[321:java/lang/Throwable  ] right=165:[326:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#openClassicWorldHousekeeper(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` | 缺呼叫 | method openClassicWorldHousekeeper(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V insn[4]: left=INVOKEVIRTUAL local/lito381/server/ClassicWorldNpcCatalog$StaticNpc.x()I right=ALOAD 0; path event multisets differ (left=74, right=74); labelled CFGs differ |
+| `local/lito381/server/ClientSession#publishNpcCounterBarrierTrigger(JLlocal/lito381/server/BattleCounterBarrier$Decision;Ljava/util/List;Ljava/lang/String;)V` | 順序不同 | method publishNpcCounterBarrierTrigger(JLlocal/lito381/server/BattleCounterBarrier$Decision;Ljava/util/List;Ljava/lang/String;)V insn[18]: left=IFEQ L51 right=IFEQ L54; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#publishNpcCounterMirrorTrigger(JIILlocal/lito381/server/BattleCounterMirrorStatus$Decision;Ljava/util/List;Ljava/lang/String;)V` | 順序不同 | method publishNpcCounterMirrorTrigger(JIILlocal/lito381/server/BattleCounterMirrorStatus$Decision;Ljava/util/List;Ljava/lang/String;)V insn[22]: left=IFEQ L74 right=IFEQ L77; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#publishPlayerMagicCancellation(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession$PlayerMagicCancellation;Ljava/util/List;J)V` | 缺呼叫 | method publishPlayerMagicCancellation(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession$PlayerMagicCancellation;Ljava/util/List;J)V insn[259]: left=INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V right=INVOKESTATIC local/lito381/server/CombatPoisonParalysis.release(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)V; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#publishTimeAttackPoisonUpdate(Llocal/lito381/server/GameHub$TimeAttackPoisonUpdate;J)V` | 缺呼叫 | method publishTimeAttackPoisonUpdate(Llocal/lito381/server/GameHub$TimeAttackPoisonUpdate;J)V insn[2]: left=ASTORE 4 right=INVOKESTATIC local/lito381/server/NativeSourceArenaPoison.hpbar(Ljava/lang/Object;)V; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#quitFight()V` | 多呼叫 | method quitFight()V: left=79:[95:java/io/IOException  , 115:java/lang/Throwable  ] right=86:[102:java/io/IOException  , 122:java/lang/Throwable  ]; path event multisets differ (left=1514, right=1503); labelled CFGs differ |
+| `local/lito381/server/ClientSession#releaseCompanionToNature(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;I)Z` | 缺呼叫 | method releaseCompanionToNature(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;I)Z: left=46:[54:java/lang/Throwable  ] right=48:[56:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#resetAndSendRentalTownStatus()V` | 缺呼叫 | method resetAndSendRentalTownStatus()V insn[42]: left=PUTFIELD local/lito381/server/ClientSession.playerHp:I right=ALOAD 0; path event multisets differ (left=92, right=93); labelled CFGs differ |
+| `local/lito381/server/ClientSession#resolveClassicWorldScarecrowHit(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldMonsterCatalog$MonsterTemplate;I)V` | 純形狀待裁定 | method resolveClassicWorldScarecrowHit(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldMonsterCatalog$MonsterTemplate;I)V insn[29]: left=GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub; right=INVOKESTATIC local/lito381/server/NativeStaticNpcScene.heading(Llocal/lito381/server/GameHub;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClientSession;)I; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#resolveDragonKnightNegativeTarget(Llocal/lito381/server/ClientSession$Phase;JIIIIIZ)Llocal/lito381/server/ClientSession$ArmorBreakTarget;` | 純形狀待裁定 | method resolveDragonKnightNegativeTarget(Llocal/lito381/server/ClientSession$Phase;JIIIIIZ)Llocal/lito381/server/ClientSession$ArmorBreakTarget; insn[551]: left=INVOKEDYNAMIC apply()Ljava/util/function/Function; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/Me… right=INVOKEDYNAMIC apply()Ljava/util/function/Function; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/Me…; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#resolveSelectorOnlyIllusionAvatarTarget(Llocal/lito381/server/BattleSpellCatalog$IllusionAvatarSpell;Llocal/lito381/server/ClientSession$Phase;JIIIIJ)Llocal/lito381/server/ClientSession;` | 缺呼叫 | method resolveSelectorOnlyIllusionAvatarTarget(Llocal/lito381/server/BattleSpellCatalog$IllusionAvatarSpell;Llocal/lito381/server/ClientSession$Phase;JIIIIJ)Llocal/lito381/server/ClientSession; insn[39]: left=IFEQ L156 right=IFEQ L159; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverAwakeningMpDrain(J)V` | 純形狀待裁定 | method serverAwakeningMpDrain(J)V: left=7:[53:java/lang/Throwable  ] right=5:[52:java/lang/Throwable  ]; path event multisets differ (left=28, right=28); labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverBotTick(JIII)V` | 缺呼叫 | method serverBotTick(JIII)V insn[80]: left=INVOKESPECIAL local/lito381/server/ClientSession.counterBarrierDecision(IIZIJ)Llocal/lito381/server/BattleCounterBarrier$Decision; right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverClassicWorldCompanionTick(IJ)V` | 缺呼叫 | method serverClassicWorldCompanionTick(IJ)V insn[1]: left=GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase; right=LLOAD 2/3; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverClassicWorldCompanionTick(Llocal/lito381/server/BattleCompanion;IJ)V` | 缺呼叫 | method serverClassicWorldCompanionTick(Llocal/lito381/server/BattleCompanion;IJ)V: left=625:[631:java/lang/Exception  ] right=7:[1102:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverClassicWorldMonsterMagicAttack(Llocal/lito381/server/ClassicWorldMonsterPopulation$MagicAttack;)V` | 缺呼叫 | method serverClassicWorldMonsterMagicAttack(Llocal/lito381/server/ClassicWorldMonsterPopulation$MagicAttack;)V: left=111:[117:java/lang/Exception  ] right=12:[703:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverCompanionTick(JJ)V` | 缺呼叫 | method serverCompanionTick(JJ)V: left=31:[39:java/lang/Throwable  ] right=39:[47:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverCompanionTick(Llocal/lito381/server/BattleCompanion;JJ)V` | 缺呼叫 | method serverCompanionTick(Llocal/lito381/server/BattleCompanion;JJ)V: left=365:[370:java/lang/Exception  ] right=7:[822:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverCubeHarmonyNonPlayerDamage(JIILlocal/lito381/server/BattleCubeHarmonyEffects$Event;)V` | 缺呼叫 | method serverCubeHarmonyNonPlayerDamage(JIILlocal/lito381/server/BattleCubeHarmonyEffects$Event;)V insn[0]: left=ALOAD 5 right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverCubeIgnitionMonsterDamage(JIILlocal/lito381/server/BattleCubeIgnitionEffects$Event;)V` | 缺呼叫 | method serverCubeIgnitionMonsterDamage(JIILlocal/lito381/server/BattleCubeIgnitionEffects$Event;)V insn[0]: left=ALOAD 5 right=ALOAD 0; path event multisets differ (left=30, right=32); labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverHonorRespawnDue(JJII)V` | 缺呼叫 | method serverHonorRespawnDue(JJII)V: left=7:[40:java/lang/Throwable  ] right=10:[49:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverMonsterAiTick(Llocal/lito381/server/GameHub$MonsterAiTick;)V` | 缺呼叫 | method serverMonsterAiTick(Llocal/lito381/server/GameHub$MonsterAiTick;)V: left=444:[449:java/lang/Exception  ] right=12:[1091:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverQuestMonsterAreaPhysicalHit(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleQuestEncounter$Snapshot;Ljava/util/List;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/SourceNpcPhysicalStats;ZI)V` | 缺呼叫 | method serverQuestMonsterAreaPhysicalHit(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleQuestEncounter$Snapshot;Ljava/util/List;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/SourceNpcPhysicalStats;ZI)V: left=269:[338:java/lang/IllegalArgumentException  ] right=10:[550:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverQuestMonsterMagicAttack(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleQuestEncounter$Snapshot;Ljava/util/List;)V` | 缺呼叫 | method serverQuestMonsterMagicAttack(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleQuestEncounter$Snapshot;Ljava/util/List;)V: left=87:[93:java/lang/Exception  ] right=10:[557:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverTimeAttackMonsterAreaPhysicalHit(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Ljava/util/List;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/SourceNpcPhysicalStats;ZI)V` | 缺呼叫 | method serverTimeAttackMonsterAreaPhysicalHit(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Ljava/util/List;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/SourceNpcPhysicalStats;ZI)V: left=272:[341:java/lang/IllegalArgumentException  ] right=10:[553:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#serverTimeAttackMonsterMagicAttack(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Ljava/util/List;)V` | 缺呼叫 | method serverTimeAttackMonsterMagicAttack(Llocal/lito381/server/GameHub$MonsterAiTick;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Ljava/util/List;)V: left=122:[128:java/lang/Exception  ] right=10:[592:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#slaveControl([B)V` | 缺呼叫 | method slaveControl([B)V: length left=0 right=134; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourceApplicationRun()V` | 缺呼叫 | method sourceApplicationRun()V: left=1:[8:java/lang/Exception  ] right=24:[740:java/lang/Exception  , 1062:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePlayerBattleCommit(ILlocal/lito381/server/ClientSession;ZZJLlocal/lito381/server/BattleJoyOfPainStatus$Lease;I)V` | 純形狀待裁定 | method sourcePlayerBattleCommit(ILlocal/lito381/server/ClientSession;ZZJLlocal/lito381/server/BattleJoyOfPainStatus$Lease;I)V insn[4]: left=INVOKESTATIC local/lito381/server/NativeAcceptedState.requireCurrent()V right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePlayerLegacyWorldDirectDamage(DJLlocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;` | 純形狀待裁定 | method sourcePlayerLegacyWorldDirectDamage(DJLlocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext; insn[38]: left=DUP right=ISTORE 9; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePlayerWorldCommit(DJLlocal/lito381/server/CombatPoisonLifecycle$Scope;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleAbilityStatus$IllusionAvatar;I)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;` | 順序不同 | method sourcePlayerWorldCommit(DJLlocal/lito381/server/CombatPoisonLifecycle$Scope;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleAbilityStatus$IllusionAvatar;I)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext; insn[0]: left=INVOKESTATIC local/lito381/server/NativeAcceptedState.requireCurrent()V right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$applyFatalityCancellation(Llocal/lito381/server/BattleDeathmatchFatalityCatalog$Effect;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$applyFatalityCancellation(Llocal/lito381/server/BattleDeathmatchFatalityCatalog$Effect;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=11:[219:java/lang/Throwable  ] right=9:[216:java/lang/Throwable  ]; path event multisets differ (left=60, right=58); labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$attemptEnchantVenomPoison(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleQuestEncounter$Snapshot;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;ZZJLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$attemptEnchantVenomPoison(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleQuestEncounter$Snapshot;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;ZZJLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=69:[159:java/lang/Throwable  ] right=65:[153:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$publishClassicWorldMonsterPoisonUpdate(Llocal/lito381/server/ClassicWorldMonsterPopulation$PoisonUpdate;JLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$publishClassicWorldMonsterPoisonUpdate(Llocal/lito381/server/ClassicWorldMonsterPopulation$PoisonUpdate;JLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V insn[27]: left=IFEQ L178 right=IFEQ L158; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$publishNpcMagicCancellation(JLjava/util/List;ZZZZZZZZZZZZZZZZZZZZZLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 順序不同 | method sourcePoisonBody$publishNpcMagicCancellation(JLjava/util/List;ZZZZZZZZZZZZZZZZZZZZZLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left= right=(JLjava/util/List<Llocal/lito381/server/ClientSession;>;ZZZZZZZZZZZZZZZZZZZZZ)V |
+| `local/lito381/server/ClientSession#sourcePoisonBody$serverClassicWorldMonsterStatusSkillAttack(Llocal/lito381/server/ClassicWorldMonsterPopulation$StatusSkillAttack;ILlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$serverClassicWorldMonsterStatusSkillAttack(Llocal/lito381/server/ClassicWorldMonsterPopulation$StatusSkillAttack;ILlocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=126:[133:java/lang/Exception  ] right=124:[131:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$serverExpireTimedStatuses(JLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$serverExpireTimedStatuses(JLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V insn[74]: left=IFEQ L481 right=IFEQ L442; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$serverPrepareBattle(Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$serverPrepareBattle(Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=140:[164:java/io/IOException  ] right=138:[162:java/io/IOException  ]; path event multisets differ (left=175, right=173); labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$sourceDeathCancellation(Llocal/lito381/server/BattleDeathmatchFatalityCatalog$Effect;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 純形狀待裁定 | method sourcePoisonBody$sourceDeathCancellation(Llocal/lito381/server/BattleDeathmatchFatalityCatalog$Effect;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=13:[401:java/lang/Throwable  ] right=12:[388:java/lang/Throwable  ]; path event multisets differ (left=150, right=148); labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$takeClassicWorldDirectDamage(DJLlocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;` | 純形狀待裁定 | method sourcePoisonBody$takeClassicWorldDirectDamage(DJLlocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;: left=5:[79:java/lang/Throwable  ] right=5:[77:java/lang/Throwable  ]; path event multisets differ (left=58, right=58); labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$useClassicWorldCurseRemovalSpell([BLlocal/lito381/server/BattleSpellCatalog$CurseRemovalSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 順序不同 | method sourcePoisonBody$useClassicWorldCurseRemovalSpell([BLlocal/lito381/server/BattleSpellCatalog$CurseRemovalSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=307:[392:java/lang/Throwable  ] right=306:[391:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#sourcePoisonBody$useCurseRemovalSpell([BLlocal/lito381/server/BattleSpellCatalog$CurseRemovalSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | 順序不同 | method sourcePoisonBody$useCurseRemovalSpell([BLlocal/lito381/server/BattleSpellCatalog$CurseRemovalSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=452:[531:java/lang/Throwable  ] right=444:[523:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#startBattle()V` | 純形狀待裁定 | method startBattle()V insn[242]: left=ISTORE 7 right=POP; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#takePlayerDamage(ILlocal/lito381/server/ClientSession;ZZJ)V` | 缺呼叫 | method takePlayerDamage(ILlocal/lito381/server/ClientSession;ZZJ)V: length left=0 right=29; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#tryMortalBodyClassicWorldMonsterReflection(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Ljava/lang/String;)V` | 缺呼叫 | method tryMortalBodyClassicWorldMonsterReflection(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Ljava/lang/String;)V insn[0]: left=ALOAD 1 right=ALOAD 0; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useAbilityBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$AbilityBuffSpell;)V` | 缺呼叫 | method useAbilityBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$AbilityBuffSpell;)V: left=257:[443:java/lang/Throwable  ] right=271:[461:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useAdvanceSpiritSpell([BLlocal/lito381/server/BattleSpellCatalog$AdvanceSpiritSpell;)V` | 缺呼叫 | method useAdvanceSpiritSpell([BLlocal/lito381/server/BattleSpellCatalog$AdvanceSpiritSpell;)V: left=188:[358:java/lang/Throwable  ] right=197:[371:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useAquaProtectSpell([BLlocal/lito381/server/BattleSpellCatalog$AquaProtectSpell;)V` | 缺呼叫 | method useAquaProtectSpell([BLlocal/lito381/server/BattleSpellCatalog$AquaProtectSpell;)V: left=282:[460:java/lang/Throwable  ] right=298:[480:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useBodyToMindSpell([BLlocal/lito381/server/BattleSpellCatalog$BodyToMindSpell;)V` | 缺呼叫 | method useBodyToMindSpell([BLlocal/lito381/server/BattleSpellCatalog$BodyToMindSpell;)V: left=34:[141:java/lang/Throwable  ] right=38:[149:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useBounceAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$BounceAttackSpell;)V` | 缺呼叫 | method useBounceAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$BounceAttackSpell;)V: left=119:[269:java/lang/Throwable  ] right=119:[273:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useBringStoneSpell([BLlocal/lito381/server/BattleSpellCatalog$BringStoneSpell;)V` | 缺呼叫 | method useBringStoneSpell([BLlocal/lito381/server/BattleSpellCatalog$BringStoneSpell;)V: left=172:[380:java/lang/Throwable  ] right=188:[400:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useBurningSlashSpell([BLlocal/lito381/server/BattleSpellCatalog$BurningSlashSpell;)V` | 缺呼叫 | method useBurningSlashSpell([BLlocal/lito381/server/BattleSpellCatalog$BurningSlashSpell;)V: left=90:[218:java/lang/Throwable  ] right=96:[228:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useCallClanSpell([BLlocal/lito381/server/BattleSpellCatalog$CallClanSpell;)V` | 缺呼叫 | method useCallClanSpell([BLlocal/lito381/server/BattleSpellCatalog$CallClanSpell;)V: left=148:[276:java/lang/Throwable  ] right=155:[287:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V` | 純形狀待裁定 | method useClassicWorldAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V insn[10]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/Lambd… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/Lambd…; path event multisets differ (left=5, right=5); labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)V` | 純形狀待裁定 | method useClassicWorldAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)V insn[10]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMet… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMet…; path event multisets differ (left=5, right=5); labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V` | 缺呼叫 | method useClassicWorldCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V: left=101:[528:java/lang/Exception  ] right=105:[532:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldCounterDetectionSpell([BLlocal/lito381/server/BattleSpellCatalog$CounterDetectionSpell;)V` | 缺呼叫 | method useClassicWorldCounterDetectionSpell([BLlocal/lito381/server/BattleSpellCatalog$CounterDetectionSpell;)V: left=108:[204:java/lang/Throwable  ] right=110:[210:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;I)V` | 缺呼叫 | method useClassicWorldHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;I)V: left=327:[332:java/lang/Exception  ] right=336:[341:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V` | 純形狀待裁定 | method useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V insn[5]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/Metho… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/Metho…; path event multisets differ (left=3, right=3); labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldLineFreezeAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V` | 缺呼叫 | method useClassicWorldLineFreezeAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V: left=183:[371:java/lang/Exception  ] right=192:[380:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldManaDrainSpell([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V` | 缺呼叫 | method useClassicWorldManaDrainSpell([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V: left=269:[274:java/lang/Exception  ] right=278:[283:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useClassicWorldTurnUndeadSpell([BLlocal/lito381/server/BattleSpellCatalog$TurnUndeadSpell;)V` | 缺呼叫 | method useClassicWorldTurnUndeadSpell([BLlocal/lito381/server/BattleSpellCatalog$TurnUndeadSpell;)V: left=226:[231:java/lang/Exception  ] right=235:[240:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useCombatBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$CombatBuffSpell;)V` | 缺呼叫 | method useCombatBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$CombatBuffSpell;)V: left=208:[397:java/lang/Throwable  ] right=217:[410:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useCounterBarrierSpell([BLlocal/lito381/server/BattleSpellCatalog$CounterBarrierSpell;)V` | 缺呼叫 | method useCounterBarrierSpell([BLlocal/lito381/server/BattleSpellCatalog$CounterBarrierSpell;)V: left=118:[269:java/lang/Throwable  ] right=118:[273:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useCounterDetectionSpell([BLlocal/lito381/server/BattleSpellCatalog$CounterDetectionSpell;)V` | 缺呼叫 | method useCounterDetectionSpell([BLlocal/lito381/server/BattleSpellCatalog$CounterDetectionSpell;)V: left=212:[312:java/lang/Throwable  ] right=214:[318:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useDetectionSpell([BLlocal/lito381/server/BattleSpellCatalog$DetectionSpell;)V` | 缺呼叫 | method useDetectionSpell([BLlocal/lito381/server/BattleSpellCatalog$DetectionSpell;)V: left=143:[252:java/lang/Throwable  ] right=143:[256:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useDiamondGolemSpell([BLlocal/lito381/server/BattleSpellCatalog$DiamondGolemSpell;)V` | 缺呼叫 | method useDiamondGolemSpell([BLlocal/lito381/server/BattleSpellCatalog$DiamondGolemSpell;)V: left=136:[341:java/lang/Throwable  ] right=143:[352:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useDodgeBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$DodgeBuffSpell;)V` | 缺呼叫 | method useDodgeBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$DodgeBuffSpell;)V: left=158:[303:java/lang/Throwable  ] right=158:[307:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useDragonSkinSpell([BLlocal/lito381/server/BattleSpellCatalog$DragonSkinSpell;)V` | 缺呼叫 | method useDragonSkinSpell([BLlocal/lito381/server/BattleSpellCatalog$DragonSkinSpell;)V: left=90:[220:java/lang/Throwable  ] right=96:[230:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useEarthBlessSpell([BLlocal/lito381/server/BattleSpellCatalog$EarthBlessSpell;)V` | 缺呼叫 | method useEarthBlessSpell([BLlocal/lito381/server/BattleSpellCatalog$EarthBlessSpell;)V: left=258:[350:java/lang/Throwable  ] right=265:[361:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useFireBlessSpell([BLlocal/lito381/server/BattleSpellCatalog$FireBlessSpell;)V` | 缺呼叫 | method useFireBlessSpell([BLlocal/lito381/server/BattleSpellCatalog$FireBlessSpell;)V: left=258:[366:java/lang/Throwable  ] right=265:[377:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useFoeSlayerSpell([BLlocal/lito381/server/BattleSpellCatalog$FoeSlayerSpell;)V` | 缺呼叫 | method useFoeSlayerSpell([BLlocal/lito381/server/BattleSpellCatalog$FoeSlayerSpell;)V: left=104:[243:java/lang/Throwable  ] right=116:[263:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useGuardBrakeSpell([BLlocal/lito381/server/BattleSpellCatalog$GuardBrakeSpell;)V` | 缺呼叫 | method useGuardBrakeSpell([BLlocal/lito381/server/BattleSpellCatalog$GuardBrakeSpell;)V: left=349:[491:java/lang/Throwable  ] right=373:[519:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V` | 缺呼叫 | method useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V: left=476:[602:java/lang/Throwable  ] right=485:[615:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useHeroPumpkinBag(Llocal/lito381/server/RuntimeInventory$Item;I)V` | 缺呼叫 | method useHeroPumpkinBag(Llocal/lito381/server/RuntimeInventory$Item;I)V insn[199]: left=PUTFIELD local/lito381/server/ClientSession.inventory:Llocal/lito381/server/RuntimeInventory; right=CONST Integer:0; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useIllusionAvatarSpell([BLlocal/lito381/server/BattleSpellCatalog$IllusionAvatarSpell;)V` | 缺呼叫 | method useIllusionAvatarSpell([BLlocal/lito381/server/BattleSpellCatalog$IllusionAvatarSpell;)V: left=136:[381:java/lang/Throwable  ] right=143:[395:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useIllusionLichSpell([BLlocal/lito381/server/BattleSpellCatalog$IllusionLichSpell;)V` | 缺呼叫 | method useIllusionLichSpell([BLlocal/lito381/server/BattleSpellCatalog$IllusionLichSpell;)V: left=136:[341:java/lang/Throwable  ] right=143:[352:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useIllusionOgreSpell([BLlocal/lito381/server/BattleSpellCatalog$IllusionOgreSpell;)V` | 缺呼叫 | method useIllusionOgreSpell([BLlocal/lito381/server/BattleSpellCatalog$IllusionOgreSpell;)V: left=136:[343:java/lang/Throwable  ] right=143:[354:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useInsightSpell([BLlocal/lito381/server/BattleSpellCatalog$InsightSpell;)V` | 缺呼叫 | method useInsightSpell([BLlocal/lito381/server/BattleSpellCatalog$InsightSpell;)V: left=136:[341:java/lang/Throwable  ] right=143:[352:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useIronSkinSpell([BLlocal/lito381/server/BattleSpellCatalog$IronSkinSpell;)V` | 缺呼叫 | method useIronSkinSpell([BLlocal/lito381/server/BattleSpellCatalog$IronSkinSpell;)V: left=164:[265:java/lang/Throwable  ] right=180:[285:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useItemArmorEnchantSpell([BLlocal/lito381/server/BattleSpellCatalog$ItemArmorEnchantSpell;)V` | 缺呼叫 | method useItemArmorEnchantSpell([BLlocal/lito381/server/BattleSpellCatalog$ItemArmorEnchantSpell;)V: left=114:[269:java/lang/Throwable  ] right=123:[284:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useJoyOfPainSpell([BLlocal/lito381/server/BattleSpellCatalog$JoyOfPainSpell;)V` | 缺呼叫 | method useJoyOfPainSpell([BLlocal/lito381/server/BattleSpellCatalog$JoyOfPainSpell;)V: left=129:[311:java/lang/Throwable  ] right=136:[322:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useMortalBodySpell([BLlocal/lito381/server/BattleSpellCatalog$MortalBodySpell;)V` | 缺呼叫 | method useMortalBodySpell([BLlocal/lito381/server/BattleSpellCatalog$MortalBodySpell;)V: left=90:[227:java/lang/Throwable  ] right=96:[237:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useMovementBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$MovementBuffSpell;)V` | 缺呼叫 | method useMovementBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$MovementBuffSpell;)V: left=62:[167:java/lang/Throwable  ] right=62:[171:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useNaturesTouchSpell([BLlocal/lito381/server/BattleSpellCatalog$NaturesTouchSpell;)V` | 缺呼叫 | method useNaturesTouchSpell([BLlocal/lito381/server/BattleSpellCatalog$NaturesTouchSpell;)V: left=284:[471:java/lang/Throwable  ] right=300:[491:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useOtherNoEffectSpell([BLlocal/lito381/server/BattleSpellCatalog$OtherNoEffectSpell;)V` | 缺呼叫 | method useOtherNoEffectSpell([BLlocal/lito381/server/BattleSpellCatalog$OtherNoEffectSpell;)V: left=170:[242:java/lang/Throwable  ] right=170:[246:java/lang/Throwable  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ |
+| `local/lito381/server/ClientSession#usePanicSpell([BLlocal/lito381/server/BattleSpellCatalog$PanicSpell;I)V` | 缺呼叫 | method usePanicSpell([BLlocal/lito381/server/BattleSpellCatalog$PanicSpell;I)V: left=411:[602:java/lang/Throwable  ] right=424:[619:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#usePatienceSpell([BLlocal/lito381/server/BattleSpellCatalog$PatienceSpell;)V` | 缺呼叫 | method usePatienceSpell([BLlocal/lito381/server/BattleSpellCatalog$PatienceSpell;)V: left=115:[317:java/lang/Throwable  ] right=122:[328:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#usePetCollar(Llocal/lito381/server/RuntimeInventory$Item;)V` | 缺呼叫 | method usePetCollar(Llocal/lito381/server/RuntimeInventory$Item;)V: left=202:[209:java/lang/Throwable  ] right=198:[205:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#usePhantasmSpell([BLlocal/lito381/server/BattleSpellCatalog$PhantasmSpell;I)V` | 缺呼叫 | method usePhantasmSpell([BLlocal/lito381/server/BattleSpellCatalog$PhantasmSpell;I)V: left=317:[506:java/lang/Throwable  ] right=324:[517:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#usePoisonResistanceSpell([BLlocal/lito381/server/BattleSpellCatalog$PoisonResistanceSpell;)V` | 缺呼叫 | method usePoisonResistanceSpell([BLlocal/lito381/server/BattleSpellCatalog$PoisonResistanceSpell;)V: left=158:[285:java/lang/Throwable  ] right=158:[289:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useRangedEvasionBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$RangedEvasionBuffSpell;)V` | 缺呼叫 | method useRangedEvasionBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$RangedEvasionBuffSpell;)V: left=158:[284:java/lang/Throwable  ] right=158:[288:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useReductionArmorSpell([BLlocal/lito381/server/BattleSpellCatalog$ReductionArmorSpell;)V` | 缺呼叫 | method useReductionArmorSpell([BLlocal/lito381/server/BattleSpellCatalog$ReductionArmorSpell;)V: left=119:[263:java/lang/Throwable  ] right=119:[267:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useRegenSpell([BLlocal/lito381/server/BattleSpellCatalog$RegenSpell;)V` | 缺呼叫 | method useRegenSpell([BLlocal/lito381/server/BattleSpellCatalog$RegenSpell;)V: left=145:[372:java/lang/Throwable  ] right=145:[376:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useResistFearSpell([BLlocal/lito381/server/BattleSpellCatalog$ResistFearSpell;)V` | 缺呼叫 | method useResistFearSpell([BLlocal/lito381/server/BattleSpellCatalog$ResistFearSpell;)V: left=138:[143:java/lang/Exception  ] right=136:[141:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useRevealWeaknessSpell([BLlocal/lito381/server/BattleSpellCatalog$RevealWeaknessSpell;)V` | 缺呼叫 | method useRevealWeaknessSpell([BLlocal/lito381/server/BattleSpellCatalog$RevealWeaknessSpell;)V: left=246:[251:java/lang/Exception  ] right=255:[260:java/lang/Exception  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useRoiPouch(Llocal/lito381/server/RuntimeInventory$Item;I)V` | 缺呼叫 | method useRoiPouch(Llocal/lito381/server/RuntimeInventory$Item;I)V insn[106]: left=PUTFIELD local/lito381/server/ClientSession.inventory:Llocal/lito381/server/RuntimeInventory; right=CONST Integer:0; path event multisets differ (left=421, right=421); labelled CFGs differ |
+| `local/lito381/server/ClientSession#useRoyalAuraSpell([BLlocal/lito381/server/BattleSpellCatalog$RoyalAuraSpell;)V` | 缺呼叫 | method useRoyalAuraSpell([BLlocal/lito381/server/BattleSpellCatalog$RoyalAuraSpell;)V: left=224:[333:java/lang/Throwable  ] right=231:[344:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useRunClanSpell([BLlocal/lito381/server/BattleSpellCatalog$RunClanSpell;)V` | 缺呼叫 | method useRunClanSpell([BLlocal/lito381/server/BattleSpellCatalog$RunClanSpell;)V: left=229:[337:java/lang/Throwable  ] right=236:[348:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useSelfHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$SelfHasteSpell;)V` | 缺呼叫 | method useSelfHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$SelfHasteSpell;)V: left=85:[179:java/lang/Throwable  ] right=85:[183:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useSolidCarriageSpell([BLlocal/lito381/server/BattleSpellCatalog$SolidCarriageSpell;)V` | 缺呼叫 | method useSolidCarriageSpell([BLlocal/lito381/server/BattleSpellCatalog$SolidCarriageSpell;)V: left=131:[282:java/lang/Throwable  ] right=131:[286:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useSourceWeapon(Llocal/lito381/server/RuntimeInventory$Item;)V` | 缺呼叫 | method useSourceWeapon(Llocal/lito381/server/RuntimeInventory$Item;)V: left=41:[50:java/lang/Exception  ] right=50:[59:java/lang/Exception  ]; path event multisets differ (left=329, right=330); labelled CFGs differ |
+| `local/lito381/server/ClientSession#useSpellBeforeDragonTargets([B)V` | 缺呼叫 | method useSpellBeforeDragonTargets([B)V: left=26:[46:java/lang/Throwable  ] right=29:[51:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useStormEyeSpell([BLlocal/lito381/server/BattleSpellCatalog$StormEyeSpell;)V` | 缺呼叫 | method useStormEyeSpell([BLlocal/lito381/server/BattleSpellCatalog$StormEyeSpell;)V: left=258:[366:java/lang/Throwable  ] right=265:[377:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useStormShotSpell([BLlocal/lito381/server/BattleSpellCatalog$StormShotSpell;)V` | 缺呼叫 | method useStormShotSpell([BLlocal/lito381/server/BattleSpellCatalog$StormShotSpell;)V: left=173:[320:java/lang/Throwable  ] right=189:[340:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useTargetNegativeStatusSpell([BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)V` | 純形狀待裁定 | method useTargetNegativeStatusSpell([BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)V insn[7]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H…; path event multisets differ (left=3, right=3); labelled CFGs differ |
+| `local/lito381/server/ClientSession#useTeleportSpell([B)V` | 缺呼叫 | method useTeleportSpell([B)V: left=272:[450:java/lang/Throwable  ] right=290:[488:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useTripleArrowSpell([BLlocal/lito381/server/BattleSpellCatalog$TripleArrowSpell;)V` | 缺呼叫 | method useTripleArrowSpell([BLlocal/lito381/server/BattleSpellCatalog$TripleArrowSpell;)V: left=108:[220:java/lang/Throwable  ] right=117:[233:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useTrueTargetSpell([BLlocal/lito381/server/BattleSpellCatalog$TrueTargetSpell;)V` | 缺呼叫 | method useTrueTargetSpell([BLlocal/lito381/server/BattleSpellCatalog$TrueTargetSpell;)V: left=191:[302:java/lang/Throwable  ] right=201:[316:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useWeaponBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$WeaponBuffSpell;)V` | 缺呼叫 | method useWeaponBuffSpell([BLlocal/lito381/server/BattleSpellCatalog$WeaponBuffSpell;)V: left=455:[649:java/lang/Throwable  ] right=464:[663:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useWorldRoiCancellation([BLlocal/lito381/server/BattleSpellCatalog$CancellationSpell;)V` | 缺呼叫 | method useWorldRoiCancellation([BLlocal/lito381/server/BattleSpellCatalog$CancellationSpell;)V: left=323:[529:java/lang/Throwable  ] right=339:[554:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+| `local/lito381/server/ClientSession#useWorldTreeCallSpell([BLlocal/lito381/server/BattleSpellCatalog$WorldTreeCallSpell;)V` | 缺呼叫 | method useWorldTreeCallSpell([BLlocal/lito381/server/BattleSpellCatalog$WorldTreeCallSpell;)V: left=148:[286:java/lang/Throwable  ] right=148:[290:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ |
+
+### lambda 配對逐項清單
+
+下表逐項列出仍未配對的方法及母方法呼叫點。箭頭右側為同一母方法相同 indy 序位的 staged／候選對照，僅作定位。具有對應呼叫點仍需比較捕獲型別與本體。未能唯一定位的項目保持待查；本輪未宣告 lambda 本體缺口已清零。
+
+
+| 方法 | 狀態 | 母方法與對側呼叫點 |
+|---|---|---|
+| `local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z` | ONLY_LEFT | local/lito381/server/ClientSession#autoSelectPendingRentalBattleHandoff()Z @ 21 → local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z |
+| `local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$456(Llocal/lito381/server/BattleCompanion;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#cleanupClassicWorldTransientCompanionsOnDisconnect()V @ 8 → local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$286(Llocal/lito381/server/BattleCompanion;)Z |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$263(Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 148 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$264(Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 151 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$265(Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 154 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$266(Llocal/lito381/server/ClientSession$Phase;JIIZLlocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 162 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$268(Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 189 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$269(Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 207 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$270(Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialAreaSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;I)V @ 225 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useCallOfNatureSpell$381(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession$Phase;IILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialCallNatureBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V @ 456 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldBlindSpell$244(IIIILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWorldBlindBody([BLlocal/lito381/server/BattleSpellCatalog$BlindSpell;)V @ 667 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldDecayPotionSpell$281(II)I` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWorldDecayPotionBody([BLlocal/lito381/server/BattleSpellCatalog$DecayPotionSpell;)V @ 356 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldMassSlowSpell$311(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaWorldSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 48 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldMassSlowSpell$313(Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;IIILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaWorldSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 320 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldMassSlowSpell$315(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession$MassSlowCompanionTarget;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaWorldSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 524 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldMassSlowSpell$316(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaWorldSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 530 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldResurrectionSpell$379(Llocal/lito381/server/ClientSession;IILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWorldResurrectionBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V @ 280 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldSilenceSpell$247(IIIIIILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWorldSilenceBody([BLlocal/lito381/server/BattleSpellCatalog$SilenceSpell;)V @ 759 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldSleepSpell$327(Llocal/lito381/server/ClientSession$PatienceTarget;Llocal/lito381/server/ClientSession$ClassicWorldSleepTarget;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaWorldSleepBody([BLlocal/lito381/server/BattleSpellCatalog$SleepSpell;)V @ 411 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useMassSlowSpell$321(IILlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaBattleSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 200 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useResurrectionSpell$383(Llocal/lito381/server/ClientSession;IILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialResurrectionBody([BLlocal/lito381/server/BattleSpellCatalog$ResurrectionSpell;)V @ 214 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useTamingSpell$384(IILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialTamingBody([BLlocal/lito381/server/BattleSpellCatalog$TamingSpell;)V @ 562 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useWorldNpcCancellation$217(IILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWorldNpcCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V @ 465 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useWorldPlayerCancellation$219(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWorldCancellationBody(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$CancellationSpell;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V @ 592 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#nativeSourceFrozenSlow_lambda$useMassSlowSpell$322(IILlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;Ljava/lang/Object;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaBattleSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 222 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#nativeSourceFrozenSlow_lambda$useMassSlowSpell$323(IILlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;Ljava/lang/Object;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaBattleSlowBody([BLlocal/lito381/server/BattleSpellCatalog$MassSlowSpell;)V @ 238 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair014$lambda$useHealingSpell$406(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V @ 35 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useHealingSpell$385(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair014$lambda$useHealingSpell$407(Llocal/lito381/server/BattleQuestEncounter$Snapshot;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V @ 213 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useHealingSpell$386(Llocal/lito381/server/BattleQuestEncounter$Snapshot;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair014$lambda$useHealingSpell$408(Llocal/lito381/server/BattleGuardianTower$Snapshot;Llocal/lito381/server/BattleGuardianTower$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V @ 229 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useHealingSpell$387(Llocal/lito381/server/BattleGuardianTower$Snapshot;Llocal/lito381/server/BattleGuardianTower$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair014$lambda$useHealingSpell$409(Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V @ 245 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useHealingSpell$388(Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair014$lambda$useHealingSpell$410(Llocal/lito381/server/BattleGuardianTower$Snapshot;Llocal/lito381/server/BattleGuardianTower$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$HealingSpell;)V @ 676 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useHealingSpell$389(Llocal/lito381/server/BattleGuardianTower$Snapshot;Llocal/lito381/server/BattleGuardianTower$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair020$lambda$resolveDragonKnightNegativeTarget$191(Llocal/lito381/server/ClientSession$ArmorBreakTarget;)Llocal/lito381/server/BattleGuardBrake$Candidate;` | ONLY_RIGHT | local/lito381/server/ClientSession#resolveDragonKnightNegativeTarget(Llocal/lito381/server/ClientSession$Phase;JIIIIIZ)Llocal/lito381/server/ClientSession$ArmorBreakTarget; @ 551 → local/lito381/server/ClientSession#lambda$resolveDragonKnightNegativeTarget$176(Llocal/lito381/server/ClientSession$ArmorBreakTarget;)Llocal/lito381/server/BattleGuardBrake$Candidate; |
+| `local/lito381/server/ClientSession#repair020$lambda$resolveDragonKnightNegativeTarget$192(Llocal/lito381/server/ClientSession$ArmorBreakTarget;)Llocal/lito381/server/BattleResistFear$Candidate;` | ONLY_RIGHT | local/lito381/server/ClientSession#resolveDragonKnightNegativeTarget(Llocal/lito381/server/ClientSession$Phase;JIIIIIZ)Llocal/lito381/server/ClientSession$ArmorBreakTarget; @ 558 → local/lito381/server/ClientSession#lambda$resolveDragonKnightNegativeTarget$177(Llocal/lito381/server/ClientSession$ArmorBreakTarget;)Llocal/lito381/server/BattleResistFear$Candidate; |
+| `local/lito381/server/ClientSession#repair020$lambda$resolveDragonKnightNegativeTarget$193(IIILlocal/lito381/server/ClientSession$ArmorBreakTarget;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#resolveDragonKnightNegativeTarget(Llocal/lito381/server/ClientSession$Phase;JIIIIIZ)Llocal/lito381/server/ClientSession$ArmorBreakTarget; @ 590 → local/lito381/server/ClientSession#lambda$resolveDragonKnightNegativeTarget$178(IIILlocal/lito381/server/ClientSession$ArmorBreakTarget;)Z |
+| `local/lito381/server/ClientSession#repair020$lambda$useAttackSpell$350(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;IIII)V @ 117 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useAttackSpell$379(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair020$lambda$useAttackSpell$351(I)I` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;IIII)V @ 1072 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useAttackSpell$380(I)I |
+| `local/lito381/server/ClientSession#repair020$lambda$useEntangleSpell$250(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialEntangleBody([BLlocal/lito381/server/BattleSpellCatalog$EntangleSpell;I)V @ 129 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair020$lambda$useEntangleSpell$251(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleCompanion$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialEntangleBody([BLlocal/lito381/server/BattleSpellCatalog$EntangleSpell;I)V @ 186 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair020$lambda$useEraseMagicSpell$252(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialEraseBody([BLlocal/lito381/server/BattleSpellCatalog$EraseMagicSpell;I)V @ 129 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair020$lambda$useEraseMagicSpell$253(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleCompanion$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialEraseBody([BLlocal/lito381/server/BattleSpellCatalog$EraseMagicSpell;I)V @ 186 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair020$lambda$useFreezeAttackSpell$343(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V @ 34 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle$373(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair020$lambda$useFreezeAttackSpell$344(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleCompanion$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle([BLlocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)V @ 61 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle$374(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleCompanion$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair020$lambda$useSleepSpell$328(Llocal/lito381/server/ClientSession$PatienceTarget;Llocal/lito381/server/ClientSession$BattleSleepTarget;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeAreaBattleSleepBody([BLlocal/lito381/server/BattleSpellCatalog$SleepSpell;)V @ 490 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair021$lambda$attack$413(Llocal/lito381/server/RuntimeInventory$Item;Ljava/util/Map$Entry;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_attack(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;)V @ 797 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_attack$367(Llocal/lito381/server/RuntimeInventory$Item;Ljava/util/Map$Entry;)Z |
+| `local/lito381/server/ClientSession#repair021$lambda$attack$414()I` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_attack(Llocal/lito381/server/Protocol$AttackRequest;Llocal/lito381/server/ClientSession$AttackEnvelope;)V @ 2302 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_attack$368()I |
+| `local/lito381/server/ClientSession#repair021$lambda$useLightningWand$119(Llocal/lito381/server/Protocol$TargetLocationInventoryUse;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeRawOriginal_useLightningWand(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$TargetLocationInventoryUse;)V @ 51 → local/lito381/server/ClientSession#lambda$nativeRawOriginal_useLightningWand$354(Llocal/lito381/server/Protocol$TargetLocationInventoryUse;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair021$lambda$useLightningWand$120(Llocal/lito381/server/Protocol$TargetLocationInventoryUse;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeRawOriginal_useLightningWand(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$TargetLocationInventoryUse;)V @ 66 → local/lito381/server/ClientSession#lambda$nativeRawOriginal_useLightningWand$355(Llocal/lito381/server/Protocol$TargetLocationInventoryUse;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair021$lambda$useLightningWand$121(Llocal/lito381/server/Protocol$TargetLocationInventoryUse;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeRawOriginal_useLightningWand(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$TargetLocationInventoryUse;)V @ 81 → local/lito381/server/ClientSession#lambda$nativeRawOriginal_useLightningWand$356(Llocal/lito381/server/Protocol$TargetLocationInventoryUse;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair023$lambda$useHasteSpell$202(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V @ 51 → local/lito381/server/ClientSession#lambda$useHasteSpell$186(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair023$lambda$useHasteSpell$203(ZLlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V @ 55 → local/lito381/server/ClientSession#lambda$useHasteSpell$187(ZLlocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair023$lambda$useHasteSpell$204(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/BattleCompanion$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V @ 89 → local/lito381/server/ClientSession#lambda$useHasteSpell$188(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/BattleCompanion$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair023$lambda$useHasteSpell$205(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V @ 138 → local/lito381/server/ClientSession#lambda$useHasteSpell$189(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/BattleQuestEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair023$lambda$useHasteSpell$206(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#useHasteSpell([BLlocal/lito381/server/BattleSpellCatalog$HasteSpell;)V @ 157 → local/lito381/server/ClientSession#lambda$useHasteSpell$190(Llocal/lito381/server/Protocol$ObjectSpellRequest;Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useAreaAttackSpell$332(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V @ 42 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useAreaAttackSpell$378(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useBlindSpell$245(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialBlindBody([BLlocal/lito381/server/BattleSpellCatalog$BlindSpell;)V @ 65 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair032$lambda$useCenteredAreaAttackSpell$333(JJLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;IIILlocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V @ 67 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useCenteredAreaAttackSpell$381(JJLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;IIILlocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useCenteredAreaAttackSpell$334(JIIILlocal/lito381/server/BattleGuardianTower$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V @ 213 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useCenteredAreaAttackSpell$382(JIIILlocal/lito381/server/BattleGuardianTower$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useCenteredAreaAttackSpell$335(JIIILlocal/lito381/server/BattleQuestEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V @ 228 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useCenteredAreaAttackSpell$383(JIIILlocal/lito381/server/BattleQuestEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useCenteredAreaAttackSpell$336(JIIILlocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceControlledOriginal_useCenteredAreaAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V @ 243 → local/lito381/server/ClientSession#lambda$nativeSourceControlledOriginal_useCenteredAreaAttackSpell$384(JIIILlocal/lito381/server/BattleTimeAttackEncounter$Snapshot;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useManaDrainSpell$240(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceRemainingOriginal39([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V @ 79 → local/lito381/server/ClientSession#lambda$nativeSourceRemainingOriginal39$412(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#repair032$lambda$useManaDrainSpell$241(II)I` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceRemainingOriginal39([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V @ 436 → local/lito381/server/ClientSession#lambda$nativeSourceRemainingOriginal39$413(II)I |
+| `local/lito381/server/ClientSession#repair032$lambda$useManaDrainSpell$242(II)I` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeSourceRemainingOriginal39([BLlocal/lito381/server/BattleSpellCatalog$ManaDrainSpell;)V @ 713 → local/lito381/server/ClientSession#lambda$nativeSourceRemainingOriginal39$414(II)I |
+| `local/lito381/server/ClientSession#repair032$lambda$useWeaknessSpell$306(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/ClientSession;)Z` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWeaknessBody([BLlocal/lito381/server/BattleSpellCatalog$WeaknessSpell;)V @ 97 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#repair032$lambda$useWeaknessSpell$307(I)I` | ONLY_RIGHT | local/lito381/server/ClientSession#nativeMaterialWeaknessBody([BLlocal/lito381/server/BattleSpellCatalog$WeaknessSpell;)V @ 460 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$286(Llocal/lito381/server/BattleCompanion;)Z` | ONLY_LEFT | local/lito381/server/ClientSession#cleanupClassicWorldTransientCompanionsOnDisconnect()V @ 8 → local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$456(Llocal/lito381/server/BattleCompanion;)Z |
+| `local/lito381/server/ClientSession#lambda$completeClassicWorldPortal$162(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V` | ONLY_LEFT | local/lito381/server/ClientSession#completeClassicWorldPortal(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V @ 6 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$nativeSourceHealingOriginalGroup$402(Llocal/lito381/server/ClientSession$Phase;Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;IILlocal/lito381/server/ArenaMapCatalog$Arena;Llocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;Llocal/lito381/server/ClientSession;)Z` | ONLY_LEFT | local/lito381/server/ClientSession#nativeSourceHealingOriginalGroup([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V @ 171 → local/lito381/server/ClientSession#lambda$useGroupHealingSpell$398(Llocal/lito381/server/ClientSession;)Z |
+| `local/lito381/server/ClientSession#lambda$nativeSourceHealingOriginalGroup$406(Llocal/lito381/server/ClientSession$Phase;Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;IILlocal/lito381/server/ArenaMapCatalog$Arena;Llocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;Llocal/lito381/server/BattleCompanion$Snapshot;)Z` | ONLY_LEFT | local/lito381/server/ClientSession#nativeSourceHealingOriginalGroup([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V @ 209 → local/lito381/server/ClientSession#lambda$useGroupHealingSpell$403(I)I |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldAreaAttackSpell$240(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V` | ONLY_LEFT | local/lito381/server/ClientSession#useClassicWorldAreaAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AreaAttackSpell;)V @ 10 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldAttackSpell$241(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)V` | ONLY_LEFT | local/lito381/server/ClientSession#useClassicWorldAttackSpell(Llocal/lito381/server/Protocol$AttackSpellRequest;Llocal/lito381/server/BattleSpellCatalog$AttackSpell;)V @ 10 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useClassicWorldLineAttackSpell$238([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V` | ONLY_LEFT | local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V @ 5 → 同一母方法下無此序位呼叫點 |
+| `local/lito381/server/ClientSession#lambda$useTargetNegativeStatusSpell$222([BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)V` | ONLY_LEFT | local/lito381/server/ClientSession#useTargetNegativeStatusSpell([BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;ILlocal/lito381/server/ClientSession$TargetNegativeStatusKind;)V @ 7 → 同一母方法下無此序位呼叫點 |
+
+72 個方法均已定位母方法。37 列在對側同一母方法的 lambda indy 序列缺少該序位，其餘 35 列列出對照目標。這項序位盤點仍需逐一檢查本體與捕獲參數。
+
+### 本輪通過的 78 個原 DIFF 方法
+
+| 方法 |
+|---|
+| `local/lito381/server/ClientSession#activatePendingRentalBattleHandoff(Ljava/lang/String;)Z` |
+| `local/lito381/server/ClientSession#applyClassicWorldDeathItem(Llocal/lito381/server/RuntimeInventory$Item;ZLjava/lang/String;)V` |
+| `local/lito381/server/ClientSession#applyWeaponBreakWeaponDamage(I)V` |
+| `local/lito381/server/ClientSession#awardClassicWorldCkewQuestDrop(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;)V` |
+| `local/lito381/server/ClientSession#awardClassicWorldRoyalTrialQuestDrop(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;)V` |
+| `local/lito381/server/ClientSession#buySell([B)V` |
+| `local/lito381/server/ClientSession#buySpells([B)V` |
+| `local/lito381/server/ClientSession#claimOnePendingReward(Llocal/lito381/server/RepositoryPendingReward;)Llocal/lito381/server/RepositoryPendingRewardClaim;` |
+| `local/lito381/server/ClientSession#classicBuySell([B)V` |
+| `local/lito381/server/ClientSession#completeClassicWorldDspyArrival(Llocal/lito381/server/ClassicWorldDspyEscorts$Snapshot;)V` |
+| `local/lito381/server/ClientSession#createClassicClan([B)V` |
+| `local/lito381/server/ClientSession#damageAttackingWeapon(Llocal/lito381/server/SourceWeaponPhysicalStats;Llocal/lito381/server/SourceWeaponPhysicalStats;ZJ)V` |
+| `local/lito381/server/ClientSession#debitClassicWorldProjectile(Llocal/lito381/server/SourceWeaponPhysicalStats;)Llocal/lito381/server/ClientSession$ClassicWorldProjectileDebit;` |
+| `local/lito381/server/ClientSession#destroyInventoryItem([B)V` |
+| `local/lito381/server/ClientSession#destroySqlPhysicalLetter(Llocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#dropInventoryItem([B)V` |
+| `local/lito381/server/ClientSession#enterChannel([B)V` |
+| `local/lito381/server/ClientSession#exchangeSpells([B)V` |
+| `local/lito381/server/ClientSession#getClassicWorldGroundItem(Llocal/lito381/server/Protocol$GroundPickup;)V` |
+| `local/lito381/server/ClientSession#getGroundItem([B)V` |
+| `local/lito381/server/ClientSession#giveInventoryItem([B)V` |
+| `local/lito381/server/ClientSession#gotoClassicWorldShip(Llocal/lito381/server/Protocol$GotoMapRequest;Llocal/lito381/server/ClientSession$PendingShipTicket;)V` |
+| `local/lito381/server/ClientSession#handleClassicCastleTrebuchetAction(Llocal/lito381/server/Protocol$HypertextActionRequest;Llocal/lito381/server/ClassicWorldCastleWarField$WarObject;)V` |
+| `local/lito381/server/ClientSession#handleRentalTownTeleportAction(Llocal/lito381/server/NativeLitoRentalTownNpcCatalog$Npc;Ljava/lang/String;)V` |
+| `local/lito381/server/ClientSession#harvestClassicWorldGuardian(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;I)Z` |
+| `local/lito381/server/ClientSession#joinRoom([BLjava/lang/String;Z)V` |
+| `local/lito381/server/ClientSession#liberateClassicWorldPet(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;)Z` |
+| `local/lito381/server/ClientSession#login([B)V` |
+| `local/lito381/server/ClientSession#movementUnlock([B)V` |
+| `local/lito381/server/ClientSession#nativeSourceCubeQuestWaveAdvance(Llocal/lito381/server/ClientSession;IILjava/util/List;ZLjava/lang/String;Llocal/lito381/server/NativeSourceCubeNpc$Commit;)V` |
+| `local/lito381/server/ClientSession#nativeSourcePhysicalQuestWaveAdvance(Llocal/lito381/server/ClientSession;IILjava/util/List;ZLjava/lang/String;Llocal/lito381/server/NativeSourcePhysicalNpc$Commit;)V` |
+| `local/lito381/server/ClientSession#nativeSourcePoisonQuestWaveAdvance(Llocal/lito381/server/ClientSession;IILjava/util/List;ZLjava/lang/String;Llocal/lito381/server/NativeSourcePoisonNpc$Commit;)V` |
+| `local/lito381/server/ClientSession#payClassicWorldHouseTax(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` |
+| `local/lito381/server/ClientSession#performClassicWorldCraft(Llocal/lito381/server/ClassicWorldCraftCatalog$Recipe;I)V` |
+| `local/lito381/server/ClientSession#performClassicWorldHotelRental(Llocal/lito381/server/ClientSession$PendingHotelRental;ILlocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` |
+| `local/lito381/server/ClientSession#performRentalTownHotelRental(Llocal/lito381/server/NativeLitoRentalTownNpcCatalog$Npc;I)V` |
+| `local/lito381/server/ClientSession#redirectToChannelPort(I)V` |
+| `local/lito381/server/ClientSession#rentClassicWorldWaterDragonPass(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;)V` |
+| `local/lito381/server/ClientSession#rentalItemSelectionContext()Z` |
+| `local/lito381/server/ClientSession#rentalTownBuySell([B)V` |
+| `local/lito381/server/ClientSession#repairInventoryItem([B)V` |
+| `local/lito381/server/ClientSession#requestLitoCharacterInfo([B)V` |
+| `local/lito381/server/ClientSession#requestQuit()V` |
+| `local/lito381/server/ClientSession#resetBattleVitals()V` |
+| `local/lito381/server/ClientSession#respawnAtBattleSpawn()V` |
+| `local/lito381/server/ClientSession#say([BI)V` |
+| `local/lito381/server/ClientSession#selectClassicServer([B)V` |
+| `local/lito381/server/ClientSession#serverClassicWorldCkewAltarCompleted(ILlocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;)V` |
+| `local/lito381/server/ClientSession#serverClassicWorldCkewStageTeleport(JILlocal/lito381/server/ClassicWorldCkewCatalog$Location;)V` |
+| `local/lito381/server/ClientSession#serverExpireTimedInventory(J)V` |
+| `local/lito381/server/ClientSession#serverRentalHotelLeaseInvalidated(Llocal/lito381/server/RentalTownHotelRegistry$Invalidation;Ljava/lang/String;)V` |
+| `local/lito381/server/ClientSession#setReady([B)V` |
+| `local/lito381/server/ClientSession#sourceProcQuestWaveAdvance(IILjava/util/List;ZLjava/lang/String;Llocal/lito381/server/NativeProcEncounterPublication$Context;)V` |
+| `local/lito381/server/ClientSession#startRentalTownScene()V` |
+| `local/lito381/server/ClientSession#transferClassicWorldCompanionItems(Llocal/lito381/server/BattleCompanion;Z)V` |
+| `local/lito381/server/ClientSession#transferCompanionItems(Llocal/lito381/server/BattleCompanion;)V` |
+| `local/lito381/server/ClientSession#useClassicWorldCkewDestructionMedicine(Llocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#useCustomAreaTeleportItem(Llocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#useExperienceGem(Llocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#useHomeTeleportScroll(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$HomeTeleportInventoryUse;)V` |
+| `local/lito381/server/ClientSession#useLetterPaper(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$LetterComposeInventoryUse;)V` |
+| `local/lito381/server/ClientSession#useNativeMagicDoll(Llocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#useRentalTownItem([BLlocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#useSourceArmor(Llocal/lito381/server/RuntimeInventory$Item;)V` |
+| `local/lito381/server/ClientSession#useSqlLetterPaper(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/Protocol$LetterComposeInventoryUse;Llocal/lito381/server/ClientSession;)V` |
+| `local/lito381/server/ClientSession#writeBoardTopic([B)V` |
+| `local/lito381/server/GameHub#botTicks(J)Ljava/util/List;` |
+| `local/lito381/server/GameHub#createRoom(ILlocal/lito381/server/GameHub$RoomSettings;)J` |
+| `local/lito381/server/GameHub#cubeHarmonyTicks(J)Ljava/util/List;` |
+| `local/lito381/server/GameHub#cubeQuakeTicks(J)Ljava/util/List;` |
+| `local/lito381/server/GameHub#cubeShockTicks(J)Ljava/util/List;` |
+| `local/lito381/server/GameHub#cubeTicks(J)Ljava/util/List;` |
+| `local/lito381/server/GameHub#forceWinner(JI)Llocal/lito381/server/BattleRules$Resolution;` |
+| `local/lito381/server/GameHub#groundTickSafely()V` |
+| `local/lito381/server/GameHub#groundTicks(J)Ljava/util/List;` |
+| `local/lito381/server/GameHub#nativeSummonOriginalDisconnect(Llocal/lito381/server/ClientSession;)Ljava/util/List;` |
+| `local/lito381/server/GameHub#resolveBattleDisconnectSafely(JJ)V` |
+| `local/lito381/server/GameHub#tryJoinRoom(JLlocal/lito381/server/ClientSession;IILjava/lang/String;)Llocal/lito381/server/GameHub$RoomJoinOutcome;` |
 
 ## 推測
 
-T029 handoff 與 disconnect 的暫存／堆疊差異可能屬工具尚未證明的等價形狀；本輪不把它們當成已證明。其餘 DIFF 可能仍含 Java 移植問題，不能全部歸因於比較器。light 的證明只適用固定 JAR 與此比較模型，不等於實機驗收。
+部分線性次數差、finally、POP 與 boolean 匯合可能屬工具未證明的形狀。上表亦存在明確新增的業務呼叫，後續須分開處理。呼叫點對應只能作診斷，無法取代完整方法與類別驗收。
 
-## 待驗證／未驗證什麼／給下一棒的提示
+## 給下一棒的提示
 
-1. **Claude 主控**：依 [本輪沿用裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6665159356)，審查以下完整代表差異；優先處理 T029 effects 暫存與 unsupported shuffle/subroutine、disconnect 堆疊差異、switch-map holder、lambda 配對及登入 handler。需要工具擴充或新核准時由主控裁定，本輪不改工具或擴大清單。
-2. **本機 B09 執行器**：保留已修正的十處 T029 條件、light SAME_PATHS、channel 成員來源與四個 metadata 通過結果；後續從最新 main 重建，不復用舊 class。須等全部 362 entries、T029 八方法按各自核准模式通過，且所有方法配對缺口清零後才可 B-land。
-3. **B-land**：依指定範圍，本批未跑單元／回歸／實機；集中於 B-land 處理。未啟動伺服器、登入器或遊戲，未連 DB，未讀機密設定，未動封存、releases 或硬連結。
+1. 本機執行器繼續補齊上表的 Java 移植缺口，優先處理技能消耗、material、companion 與 combat 路徑。保留本輪已通過的方法與 T029 八方法，從新目錄重建全部 362 entries。
+2. Claude 主控審查 sourceApplicationRun 的完整 handler／finally 差異與純形狀代表，依既有 U2-1 規則裁定後續工具工作。保留 needs:claude，整批仍不符合再送審／B-land 條件。
+3. lambda 表已定位 72 個未配對方法的母方法呼叫點，仍須核對對側同序位呼叫的捕獲型別與本體，並補上 staged 缺少的呼叫點與本體。本輪尚未完成所有「缺呼叫／順序不同一律修 Java」與配對缺口清零的要求。
+4. 依任務安排，單元、回歸、實機驗收由 B-land 處理，本輪只做編譯與靜態語意驗證。
 
-## 產出路徑與重現
+## 完整 PR 差異與產出路徑
 
-- 交付：三份 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/{ClientSession,GameHub,Protocol}.java`、本報告；核准四條已由 main 帶入。PR 累積尚含前輪 extra-methods-approved。
-- 本機證據：`scratch/issue-70/verify-216.py`、`audit-216.py`、`Focused216.java`、`LatestAudit.java`、`report216.py`、`verified216-{diff.json,diff.md,audit.txt,tool.log,annotations.log,javac.log,record.log,semantic.log}`、`focus216-verified.txt`、`inventory-verified-effects.diff`、完整 base／candidate javap、`latest-command.json`；建置在 `scratch/issue-70/target/`，均不進 git。
-- 附錄直接保存每類完整差異，審查不依賴本機 scratch。下列指令從 repo 根目錄重建；請同時檢查 JSON 方法診斷，不能只看 CLI exit 0。
+交付路徑為三份本批 staged Java 的累積 PR 差異、核准清單條目與本報告。本輪實際編輯 ClientSession.java、GameHub.java、exceptions-exempt.txt、issue-70.md。完整 PR 額外包含前輪 Protocol.java 與 extra-methods-approved.txt。完整 PR 格式檢查涵蓋 `origin/main` 到整個工作樹及提交後的 `origin/main...HEAD`，收據在 `scratch/issue-70/full-pr-diff-check-259.txt`。
+
+本輪主動寫入均在指定 worktree。Git fetch／merge／commit／push 使用 worktree 共用的 Git 中繼資料。交付前以 `e7274ca` 再合併 `origin/main@e8871cd`，帶入 B08 及 docs/REPORT.md 的上游索引。完整 PR 檔案清單共六個核准檔案。原專案資源、正式程序、DB、機密設定、封存與 release/releases 皆未操作。
+
+最後同步與四處行尾空白修正後，再於全新 `target/postmerge259`、`postmerge259-tool`、`postmerge259-annotations` 重建。應用 JAR、工具與 annotation 的全部 class bytes 均與上述驗證產物相同，批次裁切後的五份核准／entry 清單雜湊亦相同。收據為 `postmerge259-build.log`、`postmerge259-input-check.json`，完整語意與 audit 結果因此仍適用於交付來源。
+
+
+最終產物 `scratch/issue-70/target/delivery259.jar` SHA-256 為 `3230ecbe3339e0f6992566d3515bdadc2e1005c2a2ff6efbd35502f39523274a`。
+
+| 輸入 | SHA-256 |
+|---|---|
+| lito伺服器\LiTo381-Server\reference\base-0.6.71.jar | e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498 |
+| lito伺服器\LiTo381-Server\reference\candidate-50635f7e.jar | 50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729 |
+
+本機證據集中在 `scratch/issue-70/`，包含 `verify-259.py`、`evidence259.py`、`Audit259.java`、`Calls259.java`、`Dump259.java`、`report259.py`、`field-ports259.json`、`more-field-ports259.json`、`poison-ports259.json`、`latest-command.json`、`delivery259-{diff.json,diff.md,audit.txt,dump.txt,calls.tsv,classified.json}`、完整三類 candidate javap 與 formal ClientSession javap。建置輸出位於 target，均保留為本機證據。
+
+從 repo 根目錄可依下列方式重建。第一個命令必須傳入全新輸出名稱。第二個命令使用 latest-command.json 所指向的實際產物，產生完整呼叫點、指令與重點方法 audit。
+
+
 
 ```powershell
-$ErrorActionPreference = 'Stop'
-$root = (Get-Location).Path
-$s = Join-Path $root 'lito伺服器/LiTo381-Server'
-$w = Join-Path $root 'scratch/issue-70/reproduce-216'
-if (Test-Path $w) { throw '必須使用全新輸出目錄' }
-New-Item -ItemType Directory -Path "$w/target/dependency" -Force | Out-Null
-$jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
-$utf8 = [Text.UTF8Encoding]::new($false)
-$jars = foreach ($a in @('asm','asm-tree','asm-analysis')) {
-  $p = "D:/dev-cache/maven/repository/org/ow2/asm/$a/9.7/$a-9.7.jar"
-  if (!(Test-Path $p)) {
-    $p = "$w/target/dependency/$a-9.7.jar"
-    Invoke-WebRequest "https://repo.maven.apache.org/maven2/org/ow2/asm/$a/9.7/$a-9.7.jar" -OutFile $p
-  }
-  $p
-}
-$asm = $jars -join ';'
-$toolSources = @(Get-ChildItem "$s/tools/semantic-diff/src/main/java","$s/tools/as-record/src/main/java" -Recurse -Filter '*.java').FullName
-& "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp $asm -d "$w/target/tool" @toolSources
-if ($LASTEXITCODE) { throw 'tool javac failed' }
-& "$jdk/javac.exe" --release 17 -encoding UTF-8 -d "$w/target/annotations" "$s/src/main/java/local/lito381/server/AsRecord.java" "$s/src/main/java/local/lito381/server/AsmFinal.java"
-if ($LASTEXITCODE) { throw 'annotation javac failed' }
-$sources = @('ClientSession','GameHub','Protocol') | ForEach-Object { "$s/merge-inputs/50635f7e/staged/local/lito381/server/$_.java" }
-$candidate = "$s/reference/candidate-50635f7e.jar"
-$formal = "$s/reference/base-0.6.71.jar"
-& "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp "$candidate;$formal;$w/target/annotations;$s/lib/*" -d "$w/target/classes" @sources
-if ($LASTEXITCODE) { throw 'staged javac failed' }
-& "$jdk/java.exe" -cp "$w/target/tool;$asm" local.lito381.asrecord.AsRecord "$w/target/classes"
-if ($LASTEXITCODE) { throw 'AsRecord failed' }
-& "$jdk/jar.exe" cf "$w/target/left.jar" -C "$w/target/classes" .
-if ($LASTEXITCODE) { throw 'jar failed' }
-$batch = (Get-Content -Raw -Encoding UTF8 docs/combat-merge/batches.json | ConvertFrom-Json).batches | Where-Object id -eq B09
-[IO.File]::WriteAllLines("$w/entries.txt", [string[]]$batch.verify_entries, $utf8)
-$actual = @(& "$jdk/jar.exe" tf "$w/target/left.jar" | Where-Object { $_.EndsWith('.class') })
-if ($actual.Count -ne 362 -or (Compare-Object $batch.verify_entries $actual)) { throw 'entry mismatch' }
-foreach ($policy in @('effects-approved','extra-methods-approved')) {
-  $lines = Get-Content -Encoding UTF8 "docs/combat-merge/$policy.txt" | Where-Object { $_.StartsWith('local/lito381/server/ClientSession#') }
-  [IO.File]::WriteAllLines("$w/$policy.txt", [string[]]$lines, $utf8)
-}
-$meta = Get-Content -Encoding UTF8 "$root/docs/combat-merge/metadata-exempt.txt" | Where-Object { $_.StartsWith('local/lito381/server/ClientSession$') }
-[IO.File]::WriteAllLines("$w/metadata-exempt.txt", [string[]]$meta, $utf8)
-& "$jdk/java.exe" -Xmx3g -cp "$w/target/tool;$asm" local.lito381.semanticdiff.SemanticDiff --left "$w/target/left.jar" --right $candidate --left-classpath $candidate --left-classpath $formal --classes "$w/entries.txt" --allow-methods "$root/docs/combat-merge/t029-methods.txt" --allow-right $formal --effects-methods "$w/effects-approved.txt" --extra-methods "$w/extra-methods-approved.txt" --metadata-exempt "$w/metadata-exempt.txt" --json "$w/result.json" --md "$w/result.md"
-if ($LASTEXITCODE) { throw 'semantic CLI failed' }
-(Get-Content -Raw -Encoding UTF8 "$w/result.json" | ConvertFrom-Json).counts
+& 'C:/Users/CHAOREN/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -B -X utf8 scratch/issue-70/verify-259.py reproduce259
+& 'C:/Users/CHAOREN/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -B -X utf8 scratch/issue-70/evidence259.py
 ```
 
-## 附錄：各類完整代表差異
 
-由本輪 JarIndex／ClassComparer 產生的正規化指令。左為 staged、右為 candidate；T029 inventory 右為正式版。保留全部 hunks、槽位、標籤、bootstrap、META 與 TRY COVERAGE；未裁切或只挑首項。沒有把此文字診斷當作驗收通過。
+## 完整代表差異
 
-### `local/lito381/server/ClientSession#acceptsLitoRosterBroadcast()Z`
+每類依完整差異長度選三個新代表，多呼叫類僅一個方法，列出該方法。保留全部 hunks、TRY、META 與 bootstrap 內容。sourceApplicationRun 另附完整差異。
 
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession#acceptsLitoRosterBroadcast()Z
-+++ candidate/local/lito381/server/ClientSession#acceptsLitoRosterBroadcast()Z
-@@ -9,7 +9,7 @@
- IFEQ L9
- CONST Integer:0
- IRETURN
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
-```
-
-</details>
-
-### `local/lito381/server/ClientSession#login([B)V`
+### 多呼叫　`local/lito381/server/ClientSession#quitFight()V`
 
 <details>
-<summary>完整差異（全部 hunks）</summary>
+<summary>完整差異</summary>
+
+
 
 ```diff
---- staged/local/lito381/server/ClientSession#login([B)V
-+++ candidate/local/lito381/server/ClientSession#login([B)V
-@@ -1,5 +1,5 @@
- META 2 null [java/lang/Exception]
--TRY [6:[9:java/lang/IllegalArgumentException  ], 117:[123:java/lang/Exception  ], 120:[123:java/lang/Exception  ], 261:[303:java/lang/Exception  ], 262:[303:java/lang/Exception  ], 265:[303:java/lang/Exception  ], 267:[303:java/lang/Exception  ], 268:[303:java/lang/Exception  ], 269:[303:java/lang/Exception  ], 272:[303:java/lang/Exception  ], 274:[303:java/lang/Exception  ], 276:[303:java/lang/Exception  ], 279:[303:java/lang/Exception  ], 283:[303:java/lang/Exception  ], 286:[303:java/lang/Exception  ], 287:[303:java/lang/Exception  ], 289:[303:java/lang/Exception  ], 290:[303:java/lang/Exception  ], 292:[303:java/lang/Exception  ], 294:[303:java/lang/Exception  ], 295:[303:java/lang/Exception  ], 297:[303:java/lang/Exception  ], 298:[303:java/lang/Exception  ], 299:[303:java/lang/Exception  ]]
-+TRY [6:[9:java/lang/IllegalArgumentException  ], 117:[123:java/lang/Exception  ], 120:[123:java/lang/Exception  ], 286:[328:java/lang/Exception  ], 287:[328:java/lang/Exception  ], 290:[328:java/lang/Exception  ], 292:[328:java/lang/Exception  ], 293:[328:java/lang/Exception  ], 294:[328:java/lang/Exception  ], 297:[328:java/lang/Exception  ], 299:[328:java/lang/Exception  ], 301:[328:java/lang/Exception  ], 304:[328:java/lang/Exception  ], 308:[328:java/lang/Exception  ], 311:[328:java/lang/Exception  ], 312:[328:java/lang/Exception  ], 314:[328:java/lang/Exception  ], 315:[328:java/lang/Exception  ], 317:[328:java/lang/Exception  ], 319:[328:java/lang/Exception  ], 320:[328:java/lang/Exception  ], 322:[328:java/lang/Exception  ], 323:[328:java/lang/Exception  ], 324:[328:java/lang/Exception  ]]
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.VERSION_OK:Llocal/lito381/server/ClientSession$Phase;
-@@ -159,8 +159,11 @@
- GETFIELD local/lito381/server/ClientSession.state:Llocal/lito381/server/GameStateStore;
- ALOAD 8
- INVOKEVIRTUAL local/lito381/server/AuthResult.account()Ljava/lang/String;
-+ALOAD 0
-+SWAP
-+INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
- INVOKEVIRTUAL local/lito381/server/GameStateStore.isAccountBanned(Ljava/lang/String;)Z
--IFEQ L166
-+IFEQ L169
- ALOAD 0
- GETSTATIC local/lito381/server/Protocol$LoginCheckResult.ACCOUNT_BANNED:Llocal/lito381/server/Protocol$LoginCheckResult;
- CONST str:"sidecar-account-banned"
-@@ -183,37 +186,50 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.endpoint:Llocal/lito381/server/ClientSession$Endpoint;
- GETSTATIC local/lito381/server/ClientSession$Endpoint.LOGIN:Llocal/lito381/server/ClientSession$Endpoint;
--IF_ACMPNE L190
+--- staged/local/lito381/server/ClientSession#quitFight()V
++++ candidate/local/lito381/server/ClientSession#quitFight()V
+@@ -1,11 +1,12 @@
+ META 2 null [java/io/IOException]
+-TRY [79:[95:java/io/IOException  , 115:java/lang/Throwable  ], 81:[95:java/io/IOException  , 115:java/lang/Throwable  ], 83:[95:java/io/IOException  , 115:java/lang/Throwable  ], 85:[95:java/io/IOException  , 115:java/lang/Throwable  ], 86:[95:java/io/IOException  , 115:java/lang/Throwable  ], 88:[95:java/io/IOException  , 115:java/lang/Throwable  ], 99:[115:java/lang/Throwable  ], 100:[115:java/lang/Throwable  ], 102:[115:java/lang/Throwable  ], 103:[115:java/lang/Throwable  ], 105:[115:java/lang/Throwable  ], 106:[115:java/lang/Throwable  ], 107:[115:java/lang/Throwable  ], 108:[115:java/lang/Throwable  ], 206:[220:java/io/IOException  , 234:java/lang/Throwable  ], 208:[220:java/io/IOException  , 234:java/lang/Throwable  ], 210:[220:java/io/IOException  , 234:java/lang/Throwable  ], 212:[220:java/io/IOException  , 234:java/lang/Throwable  ], 213:[220:java/io/IOException  , 234:java/lang/Throwable  ], 215:[220:java/io/IOException  , 234:java/lang/Throwable  ], 221:[234:java/lang/Throwable  ], 223:[234:java/lang/Throwable  ], 224:[234:java/lang/Throwable  ], 226:[234:java/lang/Throwable  ], 227:[234:java/lang/Throwable  ], 228:[234:java/lang/Throwable  ], 229:[234:java/lang/Throwable  ]]
 -ALOAD 0
--GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
+-GETFIELD local/lito381/server/ClientSession.rentalTownTransferPending:Z
+-IFEQ L163
 -ALOAD 0
--GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-+IF_ACMPNE L199
+-GETFIELD local/lito381/server/ClientSession.rentalTownRoomState:Z
+-IFEQ L163
++TRY [86:[102:java/io/IOException  , 122:java/lang/Throwable  ], 88:[102:java/io/IOException  , 122:java/lang/Throwable  ], 90:[102:java/io/IOException  , 122:java/lang/Throwable  ], 92:[102:java/io/IOException  , 122:java/lang/Throwable  ], 93:[102:java/io/IOException  , 122:java/lang/Throwable  ], 95:[102:java/io/IOException  , 122:java/lang/Throwable  ], 106:[122:java/lang/Throwable  ], 107:[122:java/lang/Throwable  ], 109:[122:java/lang/Throwable  ], 110:[122:java/lang/Throwable  ], 112:[122:java/lang/Throwable  ], 113:[122:java/lang/Throwable  ], 114:[122:java/lang/Throwable  ], 115:[122:java/lang/Throwable  ], 195:[209:java/io/IOException  , 223:java/lang/Throwable  ], 197:[209:java/io/IOException  , 223:java/lang/Throwable  ], 199:[209:java/io/IOException  , 223:java/lang/Throwable  ], 201:[209:java/io/IOException  , 223:java/lang/Throwable  ], 202:[209:java/io/IOException  , 223:java/lang/Throwable  ], 204:[209:java/io/IOException  , 223:java/lang/Throwable  ], 210:[223:java/lang/Throwable  ], 212:[223:java/lang/Throwable  ], 213:[223:java/lang/Throwable  ], 215:[223:java/lang/Throwable  ], 216:[223:java/lang/Throwable  ], 217:[223:java/lang/Throwable  ], 218:[223:java/lang/Throwable  ]]
 +ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
++GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
++GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
++IF_ACMPNE L7
 +ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-+ASTORE 12
-+ASTORE 13
-+ALOAD 13
-+ALOAD 0
-+ALOAD 12
-+INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
- INVOKEVIRTUAL local/lito381/server/GameHub.clearClassicSourceHandoff(Ljava/lang/String;)V
--GOTO L259
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-+GOTO L284
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-+ASTORE 14
-+ASTORE 15
-+ALOAD 15
-+ALOAD 0
-+ALOAD 14
-+INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
- INVOKEVIRTUAL local/lito381/server/GameHub.pendingClassicSourceHandoff(Ljava/lang/String;)Ljava/lang/String;
- ASTORE 10
- ALOAD 10
--IFNULL L222
-+IFNULL L238
- ALOAD 0
- ALOAD 10
- INVOKESPECIAL local/lito381/server/ClientSession.canonicalClassicSource(Ljava/lang/String;)Ljava/lang/String;
--ASTORE 12
--ALOAD 12
--IFNULL L214
--ALOAD 0
--ALOAD 12
-+ASTORE 16
-+ALOAD 16
-+IFNULL L230
-+ALOAD 0
-+ALOAD 16
- INVOKESPECIAL local/lito381/server/ClientSession.isClassicSourceAuthorized(Ljava/lang/String;)Z
--IFEQ L214
--ALOAD 0
--ALOAD 12
--PUTFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
-+IFEQ L230
-+ALOAD 0
-+ALOAD 16
-+CONST str:"selectedClassicServerName"
-+INVOKESTATIC local/lito381/server/NativePlayerCommit.scene(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Ljava/lang/String;)V
- ALOAD 0
- INVOKESTATIC local/lito381/server/SourceAdministration.clear(Llocal/lito381/server/ClientSession;)V
--GOTO L222
-+GOTO L238
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-@@ -228,21 +244,29 @@
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.boundChannelId:I
-+ISTORE 17
-+ASTORE 18
-+ASTORE 19
-+ALOAD 19
-+ALOAD 0
-+ALOAD 18
-+INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
-+ILOAD 17
- INVOKEVIRTUAL local/lito381/server/GameHub.pendingChannelPortHandoff(Ljava/lang/String;I)Llocal/lito381/server/GameHub$ChannelPortHandoff;
- ASTORE 11
- ALOAD 11
--IFNULL L259
-+IFNULL L284
- ALOAD 0
- ALOAD 11
- INVOKEVIRTUAL local/lito381/server/GameHub$ChannelPortHandoff.source()Ljava/lang/String;
- INVOKESPECIAL local/lito381/server/ClientSession.canonicalClassicSource(Ljava/lang/String;)Ljava/lang/String;
--ASTORE 13
--ALOAD 13
--IFNULL L243
--ALOAD 0
--ALOAD 13
-+ASTORE 20
-+ALOAD 20
-+IFNULL L267
-+ALOAD 0
-+ALOAD 20
- INVOKESPECIAL local/lito381/server/ClientSession.isClassicSourceAuthorized(Ljava/lang/String;)Z
--IFNE L254
-+IFNE L278
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-@@ -253,45 +277,46 @@
- INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
- CONST null
- ASTORE 11
--GOTO L259
--ALOAD 0
--ALOAD 13
--PUTFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
-+GOTO L284
-+ALOAD 0
-+ALOAD 20
-+CONST str:"selectedClassicServerName"
-+INVOKESTATIC local/lito381/server/NativePlayerCommit.scene(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Ljava/lang/String;)V
- ALOAD 0
- INVOKESTATIC local/lito381/server/SourceAdministration.clear(Llocal/lito381/server/ClientSession;)V
- ALOAD 0
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
- INVOKESPECIAL local/lito381/server/ClientSession.loadCharacterDirectory(Ljava/lang/String;)Llocal/lito381/server/ClientSession$SourceCharacterDirectory;
--ASTORE 14
-+ASTORE 21
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.accounts:Llocal/lito381/server/AccountRepository;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
- INVOKEINTERFACE local/lito381/server/AccountRepository.repositoryForClassicSource(Ljava/lang/String;)Llocal/lito381/server/AccountRepository; itf
- INVOKEINTERFACE local/lito381/server/AccountRepository.castleWarSchedules()Ljava/util/List; itf
--ASTORE 15
-+ASTORE 22
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
--ALOAD 15
-+ALOAD 22
- INVOKEVIRTUAL local/lito381/server/GameHub.registerClassicCastleWarSchedules(Ljava/lang/String;Ljava/util/List;)V
- ALOAD 0
--ALOAD 14
-+ALOAD 21
- INVOKESPECIAL local/lito381/server/ClientSession.applyCharacterDirectory(Llocal/lito381/server/ClientSession$SourceCharacterDirectory;)V
- ALOAD 11
--IFNULL L302
-+IFNULL L327
- ALOAD 11
- INVOKEVIRTUAL local/lito381/server/GameHub$ChannelPortHandoff.character()Ljava/lang/String;
--ASTORE 16
-+ASTORE 23
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.characters:Ljava/util/List;
- INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
--ALOAD 16
-+ALOAD 23
- INVOKEDYNAMIC test(Ljava/lang/String;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/ClientSession.lambda$content$a208176d3f7b650dea1a06c7ea93ad0fcff75da53918965d83817c5a7e27316f(Ljava/lang/String;Llocal/lito381/server/CharacterSummary;)Z, type:(Llocal/lito381/server/CharacterSummary;)Z]
- INVOKEINTERFACE java/util/stream/Stream.noneMatch(Ljava/util/function/Predicate;)Z itf
--IFEQ L302
-+IFEQ L327
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-@@ -302,8 +327,8 @@
- INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
- CONST null
- ASTORE 11
--GOTO L325
--ASTORE 17
-+GOTO L350
-+ASTORE 24
++INVOKESPECIAL local/lito381/server/ClientSession.settleRequestedBattleExit()V
++RETURN
  ALOAD 0
  CONST null
- PUTFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-@@ -313,10 +338,10 @@
- INVOKESTATIC java/util/Set.of()Ljava/util/Set; itf
- PUTFIELD local/lito381/server/ClientSession.authenticatedClassicSources:Ljava/util/Set;
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
--ALOAD 17
-+ALOAD 24
- INVOKEVIRTUAL java/lang/Object.getClass()Ljava/lang/Class;
- INVOKEVIRTUAL java/lang/Class.getSimpleName()Ljava/lang/String;
--ALOAD 17
-+ALOAD 24
- INVOKEVIRTUAL java/lang/Exception.getMessage()Ljava/lang/String;
- INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[LiTo] character lookup failed: \u0001: \u0001"]
- INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
-@@ -333,7 +358,7 @@
+ PUTFIELD local/lito381/server/ClientSession.pendingWarehousePassword:Llocal/lito381/server/ClientSession$PendingWarehousePassword;
+@@ -17,11 +18,17 @@
+ PUTFIELD local/lito381/server/ClientSession.pendingPetRename:Llocal/lito381/server/ClientSession$PendingPetRename;
  ALOAD 0
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
- INVOKEVIRTUAL local/lito381/server/GameHub.acceptAuthenticatedAccount(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession$Endpoint;Ljava/lang/String;)Z
--IFNE L353
-+IFNE L378
- ALOAD 0
- CONST null
- PUTFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
-@@ -356,21 +381,29 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.endpoint:Llocal/lito381/server/ClientSession$Endpoint;
- GETSTATIC local/lito381/server/ClientSession$Endpoint.GAME:Llocal/lito381/server/ClientSession$Endpoint;
--IF_ACMPNE L376
-+IF_ACMPNE L409
- ALOAD 10
--IFNULL L376
-+IFNULL L409
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
-+ASTORE 25
-+ASTORE 26
-+ASTORE 27
-+ALOAD 27
+ INVOKESPECIAL local/lito381/server/ClientSession.clearControlledCompanionTargets()V
 +ALOAD 0
-+ALOAD 26
-+INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
-+ALOAD 25
- INVOKEVIRTUAL local/lito381/server/GameHub.consumeClassicSourceHandoff(Ljava/lang/String;Ljava/lang/String;)Z
--ISTORE 18
-+ISTORE 28
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
++GETFIELD local/lito381/server/ClientSession.rentalTownTransferPending:Z
++IFEQ L170
++ALOAD 0
++GETFIELD local/lito381/server/ClientSession.rentalTownRoomState:Z
++IFEQ L170
  ALOAD 0
- GETFIELD local/lito381/server/ClientSession.selectedClassicServerName:Ljava/lang/String;
--ILOAD 18
-+ILOAD 28
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.account:Ljava/lang/String;
- INVOKESTATIC local/lito381/server/ClientSession.mask(Ljava/lang/String;)Ljava/lang/String;
-@@ -379,9 +412,9 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.endpoint:Llocal/lito381/server/ClientSession$Endpoint;
- GETSTATIC local/lito381/server/ClientSession$Endpoint.GAME:Llocal/lito381/server/ClientSession$Endpoint;
--IF_ACMPNE L413
--ALOAD 11
--IFNULL L413
-+IF_ACMPNE L446
-+ALOAD 11
-+IFNULL L446
- ALOAD 0
- ALOAD 11
- INVOKEVIRTUAL local/lito381/server/GameHub$ChannelPortHandoff.channelId()I
-@@ -396,11 +429,11 @@
- INVOKEVIRTUAL local/lito381/server/ServerConfig.gameBind()Ljava/lang/String;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.boundChannelId:I
--IFGE L401
-+IFGE L434
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.config:Llocal/lito381/server/ServerConfig;
- INVOKEVIRTUAL local/lito381/server/ServerConfig.port()I
--GOTO L406
-+GOTO L439
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.config:Llocal/lito381/server/ServerConfig;
- ALOAD 0
-@@ -415,16 +448,17 @@
- INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
- ALOAD 0
- GETSTATIC local/lito381/server/ClientSession$Phase.AUTHENTICATED:Llocal/lito381/server/ClientSession$Phase;
--PUTFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
-+CONST str:"phase"
-+INVOKESTATIC local/lito381/server/NativePlayerCommit.scene(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Ljava/lang/String;)V
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.endpoint:Llocal/lito381/server/ClientSession$Endpoint;
- GETSTATIC local/lito381/server/ClientSession$Endpoint.GAME:Llocal/lito381/server/ClientSession$Endpoint;
--IF_ACMPNE L425
-+IF_ACMPNE L459
- ALOAD 0
- INVOKESPECIAL local/lito381/server/ClientSession.beginGameBootstrap()V
- ALOAD 0
- INVOKESPECIAL local/lito381/server/ClientSession.notifyWantedAccountLogin()V
--GOTO L427
-+GOTO L461
- ALOAD 0
- INVOKESPECIAL local/lito381/server/ClientSession.sendLoginBootstrap()V
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
-```
-
-</details>
-
-### `local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V
-+++ candidate/local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V
-@@ -5,6 +5,6 @@
- ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.pendingRentalTeleportEndpoint:Llocal/lito381/server/NativeLitoRentalTeleportEndpointCatalog$Endpoint;
+ ASTORE 1
  ALOAD 1
- ALOAD 2
--INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H7 local/lito381/server/ClientSession.lambda$content$dfb3791738c5b4d0ec1d5ae51a7b2311d8001284ea4625b6d859dc694635b012([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V, type:()V]
-+INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H7 local/lito381/server/ClientSession.nativeCompanionTargetuseClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V, type:()V]
- INVOKESTATIC local/lito381/server/NativeCompanionTargets.cast(Llocal/lito381/server/ClientSession;ILlocal/lito381/server/NativeSelfCastAction$Task;)V
- RETURN
-```
-
-</details>
-
-### `local/lito381/server/ClientSession#movementUnlock([B)V`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession#movementUnlock([B)V
-+++ candidate/local/lito381/server/ClientSession#movementUnlock([B)V
-@@ -1,4 +1,4 @@
--META 2 null [java/io/IOException]
-+META 2 null []
- TRY []
+-IFNULL L124
++IFNULL L131
  ALOAD 1
- INVOKESTATIC local/lito381/server/Protocol.movementUnlock([B)V
-@@ -15,11 +15,11 @@
- INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
- RETURN
+ INVOKEVIRTUAL local/lito381/server/NativeLitoRentalTeleportEndpointCatalog$Endpoint.ipv4()J
  ALOAD 0
-+CONST Integer:0
-+ALOAD 0
- INVOKESTATIC local/lito381/server/Protocol.movementLockRelease()[B
- CONST str:"S_PARALYSE movement-lock-release mode=17"
- INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
--ALOAD 0
--CONST Integer:0
- PUTFIELD local/lito381/server/ClientSession.movementLockPending:Z
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 0
-```
-
-</details>
-
-### `local/lito381/server/ClientSession#repair021$lambda$attack$414()I`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession#repair021$lambda$attack$414()I
-+++ candidate/local/lito381/server/ClientSession#repair021$lambda$attack$414()I
-@@ -1 +1,6 @@
--MISSING
-+META 4106 null []
-+TRY []
-+INVOKESTATIC java/util/concurrent/ThreadLocalRandom.current()Ljava/util/concurrent/ThreadLocalRandom;
-+CONST Integer:1000
-+INVOKEVIRTUAL java/util/concurrent/ThreadLocalRandom.nextInt(I)I
-+IRETURN
-```
-
-</details>
-
-### `local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
-+++ formal/local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
-@@ -82,22 +82,22 @@
- RETURN
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
-+ALOAD 0
-+INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;
-+ALOAD 0
-+INVOKESPECIAL local/lito381/server/ClientSession.stateCharacter()Ljava/lang/String;
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.rentalTownInventory:Llocal/lito381/server/RuntimeInventory;
- ASTORE 8
--ALOAD 0
--INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;
- ASTORE 9
--ALOAD 0
--INVOKESPECIAL local/lito381/server/ClientSession.stateCharacter()Ljava/lang/String;
- ASTORE 10
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.rentalTownInventory:Llocal/lito381/server/RuntimeInventory;
- ASTORE 11
-+ALOAD 11
-+ALOAD 0
-+ALOAD 10
-+INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
-+ALOAD 9
- ALOAD 8
--ALOAD 0
--ALOAD 9
--INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
--ALOAD 10
--ALOAD 11
- INVOKEVIRTUAL local/lito381/server/GameHub.stageRentalBattleHandoff(Ljava/lang/String;Ljava/lang/String;Llocal/lito381/server/RuntimeInventory;)Z
- ISTORE 12
- ILOAD 12
-@@ -2050,7 +2050,7 @@
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/InventoryCatalog$Definition.effect()Llocal/lito381/server/InventoryCatalog$Effect;
- GETSTATIC local/lito381/server/InventoryCatalog$Effect.ANTIDOTE:Llocal/lito381/server/InventoryCatalog$Effect;
--IF_ACMPNE L2251
-+IF_ACMPNE L2254
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
-@@ -2092,27 +2092,30 @@
- CONST str:"item-antidote"
- INVOKESPECIAL local/lito381/server/ClientSession.cancelAbsoluteBarrier(Ljava/lang/String;)V
- ALOAD 0
-+DUP
- GETFIELD local/lito381/server/ClientSession.timedStatus:Llocal/lito381/server/BattleTimedStatus;
--ALOAD 0
-+SWAP
- ALOAD 2
- INVOKESTATIC local/lito381/server/CombatPoisonLifecycle.cure(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Z
- ISTORE 98
- ALOAD 0
-+DUP
- GETFIELD local/lito381/server/ClientSession.timedStatus:Llocal/lito381/server/BattleTimedStatus;
--ALOAD 0
-+SWAP
- ALOAD 2
- INVOKESTATIC local/lito381/server/CombatPoisonLifecycle.silence(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Z
- ISTORE 99
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.classicWorldPoisonKind:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
- GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.PARALYSIS:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
--IF_ACMPNE L2113
--ALOAD 0
-+IF_ACMPNE L2116
-+ALOAD 0
-+DUP
- GETFIELD local/lito381/server/ClientSession.timedStatus:Llocal/lito381/server/BattleTimedStatus;
--ALOAD 0
-+SWAP
- ALOAD 2
- INVOKESTATIC local/lito381/server/CombatPoisonLifecycle.npcCancel(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/BattleTimedStatus$ParalysisCancellation;
--GOTO L2118
-+GOTO L2121
- NEW local/lito381/server/BattleTimedStatus$ParalysisCancellation
- DUP
- CONST Integer:0
-@@ -2120,27 +2123,27 @@
- INVOKESPECIAL local/lito381/server/BattleTimedStatus$ParalysisCancellation.<init>(ZZ)V
- ASTORE 100
- ILOAD 98
--IFNE L2126
-+IFNE L2129
- ILOAD 99
--IFNE L2126
-+IFNE L2129
- ALOAD 100
- INVOKEVIRTUAL local/lito381/server/BattleTimedStatus$ParalysisCancellation.present()Z
--IFEQ L2128
-+IFEQ L2131
+@@ -29,9 +36,9 @@
+ INVOKEVIRTUAL local/lito381/server/ServerConfig.advertisedHost()Ljava/lang/String;
+ INVOKESTATIC local/lito381/server/ClientSession.ipv4LittleEndian(Ljava/lang/String;)J
+ LCMP
+-IFNE L32
++IFNE L39
  CONST Integer:1
--GOTO L2129
-+GOTO L2132
+-GOTO L33
++GOTO L40
  CONST Integer:0
- ISTORE 101
- ILOAD 98
--IFEQ L2135
-+IFEQ L2138
+ ISTORE 2
  ALOAD 0
- CONST null
- INVOKESTATIC local/lito381/server/CombatPoisonAtomic.attacker(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;)V
- ILOAD 101
--IFEQ L2147
-+IFEQ L2150
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2147
-+IF_ACMPNE L2150
- ALOAD 0
- CONST Long:0
- INVOKESTATIC local/lito381/server/CombatPoisonAtomic.object(Llocal/lito381/server/ClientSession;J)V
-@@ -2168,12 +2171,12 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2174
-+IF_ACMPNE L2177
- ALOAD 0
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.classicWorldMapId:I
- INVOKESPECIAL local/lito381/server/ClientSession.classicWorldMembers(I)Ljava/util/List;
--GOTO L2179
-+GOTO L2182
+@@ -59,7 +66,7 @@
+ CONST str:"phase"
+ INVOKESTATIC local/lito381/server/NativePlayerCommit.scene(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Ljava/lang/String;)V
+ ILOAD 2
+-IFNE L78
++IFNE L85
  ALOAD 0
  GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
  ALOAD 0
-@@ -2185,7 +2188,7 @@
- ASTORE 104
- ALOAD 104
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L2212
-+IFEQ L2215
- ALOAD 104
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -2193,7 +2196,7 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2205
-+IF_ACMPNE L2208
- ALOAD 105
- GETFIELD local/lito381/server/ClientSession.positionX:I
- ALOAD 105
-@@ -2203,15 +2206,15 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.positionY:I
- INVOKESTATIC local/lito381/server/BattleSpellCatalog.isInNativeScreen(IIII)Z
--IFNE L2205
--GOTO L2183
-+IFNE L2208
-+GOTO L2186
- ALOAD 105
- ALOAD 102
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
- INVOKEDYNAMIC makeConcatWithConstants(J)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_EFFECT antidote object=\u0001 gfx=192"]
+@@ -90,14 +97,14 @@
+ CONST str:"S_LITO_QUIT_FIGHT rental-town configured endpoint"
  INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
--GOTO L2183
-+GOTO L2186
+ ILOAD 2
+-IFNE L123
++IFNE L130
  ALOAD 0
- ALOAD 97
+ CONST str:"rental-town-cross-endpoint-handoff"
+ INVOKEVIRTUAL local/lito381/server/ClientSession.forceDisconnect(Ljava/lang/String;)V
+-GOTO L123
++GOTO L130
+ ASTORE 4
+ ILOAD 2
+-IFEQ L100
++IFEQ L107
+ ALOAD 4
+ ATHROW
+ GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+@@ -110,14 +117,14 @@
+ INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[LiTo] rental-town old endpoint already reset account=\u0001 reply-skipped=\u0001"]
+ INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
+ ILOAD 2
+-IFNE L123
++IFNE L130
  ALOAD 0
-@@ -2219,14 +2222,14 @@
- INVOKESPECIAL local/lito381/server/ClientSession.sendInventoryDelta(Llocal/lito381/server/RuntimeInventory;Llocal/lito381/server/RuntimeInventory;)V
- ALOAD 100
- INVOKEVIRTUAL local/lito381/server/BattleTimedStatus$ParalysisCancellation.unlockRequired()Z
--IFEQ L2225
-+IFEQ L2228
+ CONST str:"rental-town-cross-endpoint-handoff"
+ INVOKEVIRTUAL local/lito381/server/ClientSession.forceDisconnect(Ljava/lang/String;)V
+-GOTO L123
++GOTO L130
+ ASTORE 5
+ ILOAD 2
+-IFNE L121
++IFNE L128
  ALOAD 0
- GETSTATIC local/lito381/server/Protocol$ParalysisMode.PARALYSIS_RELEASE:Llocal/lito381/server/Protocol$ParalysisMode;
- INVOKESTATIC local/lito381/server/Protocol.paralysis(Llocal/lito381/server/Protocol$ParalysisMode;)[B
- CONST str:"S_PARALYSE mode=3 reason=antidote"
- INVOKESTATIC local/lito381/server/CombatPoisonParalysis.release(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)V
- ILOAD 99
--IFEQ L2235
-+IFEQ L2238
+ CONST str:"rental-town-cross-endpoint-handoff"
+ INVOKEVIRTUAL local/lito381/server/ClientSession.forceDisconnect(Ljava/lang/String;)V
+@@ -164,30 +171,12 @@
+ INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
+ RETURN
  ALOAD 0
- CONST Integer:311
+-GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
+-GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
+-IF_ACMPNE L170
+-ALOAD 0
+-INVOKESPECIAL local/lito381/server/ClientSession.settleRequestedBattleExit()V
+-RETURN
+-ALOAD 0
+-CONST null
+-PUTFIELD local/lito381/server/ClientSession.pendingWarehousePassword:Llocal/lito381/server/ClientSession$PendingWarehousePassword;
+-ALOAD 0
+-CONST null
+-PUTFIELD local/lito381/server/ClientSession.pendingSlaveTarget:Llocal/lito381/server/ClientSession$PendingSlaveTarget;
+-ALOAD 0
+-CONST null
+-PUTFIELD local/lito381/server/ClientSession.pendingPetRename:Llocal/lito381/server/ClientSession$PendingPetRename;
+-ALOAD 0
+-INVOKESPECIAL local/lito381/server/ClientSession.clearControlledCompanionTargets()V
+-ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.config:Llocal/lito381/server/ServerConfig;
+ INVOKEVIRTUAL local/lito381/server/ServerConfig.nativeTransferStoneProbeEnabled()Z
+-IFEQ L241
++IFEQ L230
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.transferStoneProbeHandoffPending:Z
+-IFEQ L241
++IFEQ L230
+ ALOAD 0
  CONST Integer:0
-@@ -2236,7 +2239,7 @@
- ALOAD 2
- INVOKESTATIC local/lito381/server/CombatPoisonLifecycle.silenceDeathSend(Llocal/lito381/server/ClientSession;[BLjava/lang/String;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V
- ILOAD 101
--IFEQ L2244
-+IFEQ L2247
+ PUTFIELD local/lito381/server/ClientSession.transferStoneProbeHandoffPending:Z
+@@ -219,7 +208,7 @@
  ALOAD 0
- ALOAD 0
- INVOKESTATIC java/lang/System.nanoTime()J
-@@ -2254,17 +2257,17 @@
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/InventoryCatalog$Definition.effect()Llocal/lito381/server/InventoryCatalog$Effect;
- GETSTATIC local/lito381/server/InventoryCatalog$Effect.BLIND:Llocal/lito381/server/InventoryCatalog$Effect;
--IF_ACMPNE L2325
-+IF_ACMPNE L2328
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2265
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.observer:Z
--IFNE L2265
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.playerHp:I
--IFGT L2276
-+IF_ACMPNE L2268
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.observer:Z
-+IFNE L2268
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.playerHp:I
-+IFGT L2279
+ CONST str:"transfer-stone-probe-endpoint-handoff"
+ INVOKEVIRTUAL local/lito381/server/ClientSession.forceDisconnect(Ljava/lang/String;)V
+-GOTO L240
++GOTO L229
+ ASTORE 7
  GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
  ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
-@@ -2286,7 +2289,7 @@
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory$Item.objectId()J
- CONST Long:1
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory.remove(JJ)Z
--IFNE L2288
-+IFNE L2291
- RETURN
+@@ -233,7 +222,7 @@
  ALOAD 0
- CONST str:"item-blindness"
-@@ -2328,17 +2331,17 @@
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/InventoryCatalog$Definition.effect()Llocal/lito381/server/InventoryCatalog$Effect;
- GETSTATIC local/lito381/server/InventoryCatalog$Effect.BREATH:Llocal/lito381/server/InventoryCatalog$Effect;
--IF_ACMPNE L2436
-+IF_ACMPNE L2439
+ CONST str:"transfer-stone-probe-endpoint-handoff"
+ INVOKEVIRTUAL local/lito381/server/ClientSession.forceDisconnect(Ljava/lang/String;)V
+-GOTO L240
++GOTO L229
+ ASTORE 8
  ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2339
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.observer:Z
--IFNE L2339
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.playerHp:I
--IFGT L2350
-+IF_ACMPNE L2342
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.observer:Z
-+IFNE L2342
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.playerHp:I
-+IFGT L2353
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+ CONST str:"transfer-stone-probe-endpoint-handoff"
+@@ -244,7 +233,7 @@
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.pendingTransition:Llocal/lito381/server/ClientSession$PendingTransition;
+ GETSTATIC local/lito381/server/ClientSession$PendingTransition.RESTART_AWAIT_QUIT_FIGHT:Llocal/lito381/server/ClientSession$PendingTransition;
+-IF_ACMPNE L260
++IF_ACMPNE L249
+ ALOAD 0
+ NEW local/lito381/server/Protocol$Writer
+ DUP
+@@ -263,21 +252,21 @@
  ALOAD 0
  GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
-@@ -2360,7 +2363,7 @@
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory$Item.objectId()J
- CONST Long:1
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory.remove(JJ)Z
--IFNE L2362
-+IFNE L2365
- RETURN
+ GETSTATIC local/lito381/server/ClientSession$Phase.LOBBY:Llocal/lito381/server/ClientSession$Phase;
+-IF_ACMPNE L297
++IF_ACMPNE L286
  ALOAD 0
- CONST str:"item-underwater-breath"
-@@ -2398,7 +2401,7 @@
- ASTORE 110
- ALOAD 110
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L2410
-+IFEQ L2413
- ALOAD 110
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -2409,7 +2412,7 @@
- INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
- INVOKEDYNAMIC makeConcatWithConstants(J)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_EFFECT underwater-breath object=\u0001 gfx=190"]
+ GETFIELD local/lito381/server/ClientSession.config:Llocal/lito381/server/ServerConfig;
+ INVOKEVIRTUAL local/lito381/server/ServerConfig.rentalTownDirectoryEnabled()Z
+-IFEQ L297
++IFEQ L286
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.rentalTownDirectoryAdvertised:Z
+-IFEQ L297
++IFEQ L286
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.selectedCharacter:Ljava/lang/String;
+ INVOKEVIRTUAL java/lang/String.isEmpty()Z
+-IFNE L297
++IFNE L286
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.rentalItemSetSelection:I
+-IFLT L297
++IFLT L286
+ ALOAD 0
+ CONST Integer:1
+ PUTFIELD local/lito381/server/ClientSession.rentalTownJoinPending:Z
+@@ -296,18 +285,18 @@
+ INVOKESTATIC local/lito381/server/Protocol.allowPostTransition()[B
+ CONST str:"S_LITO_VS_SERVER_ALLOW_JOIN rental-town cached-room join"
  INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
--GOTO L2396
-+GOTO L2399
- ALOAD 0
- ALOAD 107
- ALOAD 0
-@@ -2439,7 +2442,7 @@
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/InventoryCatalog$Definition.effect()Llocal/lito381/server/InventoryCatalog$Effect;
- GETSTATIC local/lito381/server/InventoryCatalog$Effect.POLYMORPH:Llocal/lito381/server/InventoryCatalog$Effect;
--IF_ACMPNE L2445
-+IF_ACMPNE L2448
- ALOAD 0
- ALOAD 17
- ALOAD 26
-@@ -2448,17 +2451,17 @@
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/InventoryCatalog$Definition.effect()Llocal/lito381/server/InventoryCatalog$Effect;
- GETSTATIC local/lito381/server/InventoryCatalog$Effect.WHISTLE:Llocal/lito381/server/InventoryCatalog$Effect;
--IF_ACMPNE L2499
-+IF_ACMPNE L2502
+-GOTO L345
++GOTO L334
  ALOAD 0
  GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
  GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2459
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.observer:Z
--IFNE L2459
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.playerHp:I
--IFGT L2470
-+IF_ACMPNE L2462
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.observer:Z
-+IFNE L2462
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.playerHp:I
-+IFGT L2473
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+-IF_ACMPNE L304
++IF_ACMPNE L293
+ ALOAD 0
+ INVOKESPECIAL local/lito381/server/ClientSession.settleRequestedBattleExit()V
+-GOTO L345
++RETURN
  ALOAD 0
  GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
-@@ -2483,7 +2486,7 @@
- ASTORE 113
- ALOAD 113
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L2493
-+IFEQ L2496
- ALOAD 113
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -2492,7 +2495,7 @@
- ALOAD 112
- CONST str:"S_SOUND_EFFECT repeat=0 sound=437 item=whistle"
+ GETSTATIC local/lito381/server/ClientSession$Phase.RESULT:Llocal/lito381/server/ClientSession$Phase;
+-IF_ACMPNE L320
++IF_ACMPNE L309
+ ALOAD 0
+ NEW local/lito381/server/Protocol$Writer
+ DUP
+@@ -319,11 +308,11 @@
+ INVOKEVIRTUAL local/lito381/server/Protocol$Writer.bytes()[B
+ CONST str:"S_LITO_QUIT_FIGHT accepted; waiting-summary-confirm"
  INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
--GOTO L2481
-+GOTO L2484
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 17
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory$Item.objectId()J
-@@ -2502,17 +2505,17 @@
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/InventoryCatalog$Definition.effect()Llocal/lito381/server/InventoryCatalog$Effect;
- GETSTATIC local/lito381/server/InventoryCatalog$Effect.LIQUOR:Llocal/lito381/server/InventoryCatalog$Effect;
--IF_ACMPNE L2575
-+IF_ACMPNE L2578
+-GOTO L345
++GOTO L334
  ALOAD 0
  GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPNE L2513
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.observer:Z
--IFNE L2513
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.playerHp:I
--IFGT L2524
-+IF_ACMPNE L2516
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.observer:Z
-+IFNE L2516
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.playerHp:I
-+IFGT L2527
+ GETSTATIC local/lito381/server/ClientSession$Phase.ROOM:Llocal/lito381/server/ClientSession$Phase;
+-IF_ACMPNE L342
++IF_ACMPNE L331
+ ALOAD 0
+ NEW local/lito381/server/Protocol$Writer
+ DUP
+@@ -337,11 +326,11 @@
+ INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.rentalTownRoomState:Z
+-IFNE L345
++IFNE L330
+ ALOAD 0
+ CONST Integer:0
+ INVOKESPECIAL local/lito381/server/ClientSession.exitRoom(Z)V
+-GOTO L345
++GOTO L334
  GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
-@@ -2534,7 +2537,7 @@
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory$Item.objectId()J
- CONST Long:1
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory.remove(JJ)Z
--IFNE L2536
-+IFNE L2539
- RETURN
- ALOAD 0
- CONST str:"item-liquor"
+ CONST str:"[LiTo] C_LITO_QUIT_FIGHT acknowledged outside battle"
+ INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
 ```
+
 
 </details>
 
-### `local/lito381/server/ClientSession#sourceApplicationRun()V`
+### 純形狀待裁定　`local/lito381/server/ClientSession#nativeAreaFreezeAcceptedWorld(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V`
 
 <details>
-<summary>完整差異（全部 hunks）</summary>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#nativeAreaFreezeAcceptedWorld(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V
++++ candidate/local/lito381/server/ClientSession#nativeAreaFreezeAcceptedWorld(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V
+@@ -8,11 +8,13 @@
+ ALOAD 1
+ INVOKESTATIC local/lito381/server/NativeAcceptedFreezeMutation.duration(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)I
+ INVOKEVIRTUAL local/lito381/server/BattleTimedStatus.activateFreeze(JI)Z
+-DUP
++IFEQ L11
++CONST Integer:1
++GOTO L12
++CONST Integer:0
+ ISTORE 6
+-ISTORE 7
+ ILOAD 6
+-IFEQ L40
++IFEQ L42
+ ALOAD 0
+ ALOAD 2
+ INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
+```
+
+
+</details>
+
+### 純形狀待裁定　`local/lito381/server/ClientSession#nativeAreaFreezeAcceptedBattle(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#nativeAreaFreezeAcceptedBattle(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V
++++ candidate/local/lito381/server/ClientSession#nativeAreaFreezeAcceptedBattle(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;Llocal/lito381/server/ClientSession;Ljava/util/List;)V
+@@ -8,11 +8,13 @@
+ ALOAD 1
+ INVOKESTATIC local/lito381/server/NativeAcceptedFreezeMutation.duration(Llocal/lito381/server/BattleSpellCatalog$FreezeAttackSpell;)I
+ INVOKEVIRTUAL local/lito381/server/BattleTimedStatus.activateFreeze(JI)Z
+-DUP
++IFEQ L11
++CONST Integer:1
++GOTO L12
++CONST Integer:0
+ ISTORE 6
+-ISTORE 7
+ ILOAD 6
+-IFEQ L41
++IFEQ L43
+ ALOAD 0
+ ALOAD 2
+ INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
+```
+
+
+</details>
+
+### 純形狀待裁定　`local/lito381/server/ClientSession#resolveClassicWorldScarecrowHit(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldMonsterCatalog$MonsterTemplate;I)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#resolveClassicWorldScarecrowHit(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldMonsterCatalog$MonsterTemplate;I)V
++++ candidate/local/lito381/server/ClientSession#resolveClassicWorldScarecrowHit(Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClassicWorldMonsterCatalog$MonsterTemplate;I)V
+@@ -29,18 +29,18 @@
+ GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
+ ALOAD 1
+ ALOAD 0
+-GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
+-ALOAD 1
+-ALOAD 0
+ INVOKESTATIC local/lito381/server/NativeStaticNpcScene.heading(Llocal/lito381/server/GameHub;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;Llocal/lito381/server/ClientSession;)I
+-DUP
+ ISTORE 4
++ILOAD 4
+ CONST Integer:1
+ IADD
+ CONST Integer:7
+ IAND
+-DUP
+ ISTORE 5
++ALOAD 0
++GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
++ALOAD 1
++ILOAD 5
+ ALOAD 0
+ INVOKESTATIC local/lito381/server/NativeStaticNpcScene.turn(Llocal/lito381/server/GameHub;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;ILlocal/lito381/server/ClientSession;)Z
+ IFNE L51
+```
+
+
+</details>
+
+### 缺呼叫　`local/lito381/server/ClientSession#resetAndSendRentalTownStatus()V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#resetAndSendRentalTownStatus()V
++++ candidate/local/lito381/server/ClientSession#resetAndSendRentalTownStatus()V
+@@ -42,6 +42,8 @@
+ ALOAD 0
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.playerMaxHp:I
++ALOAD 0
++INVOKESTATIC local/lito381/server/NativePlayerCommit.advance(Llocal/lito381/server/ClientSession;)V
+ PUTFIELD local/lito381/server/ClientSession.playerHp:I
+ ALOAD 0
+ ALOAD 0
+```
+
+
+</details>
+
+### 缺呼叫　`local/lito381/server/ClientSession#confirmDeath([B)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#confirmDeath([B)V
++++ candidate/local/lito381/server/ClientSession#confirmDeath([B)V
+@@ -23,7 +23,7 @@
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.lastAttacker:Llocal/lito381/server/ClientSession;
+ ALOAD 0
+-INVOKEVIRTUAL local/lito381/server/GameHub.playerDefeated(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleRules$Resolution;
++INVOKESTATIC local/lito381/server/CombatPoisonLifecycle.defeated(Llocal/lito381/server/GameHub;JLlocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleRules$Resolution;
+ ASTORE 2
+ GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+ ALOAD 0
+```
+
+
+</details>
+
+### 缺呼叫　`local/lito381/server/ClientSession#commitClassicWorldMonsterCounterBarrier(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleCounterBarrier$Decision;)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#commitClassicWorldMonsterCounterBarrier(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleCounterBarrier$Decision;)V
++++ candidate/local/lito381/server/ClientSession#commitClassicWorldMonsterCounterBarrier(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/BattleCounterBarrier$Decision;)V
+@@ -141,7 +141,7 @@
+ INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPopulation$Snapshot.currentHp()I
+ ALOAD 13
+ INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPopulation$Snapshot.maximumHp()I
+-INVOKESTATIC local/lito381/server/Protocol.hitRatio(JII)[B
++INVOKESTATIC local/lito381/server/NativeBattleTamedLifecycle.visualHitRatio(JII)[B
+ ASTORE 14
+ ALOAD 0
+ ALOAD 0
+```
+
+
+</details>
+
+### 順序不同　`local/lito381/server/ClientSession#sourcePoisonBody$publishNpcMagicCancellation(JLjava/util/List;ZZZZZZZZZZZZZZZZZZZZZLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#sourcePoisonBody$publishNpcMagicCancellation(JLjava/util/List;ZZZZZZZZZZZZZZZZZZZZZLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
++++ candidate/local/lito381/server/ClientSession#sourcePoisonBody$publishNpcMagicCancellation(JLjava/util/List;ZZZZZZZZZZZZZZZZZZZZZLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
+@@ -1,12 +1,15 @@
+-META 2 null [java/io/IOException]
++META 2 (JLjava/util/List<Llocal/lito381/server/ClientSession;>;ZZZZZZZZZZZZZZZZZZZZZ)V [java/io/IOException]
+ TRY []
+ ALOAD 3
+ INVOKEINTERFACE java/util/List.iterator()Ljava/util/Iterator; itf
+ ASTORE 26
+ ALOAD 26
+ INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
+-IFNE L7
+-GOTO L47
++IFNE L10
++LLOAD 1/2
++ALOAD 25
++INVOKESTATIC local/lito381/server/CombatMonsterCurseLifecycle.paletteFinishedForId(JLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
++GOTO L49
+ ALOAD 26
+ INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
+ CHECKCAST local/lito381/server/ClientSession
+@@ -28,14 +31,13 @@
+ INVOKEDYNAMIC makeConcatWithConstants(J)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_EMOTION(brave) Cancellation NPC=\u0001 mode=0 duration=0"]
+ INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
+ ILOAD 14
+-IFNE L36
++IFNE L38
+ ILOAD 15
+-IFNE L36
++IFNE L38
+ ILOAD 16
+-IFNE L36
++IFNE L38
+ ILOAD 17
+-IFNE L36
+-GOTO L3
++IFEQ L48
+ ALOAD 27
+ LLOAD 1/2
+ CONST Integer:0
+@@ -47,9 +49,6 @@
+ ALOAD 25
+ INVOKESTATIC local/lito381/server/CombatMonsterCurseLifecycle.send(Llocal/lito381/server/ClientSession;[BLjava/lang/String;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V
+ GOTO L3
+-LLOAD 1/2
+-ALOAD 25
+-INVOKESTATIC local/lito381/server/CombatMonsterCurseLifecycle.paletteFinishedForId(JLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
+ GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+ LLOAD 1/2
+ ILOAD 4
+```
+
+
+</details>
+
+### 順序不同　`local/lito381/server/ClientSession#publishNpcCounterMirrorTrigger(JIILlocal/lito381/server/BattleCounterMirrorStatus$Decision;Ljava/util/List;Ljava/lang/String;)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#publishNpcCounterMirrorTrigger(JIILlocal/lito381/server/BattleCounterMirrorStatus$Decision;Ljava/util/List;Ljava/lang/String;)V
++++ candidate/local/lito381/server/ClientSession#publishNpcCounterMirrorTrigger(JIILlocal/lito381/server/BattleCounterMirrorStatus$Decision;Ljava/util/List;Ljava/lang/String;)V
+@@ -22,7 +22,7 @@
+ ASTORE 11
+ ALOAD 11
+ INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
+-IFEQ L74
++IFEQ L77
+ ALOAD 11
+ INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
+ CHECKCAST local/lito381/server/ClientSession
+@@ -60,11 +60,6 @@
+ ALOAD 7
+ INVOKEDYNAMIC makeConcatWithConstants(JJILjava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_EFFECT Counter-Mirror-trigger defender=\u0001 npc-attacker=\u0001 gfx=\u0001 source=\u0001"]
+ INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
+-ALOAD 0
+-LLOAD 1/2
+-INVOKESTATIC local/lito381/server/NativeSourceNpcReaction.allow(Llocal/lito381/server/ClientSession;J)Z
+-IFNE L65
+-GOTO L20
+ ALOAD 12
+ ALOAD 10
+ LLOAD 1/2
+@@ -72,6 +67,14 @@
+ INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
+ ALOAD 7
+ INVOKEDYNAMIC makeConcatWithConstants(JJLjava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_ACTION Counter-Mirror-reflected npc-attacker=\u0001 defender=\u0001 action=2 source=\u0001"]
++ALOAD 0
++LLOAD 1/2
++INVOKESTATIC local/lito381/server/NativeSourceNpcReaction.allow(Llocal/lito381/server/ClientSession;J)Z
++IFNE L75
++POP
++POP
++POP
++GOTO L76
+ INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
+ GOTO L20
+ GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+```
+
+
+</details>
+
+### 順序不同　`local/lito381/server/ClientSession#publishNpcCounterBarrierTrigger(JLlocal/lito381/server/BattleCounterBarrier$Decision;Ljava/util/List;Ljava/lang/String;)V`
+
+<details>
+<summary>完整差異</summary>
+
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#publishNpcCounterBarrierTrigger(JLlocal/lito381/server/BattleCounterBarrier$Decision;Ljava/util/List;Ljava/lang/String;)V
++++ candidate/local/lito381/server/ClientSession#publishNpcCounterBarrierTrigger(JLlocal/lito381/server/BattleCounterBarrier$Decision;Ljava/util/List;Ljava/lang/String;)V
+@@ -18,7 +18,7 @@
+ ASTORE 9
+ ALOAD 9
+ INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
+-IFEQ L51
++IFEQ L54
+ ALOAD 9
+ INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
+ CHECKCAST local/lito381/server/ClientSession
+@@ -37,11 +37,6 @@
+ ALOAD 5
+ INVOKEDYNAMIC makeConcatWithConstants(JJIIILjava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_EFFECT counter-barrier-trigger defender=\u0001 npc-attacker=\u0001 gfx=\u0001 probability=\u0001 roll=\u0001 source=\u0001"]
+ INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
+-ALOAD 0
+-LLOAD 1/2
+-INVOKESTATIC local/lito381/server/NativeSourceNpcReaction.allow(Llocal/lito381/server/ClientSession;J)Z
+-IFNE L42
+-GOTO L16
+ ALOAD 10
+ ALOAD 8
+ LLOAD 1/2
+@@ -49,6 +44,14 @@
+ INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
+ ALOAD 5
+ INVOKEDYNAMIC makeConcatWithConstants(JJLjava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_ACTION counter-barrier-reflected npc-attacker=\u0001 defender=\u0001 action=2 source=\u0001"]
++ALOAD 0
++LLOAD 1/2
++INVOKESTATIC local/lito381/server/NativeSourceNpcReaction.allow(Llocal/lito381/server/ClientSession;J)Z
++IFNE L52
++POP
++POP
++POP
++GOTO L53
+ INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
+ GOTO L16
+ GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
+```
+
+
+</details>
+
+### 缺呼叫　`local/lito381/server/ClientSession#sourceApplicationRun()V`
+
+<details>
+<summary>完整差異</summary>
+
+
 
 ```diff
 --- staged/local/lito381/server/ClientSession#sourceApplicationRun()V
@@ -2718,649 +2947,151 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
  RETURN
 ```
 
-</details>
-
-### `local/lito381/server/ClientSession#setReady([B)V`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession#setReady([B)V
-+++ candidate/local/lito381/server/ClientSession#setReady([B)V
-@@ -3,30 +3,32 @@
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;
- GETSTATIC local/lito381/server/ClientSession$Phase.ROOM:Llocal/lito381/server/ClientSession$Phase;
--IF_ACMPEQ L5
-+IF_ACMPEQ L7
-+ALOAD 0
-+INVOKESTATIC local/lito381/server/NativeRoomRules.feedback(Llocal/lito381/server/ClientSession;)V
- RETURN
- ALOAD 1
- INVOKESTATIC local/lito381/server/Protocol.litoReadyRequest([B)Llocal/lito381/server/Protocol$LitoReadyRequest;
- ASTORE 2
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/Protocol$LitoReadyRequest.ownerStart()Z
--IFEQ L13
-+IFEQ L15
- GETSTATIC local/lito381/server/Protocol$LitoParticipantState.READY:Llocal/lito381/server/Protocol$LitoParticipantState;
--GOTO L15
-+GOTO L17
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/Protocol$LitoReadyRequest.participantState()Llocal/lito381/server/Protocol$LitoParticipantState;
- ASTORE 3
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.rentalTownRoomState:Z
--IFEQ L43
-+IFEQ L47
- ALOAD 0
- CONST Integer:0
- PUTFIELD local/lito381/server/ClientSession.ready:Z
- ALOAD 3
- GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
--IF_ACMPNE L27
--GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
--GOTO L28
-+IF_ACMPNE L29
-+GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
-+GOTO L30
- GETSTATIC local/lito381/server/Protocol$LitoParticipantState.NOT_READY:Llocal/lito381/server/Protocol$LitoParticipantState;
- ASTORE 4
- ALOAD 0
-@@ -42,17 +44,19 @@
- INVOKEVIRTUAL local/lito381/server/Protocol$LitoParticipantState.wireValue()I
- INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;II)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_LITO_READY_GAME rental-town player=\u0001 requested=\u0001 published=\u0001"]
- INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
-+ALOAD 0
-+INVOKESTATIC local/lito381/server/NativeRoomRules.feedback(Llocal/lito381/server/ClientSession;)V
- RETURN
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/Protocol$LitoReadyRequest.ownerStart()Z
--IFEQ L53
-+IFEQ L57
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.currentRoomId:J
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/GameHub.requestOwnerStart(JLlocal/lito381/server/ClientSession;)Llocal/lito381/server/GameHub$ReadyUpdate;
--GOTO L61
-+GOTO L65
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
-@@ -64,14 +68,14 @@
- ASTORE 5
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/Protocol$LitoReadyRequest.ownerStart()Z
--IFEQ L79
-+IFEQ L83
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.currentRoomId:J
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/GameHub.isOwner(JLlocal/lito381/server/ClientSession;)Z
--IFNE L79
-+IFNE L83
- GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/ClientSession.playerName()Ljava/lang/String;
-@@ -85,14 +89,14 @@
- PUTFIELD local/lito381/server/ClientSession.ready:Z
- ALOAD 3
- GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
--IF_ACMPNE L88
--GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
--GOTO L94
-+IF_ACMPNE L92
-+GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
-+GOTO L98
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.ready:Z
--IFEQ L93
-+IFEQ L97
- GETSTATIC local/lito381/server/Protocol$LitoParticipantState.READY:Llocal/lito381/server/Protocol$LitoParticipantState;
--GOTO L94
-+GOTO L98
- GETSTATIC local/lito381/server/Protocol$LitoParticipantState.NOT_READY:Llocal/lito381/server/Protocol$LitoParticipantState;
- ASTORE 6
- ALOAD 0
-@@ -111,7 +115,7 @@
- ASTORE 9
- ALOAD 9
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L128
-+IFEQ L132
- ALOAD 9
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -127,10 +131,10 @@
- INVOKESTATIC java/lang/String.valueOf(Ljava/lang/Object;)Ljava/lang/String;
- INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;ZLjava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_LITO_READY_GAME player=\u0001 ready=\u0001 request=\u0001"]
- INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
--GOTO L109
-+GOTO L113
- ALOAD 5
- INVOKEVIRTUAL local/lito381/server/GameHub$ReadyUpdate.minimumPlayersPerForceWarning()I
--IFLE L139
-+IFLE L143
- ALOAD 0
- ALOAD 5
- INVOKEVIRTUAL local/lito381/server/GameHub$ReadyUpdate.minimumPlayersPerForceWarning()I
-@@ -141,7 +145,7 @@
- INVOKESPECIAL local/lito381/server/ClientSession.sendEncrypted([BLjava/lang/String;)V
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.ready:Z
--IFEQ L164
-+IFEQ L168
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
-@@ -150,14 +154,14 @@
- INVOKEVIRTUAL local/lito381/server/BattleRules$RuleSet.mode()Llocal/lito381/server/BattleRules$Mode;
- ALOAD 0
- INVOKESTATIC local/lito381/server/NativeRoomRules.bot(Llocal/lito381/server/BattleRules$Mode;Llocal/lito381/server/ClientSession;)Z
--IFEQ L164
-+IFEQ L168
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/ClientSession.currentRoomId:J
- INVOKEVIRTUAL local/lito381/server/GameHub.roomCombatantCount(J)I
- CONST Integer:2
--IF_ICMPGE L164
-+IF_ICMPGE L168
- ALOAD 0
- CONST str:"ArenaBot"
- CONST Integer:1
-@@ -169,13 +173,13 @@
- ASTORE 11
- ALOAD 11
- GETSTATIC local/lito381/server/GameHub$ReadyTransition.COUNTDOWN_STARTED:Llocal/lito381/server/GameHub$ReadyTransition;
--IF_ACMPNE L185
-+IF_ACMPNE L189
- ALOAD 8
- INVOKEINTERFACE java/util/List.iterator()Ljava/util/Iterator; itf
- ASTORE 12
- ALOAD 12
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L184
-+IFEQ L188
- ALOAD 12
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -183,17 +187,17 @@
- ALOAD 13
- CONST Integer:3
- INVOKEVIRTUAL local/lito381/server/ClientSession.serverCountdown(I)V
--GOTO L173
--GOTO L202
-+GOTO L177
-+GOTO L206
- ALOAD 11
- GETSTATIC local/lito381/server/GameHub$ReadyTransition.COUNTDOWN_CANCELLED:Llocal/lito381/server/GameHub$ReadyTransition;
--IF_ACMPNE L202
-+IF_ACMPNE L206
- ALOAD 8
- INVOKEINTERFACE java/util/List.iterator()Ljava/util/Iterator; itf
- ASTORE 14
- ALOAD 14
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L202
-+IFEQ L206
- ALOAD 14
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -201,7 +205,7 @@
- ALOAD 15
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/ClientSession.serverCountdown(I)V
--GOTO L191
-+GOTO L195
- ALOAD 0
- INVOKESTATIC local/lito381/server/NativeRoomRules.feedback(Llocal/lito381/server/ClientSession;)V
- RETURN
-```
 
 </details>
 
-### `local/lito381/server/GameHub#battleDisconnectWork(JJ)Llocal/lito381/server/GameHub$BattleDisconnectWork;`
+### lambda 名稱與本體代表
 
-<details>
-<summary>完整差異（全部 hunks）</summary>
+以下保留兩個方向各三個原名方法的全部差異。同名方法不存在時顯示該側為空；對側其他名稱的呼叫點見前表，仍須建立完整配對證明。
 
-```diff
---- staged/local/lito381/server/GameHub#battleDisconnectWork(JJ)Llocal/lito381/server/GameHub$BattleDisconnectWork;
-+++ candidate/local/lito381/server/GameHub#battleDisconnectWork(JJ)Llocal/lito381/server/GameHub$BattleDisconnectWork;
-@@ -276,18 +276,17 @@
- ALOAD 25
- ALOAD 8
- INVOKESTATIC local/lito381/server/TeamDisconnectSettlement.continuingWork(Llocal/lito381/server/GameHub;JLjava/util/List;Llocal/lito381/server/BattleRules$Resolution;Ljava/util/Set;)Ljava/lang/Object;
--ASTORE 26
--ALOAD 26
--IFNULL L282
--ALOAD 26
-+DUP
-+IFNULL L280
- CHECKCAST local/lito381/server/GameHub$BattleDisconnectWork
- ARETURN
-+POP
- NEW java/util/ArrayList
- DUP
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.members:Ljava/util/Set;
- INVOKESPECIAL java/util/ArrayList.<init>(Ljava/util/Collection;)V
--ASTORE 27
-+ASTORE 26
- ALOAD 5
- CONST Integer:0
- PUTFIELD local/lito381/server/GameHub$Room.battleStarted:Z
-@@ -298,9 +297,9 @@
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.members:Ljava/util/Set;
- INVOKEINTERFACE java/util/Set.isEmpty()Z itf
--IFNE L301
-+IFNE L300
- CONST Integer:1
--GOTO L302
-+GOTO L301
- CONST Integer:0
- PUTFIELD local/lito381/server/GameHub$Room.resultPending:Z
- ALOAD 5
-@@ -310,7 +309,7 @@
- GETFIELD local/lito381/server/GameHub$Room.ready:Ljava/util/Set;
- INVOKEINTERFACE java/util/Set.clear()V itf
- ALOAD 5
--ALOAD 5
-+DUP
- ALOAD 0
- INVOKESTATIC local/lito381/server/NativeRoomRules.botHp(Ljava/lang/Object;Llocal/lito381/server/GameHub;)I
- PUTFIELD local/lito381/server/GameHub$Room.botHp:I
-@@ -393,33 +392,33 @@
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.channelId:I
- INVOKESPECIAL local/lito381/server/GameHub.requiredChannel(I)Llocal/lito381/server/GameHub$Channel;
--ASTORE 28
-+ASTORE 27
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.members:Ljava/util/Set;
- INVOKEINTERFACE java/util/Set.isEmpty()Z itf
--IFEQ L406
-+IFEQ L405
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.id:J
--ALOAD 28
-+ALOAD 27
- GETFIELD local/lito381/server/GameHub$Channel.defaultRoomId:J
- LCMP
--IFEQ L406
-+IFEQ L405
- CONST Integer:1
--GOTO L407
--CONST Integer:0
--ISTORE 29
--ILOAD 29
--IFEQ L416
-+GOTO L406
-+CONST Integer:0
-+ISTORE 28
-+ILOAD 28
-+IFEQ L415
- NEW java/util/ArrayList
- DUP
--ALOAD 28
-+ALOAD 27
- GETFIELD local/lito381/server/GameHub$Channel.members:Ljava/util/Set;
- INVOKESPECIAL java/util/ArrayList.<init>(Ljava/util/Collection;)V
--GOTO L417
-+GOTO L416
- INVOKESTATIC java/util/List.of()Ljava/util/List; itf
--ASTORE 30
--ILOAD 29
--IFEQ L435
-+ASTORE 29
-+ILOAD 28
-+IFEQ L434
- ALOAD 0
- GETFIELD local/lito381/server/GameHub.rooms:Ljava/util/Map;
- ALOAD 5
-@@ -427,18 +426,18 @@
- INVOKESTATIC java/lang/Long.valueOf(J)Ljava/lang/Long;
- INVOKEINTERFACE java/util/Map.remove(Ljava/lang/Object;)Ljava/lang/Object; itf
- POP
--ALOAD 28
-+ALOAD 27
- GETFIELD local/lito381/server/GameHub$Channel.roomIds:Ljava/util/Set;
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.id:J
- INVOKESTATIC java/lang/Long.valueOf(J)Ljava/lang/Long;
- INVOKEINTERFACE java/util/Set.remove(Ljava/lang/Object;)Z itf
- POP
--GOTO L442
-+GOTO L441
- ALOAD 5
- GETFIELD local/lito381/server/GameHub$Room.members:Ljava/util/Set;
- INVOKEINTERFACE java/util/Set.isEmpty()Z itf
--IFEQ L442
-+IFEQ L441
- ALOAD 0
- ALOAD 5
- INVOKESPECIAL local/lito381/server/GameHub.resetOrRemove(Llocal/lito381/server/GameHub$Room;)V
-@@ -455,10 +454,10 @@
- NEW local/lito381/server/GameHub$BattleDisconnectWork
- DUP
- LLOAD 1/2
--ALOAD 27
-+ALOAD 26
- ALOAD 6
- ALOAD 25
--ALOAD 30
--ILOAD 29
-+ALOAD 29
-+ILOAD 28
- INVOKESPECIAL local/lito381/server/GameHub$BattleDisconnectWork.<init>(JLjava/util/List;Ljava/util/List;Llocal/lito381/server/BattleRules$Resolution;Ljava/util/List;Z)V
- ARETURN
-```
+#### ONLY_LEFT　`local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z`
 
-</details>
-
-### `local/lito381/server/ClientSession$1#<clinit>()V`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
-
-```diff
---- staged/local/lito381/server/ClientSession$1#<clinit>()V
-+++ candidate/local/lito381/server/ClientSession$1#<clinit>()V
-@@ -1,165 +1,165 @@
- META 8 null []
--TRY [4:[10:java/lang/NoSuchFieldError  ], 5:[10:java/lang/NoSuchFieldError  ], 6:[10:java/lang/NoSuchFieldError  ], 8:[10:java/lang/NoSuchFieldError  ], 11:[17:java/lang/NoSuchFieldError  ], 12:[17:java/lang/NoSuchFieldError  ], 13:[17:java/lang/NoSuchFieldError  ], 15:[17:java/lang/NoSuchFieldError  ], 18:[24:java/lang/NoSuchFieldError  ], 19:[24:java/lang/NoSuchFieldError  ], 20:[24:java/lang/NoSuchFieldError  ], 22:[24:java/lang/NoSuchFieldError  ], 25:[31:java/lang/NoSuchFieldError  ], 26:[31:java/lang/NoSuchFieldError  ], 27:[31:java/lang/NoSuchFieldError  ], 29:[31:java/lang/NoSuchFieldError  ], 36:[42:java/lang/NoSuchFieldError  ], 37:[42:java/lang/NoSuchFieldError  ], 38:[42:java/lang/NoSuchFieldError  ], 40:[42:java/lang/NoSuchFieldError  ], 43:[49:java/lang/NoSuchFieldError  ], 44:[49:java/lang/NoSuchFieldError  ], 45:[49:java/lang/NoSuchFieldError  ], 47:[49:java/lang/NoSuchFieldError  ], 50:[56:java/lang/NoSuchFieldError  ], 51:[56:java/lang/NoSuchFieldError  ], 52:[56:java/lang/NoSuchFieldError  ], 54:[56:java/lang/NoSuchFieldError  ], 57:[63:java/lang/NoSuchFieldError  ], 58:[63:java/lang/NoSuchFieldError  ], 59:[63:java/lang/NoSuchFieldError  ], 61:[63:java/lang/NoSuchFieldError  ], 64:[70:java/lang/NoSuchFieldError  ], 65:[70:java/lang/NoSuchFieldError  ], 66:[70:java/lang/NoSuchFieldError  ], 68:[70:java/lang/NoSuchFieldError  ], 71:[77:java/lang/NoSuchFieldError  ], 72:[77:java/lang/NoSuchFieldError  ], 73:[77:java/lang/NoSuchFieldError  ], 75:[77:java/lang/NoSuchFieldError  ], 78:[84:java/lang/NoSuchFieldError  ], 79:[84:java/lang/NoSuchFieldError  ], 80:[84:java/lang/NoSuchFieldError  ], 82:[84:java/lang/NoSuchFieldError  ], 85:[91:java/lang/NoSuchFieldError  ], 86:[91:java/lang/NoSuchFieldError  ], 87:[91:java/lang/NoSuchFieldError  ], 89:[91:java/lang/NoSuchFieldError  ], 92:[98:java/lang/NoSuchFieldError  ], 93:[98:java/lang/NoSuchFieldError  ], 94:[98:java/lang/NoSuchFieldError  ], 96:[98:java/lang/NoSuchFieldError  ], 103:[109:java/lang/NoSuchFieldError  ], 104:[109:java/lang/NoSuchFieldError  ], 105:[109:java/lang/NoSuchFieldError  ], 107:[109:java/lang/NoSuchFieldError  ], 110:[116:java/lang/NoSuchFieldError  ], 111:[116:java/lang/NoSuchFieldError  ], 112:[116:java/lang/NoSuchFieldError  ], 114:[116:java/lang/NoSuchFieldError  ], 117:[123:java/lang/NoSuchFieldError  ], 118:[123:java/lang/NoSuchFieldError  ], 119:[123:java/lang/NoSuchFieldError  ], 121:[123:java/lang/NoSuchFieldError  ], 124:[130:java/lang/NoSuchFieldError  ], 125:[130:java/lang/NoSuchFieldError  ], 126:[130:java/lang/NoSuchFieldError  ], 128:[130:java/lang/NoSuchFieldError  ], 131:[137:java/lang/NoSuchFieldError  ], 132:[137:java/lang/NoSuchFieldError  ], 133:[137:java/lang/NoSuchFieldError  ], 135:[137:java/lang/NoSuchFieldError  ], 142:[148:java/lang/NoSuchFieldError  ], 143:[148:java/lang/NoSuchFieldError  ], 144:[148:java/lang/NoSuchFieldError  ], 146:[148:java/lang/NoSuchFieldError  ], 149:[155:java/lang/NoSuchFieldError  ], 150:[155:java/lang/NoSuchFieldError  ], 151:[155:java/lang/NoSuchFieldError  ], 153:[155:java/lang/NoSuchFieldError  ], 156:[162:java/lang/NoSuchFieldError  ], 157:[162:java/lang/NoSuchFieldError  ], 158:[162:java/lang/NoSuchFieldError  ], 160:[162:java/lang/NoSuchFieldError  ], 167:[173:java/lang/NoSuchFieldError  ], 168:[173:java/lang/NoSuchFieldError  ], 169:[173:java/lang/NoSuchFieldError  ], 171:[173:java/lang/NoSuchFieldError  ], 174:[180:java/lang/NoSuchFieldError  ], 175:[180:java/lang/NoSuchFieldError  ], 176:[180:java/lang/NoSuchFieldError  ], 178:[180:java/lang/NoSuchFieldError  ], 181:[187:java/lang/NoSuchFieldError  ], 182:[187:java/lang/NoSuchFieldError  ], 183:[187:java/lang/NoSuchFieldError  ], 185:[187:java/lang/NoSuchFieldError  ], 188:[194:java/lang/NoSuchFieldError  ], 189:[194:java/lang/NoSuchFieldError  ], 190:[194:java/lang/NoSuchFieldError  ], 192:[194:java/lang/NoSuchFieldError  ], 195:[201:java/lang/NoSuchFieldError  ], 196:[201:java/lang/NoSuchFieldError  ], 197:[201:java/lang/NoSuchFieldError  ], 199:[201:java/lang/NoSuchFieldError  ], 202:[208:java/lang/NoSuchFieldError  ], 203:[208:java/lang/NoSuchFieldError  ], 204:[208:java/lang/NoSuchFieldError  ], 206:[208:java/lang/NoSuchFieldError  ], 209:[215:java/lang/NoSuchFieldError  ], 210:[215:java/lang/NoSuchFieldError  ], 211:[215:java/lang/NoSuchFieldError  ], 213:[215:java/lang/NoSuchFieldError  ], 216:[222:java/lang/NoSuchFieldError  ], 217:[222:java/lang/NoSuchFieldError  ], 218:[222:java/lang/NoSuchFieldError  ], 220:[222:java/lang/NoSuchFieldError  ], 223:[229:java/lang/NoSuchFieldError  ], 224:[229:java/lang/NoSuchFieldError  ], 225:[229:java/lang/NoSuchFieldError  ], 227:[229:java/lang/NoSuchFieldError  ], 234:[240:java/lang/NoSuchFieldError  ], 235:[240:java/lang/NoSuchFieldError  ], 236:[240:java/lang/NoSuchFieldError  ], 238:[240:java/lang/NoSuchFieldError  ], 241:[247:java/lang/NoSuchFieldError  ], 242:[247:java/lang/NoSuchFieldError  ], 243:[247:java/lang/NoSuchFieldError  ], 245:[247:java/lang/NoSuchFieldError  ], 248:[254:java/lang/NoSuchFieldError  ], 249:[254:java/lang/NoSuchFieldError  ], 250:[254:java/lang/NoSuchFieldError  ], 252:[254:java/lang/NoSuchFieldError  ], 259:[265:java/lang/NoSuchFieldError  ], 260:[265:java/lang/NoSuchFieldError  ], 261:[265:java/lang/NoSuchFieldError  ], 263:[265:java/lang/NoSuchFieldError  ], 266:[272:java/lang/NoSuchFieldError  ], 267:[272:java/lang/NoSuchFieldError  ], 268:[272:java/lang/NoSuchFieldError  ], 270:[272:java/lang/NoSuchFieldError  ], 273:[279:java/lang/NoSuchFieldError  ], 274:[279:java/lang/NoSuchFieldError  ], 275:[279:java/lang/NoSuchFieldError  ], 277:[279:java/lang/NoSuchFieldError  ], 284:[290:java/lang/NoSuchFieldError  ], 285:[290:java/lang/NoSuchFieldError  ], 286:[290:java/lang/NoSuchFieldError  ], 288:[290:java/lang/NoSuchFieldError  ], 291:[297:java/lang/NoSuchFieldError  ], 292:[297:java/lang/NoSuchFieldError  ], 293:[297:java/lang/NoSuchFieldError  ], 295:[297:java/lang/NoSuchFieldError  ], 298:[304:java/lang/NoSuchFieldError  ], 299:[304:java/lang/NoSuchFieldError  ], 300:[304:java/lang/NoSuchFieldError  ], 302:[304:java/lang/NoSuchFieldError  ], 309:[315:java/lang/NoSuchFieldError  ], 310:[315:java/lang/NoSuchFieldError  ], 311:[315:java/lang/NoSuchFieldError  ], 313:[315:java/lang/NoSuchFieldError  ], 316:[322:java/lang/NoSuchFieldError  ], 317:[322:java/lang/NoSuchFieldError  ], 318:[322:java/lang/NoSuchFieldError  ], 320:[322:java/lang/NoSuchFieldError  ], 323:[329:java/lang/NoSuchFieldError  ], 324:[329:java/lang/NoSuchFieldError  ], 325:[329:java/lang/NoSuchFieldError  ], 327:[329:java/lang/NoSuchFieldError  ], 330:[336:java/lang/NoSuchFieldError  ], 331:[336:java/lang/NoSuchFieldError  ], 332:[336:java/lang/NoSuchFieldError  ], 334:[336:java/lang/NoSuchFieldError  ], 337:[343:java/lang/NoSuchFieldError  ], 338:[343:java/lang/NoSuchFieldError  ], 339:[343:java/lang/NoSuchFieldError  ], 341:[343:java/lang/NoSuchFieldError  ], 344:[350:java/lang/NoSuchFieldError  ], 345:[350:java/lang/NoSuchFieldError  ], 346:[350:java/lang/NoSuchFieldError  ], 348:[350:java/lang/NoSuchFieldError  ], 351:[357:java/lang/NoSuchFieldError  ], 352:[357:java/lang/NoSuchFieldError  ], 353:[357:java/lang/NoSuchFieldError  ], 355:[357:java/lang/NoSuchFieldError  ], 358:[364:java/lang/NoSuchFieldError  ], 359:[364:java/lang/NoSuchFieldError  ], 360:[364:java/lang/NoSuchFieldError  ], 362:[364:java/lang/NoSuchFieldError  ], 369:[375:java/lang/NoSuchFieldError  ], 370:[375:java/lang/NoSuchFieldError  ], 371:[375:java/lang/NoSuchFieldError  ], 373:[375:java/lang/NoSuchFieldError  ], 376:[382:java/lang/NoSuchFieldError  ], 377:[382:java/lang/NoSuchFieldError  ], 378:[382:java/lang/NoSuchFieldError  ], 380:[382:java/lang/NoSuchFieldError  ], 383:[389:java/lang/NoSuchFieldError  ], 384:[389:java/lang/NoSuchFieldError  ], 385:[389:java/lang/NoSuchFieldError  ], 387:[389:java/lang/NoSuchFieldError  ], 390:[396:java/lang/NoSuchFieldError  ], 391:[396:java/lang/NoSuchFieldError  ], 392:[396:java/lang/NoSuchFieldError  ], 394:[396:java/lang/NoSuchFieldError  ], 397:[403:java/lang/NoSuchFieldError  ], 398:[403:java/lang/NoSuchFieldError  ], 399:[403:java/lang/NoSuchFieldError  ], 401:[403:java/lang/NoSuchFieldError  ], 408:[414:java/lang/NoSuchFieldError  ], 409:[414:java/lang/NoSuchFieldError  ], 410:[414:java/lang/NoSuchFieldError  ], 412:[414:java/lang/NoSuchFieldError  ], 415:[421:java/lang/NoSuchFieldError  ], 416:[421:java/lang/NoSuchFieldError  ], 417:[421:java/lang/NoSuchFieldError  ], 419:[421:java/lang/NoSuchFieldError  ], 422:[428:java/lang/NoSuchFieldError  ], 423:[428:java/lang/NoSuchFieldError  ], 424:[428:java/lang/NoSuchFieldError  ], 426:[428:java/lang/NoSuchFieldError  ], 429:[435:java/lang/NoSuchFieldError  ], 430:[435:java/lang/NoSuchFieldError  ], 431:[435:java/lang/NoSuchFieldError  ], 433:[435:java/lang/NoSuchFieldError  ], 440:[446:java/lang/NoSuchFieldError  ], 441:[446:java/lang/NoSuchFieldError  ], 442:[446:java/lang/NoSuchFieldError  ], 444:[446:java/lang/NoSuchFieldError  ], 447:[453:java/lang/NoSuchFieldError  ], 448:[453:java/lang/NoSuchFieldError  ], 449:[453:java/lang/NoSuchFieldError  ], 451:[453:java/lang/NoSuchFieldError  ], 454:[460:java/lang/NoSuchFieldError  ], 455:[460:java/lang/NoSuchFieldError  ], 456:[460:java/lang/NoSuchFieldError  ], 458:[460:java/lang/NoSuchFieldError  ], 465:[471:java/lang/NoSuchFieldError  ], 466:[471:java/lang/NoSuchFieldError  ], 467:[471:java/lang/NoSuchFieldError  ], 469:[471:java/lang/NoSuchFieldError  ], 472:[478:java/lang/NoSuchFieldError  ], 473:[478:java/lang/NoSuchFieldError  ], 474:[478:java/lang/NoSuchFieldError  ], 476:[478:java/lang/NoSuchFieldError  ], 479:[485:java/lang/NoSuchFieldError  ], 480:[485:java/lang/NoSuchFieldError  ], 481:[485:java/lang/NoSuchFieldError  ], 483:[485:java/lang/NoSuchFieldError  ], 490:[496:java/lang/NoSuchFieldError  ], 491:[496:java/lang/NoSuchFieldError  ], 492:[496:java/lang/NoSuchFieldError  ], 494:[496:java/lang/NoSuchFieldError  ], 497:[503:java/lang/NoSuchFieldError  ], 498:[503:java/lang/NoSuchFieldError  ], 499:[503:java/lang/NoSuchFieldError  ], 501:[503:java/lang/NoSuchFieldError  ], 504:[510:java/lang/NoSuchFieldError  ], 505:[510:java/lang/NoSuchFieldError  ], 506:[510:java/lang/NoSuchFieldError  ], 508:[510:java/lang/NoSuchFieldError  ], 511:[517:java/lang/NoSuchFieldError  ], 512:[517:java/lang/NoSuchFieldError  ], 513:[517:java/lang/NoSuchFieldError  ], 515:[517:java/lang/NoSuchFieldError  ], 518:[524:java/lang/NoSuchFieldError  ], 519:[524:java/lang/NoSuchFieldError  ], 520:[524:java/lang/NoSuchFieldError  ], 522:[524:java/lang/NoSuchFieldError  ], 529:[535:java/lang/NoSuchFieldError  ], 530:[535:java/lang/NoSuchFieldError  ], 531:[535:java/lang/NoSuchFieldError  ], 533:[535:java/lang/NoSuchFieldError  ], 536:[542:java/lang/NoSuchFieldError  ], 537:[542:java/lang/NoSuchFieldError  ], 538:[542:java/lang/NoSuchFieldError  ], 540:[542:java/lang/NoSuchFieldError  ], 543:[549:java/lang/NoSuchFieldError  ], 544:[549:java/lang/NoSuchFieldError  ], 545:[549:java/lang/NoSuchFieldError  ], 547:[549:java/lang/NoSuchFieldError  ], 550:[556:java/lang/NoSuchFieldError  ], 551:[556:java/lang/NoSuchFieldError  ], 552:[556:java/lang/NoSuchFieldError  ], 554:[556:java/lang/NoSuchFieldError  ], 557:[563:java/lang/NoSuchFieldError  ], 558:[563:java/lang/NoSuchFieldError  ], 559:[563:java/lang/NoSuchFieldError  ], 561:[563:java/lang/NoSuchFieldError  ], 568:[574:java/lang/NoSuchFieldError  ], 569:[574:java/lang/NoSuchFieldError  ], 570:[574:java/lang/NoSuchFieldError  ], 572:[574:java/lang/NoSuchFieldError  ], 575:[581:java/lang/NoSuchFieldError  ], 576:[581:java/lang/NoSuchFieldError  ], 577:[581:java/lang/NoSuchFieldError  ], 579:[581:java/lang/NoSuchFieldError  ], 582:[588:java/lang/NoSuchFieldError  ], 583:[588:java/lang/NoSuchFieldError  ], 584:[588:java/lang/NoSuchFieldError  ], 586:[588:java/lang/NoSuchFieldError  ], 589:[595:java/lang/NoSuchFieldError  ], 590:[595:java/lang/NoSuchFieldError  ], 591:[595:java/lang/NoSuchFieldError  ], 593:[595:java/lang/NoSuchFieldError  ], 596:[602:java/lang/NoSuchFieldError  ], 597:[602:java/lang/NoSuchFieldError  ], 598:[602:java/lang/NoSuchFieldError  ], 600:[602:java/lang/NoSuchFieldError  ], 603:[609:java/lang/NoSuchFieldError  ], 604:[609:java/lang/NoSuchFieldError  ], 605:[609:java/lang/NoSuchFieldError  ], 607:[609:java/lang/NoSuchFieldError  ], 610:[616:java/lang/NoSuchFieldError  ], 611:[616:java/lang/NoSuchFieldError  ], 612:[616:java/lang/NoSuchFieldError  ], 614:[616:java/lang/NoSuchFieldError  ], 621:[627:java/lang/NoSuchFieldError  ], 622:[627:java/lang/NoSuchFieldError  ], 623:[627:java/lang/NoSuchFieldError  ], 625:[627:java/lang/NoSuchFieldError  ], 628:[634:java/lang/NoSuchFieldError  ], 629:[634:java/lang/NoSuchFieldError  ], 630:[634:java/lang/NoSuchFieldError  ], 632:[634:java/lang/NoSuchFieldError  ], 635:[641:java/lang/NoSuchFieldError  ], 636:[641:java/lang/NoSuchFieldError  ], 637:[641:java/lang/NoSuchFieldError  ], 639:[641:java/lang/NoSuchFieldError  ], 646:[652:java/lang/NoSuchFieldError  ], 647:[652:java/lang/NoSuchFieldError  ], 648:[652:java/lang/NoSuchFieldError  ], 650:[652:java/lang/NoSuchFieldError  ], 653:[659:java/lang/NoSuchFieldError  ], 654:[659:java/lang/NoSuchFieldError  ], 655:[659:java/lang/NoSuchFieldError  ], 657:[659:java/lang/NoSuchFieldError  ], 660:[666:java/lang/NoSuchFieldError  ], 661:[666:java/lang/NoSuchFieldError  ], 662:[666:java/lang/NoSuchFieldError  ], 664:[666:java/lang/NoSuchFieldError  ], 667:[673:java/lang/NoSuchFieldError  ], 668:[673:java/lang/NoSuchFieldError  ], 669:[673:java/lang/NoSuchFieldError  ], 671:[673:java/lang/NoSuchFieldError  ], 674:[680:java/lang/NoSuchFieldError  ], 675:[680:java/lang/NoSuchFieldError  ], 676:[680:java/lang/NoSuchFieldError  ], 678:[680:java/lang/NoSuchFieldError  ], 681:[687:java/lang/NoSuchFieldError  ], 682:[687:java/lang/NoSuchFieldError  ], 683:[687:java/lang/NoSuchFieldError  ], 685:[687:java/lang/NoSuchFieldError  ], 688:[694:java/lang/NoSuchFieldError  ], 689:[694:java/lang/NoSuchFieldError  ], 690:[694:java/lang/NoSuchFieldError  ], 692:[694:java/lang/NoSuchFieldError  ], 695:[701:java/lang/NoSuchFieldError  ], 696:[701:java/lang/NoSuchFieldError  ], 697:[701:java/lang/NoSuchFieldError  ], 699:[701:java/lang/NoSuchFieldError  ], 706:[712:java/lang/NoSuchFieldError  ], 707:[712:java/lang/NoSuchFieldError  ], 708:[712:java/lang/NoSuchFieldError  ], 710:[712:java/lang/NoSuchFieldError  ], 713:[719:java/lang/NoSuchFieldError  ], 714:[719:java/lang/NoSuchFieldError  ], 715:[719:java/lang/NoSuchFieldError  ], 717:[719:java/lang/NoSuchFieldError  ], 720:[726:java/lang/NoSuchFieldError  ], 721:[726:java/lang/NoSuchFieldError  ], 722:[726:java/lang/NoSuchFieldError  ], 724:[726:java/lang/NoSuchFieldError  ], 727:[733:java/lang/NoSuchFieldError  ], 728:[733:java/lang/NoSuchFieldError  ], 729:[733:java/lang/NoSuchFieldError  ], 731:[733:java/lang/NoSuchFieldError  ], 738:[744:java/lang/NoSuchFieldError  ], 739:[744:java/lang/NoSuchFieldError  ], 740:[744:java/lang/NoSuchFieldError  ], 742:[744:java/lang/NoSuchFieldError  ], 745:[751:java/lang/NoSuchFieldError  ], 746:[751:java/lang/NoSuchFieldError  ], 747:[751:java/lang/NoSuchFieldError  ], 749:[751:java/lang/NoSuchFieldError  ], 752:[758:java/lang/NoSuchFieldError  ], 753:[758:java/lang/NoSuchFieldError  ], 754:[758:java/lang/NoSuchFieldError  ], 756:[758:java/lang/NoSuchFieldError  ], 759:[765:java/lang/NoSuchFieldError  ], 760:[765:java/lang/NoSuchFieldError  ], 761:[765:java/lang/NoSuchFieldError  ], 763:[765:java/lang/NoSuchFieldError  ], 766:[772:java/lang/NoSuchFieldError  ], 767:[772:java/lang/NoSuchFieldError  ], 768:[772:java/lang/NoSuchFieldError  ], 770:[772:java/lang/NoSuchFieldError  ], 777:[783:java/lang/NoSuchFieldError  ], 778:[783:java/lang/NoSuchFieldError  ], 779:[783:java/lang/NoSuchFieldError  ], 781:[783:java/lang/NoSuchFieldError  ], 784:[790:java/lang/NoSuchFieldError  ], 785:[790:java/lang/NoSuchFieldError  ], 786:[790:java/lang/NoSuchFieldError  ], 788:[790:java/lang/NoSuchFieldError  ], 791:[797:java/lang/NoSuchFieldError  ], 792:[797:java/lang/NoSuchFieldError  ], 793:[797:java/lang/NoSuchFieldError  ], 795:[797:java/lang/NoSuchFieldError  ]]
--INVOKESTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.values()[Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
-+TRY [4:[10:java/lang/NoSuchFieldError  ], 5:[10:java/lang/NoSuchFieldError  ], 6:[10:java/lang/NoSuchFieldError  ], 8:[10:java/lang/NoSuchFieldError  ], 11:[17:java/lang/NoSuchFieldError  ], 12:[17:java/lang/NoSuchFieldError  ], 13:[17:java/lang/NoSuchFieldError  ], 15:[17:java/lang/NoSuchFieldError  ], 18:[24:java/lang/NoSuchFieldError  ], 19:[24:java/lang/NoSuchFieldError  ], 20:[24:java/lang/NoSuchFieldError  ], 22:[24:java/lang/NoSuchFieldError  ], 25:[31:java/lang/NoSuchFieldError  ], 26:[31:java/lang/NoSuchFieldError  ], 27:[31:java/lang/NoSuchFieldError  ], 29:[31:java/lang/NoSuchFieldError  ], 32:[38:java/lang/NoSuchFieldError  ], 33:[38:java/lang/NoSuchFieldError  ], 34:[38:java/lang/NoSuchFieldError  ], 36:[38:java/lang/NoSuchFieldError  ], 39:[45:java/lang/NoSuchFieldError  ], 40:[45:java/lang/NoSuchFieldError  ], 41:[45:java/lang/NoSuchFieldError  ], 43:[45:java/lang/NoSuchFieldError  ], 46:[52:java/lang/NoSuchFieldError  ], 47:[52:java/lang/NoSuchFieldError  ], 48:[52:java/lang/NoSuchFieldError  ], 50:[52:java/lang/NoSuchFieldError  ], 53:[59:java/lang/NoSuchFieldError  ], 54:[59:java/lang/NoSuchFieldError  ], 55:[59:java/lang/NoSuchFieldError  ], 57:[59:java/lang/NoSuchFieldError  ], 60:[66:java/lang/NoSuchFieldError  ], 61:[66:java/lang/NoSuchFieldError  ], 62:[66:java/lang/NoSuchFieldError  ], 64:[66:java/lang/NoSuchFieldError  ], 71:[77:java/lang/NoSuchFieldError  ], 72:[77:java/lang/NoSuchFieldError  ], 73:[77:java/lang/NoSuchFieldError  ], 75:[77:java/lang/NoSuchFieldError  ], 78:[84:java/lang/NoSuchFieldError  ], 79:[84:java/lang/NoSuchFieldError  ], 80:[84:java/lang/NoSuchFieldError  ], 82:[84:java/lang/NoSuchFieldError  ], 85:[91:java/lang/NoSuchFieldError  ], 86:[91:java/lang/NoSuchFieldError  ], 87:[91:java/lang/NoSuchFieldError  ], 89:[91:java/lang/NoSuchFieldError  ], 92:[98:java/lang/NoSuchFieldError  ], 93:[98:java/lang/NoSuchFieldError  ], 94:[98:java/lang/NoSuchFieldError  ], 96:[98:java/lang/NoSuchFieldError  ], 99:[105:java/lang/NoSuchFieldError  ], 100:[105:java/lang/NoSuchFieldError  ], 101:[105:java/lang/NoSuchFieldError  ], 103:[105:java/lang/NoSuchFieldError  ], 110:[116:java/lang/NoSuchFieldError  ], 111:[116:java/lang/NoSuchFieldError  ], 112:[116:java/lang/NoSuchFieldError  ], 114:[116:java/lang/NoSuchFieldError  ], 117:[123:java/lang/NoSuchFieldError  ], 118:[123:java/lang/NoSuchFieldError  ], 119:[123:java/lang/NoSuchFieldError  ], 121:[123:java/lang/NoSuchFieldError  ], 124:[130:java/lang/NoSuchFieldError  ], 125:[130:java/lang/NoSuchFieldError  ], 126:[130:java/lang/NoSuchFieldError  ], 128:[130:java/lang/NoSuchFieldError  ], 135:[141:java/lang/NoSuchFieldError  ], 136:[141:java/lang/NoSuchFieldError  ], 137:[141:java/lang/NoSuchFieldError  ], 139:[141:java/lang/NoSuchFieldError  ], 142:[148:java/lang/NoSuchFieldError  ], 143:[148:java/lang/NoSuchFieldError  ], 144:[148:java/lang/NoSuchFieldError  ], 146:[148:java/lang/NoSuchFieldError  ], 149:[155:java/lang/NoSuchFieldError  ], 150:[155:java/lang/NoSuchFieldError  ], 151:[155:java/lang/NoSuchFieldError  ], 153:[155:java/lang/NoSuchFieldError  ], 156:[162:java/lang/NoSuchFieldError  ], 157:[162:java/lang/NoSuchFieldError  ], 158:[162:java/lang/NoSuchFieldError  ], 160:[162:java/lang/NoSuchFieldError  ], 167:[173:java/lang/NoSuchFieldError  ], 168:[173:java/lang/NoSuchFieldError  ], 169:[173:java/lang/NoSuchFieldError  ], 171:[173:java/lang/NoSuchFieldError  ], 174:[180:java/lang/NoSuchFieldError  ], 175:[180:java/lang/NoSuchFieldError  ], 176:[180:java/lang/NoSuchFieldError  ], 178:[180:java/lang/NoSuchFieldError  ], 181:[187:java/lang/NoSuchFieldError  ], 182:[187:java/lang/NoSuchFieldError  ], 183:[187:java/lang/NoSuchFieldError  ], 185:[187:java/lang/NoSuchFieldError  ], 188:[194:java/lang/NoSuchFieldError  ], 189:[194:java/lang/NoSuchFieldError  ], 190:[194:java/lang/NoSuchFieldError  ], 192:[194:java/lang/NoSuchFieldError  ], 195:[201:java/lang/NoSuchFieldError  ], 196:[201:java/lang/NoSuchFieldError  ], 197:[201:java/lang/NoSuchFieldError  ], 199:[201:java/lang/NoSuchFieldError  ], 202:[208:java/lang/NoSuchFieldError  ], 203:[208:java/lang/NoSuchFieldError  ], 204:[208:java/lang/NoSuchFieldError  ], 206:[208:java/lang/NoSuchFieldError  ], 209:[215:java/lang/NoSuchFieldError  ], 210:[215:java/lang/NoSuchFieldError  ], 211:[215:java/lang/NoSuchFieldError  ], 213:[215:java/lang/NoSuchFieldError  ], 216:[222:java/lang/NoSuchFieldError  ], 217:[222:java/lang/NoSuchFieldError  ], 218:[222:java/lang/NoSuchFieldError  ], 220:[222:java/lang/NoSuchFieldError  ], 223:[229:java/lang/NoSuchFieldError  ], 224:[229:java/lang/NoSuchFieldError  ], 225:[229:java/lang/NoSuchFieldError  ], 227:[229:java/lang/NoSuchFieldError  ], 234:[240:java/lang/NoSuchFieldError  ], 235:[240:java/lang/NoSuchFieldError  ], 236:[240:java/lang/NoSuchFieldError  ], 238:[240:java/lang/NoSuchFieldError  ], 241:[247:java/lang/NoSuchFieldError  ], 242:[247:java/lang/NoSuchFieldError  ], 243:[247:java/lang/NoSuchFieldError  ], 245:[247:java/lang/NoSuchFieldError  ], 248:[254:java/lang/NoSuchFieldError  ], 249:[254:java/lang/NoSuchFieldError  ], 250:[254:java/lang/NoSuchFieldError  ], 252:[254:java/lang/NoSuchFieldError  ], 259:[265:java/lang/NoSuchFieldError  ], 260:[265:java/lang/NoSuchFieldError  ], 261:[265:java/lang/NoSuchFieldError  ], 263:[265:java/lang/NoSuchFieldError  ], 266:[272:java/lang/NoSuchFieldError  ], 267:[272:java/lang/NoSuchFieldError  ], 268:[272:java/lang/NoSuchFieldError  ], 270:[272:java/lang/NoSuchFieldError  ], 273:[279:java/lang/NoSuchFieldError  ], 274:[279:java/lang/NoSuchFieldError  ], 275:[279:java/lang/NoSuchFieldError  ], 277:[279:java/lang/NoSuchFieldError  ], 284:[290:java/lang/NoSuchFieldError  ], 285:[290:java/lang/NoSuchFieldError  ], 286:[290:java/lang/NoSuchFieldError  ], 288:[290:java/lang/NoSuchFieldError  ], 291:[297:java/lang/NoSuchFieldError  ], 292:[297:java/lang/NoSuchFieldError  ], 293:[297:java/lang/NoSuchFieldError  ], 295:[297:java/lang/NoSuchFieldError  ], 298:[304:java/lang/NoSuchFieldError  ], 299:[304:java/lang/NoSuchFieldError  ], 300:[304:java/lang/NoSuchFieldError  ], 302:[304:java/lang/NoSuchFieldError  ], 309:[315:java/lang/NoSuchFieldError  ], 310:[315:java/lang/NoSuchFieldError  ], 311:[315:java/lang/NoSuchFieldError  ], 313:[315:java/lang/NoSuchFieldError  ], 316:[322:java/lang/NoSuchFieldError  ], 317:[322:java/lang/NoSuchFieldError  ], 318:[322:java/lang/NoSuchFieldError  ], 320:[322:java/lang/NoSuchFieldError  ], 323:[329:java/lang/NoSuchFieldError  ], 324:[329:java/lang/NoSuchFieldError  ], 325:[329:java/lang/NoSuchFieldError  ], 327:[329:java/lang/NoSuchFieldError  ], 330:[336:java/lang/NoSuchFieldError  ], 331:[336:java/lang/NoSuchFieldError  ], 332:[336:java/lang/NoSuchFieldError  ], 334:[336:java/lang/NoSuchFieldError  ], 337:[343:java/lang/NoSuchFieldError  ], 338:[343:java/lang/NoSuchFieldError  ], 339:[343:java/lang/NoSuchFieldError  ], 341:[343:java/lang/NoSuchFieldError  ], 344:[350:java/lang/NoSuchFieldError  ], 345:[350:java/lang/NoSuchFieldError  ], 346:[350:java/lang/NoSuchFieldError  ], 348:[350:java/lang/NoSuchFieldError  ], 351:[357:java/lang/NoSuchFieldError  ], 352:[357:java/lang/NoSuchFieldError  ], 353:[357:java/lang/NoSuchFieldError  ], 355:[357:java/lang/NoSuchFieldError  ], 358:[364:java/lang/NoSuchFieldError  ], 359:[364:java/lang/NoSuchFieldError  ], 360:[364:java/lang/NoSuchFieldError  ], 362:[364:java/lang/NoSuchFieldError  ], 369:[375:java/lang/NoSuchFieldError  ], 370:[375:java/lang/NoSuchFieldError  ], 371:[375:java/lang/NoSuchFieldError  ], 373:[375:java/lang/NoSuchFieldError  ], 376:[382:java/lang/NoSuchFieldError  ], 377:[382:java/lang/NoSuchFieldError  ], 378:[382:java/lang/NoSuchFieldError  ], 380:[382:java/lang/NoSuchFieldError  ], 383:[389:java/lang/NoSuchFieldError  ], 384:[389:java/lang/NoSuchFieldError  ], 385:[389:java/lang/NoSuchFieldError  ], 387:[389:java/lang/NoSuchFieldError  ], 390:[396:java/lang/NoSuchFieldError  ], 391:[396:java/lang/NoSuchFieldError  ], 392:[396:java/lang/NoSuchFieldError  ], 394:[396:java/lang/NoSuchFieldError  ], 397:[403:java/lang/NoSuchFieldError  ], 398:[403:java/lang/NoSuchFieldError  ], 399:[403:java/lang/NoSuchFieldError  ], 401:[403:java/lang/NoSuchFieldError  ], 408:[414:java/lang/NoSuchFieldError  ], 409:[414:java/lang/NoSuchFieldError  ], 410:[414:java/lang/NoSuchFieldError  ], 412:[414:java/lang/NoSuchFieldError  ], 415:[421:java/lang/NoSuchFieldError  ], 416:[421:java/lang/NoSuchFieldError  ], 417:[421:java/lang/NoSuchFieldError  ], 419:[421:java/lang/NoSuchFieldError  ], 422:[428:java/lang/NoSuchFieldError  ], 423:[428:java/lang/NoSuchFieldError  ], 424:[428:java/lang/NoSuchFieldError  ], 426:[428:java/lang/NoSuchFieldError  ], 429:[435:java/lang/NoSuchFieldError  ], 430:[435:java/lang/NoSuchFieldError  ], 431:[435:java/lang/NoSuchFieldError  ], 433:[435:java/lang/NoSuchFieldError  ], 440:[446:java/lang/NoSuchFieldError  ], 441:[446:java/lang/NoSuchFieldError  ], 442:[446:java/lang/NoSuchFieldError  ], 444:[446:java/lang/NoSuchFieldError  ], 447:[453:java/lang/NoSuchFieldError  ], 448:[453:java/lang/NoSuchFieldError  ], 449:[453:java/lang/NoSuchFieldError  ], 451:[453:java/lang/NoSuchFieldError  ], 454:[460:java/lang/NoSuchFieldError  ], 455:[460:java/lang/NoSuchFieldError  ], 456:[460:java/lang/NoSuchFieldError  ], 458:[460:java/lang/NoSuchFieldError  ], 465:[471:java/lang/NoSuchFieldError  ], 466:[471:java/lang/NoSuchFieldError  ], 467:[471:java/lang/NoSuchFieldError  ], 469:[471:java/lang/NoSuchFieldError  ], 472:[478:java/lang/NoSuchFieldError  ], 473:[478:java/lang/NoSuchFieldError  ], 474:[478:java/lang/NoSuchFieldError  ], 476:[478:java/lang/NoSuchFieldError  ], 479:[485:java/lang/NoSuchFieldError  ], 480:[485:java/lang/NoSuchFieldError  ], 481:[485:java/lang/NoSuchFieldError  ], 483:[485:java/lang/NoSuchFieldError  ], 490:[496:java/lang/NoSuchFieldError  ], 491:[496:java/lang/NoSuchFieldError  ], 492:[496:java/lang/NoSuchFieldError  ], 494:[496:java/lang/NoSuchFieldError  ], 497:[503:java/lang/NoSuchFieldError  ], 498:[503:java/lang/NoSuchFieldError  ], 499:[503:java/lang/NoSuchFieldError  ], 501:[503:java/lang/NoSuchFieldError  ], 504:[510:java/lang/NoSuchFieldError  ], 505:[510:java/lang/NoSuchFieldError  ], 506:[510:java/lang/NoSuchFieldError  ], 508:[510:java/lang/NoSuchFieldError  ], 511:[517:java/lang/NoSuchFieldError  ], 512:[517:java/lang/NoSuchFieldError  ], 513:[517:java/lang/NoSuchFieldError  ], 515:[517:java/lang/NoSuchFieldError  ], 518:[524:java/lang/NoSuchFieldError  ], 519:[524:java/lang/NoSuchFieldError  ], 520:[524:java/lang/NoSuchFieldError  ], 522:[524:java/lang/NoSuchFieldError  ], 529:[535:java/lang/NoSuchFieldError  ], 530:[535:java/lang/NoSuchFieldError  ], 531:[535:java/lang/NoSuchFieldError  ], 533:[535:java/lang/NoSuchFieldError  ], 536:[542:java/lang/NoSuchFieldError  ], 537:[542:java/lang/NoSuchFieldError  ], 538:[542:java/lang/NoSuchFieldError  ], 540:[542:java/lang/NoSuchFieldError  ], 543:[549:java/lang/NoSuchFieldError  ], 544:[549:java/lang/NoSuchFieldError  ], 545:[549:java/lang/NoSuchFieldError  ], 547:[549:java/lang/NoSuchFieldError  ], 550:[556:java/lang/NoSuchFieldError  ], 551:[556:java/lang/NoSuchFieldError  ], 552:[556:java/lang/NoSuchFieldError  ], 554:[556:java/lang/NoSuchFieldError  ], 557:[563:java/lang/NoSuchFieldError  ], 558:[563:java/lang/NoSuchFieldError  ], 559:[563:java/lang/NoSuchFieldError  ], 561:[563:java/lang/NoSuchFieldError  ], 568:[574:java/lang/NoSuchFieldError  ], 569:[574:java/lang/NoSuchFieldError  ], 570:[574:java/lang/NoSuchFieldError  ], 572:[574:java/lang/NoSuchFieldError  ], 575:[581:java/lang/NoSuchFieldError  ], 576:[581:java/lang/NoSuchFieldError  ], 577:[581:java/lang/NoSuchFieldError  ], 579:[581:java/lang/NoSuchFieldError  ], 582:[588:java/lang/NoSuchFieldError  ], 583:[588:java/lang/NoSuchFieldError  ], 584:[588:java/lang/NoSuchFieldError  ], 586:[588:java/lang/NoSuchFieldError  ], 589:[595:java/lang/NoSuchFieldError  ], 590:[595:java/lang/NoSuchFieldError  ], 591:[595:java/lang/NoSuchFieldError  ], 593:[595:java/lang/NoSuchFieldError  ], 596:[602:java/lang/NoSuchFieldError  ], 597:[602:java/lang/NoSuchFieldError  ], 598:[602:java/lang/NoSuchFieldError  ], 600:[602:java/lang/NoSuchFieldError  ], 603:[609:java/lang/NoSuchFieldError  ], 604:[609:java/lang/NoSuchFieldError  ], 605:[609:java/lang/NoSuchFieldError  ], 607:[609:java/lang/NoSuchFieldError  ], 610:[616:java/lang/NoSuchFieldError  ], 611:[616:java/lang/NoSuchFieldError  ], 612:[616:java/lang/NoSuchFieldError  ], 614:[616:java/lang/NoSuchFieldError  ], 621:[627:java/lang/NoSuchFieldError  ], 622:[627:java/lang/NoSuchFieldError  ], 623:[627:java/lang/NoSuchFieldError  ], 625:[627:java/lang/NoSuchFieldError  ], 628:[634:java/lang/NoSuchFieldError  ], 629:[634:java/lang/NoSuchFieldError  ], 630:[634:java/lang/NoSuchFieldError  ], 632:[634:java/lang/NoSuchFieldError  ], 635:[641:java/lang/NoSuchFieldError  ], 636:[641:java/lang/NoSuchFieldError  ], 637:[641:java/lang/NoSuchFieldError  ], 639:[641:java/lang/NoSuchFieldError  ], 646:[652:java/lang/NoSuchFieldError  ], 647:[652:java/lang/NoSuchFieldError  ], 648:[652:java/lang/NoSuchFieldError  ], 650:[652:java/lang/NoSuchFieldError  ], 653:[659:java/lang/NoSuchFieldError  ], 654:[659:java/lang/NoSuchFieldError  ], 655:[659:java/lang/NoSuchFieldError  ], 657:[659:java/lang/NoSuchFieldError  ], 660:[666:java/lang/NoSuchFieldError  ], 661:[666:java/lang/NoSuchFieldError  ], 662:[666:java/lang/NoSuchFieldError  ], 664:[666:java/lang/NoSuchFieldError  ], 667:[673:java/lang/NoSuchFieldError  ], 668:[673:java/lang/NoSuchFieldError  ], 669:[673:java/lang/NoSuchFieldError  ], 671:[673:java/lang/NoSuchFieldError  ], 674:[680:java/lang/NoSuchFieldError  ], 675:[680:java/lang/NoSuchFieldError  ], 676:[680:java/lang/NoSuchFieldError  ], 678:[680:java/lang/NoSuchFieldError  ], 681:[687:java/lang/NoSuchFieldError  ], 682:[687:java/lang/NoSuchFieldError  ], 683:[687:java/lang/NoSuchFieldError  ], 685:[687:java/lang/NoSuchFieldError  ], 688:[694:java/lang/NoSuchFieldError  ], 689:[694:java/lang/NoSuchFieldError  ], 690:[694:java/lang/NoSuchFieldError  ], 692:[694:java/lang/NoSuchFieldError  ], 695:[701:java/lang/NoSuchFieldError  ], 696:[701:java/lang/NoSuchFieldError  ], 697:[701:java/lang/NoSuchFieldError  ], 699:[701:java/lang/NoSuchFieldError  ], 706:[712:java/lang/NoSuchFieldError  ], 707:[712:java/lang/NoSuchFieldError  ], 708:[712:java/lang/NoSuchFieldError  ], 710:[712:java/lang/NoSuchFieldError  ], 713:[719:java/lang/NoSuchFieldError  ], 714:[719:java/lang/NoSuchFieldError  ], 715:[719:java/lang/NoSuchFieldError  ], 717:[719:java/lang/NoSuchFieldError  ], 720:[726:java/lang/NoSuchFieldError  ], 721:[726:java/lang/NoSuchFieldError  ], 722:[726:java/lang/NoSuchFieldError  ], 724:[726:java/lang/NoSuchFieldError  ], 727:[733:java/lang/NoSuchFieldError  ], 728:[733:java/lang/NoSuchFieldError  ], 729:[733:java/lang/NoSuchFieldError  ], 731:[733:java/lang/NoSuchFieldError  ], 738:[744:java/lang/NoSuchFieldError  ], 739:[744:java/lang/NoSuchFieldError  ], 740:[744:java/lang/NoSuchFieldError  ], 742:[744:java/lang/NoSuchFieldError  ], 745:[751:java/lang/NoSuchFieldError  ], 746:[751:java/lang/NoSuchFieldError  ], 747:[751:java/lang/NoSuchFieldError  ], 749:[751:java/lang/NoSuchFieldError  ], 752:[758:java/lang/NoSuchFieldError  ], 753:[758:java/lang/NoSuchFieldError  ], 754:[758:java/lang/NoSuchFieldError  ], 756:[758:java/lang/NoSuchFieldError  ], 759:[765:java/lang/NoSuchFieldError  ], 760:[765:java/lang/NoSuchFieldError  ], 761:[765:java/lang/NoSuchFieldError  ], 763:[765:java/lang/NoSuchFieldError  ], 766:[772:java/lang/NoSuchFieldError  ], 767:[772:java/lang/NoSuchFieldError  ], 768:[772:java/lang/NoSuchFieldError  ], 770:[772:java/lang/NoSuchFieldError  ], 777:[783:java/lang/NoSuchFieldError  ], 778:[783:java/lang/NoSuchFieldError  ], 779:[783:java/lang/NoSuchFieldError  ], 781:[783:java/lang/NoSuchFieldError  ], 784:[790:java/lang/NoSuchFieldError  ], 785:[790:java/lang/NoSuchFieldError  ], 786:[790:java/lang/NoSuchFieldError  ], 788:[790:java/lang/NoSuchFieldError  ], 791:[797:java/lang/NoSuchFieldError  ], 792:[797:java/lang/NoSuchFieldError  ], 793:[797:java/lang/NoSuchFieldError  ], 795:[797:java/lang/NoSuchFieldError  ]]
-+INVOKESTATIC local/lito381/server/ClientSession$Phase.values()[Llocal/lito381/server/ClientSession$Phase;
- ARRAYLENGTH
- NEWARRAY 10
- PUTSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
--GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.DAMAGE:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+GETSTATIC local/lito381/server/ClientSession$Phase.CHANNEL:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
- CONST Integer:1
- IASTORE
- GOTO L11
- ASTORE 0
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
--GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.SILENCE:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+GETSTATIC local/lito381/server/ClientSession$Phase.ROOM:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
- CONST Integer:2
- IASTORE
- GOTO L18
- ASTORE 1
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
--GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.PARALYSIS:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
- CONST Integer:3
- IASTORE
- GOTO L25
- ASTORE 2
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
--GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.NONE:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+GETSTATIC local/lito381/server/ClientSession$Phase.RESULT:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
- CONST Integer:4
- IASTORE
- GOTO L32
- ASTORE 3
--INVOKESTATIC local/lito381/server/ClientSession$Phase.values()[Llocal/lito381/server/ClientSession$Phase;
--ARRAYLENGTH
--NEWARRAY 10
--PUTSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.CHANNEL:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:1
--IASTORE
--GOTO L43
--ASTORE 4
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.ROOM:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:2
--IASTORE
--GOTO L50
--ASTORE 5
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:3
--IASTORE
--GOTO L57
--ASTORE 6
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.RESULT:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:4
--IASTORE
--GOTO L64
--ASTORE 7
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
- GETSTATIC local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
- INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
- CONST Integer:5
- IASTORE
--GOTO L71
--ASTORE 8
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
-+GOTO L39
-+ASTORE 4
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
- GETSTATIC local/lito381/server/ClientSession$Phase.KEY_SENT:Llocal/lito381/server/ClientSession$Phase;
- INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
- CONST Integer:6
- IASTORE
-+GOTO L46
-+ASTORE 5
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
-+GETSTATIC local/lito381/server/ClientSession$Phase.VERSION_OK:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
-+CONST Integer:7
-+IASTORE
-+GOTO L53
-+ASTORE 6
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
-+GETSTATIC local/lito381/server/ClientSession$Phase.AUTHENTICATED:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
-+CONST Integer:8
-+IASTORE
-+GOTO L60
-+ASTORE 7
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#20:[I
-+GETSTATIC local/lito381/server/ClientSession$Phase.LOBBY:Llocal/lito381/server/ClientSession$Phase;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
-+CONST Integer:9
-+IASTORE
-+GOTO L67
-+ASTORE 8
-+INVOKESTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.values()[Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+ARRAYLENGTH
-+NEWARRAY 10
-+PUTSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
-+GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.NONE:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
-+CONST Integer:1
-+IASTORE
- GOTO L78
- ASTORE 9
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.VERSION_OK:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:7
-+GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.MOVED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
-+CONST Integer:2
- IASTORE
- GOTO L85
- ASTORE 10
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.AUTHENTICATED:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:8
-+GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ABANDONED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
-+CONST Integer:3
- IASTORE
- GOTO L92
- ASTORE 11
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
--GETSTATIC local/lito381/server/ClientSession$Phase.LOBBY:Llocal/lito381/server/ClientSession$Phase;
--INVOKEVIRTUAL local/lito381/server/ClientSession$Phase.ordinal()I
--CONST Integer:9
-+GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ARRIVED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
-+CONST Integer:4
- IASTORE
- GOTO L99
- ASTORE 12
--INVOKESTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.values()[Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#19:[I
-+GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.DEAD_REMOVED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
-+CONST Integer:5
-+IASTORE
-+GOTO L106
-+ASTORE 13
-+INVOKESTATIC local/lito381/server/ClientSession$AttackEnvelope.values()[Llocal/lito381/server/ClientSession$AttackEnvelope;
- ARRAYLENGTH
- NEWARRAY 10
- PUTSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#18:[I
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#18:[I
--GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.NONE:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
--CONST Integer:1
--IASTORE
--GOTO L110
--ASTORE 13
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#18:[I
--GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.MOVED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
--CONST Integer:2
-+GETSTATIC local/lito381/server/ClientSession$AttackEnvelope.DIRECT:Llocal/lito381/server/ClientSession$AttackEnvelope;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$AttackEnvelope.ordinal()I
-+CONST Integer:1
- IASTORE
- GOTO L117
- ASTORE 14
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#18:[I
--GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ABANDONED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
--CONST Integer:3
-+GETSTATIC local/lito381/server/ClientSession$AttackEnvelope.FAR:Llocal/lito381/server/ClientSession$AttackEnvelope;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$AttackEnvelope.ordinal()I
-+CONST Integer:2
- IASTORE
- GOTO L124
- ASTORE 15
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#18:[I
--GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ARRIVED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
--CONST Integer:4
-+GETSTATIC local/lito381/server/ClientSession$AttackEnvelope.ALTERNATE:Llocal/lito381/server/ClientSession$AttackEnvelope;
-+INVOKEVIRTUAL local/lito381/server/ClientSession$AttackEnvelope.ordinal()I
-+CONST Integer:3
- IASTORE
- GOTO L131
- ASTORE 16
--GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#18:[I
--GETSTATIC local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.DEAD_REMOVED:Llocal/lito381/server/ClassicWorldDspyEscorts$TransitionKind;
--INVOKEVIRTUAL local/lito381/server/ClassicWorldDspyEscorts$TransitionKind.ordinal()I
--CONST Integer:5
--IASTORE
--GOTO L138
--ASTORE 17
--INVOKESTATIC local/lito381/server/ClientSession$AttackEnvelope.values()[Llocal/lito381/server/ClientSession$AttackEnvelope;
-+INVOKESTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.values()[Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
- ARRAYLENGTH
- NEWARRAY 10
- PUTSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#17:[I
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#17:[I
--GETSTATIC local/lito381/server/ClientSession$AttackEnvelope.DIRECT:Llocal/lito381/server/ClientSession$AttackEnvelope;
--INVOKEVIRTUAL local/lito381/server/ClientSession$AttackEnvelope.ordinal()I
--CONST Integer:1
-+GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.DAMAGE:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+CONST Integer:1
-+IASTORE
-+GOTO L142
-+ASTORE 17
-+GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#17:[I
-+GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.SILENCE:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+CONST Integer:2
- IASTORE
- GOTO L149
- ASTORE 18
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#17:[I
--GETSTATIC local/lito381/server/ClientSession$AttackEnvelope.FAR:Llocal/lito381/server/ClientSession$AttackEnvelope;
--INVOKEVIRTUAL local/lito381/server/ClientSession$AttackEnvelope.ordinal()I
--CONST Integer:2
-+GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.PARALYSIS:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+CONST Integer:3
- IASTORE
- GOTO L156
- ASTORE 19
- GETSTATIC local/lito381/server/ClientSession$1.$SwitchMap$#17:[I
--GETSTATIC local/lito381/server/ClientSession$AttackEnvelope.ALTERNATE:Llocal/lito381/server/ClientSession$AttackEnvelope;
--INVOKEVIRTUAL local/lito381/server/ClientSession$AttackEnvelope.ordinal()I
--CONST Integer:3
-+GETSTATIC local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.NONE:Llocal/lito381/server/ClassicWorldMonsterPoisonAttack$Kind;
-+INVOKEVIRTUAL local/lito381/server/ClassicWorldMonsterPoisonAttack$Kind.ordinal()I
-+CONST Integer:4
- IASTORE
- GOTO L163
- ASTORE 20
-```
-
-</details>
-
-### `local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z`
-
-<details>
-<summary>完整差異（全部 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z
 +++ candidate/local/lito381/server/ClientSession#lambda$autoSelectPendingRentalBattleHandoff$30(Llocal/lito381/server/CharacterSummary;)Z
-@@ -1,15 +1,15 @@
- META 4098 null []
+@@ -2,19 +2,19 @@
  TRY []
-+ALOAD 0
-+GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
-+ALOAD 0
-+INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;
+ ALOAD 0
+ GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
+-ASTORE 2
+ ALOAD 0
+ INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;
+-ASTORE 3
  ALOAD 0
  ALOAD 1
  INVOKEVIRTUAL local/lito381/server/CharacterSummary.name()Ljava/lang/String;
  INVOKESPECIAL local/lito381/server/ClientSession.stateCharacter(Ljava/lang/String;)Ljava/lang/String;
- ASTORE 2
--ALOAD 0
--INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;
- ASTORE 3
--ALOAD 0
--GETFIELD local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;
++ASTORE 2
++ASTORE 3
  ASTORE 4
- ALOAD 4
+-ALOAD 2
++ALOAD 4
  ALOAD 0
+ ALOAD 3
+ INVOKESTATIC local/lito381/server/SourceLogin.account(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Ljava/lang/String;
+-ALOAD 4
++ALOAD 2
+ INVOKEVIRTUAL local/lito381/server/GameHub.hasRentalBattleHandoff(Ljava/lang/String;Ljava/lang/String;)Z
+ IRETURN
 ```
 
-</details>
+
+#### ONLY_LEFT　`local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$286(Llocal/lito381/server/BattleCompanion;)Z`
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$286(Llocal/lito381/server/BattleCompanion;)Z
++++ candidate/local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$286(Llocal/lito381/server/BattleCompanion;)Z
+@@ -1,11 +0,0 @@
+-META 4106 null []
+-TRY []
+-ALOAD 0
+-INVOKEVIRTUAL local/lito381/server/BattleCompanion.snapshot()Llocal/lito381/server/BattleCompanion$Snapshot;
+-INVOKEVIRTUAL local/lito381/server/BattleCompanion$Snapshot.kind()Llocal/lito381/server/BattleCompanion$Kind;
+-GETSTATIC local/lito381/server/BattleCompanion$Kind.PET:Llocal/lito381/server/BattleCompanion$Kind;
+-IF_ACMPEQ L7
+-CONST Integer:1
+-GOTO L8
+-CONST Integer:0
+-IRETURN
+```
+
+
+#### ONLY_LEFT　`local/lito381/server/ClientSession#lambda$completeClassicWorldPortal$162(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V`
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#lambda$completeClassicWorldPortal$162(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V
++++ candidate/local/lito381/server/ClientSession#lambda$completeClassicWorldPortal$162(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V
+@@ -1,7 +0,0 @@
+-META 4098 null [java/io/IOException]
+-TRY []
+-ALOAD 0
+-ALOAD 1
+-ALOAD 2
+-INVOKESPECIAL local/lito381/server/ClientSession.nativePlacementPortalBody(Llocal/lito381/server/Protocol$PortalDestination;Llocal/lito381/server/ClientSession$PendingClassicWorldPortal;)V
+-RETURN
+```
+
+
+#### ONLY_RIGHT　`local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$456(Llocal/lito381/server/BattleCompanion;)Z`
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$456(Llocal/lito381/server/BattleCompanion;)Z
++++ candidate/local/lito381/server/ClientSession#lambda$cleanupClassicWorldTransientCompanionsOnDisconnect$456(Llocal/lito381/server/BattleCompanion;)Z
+@@ -0,0 +1,18 @@
++META 4106 null []
++TRY []
++ALOAD 0
++INVOKEVIRTUAL local/lito381/server/BattleCompanion.snapshot()Llocal/lito381/server/BattleCompanion$Snapshot;
++INVOKEVIRTUAL local/lito381/server/BattleCompanion$Snapshot.kind()Llocal/lito381/server/BattleCompanion$Kind;
++GETSTATIC local/lito381/server/BattleCompanion$Kind.SUMMON:Llocal/lito381/server/BattleCompanion$Kind;
++IF_ACMPNE L7
++CONST Integer:0
++IRETURN
++ALOAD 0
++INVOKEVIRTUAL local/lito381/server/BattleCompanion.snapshot()Llocal/lito381/server/BattleCompanion$Snapshot;
++INVOKEVIRTUAL local/lito381/server/BattleCompanion$Snapshot.kind()Llocal/lito381/server/BattleCompanion$Kind;
++GETSTATIC local/lito381/server/BattleCompanion$Kind.PET:Llocal/lito381/server/BattleCompanion$Kind;
++IF_ACMPEQ L14
++CONST Integer:1
++GOTO L15
++CONST Integer:0
++IRETURN
+```
+
+
+#### ONLY_RIGHT　`local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$263(Llocal/lito381/server/ClientSession;)Z`
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$263(Llocal/lito381/server/ClientSession;)Z
++++ candidate/local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$263(Llocal/lito381/server/ClientSession;)Z
+@@ -0,0 +1,12 @@
++META 4106 null []
++TRY []
++ALOAD 0
++GETFIELD local/lito381/server/ClientSession.playerHp:I
++IFLE L8
++ALOAD 0
++GETFIELD local/lito381/server/ClientSession.observer:Z
++IFNE L8
++CONST Integer:1
++GOTO L9
++CONST Integer:0
++IRETURN
+```
+
+
+#### ONLY_RIGHT　`local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$264(Llocal/lito381/server/ClientSession;)Z`
+
+
+```diff
+--- staged/local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$264(Llocal/lito381/server/ClientSession;)Z
++++ candidate/local/lito381/server/ClientSession#lambda$useAreaSilenceSpell$264(Llocal/lito381/server/ClientSession;)Z
+@@ -0,0 +1,12 @@
++META 4098 null []
++TRY []
++ALOAD 1
++GETFIELD local/lito381/server/ClientSession.invisible:Z
++IFEQ L6
++ALOAD 1
++ALOAD 0
++IF_ACMPNE L8
++CONST Integer:1
++GOTO L9
++CONST Integer:0
++IRETURN
+```

@@ -2412,7 +2412,7 @@ final class ClientSession implements Runnable {
                     + "commit source=" + selectedClassicServerName + " player="
                     + playerName() + " error=" + failure.getMessage());
         }
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         sendEncrypted(Protocol.messageCode(
                         143, npc.nameId(), passItem.nativeViewName()),
@@ -2544,7 +2544,7 @@ final class ClientSession implements Runnable {
                         + " status=" + payment.status());
                 return;
             }
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             // SQL is authoritative; this remains a restart/debug economy mirror.
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
@@ -2735,7 +2735,7 @@ final class ClientSession implements Runnable {
             return;
         }
 
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         String keyName = keyItems.get(0).nativeViewName()
                 + (amount > 1 ? " (" + amount + ")" : "");
@@ -3809,7 +3809,7 @@ final class ClientSession implements Runnable {
             }
             state.saveEconomyState(stateCharacter(), shopPoints,
                     next.catalogCounts(), next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             sendInventoryDelta(previous, inventory);
         }
 
@@ -3904,7 +3904,7 @@ final class ClientSession implements Runnable {
         if (consumed) {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     next.catalogCounts(), next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             sendInventoryDelta(previous, inventory);
         }
         long nextUse = Math.addExact(now,
@@ -4852,7 +4852,7 @@ final class ClientSession implements Runnable {
         state.saveEconomyStateAndStoryQuests(
                 stateCharacter(), shopPoints, next.catalogCounts(),
                 next.catalogItemStates(), nextQuests);
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         for (int effectId : event.removedSkillEffects()) {
             storySkillEffectDeadlines.remove(effectId);
         }
@@ -4936,7 +4936,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyStateAndStoryQuests(
                     stateCharacter(), shopPoints, next.catalogCounts(),
                     next.catalogItemStates(), nextQuests);
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             sendInventoryDelta(previous, inventory);
         }
         if (reward != null) {
@@ -5049,7 +5049,7 @@ final class ClientSession implements Runnable {
             }
             state.saveEconomyState(stateCharacter(), shopPoints,
                     next.catalogCounts(), next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             sendInventoryDelta(previous, inventory);
 
             clearPendingClassicList();
@@ -5107,7 +5107,7 @@ final class ClientSession implements Runnable {
         }
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         sendEncrypted(Protocol.messageCode(143, npc.nameId(), reward.name()),
                 "S_MESSAGE_CODE Ship-Grave-voyager-reward=143 item=" + rewardId);
@@ -5211,7 +5211,7 @@ final class ClientSession implements Runnable {
         state.saveEconomyStateAndStoryQuestsConsumingSourceObjects(
                 stateCharacter(), shopPoints, finalInventory.catalogCounts(),
                 finalInventory.catalogItemStates(), quests, consumedSourceObjects);
-        inventory = finalInventory;
+        NativeDeItemApplication.replace(this, finalInventory, 0);
 
         boolean removedEquippedWeapon = false;
         Map<Long, Long> retainedSourceEquipment = new LinkedHashMap<>(
@@ -5802,7 +5802,7 @@ final class ClientSession implements Runnable {
         }
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         rebuildMaximumVitals(System.nanoTime());
         playerHp = playerMaxHp;
         playerMp = playerMaxMp;
@@ -6034,7 +6034,7 @@ final class ClientSession implements Runnable {
 
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         for (ClassicWorldCraftCatalog.MakingItem result : recipe.results()) {
             long quantity = (long) result.count() * amount;
@@ -6131,7 +6131,7 @@ final class ClientSession implements Runnable {
                     "durable pet liberation could not commit wild replacement");
         }
 
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         owned.deactivate();
         owned.clearCarriedItems();
@@ -6851,7 +6851,7 @@ final class ClientSession implements Runnable {
             return;
         }
 
-        inventory = nextInventory;
+        NativeDeItemApplication.replace(this, nextInventory, 0);
         sendInventoryDelta(previousInventory, inventory);
         if (!previousBidder.isBlank()) {
             ClientSession previousBidderSession = hub.activeMemberByIdentity(
@@ -6948,7 +6948,7 @@ final class ClientSession implements Runnable {
                     auth.banned() ? "account-banned" : "invalid-account-or-password");
             return;
         }
-        if (state.isAccountBanned(auth.account())) {
+        if (state.isAccountBanned(SourceLogin.account(this, auth.account()))) {
             sendLoginFailure(Protocol.LoginCheckResult.ACCOUNT_BANNED, "sidecar-account-banned");
             return;
         }
@@ -6962,13 +6962,13 @@ final class ClientSession implements Runnable {
         if (endpoint == Endpoint.LOGIN) {
             // A fresh authenticated LOGIN invalidates an abandoned selector
             // handoff from an older attempt. C_C8/C35 will stage the new one.
-            hub.clearClassicSourceHandoff(account);
+            hub.clearClassicSourceHandoff(SourceLogin.account(this, account));
         } else {
-            stagedClassicSource = hub.pendingClassicSourceHandoff(account);
+            stagedClassicSource = hub.pendingClassicSourceHandoff(SourceLogin.account(this, account));
             if (stagedClassicSource != null) {
                 String canonical = canonicalClassicSource(stagedClassicSource);
                 if (canonical != null && isClassicSourceAuthorized(canonical)) {
-                    selectedClassicServerName = canonical;
+                    NativePlayerCommit.scene(this, canonical, "selectedClassicServerName");
                     SourceAdministration.clear(this);
                 } else {
                     System.out.println("[LiTo] discarded invalid staged classic source account="
@@ -6976,8 +6976,11 @@ final class ClientSession implements Runnable {
                     stagedClassicSource = null;
                 }
             }
-            stagedChannelPortHandoff = hub.pendingChannelPortHandoff(
-                    account, boundChannelId);
+            GameHub handoffHub = hub;
+            String handoffAccount = account;
+            int handoffChannel = boundChannelId;
+            stagedChannelPortHandoff = handoffHub.pendingChannelPortHandoff(
+                    SourceLogin.account(this, handoffAccount), handoffChannel);
             if (stagedChannelPortHandoff != null) {
                 String canonical = canonicalClassicSource(
                         stagedChannelPortHandoff.source());
@@ -6986,7 +6989,7 @@ final class ClientSession implements Runnable {
                             + mask(account) + " bound-channel=" + boundChannelId);
                     stagedChannelPortHandoff = null;
                 } else {
-                    selectedClassicServerName = canonical;
+                    NativePlayerCommit.scene(this, canonical, "selectedClassicServerName");
                     SourceAdministration.clear(this);
                 }
             }
@@ -7028,8 +7031,11 @@ final class ClientSession implements Runnable {
             return;
         }
         if (endpoint == Endpoint.GAME && stagedClassicSource != null) {
-            boolean consumed = hub.consumeClassicSourceHandoff(
-                    account, selectedClassicServerName);
+            GameHub handoffHub = hub;
+            String handoffAccount = account;
+            String handoffSource = selectedClassicServerName;
+            boolean consumed = handoffHub.consumeClassicSourceHandoff(
+                    SourceLogin.account(this, handoffAccount), handoffSource);
             System.out.println("[LiTo] GAME claimed classic-source handoff source="
                     + selectedClassicServerName + " consumed=" + consumed
                     + " account=" + mask(account));
@@ -7044,7 +7050,7 @@ final class ClientSession implements Runnable {
                     + " channel=" + channelPortHandoffTarget
                     + " account=" + mask(account));
         }
-        phase = Phase.AUTHENTICATED;
+        NativePlayerCommit.scene(this, Phase.AUTHENTICATED, "phase");
         if (endpoint == Endpoint.GAME) {
             beginGameBootstrap();
             notifyWantedAccountLogin();
@@ -7286,9 +7292,9 @@ final class ClientSession implements Runnable {
             return false;
         }
         CharacterSummary characterSummary2 = this.characters.stream().filter(characterSummary -> {
-            String string = this.stateCharacter(characterSummary.name());
-            String string2 = this.accountName();
             GameHub gameHub = this.hub;
+            String string2 = this.accountName();
+            String string = this.stateCharacter(characterSummary.name());
             return gameHub.hasRentalBattleHandoff(SourceLogin.account(this, string2), string);
         }).findFirst().orElse(null);
         if (characterSummary2 == null) {
@@ -7422,11 +7428,11 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] C_SERVER_SELECT refreshed source list for physical retained-source selection; awaiting C_C8");
             return;
         }
-        NativePlayerCommit.scene(this, this.config.classicServerNames().get(0), "selectedClassicServerName");
+        NativePlayerCommit.scene(this, (String) this.config.classicServerNames().get(0), "selectedClassicServerName");
         SourceAdministration.clear(this);
-        String string = this.selectedClassicServerName;
-        String string2 = this.accountName();
         GameHub gameHub = this.hub;
+        String string2 = this.accountName();
+        String string = this.selectedClassicServerName;
         gameHub.stageClassicSourceHandoff(SourceLogin.account(this, string2), string);
         this.enterLobby("C_SERVER_SELECT implicit-first=" + this.selectedClassicServerName);
     }
@@ -7558,9 +7564,12 @@ final class ClientSession implements Runnable {
                         + phase);
                 return;
             }
-            selectedClassicServerName = matched;
+            NativePlayerCommit.scene(this, matched, "selectedClassicServerName");
             SourceAdministration.clear(this);
-            hub.stageClassicSourceHandoff(accountName(), selectedClassicServerName);
+            GameHub handoffHub = hub;
+            String handoffAccount = accountName();
+            String handoffSource = selectedClassicServerName;
+            handoffHub.stageClassicSourceHandoff(SourceLogin.account(this, handoffAccount), handoffSource);
             enterLobby("C_C8 selected-source=" + selectedClassicServerName);
             return;
         }
@@ -7576,7 +7585,7 @@ final class ClientSession implements Runnable {
                     + ": " + databaseError.getMessage());
             return;
         }
-        selectedClassicServerName = matched;
+        NativePlayerCommit.scene(this, matched, "selectedClassicServerName");
         SourceAdministration.clear(this);
         hub.registerClassicCastleWarSchedules(
                 selectedClassicServerName, castleWarSchedules);
@@ -7961,12 +7970,12 @@ final class ClientSession implements Runnable {
         GameStateStore.Warehouse durableWarehouse = state.personalWarehouse(
                 stateAccount(), accountCharacterIdentities());
         shopPoints = economy.points();
-        inventory = RuntimeInventory.fromDurableState(
+        NativeDeItemApplication.replace(this, RuntimeInventory.fromDurableState(
                 economy.inventory(), economy.itemStates(), sourceInventory == null
                         ? Map.of() : sourceInventory.definitions(),
-                sourceInventory == null ? Map.of() : sourceInventory.sourceWeapons());
+                sourceInventory == null ? Map.of() : sourceInventory.sourceWeapons()), 0);
         if (config.nativeTournamentEconomyEnabled()) {
-            inventory = inventory.sourceEquipmentOnly();
+            NativeDeItemApplication.replace(this, inventory.sourceEquipmentOnly(), 0);
         }
         sourceEquipmentObjects = sourceInventory == null
                 ? Map.of() : sourceInventory.sourceEquipmentObjects();
@@ -8006,8 +8015,8 @@ final class ClientSession implements Runnable {
                         + selected.name(), evaluationFailure);
             }
         }
-        warehouse = RuntimeInventory.fromDurableState(
-                durableWarehouse.inventory(), durableWarehouse.itemStates());
+        NativeDeItemApplication.replace(this, RuntimeInventory.fromDurableState(
+                durableWarehouse.inventory(), durableWarehouse.itemStates()), 3);
         // Once the source weapon is represented by its durable inventory
         // object, never fall back to the parallel aggregate-only weapon after
         // that object is deliberately unequipped and the character relogs.
@@ -8568,7 +8577,7 @@ final class ClientSession implements Runnable {
             // LiToHelp1/3/4: source consumables/Adena are unavailable, bought
             // consumables disappear after the match, and a fresh fixed coin
             // amount is issued for the next one.
-            inventory = inventory.sourceEquipmentOnly();
+            NativeDeItemApplication.replace(this, inventory.sourceEquipmentOnly(), 0);
             // Non-importable source rows are unavailable to Tournament and
             // must not survive as invisible carried weight. Imported source
             // equipment remains represented by inventory.totalWeight().
@@ -8781,7 +8790,7 @@ final class ClientSession implements Runnable {
             hubChannelId = -1;
             pendingLitoRoomInvitation = null;
             acceptedLitoRoomInvitation = null;
-            phase = Phase.CHANNEL;
+            NativePlayerCommit.scene(this, Phase.CHANNEL, "phase");
             System.out.println("[LiTo] entered /argo active-battle browser from channel="
                     + lastTournamentChannelId + " users=" + argo.users()
                     + "/" + argo.capacity());
@@ -8830,11 +8839,15 @@ final class ClientSession implements Runnable {
         pendingLitoRoomInvitation = null;
         acceptedLitoRoomInvitation = null;
         observer = false;
-        phase = Phase.CHANNEL;
+        NativePlayerCommit.scene(this, Phase.CHANNEL, "phase");
         if (channelPortHandoffTarget >= 0) {
-            boolean consumed = hub.consumeChannelPortHandoff(
-                    accountName(), channelPortHandoffCharacter,
-                    selectedClassicServerName, channelId);
+            GameHub handoffHub = hub;
+            String handoffAccount = accountName();
+            String handoffCharacter = channelPortHandoffCharacter;
+            String handoffSource = selectedClassicServerName;
+            boolean consumed = handoffHub.consumeChannelPortHandoff(
+                    SourceLogin.account(this, handoffAccount), handoffCharacter,
+                    handoffSource, channelId);
             if (!consumed) {
                 throw new IOException("channel-port handoff expired before channel entry");
             }
@@ -8862,19 +8875,19 @@ final class ClientSession implements Runnable {
             this.sendEncrypted(Protocol.litoEnterChannelFailure(Protocol.LitoEnterChannelFailure.CHANNEL_NOT_IN_SERVICE, Protocol.LitoChannelSelection.activeChannel(n)), "S_LITO_ENTER_CHANNEL_RESULT redirect rejected missing identity");
             return;
         }
-        int n2 = n;
-        String string = this.selectedClassicServerName;
-        String string2 = characterSummary.name();
         GameHub gameHub = this.hub;
         String string3 = this.accountName();
+        String string2 = characterSummary.name();
+        String string = this.selectedClassicServerName;
+        int n2 = n;
         boolean bl = gameHub.stageChannelPortHandoff(SourceLogin.account(this, string3), string2, string, n2);
         if (!bl) {
             this.sendEncrypted(Protocol.litoEnterChannelFailure(Protocol.LitoEnterChannelFailure.CHANNEL_NOT_IN_SERVICE, Protocol.LitoChannelSelection.activeChannel(n)), "S_LITO_ENTER_CHANNEL_RESULT redirect handoff rejected");
             return;
         }
-        String string4 = this.selectedClassicServerName;
-        String string5 = this.accountName();
         GameHub gameHub2 = this.hub;
+        String string5 = this.accountName();
+        String string4 = this.selectedClassicServerName;
         gameHub2.stageClassicSourceHandoff(SourceLogin.account(this, string5), string4);
         this.channelPortTransferPending = true;
         this.sendEncrypted(Protocol.vsServerStatus(Protocol.LitoVsServerAvailability.AVAILABLE), "S_LITO_VS_SERVER_STATUS channel-port redirect available");
@@ -8891,9 +8904,9 @@ final class ClientSession implements Runnable {
         if (!this.rentalTownDirectoryAdvertised) return false;
         if (this.phase != Phase.LOBBY) return false;
         if (this.selectedCharacter.isEmpty()) return false;
-        String string = this.stateCharacter();
         GameHub gameHub = this.hub;
         String string2 = this.accountName();
+        String string = this.stateCharacter();
         if (gameHub.hasRentalBattleHandoff(SourceLogin.account(this, string2), string)) return false;
         return true;
     }
@@ -9082,11 +9095,13 @@ final class ClientSession implements Runnable {
         }
         if (rentalTownJoinPending) {
             joinRentalTown(roomId, password, trigger, matchmaking);
+            NativeRoomRules.joined(this);
             return;
         }
         if (phase != Phase.CHANNEL) {
             System.out.println("[LiTo] C_LITO_JOIN rejected invalid-phase=" + phase);
             rejectRoomRequest("invalid-phase", matchmaking);
+            NativeRoomRules.joined(this);
             return;
         }
         boolean argoJoin = currentChannelId == ARGO_CHANNEL_ID;
@@ -9098,6 +9113,7 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] C_LITO_JOIN rejected unknown-room=" + roomId);
             rejectRoomRequest("unknown-room", matchmaking,
                     Protocol.LitoJoinFailure.ROOM_CLOSED);
+            NativeRoomRules.joined(this);
             return;
         }
         GameHub.RoomSettings settings = hub.roomSettings(roomId);
@@ -9108,6 +9124,7 @@ final class ClientSession implements Runnable {
                     + Integer.toHexString(settings.attributes()));
             rejectRoomRequest("upper-tier", matchmaking,
                     Protocol.LitoJoinFailure.UPPER_TIER_RESTRICTED);
+            NativeRoomRules.joined(this);
             return;
         }
         if (argoJoin) {
@@ -9120,6 +9137,7 @@ final class ClientSession implements Runnable {
             observer = previousObserver;
             rejectRoomRequest("observer-disabled", matchmaking,
                     Protocol.LitoJoinFailure.OBSERVER_DISABLED);
+            NativeRoomRules.joined(this);
             return;
         }
         // The /argo room-row callback has no password-dialog branch: it sends
@@ -9130,6 +9148,7 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] C_LITO_JOIN rejected invalid-password room=" + roomId);
             rejectRoomRequest("invalid-password", matchmaking,
                     Protocol.LitoJoinFailure.BAD_PASSWORD);
+            NativeRoomRules.joined(this);
             return;
         }
         if (!hub.hasCapacity(roomChannelId, roomId, observer)) {
@@ -9137,6 +9156,7 @@ final class ClientSession implements Runnable {
             observer = previousObserver;
             rejectRoomRequest("room-full", matchmaking,
                     Protocol.LitoJoinFailure.ROOM_FULL);
+            NativeRoomRules.joined(this);
             return;
         }
 
@@ -9145,6 +9165,7 @@ final class ClientSession implements Runnable {
             if (joinedChannel == null) {
                 observer = previousObserver;
                 rejectRoomRequest("argo-channel-full", matchmaking);
+                NativeRoomRules.joined(this);
                 return;
             }
             hubChannelId = roomChannelId;
@@ -9170,6 +9191,7 @@ final class ClientSession implements Runnable {
             };
             rejectRoomRequest("room-no-longer-joinable-" + roomJoin.failure(),
                     matchmaking, nativeFailure);
+            NativeRoomRules.joined(this);
             return;
         }
 
@@ -9210,9 +9232,9 @@ final class ClientSession implements Runnable {
         sendEncrypted(joined.bytes(), "S_LITO_JOIN_RESULT accepted room=" + roomId + " trigger=" + trigger);
         hub.cancelMatchMaking(this);
         pendingMatchMakingRequest = null;
-        phase = Phase.ROOM;
+        NativePlayerCommit.scene(this, Phase.ROOM, "phase");
         ready = false;
-        currentRoomId = roomId;
+        NativePlayerCommit.scene(this, roomId, "currentRoomId");
         if (!observer && roomJoin.combatantsBefore() == 1
                 && NativeRoomRules.bot(hub.roomRules(roomId).mode(), hub, roomId)) {
             byte[] botLeft = new Protocol.Writer().c(Protocol.S_LITO_EXIT_ROOM)
@@ -9247,9 +9269,9 @@ final class ClientSession implements Runnable {
             for (int value = 3; value >= 1; value--) serverCountdown(value);
             startBattle();
         }
-        NativeRoomRules.joined(this);
         System.out.println("[LiTo] joined room=" + roomId + " player=" + player + " observer=" + observer);
         LobbyRoomDirectory.refresh(this, "room-joined");
+        NativeRoomRules.joined(this);
     }
 
     private void joinRentalTown(long l, String string, String string2, boolean bl) throws IOException {
@@ -9281,7 +9303,7 @@ final class ClientSession implements Runnable {
                 selectedCharacterSummary().type(), rentalItemSetSelection);
         rentalTownLoadout = plan.stage(
                 scene.loadoutPolicy(), ClientSession::nextRentalItemObjectId);
-        rentalTownInventory = rentalTownLoadout.inventory();
+        NativeDeItemApplication.replace(this, rentalTownLoadout.inventory(), 1);
         positionX = scene.spawnX();
         positionY = scene.spawnY();
         playerHeading = scene.heading();
@@ -9328,7 +9350,7 @@ final class ClientSession implements Runnable {
                 "S_LITO_OBSERVER_BOX rental-town min=" + town.minX() + ","
                         + town.minY() + " max-exclusive=" + (town.maxX() + 1)
                         + "," + (town.maxY() + 1));
-        phase = Phase.BATTLE;
+        NativePlayerCommit.scene(this, Phase.BATTLE, "phase");
         notifyBuddyActivity(Protocol.LitoBuddyActivity.FIGHTING);
         int gameSeconds = ClassicLineageClock.now();
         sendEncrypted(Protocol.worldTime(gameSeconds),
@@ -9458,10 +9480,10 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] C_HACTION rental-town teleporter deferred resource=" + npc.resourceIndex() + " html=" + npc.startHtml() + " action=" + string + " result=server-owned-endpoint-not-configured");
             return;
         }
-        RuntimeInventory runtimeInventory = this.rentalTownInventory;
-        String string2 = this.stateCharacter();
         GameHub gameHub = this.hub;
         String string3 = this.accountName();
+        String string2 = this.stateCharacter();
+        RuntimeInventory runtimeInventory = this.rentalTownInventory;
         boolean bl = gameHub.stageRentalBattleHandoff(SourceLogin.account(this, string3), string2, runtimeInventory);
         if (!bl) {
             System.out.println("[LiTo] C_HACTION rental-town teleporter rejected resource=" + npc.resourceIndex() + " html=" + npc.startHtml() + " action=" + string + " result=missing-authenticated-character-or-rental-loadout");
@@ -9698,7 +9720,7 @@ final class ClientSession implements Runnable {
             return;
         }
 
-        rentalTownInventory = next;
+        NativeDeItemApplication.replace(this, next, 1);
         rentalTownLightGemCount = nextLightGemCount;
         sendInventoryDelta(previous, rentalTownInventory, false);
         sendEncrypted(Protocol.changeInventoryCount(
@@ -9810,7 +9832,7 @@ final class ClientSession implements Runnable {
             if (rentalHotelLease != null) return;
             rentalHotelLease = lease;
         }
-        rentalTownInventory = next;
+        NativeDeItemApplication.replace(this, next, 1);
         sendInventoryDelta(previous, rentalTownInventory, false);
         hub.scheduleRentalHotelExpiry(this, token, durationNanos);
         sendEncrypted(Protocol.hypertext(
@@ -9920,7 +9942,7 @@ final class ClientSession implements Runnable {
                 .collect(java.util.stream.Collectors.toSet());
         if (!carried.isEmpty()) {
             RuntimeInventory previous = rentalTownInventory;
-            rentalTownInventory = rentalTownInventory.withoutObjects(carried);
+            NativeDeItemApplication.replace(this, rentalTownInventory.withoutObjects(carried), 1);
             if (rentalTownRoomState && phase == Phase.BATTLE) {
                 sendInventoryDelta(previous, rentalTownInventory, false);
             }
@@ -10433,7 +10455,10 @@ final class ClientSession implements Runnable {
     }
 
     private void setReady(byte[] payload) throws IOException {
-        if (phase != Phase.ROOM) return;
+        if (phase != Phase.ROOM) {
+            NativeRoomRules.feedback(this);
+            return;
+        }
         Protocol.LitoReadyRequest request = Protocol.litoReadyRequest(payload);
         Protocol.LitoParticipantState requested = request.ownerStart()
                 ? Protocol.LitoParticipantState.READY
@@ -10451,6 +10476,7 @@ final class ClientSession implements Runnable {
                     "S_LITO_READY_GAME rental-town player=" + playerName()
                             + " requested=" + requested.wireValue()
                             + " published=" + publishedState.wireValue());
+            NativeRoomRules.feedback(this);
             return;
         }
         // Native value 2 is the room shop/list-entry state emitted before
@@ -10598,7 +10624,7 @@ final class ClientSession implements Runnable {
             // before a compatibility-only client reaches world rendering.
             // Production defaults false and retains the native post-bootstrap
             // challenge order below.
-            phase = Phase.BATTLE;
+            NativePlayerCommit.scene(this, Phase.BATTLE, "phase");
             sendClientIntegrityChallenge();
         }
         // The native S_WORLD handler resolves dword_75A898 from the arena id.
@@ -10618,7 +10644,7 @@ final class ClientSession implements Runnable {
             sendEncrypted(bootstrap.timeLimit(),
                     "S_LITO_TIMELIMIT battle-seconds=" + rules.timeLimitSeconds());
         }
-        phase = Phase.BATTLE;
+        NativePlayerCommit.scene(this, Phase.BATTLE, "phase");
         notifyBuddyActivity(Protocol.LitoBuddyActivity.FIGHTING);
         int gameSeconds = ClassicLineageClock.now();
         sendEncrypted(Protocol.worldTime(gameSeconds),
@@ -10636,7 +10662,7 @@ final class ClientSession implements Runnable {
         // roster. This idempotent local reset also covers direct participant
         // entry paths without altering an already-running match for observers.
         if (!observer) resetBattleVitals();
-        lastAttacker = null;
+        CombatPoisonLifecycle.last(this, null);
         deathConfirmationPending = false;
         terminalEffectResultNotBeforeNanos = 0;
         resultRecorded = false;
@@ -10649,8 +10675,11 @@ final class ClientSession implements Runnable {
                 currentRoomId, this), this);
         List<GameHub.RoomVirtualPlayer> virtualPlayers =
                 hub.battleVirtualPlayers(currentRoomId);
-        boolean includesBot = NativeRoomRules.bot(rules.mode(), this)
+        boolean includesBot = rules.mode() != BattleRules.Mode.PET_RACE
+                && rules.mode() != BattleRules.Mode.QUEST_BATTLE
+                && rules.mode() != BattleRules.Mode.TIME_ATTACK
                 && battleMembers.size() < 2 && virtualPlayers.isEmpty();
+        includesBot = NativeRoomRules.activeBot(this);
         if (rules.mode() == BattleRules.Mode.PET_RACE) {
             sendNativeRaceHud(battleMembers);
         }
@@ -11171,8 +11200,9 @@ final class ClientSession implements Runnable {
         int n4 = this.equipmentAdjustedBaseMaxMp(characterSummary);
         this.playerMaxHp = this.battleMaximumWithAdvanceSpirit(n3, n, snapshot.maxHp(), l);
         this.playerMaxMp = this.battleMaximumWithAdvanceSpirit(n4, n2, snapshot.maxMp(), l);
+        int restoredHp = this.playerMaxHp;
         NativePlayerCommit.advance(this);
-        this.playerHp = this.playerMaxHp;
+        this.playerHp = restoredHp;
         this.playerMp = this.playerMaxMp;
         this.terminalEffectResultNotBeforeNanos = 0L;
         this.lastCombatTargetObjectId = 0L;
@@ -13441,7 +13471,7 @@ final class ClientSession implements Runnable {
                         "configured-battle-destination-selected");
                 clearRentalTownRoomState();
                 rentalItemSetSelection = -1;
-                phase = Phase.LOBBY;
+                NativePlayerCommit.scene(this, Phase.LOBBY, "phase");
                 if (!sameHost) {
                     boolean released = hub.releaseAuthenticatedAccountForTransfer(
                             this, account);
@@ -13471,7 +13501,7 @@ final class ClientSession implements Runnable {
             removeRentalTownSceneInventory("battle-destination-selected");
             clearRentalTownRoomState();
             rentalItemSetSelection = -1;
-            phase = Phase.LOBBY;
+            NativePlayerCommit.scene(this, Phase.LOBBY, "phase");
             sendEncrypted(new Protocol.Writer()
                             .c(Protocol.S_LITO_QUIT_FIGHT).c(0).bytes(),
                     "S_LITO_QUIT_FIGHT rental-town to battle-channel selector");
@@ -13554,16 +13584,16 @@ final class ClientSession implements Runnable {
         boolean bl = this.nativeLobbyExitResumeDeadlineNanos != 0L && l - this.nativeLobbyExitResumeDeadlineNanos < 0L;
         this.nativeLobbyExitResumeDeadlineNanos = 0L;
         if (bl && this.phase == Phase.CHANNEL && this.currentChannelId >= 0 && this.currentChannelId < GameHub.CHANNEL_COUNT && !this.accountName().isBlank() && !this.selectedCharacter.isBlank() && !this.selectedClassicServerName.isBlank()) {
-            int n = this.currentChannelId;
-            String string = this.selectedClassicServerName;
-            String string2 = this.selectedCharacter;
             GameHub gameHub = this.hub;
             String string3 = this.accountName();
+            String string2 = this.selectedCharacter;
+            String string = this.selectedClassicServerName;
+            int n = this.currentChannelId;
             boolean bl2 = gameHub.stageChannelPortHandoff(SourceLogin.account(this, string3), string2, string, n);
             if (bl2) {
-                String string4 = this.selectedClassicServerName;
-                String string5 = this.accountName();
                 GameHub gameHub2 = this.hub;
+                String string5 = this.accountName();
+                String string4 = this.selectedClassicServerName;
                 gameHub2.stageClassicSourceHandoff(SourceLogin.account(this, string5), string4);
                 System.out.println("[LiTo] staged native lobby-exit resume account=" + ClientSession.mask(this.account) + " character=" + this.selectedCharacter + " source=" + this.selectedClassicServerName + " channel=" + this.currentChannelId);
             }
@@ -13636,8 +13666,8 @@ final class ClientSession implements Runnable {
             abandonClassicWorldRoiFollower("owner-restart");
             notifyClassicWorldPeersOfRemoval("restart");
             hub.leaveClassicWorld(this);
-            classicWorldMapId = -1;
-            classicWorldInstanceId = -1;
+            NativePlayerCommit.scene(this, -1, "classicWorldMapId");
+            NativePlayerCommit.scene(this, -1, "classicWorldInstanceId");
         }
         long departedRoom = currentRoomId;
         if (departedRoom != 0) {
@@ -13668,7 +13698,7 @@ final class ClientSession implements Runnable {
         NativeRoomRules.restoreBot(this);
                 if (transferRoomOwner) broadcastRoomOwner(departedRoom, "restart");
                 detachArgoRoomMembership();
-                currentRoomId = 0;
+                NativePlayerCommit.scene(this, 0, "currentRoomId");
                 ready = false;
                 if (roomDeleted && currentChannelId >= 0) {
                     broadcastRoomDeleted(departedRoom);
@@ -13682,7 +13712,7 @@ final class ClientSession implements Runnable {
             hubChannelId = -1;
         }
         rentalItemSetSelection = -1;
-        phase = Phase.LOBBY;
+        NativePlayerCommit.scene(this, Phase.LOBBY, "phase");
         pendingTransition = PendingTransition.RESTART_AWAIT_SOURCE_REFRESH;
         sendEncrypted(Protocol.allowPostTransition(),
                 "S_LITO_VS_SERVER_ALLOW_JOIN restart source-refresh");
@@ -14278,11 +14308,15 @@ final class ClientSession implements Runnable {
         }
     }
 
-    private void say(byte[] payload, int expectedOpcode) throws Exception {
+    private void say(byte[] payload, int expectedOpcode) throws IOException {
         Protocol.ChatRequest request = Protocol.chatRequest(payload, expectedOpcode);
         if (phase != Phase.ROOM && phase != Phase.BATTLE
                 && phase != Phase.CHANNEL && phase != Phase.WORLD) return;
-        if (handleGmChatCommand(request.message())) return;
+        try {
+            if (handleGmChatCommand(request.message())) return;
+        } catch (Exception failure) {
+            rethrowUnchecked(failure);
+        }
         if (sendCloneAppearanceProbe(request.message())) return;
         if (sendAttackAllProbe(request.message())) return;
         if (sendBookListProbe(request.message())) return;
@@ -15909,12 +15943,12 @@ final class ClientSession implements Runnable {
             return;
         }
 
-        inventory = nextInventory;
+        NativeDeItemApplication.replace(this, nextInventory, 0);
         try {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
         } catch (IOException error) {
-            inventory = previousInventory;
+            NativeDeItemApplication.replace(this, previousInventory, 0);
             if (sqlClanCreated) {
                 try {
                     if (selectedSourceAccounts().rollbackCreatedClan(
@@ -17195,7 +17229,7 @@ final class ClientSession implements Runnable {
                     previousInventory, nextInventory, localToSource);
             if (mutation.status() == RepositoryBoardMutationStatus.SUCCESS) {
                 topic = mutation.topic();
-                inventory = nextInventory;
+                NativeDeItemApplication.replace(this, nextInventory, 0);
                 // SQL is authoritative; this is only the local economy cache.
                 state.saveEconomyState(stateCharacter(), shopPoints,
                         inventory.catalogCounts(), inventory.catalogItemStates());
@@ -17206,7 +17240,7 @@ final class ClientSession implements Runnable {
                 topic = state.postBoardTopic(stateCharacter(), shopPoints,
                         nextInventory.catalogCounts(), date,
                         request.title(), request.content());
-                inventory = nextInventory;
+                NativeDeItemApplication.replace(this, nextInventory, 0);
             } else {
                 System.out.println("[LiTo] SQL board post refused status="
                         + mutation.status() + " source=" + selectedClassicServerName
@@ -17268,12 +17302,12 @@ final class ClientSession implements Runnable {
         }
 
         RuntimeInventory previousInventory = inventory;
-        inventory = nextInventory;
+        NativeDeItemApplication.replace(this, nextInventory, 0);
         try {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
         } catch (IOException failure) {
-            inventory = previousInventory;
+            NativeDeItemApplication.replace(this, previousInventory, 0);
             throw failure;
         }
         sendInventoryDelta(previousInventory, inventory);
@@ -17379,7 +17413,7 @@ final class ClientSession implements Runnable {
         RuntimeInventory previousInventory = inventory;
         state.saveSpellPurchase(stateCharacter(), shopPoints,
                 nextInventory.catalogCounts(), nextPurchased);
-        inventory = nextInventory;
+        NativeDeItemApplication.replace(this, nextInventory, 0);
         purchasedSkills = Set.copyOf(nextPurchased);
         learnedSkills = Set.copyOf(nextLearned);
         pendingSpellShop = null;
@@ -17479,7 +17513,7 @@ final class ClientSession implements Runnable {
         RuntimeInventory previousInventory = inventory;
         state.saveSpellPurchase(stateCharacter(), shopPoints,
                 nextInventory.catalogCounts(), nextPurchased);
-        inventory = nextInventory;
+        NativeDeItemApplication.replace(this, nextInventory, 0);
         purchasedSkills = Set.copyOf(nextPurchased);
         learnedSkills = Set.copyOf(nextLearned);
         pendingSpellMaterialShop = null;
@@ -18424,7 +18458,7 @@ final class ClientSession implements Runnable {
                 return;
             }
             if (warehouseCapability.scope() == GameStateStore.WarehouseScope.PERSONAL) {
-                warehouse = nextWarehouse;
+                NativeDeItemApplication.replace(this, nextWarehouse, 3);
             }
         } else {
             state.saveEconomyState(stateCharacter(), shopPoints,
@@ -18434,7 +18468,7 @@ final class ClientSession implements Runnable {
         // commit has completed. Releasing it before save() would allow a
         // second member to open a stale list during the filesystem write.
         clearPendingClassicList();
-        inventory = nextInventory;
+        NativeDeItemApplication.replace(this, nextInventory, 0);
         sendInventoryDelta(previousInventory, inventory);
         System.out.println("[LiTo] C_BUY_SELL accepted npc="
                 + transaction.npcObjectId() + " mode=" + transaction.mode()
@@ -18662,7 +18696,7 @@ final class ClientSession implements Runnable {
         if (accepted) {
             RuntimeInventory previousInventory = inventory;
             shopPoints = nextPoints;
-            inventory = nextInventory;
+            NativeDeItemApplication.replace(this, nextInventory, 0);
             // The lobby already owns the same 648EBC item receiver used by
             // selection S_7C. Publish committed object deltas immediately.
             // A later bootstrap clears the retained native model before repopulating it.
@@ -18791,9 +18825,9 @@ final class ClientSession implements Runnable {
         if (this.rentalBattleLoadoutActive || this.accountName().isBlank() || this.selectedCharacter.isBlank()) {
             return false;
         }
-        String string2 = this.stateCharacter();
         GameHub gameHub = this.hub;
         String string3 = this.accountName();
+        String string2 = this.stateCharacter();
         GameHub.RentalBattleHandoff rentalBattleHandoff = gameHub.consumeRentalBattleHandoff(SourceLogin.account(this, string3), string2);
         if (rentalBattleHandoff == null) {
             return false;
@@ -19160,7 +19194,7 @@ final class ClientSession implements Runnable {
         }
 
         RuntimeInventory previous = inventory;
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         for (Overflow entry : overflow) {
             broadcastGroundItem(entry.ground(), "companion-getitem-overflow");
@@ -19224,7 +19258,7 @@ final class ClientSession implements Runnable {
         }
 
         RuntimeInventory previous = inventory;
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         if (!transferred.isEmpty()) {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
@@ -19582,7 +19616,7 @@ final class ClientSession implements Runnable {
         }
 
         RuntimeInventory previous = inventory;
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         broadcastGroundTake(take, "player-pickup");
         sendInventoryDelta(previous, inventory);
         sendEncrypted(Protocol.messageCode(403, take.taken().displayName()),
@@ -19657,7 +19691,7 @@ final class ClientSession implements Runnable {
         }
 
         RuntimeInventory previous = inventory;
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         broadcastClassicWorldGroundTake(take, "player-pickup");
         sendInventoryDelta(previous, inventory);
         sendEncrypted(Protocol.messageCode(403, take.taken().displayName()),
@@ -19769,7 +19803,7 @@ final class ClientSession implements Runnable {
         }
 
         RuntimeInventory previous = inventory;
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         if (classicWorld) {
             broadcastClassicWorldGroundItem(worldGround, "player-drop");
@@ -19858,7 +19892,7 @@ final class ClientSession implements Runnable {
                     mapId, instanceId, nowNanos);
             NativeMagicDollPowers summonedPowers =
                     NativeMagicDollPowers.from(type);
-            inventory = candidate;
+            NativeDeItemApplication.replace(this, candidate, 0);
             activeMagicDoll = summoned;
             magicDollPeriodicState = NativeMagicDollEffects.PeriodicState.from(
                     summonedPowers);
@@ -20432,7 +20466,7 @@ final class ClientSession implements Runnable {
                     evolution.pet(), evolution.targetTemplate());
             publishPetEvolution(companion, evolved);
         }
-        inventory = committedInventory;
+        NativeDeItemApplication.replace(this, committedInventory, 0);
         sendInventoryDelta(previous, inventory);
         if (companionItemReceipt != null) {
             publishCompanionGivenItemUse(companionItemReceipt);
@@ -20741,7 +20775,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     next.catalogCounts(), next.catalogItemStates());
         }
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         if (removed.equipped() && removed.definition().sourceArmor()) {
             removeSolidCarriageUnlessEquipped("destroy-equipped-armor");
         }
@@ -20784,7 +20818,7 @@ final class ClientSession implements Runnable {
             throw new IllegalStateException(
                     "deleted SQL physical letter lost runtime object");
         }
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         removeSqlLetter(existing.objectId());
         saveSqlLetterEconomyBestEffort();
         sendInventoryDelta(previous, inventory);
@@ -20907,7 +20941,7 @@ final class ClientSession implements Runnable {
             rollbackStagedSourceWeaponState(changes, "persistence-failed");
             throw persistenceFailure;
         }
-        inventory = candidate;
+        NativeDeItemApplication.replace(this, candidate, 0);
         sourceWeaponSuppressed = true;
         sourceEquipmentMagicStats = evaluation.magic();
         sourceEquipmentVitalStats = evaluation.vital();
@@ -20992,7 +21026,7 @@ final class ClientSession implements Runnable {
             rollbackStagedSourceEquipmentState(changes, "persistence-failed");
             throw persistenceFailure;
         }
-        inventory = candidate;
+        NativeDeItemApplication.replace(this, candidate, 0);
         sourceEquipmentMagicStats = evaluation.magic();
         sourceEquipmentVitalStats = evaluation.vital();
         sourceEquippedFireResistance = new SourceEquippedFireResistance(
@@ -21283,11 +21317,11 @@ final class ClientSession implements Runnable {
         }
         if (claim.status() != RepositoryPendingRewardClaimStatus.SUCCESS) return claim;
         if (personalWarehouse) {
-            warehouse = afterWarehouse.copy();
+            NativeDeItemApplication.replace(this, afterWarehouse.copy(), 3);
             state.reconcileSqlWarehouse(GameStateStore.WarehouseScope.PERSONAL,
                     stateAccount(), afterWarehouse);
         } else {
-            inventory = afterInventory;
+            NativeDeItemApplication.replace(this, afterInventory, 0);
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
             sendInventoryDelta(beforeInventory, inventory);
@@ -22517,7 +22551,7 @@ final class ClientSession implements Runnable {
                     stateCharacter(), shopPoints, inventory.catalogCounts(),
                     inventory.catalogItemStates(), durable);
         } catch (IOException | RuntimeException failure) {
-            inventory = previous;
+            NativeDeItemApplication.replace(this, previous, 0);
             throw failure;
         }
         long nowNanos = System.nanoTime();
@@ -22606,12 +22640,12 @@ final class ClientSession implements Runnable {
         }
 
         if (target == this) {
-            inventory = receiverAfter;
+            NativeDeItemApplication.replace(this, receiverAfter, 0);
             bindNewLetterObject(senderBefore, inventory, delivery.letter());
             if (inventoryBootstrapSent) sendInventoryDelta(senderBefore, inventory);
             sendLetterDeliveryNotice(delivery.letter());
         } else {
-            inventory = senderAfter;
+            NativeDeItemApplication.replace(this, senderAfter, 0);
             if (inventoryBootstrapSent) sendInventoryDelta(senderBefore, inventory);
             if (target != null) {
                 target.receiveLetterDelivery(receiverBefore, receiverAfter, delivery.letter());
@@ -22678,7 +22712,7 @@ final class ClientSession implements Runnable {
                 throw new IllegalStateException(
                         "SQL physical-letter delivery cannot admit receiver runtime item");
             }
-            inventory = senderAfter;
+            NativeDeItemApplication.replace(this, senderAfter, 0);
             reconcileSqlLetter(repositoryLetter);
             letterObjectBindings.put(repositoryLetter.itemObjectId(),
                     repositoryLetter.itemObjectId());
@@ -22686,7 +22720,7 @@ final class ClientSession implements Runnable {
             if (inventoryBootstrapSent) sendInventoryDelta(senderBefore, inventory);
             sendLetterDeliveryNotice(letter);
         } else {
-            inventory = senderAfter;
+            NativeDeItemApplication.replace(this, senderAfter, 0);
             saveSqlLetterEconomyBestEffort();
             if (inventoryBootstrapSent) sendInventoryDelta(senderBefore, inventory);
             if (target != null) target.receiveSqlLetterDelivery(repositoryLetter);
@@ -23003,7 +23037,7 @@ final class ClientSession implements Runnable {
         if (!next.remove(scroll.objectId(), 1)) return;
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         itemReadyNanos.put(4, now + 1_500_000_000L);
         cancelAbsoluteBarrier("item-home-scroll");
         sendInventoryDelta(previous, inventory);
@@ -23111,7 +23145,7 @@ final class ClientSession implements Runnable {
         if (!next.remove(item.objectId(), 1)) return;
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         cancelAbsoluteBarrier("item-custom-area-teleport");
         sendInventoryDelta(previous, inventory);
 
@@ -23227,7 +23261,7 @@ final class ClientSession implements Runnable {
                     + requested.objectId() + " catalog=" + definition.catalogId());
             return;
         }
-        rentalTownInventory = candidate;
+        NativeDeItemApplication.replace(this, candidate, 1);
         for (RuntimeInventory.Item changed : changes) {
             sendInventoryEquipmentState(changed, "rental-town-equipped");
         }
@@ -23271,7 +23305,7 @@ final class ClientSession implements Runnable {
             }
             state.saveEconomyState(stateCharacter(), shopPoints,
                     next.catalogCounts(), next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             InventoryCatalog.Definition definition = InventoryCatalog.find(itemId);
             sendEncrypted(Protocol.messageCode(165,
                             definition == null ? Long.toString(itemId) : definition.name()),
@@ -23460,10 +23494,10 @@ final class ClientSession implements Runnable {
         try {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     next.catalogCounts(), next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             if (forceUnequip) sourceWeaponSuppressed = true;
         } catch (IOException | RuntimeException failure) {
-            inventory = previous;
+            NativeDeItemApplication.replace(this, previous, 0);
             sourceWeaponSuppressed = previousSourceWeaponSuppressed;
             throw failure;
         }
@@ -23683,7 +23717,7 @@ final class ClientSession implements Runnable {
         }
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
 
         clearPendingClassicList();
@@ -24689,7 +24723,7 @@ final class ClientSession implements Runnable {
             if (!honorRespawnPending(roomId, token)) return;
             pendingHonorRespawnToken = 0;
             playerHp = playerMaxHp;
-            lastAttacker = null;
+            CombatPoisonLifecycle.last(this, null);
             // Honor Match restarts at the death coordinate; it must not reuse
             // the ordinary spawn-anchor teleport path.
             positionX = deathX;
@@ -24716,8 +24750,9 @@ final class ClientSession implements Runnable {
     }
 
     private void respawnAtBattleSpawn() throws IOException {
+        int restoredHp = this.playerMaxHp;
         NativePlayerCommit.advance(this);
-        this.playerHp = this.playerMaxHp;
+        this.playerHp = restoredHp;
         CombatPoisonLifecycle.last(this, null);
         this.terminalEffectResultNotBeforeNanos = 0L;
         this.hub.respawn(this.currentRoomId, this);
@@ -37337,7 +37372,7 @@ final class ClientSession implements Runnable {
             }
             cancelMeditation("spell-" + spell.skillId());
             previousInventory = inventory;
-            inventory = nextInventory;
+            NativeDeItemApplication.replace(this, nextInventory, 0);
             playerMp -= mpCost;
             remainingMp = playerMp;
             commitSpellReady(spell.skillId(),
@@ -39524,7 +39559,7 @@ final class ClientSession implements Runnable {
                     if (nextInventory.add(
                             InventoryCatalog.require(refinement.targetCatalogId()), 1)) {
                         previousInventory = inventory;
-                        inventory = nextInventory;
+                        NativeDeItemApplication.replace(this, nextInventory, 0);
                         resultMessage = spell.successMessage();
                         resultArgument = refinement.targetNameId();
                     } else {
@@ -39534,7 +39569,7 @@ final class ClientSession implements Runnable {
                     }
                 } else {
                     previousInventory = inventory;
-                    inventory = nextInventory;
+                    NativeDeItemApplication.replace(this, nextInventory, 0);
                     resultMessage = spell.failureMessage();
                 }
             }
@@ -45701,7 +45736,7 @@ final class ClientSession implements Runnable {
             synchronized (tamedCompanions) {
                 tamedCompanions.remove(pet);
             }
-            inventory = previous;
+            NativeDeItemApplication.replace(this, previous, 0);
             throw failure;
         }
     }
@@ -47365,7 +47400,7 @@ final class ClientSession implements Runnable {
         state.saveEconomyState(stateCharacter(), shopPoints,
                 next.catalogCounts(), next.catalogItemStates());
         RuntimeInventory previous = inventory;
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sendInventoryDelta(previous, inventory);
         sendEncrypted(Protocol.messageCode(
                         ClassicWorldGuardianCatalog.HARVEST_MESSAGE,
@@ -48156,7 +48191,7 @@ final class ClientSession implements Runnable {
                 }
                 state.saveEconomyState(stateCharacter(), shopPoints,
                         candidate.catalogCounts(), candidate.catalogItemStates());
-                inventory = candidate;
+                NativeDeItemApplication.replace(this, candidate, 0);
                 after = inventory.item(runtimeObjectId);
                 long remaining = after == null ? 0 : after.quantity();
                 reservation = new GameStateStore.SourceProjectileReservation(
@@ -48179,7 +48214,7 @@ final class ClientSession implements Runnable {
                         stateCharacter(), projectile, runtimeObjectId,
                         candidate.catalogCounts(), candidate.catalogItemStates());
                 if (reservation.accepted() && projectile.consumeOnAttack()) {
-                    inventory = candidate;
+                    NativeDeItemApplication.replace(this, candidate, 0);
                     after = inventory.item(runtimeObjectId);
                 }
             }
@@ -48588,7 +48623,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyState(
                     stateCharacter(), shopPoints, next.catalogCounts(),
                     next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             sendInventoryDelta(previous, inventory);
         } else {
             ClassicWorldGroundItems.Item ground = hub.putClassicWorldGroundItem(
@@ -48644,7 +48679,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyState(
                     stateCharacter(), shopPoints, next.catalogCounts(),
                     next.catalogItemStates());
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             sendInventoryDelta(previous, inventory);
         } else {
             ClassicWorldGroundItems.Item ground = hub.putClassicWorldGroundItem(
@@ -48705,7 +48740,7 @@ final class ClientSession implements Runnable {
         state.saveEconomyStateAndStoryQuests(
                 stateCharacter(), shopPoints, next.catalogCounts(),
                 next.catalogItemStates(), quests);
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         if (alreadyOwned) return;
 
         RuntimeInventory.Item source = new RuntimeInventory.Item(
@@ -49078,12 +49113,12 @@ final class ClientSession implements Runnable {
             if (!next.damageWeapon(
                     equipped.objectId(), equipped.durability() + 1)) return;
             previous = inventory;
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
             try {
                 state.saveEconomyState(stateCharacter(), shopPoints,
                         inventory.catalogCounts(), inventory.catalogItemStates());
             } catch (IOException failure) {
-                inventory = previous;
+                NativeDeItemApplication.replace(this, previous, 0);
                 throw failure;
             }
             damaged = inventory.item(equipped.objectId());
@@ -49123,13 +49158,13 @@ final class ClientSession implements Runnable {
                     RuntimeInventory next = inventory.copy();
                     if (!next.damageWeapon(
                             current.objectId(), nextDurability)) return;
-                    inventory = next;
+                    NativeDeItemApplication.replace(this, next, 0);
                     try {
                         state.saveEconomyState(stateCharacter(), shopPoints,
                                 inventory.catalogCounts(),
                                 inventory.catalogItemStates());
                     } catch (IOException failure) {
-                        inventory = previous;
+                        NativeDeItemApplication.replace(this, previous, 0);
                         throw failure;
                     }
                 }
@@ -50024,7 +50059,7 @@ final class ClientSession implements Runnable {
             }
         }
 
-        inventory = next;
+        NativeDeItemApplication.replace(this, next, 0);
         sourceEquipmentObjects = Map.copyOf(retainedEquipmentObjects);
         consumedSourceEquipmentObjects = Set.copyOf(consumedEquipmentObjects);
         if (equipmentEvaluation != null) {
@@ -50783,7 +50818,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyStateAndStoryQuests(
                     stateCharacter(), shopPoints, next.catalogCounts(),
                     next.catalogItemStates(), nextQuests);
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
         } catch (IOException | RuntimeException failure) {
             hub.classicWorldDspyEscorts().restoreAfterFailedArrival(removed);
             throw failure;
@@ -50925,7 +50960,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyStateAndStoryQuests(
                     stateCharacter(), shopPoints, next.catalogCounts(),
                     next.catalogItemStates(), nextQuests);
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
         } catch (IOException | RuntimeException failure) {
             hub.classicWorldRescueFollowers().restoreAfterFailedCompletion(removed);
             throw failure;
@@ -51058,7 +51093,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyStateAndStoryQuests(
                     stateCharacter(), shopPoints, next.catalogCounts(),
                     next.catalogItemStates(), quests);
-            inventory = next;
+            NativeDeItemApplication.replace(this, next, 0);
         } catch (IOException | RuntimeException failure) {
             hub.classicWorldRoiFollowers().restoreAfterFailedCompletion(removed);
             throw failure;
@@ -54871,7 +54906,7 @@ final class ClientSession implements Runnable {
                     stateCharacter(), shopPoints, candidate.catalogCounts(),
                     candidate.catalogItemStates(), expiredObjectIds, nowEpochMillis);
             RuntimeInventory previous = inventory;
-            inventory = candidate;
+            NativeDeItemApplication.replace(this, candidate, 0);
             sourceEquipmentObjects = Map.copyOf(retainedEquipmentObjects);
             consumedSourceEquipmentObjects = Set.copyOf(consumedEquipmentObjects);
             sourceProjectileObjects = Map.copyOf(retainedProjectileObjects);
@@ -56128,9 +56163,14 @@ final class ClientSession implements Runnable {
     boolean authorizesAuthenticatedEndpointTransfer(String suppliedAccount) {
         boolean explicitTransfer = config.nativeTransferStoneProbeEnabled()
                 && transferStoneProbeHandoffPending;
-        boolean rentalTransfer = rentalTownTransferPending
-                && pendingRentalTeleportEndpoint != null
-                && hub.hasRentalBattleHandoff(accountName(), stateCharacter());
+        boolean rentalTransfer = false;
+        if (rentalTownTransferPending && pendingRentalTeleportEndpoint != null) {
+            GameHub handoffHub = hub;
+            String handoffAccount = accountName();
+            String handoffCharacter = stateCharacter();
+            rentalTransfer = handoffHub.hasRentalBattleHandoff(
+                    SourceLogin.account(this, handoffAccount), handoffCharacter);
+        }
         return (explicitTransfer || rentalTransfer || channelPortTransferPending)
                 && account != null
                 && suppliedAccount != null
@@ -58354,7 +58394,7 @@ final class ClientSession implements Runnable {
         CombatWorldCommit.dolls(this, attackProc, snapshot, sourceNpcPhysicalStats, poisonUpdate, scope);
     }
 
-    static void nativeSourceCubeQuestWaveAdvance(ClientSession clientSession, int n, int n2, List<BattleQuestEncounter.Snapshot> list, boolean bl, String string, NativeSourceCubeNpc.Commit commit) throws IOException {
+    static void nativeSourceCubeQuestWaveAdvance(ClientSession clientSession, int n, int n2, List list, boolean bl, String string, NativeSourceCubeNpc.Commit commit) throws IOException {
         List<ClientSession> list2 = NativeSourceCubeNpc.recipients(NativeSourceCubeNpc.hub(clientSession, commit), NativeSourceCubeNpc.room(clientSession, commit), n, commit);
         if (!list.isEmpty()) {
             int n3 = n2 + 1;
@@ -58367,7 +58407,7 @@ final class ClientSession implements Runnable {
                 for (BattleQuestBoundary.Attribute attribute : NativeSourceCubeNpc.opened(NativeSourceCubeNpc.hub(clientSession, commit), NativeSourceCubeNpc.room(clientSession, commit), n, n2, commit)) {
                     NativeSourceCubeNpc.send(clientSession2, Protocol.doorAttribute(attribute.x(), attribute.y(), attribute.direction(), attribute.passable()), "S_CHANGE_ATTR quest-boundary-open force=" + n + " after-room=" + n2 + " x=" + attribute.x() + " y=" + attribute.y() + " direction=" + attribute.direction() + " source=room-monsters-eliminated+LiTo.bin-sub_4A5E70+sub_48B9A0+sub_48B640-S_CHANGE_ATTR", commit);
                 }
-                for (BattleQuestEncounter.Snapshot snapshot2 : list) {
+                for (BattleQuestEncounter.Snapshot snapshot2 : (List<BattleQuestEncounter.Snapshot>) list) {
                     NativeSourceCubeNpc.send(clientSession2, Protocol.questMonster(snapshot2), "S_PUT_OBJECT quest-monster=" + snapshot2.objectId() + " force=" + snapshot2.force() + " room=" + snapshot2.roomNumber() + " npc=" + snapshot2.npcId() + " after-cleared-room=" + n2, commit);
                 }
             }
@@ -58422,7 +58462,7 @@ final class ClientSession implements Runnable {
         System.out.println("[LiTo] magic-doll attack proc player=" + this.playerName() + " target=" + l + " direct=" + attackProc.additionalDamage() + " damage-powers=" + String.valueOf(attackProc.damageTriggers().stream().map(SourceMagicDollPower::id).toList()) + " skill-powers=" + String.valueOf(attackProc.skillTriggers().stream().map(SourceMagicDollPower::id).toList()));
     }
 
-    static void nativeSourcePhysicalQuestWaveAdvance(ClientSession clientSession, int n, int n2, List<BattleQuestEncounter.Snapshot> list, boolean bl, String string, NativeSourcePhysicalNpc.Commit commit) throws IOException {
+    static void nativeSourcePhysicalQuestWaveAdvance(ClientSession clientSession, int n, int n2, List list, boolean bl, String string, NativeSourcePhysicalNpc.Commit commit) throws IOException {
         List<ClientSession> list2 = NativeSourcePhysicalNpc.recipients(NativeSourcePhysicalNpc.hub(clientSession, commit), NativeSourcePhysicalNpc.room(clientSession, commit), n, commit);
         if (!list.isEmpty()) {
             int n3 = n2 + 1;
@@ -58435,7 +58475,7 @@ final class ClientSession implements Runnable {
                 for (BattleQuestBoundary.Attribute attribute : NativeSourcePhysicalNpc.opened(NativeSourcePhysicalNpc.hub(clientSession, commit), NativeSourcePhysicalNpc.room(clientSession, commit), n, n2, commit)) {
                     NativeSourcePhysicalNpc.send(clientSession2, Protocol.doorAttribute(attribute.x(), attribute.y(), attribute.direction(), attribute.passable()), "S_CHANGE_ATTR quest-boundary-open force=" + n + " after-room=" + n2 + " x=" + attribute.x() + " y=" + attribute.y() + " direction=" + attribute.direction() + " source=room-monsters-eliminated+LiTo.bin-sub_4A5E70+sub_48B9A0+sub_48B640-S_CHANGE_ATTR", commit);
                 }
-                for (BattleQuestEncounter.Snapshot snapshot2 : list) {
+                for (BattleQuestEncounter.Snapshot snapshot2 : (List<BattleQuestEncounter.Snapshot>) list) {
                     NativeSourcePhysicalNpc.send(clientSession2, Protocol.questMonster(snapshot2), "S_PUT_OBJECT quest-monster=" + snapshot2.objectId() + " force=" + snapshot2.force() + " room=" + snapshot2.roomNumber() + " npc=" + snapshot2.npcId() + " after-cleared-room=" + n2, commit);
                 }
             }
@@ -58454,7 +58494,7 @@ final class ClientSession implements Runnable {
         }
     }
 
-    static void nativeSourcePoisonQuestWaveAdvance(ClientSession clientSession, int n, int n2, List<BattleQuestEncounter.Snapshot> list, boolean bl, String string, NativeSourcePoisonNpc.Commit commit) throws IOException {
+    static void nativeSourcePoisonQuestWaveAdvance(ClientSession clientSession, int n, int n2, List list, boolean bl, String string, NativeSourcePoisonNpc.Commit commit) throws IOException {
         List<ClientSession> list2 = NativeSourcePoisonNpc.recipients(NativeSourcePoisonNpc.hub(clientSession, commit), NativeSourcePoisonNpc.room(clientSession, commit), n, commit);
         if (!list.isEmpty()) {
             int n3 = n2 + 1;
@@ -58467,7 +58507,7 @@ final class ClientSession implements Runnable {
                 for (BattleQuestBoundary.Attribute attribute : NativeSourcePoisonNpc.opened(NativeSourcePoisonNpc.hub(clientSession, commit), NativeSourcePoisonNpc.room(clientSession, commit), n, n2, commit)) {
                     NativeSourcePoisonNpc.send(clientSession2, Protocol.doorAttribute(attribute.x(), attribute.y(), attribute.direction(), attribute.passable()), "S_CHANGE_ATTR quest-boundary-open force=" + n + " after-room=" + n2 + " x=" + attribute.x() + " y=" + attribute.y() + " direction=" + attribute.direction() + " source=room-monsters-eliminated+LiTo.bin-sub_4A5E70+sub_48B9A0+sub_48B640-S_CHANGE_ATTR", commit);
                 }
-                for (BattleQuestEncounter.Snapshot snapshot2 : list) {
+                for (BattleQuestEncounter.Snapshot snapshot2 : (List<BattleQuestEncounter.Snapshot>) list) {
                     NativeSourcePoisonNpc.send(clientSession2, Protocol.questMonster(snapshot2), "S_PUT_OBJECT quest-monster=" + snapshot2.objectId() + " force=" + snapshot2.force() + " room=" + snapshot2.roomNumber() + " npc=" + snapshot2.npcId() + " after-cleared-room=" + n2, commit);
                 }
             }
@@ -60337,7 +60377,7 @@ final class ClientSession implements Runnable {
         System.out.println("[LiTo] C_USE_SPELL remove-curse skill=" + curseRemovalSpell.skillId() + " caster=" + this.playerName() + " target=" + objectSpellRequest.targetObjectId() + " poison-cured=" + bl6 + " paralysis-cured=" + bl7 + " effective-int=" + n5 + " mp-cost=" + n7 + " mp=" + n + "/" + this.playerMaxMp);
     }
 
-    private void sourceProcQuestWaveAdvance(int n, int n2, List<BattleQuestEncounter.Snapshot> list, boolean bl, String string, NativeProcEncounterPublication.Context context) throws IOException {
+    private void sourceProcQuestWaveAdvance(int n, int n2, List list, boolean bl, String string, NativeProcEncounterPublication.Context context) throws IOException {
         List<ClientSession> list2 = NativeProcEncounterPublication.recipients(this.hub, NativeProcEncounterPublication.room(this, context), n, context);
         if (!list.isEmpty()) {
             int n3 = n2 + 1;
@@ -60350,7 +60390,7 @@ final class ClientSession implements Runnable {
                 for (BattleQuestBoundary.Attribute attribute : NativeProcEncounterPublication.opened(this.hub, NativeProcEncounterPublication.room(this, context), n, n2, context)) {
                     NativeProcEncounterPublication.send(clientSession, Protocol.doorAttribute(attribute.x(), attribute.y(), attribute.direction(), attribute.passable()), "S_CHANGE_ATTR quest-boundary-open force=" + n + " after-room=" + n2 + " x=" + attribute.x() + " y=" + attribute.y() + " direction=" + attribute.direction() + " source=room-monsters-eliminated+LiTo.bin-sub_4A5E70+sub_48B9A0+sub_48B640-S_CHANGE_ATTR", context);
                 }
-                for (BattleQuestEncounter.Snapshot snapshot2 : list) {
+                for (BattleQuestEncounter.Snapshot snapshot2 : (List<BattleQuestEncounter.Snapshot>) list) {
                     NativeProcEncounterPublication.send(clientSession, Protocol.questMonster(snapshot2), "S_PUT_OBJECT quest-monster=" + snapshot2.objectId() + " force=" + snapshot2.force() + " room=" + snapshot2.roomNumber() + " npc=" + snapshot2.npcId() + " after-cleared-room=" + n2, context);
                 }
             }
