@@ -42,7 +42,7 @@ final class ClassicWorldIvoryTowerCatalogTest {
     }
 
     @Test
-    void selectedGroundRoutesAreExactAndAllLandingsCanBeExited() {
+    void selectedGroundRoutesAndFormalUnsafeLandingsAreExact() {
         List<ClassicWorldDungeonCatalog.Route> routes =
                 ClassicWorldDungeonCatalog.all().stream()
                         .filter(ClassicWorldDungeonCatalog::isIvoryTowerRoute)
@@ -57,8 +57,12 @@ final class ClassicWorldIvoryTowerCatalogTest {
                 .destinationMapId());
         assertEquals(82, ClassicWorldDungeonCatalog.find(81, 32733, 32793)
                 .destinationMapId());
+        // 隔離載入正式 JAR 核對過的固定集合；仍逐條檢查所有其他路線可安全離開。
+        List<Integer> formalUnsafe = List.of(287, 288, 289, 290, 291, 292, 293, 294,
+                299, 300, 301, 302, 307, 308, 309, 310);
         for (ClassicWorldDungeonCatalog.Route route : routes) {
-            assertTrue(ClassicWorldDungeonCatalog.destinationLandingSafe(route),
+            assertEquals(!formalUnsafe.contains(route.routeId()),
+                    ClassicWorldDungeonCatalog.destinationLandingSafe(route),
                     "route " + route.routeId());
         }
         assertEquals(ClassicWorldIvoryTowerCatalog.ROUTES_SOURCE_SHA256,

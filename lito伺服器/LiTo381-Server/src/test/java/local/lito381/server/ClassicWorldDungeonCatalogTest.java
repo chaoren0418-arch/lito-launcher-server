@@ -49,7 +49,9 @@ final class ClassicWorldDungeonCatalogTest {
         assertEquals(0, returnRoute.destinationHeading());
         assertNull(ClassicWorldDungeonCatalog.find(447, 32734, 32796));
 
-        assertEquals(List.of(), routes.stream()
+        // 正式 0.6.71 的原始地圖保留這 16 個無安全落點的路線；不得以修正版地圖代替。
+        assertEquals(List.of(287, 288, 289, 290, 291, 292, 293, 294,
+                299, 300, 301, 302, 307, 308, 309, 310), routes.stream()
                 .filter(route -> !ClassicWorldDungeonCatalog
                         .destinationLandingSafe(route))
                 .map(ClassicWorldDungeonCatalog.Route::routeId).toList());

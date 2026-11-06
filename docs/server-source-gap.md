@@ -17,17 +17,17 @@
 | 集合 | 數量 |
 |---|---|
 | reference `.class` | 2554 |
-| target `.class` | 3907 |
-| 交集 | 2538 |
-| 只在 reference | 16 |
-| 只在 target | 1369 |
+| target `.class` | 3935 |
+| 交集 | 2553 |
+| 只在 reference | 1 |
+| 只在 target | 1382 |
 
 ### 只在 reference 分類計數
 
 | 類別 | 數量 | 含義 |
 |---|---|---|
 | Modern* | 0 | 正式 JAR 有、現行 src 標為 Modern 候選 |
-| 刻意排除 | 15 | 外層類已在 target；inner／匿名類形狀與正式 JAR 不同 |
+| 刻意排除 | 0 | 外層類已在 target；inner／匿名類形狀與正式 JAR 不同 |
 | 待補 | 1 | 頂層類或外層類不在 target，需補來源 |
 
 ## 已驗證／推測／待驗證
@@ -42,27 +42,11 @@
 
 | 類別 | 說明 |
 |---|---|
-| `local/lito381/server/NativeDeVisibilitySwitch.class` | 頂層類；src/main 沒有對應 .java，reference/missing-classes.txt 已列。 |
-
-### 刻意排除（15）
-
-| 類別 | 說明 |
-|---|---|
-| `local/lito381/server/BattleDeathmatchFatalityCatalog$1.class` | 外層類已在 target；現行用 enum Family/Effect，匿名 $1 不再出現。 |
-| `local/lito381/server/BattleInvisibilityStatus$Lease.class` | 現行 BattleInvisibilityStatus 把 lease 收成欄位，不再產 named inner class。 |
-| `local/lito381/server/BattleInvisibilityStatus$Snapshot.class` | 同上，現行原始碼不再產 Snapshot inner class。 |
-| `local/lito381/server/BattleTimeAttackMagicSkillCatalog$1.class` | 外層類已在 target；匿名類編號／寫法與正式 JAR 不同。 |
-| `local/lito381/server/ClassicWorldCkewCatalog$1.class` | 外層類已在 target；匿名類編號／寫法與正式 JAR 不同。 |
-| `local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$1.class` | 外層類已在 target；匿名類編號／寫法與正式 JAR 不同。 |
-| `local/lito381/server/InventoryCatalog$1.class` | 外層類已在 target；現行有 enum Effect，不再產匿名 $1。 |
-| `local/lito381/server/NativeCastMaterial$Effect.class` | T002 搬入的 tools 原始碼改用 Cast + Function，不再有 Effect inner。 |
-| `local/lito381/server/NativeDeAiState$2.class` | 外層類已在 target；現行用 record/enum，匿名類編號不同。 |
-| `local/lito381/server/NativeDeDeletionVisibility$1.class` | 外層類已在 target；現行有 named Snapshot，匿名 $1 不再出現。 |
-| `local/lito381/server/NativeDeEquipment$1.class` | 外層類已在 target；現行用 record，匿名 $1 不再出現。 |
-| `local/lito381/server/NativeDeWorldCore$1.class` | 外層類已在 target；匿名類編號／寫法與正式 JAR 不同。 |
-| `local/lito381/server/NativeDeWorldPlayerFilter$1.class` | 外層類已在 target；匿名類編號／寫法與正式 JAR 不同。 |
-| `local/lito381/server/NativeLitoRentalTownNpcCatalog$1.class` | 外層類已在 target；匿名類編號／寫法與正式 JAR 不同。 |
 | `local/lito381/server/NativeResurrectionMaterialAction$Target.class` | 現行用 private static method target()，不再產 Target inner class。 |
+
+### 刻意排除（0）
+
+_（無）_
 
 ### Modern*（0）
 
@@ -70,7 +54,7 @@ _（無）_
 
 ## 只在 target
 
-### Modern*（1320）
+### Modern*（1332）
 
 現行 `src/main` 的 Modern 候選堆疊；正式 0.6.71 JAR 不含。刻意保留在 Maven 產物（另有 `LiTo381-Server-modern.jar` classifier）。
 
@@ -296,6 +280,7 @@ local/lito381/server/ModernBattleEngine$VipOperation.class
 local/lito381/server/ModernBattleEngine$VipReplacement.class
 local/lito381/server/ModernBattleEngine$VipStaleCalculation.class
 local/lito381/server/ModernBattleEngine.class
+local/lito381/server/ModernBattleEquipmentProtocol$1.class
 local/lito381/server/ModernBattleEquipmentProtocol$Disposition.class
 local/lito381/server/ModernBattleEquipmentProtocol$Reason.class
 local/lito381/server/ModernBattleEquipmentProtocol$Reply.class
@@ -351,6 +336,7 @@ local/lito381/server/ModernBattleReadProtocol$Reply.class
 local/lito381/server/ModernBattleReadProtocol$Request.class
 local/lito381/server/ModernBattleReadProtocol$State.class
 local/lito381/server/ModernBattleReadProtocol.class
+local/lito381/server/ModernBattleRevivalProtocol$1.class
 local/lito381/server/ModernBattleRevivalProtocol$Reason.class
 local/lito381/server/ModernBattleRevivalProtocol$Reply.class
 local/lito381/server/ModernBattleRevivalProtocol$Request.class
@@ -378,6 +364,7 @@ local/lito381/server/ModernBattleWire$Writer.class
 local/lito381/server/ModernBattleWire.class
 local/lito381/server/ModernBattleWireModes.class
 local/lito381/server/ModernBattleWirePersonal.class
+local/lito381/server/ModernBattleWorldProtocol$1.class
 local/lito381/server/ModernBattleWorldProtocol$Action.class
 local/lito381/server/ModernBattleWorldProtocol$Reply.class
 local/lito381/server/ModernBattleWorldProtocol$Request.class
@@ -385,6 +372,8 @@ local/lito381/server/ModernBattleWorldProtocol$State.class
 local/lito381/server/ModernBattleWorldProtocol.class
 local/lito381/server/ModernBotTemplate.class
 local/lito381/server/ModernBuffProtocol.class
+local/lito381/server/ModernCaptureLog$Connection.class
+local/lito381/server/ModernCaptureLog.class
 local/lito381/server/ModernCharacterArmor.class
 local/lito381/server/ModernCharacterData$InventoryItem.class
 local/lito381/server/ModernCharacterData$ItemKind.class
@@ -730,6 +719,7 @@ local/lito381/server/ModernMatchmaking$Distance.class
 local/lito381/server/ModernMatchmaking$Result.class
 local/lito381/server/ModernMatchmaking$State.class
 local/lito381/server/ModernMatchmaking.class
+local/lito381/server/ModernMatchmakingProtocol$1.class
 local/lito381/server/ModernMatchmakingProtocol$Action.class
 local/lito381/server/ModernMatchmakingProtocol$Reply.class
 local/lito381/server/ModernMatchmakingProtocol$Request.class
@@ -786,6 +776,7 @@ local/lito381/server/ModernNpcBattle$Frame.class
 local/lito381/server/ModernNpcBattle$Reason.class
 local/lito381/server/ModernNpcBattle$Result.class
 local/lito381/server/ModernNpcBattle.class
+local/lito381/server/ModernNpcCatalog$1.class
 local/lito381/server/ModernNpcCatalog$Catalog.class
 local/lito381/server/ModernNpcCatalog$Facts.class
 local/lito381/server/ModernNpcCatalog$Field.class
@@ -997,6 +988,7 @@ local/lito381/server/ModernRegenProtocol.class
 local/lito381/server/ModernRoomProtocol$1.class
 local/lito381/server/ModernRoomProtocol$Echo.class
 local/lito381/server/ModernRoomProtocol.class
+local/lito381/server/ModernRooms$1.class
 local/lito381/server/ModernRooms$Action.class
 local/lito381/server/ModernRooms$Binding.class
 local/lito381/server/ModernRooms$BotResult.class
@@ -1040,6 +1032,7 @@ local/lito381/server/ModernServerConfig$TlsConfig.class
 local/lito381/server/ModernServerConfig$WorldPolicyConfig.class
 local/lito381/server/ModernServerConfig$WorldPolicyInput.class
 local/lito381/server/ModernServerConfig.class
+local/lito381/server/ModernServerConsole$1.class
 local/lito381/server/ModernServerConsole$Command.class
 local/lito381/server/ModernServerConsole.class
 local/lito381/server/ModernSessionBoundary$Negotiated.class
@@ -1071,6 +1064,7 @@ local/lito381/server/ModernSettlementCoordinator$Token.class
 local/lito381/server/ModernSettlementCoordinator.class
 local/lito381/server/ModernSharedDeathmatchPreset.class
 local/lito381/server/ModernSharedSiegePreset.class
+local/lito381/server/ModernShopAuthority$1.class
 local/lito381/server/ModernShopAuthority$Action.class
 local/lito381/server/ModernShopAuthority$Outcome.class
 local/lito381/server/ModernShopAuthority$Owned.class
@@ -1244,6 +1238,7 @@ local/lito381/server/ModernTimeAttackProtocol$Receipt.class
 local/lito381/server/ModernTimeAttackProtocol.class
 local/lito381/server/ModernTimeAttackSettlement$Proof.class
 local/lito381/server/ModernTimeAttackSettlement.class
+local/lito381/server/ModernTimedEffects$1.class
 local/lito381/server/ModernTimedEffects$Action.class
 local/lito381/server/ModernTimedEffects$HasteOrigin.class
 local/lito381/server/ModernTimedEffects$Kind.class
@@ -1336,6 +1331,7 @@ local/lito381/server/ModernWorldPolicy.class
 local/lito381/server/ModernWorldPolicyJdbc$Column.class
 local/lito381/server/ModernWorldPolicyJdbc.class
 local/lito381/server/ModernWorldPolicyReadProbe.class
+local/lito381/server/ModernWorldProtocol$1.class
 local/lito381/server/ModernWorldProtocol$AbortReason.class
 local/lito381/server/ModernWorldProtocol$Action.class
 local/lito381/server/ModernWorldProtocol$Completion.class
@@ -1397,12 +1393,13 @@ local/lito381/server/ModernWorldSpawns$Plan.class
 local/lito381/server/ModernWorldSpawns.class
 ```
 
-### 其他非 Modern（49）
+### 其他非 Modern（50）
 
 src/main 多出來、正式 JAR 沒有的輔助型別（裝備規則、競技場存在感、外觀依賴解析等）。
 
 ```
-local/lito381/server/CaptureLog$Connection.class
+local/lito381/server/AsRecord.class
+local/lito381/server/AsmFinal.class
 local/lito381/server/EquipmentRules$Actor.class
 local/lito381/server/EquipmentRules$ArmorFacts.class
 local/lito381/server/EquipmentRules$ArmorSlot.class
@@ -1425,6 +1422,7 @@ local/lito381/server/EquipmentRules$UnknownFacts.class
 local/lito381/server/EquipmentRules$WeaponFacts.class
 local/lito381/server/EquipmentRules.class
 local/lito381/server/LegacyJdbcNetworkDefaults.class
+local/lito381/server/NativeAppearanceDependencyResolver$1.class
 local/lito381/server/NativeAppearanceDependencyResolver$Action.class
 local/lito381/server/NativeAppearanceDependencyResolver$Binding.class
 local/lito381/server/NativeAppearanceDependencyResolver$Frame.class
@@ -1435,7 +1433,6 @@ local/lito381/server/NativeAppearanceDependencyResolver$PlannedFrame.class
 local/lito381/server/NativeAppearanceDependencyResolver$Row.class
 local/lito381/server/NativeAppearanceDependencyResolver$State.class
 local/lito381/server/NativeAppearanceDependencyResolver.class
-local/lito381/server/NativeDeVisibilityPc$1.class
 local/lito381/server/NativePlayerLoadoutAdapter$Captured.class
 local/lito381/server/NativePlayerLoadoutAdapter.class
 local/lito381/server/TournamentPresence$ChannelSnapshot.class
@@ -1452,3 +1449,12 @@ local/lito381/server/TournamentPresence.class
 local/lito381/server/TournamentRoomPolicy$1.class
 local/lito381/server/TournamentRoomPolicy.class
 ```
+
+## #78 A-land 來源專有搬移
+
+新增來源專有 2 個，原因：CaptureLog 對齊正式。
+
+- `local/lito381/server/ModernCaptureLog.class`
+- `local/lito381/server/ModernCaptureLog$Connection.class`
+
+同時移除舊 `CaptureLog$Connection`，所以相對 e34dfb8 的 ONLY_LEFT 淨增 1。Main／SourceLogin／NativeServerLifetime 保持正式 CaptureLog 介面，ClientSession 的相容建構子委派正式記錄格式；明確使用 ModernCaptureLog 的入口保留擴充欄位。B-land 後依 #78 裁定檢查是否仍有呼叫者。

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.io.TempDir;
 final class ClientSessionGmDeIntegrationTest {
     @TempDir Path temporary;
 
-    @Test void databaseAuthorizedDeChatCreatesReadyRoomRowsAndStartsCountdown()
+    @Test void databaseAuthorizedDeChatCreatesReadyRowsButDummiesDoNotSatisfyStartMinimum()
             throws Exception {
         ServerConfig config = ServerConfig.load(Path.of(
                 "src/test/resources/server-config/config/server.selftest.properties"));
@@ -66,9 +66,13 @@ final class ClientSessionGmDeIntegrationTest {
             invokeHandle(session, new Protocol.Writer().c(Protocol.C_LITO_READY_GAME)
                     .c(1).bytes());
             assertEquals(Protocol.S_LITO_READY_GAME, receive(client, receiver)[0] & 0xFF);
-            byte[] countdown = receive(client, receiver);
-            assertEquals(Protocol.S_LITO_COUNTDOWN, countdown[0] & 0xFF);
-            assertEquals(3, countdown[1] & 0xFF);
+            // 正式 BattleRules／NativeRoomRules 要求至少兩位真人；.de 假人不計入開戰人數。
+            Protocol.Reader refusal = new Protocol.Reader(receive(client, receiver));
+            assertEquals(Protocol.S_MESSAGE, refusal.c());
+            assertEquals(9, refusal.c());
+            assertEquals("無法開始：至少需要 2 位參戰玩家，目前 1 位（觀戰者與假人不計）。", refusal.s());
+            org.junit.jupiter.api.Assertions.assertThrows(java.net.SocketTimeoutException.class,
+                    () -> receive(client, receiver));
         }
     }
 

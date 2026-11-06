@@ -1,53 +1,44 @@
-# Issue #78 — A-land 整合與驗證（待 Claude 裁定）
+# Issue #78 — A-land 整合與驗證
 
 ## 結論
 
-**尚未達成 A-land 驗收，不可交 #225 啟動驗收或部署。** Maven package 成功，必補執行期測試全數通過；完整測試仍因正式版地圖雜湊與 src/main/resources 不一致而失敗，A 範圍仍有 CaptureLog 差異。以 `needs:claude` 交主控裁定，不把工具 exit 0 或 package 成功當成語意驗收通過。
+**程式、單元測試及 class 語意驗收已通過；三份建置中繼資料仍待主控裁定，PR 保持草稿，不交 #225 啟動。**
 
-工作分支 `task/78`，基底 `7b6a97fa84ca0408e426df4d9f70df738d218a88`。本輪未切換或建立分支。唯讀核對遠端 main `8df7c89c3a9b4dbdb8eb01b40a5b53462dbac0f8`：新增 #254 工具修正，B-land 尚未合入；本輪未 rebase，使用本分支已合入的 #235 比較器（最後工具來源提交 `2ea0999be1b1a570b315b77ec40dc7d5300019a4`）。後續合入 B-land／新版工具時必須重驗，不能沿用本表。
+完整測試 `6050` 項，Failures `0`、Errors `0`、Skipped `110`。A 692 entries 的 DIFF／ONLY_LEFT／ONLY_RIGHT 均為 0，CaptureLog 為 SAME；整顆 JAR 的其他 class 差異為 0。全部 1,366 份遊戲資源逐位元組相同；若嚴格把 Maven 產生的三份 META-INF 中繼資料也納入「非 class 不同數必須為 0」，目前仍有 3 個 DIFF，沒有自行視為已豁免。
+
+本輪依 [主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/78#issuecomment-6672249950) 完成後續整合；[中繼資料裁定請求](https://github.com/chaoren0418-arch/lito-launcher-server/issues/78#issuecomment-6672434402)。沿用 task/78，合併 main `8df7c89c3a9b4dbdb8eb01b40a5b53462dbac0f8`（含 #254），B-land 尚未合入；不切分支、不改 B staged。
 
 ## 做了什麼
 
-- 依 A01–A06 的 224 個外層類別整合：223 份 staged 定義已落入 src/main；**CaptureLog 1 份因與現行 ClientSession／來源專有 Connection API 衝突，保留 HEAD，未假稱已覆蓋全部 224 份。**
-- `Accounts.java` 移除三個重複共置定義，改用獨立 AccountRepository、MemoryAccountRepository、SourceEquipmentPhysicalStats；`BattleAnimationCatalog.java` 保留原共置 BattleActionCodes。
-- 補入 A 呼叫所需、正式 JAR 已存在的三項相依契約：LegacyMySqlRepository.nativeMaterialCharacterConnection()、CombatPoisonLifecycle.State 的三個 source* 欄位、NativeCastMaterial.Effect／Cast.effect 描述子。這些位於 B 的 src/main；未搬入其他 B 候選邏輯，也未修改任何 B staged。NativeCastMaterial 的 interface 回傳 primitive boolean 並宣告 IOException，已由正式 javap 核對，避免 A lambda 被編成 Boolean 版本。
-- TournamentRoomPolicy 與相關測試改用正式 BattleRules.decode(RoomSettings, ...) 入口。GM 測試的帳號權限改由 AccountAccessFixture 明確提供，因正式 MemoryAccountRepository 沒有測試曾依賴的 grantAccessLevel API。
-- `pom.xml` 的 #134 process-classes／process-test-classes 接線保持原樣；新增對實際正式類別的 record／final 欄位驗證。沒有將正式 class 複製進 Maven 成品，也沒有停用測試或新增 skip。
+- A01–A06 全部 224 個外層類別定義已落入 src/main；223 份 Java 與 staged 文字相同，BattleAnimationCatalog 額外保留共置的來源專有 BattleActionCodes。保留前輪的 Accounts 共置拆分、三項相依契約、職業 Type 修正及 13 項必要測試。
+- CaptureLog 換回 A staged；新增 ModernCaptureLog 與其 Connection，保留擴充記錄的 capture_id／sequence／connection_id／endpoint／phase／observation。ClientSession 的內部型別與相關測試改為 ModernCaptureLog。
+- Main／SourceLogin／NativeServerLifetime 都屬 A，保留正式 CaptureLog 方法描述子；ClientSession 提供相容建構子，以 ModernCaptureLog adapter 委派正式 frame／close。**正式入口沿用正式記錄格式；明確傳入 ModernCaptureLog 的入口才產生擴充欄位。**沒有反射取用 CaptureLog 的 writer、額外開檔或改動 A 入口。新增兩個測試覆蓋擴充欄位／連線識別／遮罩及正式 adapter 的 close 邊界。
+- 從唯讀 reference 取出 11 份 maps（77–82、104、105、108–110），核對 SHA-256 與前輪 formal_sha256 完全相同。另補回 725 份正式資源：battle 2、combat 723，4,076,189 bytes。全部是建置輸入；未修改正式 JAR、客戶端、機密設定、封存或部署成品。
+- pom.xml 的 #134 轉換接線保持原樣。成品 3,935 份 class 已逐份核對與最後完整測試的 target/classes 位元組相同，且不含 compile-stubs／ASM／轉換器 class；沒有從正式 JAR 補入任何 class。
+- 用與 CI 相同的 jar tf 比對程式重建 docs/server-source-gap.md，列出兩個新增 Modern 類別及舊 CaptureLog$Connection 的移除。
 
-## 已驗證
+## 已驗證／怎麼驗證
 
-### 建置與測試
+### Maven 與必要測試
 
-Microsoft OpenJDK 17.0.17、Maven 3.9.16。所有建置產物在 target；最後驗證的 Maven 快取、測試暫存在此 worktree 的 scratch/issue-78。最後完整測試先執行 clean，排除增量編譯殘留。Windows 測試 JVM 在沙箱內啟動約 8.3 秒，會碰到既有 3–5 秒期限；改用獲准的本機執行後重跑，沒有放寬測試期限。
+Microsoft OpenJDK 17.0.17、Maven 3.9.16；所有 cache／TEMP／java.io.tmpdir 在本 worktree 的 scratch/issue-78，建置產物在 target。未啟動伺服器、遊戲或正式 DB；單元測試使用原有本機 fixture。先 clean 執行全套，逐案修正失敗後再執行完整 test，沒有刪除測試、增加 skip、放寬 timeout 或改 hash check。
 
 ```powershell
-# 在本 worktree 根目錄；JAVA_HOME／PATH 指向上述 JDK 與 Maven。
+# 從 task/78 根目錄執行；使用 Java 17 與 Maven 3.9。
 New-Item -ItemType Directory -Force scratch/issue-78/tmp,scratch/issue-78/m2 | Out-Null
-$env:TEMP = $env:TMP = (Resolve-Path scratch/issue-78/tmp).Path
+$taskTmp = (Resolve-Path scratch/issue-78/tmp).Path
 $taskM2 = (Resolve-Path scratch/issue-78/m2).Path
-$env:MAVEN_OPTS = "-Dmaven.repo.local=$taskM2 -Djava.io.tmpdir=$env:TEMP -Dfile.encoding=UTF-8"
-mvn -f lito伺服器/LiTo381-Server/pom.xml -B test
+$env:TEMP = $env:TMP = $taskTmp
+$env:MAVEN_OPTS = "-Dmaven.repo.local=$taskM2 -Djava.io.tmpdir=$taskTmp -Dfile.encoding=UTF-8"
+mvn -f lito伺服器/LiTo381-Server/pom.xml -B "-DargLine=-Djava.io.tmpdir=$taskTmp" test
 mvn -f lito伺服器/LiTo381-Server/pom.xml -B -DskipTests package
 ```
 
-本機執行另傳 `-Dmaven.repo.local=<worktree>/scratch/issue-78/m2`、`-Djava.io.tmpdir=<worktree>/scratch/issue-78/tmp` 與同值 `-DargLine=-Djava.io.tmpdir=...`，確保 JVM 啟動時即採用 worktree 暫存；完整測試實際 goals 為 `clean test`。這些參數不過濾測試。精確命令與原始輸出保留於 scratch/issue-78 的 `full-final-command.json`／`full-final.log`、`package-final-command.json`／`package-final.log`。
+預期及本輪實際：`Tests run: 6050, Failures: 0, Errors: 0, Skipped: 110`；兩次 Maven 均 BUILD SUCCESS。Skipped 是既有本機資源守門，未新增。完整 argv、exit、日誌 SHA 在 [機器證據](issue-78-evidence.json) 的 build_commands／log_sha256。
 
-| 指令 | 預期 | 實際 |
-|---|---|---|
-| mvn -B test | Tests run: N, Failures: 0, Errors: 0 | Tests run: 6048, Failures: 3, Errors: 635, Skipped: 110；BUILD FAILURE |
-| mvn -B -DskipTests package | BUILD SUCCESS | BUILD SUCCESS；產生 target/LiTo381-Server.jar |
-
-Skipped 來自原有環境／資源 assumptions；本任務沒有新增任何停用、跳過或忽略失敗設定。不得將此結果寫成全綠。
-
-| 必補測試類別 | Tests | Failures | Errors | Skipped |
-|---|---:|---:|---:|---:|
-| ALandInstanceStateTest | 4 | 0 | 0 | 0 |
-| ALandItemDefinitionsTest | 4 | 0 | 0 | 0 |
-| ALandLifecycleTest | 2 | 0 | 0 | 0 |
-| AsRecordBuildTest | 3 | 0 | 0 | 0 |
+必補三組 ALand 與 AsRecordBuildTest 共 13 項，本輪全數通過；新增 ModernCaptureLogTest 2 項亦通過。轉換器實際將 CombatCurseLifecycle$Target 建成 8 components 的 record；NativeDeItemTable 六個指定欄位為 final。
 
 逐條對照 deviations.md 的 A 要求：
-
 | 要求 | 測試與觀察 |
 |---|---|
 | WorldLog.debug／選用欄位失敗 | ALandItemDefinitionsTest 以 JDBC proxy 驅動真實 GreaterTierTable 載入，確認 default debug 的訊息／參數、正常路徑無誤記、必要欄位失敗仍記錯並拒絕該 row |
@@ -60,30 +51,21 @@ Skipped 來自原有環境／資源 assumptions；本任務沒有新增任何停
 
 測試邊界如實保留：以 Unsafe 建立不含排程執行緒的 owner fixture，受測 NPC 的完整 Java 建構鏈照常執行；PoisonAtomic 的 NPC_STATE method handle 只替換尚待 B-land 的來源 callback，真正 A 交易／monitor／leaveInstall 均執行，測試結束復原靜態欄位；不宣稱涵蓋 B 的完整 NPC 遊戲流程。刪除測試在 remaining.cancelChat 用 sentinel 結束，沒有跑後續世界清理。這些都是隔離單元測試，不冒充實機驗收。
 
-### 既有測試逐案判斷
+### 既有測試逐案處理
 
-- BattleTurnUndead、BattleManaDrain、BattleSpellCatalog、ProtocolBattle 的法師案例原用 Type=1；依正式 0.6.71，法師為 Type=3。修正輸入並保留原概率期望，另修正 magicLevel 的職業對應。
-- ModernTlsIdentity 原要求 Main 分派 --modern-config，與正式 Main 不符。現在直接斷言正式入口拒絕未知參數，並保留 ModernMain 專用入口的輸入拒絕及路徑不洩漏測試；沒有刪除 Modern 類別。
-- Windows 跨程序 timeout：未修改原測試，最後本機重跑結果列入完整報告。
-- 尚未解決的每一個 failure/error 全列於 [機器證據](issue-78-evidence.json) 的 test_failures。根因統計如下（連鎖 NoClassDefFoundError 保留原訊息，不偽裝成獨立程式缺陷）：
+- 保留前輪已核准的 BattleTurnUndead／ManaDrain／SpellCatalog／ProtocolBattle 職業 Type、ModernTlsIdentity 正式入口及 AccountAccessFixture 修正。
+- ClassicWorldDungeonCatalogTest、ClassicWorldIvoryTowerCatalogTest：以 platform-parent 隔離 ClassLoader 直接載入正式 JAR，正式 `destinationLandingSafe` 回傳 false 的固定集合為 **287–294、299–302、307–310**。測試現在逐條核對這 16 條及其餘安全路線；不再假設先前修正版 maps 的全部落點安全。原始 probe 在 scratch/issue-78/FormalRoutes.java。
+- ClientSessionGmDeIntegrationTest 與 GameHubVirtualPlayerTest：正式 BattleRules、NativeRoomRules 均經語意比對為 SAME，真人最低人數不含 .de 假人。測試現在檢查假人不能觸發倒數；40 組模式／地圖矩陣仍完整保留，補足真人及明確分隊後繼續驗證倒數、戰鬥、封包及出生點。
+- ClientSessionLitoChannelSelectionIntegrationTest：三處 null capture 改用既有 discardCapture fixture；ClientSession 原本就要求有效 capture。ClientSessionLitoRoomInvitationTest 的反射欄位型別與建構 fixture 改為 ModernCaptureLog，保留原邀請流程斷言。
+- 所有修改後的測試均包含在最後完整 test，test_failures 為空。
 
-- 479：`java.lang.ExceptionInInitializerError: Exception java.lang.IllegalStateException: Can't overwrite cause with java.io.IOException: classic Ivory-Tower map source hash mismatch 77 [in thread "main"]`
-- 132：`java.lang.ExceptionInInitializerError: Exception java.lang.ExceptionInInitializerError [in thread "main"]`
-- 17：`java.lang.ExceptionInInitializerError: Exception java.lang.NoClassDefFoundError: Could not initialize class local.lito381.server.ClassicWorldNpcCatalog [in thread "main"]`
-- 9：`java.lang.ExceptionInInitializerError: Exception java.lang.NoClassDefFoundError: Could not initialize class local.lito381.server.ClassicWorldMapCatalog [in thread "main"]`
-- 1：`java.lang.ExceptionInInitializerError: cannot load classic map resource /maps/77.l38.gz: classic Ivory-Tower map source hash mismatch 77`
+### 語意比對：三類與核准項
 
-地圖 77 實際資源 SHA-256 為 `b829a6b81e4155a0eedfa8fc65d48ce6341863fd23b6a79333ba595cd5c4d4d8`，正式資源為 `a31c660396c455db07a115fcc15b2294db4139191f33c80ee96045948ba9d6bc`。正式 A 的 ClassicWorldMapCatalog 會檢查正式雜湊，導致初始化失敗。唯讀比對找到 11 份不同地圖：77、78、79、80、81、82、104、105、108、109、110；逐份雜湊見 resource_differences。**沒有改 maps 資源、跳過 hash check 或放寬測試。**
-
-### 語意比對：三類結果
-
-左側是本次 Maven 的 target/LiTo381-Server.jar，右側 reference/base-0.6.71.jar，SHA-256 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`。ASM 9.7，由目前 tools/semantic-diff 原始碼重新編譯，未使用正式 JAR 作左側 fallback。比較器 exit 0 只表示報告成功生成，以下獨立檢查 statuses。
-
-下表的整顆 JAR 比較範圍是全部 `.class`；前述 11 份地圖屬非 class 資源差異，另列驗收阻塞，不混入 class DIFF 計數。
+左側 target/LiTo381-Server.jar，右側 reference/base-0.6.71.jar（SHA-256 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`）。由合併後 tools/semantic-diff 原始碼重編，帶 effects／extra-methods／metadata-exempt／access-widen／deviations／exceptions-exempt／layout 全部適用精確核准，範圍外條目另存 unused_approvals。沒有新增豁免或以正式 class 當左側 fallback。
 
 | 狀態 | A 692 entries | 整顆 JAR |
 |---|---:|---:|
-| SAME | 663 | 2331 |
+| SAME | 664 | 2332 |
 | SAME_EFFECTS | 4 | 4 |
 | SAME_LAYOUT | 1 | 1 |
 | SAME_PATHS | 17 | 22 |
@@ -92,33 +74,15 @@ Skipped 來自原有環境／資源 assumptions；本任務沒有新增任何停
 | VISIBILITY_BRIDGE | 0 | 0 |
 | ORPHAN_IGNORED | 0 | 0 |
 | DEVIATION | 6 | 6 |
-| DIFF | 1 | 187 |
-| ONLY_LEFT | 0 | 1381 |
+| DIFF | 0 | 186 |
+| ONLY_LEFT | 0 | 1382 |
 | ONLY_RIGHT | 0 | 1 |
 
-1. **A 範圍**：全部 692 entry 的類別名稱、status、逐方法差異見 evidence.a_classes；DIFF=1、ONLY_LEFT=0、ONLY_RIGHT=0，未達標。Main 為既有精確核准的 SAME_LAYOUT；任務列舉的可接受 status 未含 SAME_LAYOUT，因此另請主控確認，未擅自改列 SAME_CFG 或新增核准。
-2. **整顆 JAR**：B 差異 `{'DIFF': 186, 'ONLY_RIGHT': 1}`；來源專有 `{'ONLY_LEFT': 1381}`。完整類別清單在 evidence.difference_groups.B／SOURCE_ONLY。B 差異均可對回現有 server-semantic-gap 的既有差異，新增 B 差異清單為 `[]`；來源專有新增清單為 `[]`。原清單中的 NativeDeVisibilityPc$1 已被 A staged 的新實作取代，沒有再產生這個舊匿名類別。
-3. **其他差異**：`{'DIFF': 1}`，不為 0，須 needs:claude。以下列出全部類別，完整 methodResults／firstDiff 在 evidence.difference_groups.OTHER：
+1. **A**：692 個 entry 全部可接受；核准項為 6 個 DEVIATION 與 1 個 SAME_LAYOUT（Main，主控明確接受），另外列出而不混入 SAME。DIFF=0、ONLY_LEFT=0、ONLY_RIGHT=0。
+2. **整顆 JAR**：B 差異 `{'DIFF': 186, 'ONLY_RIGHT': 1}`；來源專有 `{'ONLY_LEFT': 1382}`。完整類別清單及 firstDiff 在 evidence.difference_groups；A 全清單在 a_classes。相對前輪 B 新增 `[]`、已消除 `[]`。新增來源專有 2 個 ModernCaptureLog 類別，移除 CaptureLog$Connection，因此淨增 1，並非在原 1,381 個上直接加 2。
+3. **其他 class 差異**：0；evidence.difference_groups.OTHER 為空或不存在。
 
-- `local/lito381/server/CaptureLog`：DIFF；`{"where": "class", "member": "nestMembers", "insnIndex": null, "detail": "left=local/lito381/server/CaptureLog$Connection right="}`
-
-CaptureLog 保留現行 capture_id／sequence／connection_id／endpoint／phase／observation 與 Connection API；ClientSession 有三處 frame 呼叫、建構時 connection 呼叫與欄位型別依賴。直接替換 staged 會使目前 B 的 ClientSession 編譯失敗；直接刪除擴充又會撤回目前的記錄契約及來源專有 Connection 類別。請 Claude 裁定如何協調 A 等正式的要求與這項現有功能；本輪沒有自行增加整類豁免或修改 B staged。
-
-使用全部適用核准清單，依比較 class 集合及兩側實際存在的 owner 取交集。其餘候選專有核准無適用目標，逐條記錄於 evidence.unused_approvals；沒有擴張核准。
-
-| 清單 | A 適用條數 | 整顆適用條數 |
-|---|---:|---:|
-| effects-approved.txt | 7 | 9 |
-| extra-methods-approved.txt | 1 | 1 |
-| metadata-exempt.txt | 1 | 5 |
-| access-widen-approved.txt | 3 | 4 |
-| deviations.txt | 15 | 15 |
-| exceptions-exempt.txt | 0 | 0 |
-| layout-approved.txt | 1 | 1 |
-
-### semantic-diff 重現腳本
-
-以下存為 `scratch/issue-78/verify.py`，在 repo 根目錄以 Python 3 執行 `python -X utf8 scratch/issue-78/verify.py`。先完成上面的 Maven package；m2 中 ASM 依賴不足時腳本從 Maven Central 下載至 worktree scratch。輸出 a.json、full.json、classification.json 與完整 CLI argv。工具預期的 A 閘門為 DIFF／ONLY_* 全為 0，其他差異也須為 0；本輪實際未滿足。
+可重現比較腳本如下（保存至 scratch/issue-78/verify.py，先 package，再以 Python 3 執行；腳本將 ASM 依賴保存在 worktree scratch，Windows classpath 用分號）。CLI 預期 exit 0；另檢查 A statuses 及 OTHER 清單，不能只看工具 exit。
 
 ```python
 from pathlib import Path
@@ -162,7 +126,7 @@ for label,selection in [('a',a),('full',le|re)]:
  (w/(label+'-unused-approvals.json')).write_text(json.dumps(skipped,ensure_ascii=False,indent=2),encoding='utf8')
  args=[j/'java.exe','-Xmx2g','-Dfile.encoding=UTF-8','-cp',str(tool)+';'+cp,'local.lito381.semanticdiff.SemanticDiff','--left',left,'--right',right,*flags,'--json',w/(label+'.json'),'--md',w/(label+'.md')]
  if label=='a':args+=['--classes',w/'a-entries.txt']
- run('semantic-'+label,args)
+ assert run('semantic-'+label,args)==0
  if (w/(label+'.json')).exists():print(label,json.loads((w/(label+'.json')).read_text(encoding='utf8'))['counts'],flush=True)
 full=json.loads((w/'full.json').read_text(encoding='utf8'))
 groups=collections.defaultdict(list)
@@ -176,21 +140,33 @@ print('classification',{k:dict(collections.Counter(c['status'] for c in v)) for 
 print('SHA256',hashlib.sha256(left.read_bytes()).hexdigest())
 ```
 
+### 全部非 class 資源
+
+未排除 META-INF，忽略 ZIP 目錄項，逐份比對 bytes：**SAME=1366、DIFF=3、ONLY_LEFT=0、ONLY_RIGHT=0**。來源專有資源清單為空。全部 entry、左右 SHA 在 evidence.nonclass_entries；725 份補回資源及 11 maps 的前後 SHA 分別在 restored_resources／map_resources。
+
+全部不同 entry（完整內容差異在 evidence.metadata_differences）：
+
+- `META-INF/MANIFEST.MF`
+- `META-INF/maven/local.lito381/lito381-server/pom.properties`
+- `META-INF/maven/local.lito381/lito381-server/pom.xml`
+
+reference manifest／pom.properties 的版本為 **0.7.864**，現行建置為 **0.6.71**；嵌入 POM 也不同，現行 POM 包含必需的轉換器與 stub 排除接線。未以舊中繼資料取代現行建置資訊，亦未把這 3 份擅自排除後宣稱「全部非 class DIFF=0」。其餘 1,366 份全部相同，缺少項為 0。
+
 ## 推測
 
-- 地圖雜湊失配是大量初始化連鎖失敗的共同原因；只修復資源不代表後續所有整合測試必然通過，仍需完整重跑。
-- A 的固定比較模型與核准只覆蓋類別語意；不能由此推定 B 尚未落地的遊戲流程或資源內容正確。
+class 語意與資源檢查支持 A 範圍等於正式（含精確核准偏離），但不代表整顆 JAR 等於正式。B 尚待 M2 落地；單元測試及靜態比對不能替代實機登入／畫面驗收。
 
 ## 待驗證／給下一棒的提示
 
-1. Claude 裁定 CaptureLog 的相容策略、Main SAME_LAYOUT 是否符合 #78 的 status 閘門，以及 map 資源由哪個任務對齊正式版。不可直接合併作為 A-land 完成。
-2. 本機執行器依裁定修正後，重跑完整 test／package 及兩次 semantic-diff；B-land 若先合入，先 rebase 並重跑 A／B 比對。
-3. #225 僅能使用最終通過版本；本輪 JAR 不供登入／截圖驗收。沒有啟動正式服務、遊戲或連正式 DB，沒有驗證玩家流程。
+1. Claude 裁定三份 Maven META-INF 中繼資料，以及確認正式 CaptureLog adapter 的格式邊界。裁定前 PR #264 保持草稿，不宣稱 #78 全部閘門通過。
+2. CI 以 PR 最新提交的 checks 為準；本機已執行同一份 class-list 比對步驟，沒有把本機結果冒充 GitHub CI。
+3. B-land 若先合入，需依規則整合並重跑 A／B 語意比對；候選 ClientSession 換入後，如 ModernCaptureLog 無呼叫者，依主控裁定一併移除。
+4. #225 只在全部裁定／CI 通過後，使用下列 SHA 的成品驗收。未執行伺服器／遊戲啟動、正式 DB 操作或部署。
 
 ## 產出路徑
 
-- 來源與測試：`lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/`、`src/test/java/local/lito381/server/`。
-- 本報告：`docs/reports/issue-78.md`；完整分類、類別清單、失敗案例、資源雜湊、精確比較命令：`docs/reports/issue-78-evidence.json`。
-- 未入 git 的本機產物／原始日誌：`lito伺服器/LiTo381-Server/target/`、`scratch/issue-78/`。正式 JAR、B staged、機密設定、封存、releases、docs/REPORT.md 均未修改。
+- src/main/java、src/main/resources、src/test/java 的上述來源、資源與測試。
+- docs/reports/issue-78.md、docs/reports/issue-78-evidence.json、docs/server-source-gap.md。
+- 本機證據 scratch/issue-78/；成品 lito伺服器/LiTo381-Server/target/。docs/REPORT.md 僅帶入 main 既有變更，沒有本任務直接修改。
 
-`target/LiTo381-Server.jar` SHA-256：**`45a3f5e778f2652a6bbad9ffe0b27762447e58ef17a965bf1cf0604fe615aeb8`**。
+`target/LiTo381-Server.jar` SHA-256：**`b56e85f570f6ae9cfe947b3a3e1afb452ed93beadfd1e76d40b3537bfc1e7861`**。
