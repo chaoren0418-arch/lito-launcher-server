@@ -115,6 +115,32 @@ DB 身分為 **`'lito83_exp'@'127.0.0.1'`**。建立前以不限定 Host 的同�
 
 公開僅提交本報告。原有 `D scratch/t020c/cleanup-exp-db.sql` 已核對為遠端 71189b9b 的既有清理提交；本輪以 fast-forward 保留該提交，新提交只含報告。腳本、秘密、資料列、dump、備份及原始紀錄不公開。`git diff --check` 與秘密排除檢查通過。
 
+## 清理步驟（僅供日後經授權執行）
+
+本節依已保存的身分、權限、備份及停機證據編寫，**本次文件修正沒有執行任何清理或重新連線**。以下不是可直接執行的清理腳本，也不構成預先批准；日後連線、啟停、撤權及資料退役，均須符合當時適用的授權。尤其 DROP 與秘密檔案永久刪除，必須先取得涵蓋精確目標的有效授權，不能因本文列出命令就視為已同意。
+
+1. **確認使用結束與保留需求**：由 #84／#225 及 P24Lab 使用者確認本次實驗不再使用，沒有其他工作共用這三個副本或帳號；停止新的測試排程與設定引用，確認既有實驗連線已正常結束。若仍有使用者、未完成結算或需保留的結果，先停止清理。不得強殺他人的連線或程序。
+2. **重新確認實例身分**：只使用既有 P24Lab 管理入口，明確指定 TCP `127.0.0.1:43324`；實例若仍停止，不因本文自行啟動。經當時授權連線後先讀 `@@port`、`@@server_uuid`、`@@datadir`、`@@bind_address`，預期依本輪證據分別為 `43324`、`e3443e40-d090-11f1-8040-4cedfb679789`、`D:\BinEngine\environments\p24\db-data\`、`127.0.0.1`。任何不符立即停止，不改用 3306 或 3307。再核對帳號的精確 Host、現有 grants、三個目標庫的用途及跨庫依賴；若已被他人改用或內容超出本次實驗，重新釐清範圍。
+3. **退役持續存取權**：確認沒有尚存的實驗連線，保存不含秘密的授權摘要。由獲准的管理入口對唯一帳號 `'lito83_exp'@'127.0.0.1'` 執行下列撤權及帳號移除；實驗帳號自身沒有管理權。不得以萬用 Host 或同名帳號批次處理。命令列於此僅供日後審核，**本輪未執行**：
+
+   ```sql
+   REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'lito83_exp'@'127.0.0.1';
+   DROP USER 'lito83_exp'@'127.0.0.1';
+   ```
+
+   每一步後核對結果；帳號不存在或權限與記錄不符時先查明，不盲目重跑。撤權／DROP USER 不能代替確認既有連線已結束，也不會自動刪除本機秘密檔案。
+4. **退役實驗資料**：先確認當時所需的結果、證據及備份已保留。只有取得永久刪除這三個庫的有效授權後，才可由管理入口逐一執行並核對：
+
+   ```sql
+   DROP DATABASE `p24_lito_lito_exp`;
+   DROP DATABASE `p24_accounts_lito_exp`;
+   DROP DATABASE `p24_world_lito_exp`;
+   ```
+
+   此操作會刪除副本中的測試登入、角色、戰績與資源，不能依賴 transaction rollback 還原。原 `p24_world`、`p24_accounts`、`p24_lito` 與其他 P24Lab／tw-bin 資料均不是清理目標；禁止刪除整個 datadir、以萬用名稱列舉刪庫，或沿用舊 `3307`／`380_lito_exp`／`cleanup-exp-db.sql` 清理流程。
+5. **退役兩份本機秘密設定**：精確目標僅為 `D:\lineage開發\3-lito開發\scratch\wt\task-83\scratch\t020c\isolated-test.properties` 與同目錄 `test-accounts-private.properties`。先停止所有對這兩檔的引用；確認 DB 帳號及實驗登入已退役後，依當時授權處理檔案。永久刪除前以路徑／連結資訊核對實際目標仍在本工作樹內、不是 hardlink／重新導向，不必為清理而讀出秘密；授權若不包含刪除則保留於受限、git 忽略的位置並明確標為不可再用。不得把秘密複製進報告、Git、聊天或一般證據附件，也不得順便刪除 combat.properties、其他設定或整個 scratch/t020c。
+6. **保留證據並記錄結案**：保留本報告的 Git 歷史、#83 的 RESULT、前述 p24-*.json 驗證紀錄及 p24-select-tables.tsv；保留 P24Lab 自有 `backups/issue-83-before-isolation` 與 `backups/issue-83-before-credentials` 兩份冷備份及雜湊收據。這些備份／證據不在上述刪除範圍，仍存本機且不公開原始資料；其日後刪除另依當時授權。清理完成後只記錄時間、已退役目標、驗證結果與保留位置，不記錄秘密。若當次另外獲准啟動了 P24Lab，依既有流程只正常關閉自己啟動的實例並核對實驗埠，不停止他人的程序。
+
 ## 未驗證與給下一棒的提示
 
 1. **候選接線是具體程式缺口**：本 checkout 的 Accounts.java:522 openLegacy 尚未呼叫 SharedDatabase.open，:14856 resourceTable 仍直接使用 resourceDatabase；UnifiedConfiguration.java:73 設為 lito_mysql，會進 Accounts.java:6285 的額外擴充表檢查及 :6422 的遷移 DDL。舊 tools/shared-database/PatchShared.java:22–45 有對應掛鉤，但目前 pom.xml 未接入 PatchShared。需由 #225／主控核實指定候選的實際接線，不以擴權、建額外擴充表或授予 DDL 掩蓋。不得把這份設定直接用在未核實的任意 Maven 產物。
