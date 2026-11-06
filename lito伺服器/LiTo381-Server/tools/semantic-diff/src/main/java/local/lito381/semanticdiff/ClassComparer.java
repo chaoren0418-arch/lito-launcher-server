@@ -206,6 +206,11 @@ final class ClassComparer {
         LambdaCallsites.pair(left,right,leftJar,rightJar);
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
+        Map<String, String> renames = rightJar.privateRenames.getOrDefault(right.name, Map.of());
+        for (var rename : renames.entrySet()) {
+            MethodNode method = rmap.remove(rename.getKey());
+            if (method != null) rmap.put(rename.getValue(), method);
+        }
         Map<String, MethodNode> amap =
                 allowRight == null || allowJar == null ? Map.of() : methodMap(allowRight, allowJar);
         Set<String> keys = new TreeSet<>(unionKeys(lmap, rmap));
@@ -233,7 +238,8 @@ final class ClassComparer {
                 rightLabel = "right";
             }
             if (lm == null) {
-                if (!allow && rJar.orphan(rm)) {
+                if (!allow && !rJar.privateRenameTargets.getOrDefault(right.name, Set.of()).contains(rm.name + rm.desc)
+                        && rJar.orphan(rm)) {
                     rJar.result(rm,"ORPHAN_IGNORED","private synthetic; no JAR references or matching LDC string");
                     continue;
                 }
@@ -261,6 +267,11 @@ final class ClassComparer {
             JarIndex.MethodResult pairing=leftJar.methodResults.getOrDefault(left.name,Map.of()).get(lm.name+lm.desc);
             FirstDiff d = compareMethod(key, lm, rm, leftJar, rJar,
                     effectsMethods.contains(lm.name + lm.desc) && effectsMethods.contains(rm.name + rm.desc));
+            if (!allow && key.equals(renames.get(rm.name + rm.desc))) {
+                leftJar.result(lm, d == null ? "DEVIATION" : "DIFF",
+                        "private-rename " + lm.name + lm.desc + " -> " + rm.name + rm.desc
+                        + (d == null ? "; private shadow guards and full body comparison passed" : "; " + d.oneLine()));
+            }
             if(d==null && leftJar.callsiteIds.containsKey(left.name+"#"+lm.name+lm.desc))
                 leftJar.result(lm,"LAMBDA_PAIRED_BY_CALLSITE",pairing!=null&&pairing.status().equals("LAMBDA_PAIRED_BY_CALLSITE")
                         ?pairing.detail():rm.name+rm.desc+"; full body comparison passed");
@@ -362,11 +373,13 @@ final class ClassComparer {
         if (TransportComparison.same(lm, rm, leftJar, rJar, leftJar.approved(leftJar.layouts, lm))) return null;
         if (BlockExpressions.same(lm, rm, leftJar, rJar)) return null;
         if (effects) {
+            // Transport is accepted only with the ordered operand/exception proof.
+            // A DUP count cannot justify deleting an arbitrary subset of ASTOREs.
             // Keep the existing explicitly approved effects heuristic on physical slots.
             // The default data-flow proof above already used the normalized webs.
             lm = leftJar.beforeWebs.getOrDefault(lm,lm);
             rm = rJar.beforeWebs.getOrDefault(rm,rm);
-            d = cmpList("effects sequence", effectsSequence(lm, leftJar, tempStores(lm, rm)), effectsSequence(rm, rJar, tempStores(rm, lm)));
+            d = cmpList("effects sequence", effectsSequence(lm, leftJar, Set.of()), effectsSequence(rm, rJar, Set.of()));
             if (d == null) d = cmp("effects constants", constants(lm, leftJar).toString(), constants(rm, rJar).toString());
             if (d == null) d = cmpList("effects tryCatch", catchTypes(lm, leftJar), catchTypes(rm, rJar));
             if (d == null) d = cmp("effects branches", Integer.toString(branches(lm)), Integer.toString(branches(rm)));
@@ -421,32 +434,6 @@ final class ClassComparer {
         return l == Opcodes.ACC_PUBLIC || l == r
                 || r == Opcodes.ACC_PRIVATE && (l == 0 || l == Opcodes.ACC_PROTECTED)
                 || r == 0 && l == Opcodes.ACC_PROTECTED;
-    }
-
-    private static Set<AbstractInsnNode> tempStores(MethodNode m, MethodNode other) {
-        long dups = java.util.Arrays.stream(other.instructions.toArray()).filter(n -> n.getOpcode() == Opcodes.DUP).count();
-        Set<AbstractInsnNode> result = Collections.newSetFromMap(new IdentityHashMap<>());
-        if (dups == 0) return result;
-        for (AbstractInsnNode n : m.instructions) if (n instanceof VarInsnNode v && v.getOpcode() == Opcodes.ASTORE) {
-            if (n.visibleTypeAnnotations != null || n.invisibleTypeAnnotations != null) continue;
-            int writes = 0, reads = 0; AbstractInsnNode read = null;
-            for (AbstractInsnNode x : m.instructions) {
-                if (x instanceof VarInsnNode t && t.var == v.var) {
-                    if (t.getOpcode() == Opcodes.ASTORE) writes++;
-                    else if (t.getOpcode() == Opcodes.ALOAD) { reads++; read = t; }
-                    else { writes += 2; }
-                }
-                if (x instanceof IincInsnNode t && t.var == v.var) writes += 2;
-            }
-            if (writes != 1 || reads != 1) continue;
-            AbstractInsnNode x = n.getNext();
-            while (x != null && x != read && !(x instanceof LabelNode) && !(x instanceof JumpInsnNode)
-                    && !(x instanceof TableSwitchInsnNode) && !(x instanceof LookupSwitchInsnNode)
-                    && !(x instanceof IincInsnNode) && !(x.getOpcode() >= Opcodes.ISTORE && x.getOpcode() <= Opcodes.ASTORE)
-                    && x.getOpcode() != Opcodes.PUTFIELD && x.getOpcode() != Opcodes.PUTSTATIC) x = x.getNext();
-            if (x == read) result.add(n);
-        }
-        return result.size() <= dups ? result : Set.of();
     }
 
     static String methodIdentity(MethodNode m, JarIndex jar) {

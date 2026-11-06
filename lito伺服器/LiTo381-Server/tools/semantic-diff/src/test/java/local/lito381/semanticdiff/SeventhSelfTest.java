@@ -68,17 +68,24 @@ public final class SeventhSelfTest implements Opcodes {
     }
     static ClassNode switches(boolean synthetic,boolean swapped,boolean ordinal,boolean renamed) {
         ClassNode c=clazz(); String[] fields=renamed?new String[]{"$SwitchMap$B","$SwitchMap$A"}:new String[]{"$SwitchMap$first","$SwitchMap$second"};
+        c.name="Fixture$1";
         for(String f:fields)c.fields.add(new FieldNode(ACC_STATIC|ACC_FINAL|(synthetic?ACC_SYNTHETIC:0),f,"[I",null,null));
         MethodNode init=method(c,ACC_STATIC,"<clinit>","()V");
         for(int i=0;i<2;i++) {
-            ins(init,ICONST_2);init.instructions.add(new IntInsnNode(NEWARRAY,T_INT));
-            init.instructions.add(new FieldInsnNode(PUTSTATIC,"Fixture",fields[i],"[I"));
-            init.instructions.add(new FieldInsnNode(GETSTATIC,"Fixture",fields[i],"[I"));
+            invoke(init,INVOKESTATIC,"java/lang/Thread$State","values","()[Ljava/lang/Thread$State;");
+            ins(init,ARRAYLENGTH);init.instructions.add(new IntInsnNode(NEWARRAY,T_INT));
+            init.instructions.add(new FieldInsnNode(PUTSTATIC,c.name,fields[i],"[I"));
+            LabelNode start=new LabelNode(),end=new LabelNode(),handler=new LabelNode(),next=new LabelNode();
+            init.instructions.add(start);
+            init.instructions.add(new FieldInsnNode(GETSTATIC,c.name,fields[i],"[I"));
             init.instructions.add(new FieldInsnNode(GETSTATIC,"java/lang/Thread$State",ordinal?"RUNNABLE":"NEW","Ljava/lang/Thread$State;"));
             invoke(init,INVOKEVIRTUAL,"java/lang/Thread$State","ordinal","()I");ins(init,ICONST_1+i,IASTORE);
+            init.instructions.add(end);init.instructions.add(new JumpInsnNode(GOTO,next));
+            init.instructions.add(handler);ins(init,POP);init.instructions.add(next);
+            init.tryCatchBlocks.add(new TryCatchBlockNode(start,end,handler,"java/lang/NoSuchFieldError"));
         }
         ins(init,RETURN); MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","()I");
-        for(int i=0;i<2;i++){m.instructions.add(new FieldInsnNode(GETSTATIC,"Fixture",fields[swapped?1-i:i],"[I"));ins(m,ICONST_0,IALOAD);if(i==0)ins(m,ICONST_2,IMUL);}
+        for(int i=0;i<2;i++){m.instructions.add(new FieldInsnNode(GETSTATIC,c.name,fields[swapped?1-i:i],"[I"));ins(m,ICONST_0,IALOAD);if(i==0)ins(m,ICONST_2,IMUL);}
         ins(m,IADD,IRETURN);return c;
     }
     // 0 pure; 1 wrapping; 2 helper log; 3 handler log; 4 right handler;

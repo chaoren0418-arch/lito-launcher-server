@@ -89,6 +89,10 @@ public final class SemanticDiff {
                 parsed.layouts, parsed.deviations, parsed.methodDiffs, parsed.ctorOrders, parsed.allowMethods, parsed.exceptionsExempt)) {
             if (policy != null) policy.forEach((c, ms) -> exact.computeIfAbsent(c,k -> new LinkedHashSet<>()).addAll(ms));
         }
+        parsed.privateRenames.forEach((owner, pairs) -> pairs.forEach((key, target) -> {
+            Set<String> methods = exact.computeIfAbsent(owner, k -> new LinkedHashSet<>());
+            methods.add(key); methods.add(target + key.substring(key.indexOf('(')));
+        }));
         left.preserveExactMethods(exact);
         right.preserveExactMethods(exact);
         if (allow != null) allow.preserveExactMethods(exact);
@@ -126,6 +130,17 @@ public final class SemanticDiff {
                 names.add(name);
             }
         }
+        // Configure before any readTree: only comparison trees normalize these calls.
+        for (var entry : parsed.privateRenames.entrySet()) for (var rename : entry.getValue().entrySet()) {
+            String key = rename.getKey(), target = rename.getValue() + key.substring(key.indexOf('('));
+            for (var policy : Arrays.asList(parsed.extraMethods, parsed.effectsMethods, parsed.accessWiden,
+                    parsed.layouts, parsed.deviations, parsed.methodDiffs, parsed.ctorOrders, parsed.allowMethods, parsed.exceptionsExempt)) {
+                Set<String> methods = policy == null ? Set.of() : policy.getOrDefault(entry.getKey(), Set.of());
+                if (methods.contains(key) || methods.contains(target))
+                    throw new IllegalArgumentException("private-rename overlaps another method policy: " + entry.getKey() + "#" + key);
+            }
+        }
+        PrivateRenames.configure(parsed.privateRenames, names, left, right);
         Map<String, Set<String>> validatedAllow = validateAllowMethods(parsed, names, allow);
         validateEffectsMethods(parsed, names, right, allow);
         validateExemptions(parsed, names, left);
@@ -237,6 +252,13 @@ public final class SemanticDiff {
             System.out.println("wrote " + parsed.md);
         }
         return 0;
+    }
+
+    private static Set<String> privateRenameEntries(Args parsed) {
+        Set<String> entries = new TreeSet<>();
+        parsed.privateRenames.forEach((owner, pairs) -> pairs.forEach((key, target) ->
+                entries.add(owner + "#" + key + " -> " + target + key.substring(key.indexOf('(')))));
+        return entries;
     }
 
     private static org.objectweb.asm.tree.MethodNode exactMethod(JarIndex jar, String owner, String wanted) {
@@ -411,6 +433,7 @@ public final class SemanticDiff {
             w.println("  \"extraMethodsFile\": " + json(parsed.extraFile == null ? null : parsed.extraFile.toString()) + ",");
             w.println("  \"metadataExemptFile\": " + json(parsed.metadataFile == null ? null : parsed.metadataFile.toString()) + ",");
             w.println("  \"innerAccessWiden\": " + jsonNames(parsed.innerAccessWiden) + ",");
+            w.println("  \"privateRenames\": " + jsonNames(privateRenameEntries(parsed)) + ",");
             for (var p : Map.of("methodDiffs",parsed.methodDiffs,"accessWiden",parsed.accessWiden,"layoutMethods",parsed.layouts,"deviations",parsed.deviations,"ctorPrologueOrder",parsed.ctorOrders,"exceptionsExempt",parsed.exceptionsExempt).entrySet()) {
                 Set<String> entries = new TreeSet<>(); p.getValue().forEach((c, ms) -> ms.forEach(m -> entries.add(c + "#" + m)));
                 w.println("  " + json(p.getKey()) + ": " + jsonNames(entries) + ",");
@@ -597,6 +620,7 @@ public final class SemanticDiff {
         for (String owner : parsed.metadataExempt) lines.add("- metadata-exempt：`" + owner + "`");
         for (String owner : parsed.enclosingMethodExempt) lines.add("- metadata-exempt：`" + owner + " enclosing-method`");
         for(String inner:parsed.innerAccessWiden)lines.add("- inner-access-widen：`"+inner+"`");
+        for (String rename : privateRenameEntries(parsed)) lines.add("- private-rename: `" + rename + "`");
         for (var p : Map.of("method-diff",parsed.methodDiffs,"access-widen",parsed.accessWiden,"layout-methods",parsed.layouts,"deviations",parsed.deviations,"ctor-prologue-order",parsed.ctorOrders,"exceptions-exempt",parsed.exceptionsExempt).entrySet())
             p.getValue().forEach((c, ms) -> ms.forEach(m -> lines.add("- " + p.getKey() + "：`" + c + "#" + m + "`")));
         lines.add("");
@@ -792,6 +816,7 @@ public final class SemanticDiff {
         Map<String, Set<String>> effectsMethods = Map.of();
         Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
         Map<String, Set<String>> exceptionsExempt = Map.of();
+        Map<String, Map<String, String>> privateRenames = new LinkedHashMap<>();
         Map<String, Set<String>> methodDiffs = new LinkedHashMap<>();
         Set<String> innerAccessWiden = new LinkedHashSet<>();
 
@@ -901,6 +926,24 @@ public final class SemanticDiff {
                 if (text.isEmpty() || text.startsWith("#")) continue;
                 int comment = text.indexOf('#', text.indexOf('#')+1);
                 if (comment >= 0) text = text.substring(0,comment).trim();
+                String[] parts = text.split("\\s+");
+                if (parts.length >= 2 && parts[1].equals("private-rename")) {
+                    requireApproval(line);
+                    if (parts.length != 3 || !parts[2].matches("[^\\s.#/;\\[()<>]+"))
+                        throw new IllegalArgumentException("invalid private-rename entry: " + line);
+                    int separator = parts[0].indexOf('#');
+                    if (separator <= 0 || !parts[0].substring(separator + 1).matches("[^\\s.#/;\\[()<>]+\\([^\\s]*\\)[^\\s]+"))
+                        throw new IllegalArgumentException("invalid private-rename entry: " + line);
+                    String owner = normalizeClassName(parts[0].substring(0, separator));
+                    String key = parts[0].substring(separator + 1);
+                    var pairs = privateRenames.computeIfAbsent(owner, k -> new LinkedHashMap<>());
+                    String targetKey = parts[2] + key.substring(key.indexOf('('));
+                    if (pairs.containsKey(key) || pairs.entrySet().stream().anyMatch(e ->
+                            (e.getValue() + e.getKey().substring(e.getKey().indexOf('('))).equals(targetKey)))
+                        throw new IllegalArgumentException("duplicate private-rename endpoint: " + line);
+                    pairs.put(key, parts[2]);
+                    continue;
+                }
                 boolean methodDiff = text.endsWith(" method-diff");
                 if(methodDiff) {
                     requireApproval(line);
@@ -913,7 +956,7 @@ public final class SemanticDiff {
                     throw new IllegalArgumentException("invalid --deviations entry: " + line);
                 (methodDiff ? methodDiffs : ctor ? ctorOrders : deviations).computeIfAbsent(normalizeClassName(text.substring(0,hash)), k -> new LinkedHashSet<>()).add(text.substring(hash+1));
             }
-            if (deviations.isEmpty() && ctorOrders.isEmpty() && methodDiffs.isEmpty()) throw new IllegalArgumentException("--deviations produced an empty set");
+            if (deviations.isEmpty() && ctorOrders.isEmpty() && methodDiffs.isEmpty() && privateRenames.isEmpty()) throw new IllegalArgumentException("--deviations produced an empty set");
         }
 
         private static Set<String> parseNameList(String spec, String flag) throws IOException {

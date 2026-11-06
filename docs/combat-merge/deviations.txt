@@ -19,3 +19,6 @@ local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDe
 local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZZLjava/lang/String;)V method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6657400173
 local/lito381/server/NativeDeCharacterFields$CombatSkillDerived#compute(Ljava/lang/Iterable;)Llocal/lito381/server/NativeDeCharacterFields$CombatSkillDerived; method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6657400173
 local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6657773411
+local/lito381/server/NativeDeItemWeaponProcTable#reload()V method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/73
+
+local/lito381/server/NativeDeNpcConstructionState#cancelNpcChatTimer$own()V  private-rename  cancelNpcChatTimer  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/73#issuecomment-6668602650

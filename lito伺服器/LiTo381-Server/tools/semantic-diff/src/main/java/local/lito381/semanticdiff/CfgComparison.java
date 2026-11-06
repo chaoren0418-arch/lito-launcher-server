@@ -5,7 +5,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.MethodNode;
 import static local.lito381.semanticdiff.BlockExpressions.*;
 
-/** Entry-rooted labelled graph isomorphism. No search by similar block contents. */
+/** Entry-rooted labelled graph isomorphism after proven identical-block coalescing. */
 final class CfgComparison implements Opcodes {
     private CfgComparison() {}
     record Result(boolean same, String reason) {}
@@ -25,6 +25,19 @@ final class CfgComparison implements Opcodes {
     private static boolean direct(MethodNode a,MethodNode b,JarIndex aj,JarIndex bj)
             throws org.objectweb.asm.tree.analysis.AnalyzerException {
         List<Block> left=view(a,aj,true),right=view(b,bj,true);
+        if(isomorphic(a,left,right))return true;
+        if(!FourthNormalizations.enabled("cfg-merge"))return false;
+        if(isomorphic(a,coalesce(left),coalesce(right)))return true;
+        // javac can inline the final cleanup after the last protected operation.
+        // Respect try boundaries as block leaders to expose that shared suffix.
+        if(isomorphic(a,coalesce(view(a,aj,true,true)),coalesce(view(b,bj,true,true))))return true;
+        // A shared cleanup can start inside an otherwise straight-line block
+        // (e.g. STORE; LOAD; IF). Empty-stack cuts expose the same basic blocks
+        // on both sides without moving any operation or changing exception edges.
+        return isomorphic(a,coalesce(view(a,aj,true,true,true)),coalesce(view(b,bj,true,true,true)));
+    }
+
+    private static boolean isomorphic(MethodNode a,List<Block> left,List<Block> right) {
         Map<Integer,Integer> blocks=new HashMap<>(),back=new HashMap<>();
         Map<Integer,Integer> slots=new HashMap<>(),reverse=new HashMap<>();
         for(int i=0;i<LocalWebs.parameters(a);i++){slots.put(i,i);reverse.put(i,i);}
@@ -69,6 +82,100 @@ final class CfgComparison implements Opcodes {
     // Comparing every equation under the entry-rooted bijection preserves these
     // correlations even on backedges, without recursively expanding a loop.
     private record Predecessor(int block,int event,int arm) {}
+
+    /** Redirect identical blocks to a deterministic representative, then repeat:
+     * merging a tail can make its predecessors identical on the next pass.
+     * Local identities are exact within one method; block-local dead temporaries
+     * have already disappeared in #174's expression view. Never alpha-rename live locals.
+     */
+    static List<Block> coalesce(List<Block> source) {
+        List<Block> graph=compact(source);
+        boolean changed;
+        do {
+            changed=false;
+            var inputs=incoming(graph);
+            Map<StackPosition,Origin> origins=new HashMap<>();
+            List<List<Origin>> stacks=new ArrayList<>();
+            for(int i=0;i<graph.size();i++)stacks.add(stackOrigins(graph,inputs,i,origins));
+            int[] representatives=new int[graph.size()];
+            Map<MergeKey,Integer> groups=new HashMap<>();
+            for(int i=0;i<graph.size();i++) {
+                representatives[i]=i;
+                if(stacks.get(i)==null)continue;
+                Integer first=groups.putIfAbsent(new MergeKey(graph.get(i),stacks.get(i)),i);
+                if(first!=null){representatives[i]=first;changed=true;}
+            }
+            if(changed)graph=redirect(graph,representatives);
+        } while(changed);
+        return graph;
+    }
+
+    // An event/local is qualified by its producer block, not merely its position
+    // in a block. Stack transport is followed only if EVERY incoming edge proves
+    // the same origin. Mixed phis or cycles are unknown, never an unordered union.
+    private record Origin(int block,Expr value,String literal) {}
+    private record StackPosition(int block,int slot) {}
+    private record MergeKey(Block block,List<Origin> stack) {}
+    private static List<Origin> stackOrigins(List<Block> graph,
+            Map<Integer,Map<Predecessor,List<Expr>>> inputs,int id,Map<StackPosition,Origin> cache) {
+        List<Origin> values=new ArrayList<>();
+        for(int slot=0;slot<graph.get(id).entry().size();slot++) {
+            Origin origin=origin(graph,inputs,id,new Expr("stack",slot,graph.get(id).entry().get(slot).size()),new HashSet<>(),cache);
+            if(origin==null)return null;
+            values.add(origin);
+        }
+        return values;
+    }
+    private static Origin origin(List<Block> graph,Map<Integer,Map<Predecessor,List<Expr>>> inputs,
+            int id,Expr value,Set<StackPosition> visiting,Map<StackPosition,Origin> cache) {
+        if (value.kind().startsWith("literal:")) return new Origin(-1,value,value.kind());
+        if(value.kind().equals("event")) {
+            Event e=graph.get(id).events().get(value.id());
+            if(e.args().isEmpty()&&e.catches().isEmpty() && (e.text().equals("CONST null")
+                    ||List.of("CONST Integer:","CONST Long:","CONST Float:","CONST Double:","CONST str:")
+                        .stream().anyMatch(e.text()::startsWith)))
+                return new Origin(-1,new Expr("literal",0,value.size()),e.text());
+        }
+        if(!value.kind().equals("stack"))return new Origin(id,value,null);
+        StackPosition key=new StackPosition(id,value.id());
+        if(cache.containsKey(key))return cache.get(key);
+        if(visiting.size()>=256)return null; // conservative resource bound for transport chains
+        if(!visiting.add(key))return null;
+        Origin common=null;
+        for(var edge:inputs.get(id).entrySet()) {
+            Origin current=origin(graph,inputs,edge.getKey().block(),edge.getValue().get(value.id()),visiting,cache);
+            if(current==null || common!=null&&!common.equals(current)){visiting.remove(key);cache.put(key,null);return null;}
+            common=current;
+        }
+        visiting.remove(key);cache.put(key,common);return common;
+    }
+
+    private static List<Block> compact(List<Block> graph) {
+        int[] representatives=new int[graph.size()];
+        for(int i=0;i<graph.size();i++)representatives[i]=target(graph,i);
+        return redirect(graph,representatives);
+    }
+    private static List<Block> redirect(List<Block> graph,int[] representatives) {
+        Map<Integer,Integer> ids=new LinkedHashMap<>();
+        // Keep the method entry at zero, including an initial GOTO trampoline.
+        for(int i=0;i<graph.size();i++)ids.computeIfAbsent(representatives[i],k->ids.size());
+        List<Block> result=new ArrayList<>();
+        for(int representative:ids.keySet()) {
+            Block b=canonical(graph.get(representative));
+            List<Event> events=new ArrayList<>();
+            for(Event e:b.events()) {
+                List<String> catches=new ArrayList<>();
+                for(String edge:e.catches()) {
+                    int p=edge.indexOf(':');
+                    catches.add(ids.get(representatives[Integer.parseInt(edge.substring(0,p))])+edge.substring(p));
+                }
+                events.add(new Event(e.text(),e.args(),catches));
+            }
+            List<Integer> edges=b.edges().stream().map(i->ids.get(representatives[i])).toList();
+            result.add(new Block(events,b.entry(),b.exit(),b.copies(),edges));
+        }
+        return result;
+    }
     private static Map<Integer,Map<Predecessor,List<Expr>>> incoming(List<Block> graph) {
         Map<Integer,Map<Predecessor,List<Expr>>> inputs=new HashMap<>();
         for(int id=0;id<graph.size();id++)if(target(graph,id)==id)inputs.put(id,new HashMap<>());
