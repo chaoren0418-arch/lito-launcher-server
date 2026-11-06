@@ -1,0 +1,30 @@
+package local.lito381.server;
+import java.util.function.BooleanSupplier;
+/** Accepted equipment-proc participants borrow HP-boundary lives, never later captures. */
+final class NativeSourceEquipmentProcLife {
+ record Proof(NativeSourceAcceptedPlayers.Participant caster,NativeSourceAcceptedPlayers.Participant target,NativeSourceAcceptedPlayers.Proof accepted,NativePlayerLifetime lifetime,GameHub hub){
+  boolean current(){var f=NativePlayerCommit.frame();return f!=null&&f.pc==caster.pc()&&f.accepted&&!f.event.world()&&f.nativeSourceAcceptedPlayers==accepted&&lifetime.mode!=NativePlayerLifetime.Mode.STOPPED&&!(boolean)CombatAccess.field(hub,"nativeStaticMotionClosed")&&NativePlayerCommit.validFrame(caster.pc())&&participant(caster,hub)&&participant(target,hub);}
+ }
+ static boolean enabled(ClientSession pc){return pc!=null&&NativeSourceDollCommit.enabled(pc);}
+ static NativeSourceAcceptedPlayers.Participant select(NativeSourceAcceptedPlayers.Proof proof,ClientSession pc){if(proof.target()!=null&&proof.target().pc()==pc)return proof.target();return proof.source()!=null&&proof.source().pc()==pc?proof.source():null;}
+ static Proof proof(ClientSession caster,ClientSession target){var f=NativePlayerCommit.frame();if(caster==null||target==null||f==null||f.pc!=caster||!f.accepted||f.event.world()||!(f.nativeSourceAcceptedPlayers instanceof NativeSourceAcceptedPlayers.Proof accepted))return null;var source=select(accepted,caster);var selected=select(accepted,target);if(source==null||selected==null||source.binding()==null||selected.binding()==null||!source.binding().phase().equals("BATTLE")||!selected.binding().phase().equals("BATTLE")||source.binding().room()!=selected.binding().room())return null;var hub=(GameHub)CombatAccess.field(caster,"hub");return new Proof(source,selected,accepted,NativePlayerLifetime.of(hub),hub);}
+ static boolean participant(NativeSourceAcceptedPlayers.Participant p,GameHub hub){return p!=null&&!p.dead()&&p.life()!=null&&NativeAcceptedFreezeMutation.roleFrame(p.binding(),p.pc())&&!(boolean)CombatAccess.field(p.pc(),"sourceItemDisconnected")&&CombatAccess.field(p.pc(),"hub")==hub&&NativeSourceControlledDisplay.rawLife(p.pc())==p.life()&&NativeSourceRawDamage.number(p.pc(),"playerHp")>0;}
+ static boolean held(Proof proof){return proof!=null&&proof.caster().pc().nativePlayerActionLock().isHeldByCurrentThread()&&proof.target().pc().nativePlayerActionLock().isHeldByCurrentThread();}
+ static boolean owned(Proof proof,Runnable body){if(proof==null||!proof.current())return false;var caster=proof.caster().pc();var target=proof.target().pc();var a=caster.nativePlayerActionLock();var b=target.nativePlayerActionLock();ClientSession acquired=null;if(a.isHeldByCurrentThread()&&!b.isHeldByCurrentThread()){if(!b.tryLock())return false;acquired=target;}else if(b.isHeldByCurrentThread()&&!a.isHeldByCurrentThread()){if(!a.tryLock())return false;acquired=caster;}boolean[] ran={false};try{NativePairedCastSafety.run(caster,target,()->{if(held(proof)&&proof.current()){body.run();ran[0]=true;}});return ran[0];}finally{if(acquired!=null){acquired.nativePlayerActionLock().unlock();NativePlayerActionScope.unlocked(acquired);}}}
+
+ static boolean heal(ClientSession caster,ClientSession target,int skill){if(!enabled(caster)||target==null||skill<=0||!NativeProcSkillCatalog.catalog().healing(skill))return NativeProcHealingPlayer.nativeSourceEquipmentProcOriginalApply(caster,target,skill);boolean[] result={true};owned(proof(caster,target),()->result[0]=NativeProcHealingPlayer.nativeSourceEquipmentProcOriginalApply(caster,target,skill));return result[0];}
+ static void skill(ClientSession caster,ClientSession target,NativeArmorProc.Rule rule){if(!enabled(caster)||target==null||rule==null){NativeEquipmentDefense.nativeSourceEquipmentProcOriginalSkill(caster,target,rule);return;}owned(proof(caster,target),()->NativeEquipmentDefense.nativeSourceEquipmentProcOriginalSkill(caster,target,rule));}
+ static boolean validFrame(ClientSession caster,ClientSession target){if(!NativePlayerCommit.validFrame(caster))return false;if(!enabled(caster))return true;var proof=proof(caster,target);return proof!=null&&proof.current();}
+ static boolean lockedFrame(ClientSession caster,ClientSession target){if(!validFrame(caster,target))return false;if(!enabled(caster))return true;return held(proof(caster,target));}
+ static BooleanSupplier guarded(Proof proof,BooleanSupplier original){return()->held(proof)&&proof.current()&&original.getAsBoolean();}
+ static boolean mutateOwned(ClientSession pc,NativePlayerCommit.Binding binding,BooleanSupplier original,ClientSession caster,ClientSession target){if(!enabled(caster))return NativePlayerCommit.mutateOwned(pc,binding,original);var proof=proof(caster,target);return proof!=null&&pc==proof.target().pc()&&proof.target().binding().equals(binding)&&held(proof)&&proof.current()&&NativePlayerCommit.mutateOwned(pc,binding,guarded(proof,original));}
+ private NativeSourceEquipmentProcLife(){}
+
+    static boolean nativeSourceTimedRefreshMutateOwned(ClientSession clientSession, NativePlayerCommit.Binding binding, BooleanSupplier booleanSupplier, ClientSession clientSession2, ClientSession clientSession3, BattleAbilityStatus battleAbilityStatus, NativeArmorProc.Rule rule) {
+        if (!NativeSourceEquipmentProcLife.enabled(clientSession2)) {
+            return NativePlayerCommit.mutateOwned(clientSession, binding, booleanSupplier);
+        }
+        Proof proof = NativeSourceEquipmentProcLife.proof(clientSession2, clientSession3);
+        return proof != null && clientSession == proof.target().pc() && proof.target().binding().equals(binding) && NativeSourceEquipmentProcLife.held(proof) && proof.current() && NativeSourceProc68FirstQueue.mutate(clientSession, binding, NativeSourceProcTimedRefresh.guarded(proof, booleanSupplier, battleAbilityStatus, rule), proof, battleAbilityStatus, rule);
+    }
+}
