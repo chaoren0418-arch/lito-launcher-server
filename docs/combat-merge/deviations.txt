@@ -22,3 +22,4 @@ local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z method-diff # ap
 local/lito381/server/NativeDeItemWeaponProcTable#reload()V method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/73
 
 local/lito381/server/NativeDeNpcConstructionState#cancelNpcChatTimer$own()V  private-rename  cancelNpcChatTimer  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/73#issuecomment-6668602650
+local/lito381/server/NativeLightAction$Batch#emit()V  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6672200596
