@@ -7395,7 +7395,12 @@ final class ClientSession implements Runnable {
         if (this.endpoint != Endpoint.GAME || this.phase != Phase.LOBBY || this.accountName().isBlank() || this.litoCharacterSelectionConsumed) {
             return false;
         }
-        CharacterSummary characterSummary2 = this.characters.stream().filter(this::lambda$autoSelectPendingRentalBattleHandoff$30).findFirst().orElse(null);
+        CharacterSummary characterSummary2 = this.characters.stream().filter(characterSummary -> {
+            GameHub gameHub = this.hub;
+            String string2 = this.accountName();
+            String string = this.stateCharacter(characterSummary.name());
+            return gameHub.hasRentalBattleHandoff(SourceLogin.account(this, string2), string);
+            }).findFirst().orElse(null);
         if (characterSummary2 == null) {
             return false;
         }
@@ -7404,12 +7409,7 @@ final class ClientSession implements Runnable {
         return this.litoCharacterSelectionConsumed && this.rentalBattleLoadoutActive;
     }
 
-    private boolean lambda$autoSelectPendingRentalBattleHandoff$30(CharacterSummary characterSummary) {
-            GameHub gameHub = this.hub;
-            String string2 = this.accountName();
-            String string = this.stateCharacter(characterSummary.name());
-            return gameHub.hasRentalBattleHandoff(SourceLogin.account(this, string2), string);
-    }
+
 
     private void sendLoginBootstrap() throws IOException {
         sleepForBootstrap(config.loginBootstrapInitialDelayMs(), "initial");
@@ -10642,8 +10642,10 @@ final class ClientSession implements Runnable {
     }
 
     private void startBattle() throws IOException {
+        GameHub.ClanData clanData;
+        ArenaMapCatalog.Point virtualSpawn;
+        ArenaMapCatalog.Point memberSpawn;
         boolean bl;
-        Record record;
         this.pendingWarehousePassword = null;
         this.pendingSlaveTarget = null;
         this.clearPendingAskCallbacks();
@@ -10780,19 +10782,19 @@ final class ClientSession implements Runnable {
             this.sendEncrypted(Protocol.invisible(this.playerObjectId(), 1), "S_INVISIBLE mode=1 reason=battle-bootstrap-local-rebuild");
         }
         for (ClientSession clientSession : list) {
-            if (clientSession.invisible && clientSession != this || ((GameHub.ClanData)(record = this.hub.clanData(clientSession.sourceCharacterIdentity()))).name().isBlank()) continue;
-            this.sendEncrypted(Protocol.battleClanMetadata(clientSession.playerObjectId(), 0L, ((GameHub.ClanData)record).name(), true), "S_LITO_CLAN object=" + clientSession.playerObjectId() + " clan=" + ((GameHub.ClanData)record).name());
+            if (clientSession.invisible && clientSession != this || ((clanData = this.hub.clanData(clientSession.sourceCharacterIdentity()))).name().isBlank()) continue;
+            this.sendEncrypted(Protocol.battleClanMetadata(clientSession.playerObjectId(), 0L, (clanData).name(), true), "S_LITO_CLAN object=" + clientSession.playerObjectId() + " clan=" + (clanData).name());
         }
         for (GameHub.RoomVirtualPlayer roomVirtualPlayer : list2) {
-            record = (ArenaMapCatalog.Point)linkedHashMap.get(roomVirtualPlayer.objectId());
+            virtualSpawn = (ArenaMapCatalog.Point)linkedHashMap.get(roomVirtualPlayer.objectId());
             bl = this.minimapAlliedWithForce(roomVirtualPlayer.force());
-            this.sendEncrypted(Protocol.minimapPlayer(roomVirtualPlayer.objectId(), ((ArenaMapCatalog.Point)record).x(), ((ArenaMapCatalog.Point)record).y(), bl), "S_LITO_MINIMAP player=" + roomVirtualPlayer.name() + " x=" + ((ArenaMapCatalog.Point)record).x() + " y=" + ((ArenaMapCatalog.Point)record).y() + " allied=" + bl);
+            this.sendEncrypted(Protocol.minimapPlayer(roomVirtualPlayer.objectId(), (virtualSpawn).x(), (virtualSpawn).y(), bl), "S_LITO_MINIMAP player=" + roomVirtualPlayer.name() + " x=" + (virtualSpawn).x() + " y=" + (virtualSpawn).y() + " allied=" + bl);
         }
         this.sendCurrentClassicClanWarState();
         for (ClientSession clientSession : list) {
-            record = this.battleSpawn(arena, this.hub.battleSpawnIndex(this.currentRoomId, clientSession));
+            memberSpawn = this.battleSpawn(arena, this.hub.battleSpawnIndex(this.currentRoomId, clientSession));
             bl = this.minimapAlliedWith(clientSession);
-            this.sendEncrypted(Protocol.minimapPlayer(clientSession.playerObjectId(), ((ArenaMapCatalog.Point)record).x(), ((ArenaMapCatalog.Point)record).y(), bl), "S_LITO_MINIMAP player=" + clientSession.playerName() + " x=" + ((ArenaMapCatalog.Point)record).x() + " y=" + ((ArenaMapCatalog.Point)record).y() + " allied=" + bl);
+            this.sendEncrypted(Protocol.minimapPlayer(clientSession.playerObjectId(), (memberSpawn).x(), (memberSpawn).y(), bl), "S_LITO_MINIMAP player=" + clientSession.playerName() + " x=" + (memberSpawn).x() + " y=" + (memberSpawn).y() + " allied=" + bl);
         }
         if (bl3) {
             boolean bl4 = this.minimapAlliedWithForce(1);
@@ -24716,11 +24718,10 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void serverHonorRespawnDue(long l, long l2, int n, int n2) throws IOException {
-        Object object;
+        byte[] objectPacket;
         NativePlayerActionScope.Ticket ticket;
         block4: {
             ticket = NativeSourceManualScope.enterRespawn(this);
-            object = this;
             try {
                 if (this.honorRespawnPending(l, l2)) break block4;
             }
@@ -24741,9 +24742,9 @@ final class ClientSession implements Runnable {
         int n4 = this.playerMaxHp;
         int n5 = this.battleGfx();
         NativeSourceManualScope.exitRespawn(this, ticket, null);
-        object = Protocol.resurrect(this.playerObjectId(), 0, this.playerObjectId(), n5);
+        objectPacket = Protocol.resurrect(this.playerObjectId(), 0, this.playerObjectId(), n5);
         for (ClientSession clientSession : this.hub.roomMembers(l)) {
-            clientSession.sendEncrypted((byte[])object, "S_RESURRECT honor target=" + this.playerObjectId() + " source=" + this.playerObjectId() + " gfx=" + n5 + " position=" + n + "," + n2);
+            clientSession.sendEncrypted(objectPacket, "S_RESURRECT honor target=" + this.playerObjectId() + " source=" + this.playerObjectId() + " gfx=" + n5 + " position=" + n + "," + n2);
         }
         this.sendEncrypted(new Protocol.Writer().c(13).h(n3).h(n4).bytes(), "S_HIT_POINT honor-respawn=" + n3 + "/" + n4);
         this.broadcastOwnHitRatio("honor-respawn");
@@ -32126,6 +32127,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useAdvanceSpiritSpell(byte[] byArray, BattleSpellCatalog.AdvanceSpiritSpell advanceSpiritSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         int n2;
         int n3;
@@ -32181,18 +32184,18 @@ final class ClientSession implements Runnable {
                 this.commitSpellReady(advanceSpiritSpell.skillId(), l + (long)advanceSpiritSpell.reuseDelayMillis() * 1000000L);
             }
         }
-        object2 = Protocol.objectAction(this.playerObjectId(), advanceSpiritSpell.actionId());
-        object = Protocol.effectObject(clientSession2.playerObjectId(), advanceSpiritSpell.effectGfx());
+        object2Packet = Protocol.objectAction(this.playerObjectId(), advanceSpiritSpell.actionId());
+        objectPacket = Protocol.effectObject(clientSession2.playerObjectId(), advanceSpiritSpell.effectGfx());
         List<ClientSession> list2 = bl4 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession6 : list2) {
             boolean bl10;
             bl2 = !bl4 || this.sameClassicWorldMap(clientSession6) && BattleSpellCatalog.isInNativeScreen(clientSession6.positionX, clientSession6.positionY, this.positionX, this.positionY);
             boolean bl11 = bl10 = !bl4 || this.sameClassicWorldMap(clientSession6) && BattleSpellCatalog.isInNativeScreen(clientSession6.positionX, clientSession6.positionY, clientSession2.positionX, clientSession2.positionY);
             if (bl2 && (!this.invisible || clientSession6 == this)) {
-                clientSession6.sendEncrypted((byte[])object2, "S_ACTION advance-spirit-cast object=" + this.playerObjectId() + " action=" + advanceSpiritSpell.actionId());
+                clientSession6.sendEncrypted(object2Packet, "S_ACTION advance-spirit-cast object=" + this.playerObjectId() + " action=" + advanceSpiritSpell.actionId());
             }
             if (!bl10) continue;
-            clientSession6.sendEncrypted((byte[])object, "S_EFFECT advance-spirit target=" + clientSession2.playerObjectId() + " gfx=" + advanceSpiritSpell.effectGfx());
+            clientSession6.sendEncrypted(objectPacket, "S_EFFECT advance-spirit target=" + clientSession2.playerObjectId() + " gfx=" + advanceSpiritSpell.effectGfx());
         }
         clientSession2.sendEncrypted(new Protocol.Writer().c(13).h(n4).h(n2).bytes(), "S_HIT_POINT advance-spirit=" + n4 + "/" + n2);
         clientSession2.broadcastOwnHitRatio("advance-spirit-max-hp");
@@ -32731,24 +32734,26 @@ final class ClientSession implements Runnable {
     }
 
     private ArmorBreakTarget resolveDragonKnightNegativeTarget(Phase phase, long l, int n, int n2, int n3, int n4, int n5, boolean bl) {
+        ClassicWorldMapCatalog.ClassicMap worldMap;
+        BattleRules.Mode battleMode;
+        List<BattleGuardBrake.Candidate> guardCandidates;
         long l2;
-        Object object2;
         Map<Long, ArmorBreakTarget> linkedHashMap = new LinkedHashMap<Long, ArmorBreakTarget>();
         if (phase == Phase.WORLD) {
-            object2 = ClassicWorldMapCatalog.forMap(n);
+            worldMap = ClassicWorldMapCatalog.forMap(n);
             for (ClientSession clientSession : this.classicWorldMembers(n)) {
-                if (clientSession == this || clientSession.phase != Phase.WORLD || clientSession.observer || clientSession.playerHp <= 0 || clientSession.invisible || clientSession.classicWorldMapId != n || clientSession.classicWorldInstanceId != n2 || ((ClassicWorldMapCatalog.ClassicMap)object2).isSafetyZone(n3, n4) || ((ClassicWorldMapCatalog.ClassicMap)object2).isSafetyZone(clientSession.positionX, clientSession.positionY) || !((ClassicWorldMapCatalog.ClassicMap)object2).attackPosition(n3, n4, clientSession.positionX, clientSession.positionY, n5)) continue;
+                if (clientSession == this || clientSession.phase != Phase.WORLD || clientSession.observer || clientSession.playerHp <= 0 || clientSession.invisible || clientSession.classicWorldMapId != n || clientSession.classicWorldInstanceId != n2 || (worldMap).isSafetyZone(n3, n4) || (worldMap).isSafetyZone(clientSession.positionX, clientSession.positionY) || !(worldMap).attackPosition(n3, n4, clientSession.positionX, clientSession.positionY, n5)) continue;
                 linkedHashMap.put(clientSession.playerObjectId(), new ArmorBreakTarget(clientSession.playerObjectId(), clientSession.positionX, clientSession.positionY, clientSession.battleLevel(), clientSession, null, null, null, false));
             }
             for (ClassicWorldMonsterPopulation.Snapshot snapshot : this.hub.classicWorldMonstersInScreen(n, n2, n3, n4)) {
-                if (!snapshot.present() || !snapshot.alive() || snapshot.mapId() != n || ((ClassicWorldMapCatalog.ClassicMap)object2).isSafetyZone(n3, n4) || ((ClassicWorldMapCatalog.ClassicMap)object2).isSafetyZone(snapshot.x(), snapshot.y()) || !((ClassicWorldMapCatalog.ClassicMap)object2).attackPosition(n3, n4, snapshot.x(), snapshot.y(), n5)) continue;
+                if (!snapshot.present() || !snapshot.alive() || snapshot.mapId() != n || (worldMap).isSafetyZone(n3, n4) || (worldMap).isSafetyZone(snapshot.x(), snapshot.y()) || !(worldMap).attackPosition(n3, n4, snapshot.x(), snapshot.y(), n5)) continue;
                 linkedHashMap.put(snapshot.objectId(), new ArmorBreakTarget(snapshot.objectId(), snapshot.x(), snapshot.y(), Math.max(1, snapshot.template().level()), null, snapshot, null, null, false));
             }
             for (ClientSession clientSession : this.classicWorldMembers(n)) {
                 if (clientSession.phase != Phase.WORLD || clientSession.classicWorldMapId != n || clientSession.classicWorldInstanceId != n2) continue;
                 for (BattleCompanion.Snapshot snapshot : clientSession.classicWorldCompanionSnapshots()) {
                     BattleCompanion battleCompanion = clientSession.ownedCompanion(snapshot.objectId());
-                    if (battleCompanion == null || !snapshot.active() || snapshot.hp() <= 0 || ((ClassicWorldMapCatalog.ClassicMap)object2).isSafetyZone(n3, n4) || ((ClassicWorldMapCatalog.ClassicMap)object2).isSafetyZone(snapshot.x(), snapshot.y()) || !((ClassicWorldMapCatalog.ClassicMap)object2).attackPosition(n3, n4, snapshot.x(), snapshot.y(), n5)) continue;
+                    if (battleCompanion == null || !snapshot.active() || snapshot.hp() <= 0 || (worldMap).isSafetyZone(n3, n4) || (worldMap).isSafetyZone(snapshot.x(), snapshot.y()) || !(worldMap).attackPosition(n3, n4, snapshot.x(), snapshot.y(), n5)) continue;
                     linkedHashMap.put(snapshot.objectId(), new ArmorBreakTarget(snapshot.objectId(), snapshot.x(), snapshot.y(), Math.max(1, snapshot.level()), null, null, null, null, false, clientSession, battleCompanion));
                 }
             }
@@ -32773,15 +32778,15 @@ final class ClientSession implements Runnable {
                 if (!snapshot.alive() || !this.hub.canAttackTimeAttackActor(l, this, snapshot.objectId())) continue;
                 linkedHashMap.put(snapshot.objectId(), new ArmorBreakTarget(snapshot.objectId(), snapshot.x(), snapshot.y(), Math.max(1, snapshot.level()), null, null, null, snapshot, false));
             }
-            object2 = this.hub.roomRules(l).mode();
+            battleMode = this.hub.roomRules(l).mode();
             ArenaMapCatalog.Point point = this.hub.botPosition(l);
-            if (object2 != BattleRules.Mode.QUEST_BATTLE && object2 != BattleRules.Mode.TIME_ATTACK && point != null && this.hub.botHp(l) > 0) {
+            if (battleMode != BattleRules.Mode.QUEST_BATTLE && battleMode != BattleRules.Mode.TIME_ATTACK && point != null && this.hub.botHp(l) > 0) {
                 linkedHashMap.put(2L, new ArmorBreakTarget(2L, point.x(), point.y(), 1, null, null, null, null, true));
             }
         }
-        object2 = linkedHashMap.values().stream().map(armorBreakTarget -> new BattleGuardBrake.Candidate(armorBreakTarget.objectId(), armorBreakTarget.x(), armorBreakTarget.y())).toList();
+        guardCandidates = linkedHashMap.values().stream().map(armorBreakTarget -> new BattleGuardBrake.Candidate(armorBreakTarget.objectId(), armorBreakTarget.x(), armorBreakTarget.y())).toList();
         List<BattleResistFear.Candidate> list = linkedHashMap.values().stream().map(armorBreakTarget -> new BattleResistFear.Candidate(armorBreakTarget.objectId(), armorBreakTarget.x(), armorBreakTarget.y())).toList();
-        long l3 = l2 = bl ? DragonSkillRequests.fearTarget(this.lastCombatTargetObjectId, n3, n4, n5, list) : DragonSkillRequests.guardTarget(this.lastCombatTargetObjectId, n3, n4, n5, (List<BattleGuardBrake.Candidate>)object2);
+        long l3 = l2 = bl ? DragonSkillRequests.fearTarget(this.lastCombatTargetObjectId, n3, n4, n5, list) : DragonSkillRequests.guardTarget(this.lastCombatTargetObjectId, n3, n4, n5, guardCandidates);
         if (l2 == 0L) {
             long l4 = linkedHashMap.values().stream().filter(armorBreakTarget -> Math.max(Math.abs(n3 - armorBreakTarget.x()), Math.abs(n4 - armorBreakTarget.y())) <= n5).count();
             System.out.println("[LiTo] C_USE_SPELL " + (bl ? "Resist Fear" : "Guard Brake") + " rejected unresolved selector-only target player=" + this.playerName() + " last-explicit=" + this.lastCombatTargetObjectId + " range-candidates=" + l4 + " maximum-range=" + n5);
@@ -35475,6 +35480,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useIllusionOgreSpell(byte[] byArray, BattleSpellCatalog.IllusionOgreSpell illusionOgreSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         boolean bl;
         Object object;
@@ -35534,15 +35541,15 @@ final class ClientSession implements Runnable {
         }
         this.cancelAbsoluteBarrier("spell-" + illusionOgreSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + illusionOgreSpell.skillId());
-        object2 = Protocol.objectAction(this.playerObjectId(), illusionOgreSpell.actionId());
-        object = Protocol.effectObject(clientSession.playerObjectId(), illusionOgreSpell.effectGfx());
+        object2Packet = Protocol.objectAction(this.playerObjectId(), illusionOgreSpell.actionId());
+        objectPacket = Protocol.effectObject(clientSession.playerObjectId(), illusionOgreSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n5) : this.hub.roomMembers(l2);
         for (ClientSession clientSession5 : list) {
             if (phase == Phase.WORLD && (clientSession5.classicWorldMapId != n5 || clientSession5.classicWorldInstanceId != n4 || !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, n3, n2) && !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession5 == this) {
-                clientSession5.sendEncrypted((byte[])object2, "S_ACTION Illusion-Ogre caster=" + this.playerObjectId() + " action=" + illusionOgreSpell.actionId());
+                clientSession5.sendEncrypted(object2Packet, "S_ACTION Illusion-Ogre caster=" + this.playerObjectId() + " action=" + illusionOgreSpell.actionId());
             }
-            clientSession5.sendEncrypted((byte[])object, "S_EFFECT Illusion-Ogre target=" + clientSession.playerObjectId() + " gfx=" + illusionOgreSpell.effectGfx());
+            clientSession5.sendEncrypted(objectPacket, "S_EFFECT Illusion-Ogre target=" + clientSession.playerObjectId() + " gfx=" + illusionOgreSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n, this.playerMaxMp), "S_MANA_POINT Illusion-Ogre=" + n + "/" + this.playerMaxMp);
         System.out.println("[LiTo] C_USE_SPELL Illusion: Ogre caster=" + this.playerName() + " target=" + clientSession.playerName() + " melee-hit=" + illusionOgreSpell.meleeHit() + " melee-damage=" + illusionOgreSpell.meleeDamage() + " duration=" + illusionOgreSpell.durationSeconds() + " refreshed=" + bl + " mp=" + n + "/" + this.playerMaxMp + " mp-cost=" + n9 + " original-reduction=" + n6 + " counter-magic-bypass=" + illusionOgreSpell.counterMagicBypass() + " persisted=false client-clock-ms=" + illusionOgreSpell.clientCastClockMillis() + " phase=" + String.valueOf((Object)phase));
@@ -35599,6 +35606,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useDiamondGolemSpell(byte[] byArray, BattleSpellCatalog.DiamondGolemSpell diamondGolemSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         boolean bl;
         Object object;
@@ -35658,15 +35667,15 @@ final class ClientSession implements Runnable {
         }
         this.cancelAbsoluteBarrier("spell-" + diamondGolemSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + diamondGolemSpell.skillId());
-        object2 = Protocol.objectAction(this.playerObjectId(), diamondGolemSpell.actionId());
-        object = Protocol.effectObject(clientSession.playerObjectId(), diamondGolemSpell.effectGfx());
+        object2Packet = Protocol.objectAction(this.playerObjectId(), diamondGolemSpell.actionId());
+        objectPacket = Protocol.effectObject(clientSession.playerObjectId(), diamondGolemSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n5) : this.hub.roomMembers(l2);
         for (ClientSession clientSession5 : list) {
             if (phase == Phase.WORLD && (clientSession5.classicWorldMapId != n5 || clientSession5.classicWorldInstanceId != n4 || !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, n3, n2) && !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession5 == this) {
-                clientSession5.sendEncrypted((byte[])object2, "S_ACTION Diamond-Golem caster=" + this.playerObjectId() + " action=" + diamondGolemSpell.actionId());
+                clientSession5.sendEncrypted(object2Packet, "S_ACTION Diamond-Golem caster=" + this.playerObjectId() + " action=" + diamondGolemSpell.actionId());
             }
-            clientSession5.sendEncrypted((byte[])object, "S_EFFECT Diamond-Golem target=" + clientSession.playerObjectId() + " gfx=" + diamondGolemSpell.effectGfx());
+            clientSession5.sendEncrypted(objectPacket, "S_EFFECT Diamond-Golem target=" + clientSession.playerObjectId() + " gfx=" + diamondGolemSpell.effectGfx());
         }
         clientSession.sendEncrypted(clientSession.ownCharacterAttrDef(), "S_AC Diamond-Golem current=" + clientSession.battleArmorClass());
         this.sendEncrypted(Protocol.manaPoint(n, this.playerMaxMp), "S_MANA_POINT Diamond-Golem=" + n + "/" + this.playerMaxMp);
@@ -35724,6 +35733,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useInsightSpell(byte[] byArray, BattleSpellCatalog.InsightSpell insightSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         boolean bl;
         Object object;
@@ -35783,15 +35794,15 @@ final class ClientSession implements Runnable {
         }
         this.cancelAbsoluteBarrier("spell-" + insightSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + insightSpell.skillId());
-        object2 = Protocol.objectAction(this.playerObjectId(), insightSpell.actionId());
-        object = Protocol.effectObject(clientSession.playerObjectId(), insightSpell.effectGfx());
+        object2Packet = Protocol.objectAction(this.playerObjectId(), insightSpell.actionId());
+        objectPacket = Protocol.effectObject(clientSession.playerObjectId(), insightSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n5) : this.hub.roomMembers(l2);
         for (ClientSession clientSession5 : list) {
             if (phase == Phase.WORLD && (clientSession5.classicWorldMapId != n5 || clientSession5.classicWorldInstanceId != n4 || !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, n3, n2) && !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession5 == this) {
-                clientSession5.sendEncrypted((byte[])object2, "S_ACTION Insight caster=" + this.playerObjectId() + " action=" + insightSpell.actionId());
+                clientSession5.sendEncrypted(object2Packet, "S_ACTION Insight caster=" + this.playerObjectId() + " action=" + insightSpell.actionId());
             }
-            clientSession5.sendEncrypted((byte[])object, "S_EFFECT Insight target=" + clientSession.playerObjectId() + " gfx=" + insightSpell.effectGfx());
+            clientSession5.sendEncrypted(objectPacket, "S_EFFECT Insight target=" + clientSession.playerObjectId() + " gfx=" + insightSpell.effectGfx());
         }
         if (bl) {
             clientSession.sendAbilityScoresStatus(l3, "insight-applied");
@@ -35851,6 +35862,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useIllusionLichSpell(byte[] byArray, BattleSpellCatalog.IllusionLichSpell illusionLichSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         boolean bl;
         Object object;
@@ -35910,18 +35923,18 @@ final class ClientSession implements Runnable {
         }
         this.cancelAbsoluteBarrier("spell-" + illusionLichSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + illusionLichSpell.skillId());
-        object2 = Protocol.objectAction(this.playerObjectId(), illusionLichSpell.actionId());
-        object = Protocol.effectObject(clientSession.playerObjectId(), illusionLichSpell.effectGfx());
+        object2Packet = Protocol.objectAction(this.playerObjectId(), illusionLichSpell.actionId());
+        objectPacket = Protocol.effectObject(clientSession.playerObjectId(), illusionLichSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n5) : this.hub.roomMembers(l2);
         for (ClientSession clientSession5 : list) {
             if (phase == Phase.WORLD && (clientSession5.classicWorldMapId != n5 || clientSession5.classicWorldInstanceId != n4 || !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, n3, n2) && !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, clientSession.positionX, clientSession.positionY)) || this.invisible && clientSession5 != this) continue;
-            clientSession5.sendEncrypted((byte[])object2, "S_ACTION Illusion-Lich caster=" + this.playerObjectId() + " action=" + illusionLichSpell.actionId());
+            clientSession5.sendEncrypted(object2Packet, "S_ACTION Illusion-Lich caster=" + this.playerObjectId() + " action=" + illusionLichSpell.actionId());
         }
         clientSession.sendMagicStatus(l3, "illusion-lich-start");
         this.sendEncrypted(Protocol.manaPoint(n, this.playerMaxMp), "S_MANA_POINT Illusion-Lich=" + n + "/" + this.playerMaxMp);
         for (ClientSession clientSession6 : list) {
             if (phase == Phase.WORLD && (clientSession6.classicWorldMapId != n5 || clientSession6.classicWorldInstanceId != n4 || !BattleSpellCatalog.isInNativeScreen(clientSession6.positionX, clientSession6.positionY, clientSession.positionX, clientSession.positionY))) continue;
-            clientSession6.sendEncrypted((byte[])object, "S_EFFECT Illusion-Lich target=" + clientSession.playerObjectId() + " gfx=" + illusionLichSpell.effectGfx());
+            clientSession6.sendEncrypted(objectPacket, "S_EFFECT Illusion-Lich target=" + clientSession.playerObjectId() + " gfx=" + illusionLichSpell.effectGfx());
         }
         System.out.println("[LiTo] C_USE_SPELL Illusion: Lich caster=" + this.playerName() + " target=" + clientSession.playerName() + " sp=" + illusionLichSpell.spellPower() + " duration=" + illusionLichSpell.durationSeconds() + " refreshed=" + bl + " mp=" + n + "/" + this.playerMaxMp + " mp-cost=" + n9 + " original-reduction=" + n6 + " counter-magic-bypass=" + illusionLichSpell.counterMagicBypass() + " persisted=false client-clock-ms=" + illusionLichSpell.clientCastClockMillis() + " phase=" + String.valueOf((Object)phase));
     }
@@ -37144,6 +37157,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useSelfHasteSpell(byte[] byArray, BattleSpellCatalog.SelfHasteSpell selfHasteSpell) throws IOException {
+        byte[] objectPacket;
         BattleTimedStatus.SpeedChange speedChange;
         int n;
         boolean bl;
@@ -37182,13 +37196,13 @@ final class ClientSession implements Runnable {
         this.cancelMeditation("spell-" + selfHasteSpell.skillId());
         this.cancelAbsoluteBarrier("spell-" + selfHasteSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + selfHasteSpell.skillId());
-        object = Protocol.objectAction(this.playerObjectId(), selfHasteSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), selfHasteSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), selfHasteSpell.effectGfx());
         List<ClientSession> list = bl ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession : list) {
             if (bl && !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, this.positionX, this.positionY)) continue;
             if (!this.invisible || clientSession == this) {
-                clientSession.sendEncrypted((byte[])object, "S_ACTION self-Haste caster=" + this.playerObjectId() + " action=" + selfHasteSpell.actionId());
+                clientSession.sendEncrypted(objectPacket, "S_ACTION self-Haste caster=" + this.playerObjectId() + " action=" + selfHasteSpell.actionId());
             }
             clientSession.sendEncrypted(byArray2, "S_EFFECT self-Haste target=" + this.playerObjectId() + " gfx=" + selfHasteSpell.effectGfx());
         }
@@ -37491,6 +37505,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useMovementBuffSpell(byte[] byArray, BattleSpellCatalog.MovementBuffSpell movementBuffSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         int n2;
         int n3;
@@ -37532,13 +37547,13 @@ final class ClientSession implements Runnable {
         this.cancelMeditation("spell-" + movementBuffSpell.skillId());
         this.cancelAbsoluteBarrier("spell-" + movementBuffSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + movementBuffSpell.skillId());
-        object = Protocol.objectAction(this.playerObjectId(), movementBuffSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), movementBuffSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), movementBuffSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n4) : this.hub.roomMembers(l);
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.classicWorldInstanceId != n3 || !BattleSpellCatalog.isInNativeScreen(n2, n, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession == this) {
-                clientSession.sendEncrypted((byte[])object, "S_ACTION movement-buff caster=" + this.playerObjectId() + " action=" + movementBuffSpell.actionId());
+                clientSession.sendEncrypted(objectPacket, "S_ACTION movement-buff caster=" + this.playerObjectId() + " action=" + movementBuffSpell.actionId());
             }
             clientSession.sendEncrypted(byArray2, "S_EFFECT movement-buff target=" + this.playerObjectId() + " gfx=" + movementBuffSpell.effectGfx());
         }
@@ -37906,6 +37921,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void usePoisonResistanceSpell(byte[] byArray, BattleSpellCatalog.PoisonResistanceSpell poisonResistanceSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         boolean bl;
         Protocol.SpellSelector spellSelector = Protocol.selectorOnlySpellRequest(byArray);
@@ -37969,12 +37985,12 @@ final class ClientSession implements Runnable {
         }
         this.nativeSpellRevealControlled("spell-" + poisonResistanceSpell.skillId());
         this.cancelAbsoluteBarrier("spell-" + poisonResistanceSpell.skillId());
-        object = Protocol.objectAction(this.playerObjectId(), poisonResistanceSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), poisonResistanceSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), poisonResistanceSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n5) : this.hub.roomMembers(l2);
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.classicWorldMapId != n5 || clientSession.classicWorldInstanceId != n6 || !BattleSpellCatalog.isInNativeScreen(n7, n8, clientSession.positionX, clientSession.positionY))) continue;
-            clientSession.sendEncrypted((byte[])object, "S_ACTION poison-resistance caster=" + this.playerObjectId() + " action=" + poisonResistanceSpell.actionId());
+            clientSession.sendEncrypted(objectPacket, "S_ACTION poison-resistance caster=" + this.playerObjectId() + " action=" + poisonResistanceSpell.actionId());
             clientSession.sendEncrypted(byArray2, "S_EFFECT poison-resistance target=" + this.playerObjectId() + " gfx=" + poisonResistanceSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n, this.playerMaxMp), "S_MANA_POINT poison-resistance=" + n + "/" + this.playerMaxMp);
@@ -37989,6 +38005,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useBodyToMindSpell(byte[] byArray, BattleSpellCatalog.BodyToMindSpell bodyToMindSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         int n2;
         Protocol.SpellSelector spellSelector = Protocol.selectorOnlySpellRequest(byArray);
@@ -38019,13 +38036,13 @@ final class ClientSession implements Runnable {
             n = this.playerMp;
             this.commitSpellReady(bodyToMindSpell.skillId(), l + (long)bodyToMindSpell.reuseDelayMillis() * 1000000L);
         }
-        object = Protocol.objectAction(this.playerObjectId(), bodyToMindSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), bodyToMindSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), bodyToMindSpell.effectGfx());
         List<ClientSession> list = this.phase == Phase.WORLD ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession : list) {
             if (this.phase == Phase.WORLD && (!this.sameClassicWorldMap(clientSession) || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession == this) {
-                clientSession.sendEncrypted((byte[])object, "S_ACTION " + string + " caster=" + this.playerObjectId() + " action=" + bodyToMindSpell.actionId());
+                clientSession.sendEncrypted(objectPacket, "S_ACTION " + string + " caster=" + this.playerObjectId() + " action=" + bodyToMindSpell.actionId());
             }
             clientSession.sendEncrypted(byArray2, "S_EFFECT " + string + " target=" + this.playerObjectId() + " gfx=" + bodyToMindSpell.effectGfx());
         }
@@ -39371,6 +39388,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useRegenSpell(byte[] byArray, BattleSpellCatalog.RegenSpell regenSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         int n2;
         Object object;
@@ -39445,13 +39464,13 @@ final class ClientSession implements Runnable {
         }
         this.cancelAbsoluteBarrier("spell-" + regenSpell.skillId());
         this.nativeSpellRevealControlled("spell-" + regenSpell.skillId());
-        object2 = Protocol.objectAction(this.playerObjectId(), regenSpell.actionId());
-        object = Protocol.effectObject(clientSession.playerObjectId(), regenSpell.effectGfx());
+        object2Packet = Protocol.objectAction(this.playerObjectId(), regenSpell.actionId());
+        objectPacket = Protocol.effectObject(clientSession.playerObjectId(), regenSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n9) : this.hub.roomMembers(l2);
         for (ClientSession clientSession5 : list) {
             if (phase == Phase.WORLD && (!this.sameClassicWorldMap(clientSession5) || !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, n4, n3) && !BattleSpellCatalog.isInNativeScreen(clientSession5.positionX, clientSession5.positionY, clientSession.positionX, clientSession.positionY))) continue;
-            clientSession5.sendEncrypted((byte[])object2, "S_ACTION regen-spell-cast object=" + this.playerObjectId() + " action=" + regenSpell.actionId() + " skill=" + regenSpell.skillId());
-            clientSession5.sendEncrypted((byte[])object, "S_EFFECT regen-spell target=" + clientSession.playerObjectId() + " gfx=" + regenSpell.effectGfx() + " skill=" + regenSpell.skillId());
+            clientSession5.sendEncrypted(object2Packet, "S_ACTION regen-spell-cast object=" + this.playerObjectId() + " action=" + regenSpell.actionId() + " skill=" + regenSpell.skillId());
+            clientSession5.sendEncrypted(objectPacket, "S_EFFECT regen-spell target=" + clientSession.playerObjectId() + " gfx=" + regenSpell.effectGfx() + " skill=" + regenSpell.skillId());
         }
         if (regenSpell.hpCost() != 0) {
             this.sendEncrypted(new Protocol.Writer().c(13).h(n2).h(this.playerMaxHp).bytes(), "S_HIT_POINT regen-spell=" + n2 + "/" + this.playerMaxHp);
@@ -40631,6 +40650,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useBringStoneSpell(byte[] byArray, BattleSpellCatalog.BringStoneSpell bringStoneSpell) throws IOException {
+        byte[] object2Packet;
+        byte[] objectPacket;
         int n;
         int n2;
         int n3;
@@ -40738,11 +40759,11 @@ final class ClientSession implements Runnable {
             n2 = this.positionX;
             n = this.positionY;
         }
-        object = Protocol.objectAction(this.playerObjectId(), bringStoneSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), bringStoneSpell.actionId());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n4) : this.hub.roomMembers(l);
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.classicWorldMapId != n4 || clientSession.classicWorldInstanceId != n3 || !BattleSpellCatalog.isInNativeScreen(n2, n, clientSession.positionX, clientSession.positionY)) || this.invisible && clientSession != this) continue;
-            clientSession.sendEncrypted((byte[])object, "S_ACTION Bring-Stone caster=" + this.playerObjectId() + " action=" + bringStoneSpell.actionId());
+            clientSession.sendEncrypted(objectPacket, "S_ACTION Bring-Stone caster=" + this.playerObjectId() + " action=" + bringStoneSpell.actionId());
         }
         if (runtimeInventory != null) {
             this.sendInventoryDelta(runtimeInventory, this.inventory);
@@ -40753,10 +40774,10 @@ final class ClientSession implements Runnable {
         } else if (n14 != 0) {
             this.sendEncrypted(Protocol.messageCode(n14, new String[0]), "S_MESSAGE_CODE Bring-Stone-result=" + n14);
         }
-        Object object2 = Protocol.effectObject(this.playerObjectId(), bringStoneSpell.effectGfx());
+        object2Packet = Protocol.effectObject(this.playerObjectId(), bringStoneSpell.effectGfx());
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.classicWorldMapId != n4 || clientSession.classicWorldInstanceId != n3 || !BattleSpellCatalog.isInNativeScreen(n2, n, clientSession.positionX, clientSession.positionY))) continue;
-            clientSession.sendEncrypted((byte[])object2, "S_EFFECT Bring-Stone target=" + this.playerObjectId() + " gfx=" + bringStoneSpell.effectGfx());
+            clientSession.sendEncrypted(object2Packet, "S_EFFECT Bring-Stone target=" + this.playerObjectId() + " gfx=" + bringStoneSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n5, this.playerMaxMp), "S_MANA_POINT Bring-Stone=" + n5 + "/" + this.playerMaxMp);
         System.out.println("[LiTo] C_USE_SPELL Bring Stone caster=" + this.playerName() + " target-object=" + objectSpellRequest.targetObjectId() + " source=" + l3 + " target=" + l4 + " threshold=" + n12 + " roll=" + n13 + " result-message=" + n14 + " mp-cost=" + n9 + " phase=" + String.valueOf((Object)phase) + " mp=" + n5 + "/" + this.playerMaxMp);
@@ -41657,9 +41678,10 @@ final class ClientSession implements Runnable {
                                  ? var25.phase == ClientSession.Phase.WORLD && var25.classicWorldMapId == var10 && var25.classicWorldInstanceId == var11
                                  : var25.phase == ClientSession.Phase.BATTLE && var25.currentRoomId == var8 && this.hub.battleMapId(var8, var25) == var12
                            );
-                     if (var27) {
-                        var23.put(var25, var25.fireBlessStatus.activate(var21, var2.durationSeconds(), var2.meleeDamageModifier()));
+                     if (!(var27)) {
+                        continue;
                      }
+                     var23.put(var25, var25.fireBlessStatus.activate(var21, var2.durationSeconds(), var2.meleeDamageModifier()));
                   }
                }
 
@@ -41837,9 +41859,10 @@ final class ClientSession implements Runnable {
                                  ? var25.phase == ClientSession.Phase.WORLD && var25.classicWorldMapId == var10 && var25.classicWorldInstanceId == var11
                                  : var25.phase == ClientSession.Phase.BATTLE && var25.currentRoomId == var8 && this.hub.battleMapId(var8, var25) == var12
                            );
-                     if (var27) {
-                        var23.put(var25, var25.stormEyeStatus.activate(var21, var2.durationSeconds(), var2.rangedHitModifier(), var2.rangedDamageModifier()));
+                     if (!(var27)) {
+                        continue;
                      }
+                     var23.put(var25, var25.stormEyeStatus.activate(var21, var2.durationSeconds(), var2.rangedHitModifier(), var2.rangedDamageModifier()));
                   }
                }
 
@@ -41909,6 +41932,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useStormShotSpell(byte[] byArray, BattleSpellCatalog.StormShotSpell stormShotSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         int n2;
         int n3;
@@ -41990,13 +42014,13 @@ final class ClientSession implements Runnable {
             n2 = this.positionX;
             n = this.positionY;
         }
-        object = Protocol.objectAction(this.playerObjectId(), stormShotSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), stormShotSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), stormShotSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n4) : this.hub.roomMembers(l);
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.classicWorldMapId != n4 || clientSession.classicWorldInstanceId != n3 || !BattleSpellCatalog.isInNativeScreen(n2, n, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession == this) {
-                clientSession.sendEncrypted((byte[])object, "S_ACTION Storm-Shot caster=" + this.playerObjectId() + " action=" + stormShotSpell.actionId());
+                clientSession.sendEncrypted(objectPacket, "S_ACTION Storm-Shot caster=" + this.playerObjectId() + " action=" + stormShotSpell.actionId());
             }
             clientSession.sendEncrypted(byArray2, "S_EFFECT Storm-Shot target=" + this.playerObjectId() + " gfx=" + stormShotSpell.effectGfx());
         }
@@ -42107,9 +42131,10 @@ final class ClientSession implements Runnable {
                                  ? var25.phase == ClientSession.Phase.WORLD && var25.classicWorldMapId == var10 && var25.classicWorldInstanceId == var11
                                  : var25.phase == ClientSession.Phase.BATTLE && var25.currentRoomId == var8 && this.hub.battleMapId(var8, var25) == var12
                            );
-                     if (var27) {
-                        var23.put(var25, var25.earthBlessStatus.activate(var21, var2.durationSeconds(), var2.armorClassModifier()));
+                     if (!(var27)) {
+                        continue;
                      }
+                     var23.put(var25, var25.earthBlessStatus.activate(var21, var2.durationSeconds(), var2.armorClassModifier()));
                   }
                }
 
@@ -42180,6 +42205,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useIronSkinSpell(byte[] byArray, BattleSpellCatalog.IronSkinSpell ironSkinSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         boolean bl;
         Protocol.ObjectSpellRequest objectSpellRequest = NativeSourceObjectTargetRequest.request(Protocol.objectSpellRequest(byArray), this, ironSkinSpell.skillId());
@@ -42249,12 +42275,12 @@ final class ClientSession implements Runnable {
             this.commitSpellReady(ironSkinSpell.skillId(), l3 + (long)ironSkinSpell.reuseDelayMillis() * 1000000L);
         }
         this.nativeSpellRevealControlled("spell-" + ironSkinSpell.skillId());
-        object = Protocol.objectAction(this.playerObjectId(), ironSkinSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), ironSkinSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), ironSkinSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n6) : this.hub.roomMembers(l2);
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.classicWorldMapId != n6 || clientSession.classicWorldInstanceId != n7 || !BattleSpellCatalog.isInNativeScreen(n8, n9, clientSession.positionX, clientSession.positionY))) continue;
-            clientSession.sendEncrypted((byte[])object, "S_ACTION Iron-Skin caster=" + this.playerObjectId() + " action=" + ironSkinSpell.actionId());
+            clientSession.sendEncrypted(objectPacket, "S_ACTION Iron-Skin caster=" + this.playerObjectId() + " action=" + ironSkinSpell.actionId());
             clientSession.sendEncrypted(byArray2, "S_EFFECT Iron-Skin target=" + this.playerObjectId() + " gfx=" + ironSkinSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n, this.playerMaxMp), "S_MANA_POINT Iron-Skin=" + n + "/" + this.playerMaxMp);
@@ -42436,7 +42462,7 @@ final class ClientSession implements Runnable {
     }
 
     private void useFoeSlayerSpell(byte[] var1, BattleSpellCatalog.FoeSlayerSpell var2) throws IOException {
-      Object var29 = null;
+      CombatWorldFoe.Pending var29 = null;
       Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
       ClientSession.Phase var4 = this.phase;
       boolean var5 = var4 == ClientSession.Phase.WORLD;
@@ -42579,7 +42605,7 @@ final class ClientSession implements Runnable {
                      }
 
                      Protocol.Writer var10001 = new Protocol.Writer().c(13);
-                     CombatWorldFoe.finish(this, var12, var38, (CombatWorldFoe.Pending)var29);
+                     CombatWorldFoe.finish(this, var12, var38, var29);
                      this.sendEncrypted(
                         var10001.h(this.playerHp).h(this.playerMaxHp).bytes(), "S_HIT_POINT Foe-Slayer=" + this.playerHp + "/" + this.playerMaxHp
                      );
@@ -43437,6 +43463,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useItemArmorEnchantSpell(byte[] byArray, BattleSpellCatalog.ItemArmorEnchantSpell itemArmorEnchantSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         boolean bl;
         boolean bl2;
@@ -43499,13 +43526,13 @@ final class ClientSession implements Runnable {
         if (bl) {
             this.sendEncrypted(this.ownCharacterAttrDef(), "S_AC " + string + " current=" + this.battleArmorClass());
         }
-        object = Protocol.objectAction(this.playerObjectId(), itemArmorEnchantSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), itemArmorEnchantSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), itemArmorEnchantSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n2) : this.hub.roomMembers(l);
         for (ClientSession clientSession : list) {
             if (phase == Phase.WORLD && (clientSession.phase != Phase.WORLD || clientSession.classicWorldMapId != n2 || clientSession.classicWorldInstanceId != n3 || clientSession != this && !BattleSpellCatalog.isInNativeScreen(n4, n5, clientSession.positionX, clientSession.positionY))) continue;
             if (!this.invisible || clientSession == this) {
-                clientSession.sendEncrypted((byte[])object, "S_ACTION " + string + " caster=" + this.playerObjectId() + " action=" + itemArmorEnchantSpell.actionId());
+                clientSession.sendEncrypted(objectPacket, "S_ACTION " + string + " caster=" + this.playerObjectId() + " action=" + itemArmorEnchantSpell.actionId());
             }
             clientSession.sendEncrypted(byArray2, "S_EFFECT " + string + " target=" + this.playerObjectId() + " gfx=" + itemArmorEnchantSpell.effectGfx());
         }
@@ -43701,6 +43728,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void useDetectionSpell(byte[] byArray, BattleSpellCatalog.DetectionSpell detectionSpell) throws IOException {
+        byte[] objectPacket;
         int n;
         int n2;
         Protocol.SpellSelector spellSelector = Protocol.selectorOnlySpellRequest(byArray);
@@ -43750,10 +43778,10 @@ final class ClientSession implements Runnable {
             this.commitSpellReady(detectionSpell.skillId(), l2 + (long)detectionSpell.reuseDelayMillis() * 1000000L);
         }
         this.cancelAbsoluteBarrier((phase == Phase.WORLD ? "classic-world-spell-" : "spell-") + detectionSpell.skillId());
-        object = Protocol.objectAction(this.playerObjectId(), detectionSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), detectionSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), detectionSpell.effectGfx());
         for (ClientSession clientSession3 : list2) {
-            clientSession3.sendEncrypted((byte[])object, "S_ACTION " + (phase == Phase.WORLD ? "classic-world " : "") + "Detection caster=" + this.playerObjectId());
+            clientSession3.sendEncrypted(objectPacket, "S_ACTION " + (phase == Phase.WORLD ? "classic-world " : "") + "Detection caster=" + this.playerObjectId());
             clientSession3.sendEncrypted(byArray2, "S_EFFECT " + (phase == Phase.WORLD ? "classic-world " : "") + "Detection target=" + this.playerObjectId() + " gfx=" + detectionSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n, this.playerMaxMp), "S_MANA_POINT " + (phase == Phase.WORLD ? "classic-world " : "") + "Detection=" + n + "/" + this.playerMaxMp);
@@ -43770,7 +43798,7 @@ final class ClientSession implements Runnable {
     }
 
     private void useClassicWorldCounterDetectionSpell(byte[] var1, BattleSpellCatalog.CounterDetectionSpell var2) throws IOException {
-      Object var34 = null;
+      CombatMagicDamage.Attempt var34 = null;
       Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
       if (var3.skillId() == var2.skillId() && var2.nativeArea() == -1) {
          if (this.admitClassicWorldSpellFamily(var2.skillId(), var2.actionId(), "Counter-Detection")) {
@@ -43852,34 +43880,36 @@ final class ClientSession implements Runnable {
                      && var27.positionX == var28.x()
                      && var27.positionY == var28.y()
                      && BattleSpellCatalog.isInNativeScreen(var6, var7, var28.x(), var28.y());
-                  if (var30 && var27.invisible) {
-                     var23.add(var27);
-                     if (var27.playerHp > 0
-                        && var9.isNormalZone(var6, var7)
-                        && var9.isNormalZone(var28.x(), var28.y())
-                        && !BattleAbsoluteBarrierRules.blocksIncomingSpell(var27.timedStatus.absoluteBarrierActive(var19), var2.skillId())) {
-                        int var31 = var2.rollDamage(var0 -> ThreadLocalRandom.current().nextInt(1, var0 + 1));
-                        int var32 = ((CombatMagicDamage.Attempt)(var34 = CombatCounterDetection.prepare(
-                              this,
-                              var2.skillId(),
-                              var2.attribute(),
-                              var31,
-                              var27.effectiveSpellElementalResistance(var2.attribute()),
-                              var27.effectiveBaseMagicResistance(var19),
-                              var27.effectiveArmorMagicReductionBase(),
-                              "classic-world-player=" + var27.playerName(),
-                              var27,
-                              var19
-                           )))
-                           .damage();
-                        var32 = CombatPlayerMagic.reductions(var27, var32, "classic-world-counter-detection-" + var2.skillId());
-                        var32 = CombatCounterDetection.finish(
-                           CombatPlayerMagic.protect(var27, var32, "classic-world-counter-detection-" + var2.skillId()), (CombatMagicDamage.Attempt)var34, this, var27, var19
-                        );
-                        var37.put(var27, var32);
-                        var24.add(new Protocol.AttackManyTarget(var27.playerObjectId(), true));
-                     }
+                  if (!(var30 && var27.invisible)) {
+                     continue;
                   }
+                  var23.add(var27);
+                  if (!(var27.playerHp > 0
+                     && var9.isNormalZone(var6, var7)
+                     && var9.isNormalZone(var28.x(), var28.y())
+                     && !BattleAbsoluteBarrierRules.blocksIncomingSpell(var27.timedStatus.absoluteBarrierActive(var19), var2.skillId()))) {
+                     continue;
+                  }
+                  int var31 = var2.rollDamage(var0 -> ThreadLocalRandom.current().nextInt(1, var0 + 1));
+                  int var32 = ((CombatMagicDamage.Attempt)(var34 = CombatCounterDetection.prepare(
+                        this,
+                        var2.skillId(),
+                        var2.attribute(),
+                        var31,
+                        var27.effectiveSpellElementalResistance(var2.attribute()),
+                        var27.effectiveBaseMagicResistance(var19),
+                        var27.effectiveArmorMagicReductionBase(),
+                        "classic-world-player=" + var27.playerName(),
+                        var27,
+                        var19
+                     )))
+                     .damage();
+                  var32 = CombatPlayerMagic.reductions(var27, var32, "classic-world-counter-detection-" + var2.skillId());
+                  var32 = CombatCounterDetection.finish(
+                     CombatPlayerMagic.protect(var27, var32, "classic-world-counter-detection-" + var2.skillId()), var34, this, var27, var19
+                  );
+                  var37.put(var27, var32);
+                  var24.add(new Protocol.AttackManyTarget(var27.playerObjectId(), true));
                }
             }
 
@@ -43992,7 +44022,7 @@ final class ClientSession implements Runnable {
    }
 
     private void useCounterDetectionSpell(byte[] var1, BattleSpellCatalog.CounterDetectionSpell var2) throws IOException {
-      Object var42 = null;
+      CombatMagicDamage.Attempt var42 = null;
       Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
       if (var3.skillId() == var2.skillId() && var2.nativeArea() == -1) {
          if (!BattleAnimationCatalog.get().supportsTimedAction(this.battleGfx(), var2.actionId())) {
@@ -44112,39 +44142,41 @@ final class ClientSession implements Runnable {
                      && var33.positionX == var34.x()
                      && var33.positionY == var34.y()
                      && BattleSpellCatalog.isInNativeScreen(var7, var8, var34.x(), var34.y());
-                  if (var36) {
-                     boolean var37 = var33.invisible;
-                     if (var37) {
-                        var46.add(var33);
-                     }
-
-                     boolean var38 = var37 || NativeSourceTargetLos.line(var10, var7, var8, var34.x(), var34.y(), this, var2.skillId());
-                     if (var33.playerHp > 0
-                        && var38
-                        && (var37 || this.hub.canAttack(var4, this, var33))
-                        && !BattleAbsoluteBarrierRules.blocksIncomingSpell(var33.timedStatus.absoluteBarrierActive(var26), var2.skillId())) {
-                        int var39 = var2.rollDamage(var0 -> ThreadLocalRandom.current().nextInt(1, var0 + 1));
-                        int var40 = ((CombatMagicDamage.Attempt)(var42 = CombatCounterDetection.prepare(
-                              this,
-                              var2.skillId(),
-                              var2.attribute(),
-                              var39,
-                              var33.effectiveSpellElementalResistance(var2.attribute()),
-                              var33.effectiveBaseMagicResistance(var26),
-                              var33.effectiveArmorMagicReductionBase(),
-                              "player=" + var33.playerName(),
-                              var33,
-                              var26
-                           )))
-                           .damage();
-                        var40 = CombatPlayerMagic.reductions(var33, var40, "counter-detection-" + var2.skillId());
-                        var40 = CombatCounterDetection.finish(
-                           CombatPlayerMagic.protect(var33, var40, "counter-detection-" + var2.skillId()), (CombatMagicDamage.Attempt)var42, this, var33, var26
-                        );
-                        var28.put(var33, var40);
-                        var30.add(new Protocol.AttackManyTarget(var33.playerObjectId(), true));
-                     }
+                  if (!(var36)) {
+                     continue;
                   }
+                  boolean var37 = var33.invisible;
+                  if (var37) {
+                     var46.add(var33);
+                  }
+
+                  boolean var38 = var37 || NativeSourceTargetLos.line(var10, var7, var8, var34.x(), var34.y(), this, var2.skillId());
+                  if (!(var33.playerHp > 0
+                     && var38
+                     && (var37 || this.hub.canAttack(var4, this, var33))
+                     && !BattleAbsoluteBarrierRules.blocksIncomingSpell(var33.timedStatus.absoluteBarrierActive(var26), var2.skillId()))) {
+                     continue;
+                  }
+                  int var39 = var2.rollDamage(var0 -> ThreadLocalRandom.current().nextInt(1, var0 + 1));
+                  int var40 = ((CombatMagicDamage.Attempt)(var42 = CombatCounterDetection.prepare(
+                        this,
+                        var2.skillId(),
+                        var2.attribute(),
+                        var39,
+                        var33.effectiveSpellElementalResistance(var2.attribute()),
+                        var33.effectiveBaseMagicResistance(var26),
+                        var33.effectiveArmorMagicReductionBase(),
+                        "player=" + var33.playerName(),
+                        var33,
+                        var26
+                     )))
+                     .damage();
+                  var40 = CombatPlayerMagic.reductions(var33, var40, "counter-detection-" + var2.skillId());
+                  var40 = CombatCounterDetection.finish(
+                     CombatPlayerMagic.protect(var33, var40, "counter-detection-" + var2.skillId()), var42, this, var33, var26
+                  );
+                  var28.put(var33, var40);
+                  var30.add(new Protocol.AttackManyTarget(var33.playerObjectId(), true));
                }
             }
 
@@ -45627,7 +45659,7 @@ final class ClientSession implements Runnable {
 
     private void useClassicWorldCenteredAreaAttackSpell(byte[] var1, BattleSpellCatalog.AreaAttackSpell var2) throws IOException {
       local.lito381.server.CombatWorldMultiMagic.Batch var52 = CombatWorldMultiMagic.create();
-      Object var51 = null;
+      CombatMagicDamage.Attempt var51 = null;
       Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
       if (var3.skillId() == var2.skillId() && var2.maximumRange() == 0 && var2.areaRadius() > 0 && var2.requestShape() == BattleSpellCatalog.RequestShape.SELECTOR_ONLY) {
          if (this.admitClassicWorldSpellFamily(var2.skillId(), var2.actionId(), "centered-area-" + var2.key())) {
@@ -45889,9 +45921,9 @@ final class ClientSession implements Runnable {
                      var46 = CombatPlayerMagic.reductions(var44, var46, "classic-world-centered-area-" + var2.skillId());
                      var46 = CombatPlayerMagic.protect(var44, var46, "classic-world-centered-area-" + var2.skillId());
                      local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                        var44, var46, true, ThreadLocalRandom.current().nextInt(100), var29, (CombatMagicDamage.Attempt)var51
+                        var44, var46, true, ThreadLocalRandom.current().nextInt(100), var29, var51
                      );
-                     var46 = CombatMagicDamage.finish(var46, (CombatMagicDamage.Attempt)var51, this, false);
+                     var46 = CombatMagicDamage.finish(var46, var51, this, false);
                      local.lito381.server.CombatPlayerMirror.Decision var47 = var10000;
                      if (var47.triggered()) {
                         this.publishSourcePlayerCounterMirrorTrigger(var44, var47, "classic-world-centered-area-" + var2.skillId());
@@ -47576,12 +47608,12 @@ final class ClientSession implements Runnable {
     }
 
     private void attackClassicWorld(Protocol.AttackRequest var1, ClientSession.AttackEnvelope var2) throws IOException {
-      Object var104 = null;
-      Object var103 = null;
-      Object var102 = null;
+      local.lito381.server.CombatWorldCommit.Attempt var104 = null;
+      CombatCompanionDamage.Physical var103 = null;
+      local.lito381.server.CombatWorldPhysical.Target var102 = null;
       CombatDragon.normalAttack(this);
       boolean var101 = false;
-      Object var100 = null;
+      CombatKiringku.Defense var100 = null;
       if (!this.observer && this.playerHp > 0 && ClassicWorldMapCatalog.supports(this.classicWorldMapId)) {
          if (!this.rejectWhileParalyzed("C_" + var2.name() + "_ATTACK")) {
             this.closePersonalShopIfOpen("classic-world-attack");
@@ -47649,7 +47681,7 @@ final class ClientSession implements Runnable {
                               )
                         );
                      var102 = CombatWorldPhysical.prepare(var18, this, var1);
-                     var18 = CombatWorldPhysical.projection(var18, (local.lito381.server.CombatWorldPhysical.Target)var102);
+                     var18 = CombatWorldPhysical.projection(var18, var102);
                      if (var18 == null && !var13 && !var17 && !var15 && !var8 && !var9 && !var10 && !var11) {
                         local.lito381.server.ClassicWorldMonsterPopulation.Snapshot var19 = this.hub
                            .classicWorldMonsterIncludingHidden(this.classicWorldMapId, this.classicWorldInstanceId, var1.targetObjectId());
@@ -47712,7 +47744,7 @@ final class ClientSession implements Runnable {
                               );
                         } else {
                            this.lastCombatTargetObjectId = var18.objectId();
-                           if (!CombatWorldPhysical.motion(this, (local.lito381.server.CombatWorldPhysical.Target)var102, var24, var26, ATTACK_SPELL_SEQUENCE)) {
+                           if (!CombatWorldPhysical.motion(this, var102, var24, var26, ATTACK_SPELL_SEQUENCE)) {
                               ClientSession.ClassicWorldProjectileDebit var31 = null;
                               SourceProjectilePhysicalStats var32 = var24.projectile();
                               if (var26) {
@@ -47825,7 +47857,7 @@ final class ClientSession implements Runnable {
                               boolean var69 = var45 == 5 && var24.weaponType() == 18;
                               BattleFoeSlayerSequence var10000 = this.foeSlayerSequence;
                               var54 = CombatKiringku.hit(var54, var24);
-                              var54 = CombatWorldPhysical.hit(var54, this, (local.lito381.server.CombatWorldPhysical.Target)var102, var33);
+                              var54 = CombatWorldPhysical.hit(var54, this, var102, var33);
                               BattleFoeSlayerSequence.Strike var70 = var10000.next(var18.objectId());
                               BattleChainswordWeakness.AttackOutcome var71 = BattleChainswordWeakness.AttackOutcome.none();
                               if (!var70.active() && var69 && var54) {
@@ -47853,7 +47885,7 @@ final class ClientSession implements Runnable {
                               var70 = CombatDragon.consumeOnHit(var70, this, var54, var18.objectId());
                               BattleWeaponCritical.DamageOutcome var75 = CombatTripleArrow.apply(var24, var72, var10002, CombatDragon.multiplier(var10003, var70), this);
                               boolean var76 = CombatWorldPhysical.altar(
-                                 this.classicWorldCkewAttackAllowed(var18.npcId(), System.nanoTime()), (local.lito381.server.CombatWorldPhysical.Target)var102
+                                 this.classicWorldCkewAttackAllowed(var18.npcId(), System.nanoTime()), var102
                               );
                               if (!var76) {
                                  var54 = false;
@@ -47877,7 +47909,7 @@ final class ClientSession implements Runnable {
                               local.lito381.server.BattlePhysicalDefense.NpcOutcome var152 = BattlePhysicalDefense.againstNpc(
                                  var79, var63, var81, var26, var107.totalPierce() > 0
                               );
-                              var103 = CombatWorldPhysical.attempt(var152, var79, var72, var75, (local.lito381.server.CombatWorldPhysical.Target)var102);
+                              var103 = CombatWorldPhysical.attempt(var152, var79, var72, var75, var102);
                               var100 = CombatKiringku.npc(var152, var24);
                               local.lito381.server.BattlePhysicalDefense.NpcOutcome var82 = var152;
                               int var83 = var54 ? var82.damage() : 0;
@@ -47899,11 +47931,11 @@ final class ClientSession implements Runnable {
                                        null,
                                        var24,
                                        var75,
-                                       (CombatKiringku.Defense)var100,
+                                       var100,
                                        var54,
                                        var130,
-                                       (CombatCompanionDamage.Physical)var103,
-                                       (local.lito381.server.CombatWorldPhysical.Target)var102
+                                       var103,
+                                       var102
                                     ),
                                     var101,
                                     this,
@@ -47921,7 +47953,7 @@ final class ClientSession implements Runnable {
                                  ? NativeMagicDollEffects.attack(this.activeMagicDollPowers(), () -> ThreadLocalRandom.current().nextInt(1000))
                                  : NativeMagicDollEffects.AttackProc.empty();
                               boolean var88 = ClassicWorldGuardianCatalog.isGuardian(var18) && var45 == 2 && !var24.present();
-                              var88 = CombatWorldPhysical.guardian(var88, (local.lito381.server.CombatWorldPhysical.Target)var102);
+                              var88 = CombatWorldPhysical.guardian(var88, var102);
                               if (!var88 || !var54 || this.harvestClassicWorldGuardian(var18, ThreadLocalRandom.current().nextInt(1, 101))) {
                                  int var89 = heading(this.positionX, this.positionY, var18.x(), var18.y());
                                  this.playerHeading = var89;
@@ -48070,7 +48102,7 @@ final class ClientSession implements Runnable {
                                     }
                                  }
 
-                                 if (!CombatWorldPhysical.commit(this, (local.lito381.server.CombatWorldPhysical.Target)var102, var83)) {
+                                 if (!CombatWorldPhysical.commit(this, var102, var83)) {
                                     if (!var88) {
                                        if (!var15 && !var17) {
                                           if (!var13 && !var8 && !var9 && !var10 && !var11) {
@@ -48083,7 +48115,7 @@ final class ClientSession implements Runnable {
                                                 var24.present(),
                                                 var54,
                                                 var18.objectId(),
-                                                (local.lito381.server.CombatWorldCommit.Attempt)var104
+                                                var104
                                              );
                                           }
 
@@ -48194,7 +48226,7 @@ final class ClientSession implements Runnable {
                                                       );
                                                 }
                                              } else if (!CombatWorldCommit.enqueue(
-                                                (local.lito381.server.CombatWorldCommit.Attempt)var104, this, var18, var63, var87
+                                                var104, this, var18, var63, var87
                                              )) {
                                                 boolean var132 = this.hub
                                                    .classicWorldMonsterSleepActive(
@@ -50541,11 +50573,12 @@ final class ClientSession implements Runnable {
     }
 
     private boolean consumeClassicWorldDeathSafe(int n, String string) throws IOException {
-        Object object;
+        ClassicWorldDeathPenaltyCatalog.DeathSafe deathSafe;
+        Set<Long> sourceObjects;
         RuntimeInventory.Item object3 = null;
         for (RuntimeInventory.Item object22 : this.inventory.items()) {
-            object = ClassicWorldDeathPenaltyCatalog.deathSafe(object22.definition().catalogId());
-            if (object == null || !((ClassicWorldDeathPenaltyCatalog.DeathSafe)object).consume() || !((ClassicWorldDeathPenaltyCatalog.DeathSafe)object).protects(n)) continue;
+            deathSafe = ClassicWorldDeathPenaltyCatalog.deathSafe(object22.definition().catalogId());
+            if (deathSafe == null || !(deathSafe).consume() || !(deathSafe).protects(n)) continue;
             object3 = object22;
             break;
         }
@@ -50557,11 +50590,11 @@ final class ClientSession implements Runnable {
         if (!runtimeInventory2.remove(object3.objectId(), 1L)) {
             throw new IOException("validated DeathSafe EXP carrier disappeared");
         }
-        Object object2 = object = object3.sourceBound() && object3.quantity() == 1 ? Set.of(Long.valueOf(object3.objectId())) : Set.of();
-        if (((Set<?>)object).isEmpty()) {
+        sourceObjects = object3.sourceBound() && object3.quantity() == 1 ? Set.of(Long.valueOf(object3.objectId())) : Set.of();
+        if ((sourceObjects).isEmpty()) {
             this.state.saveEconomyState(this.stateCharacter(), this.shopPoints, runtimeInventory2.catalogCounts(), runtimeInventory2.catalogItemStates());
         } else {
-            this.state.saveEconomyStateAndStoryQuestsConsumingSourceObjects(this.stateCharacter(), this.shopPoints, runtimeInventory2.catalogCounts(), runtimeInventory2.catalogItemStates(), this.state.storyQuests(this.stateCharacter()).effective(), (Set<Long>)object);
+            this.state.saveEconomyStateAndStoryQuestsConsumingSourceObjects(this.stateCharacter(), this.shopPoints, runtimeInventory2.catalogCounts(), runtimeInventory2.catalogItemStates(), this.state.storyQuests(this.stateCharacter()).effective(), sourceObjects);
         }
         NativeDeItemApplication.replace(this, runtimeInventory2, 0);
         this.sendInventoryDelta(runtimeInventory, runtimeInventory2, false);
@@ -51949,8 +51982,8 @@ final class ClientSession implements Runnable {
                 NativeCombatAttacker.leave(ingress);
                 return;
             }
-            Object object3 = snapshot.kind().earnsExperience() ? ClassicWorldMonsterPopulation.ContributorKind.PET : ClassicWorldMonsterPopulation.ContributorKind.SUMMON;
-            ClassicWorldMonsterPopulation.Hit hit = this.hub.damageClassicWorldMonster(n, this.classicWorldInstanceId, snapshot2.objectId(), (ClassicWorldMonsterPopulation.ContributorKind)((Object)object3), snapshot.objectId(), this.playerObjectId(), n16);
+            ClassicWorldMonsterPopulation.ContributorKind object3 = snapshot.kind().earnsExperience() ? ClassicWorldMonsterPopulation.ContributorKind.PET : ClassicWorldMonsterPopulation.ContributorKind.SUMMON;
+            ClassicWorldMonsterPopulation.Hit hit = this.hub.damageClassicWorldMonster(n, this.classicWorldInstanceId, snapshot2.objectId(), object3, snapshot.objectId(), this.playerObjectId(), n16);
             if (hit == null) {
                 NativeCombatAttacker.leave(ingress);
                 return;
@@ -53113,6 +53146,7 @@ final class ClientSession implements Runnable {
     }
 
     private BattleCompanion.Damage applyBattleCompanionFeedbackDamage(BattleCompanion battleCompanion, int n, List<ClientSession> list, String string) throws IOException {
+        byte[] objectPacket;
         if (battleCompanion == null || n <= 0) {
             return null;
         }
@@ -53125,9 +53159,9 @@ final class ClientSession implements Runnable {
             object.sendEncrypted(byArray, "S_HIT_RATIO companion-feedback object=" + damage.after().objectId() + " hp=" + damage.after().hp() + "/" + damage.after().maxHp() + " source=" + string);
         }
         if (damage.diedNow()) {
-            Object object = Protocol.objectAction(damage.after().objectId(), 8);
+            objectPacket = Protocol.objectAction(damage.after().objectId(), 8);
             for (ClientSession clientSession : list) {
-                clientSession.sendEncrypted((byte[])object, "S_ACTION companion-feedback-death object=" + damage.after().objectId() + " source=" + string);
+                clientSession.sendEncrypted(objectPacket, "S_ACTION companion-feedback-death object=" + damage.after().objectId() + " source=" + string);
             }
         }
         return damage;
@@ -55667,7 +55701,8 @@ final class ClientSession implements Runnable {
             }
             long l2 = Math.multiplyExact((long)n3, snapshot.mpDrainAmount());
             n2 = this.playerMp;
-            n = this.playerMp = (int)Math.max(0L, (long)this.playerMp - l2);
+            this.playerMp = (int)Math.max(0L, (long)this.playerMp - l2);
+            n = this.playerMp;
         }
         int n4 = n2 - n;
         String string = ClientSession.awakenLogName(snapshot.skillId());
@@ -57441,19 +57476,12 @@ final class ClientSession implements Runnable {
     // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    void nativeMassTeleportAnswerBody(Protocol.AskAnswer var1) throws IOException {
-      boolean var27 = false /* VF: Semaphore variable */;
 
       ClientSession.PendingMassTeleport var2;
-      try {
-         var27 = true;
+      {
          var2 = this.pendingMassTeleport;
          NativeMassTeleportAnswerLife.capture(this, null);
          this.pendingMassTeleport = null;
-         var27 = false;
-      } finally {
-         if (var27) {
-            ;
-         }
       }
 
       if (!(var2 != null && var1.questionId() == 748 && var1.text().isEmpty())) {
@@ -57476,10 +57504,8 @@ final class ClientSession implements Runnable {
             if (var3 != null && var3 != this && var4 != null && var5 - var2.expiresAtNanos() < 0L) {
                ClientSession var8 = this.playerObjectId() <= var3.playerObjectId() ? this : var3;
                ClientSession var9 = var8 == this ? var3 : this;
-               boolean var20 = false /* VF: Semaphore variable */;
 
-               try {
-                  var20 = true;
+               {
 
                   try {
                      boolean var12 = !this.observer
@@ -57519,11 +57545,6 @@ final class ClientSession implements Runnable {
                      ;
                   }
 
-                  var20 = false;
-               } finally {
-                  if (var20) {
-                     ;
-                  }
                }
             }
 
@@ -57617,7 +57638,6 @@ final class ClientSession implements Runnable {
                int var32 = this.nativeSkillConsumptionOriginalReduction();
                int var13 = NativeSkillConsumptionBridges.ShieldSpell_effectiveMpCost_II(var2, var12, var31);
                long var24 = System.nanoTime();
-               boolean var34 = false /* VF: Semaphore variable */;
 
                int var14;
                int var15;
@@ -57628,8 +57648,7 @@ final class ClientSession implements Runnable {
                int var21;
                int var22;
                int var23;
-               try {
-                  var34 = true;
+               {
                   long var27 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   if (var24 < var27
                      || this.phase != ClientSession.Phase.BATTLE && this.phase != ClientSession.Phase.WORLD
@@ -57677,11 +57696,6 @@ final class ClientSession implements Runnable {
                   var21 = this.classicWorldInstanceId;
                   var22 = this.positionX;
                   var23 = this.positionY;
-                  var34 = false;
-               } finally {
-                  if (var34) {
-                     ;
-                  }
                }
 
                if (var16.skillId() != 0 && var16.skillId() != var2.skillId()) {
@@ -57797,13 +57811,11 @@ final class ClientSession implements Runnable {
                long var19 = System.nanoTime();
                int var26 = this.nativeSkillConsumptionIntelligence();
                int var27 = this.nativeSkillConsumptionOriginalReduction();
-               boolean var29 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var14;
                int var16;
                int var17;
-               try {
-                  var29 = true;
+               {
                   long var22 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   boolean var24 = this.phase == var6
                      && !this.observer
@@ -57848,8 +57860,8 @@ final class ClientSession implements Runnable {
 
                      RuntimeInventory var31 = NativeCastMaterial.next(this);
                      // Preserve the candidate patch branch in javac output.
-                     boolean candidateMaterialBranch1 = false;
-                     if (var2.itemConsumeId() != 0L && candidateMaterialBranch1) {
+                     boolean candidateMaterialAvailable1 = true;
+                     if (var2.itemConsumeId() != 0L && !candidateMaterialAvailable1) {
                         System.out
                            .println(
                               "[LiTo] C_USE_SPELL weight spell rejected missing reagent skill="
@@ -57874,11 +57886,6 @@ final class ClientSession implements Runnable {
                      this.commitSpellReady(var2.skillId(), var19 + var2.reuseDelayMillis() * 1000000L);
                   }
 
-                  var29 = false;
-               } finally {
-                  if (var29) {
-                     ;
-                  }
                }
 
                if (var18 != 0) {
@@ -57955,7 +57962,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialCounterMagicBody(byte[] byArray, BattleSpellCatalog.CounterMagicSpell counterMagicSpell) throws IOException {
-        Object object;
+        byte[] objectPacket;
         long l;
         int n;
         block11: {
@@ -57992,7 +57999,6 @@ final class ClientSession implements Runnable {
             int n5 = this.nativeSkillConsumptionOriginalReduction();
             n = NativeSkillConsumptionBridges.CounterMagicSpell_effectiveMpCost_II(counterMagicSpell, n3, n4);
             l = System.nanoTime();
-            object = this;
             long l3 = this.spellReadyNanos.getOrDefault(counterMagicSpell.skillId(), 0L);
             if (l >= l3 && this.playerMp >= n && (this.phase == Phase.BATTLE || this.phase == Phase.WORLD) && this.playerHp > 0) break block11;
             if (this.playerMp < n) {
@@ -58012,12 +58018,12 @@ final class ClientSession implements Runnable {
         int n6 = this.playerMp;
         this.commitSpellReady(counterMagicSpell.skillId(), l + (long)counterMagicSpell.reuseDelayMillis() * 1000000L);
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = new Protocol.Writer().c(32).d(this.playerObjectId()).c(counterMagicSpell.actionId()).bytes();
+        objectPacket = new Protocol.Writer().c(32).d(this.playerObjectId()).c(counterMagicSpell.actionId()).bytes();
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), counterMagicSpell.effectGfx());
         List<ClientSession> list = this.phase == Phase.WORLD ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession2 : list) {
             if (this.phase == Phase.WORLD && (!this.sameClassicWorldMap(clientSession2) || !BattleSpellCatalog.isInNativeScreen(clientSession2.positionX, clientSession2.positionY, this.positionX, this.positionY)) || this.invisible && clientSession2 != this) continue;
-            clientSession2.sendEncrypted((byte[])object, "S_ACTION counter-magic-cast object=" + this.playerObjectId() + " action=" + counterMagicSpell.actionId());
+            clientSession2.sendEncrypted(objectPacket, "S_ACTION counter-magic-cast object=" + this.playerObjectId() + " action=" + counterMagicSpell.actionId());
         }
         this.sendEncrypted(byArray2, "S_EFFECT counter-magic-activate target=" + this.playerObjectId() + " gfx=" + counterMagicSpell.effectGfx());
         this.sendEncrypted(Protocol.manaPoint(n6, this.playerMaxMp), "S_MANA_POINT counter-magic=" + n6 + "/" + this.playerMaxMp);
@@ -58028,7 +58034,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialAbsoluteBarrierBody(byte[] byArray, BattleSpellCatalog.AbsoluteBarrierSpell absoluteBarrierSpell) throws IOException {
-        Object object;
+        byte[] objectPacket;
         long l;
         int n;
         int n2;
@@ -58044,7 +58050,6 @@ final class ClientSession implements Runnable {
             int n3 = BattleSpellCatalog.originalMagicConsumeReduction(characterSummary == null ? 0 : characterSummary.type(), characterSummary == null ? 0 : Math.max(0, characterSummary.originalIntelligence()));
             n = NativeSkillConsumptionBridges.AbsoluteBarrierSpell_effectiveMpCost_III(absoluteBarrierSpell, n2, n3);
             l = System.nanoTime();
-            object = this;
             long l2 = this.spellReadyNanos.getOrDefault(absoluteBarrierSpell.skillId(), 0L);
             if (!(l < l2 || this.playerMp < n || this.phase != Phase.BATTLE && this.phase != Phase.WORLD || this.phase == Phase.WORLD && !ClassicWorldMapCatalog.supports(this.classicWorldMapId) || this.observer) && this.playerHp > 0) break block7;
             System.out.println("[LiTo] C_USE_SPELL Absolute Barrier rejected state skill=" + absoluteBarrierSpell.skillId() + " mp=" + this.playerMp + " cost=" + n + " cooldownNanos=" + Math.max(0L, l2 - l));
@@ -58062,13 +58067,13 @@ final class ClientSession implements Runnable {
         this.commitSpellReady(absoluteBarrierSpell.skillId(), l + (long)absoluteBarrierSpell.reuseDelayMillis() * 1000000L);
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
         this.nativeSpellRevealControlled("spell-" + absoluteBarrierSpell.skillId());
-        object = Protocol.objectAction(this.playerObjectId(), absoluteBarrierSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), absoluteBarrierSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), absoluteBarrierSpell.effectGfx());
         List<ClientSession> list = this.phase == Phase.WORLD ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession2 : list) {
             if (this.phase == Phase.WORLD && (!this.sameClassicWorldMap(clientSession2) || !BattleSpellCatalog.isInNativeScreen(clientSession2.positionX, clientSession2.positionY, this.positionX, this.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION absolute-barrier-cast object=" + this.playerObjectId() + " action=" + absoluteBarrierSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION absolute-barrier-cast object=" + this.playerObjectId() + " action=" + absoluteBarrierSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT absolute-barrier-activate target=" + this.playerObjectId() + " gfx=" + absoluteBarrierSpell.effectGfx());
         }
@@ -58240,7 +58245,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialMagicResistanceBody(byte[] byArray, BattleSpellCatalog.MagicResistanceSpell magicResistanceSpell) throws IOException {
-        Object object;
+        byte[] objectPacket;
         long l;
         int n;
         int n2;
@@ -58258,7 +58263,6 @@ final class ClientSession implements Runnable {
             n2 = BattleSpellCatalog.originalMagicConsumeReduction(characterSummary == null ? 0 : characterSummary.type(), characterSummary == null ? 0 : Math.max(0, characterSummary.originalIntelligence()));
             n = NativeSkillConsumptionBridges.MagicResistanceSpell_effectiveMpCost_III(magicResistanceSpell, n3, n2);
             l = System.nanoTime();
-            object = this;
             long l2 = this.spellReadyNanos.getOrDefault(magicResistanceSpell.skillId(), 0L);
             if (l >= l2 && this.playerMp >= n && (this.phase == Phase.BATTLE || this.phase == Phase.WORLD) && !this.observer && this.playerHp > 0) break block7;
             System.out.println("[LiTo] C_USE_SPELL Resist Magic rejected state skill=" + magicResistanceSpell.skillId() + " mp=" + this.playerMp + " cost=" + n + " cooldownNanos=" + Math.max(0L, l2 - l) + " phase=" + String.valueOf((Object)this.phase) + " observer=" + this.observer + " hp=" + this.playerHp);
@@ -58275,13 +58279,13 @@ final class ClientSession implements Runnable {
         int n4 = this.playerMp;
         this.commitSpellReady(magicResistanceSpell.skillId(), l + (long)magicResistanceSpell.reuseDelayMillis() * 1000000L);
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), magicResistanceSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), magicResistanceSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), magicResistanceSpell.effectGfx());
         List<ClientSession> list = this.phase == Phase.WORLD ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession2 : list) {
             if (this.phase == Phase.WORLD && (!this.sameClassicWorldMap(clientSession2) || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession2.positionX, clientSession2.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION Resist-Magic caster=" + this.playerObjectId() + " action=" + magicResistanceSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION Resist-Magic caster=" + this.playerObjectId() + " action=" + magicResistanceSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Resist-Magic target=" + this.playerObjectId() + " gfx=" + magicResistanceSpell.effectGfx());
         }
@@ -58294,8 +58298,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialExoticVitalizeBody(byte[] byArray, BattleSpellCatalog.ExoticVitalizeSpell exoticVitalizeSpell) throws IOException {
+        byte[] objectPacket;
         long l;
-        Object object;
         int n;
         int n2;
         long l2;
@@ -58344,7 +58348,6 @@ final class ClientSession implements Runnable {
             l2 = this.currentRoomId;
             n2 = this.classicWorldMapId;
             n = this.classicWorldInstanceId;
-            object = this;
             l = System.nanoTime();
             long l4 = this.spellReadyNanos.getOrDefault(exoticVitalizeSpell.skillId(), 0L);
             bl = this.phase == phase && !this.observer && this.playerHp > 0 && (phase == Phase.BATTLE ? this.currentRoomId == l2 : this.classicWorldMapId == n2 && this.classicWorldInstanceId == n);
@@ -58368,12 +58371,12 @@ final class ClientSession implements Runnable {
         this.nativeSpellRevealControlled("spell-" + exoticVitalizeSpell.skillId());
         this.cancelAbsoluteBarrier("spell-" + exoticVitalizeSpell.skillId());
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), exoticVitalizeSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), exoticVitalizeSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), exoticVitalizeSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n2) : this.hub.roomMembers(l2);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.classicWorldMapId != n2 || clientSession2.classicWorldInstanceId != n || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession2.positionX, clientSession2.positionY))) continue;
-            clientSession2.sendEncrypted((byte[])object, "S_ACTION Exotic-Vitalize caster=" + this.playerObjectId() + " action=" + exoticVitalizeSpell.actionId());
+            clientSession2.sendEncrypted(objectPacket, "S_ACTION Exotic-Vitalize caster=" + this.playerObjectId() + " action=" + exoticVitalizeSpell.actionId());
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Exotic-Vitalize target=" + this.playerObjectId() + " gfx=" + exoticVitalizeSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n7, this.playerMaxMp), "S_MANA_POINT Exotic-Vitalize=" + n7 + "/" + this.playerMaxMp);
@@ -58384,8 +58387,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialAdditionalFireBody(byte[] byArray, BattleSpellCatalog.AdditionalFireSpell additionalFireSpell) throws IOException {
+        byte[] objectPacket;
         long l;
-        Object object;
         int n;
         int n2;
         int n3;
@@ -58438,7 +58441,6 @@ final class ClientSession implements Runnable {
             n3 = this.classicWorldInstanceId;
             n2 = this.positionX;
             n = this.positionY;
-            object = this;
             l = System.nanoTime();
             long l4 = this.spellReadyNanos.getOrDefault(additionalFireSpell.skillId(), 0L);
             bl = this.phase == phase && !this.observer && this.playerHp > 0 && (phase == Phase.BATTLE ? this.currentRoomId == l2 : this.classicWorldMapId == n4 && this.classicWorldInstanceId == n3);
@@ -58463,12 +58465,12 @@ final class ClientSession implements Runnable {
         this.nativeSpellRevealControlled("spell-" + additionalFireSpell.skillId());
         this.cancelAbsoluteBarrier("spell-" + additionalFireSpell.skillId());
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), additionalFireSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), additionalFireSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), additionalFireSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n4) : this.hub.roomMembers(l2);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.classicWorldMapId != n4 || clientSession2.classicWorldInstanceId != n3 || !BattleSpellCatalog.isInNativeScreen(n2, n, clientSession2.positionX, clientSession2.positionY))) continue;
-            clientSession2.sendEncrypted((byte[])object, "S_ACTION Additional-Fire caster=" + this.playerObjectId() + " action=" + additionalFireSpell.actionId());
+            clientSession2.sendEncrypted(objectPacket, "S_ACTION Additional-Fire caster=" + this.playerObjectId() + " action=" + additionalFireSpell.actionId());
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Additional-Fire target=" + this.playerObjectId() + " gfx=" + additionalFireSpell.effectGfx());
         }
         this.sendEncrypted(Protocol.manaPoint(n9, this.playerMaxMp), "S_MANA_POINT Additional-Fire=" + n9 + "/" + this.playerMaxMp);
@@ -58614,7 +58616,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialEnchantVenomBody(byte[] byArray, BattleSpellCatalog.EnchantVenomSpell enchantVenomSpell) throws IOException {
-        Object object;
+        byte[] objectPacket;
         long l;
         int n;
         int n2;
@@ -58643,7 +58645,6 @@ final class ClientSession implements Runnable {
             n2 = this.positionX;
             n = this.positionY;
             l = System.nanoTime();
-            object = this;
             long l2 = this.spellReadyNanos.getOrDefault(enchantVenomSpell.skillId(), 0L);
             boolean bl2 = phase == Phase.BATTLE && this.phase == Phase.BATTLE;
             boolean bl3 = bl = phase == Phase.WORLD && this.phase == Phase.WORLD && this.classicWorldMapId == n4 && this.classicWorldInstanceId == n3 && this.positionX == n2 && this.positionY == n;
@@ -58664,13 +58665,13 @@ final class ClientSession implements Runnable {
         int n10 = this.playerMp;
         this.commitSpellReady(enchantVenomSpell.skillId(), l + (long)enchantVenomSpell.reuseDelayMillis() * 1000000L);
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), enchantVenomSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), enchantVenomSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), enchantVenomSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n4) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.phase != Phase.WORLD || clientSession2.classicWorldMapId != n4 || clientSession2.classicWorldInstanceId != n3 || !BattleSpellCatalog.isInNativeScreen(n2, n, clientSession2.positionX, clientSession2.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION Enchant-Venom caster=" + this.playerObjectId() + " action=" + enchantVenomSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION Enchant-Venom caster=" + this.playerObjectId() + " action=" + enchantVenomSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Enchant-Venom target=" + this.playerObjectId() + " gfx=" + enchantVenomSpell.effectGfx());
         }
@@ -58684,8 +58685,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialCounterMirrorBody(byte[] byArray, BattleSpellCatalog.CounterMirrorSpell counterMirrorSpell) throws IOException {
+        byte[] objectPacket;
         long l;
-        Object object;
         int n;
         CharacterSummary characterSummary;
         Protocol.SpellSelector spellSelector;
@@ -58726,7 +58727,6 @@ final class ClientSession implements Runnable {
             int n3 = this.nativeSkillConsumptionIntelligence();
             int n4 = this.nativeSkillConsumptionOriginalReduction();
             n = NativeSkillConsumptionBridges.CounterMirrorSpell_effectiveMpCost_II(counterMirrorSpell, n2, n3);
-            object = this;
             l = System.nanoTime();
             long l3 = this.spellReadyNanos.getOrDefault(counterMirrorSpell.skillId(), 0L);
             if (l >= l3 && this.playerMp >= n && !this.observer && this.playerHp > 0 && (this.phase == Phase.BATTLE || this.phase == Phase.WORLD)) break block13;
@@ -58748,11 +58748,11 @@ final class ClientSession implements Runnable {
         int n5 = this.playerMp;
         this.commitSpellReady(counterMirrorSpell.skillId(), l + (long)counterMirrorSpell.reuseDelayMillis() * 1000000L);
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), counterMirrorSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), counterMirrorSpell.actionId());
         List<ClientSession> list = this.phase == Phase.WORLD ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession2 : list) {
             if (this.phase == Phase.WORLD && (!this.sameClassicWorldMap(clientSession2) || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession2.positionX, clientSession2.positionY)) || this.invisible && clientSession2 != this) continue;
-            clientSession2.sendEncrypted((byte[])object, "S_ACTION Counter-Mirror caster=" + this.playerObjectId() + " action=" + counterMirrorSpell.actionId());
+            clientSession2.sendEncrypted(objectPacket, "S_ACTION Counter-Mirror caster=" + this.playerObjectId() + " action=" + counterMirrorSpell.actionId());
         }
         this.sendEncrypted(Protocol.effectObject(this.playerObjectId(), counterMirrorSpell.effectGfx()), "S_EFFECT Counter-Mirror owner-only target=" + this.playerObjectId() + " gfx=" + counterMirrorSpell.effectGfx());
         this.sendEncrypted(Protocol.manaPoint(n5, this.playerMaxMp), "S_MANA_POINT Counter-Mirror=" + n5 + "/" + this.playerMaxMp);
@@ -58763,8 +58763,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialClearMindBody(byte[] byArray, BattleSpellCatalog.ClearMindSpell clearMindSpell) throws IOException {
+        byte[] objectPacket;
         long l;
-        Object object;
         int n;
         Protocol.SpellSelector spellSelector;
         block14: {
@@ -58804,7 +58804,6 @@ final class ClientSession implements Runnable {
             int n3 = this.nativeSkillConsumptionIntelligence();
             int n4 = this.nativeSkillConsumptionOriginalReduction();
             n = NativeSkillConsumptionBridges.ClearMindSpell_effectiveMpCost_II(clearMindSpell, n2, n3);
-            object = this;
             l = System.nanoTime();
             long l3 = this.spellReadyNanos.getOrDefault(clearMindSpell.skillId(), 0L);
             if (l >= l3 && this.playerMp >= n && !this.observer && this.playerHp > 0 && (this.phase == Phase.BATTLE || this.phase == Phase.WORLD)) break block14;
@@ -58829,13 +58828,13 @@ final class ClientSession implements Runnable {
         int n6 = this.classicWorldMapId;
         int n7 = this.classicWorldInstanceId;
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), clearMindSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), clearMindSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), clearMindSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n6) : this.hub.roomMembers(l4);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.classicWorldMapId != n6 || clientSession2.classicWorldInstanceId != n7 || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession2.positionX, clientSession2.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION Clear-Mind caster=" + this.playerObjectId() + " action=" + clearMindSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION Clear-Mind caster=" + this.playerObjectId() + " action=" + clearMindSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Clear-Mind target=" + this.playerObjectId() + " gfx=" + clearMindSpell.effectGfx());
         }
@@ -58849,8 +58848,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialResistElementalBody(byte[] byArray, BattleSpellCatalog.ResistElementalSpell resistElementalSpell) throws IOException {
+        byte[] objectPacket;
         long l;
-        Object object;
         int n;
         Protocol.SpellSelector spellSelector;
         block14: {
@@ -58890,7 +58889,6 @@ final class ClientSession implements Runnable {
             int n3 = this.nativeSkillConsumptionIntelligence();
             int n4 = this.nativeSkillConsumptionOriginalReduction();
             n = NativeSkillConsumptionBridges.ResistElementalSpell_effectiveMpCost_II(resistElementalSpell, n2, n3);
-            object = this;
             l = System.nanoTime();
             long l3 = this.spellReadyNanos.getOrDefault(resistElementalSpell.skillId(), 0L);
             if (l >= l3 && this.playerMp >= n && !this.observer && this.playerHp > 0 && (this.phase == Phase.BATTLE || this.phase == Phase.WORLD)) break block14;
@@ -58915,13 +58913,13 @@ final class ClientSession implements Runnable {
         int n6 = this.classicWorldMapId;
         int n7 = this.classicWorldInstanceId;
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), resistElementalSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), resistElementalSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), resistElementalSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n6) : this.hub.roomMembers(l4);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.classicWorldMapId != n6 || clientSession2.classicWorldInstanceId != n7 || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession2.positionX, clientSession2.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION Resist-Elemental caster=" + this.playerObjectId() + " action=" + resistElementalSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION Resist-Elemental caster=" + this.playerObjectId() + " action=" + resistElementalSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Resist-Elemental target=" + this.playerObjectId() + " gfx=" + resistElementalSpell.effectGfx());
         }
@@ -58935,8 +58933,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialElementalProtectionBody(byte[] byArray, BattleSpellCatalog.ElementalProtectionSpell elementalProtectionSpell) throws IOException {
+        byte[] objectPacket;
         long l;
-        Object object;
         int n;
         Protocol.SpellSelector spellSelector;
         block17: {
@@ -58980,7 +58978,6 @@ final class ClientSession implements Runnable {
             int n3 = this.nativeSkillConsumptionIntelligence();
             int n4 = this.nativeSkillConsumptionOriginalReduction();
             n = NativeSkillConsumptionBridges.ElementalProtectionSpell_effectiveMpCost_II(elementalProtectionSpell, n2, n3);
-            object = this;
             l = System.nanoTime();
             long l3 = this.spellReadyNanos.getOrDefault(elementalProtectionSpell.skillId(), 0L);
             if (l >= l3 && this.playerMp >= n && !this.observer && this.playerHp > 0 && this.elfAttribute != 0 && (this.phase == Phase.BATTLE || this.phase == Phase.WORLD)) break block17;
@@ -59008,13 +59005,13 @@ final class ClientSession implements Runnable {
         int n7 = this.classicWorldMapId;
         int n8 = this.classicWorldInstanceId;
         this.sendInventoryDelta(runtimeInventory, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), elementalProtectionSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), elementalProtectionSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), elementalProtectionSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n7) : this.hub.roomMembers(l4);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.classicWorldMapId != n7 || clientSession2.classicWorldInstanceId != n8 || !BattleSpellCatalog.isInNativeScreen(this.positionX, this.positionY, clientSession2.positionX, clientSession2.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION Elemental-Protection caster=" + this.playerObjectId() + " action=" + elementalProtectionSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION Elemental-Protection caster=" + this.playerObjectId() + " action=" + elementalProtectionSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT Elemental-Protection target=" + this.playerObjectId() + " gfx=" + elementalProtectionSpell.effectGfx());
         }
@@ -59053,7 +59050,6 @@ final class ClientSession implements Runnable {
                short var17 = 0;
                int var26 = this.nativeSkillConsumptionIntelligence();
                int var27 = this.nativeSkillConsumptionOriginalReduction();
-               boolean var29 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var12;
                BattleAwakenStatus.Toggle var13;
@@ -59061,8 +59057,7 @@ final class ClientSession implements Runnable {
                int var15;
                int var16;
                long var18;
-               try {
-                  var29 = true;
+               {
                   var18 = System.nanoTime();
                   long var21 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   boolean var23 = this.phase == var5
@@ -59136,11 +59131,6 @@ final class ClientSession implements Runnable {
                   var14 = this.playerHp;
                   var15 = this.playerMp;
                   var16 = this.playerMaxHp;
-                  var29 = false;
-               } finally {
-                  if (var29) {
-                     ;
-                  }
                }
 
                if (var17 != 0) {
@@ -59271,14 +59261,12 @@ final class ClientSession implements Runnable {
                short var15 = 0;
                int var25 = this.nativeSkillConsumptionIntelligence();
                int var26 = this.nativeSkillConsumptionOriginalReduction();
-               boolean var28 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var11;
                int var12;
                int var13;
                int var14;
-               try {
-                  var28 = true;
+               {
                   long var16 = System.nanoTime();
                   long var19 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   boolean var21 = this.phase == var4
@@ -59336,11 +59324,6 @@ final class ClientSession implements Runnable {
 
                   var13 = this.playerHp;
                   var14 = this.playerMp;
-                  var28 = false;
-               } finally {
-                  if (var28) {
-                     ;
-                  }
                }
 
                if (var15 != 0) {
@@ -59470,10 +59453,8 @@ final class ClientSession implements Runnable {
                   var11 == null ? 0 : var11.type(), var11 == null ? 0 : Math.max(0, var11.originalIntelligence())
                );
                int var15 = NativeSkillConsumptionBridges.MagicalWeaponSpell_effectiveMpCost_III(var2, var13, var14);
-               boolean var29 = false /* VF: Semaphore variable */;
 
-               try {
-                  var29 = true;
+               {
                   long var21 = System.nanoTime();
                   long var24 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   if (var21 < var24 || this.playerMp < var15 || this.playerHp <= 0 || this.phase != var4 || this.observer) {
@@ -59491,11 +59472,6 @@ final class ClientSession implements Runnable {
                      return;
                   }
 
-                  var29 = false;
-               } finally {
-                  if (var29) {
-                     ;
-                  }
                }
 
                if (NativeMagicalWeaponAction.admit(this, var2, var3.targetObjectId())) {
@@ -59640,13 +59616,11 @@ final class ClientSession implements Runnable {
                               ClientSession var34 = var15.player();
                               ClientSession var35 = var34 != null && this.playerObjectId() > var34.playerObjectId() ? var34 : this;
                               ClientSession var36 = var34 == null ? this : (var35 == this ? var34 : this);
-                              boolean var63 = false /* VF: Semaphore variable */;
 
                               RuntimeInventory var30;
                               int var31;
                               long var82;
-                              try {
-                                 var63 = true;
+                              {
 
                                  label973: {
                                     try {
@@ -59716,11 +59690,6 @@ final class ClientSession implements Runnable {
                                     return;
                                  }
 
-                                 var63 = false;
-                              } finally {
-                                 if (var63) {
-                                    ;
-                                 }
                               }
 
                               this.cancelMeditation("classic-world-spell-" + var2.skillId());
@@ -60174,13 +60143,11 @@ final class ClientSession implements Runnable {
                      ClientSession var35 = var13.player() != null ? var13.player() : var88.companionOwner();
                      ClientSession var36 = var35 != null && this.playerObjectId() > var35.playerObjectId() ? var35 : this;
                      ClientSession var37 = var35 == null ? this : (var36 == this ? var35 : this);
-                     boolean var74 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var31;
                      int var32;
                      long var100;
-                     try {
-                        var74 = true;
+                     {
 
                         label1799: {
                            try {
@@ -60297,11 +60264,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var74 = false;
-                     } finally {
-                        if (var74) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("spell-" + var2.skillId());
@@ -60338,10 +60300,8 @@ final class ClientSession implements Runnable {
 
                         if (var117 != null) {
                            var55 = var117;
-                           boolean var67 = false /* VF: Semaphore variable */;
 
-                           try {
-                              var67 = true;
+                           {
                               if (var117.phase != ClientSession.Phase.BATTLE
                                  || var117.currentRoomId != var4
                                  || this.hub.battleMapId(var4, var117) != var6
@@ -60353,7 +60313,6 @@ final class ClientSession implements Runnable {
                                  || targetRange(var15, var16, var117.positionX, var117.positionY) > var2.areaRadius()
                                  || !NativeSourceSleepConstruction.canAttack(this.hub, var4, this, var117, var60)) {
                                  var104++;
-                                 var67 = false;
                                  continue;
                               }
 
@@ -60372,11 +60331,6 @@ final class ClientSession implements Runnable {
                               var117.eraseMagicStatus.consume(var100);
                               var52 = BattleAbsoluteBarrierRules.blocksIncomingSpell(var117.timedStatus.absoluteBarrierActive(var100), var2.skillId());
                               var53 = var117.timedStatus.earthBindActive(var100);
-                              var67 = false;
-                           } finally {
-                              if (var67) {
-                                 ;
-                              }
                            }
                         } else if (var48 != null) {
                            var companionSnapshot = var48.snapshot();
@@ -60731,13 +60685,11 @@ final class ClientSession implements Runnable {
                         int var27 = BattleSpellCatalog.originalMagicConsumeReduction(var73, var70 == null ? 0 : Math.max(0, var70.originalIntelligence()));
                         int var28 = NativeSkillConsumptionBridges.MassSlowSpell_effectiveMpCost_III(var2, var26, var27);
                         int var29 = Math.addExact(var72.totalMagicHit(), this.dragonEyeStatus.snapshot(System.nanoTime()).magicHit());
-                        boolean var55 = false /* VF: Semaphore variable */;
 
                         RuntimeInventory var30;
                         int var31;
                         long var74;
-                        try {
-                           var55 = true;
+                        {
                            var74 = System.nanoTime();
                            long var35 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                            if (var74 < var35
@@ -60768,8 +60720,8 @@ final class ClientSession implements Runnable {
 
                            var74 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch4 = false;
-                           if (candidateMaterialBranch4) {
+                           boolean candidateMaterialAvailable4 = true;
+                           if (!candidateMaterialAvailable4) {
                               this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Mass-Slow-missing-reagent=299");
                               return;
                            }
@@ -60779,11 +60731,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var28);
                            var31 = this.playerMp;
                            this.commitSpellReady(var2.skillId(), var74 + var2.reuseDelayMillis() * 1000000L);
-                           var55 = false;
-                        } finally {
-                           if (var55) {
-                              ;
-                           }
                         }
 
                         this.cancelAbsoluteBarrier("classic-world-spell-" + var2.skillId());
@@ -61174,13 +61121,11 @@ final class ClientSession implements Runnable {
                int var25 = var60.totalMagicHit();
                int var26 = this.dragonEyeStatus.snapshot(System.nanoTime()).magicHit();
                int var27 = Math.addExact(var25, var26);
-               boolean var50 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var28;
                int var29;
                long var63;
-               try {
-                  var50 = true;
+               {
                   var63 = System.nanoTime();
                   long var33 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   if (var63 < var33 || this.playerMp < var24 || this.phase != ClientSession.Phase.BATTLE || this.observer || this.playerHp <= 0) {
@@ -61205,8 +61150,8 @@ final class ClientSession implements Runnable {
 
                   var63 = System.nanoTime();
                   // Preserve the candidate patch branch in javac output.
-                  boolean candidateMaterialBranch5 = false;
-                  if (candidateMaterialBranch5) {
+                  boolean candidateMaterialAvailable5 = true;
+                  if (!candidateMaterialAvailable5) {
                      this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Mass-Slow-missing-reagent=299");
                      System.out
                         .println("[LiTo] C_USE_SPELL Mass Slow rejected missing reagent catalog=" + var2.itemConsumeId() + " count=" + var2.itemConsumeCount());
@@ -61218,11 +61163,6 @@ final class ClientSession implements Runnable {
                   this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var24);
                   var29 = this.playerMp;
                   this.commitSpellReady(var2.skillId(), var63 + var2.reuseDelayMillis() * 1000000L);
-                  var50 = false;
-               } finally {
-                  if (var50) {
-                     ;
-                  }
                }
 
                this.sendInventoryDelta(var28, NativeCastMaterial.next(this));
@@ -61564,13 +61504,11 @@ final class ClientSession implements Runnable {
                      int var43 = this.nativeSkillConsumptionOriginalReduction();
                      int var25 = NativeSkillConsumptionBridges.AreaSilenceSpell_effectiveMpCost_II(var2, var24, var42);
                      int var26 = Math.addExact(var20.totalMagicHit(), this.dragonEyeStatus.snapshot(var5).magicHit());
-                     boolean var45 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var27;
                      int var28;
                      long var47;
-                     try {
-                        var45 = true;
+                     {
                         var47 = System.nanoTime();
                         long var32 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                         if (var47 < var32
@@ -61599,8 +61537,8 @@ final class ClientSession implements Runnable {
 
                         var47 = System.nanoTime();
                         // Preserve the candidate patch branch in javac output.
-                        boolean candidateMaterialBranch6 = false;
-                        if (candidateMaterialBranch6) {
+                        boolean candidateMaterialAvailable6 = true;
+                        if (!candidateMaterialAvailable6) {
                            this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Area-of-Silence-missing-reagent=299");
                            return;
                         }
@@ -61610,11 +61548,6 @@ final class ClientSession implements Runnable {
                         this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var25);
                         var28 = this.playerMp;
                         this.commitSpellReady(var2.skillId(), var47 + var2.reuseDelayMillis() * 1000000L);
-                        var45 = false;
-                     } finally {
-                        if (var45) {
-                           ;
-                        }
                      }
 
                      this.cancelAbsoluteBarrier("spell-" + var2.skillId());
@@ -61956,13 +61889,11 @@ final class ClientSession implements Runnable {
                            int var47 = this.nativeSkillConsumptionOriginalReduction();
                            int var29 = NativeSkillConsumptionBridges.WindShackleSpell_effectiveMpCost_II(var2, var28, var46);
                            int var30 = Math.addExact(var24.totalMagicHit(), this.dragonEyeStatus.snapshot(var5).magicHit());
-                           boolean var50 = false /* VF: Semaphore variable */;
 
                            RuntimeInventory var31;
                            int var32;
                            long var63;
-                           try {
-                              var50 = true;
+                           {
                               var63 = System.nanoTime();
                               long var36 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                               if (var63 < var36
@@ -61991,8 +61922,8 @@ final class ClientSession implements Runnable {
 
                               var63 = System.nanoTime();
                               // Preserve the candidate patch branch in javac output.
-                              boolean candidateMaterialBranch7 = false;
-                              if (candidateMaterialBranch7) {
+                              boolean candidateMaterialAvailable7 = true;
+                              if (!candidateMaterialAvailable7) {
                                  this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Wind-Shackle-missing-reagent=299");
                                  return;
                               }
@@ -62002,11 +61933,6 @@ final class ClientSession implements Runnable {
                               this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var29);
                               var32 = this.playerMp;
                               this.commitSpellReady(var2.skillId(), var63 + var2.reuseDelayMillis() * 1000000L);
-                              var50 = false;
-                           } finally {
-                              if (var50) {
-                                 ;
-                              }
                            }
 
                            this.cancelAbsoluteBarrier("spell-" + var2.skillId());
@@ -62363,12 +62289,10 @@ final class ClientSession implements Runnable {
                               int var36 = this.nativeSkillConsumptionIntelligence();
                               int var37 = this.nativeSkillConsumptionOriginalReduction();
                               int var53 = NativeSkillConsumptionBridges.ReturnToNatureSpell_effectiveMpCost_II(var2, var52, var36);
-                              boolean var40 = false /* VF: Semaphore variable */;
 
                               RuntimeInventory var54;
                               int var55;
-                              try {
-                                 var40 = true;
+                              {
                                  long var56 = System.nanoTime();
                                  long var31 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                                  if (var56 < var31
@@ -62401,8 +62325,8 @@ final class ClientSession implements Runnable {
 
                                  var56 = System.nanoTime();
                                  // Preserve the candidate patch branch in javac output.
-                                 boolean candidateMaterialBranch8 = false;
-                                 if (candidateMaterialBranch8) {
+                                 boolean candidateMaterialAvailable8 = true;
+                                 if (!candidateMaterialAvailable8) {
                                     this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Return-to-Nature-missing-reagent=299");
                                     System.out
                                        .println(
@@ -62419,11 +62343,6 @@ final class ClientSession implements Runnable {
                                  this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var53);
                                  var55 = this.playerMp;
                                  this.commitSpellReady(var2.skillId(), var56 + var2.reuseDelayMillis() * 1000000L);
-                                 var40 = false;
-                              } finally {
-                                 if (var40) {
-                                    ;
-                                 }
                               }
 
                               RuntimeInventory var10002 = NativeCastMaterial.next(this);
@@ -62592,13 +62511,11 @@ final class ClientSession implements Runnable {
                int var15 = var13.effectiveIntelligence(this.baseIntelligence());
                int var16 = BattleSpellCatalog.originalMagicConsumeReduction(var14, var4 == null ? 0 : Math.max(0, var4.originalIntelligence()));
                int var17 = NativeSkillConsumptionBridges.SummonSpell_effectiveMpCost_III(var2, var15, var16);
-               boolean var42 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var18;
                int var19;
                int var20;
-               try {
-                  var42 = true;
+               {
                   long var21 = System.nanoTime();
                   long var24 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   if (var21 < var24
@@ -62635,11 +62552,6 @@ final class ClientSession implements Runnable {
                   var19 = this.playerMp;
                   var20 = this.playerHp;
                   this.spellReadyNanos.put(var2.skillId(), var21 + var2.reuseDelayMillis() * 1000000L);
-                  var42 = false;
-               } finally {
-                  if (var42) {
-                     ;
-                  }
                }
 
                this.cancelMeditation("spell-" + var2.skillId());
@@ -63042,13 +62954,11 @@ final class ClientSession implements Runnable {
                               var38 = var3 > 0 ? var3 : ThreadLocalRandom.current().nextInt(1, 101);
                            }
 
-                           boolean var57 = false /* VF: Semaphore variable */;
 
                            RuntimeInventory var39;
                            int var40;
                            long var72;
-                           try {
-                              var57 = true;
+                           {
                               var72 = System.nanoTime();
                               long var44 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                               boolean var46 = var7
@@ -63096,8 +63006,8 @@ final class ClientSession implements Runnable {
 
                               var72 = System.nanoTime();
                               // Preserve the candidate patch branch in javac output.
-                              boolean candidateMaterialBranch9 = false;
-                              if (candidateMaterialBranch9) {
+                              boolean candidateMaterialAvailable9 = true;
+                              if (!candidateMaterialAvailable9) {
                                  this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Entangle-missing-reagent=299");
                                  System.out
                                     .println(
@@ -63126,11 +63036,6 @@ final class ClientSession implements Runnable {
                               this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var28);
                               var40 = this.playerMp;
                               this.commitSpellReady(var2.skillId(), var72 + var2.reuseDelayMillis() * 1000000L);
-                              var57 = false;
-                           } finally {
-                              if (var57) {
-                                 ;
-                              }
                            }
 
                            this.sendInventoryDelta(var39, NativeCastMaterial.next(this));
@@ -63548,13 +63453,11 @@ final class ClientSession implements Runnable {
                               var37 = var35 ? 100 : (var3 > 0 ? var3 : ThreadLocalRandom.current().nextInt(1, 101));
                            }
 
-                           boolean var55 = false /* VF: Semaphore variable */;
 
                            RuntimeInventory var38;
                            int var39;
                            long var69;
-                           try {
-                              var55 = true;
+                           {
                               var69 = System.nanoTime();
                               long var43 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                               boolean var45 = var7
@@ -63602,8 +63505,8 @@ final class ClientSession implements Runnable {
 
                               var69 = System.nanoTime();
                               // Preserve the candidate patch branch in javac output.
-                              boolean candidateMaterialBranch10 = false;
-                              if (candidateMaterialBranch10) {
+                              boolean candidateMaterialAvailable10 = true;
+                              if (!candidateMaterialAvailable10) {
                                  this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Erase-Magic-missing-reagent=299");
                                  System.out
                                     .println(
@@ -63632,11 +63535,6 @@ final class ClientSession implements Runnable {
                               this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var28);
                               var39 = this.playerMp;
                               this.commitSpellReady(var2.skillId(), var69 + var2.reuseDelayMillis() * 1000000L);
-                              var55 = false;
-                           } finally {
-                              if (var55) {
-                                 ;
-                              }
                            }
 
                            this.sendInventoryDelta(var38, NativeCastMaterial.next(this));
@@ -63852,13 +63750,11 @@ final class ClientSession implements Runnable {
                         int var31 = this.config.earthBindFixturePercentileRoll();
                         int var32 = var29 ? 100 : (var31 > 0 ? var31 : ThreadLocalRandom.current().nextInt(1, 101));
                         boolean var33 = !var29 && var30 >= var32;
-                        boolean var50 = false /* VF: Semaphore variable */;
 
                         RuntimeInventory var34;
                         int var35;
                         long var52;
-                        try {
-                           var50 = true;
+                        {
                            var52 = System.nanoTime();
                            long var39 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                            if (var52 < var39 || this.playerMp < var21 || this.phase != ClientSession.Phase.BATTLE || this.playerHp <= 0) {
@@ -63883,8 +63779,8 @@ final class ClientSession implements Runnable {
 
                            var52 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch11 = false;
-                           if (candidateMaterialBranch11) {
+                           boolean candidateMaterialAvailable11 = true;
+                           if (!candidateMaterialAvailable11) {
                               this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Earth-Bind-missing-reagent=299");
                               System.out
                                  .println(
@@ -63901,11 +63797,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var21);
                            var35 = this.playerMp;
                            this.commitSpellReady(var2.skillId(), var52 + var2.reuseDelayMillis() * 1000000L);
-                           var50 = false;
-                        } finally {
-                           if (var50) {
-                              ;
-                           }
                         }
 
                         this.consumeEraseMagicAfterProbability(var5, var6, var7, var52, var2.skillId());
@@ -64111,13 +64002,11 @@ final class ClientSession implements Runnable {
                   int var42 = this.config.earthBindFixturePercentileRoll();
                   int var43 = var40 ? 100 : (var42 > 0 ? var42 : ThreadLocalRandom.current().nextInt(1, 101));
                   boolean var44 = !var40 && var41 >= var43;
-                  boolean var60 = false /* VF: Semaphore variable */;
 
                   RuntimeInventory var45;
                   int var46;
                   long var66;
-                  try {
-                     var60 = true;
+                  {
                      var66 = System.nanoTime();
                      long var50 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                      local.lito381.server.BattleCompanion.Snapshot var52 = var11 == null ? null : var11.snapshot();
@@ -64155,8 +64044,8 @@ final class ClientSession implements Runnable {
 
                      var66 = System.nanoTime();
                      // Preserve the candidate patch branch in javac output.
-                     boolean candidateMaterialBranch12 = false;
-                     if (candidateMaterialBranch12) {
+                     boolean candidateMaterialAvailable12 = true;
+                     if (!candidateMaterialAvailable12) {
                         this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Earth-Bind-missing-reagent=299");
                         return;
                      }
@@ -64166,11 +64055,6 @@ final class ClientSession implements Runnable {
                      this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var32);
                      var46 = this.playerMp;
                      this.commitSpellReady(var2.skillId(), var66 + var2.reuseDelayMillis() * 1000000L);
-                     var60 = false;
-                  } finally {
-                     if (var60) {
-                        ;
-                     }
                   }
 
                   this.cancelAbsoluteBarrier("classic-world-spell-" + var2.skillId());
@@ -64382,14 +64266,12 @@ final class ClientSession implements Runnable {
                         : combatProbability$52(var2, var16, Math.max(1, var17), var18, var26, var25, var28, this, new Object[]{var5, var6, var7, var12});
                      int var30 = this.config.tamingMonsterFixturePercentileRoll();
                      int var31 = var27 ? 100 : (var30 > 0 ? var30 : ThreadLocalRandom.current().nextInt(1, 101));
-                     boolean var49 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var32;
                      int var33;
                      int var34;
                      long var53;
-                     try {
-                        var49 = true;
+                     {
                         var53 = System.nanoTime();
                         long var38 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                         if (var53 < var38
@@ -64422,8 +64304,8 @@ final class ClientSession implements Runnable {
 
                         var53 = System.nanoTime();
                         // Preserve the candidate patch branch in javac output.
-                        boolean candidateMaterialBranch13 = false;
-                        if (candidateMaterialBranch13) {
+                        boolean candidateMaterialAvailable13 = true;
+                        if (!candidateMaterialAvailable13) {
                            this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE taming-missing-reagent=299");
                            System.out
                               .println(
@@ -64439,11 +64321,6 @@ final class ClientSession implements Runnable {
                         var33 = this.playerMp;
                         var34 = this.playerHp;
                         this.commitSpellReady(var2.skillId(), var53 + var2.reuseDelayMillis() * 1000000L);
-                        var49 = false;
-                     } finally {
-                        if (var49) {
-                           ;
-                        }
                      }
 
                      this.sendInventoryDelta(var32, NativeCastMaterial.next(this));
@@ -64668,13 +64545,11 @@ final class ClientSession implements Runnable {
                      int var26 = var21.effectiveIntelligence(this.baseIntelligence());
                      int var27 = BattleSpellCatalog.originalMagicConsumeReduction(var22, var20 == null ? 0 : Math.max(0, var20.originalIntelligence()));
                      int var28 = NativeSkillConsumptionBridges.CreateZombieSpell_effectiveMpCost_III(var2, var26, var27);
-                     boolean var45 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var29;
                      int var30;
                      int var31;
-                     try {
-                        var45 = true;
+                     {
                         long var32 = System.nanoTime();
                         long var35 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                         boolean var37 = this.phase == var4
@@ -64731,8 +64606,8 @@ final class ClientSession implements Runnable {
 
                         var32 = System.nanoTime();
                         // Preserve the candidate patch branch in javac output.
-                        boolean candidateMaterialBranch14 = false;
-                        if (candidateMaterialBranch14) {
+                        boolean candidateMaterialAvailable14 = true;
+                        if (!candidateMaterialAvailable14) {
                            this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE create-zombie-missing-reagent=299");
                            System.out
                               .println(
@@ -64751,11 +64626,6 @@ final class ClientSession implements Runnable {
                         var30 = this.playerMp;
                         var31 = this.playerHp;
                         this.commitSpellReady(var2.skillId(), var32 + var2.reuseDelayMillis() * 1000000L);
-                        var45 = false;
-                     } finally {
-                        if (var45) {
-                           ;
-                        }
                      }
 
                      this.sendInventoryDelta(var29, NativeCastMaterial.next(this));
@@ -64975,13 +64845,11 @@ final class ClientSession implements Runnable {
                         int var31 = combatProbability$20(var2, var17, var22, var18, var26, var29, var25, var30, this, new Object[]{var5, var6, var7, var12});
                         int var32 = this.config.weaponBreakFixtureD100();
                         int var33 = var32 > 0 ? var32 : ThreadLocalRandom.current().nextInt(1, 101);
-                        boolean var51 = false /* VF: Semaphore variable */;
 
                         RuntimeInventory var34;
                         int var35;
                         long var54;
-                        try {
-                           var51 = true;
+                        {
                            var54 = System.nanoTime();
                            long var39 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                            if (var54 < var39 || this.playerMp < var20 || this.phase != ClientSession.Phase.BATTLE || this.playerHp <= 0) {
@@ -65006,8 +64874,8 @@ final class ClientSession implements Runnable {
 
                            var54 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch15 = false;
-                           if (candidateMaterialBranch15) {
+                           boolean candidateMaterialAvailable15 = true;
+                           if (!candidateMaterialAvailable15) {
                               this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE Weapon-Break-missing-reagent=299");
                               return;
                            }
@@ -65017,11 +64885,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var20);
                            var35 = this.playerMp;
                            this.commitSpellReady(var2.skillId(), var54 + var2.reuseDelayMillis() * 1000000L);
-                           var51 = false;
-                        } finally {
-                           if (var51) {
-                              ;
-                           }
                         }
 
                         this.sendInventoryDelta(var34, NativeCastMaterial.next(this));
@@ -65287,13 +65150,11 @@ final class ClientSession implements Runnable {
                            );
                            int var36 = this.config.weaponBreakFixtureD100();
                            int var37 = var36 > 0 ? var36 : ThreadLocalRandom.current().nextInt(1, 101);
-                           boolean var55 = false /* VF: Semaphore variable */;
 
                            RuntimeInventory var38;
                            int var39;
                            long var62;
-                           try {
-                              var55 = true;
+                           {
                               var62 = System.nanoTime();
                               long var43 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                               if (var62 < var43
@@ -65338,8 +65199,8 @@ final class ClientSession implements Runnable {
 
                               var62 = System.nanoTime();
                               // Preserve the candidate patch branch in javac output.
-                              boolean candidateMaterialBranch16 = false;
-                              if (candidateMaterialBranch16) {
+                              boolean candidateMaterialAvailable16 = true;
+                              if (!candidateMaterialAvailable16) {
                                  this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Weapon-Break-missing-reagent=299");
                                  return;
                               }
@@ -65349,11 +65210,6 @@ final class ClientSession implements Runnable {
                               this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var26);
                               var39 = this.playerMp;
                               this.commitSpellReady(var2.skillId(), var62 + var2.reuseDelayMillis() * 1000000L);
-                              var55 = false;
-                           } finally {
-                              if (var55) {
-                                 ;
-                              }
                            }
 
                            this.sendInventoryDelta(var38, NativeCastMaterial.next(this));
@@ -65575,14 +65431,12 @@ final class ClientSession implements Runnable {
                   int var25 = this.config.armorBreakFixtureD100();
                   int var26 = var25 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var25;
                   short var30 = 0;
-                  boolean var47 = false /* VF: Semaphore variable */;
 
                   RuntimeInventory var27;
                   int var28;
                   int var29;
                   long var31;
-                  try {
-                     var47 = true;
+                  {
                      var31 = System.nanoTime();
                      long var34 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                      boolean var36 = this.phase == var4
@@ -65628,8 +65482,8 @@ final class ClientSession implements Runnable {
 
                         var31 = System.nanoTime();
                         // Preserve the candidate patch branch in javac output.
-                        boolean candidateMaterialBranch17 = false;
-                        if (candidateMaterialBranch17) {
+                        boolean candidateMaterialAvailable17 = true;
+                        if (!candidateMaterialAvailable17) {
                            var30 = 299;
                         }
                      }
@@ -65644,11 +65498,6 @@ final class ClientSession implements Runnable {
 
                      var28 = this.playerHp;
                      var29 = this.playerMp;
-                     var47 = false;
-                  } finally {
-                     if (var47) {
-                        ;
-                     }
                   }
 
                   if (var30 != 0) {
@@ -65904,13 +65753,11 @@ final class ClientSession implements Runnable {
                      );
                      int var30 = this.config.cursePoisonFixturePercentileRoll();
                      int var31 = var27 ? 100 : (var30 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var30);
-                     boolean var55 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var32;
                      int var33;
                      long var59;
-                     try {
-                        var55 = true;
+                     {
                         var59 = System.nanoTime();
                         long var37 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                         if (var59 < var37 || this.playerMp < var22 || this.phase != ClientSession.Phase.BATTLE || this.playerHp <= 0) {
@@ -65935,8 +65782,8 @@ final class ClientSession implements Runnable {
 
                         var59 = System.nanoTime();
                         // Preserve the candidate patch branch in javac output.
-                        boolean candidateMaterialBranch18 = false;
-                        if (candidateMaterialBranch18) {
+                        boolean candidateMaterialAvailable18 = true;
+                        if (!candidateMaterialAvailable18) {
                            this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE poison-missing-reagent=299");
                            System.out
                               .println(
@@ -65951,11 +65798,6 @@ final class ClientSession implements Runnable {
                         this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var22);
                         var33 = this.playerMp;
                         this.commitSpellReady(var2.skillId(), var59 + var2.reuseDelayMillis() * 1000000L);
-                        var55 = false;
-                     } finally {
-                        if (var55) {
-                           ;
-                        }
                      }
 
                      boolean var36 = this.earthBindBlocksProbabilityMagic(var5, var6, var7, var59, var2.skillId());
@@ -65977,10 +65819,8 @@ final class ClientSession implements Runnable {
                      if (var62) {
                         this.publishCounterMagicConsumption(var5, var2.skillId());
                      } else if (var60 && var5 != null) {
-                        boolean var51 = false /* VF: Semaphore variable */;
 
-                        try {
-                           var51 = true;
+                        {
                            var63 = var5.timedStatus.poisonActive(var59)
                               || !var5.timedStatus.acceptsPoison(var59, BattleTimedStatus.PoisonKind.DAMAGE)
                               || var5.dragonEyeStatus.snapshot(var59).poisonResistance() > 0;
@@ -65991,11 +65831,6 @@ final class ClientSession implements Runnable {
                               }
                            }
 
-                           var51 = false;
-                        } finally {
-                           if (var51) {
-                              ;
-                           }
                         }
                      } else if (var60 && var6 != null) {
                         var63 = this.hub.questMonsterPoisonActive(this.currentRoomId, var6.objectId(), var59);
@@ -66219,13 +66054,11 @@ final class ClientSession implements Runnable {
                      );
                      int var35 = this.config.cursePoisonFixturePercentileRoll();
                      int var36 = var32 ? 100 : (var35 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var35);
-                     boolean var60 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var37;
                      int var38;
                      long var64;
-                     try {
-                        var60 = true;
+                     {
                         var64 = System.nanoTime();
                         long var42 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                         if (var64 < var42
@@ -66254,8 +66087,8 @@ final class ClientSession implements Runnable {
 
                         var64 = System.nanoTime();
                         // Preserve the candidate patch branch in javac output.
-                        boolean candidateMaterialBranch19 = false;
-                        if (candidateMaterialBranch19) {
+                        boolean candidateMaterialAvailable19 = true;
+                        if (!candidateMaterialAvailable19) {
                            this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Curse-Poison-missing-reagent=299");
                            return;
                         }
@@ -66265,11 +66098,6 @@ final class ClientSession implements Runnable {
                         this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var25);
                         var38 = this.playerMp;
                         this.commitSpellReady(var2.skillId(), var64 + var2.reuseDelayMillis() * 1000000L);
-                        var60 = false;
-                     } finally {
-                        if (var60) {
-                           ;
-                        }
                      }
 
                      this.cancelAbsoluteBarrier("classic-world-spell-" + var2.skillId());
@@ -66304,10 +66132,8 @@ final class ClientSession implements Runnable {
                      if (var67) {
                         this.publishCounterMagicConsumption(var10, var2.skillId());
                      } else if (var65 && var10 != null) {
-                        boolean var56 = false /* VF: Semaphore variable */;
 
-                        try {
-                           var56 = true;
+                        {
                            var68 = var10.timedStatus.poisonActive(var64)
                               || !var10.timedStatus.acceptsPoison(var64, BattleTimedStatus.PoisonKind.DAMAGE)
                               || var10.dragonEyeStatus.snapshot(var64).poisonResistance() > 0;
@@ -66320,11 +66146,6 @@ final class ClientSession implements Runnable {
                               }
                            }
 
-                           var56 = false;
-                        } finally {
-                           if (var56) {
-                              ;
-                           }
                         }
                      } else if (var65) {
                         var68 = this.hub.classicWorldMonsterPoisonActive(var8, var9, var11.objectId(), var64);
@@ -66543,13 +66364,11 @@ final class ClientSession implements Runnable {
                            );
                         int var36 = this.config.curseParalysisFixturePercentileRoll();
                         int var37 = var34 ? 100 : (var36 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var36);
-                        boolean var55 = false /* VF: Semaphore variable */;
 
                         RuntimeInventory var38;
                         int var39;
                         long var58;
-                        try {
-                           var55 = true;
+                        {
                            var58 = System.nanoTime();
                            long var43 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                            if (var58 < var43 || this.playerMp < var23 || this.phase != ClientSession.Phase.BATTLE || this.playerHp <= 0) {
@@ -66574,8 +66393,8 @@ final class ClientSession implements Runnable {
 
                            var58 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch20 = false;
-                           if (candidateMaterialBranch20) {
+                           boolean candidateMaterialAvailable20 = true;
+                           if (!candidateMaterialAvailable20) {
                               this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE paralysis-missing-reagent=299");
                               System.out
                                  .println(
@@ -66592,11 +66411,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var23);
                            var39 = this.playerMp;
                            this.commitSpellReady(var2.skillId(), var58 + var2.reuseDelayMillis() * 1000000L);
-                           var55 = false;
-                        } finally {
-                           if (var55) {
-                              ;
-                           }
                         }
 
                         boolean var42 = this.earthBindBlocksProbabilityMagic(var5, var6, var7, var58, var2.skillId());
@@ -66845,13 +66659,11 @@ final class ClientSession implements Runnable {
                            : combatProbability$50(var2, var23, var28, var24, var36, var35, var31, var32, this, new Object[]{var10, var11, var18});
                         int var39 = this.config.curseParalysisFixturePercentileRoll();
                         int var40 = var37 ? 100 : (var39 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var39);
-                        boolean var59 = false /* VF: Semaphore variable */;
 
                         RuntimeInventory var41;
                         int var42;
                         long var62;
-                        try {
-                           var59 = true;
+                        {
                            var62 = System.nanoTime();
                            long var46 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                            if (var62 < var46
@@ -66880,8 +66692,8 @@ final class ClientSession implements Runnable {
 
                            var62 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch21 = false;
-                           if (candidateMaterialBranch21) {
+                           boolean candidateMaterialAvailable21 = true;
+                           if (!candidateMaterialAvailable21) {
                               this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Curse-Paralysis-missing-reagent=299");
                               return;
                            }
@@ -66891,11 +66703,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var26);
                            var42 = this.playerMp;
                            this.commitSpellReady(var2.skillId(), var62 + var2.reuseDelayMillis() * 1000000L);
-                           var59 = false;
-                        } finally {
-                           if (var59) {
-                              ;
-                           }
                         }
 
                         this.cancelAbsoluteBarrier("classic-world-spell-" + var2.skillId());
@@ -67129,10 +66936,8 @@ final class ClientSession implements Runnable {
             if (var5 != null) {
                ClientSession var29 = this.playerObjectId() <= var5.playerObjectId() ? this : var5;
                ClientSession var89 = var29 == this ? var5 : this;
-               boolean var80 = false /* VF: Semaphore variable */;
 
-               try {
-                  var80 = true;
+               {
 
                   try {
                      long var33 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
@@ -67166,8 +66971,8 @@ final class ClientSession implements Runnable {
 
                      var19 = System.nanoTime();
                      // Preserve the candidate patch branch in javac output.
-                     boolean candidateMaterialBranch22 = false;
-                     if (candidateMaterialBranch22) {
+                     boolean candidateMaterialAvailable22 = true;
+                     if (!candidateMaterialAvailable22) {
                         var27 = true;
                      } else {
                         if (!NativeCancellationProbability.gate(this, var5, var2, var19, var18)) {
@@ -67262,17 +67067,10 @@ final class ClientSession implements Runnable {
                      ;
                   }
 
-                  var80 = false;
-               } finally {
-                  if (var80) {
-                     ;
-                  }
                }
             } else {
-               boolean var76 = false /* VF: Semaphore variable */;
 
-               try {
-                  var76 = true;
+               {
                   long var30 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   if (var19 < var30 || this.playerMp < var18 || this.phase != ClientSession.Phase.BATTLE || this.observer || this.playerHp <= 0) {
                      System.out
@@ -67296,8 +67094,8 @@ final class ClientSession implements Runnable {
 
                   var19 = System.nanoTime();
                   // Preserve the candidate patch branch in javac output.
-                  boolean candidateMaterialBranch23 = false;
-                  if (candidateMaterialBranch23) {
+                  boolean candidateMaterialAvailable23 = true;
+                  if (!candidateMaterialAvailable23) {
                      var27 = true;
                   } else {
                      this.cancelMeditation("spell-" + var2.skillId());
@@ -67307,11 +67105,6 @@ final class ClientSession implements Runnable {
                      this.commitSpellReady(var2.skillId(), var19 + var2.reuseDelayMillis() * 1000000L);
                   }
 
-                  var76 = false;
-               } finally {
-                  if (var76) {
-                     ;
-                  }
                }
 
                if (!var27) {
@@ -67442,7 +67235,7 @@ final class ClientSession implements Runnable {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    void nativeMaterialWorldCancellationBody(Protocol.ObjectSpellRequest var1, ClientSession var2, BattleSpellCatalog.CancellationSpell var3, CombatPoisonLifecycle.Scope var4) throws IOException {
       if (NativeSelectedPlayerIntent.object(this, var1)) {
-         Object var62 = null;
+         CombatPoisonLifecycle.SilenceNotice var62 = null;
          long var5 = System.nanoTime();
          int var7 = NativeSourceVisibilityRange.signedDistance44(this.positionX - var2.positionX, this.positionY - var2.positionY);
          BattlePolymorphCatalog.Form var8 = this.polymorphStatus.active(var5);
@@ -67486,14 +67279,12 @@ final class ClientSession implements Runnable {
                   int var14 = NativeSkillConsumptionBridges.CancellationSpell_effectiveMpCost_III(var3, var12, var13);
                   ClientSession var19 = this.playerObjectId() <= var2.playerObjectId() ? this : var2;
                   ClientSession var20 = var19 == this ? var2 : this;
-                  boolean var65 = false /* VF: Semaphore variable */;
 
                   RuntimeInventory var15;
                   ClientSession.PlayerMagicCancellation var16;
                   boolean var17;
                   int var18;
-                  try {
-                     var65 = true;
+                  {
 
                      label345: {
                         try {
@@ -67652,11 +67443,6 @@ final class ClientSession implements Runnable {
                         return;
                      }
 
-                     var65 = false;
-                  } finally {
-                     if (var65) {
-                        ;
-                     }
                   }
 
                   this.cancelAbsoluteBarrier("spell-" + var3.skillId());
@@ -67679,7 +67465,7 @@ final class ClientSession implements Runnable {
                      var72.sendEncrypted(var71, "S_EFFECT classic-world Cancellation target=" + var2.playerObjectId() + " gfx=" + var3.effectGfx());
                   }
 
-                  CombatPoisonLifecycle.cancellationNotice(this, var2, var16, var21, var5, (CombatPoisonLifecycle.SilenceNotice)var62);
+                  CombatPoisonLifecycle.cancellationNotice(this, var2, var16, var21, var5, var62);
                   if (var16.timed().freeze()) {
                      this.removeClassicWorldFreezeEffectAndPublish(
                         this.classicWorldMapId, this.classicWorldInstanceId, var2.playerObjectId(), var21, "Cancellation"
@@ -67769,13 +67555,11 @@ final class ClientSession implements Runnable {
                local.lito381.server.BattleCompanion.MagicCancellation var21 = null;
                local.lito381.server.ClassicWorldMonsterPopulation.MagicCancellation var22 = null;
                long var25 = System.nanoTime();
-               boolean var36 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var20;
                boolean var23;
                int var24;
-               try {
-                  var36 = true;
+               {
                   long var28 = this.spellReadyNanos.getOrDefault(var6.skillId(), 0L);
                   if (var25 < var28
                      || this.playerMp < var19
@@ -67802,8 +67586,8 @@ final class ClientSession implements Runnable {
 
                   RuntimeInventory var30 = this.inventory.copy();
                   // Preserve the candidate patch branch in javac output.
-                  boolean candidateMaterialBranch25 = false;
-                  if (candidateMaterialBranch25) {
+                  boolean candidateMaterialAvailable25 = true;
+                  if (!candidateMaterialAvailable25) {
                      this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Cancellation-missing-reagent=299");
                      System.out
                         .println(
@@ -67868,11 +67652,6 @@ final class ClientSession implements Runnable {
                   this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var19);
                   var24 = this.playerMp;
                   this.commitSpellReady(var6.skillId(), var25 + var6.reuseDelayMillis() * 1000000L);
-                  var36 = false;
-               } finally {
-                  if (var36) {
-                     ;
-                  }
                }
 
                this.cancelAbsoluteBarrier("spell-" + var6.skillId());
@@ -68034,13 +67813,11 @@ final class ClientSession implements Runnable {
                      int var18 = NativeSkillConsumptionBridges.WaterLifeSpell_effectiveMpCost_II(var2, var17, var34);
                      ClientSession var19 = this.playerObjectId() <= var14.playerObjectId() ? this : var14;
                      ClientSession var20 = var19 == this ? var14 : this;
-                     boolean var38 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var21;
                      int var22;
                      boolean var23;
-                     try {
-                        var38 = true;
+                     {
 
                         label472: {
                            try {
@@ -68096,11 +67873,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var38 = false;
-                     } finally {
-                        if (var38) {
-                           ;
-                        }
                      }
 
                      this.nativeSpellRevealControlled("spell-" + var2.skillId());
@@ -68285,13 +68057,11 @@ final class ClientSession implements Runnable {
                      int var39 = var35 ? 100 : (var38 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var38);
                      ClientSession var44 = var10 != null && this.playerObjectId() > var10.playerObjectId() ? var10 : this;
                      ClientSession var45 = var10 == null ? this : (var44 == this ? var10 : this);
-                     boolean var60 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var40;
                      int var41;
                      long var67;
-                     try {
-                        var60 = true;
+                     {
 
                         label834: {
                            try {
@@ -68396,11 +68166,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var60 = false;
-                     } finally {
-                        if (var60) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("spell-" + var2.skillId());
@@ -68628,13 +68393,11 @@ final class ClientSession implements Runnable {
                      int var38 = !var34 || var33 ? 100 : (var37 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var37);
                      ClientSession var43 = var10 != null && this.playerObjectId() > var10.playerObjectId() ? var10 : this;
                      ClientSession var44 = var10 == null ? this : (var43 == this ? var10 : this);
-                     boolean var59 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var39;
                      int var40;
                      long var66;
-                     try {
-                        var59 = true;
+                     {
 
                         label870: {
                            try {
@@ -68720,11 +68483,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var59 = false;
-                     } finally {
-                        if (var59) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("classic-world-spell-" + var2.skillId());
@@ -68868,6 +68626,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeMaterialItemWeaponEnchantBody(byte[] byArray, BattleSpellCatalog.ItemWeaponEnchantSpell itemWeaponEnchantSpell) throws IOException {
+        byte[] objectPacket;
         long l;
         Object object;
         int n;
@@ -68945,13 +68704,13 @@ final class ClientSession implements Runnable {
         }
         this.sendEncrypted(Protocol.manaPoint(n8, this.playerMaxMp), "S_MANA_POINT " + string + "=" + n8 + "/" + this.playerMaxMp);
         this.sendInventoryDelta(runtimeInventory2, NativeCastMaterial.next(this));
-        object = Protocol.objectAction(this.playerObjectId(), itemWeaponEnchantSpell.actionId());
+        objectPacket = Protocol.objectAction(this.playerObjectId(), itemWeaponEnchantSpell.actionId());
         byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), itemWeaponEnchantSpell.effectGfx());
         List<ClientSession> list = phase == Phase.WORLD ? this.classicWorldMembers(n7) : this.hub.roomMembers(l2);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && (clientSession2.phase != Phase.WORLD || clientSession2.classicWorldMapId != n7 || clientSession2.classicWorldInstanceId != n6 || clientSession2 != this && !BattleSpellCatalog.isInNativeScreen(n5, n4, clientSession2.positionX, clientSession2.positionY))) continue;
             if (!this.invisible || clientSession2 == this) {
-                clientSession2.sendEncrypted((byte[])object, "S_ACTION " + string + " caster=" + this.playerObjectId() + " action=" + itemWeaponEnchantSpell.actionId());
+                clientSession2.sendEncrypted(objectPacket, "S_ACTION " + string + " caster=" + this.playerObjectId() + " action=" + itemWeaponEnchantSpell.actionId());
             }
             clientSession2.sendEncrypted(byArray2, "S_EFFECT " + string + " target=" + this.playerObjectId() + " gfx=" + itemWeaponEnchantSpell.effectGfx());
         }
@@ -69015,7 +68774,6 @@ final class ClientSession implements Runnable {
             long var28 = System.nanoTime();
             ClientSession var30 = this.playerObjectId() <= var12.playerObjectId() ? this : var12;
             ClientSession var31 = var30 == this ? var12 : this;
-            boolean var44 = false /* VF: Semaphore variable */;
 
             RuntimeInventory var22;
             int var23;
@@ -69023,8 +68781,7 @@ final class ClientSession implements Runnable {
             boolean var25;
             BattlePolymorphCatalog.Form var26;
             ClientSession.PolymorphEquipmentChange var27;
-            try {
-               var44 = true;
+            {
 
                label553: {
                   try {
@@ -69117,11 +68874,6 @@ final class ClientSession implements Runnable {
                   return;
                }
 
-               var44 = false;
-            } finally {
-               if (var44) {
-                  ;
-               }
             }
 
             this.cancelMeditation("spell-" + var2.skillId());
@@ -69335,13 +69087,11 @@ final class ClientSession implements Runnable {
                         : this.config.weaknessFixturePercentileRoll();
                      ClientSession var46 = var14 != null && this.playerObjectId() > var14.playerObjectId() ? var14 : this;
                      ClientSession var47 = var14 == null ? this : (var46 == this ? var14 : this);
-                     boolean var62 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var42;
                      int var43;
                      long var69;
-                     try {
-                        var62 = true;
+                     {
 
                         label939: {
                            try {
@@ -69457,11 +69207,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var62 = false;
-                     } finally {
-                        if (var62) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("spell-" + var2.skillId());
@@ -69712,13 +69457,11 @@ final class ClientSession implements Runnable {
                      int var40 = !var36 ? 100 : (var39 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var39);
                      ClientSession var45 = var12 != null && this.playerObjectId() > var12.playerObjectId() ? var12 : this;
                      ClientSession var46 = var12 == null ? this : (var45 == this ? var12 : this);
-                     boolean var61 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var41;
                      int var42;
                      long var68;
-                     try {
-                        var61 = true;
+                     {
 
                         label887: {
                            try {
@@ -69805,11 +69548,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var61 = false;
-                     } finally {
-                        if (var61) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("classic-world-spell-" + var2.skillId());
@@ -69989,14 +69727,12 @@ final class ClientSession implements Runnable {
                var5 == null ? 0 : var5.type(), var5 == null ? 0 : Math.max(0, var5.originalIntelligence())
             );
             int var9 = NativeSkillConsumptionBridges.GroundSpell_effectiveMpCost_III(var2, var7, var8);
-            boolean var28 = false /* VF: Semaphore variable */;
 
             BattleGroundEffects.CastResult var11;
             int var12;
             long var13;
             int var17;
-            try {
-               var28 = true;
+            {
                long var19 = System.nanoTime();
                long var21 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                var13 = this.currentRoomId;
@@ -70038,8 +69774,8 @@ final class ClientSession implements Runnable {
 
                RuntimeInventory var25 = this.inventory.copy();
                // Preserve the candidate patch branch in javac output.
-               boolean candidateMaterialBranch31 = false;
-               if (var2.itemConsumeId() != 0L && candidateMaterialBranch31) {
+               boolean candidateMaterialAvailable31 = true;
+               if (var2.itemConsumeId() != 0L && !candidateMaterialAvailable31) {
                   System.out
                      .println(
                         "[LiTo] C_USE_SPELL ground rejected missing reagent skill="
@@ -70060,11 +69796,6 @@ final class ClientSession implements Runnable {
                }
 
                var12 = this.playerMp;
-               var28 = false;
-            } finally {
-               if (var28) {
-                  ;
-               }
             }
 
             this.cancelMeditation("spell-" + var2.skillId());
@@ -70157,12 +69888,10 @@ final class ClientSession implements Runnable {
                );
                int var14 = NativeSkillConsumptionBridges.GroundSpell_effectiveMpCost_III(var2, var12, var13);
                int var18 = heading(var6, var7, var3.x(), var3.y());
-               boolean var29 = false /* VF: Semaphore variable */;
 
                local.lito381.server.ClassicWorldGroundEffects.CastResult var16;
                int var17;
-               try {
-                  var29 = true;
+               {
                   long var19 = System.nanoTime();
                   long var22 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                   int var24 = Math.max(Math.abs(var6 - var3.x()), Math.abs(var7 - var3.y()));
@@ -70199,8 +69928,8 @@ final class ClientSession implements Runnable {
 
                   RuntimeInventory var25 = this.inventory.copy();
                   // Preserve the candidate patch branch in javac output.
-                  boolean candidateMaterialBranch32 = false;
-                  if (var2.itemConsumeId() != 0L && candidateMaterialBranch32) {
+                  boolean candidateMaterialAvailable32 = true;
+                  if (var2.itemConsumeId() != 0L && !candidateMaterialAvailable32) {
                      System.out
                         .println(
                            "[LiTo] C_USE_SPELL classic-world ground rejected missing reagent skill="
@@ -70222,11 +69951,6 @@ final class ClientSession implements Runnable {
                   }
 
                   var17 = this.playerMp;
-                  var29 = false;
-               } finally {
-                  if (var29) {
-                     ;
-                  }
                }
 
                this.cancelMeditation("classic-world-spell-" + var2.skillId());
@@ -70362,11 +70086,9 @@ final class ClientSession implements Runnable {
                   long var23 = System.nanoTime();
                   ClientSession var25 = var4 != null && this.playerObjectId() > var4.playerObjectId() ? var4 : this;
                   ClientSession var26 = var4 == null ? null : (var25 == this ? var4 : this);
-                  boolean var41 = false /* VF: Semaphore variable */;
 
                   ClientSession.ResurrectionCastCommit var22;
-                  try {
-                     var41 = true;
+                  {
                      if (var26 != null) {
                         try {
                            var22 = this.commitResurrectionCast(var2, var4, var21, var23);
@@ -70377,11 +70099,6 @@ final class ClientSession implements Runnable {
                         var22 = this.commitResurrectionCast(var2, null, var21, var23);
                      }
 
-                     var41 = false;
-                  } finally {
-                     if (var41) {
-                        ;
-                     }
                   }
 
                   if (!var22.accepted()) {
@@ -70491,6 +70208,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeResurrectionAnswerBody(Protocol.AskAnswer askAnswer) throws IOException {
+        byte[] objectPacket;
         boolean bl;
         PendingResurrection pendingResurrection = this.pendingResurrection;
         NativeResurrectionAnswerLife.capture(this, null);
@@ -70504,7 +70222,6 @@ final class ClientSession implements Runnable {
         ClientSession clientSession = pendingResurrection.caster();
         BattleSpellCatalog.ResurrectionSpell resurrectionSpell = pendingResurrection.spell();
         boolean bl2 = resurrectionSpell != null && askAnswer.questionId() == resurrectionSpell.questionId() && askAnswer.answer() == 1 && askAnswer.text().isEmpty();
-        Object object = this;
         boolean bl3 = bl2 && clientSession != null && clientSession != this && this.phase == pendingResurrection.originPhase() && clientSession.phase == pendingResurrection.originPhase() && !this.observer && !clientSession.observer && this.playerHp == 0 && clientSession.playerHp > 0;
         boolean bl4 = bl3 && pendingResurrection.originPhase() == Phase.BATTLE && pendingResurrection.roomId() == this.currentRoomId && clientSession.currentRoomId == this.currentRoomId && this.hub.battleStarted(this.currentRoomId) && this.hub.roomCombatants(this.currentRoomId).contains(this) && this.hub.roomCombatants(this.currentRoomId).contains(clientSession) && this.hub.battleMapId(this.currentRoomId, this) == this.hub.battleMapId(this.currentRoomId, clientSession);
         boolean bl5 = bl3 && pendingResurrection.originPhase() == Phase.WORLD && this.classicWorldMapId == pendingResurrection.mapId() && clientSession.classicWorldMapId == pendingResurrection.mapId() && this.classicWorldInstanceId == pendingResurrection.instanceId() && clientSession.classicWorldInstanceId == pendingResurrection.instanceId() && ClassicWorldResurrectionCatalog.allowsSelectedMap(pendingResurrection.mapId(), true);
@@ -70528,12 +70245,12 @@ final class ClientSession implements Runnable {
         if (phase == Phase.BATTLE) {
             this.hub.respawn(this.currentRoomId, this);
         }
-        object = Protocol.effectObject(this.playerObjectId(), 230);
+        objectPacket = Protocol.effectObject(this.playerObjectId(), 230);
         byte[] byArray = Protocol.resurrect(this.playerObjectId(), 0, clientSession.playerObjectId(), n2);
         List<ClientSession> list = phase == Phase.WORLD ? this.hub.classicWorldMembers(n3, n4) : this.hub.roomMembers(this.currentRoomId);
         for (ClientSession clientSession2 : list) {
             if (phase == Phase.WORLD && !BattleSpellCatalog.isInNativeScreen(clientSession2.positionX, clientSession2.positionY, this.positionX, this.positionY)) continue;
-            clientSession2.sendEncrypted((byte[])object, "S_EFFECT resurrection-accepted target=" + this.playerObjectId() + " gfx=230");
+            clientSession2.sendEncrypted(objectPacket, "S_EFFECT resurrection-accepted target=" + this.playerObjectId() + " gfx=230");
             clientSession2.sendEncrypted(byArray, "S_RESURRECT player target=" + this.playerObjectId() + " source=" + clientSession.playerObjectId() + " gfx=" + n2);
         }
         this.sendEncrypted(new Protocol.Writer().c(13).h(n).h(this.playerMaxHp).bytes(), "S_HIT_POINT resurrection=" + n + "/" + this.playerMaxHp);
@@ -70762,11 +70479,9 @@ final class ClientSession implements Runnable {
                   long var27 = System.nanoTime();
                   ClientSession var29 = var7 != null && this.playerObjectId() > var7.playerObjectId() ? var7 : this;
                   ClientSession var30 = var7 == null ? null : (var29 == this ? var7 : this);
-                  boolean var43 = false /* VF: Semaphore variable */;
 
                   ClientSession.ResurrectionCastCommit var26;
-                  try {
-                     var43 = true;
+                  {
                      if (var30 != null) {
                         try {
                            var26 = this.commitClassicWorldResurrectionCast(var2, var7, var4, var5, var25, var27);
@@ -70777,11 +70492,6 @@ final class ClientSession implements Runnable {
                         var26 = this.commitClassicWorldResurrectionCast(var2, null, var4, var5, var25, var27);
                      }
 
-                     var43 = false;
-                  } finally {
-                     if (var43) {
-                        ;
-                     }
                   }
 
                   if (!var26.accepted()) {
@@ -71044,12 +70754,10 @@ final class ClientSession implements Runnable {
                         );
                         int var32 = NativeSkillConsumptionBridges.ResurrectionSpell_effectiveMpCost_III(var2, var30, var31);
                         long var35 = System.nanoTime();
-                        boolean var49 = false /* VF: Semaphore variable */;
 
                         RuntimeInventory var33;
                         int var34;
-                        try {
-                           var49 = true;
+                        {
                            long var38 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                            boolean var40 = this.phase == var4
                               && !this.observer
@@ -71074,8 +70782,8 @@ final class ClientSession implements Runnable {
 
                            var35 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch33 = false;
-                           if (candidateMaterialBranch33) {
+                           boolean candidateMaterialAvailable33 = true;
+                           if (!candidateMaterialAvailable33) {
                               NativeCallNatureMaterialAction.publish(this, Protocol.messageCode(299), "S_MESSAGE_CODE Call-of-Nature-missing-reagent=299");
                               return;
                            }
@@ -71085,11 +70793,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var32);
                            var34 = this.playerMp;
                            this.commitSpellReady(var2.skillId(), var35 + var2.reuseDelayMillis() * 1000000L);
-                           var49 = false;
-                        } finally {
-                           if (var49) {
-                              ;
-                           }
                         }
 
                         this.sendInventoryDelta(var33, NativeCastMaterial.next(this));
@@ -71356,12 +71059,10 @@ final class ClientSession implements Runnable {
                         int var36 = var2.skillId() != 103 && var2.skillId() != 40 ? 0 : this.config.darkBlindFixtureRoll();
                         int var37 = var34 ? 100 : (var36 > 0 ? var36 : ThreadLocalRandom.current().nextInt(1, 101));
                         RuntimeInventory var38 = null;
-                        boolean var53 = false /* VF: Semaphore variable */;
 
                         int var39;
                         long var40;
-                        try {
-                           var53 = true;
+                        {
                            var40 = System.nanoTime();
                            if (var4 && !LiToBotEffects.eligible(this.hub, this.currentRoomId)) {
                               return;
@@ -71391,8 +71092,8 @@ final class ClientSession implements Runnable {
 
                               var40 = System.nanoTime();
                               // Preserve the candidate patch branch in javac output.
-                              boolean candidateMaterialBranch34 = false;
-                              if (candidateMaterialBranch34) {
+                              boolean candidateMaterialAvailable34 = true;
+                              if (!candidateMaterialAvailable34) {
                                  this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE blind-missing-reagent=299");
                                  System.out
                                     .println(
@@ -71410,11 +71111,6 @@ final class ClientSession implements Runnable {
                            this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var22);
                            var39 = this.playerMp;
                            this.spellReadyNanos.put(var2.skillId(), var40 + var2.reuseDelayMillis() * 1000000L);
-                           var53 = false;
-                        } finally {
-                           if (var53) {
-                              ;
-                           }
                         }
 
                         this.cancelMeditation("spell-" + var2.skillId());
@@ -71633,12 +71329,10 @@ final class ClientSession implements Runnable {
                      int var40 = var2.skillId() != 103 && var2.skillId() != 40 ? 0 : this.config.darkBlindFixtureRoll();
                      int var41 = var37 || !var38 ? 100 : (var40 > 0 ? var40 : ThreadLocalRandom.current().nextInt(1, 101));
                      RuntimeInventory var42 = null;
-                     boolean var57 = false /* VF: Semaphore variable */;
 
                      int var43;
                      long var44;
-                     try {
-                        var57 = true;
+                     {
                         var44 = System.nanoTime();
                         long var47 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                         local.lito381.server.ClassicWorldMonsterPopulation.Snapshot var49 = var11 == null
@@ -71681,8 +71375,8 @@ final class ClientSession implements Runnable {
 
                            var44 = System.nanoTime();
                            // Preserve the candidate patch branch in javac output.
-                           boolean candidateMaterialBranch35 = false;
-                           if (candidateMaterialBranch35) {
+                           boolean candidateMaterialAvailable35 = true;
+                           if (!candidateMaterialAvailable35) {
                               this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Blind-missing-reagent=299");
                               System.out
                                  .println(
@@ -71705,11 +71399,6 @@ final class ClientSession implements Runnable {
                         this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var26);
                         var43 = this.playerMp;
                         this.commitSpellReady(var2.skillId(), var44 + var2.reuseDelayMillis() * 1000000L);
-                        var57 = false;
-                     } finally {
-                        if (var57) {
-                           ;
-                        }
                      }
 
                      this.cancelAbsoluteBarrier("classic-world-spell-" + var2.skillId());
@@ -71954,13 +71643,11 @@ final class ClientSession implements Runnable {
                      int var41 = var38 ? 100 : (var40 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var40);
                      ClientSession var46 = var10 != null && this.playerObjectId() > var10.playerObjectId() ? var10 : this;
                      ClientSession var47 = var10 == null ? this : (var46 == this ? var10 : this);
-                     boolean var62 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var42;
                      int var43;
                      long var69;
-                     try {
-                        var62 = true;
+                     {
 
                         label829: {
                            try {
@@ -72061,11 +71748,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var62 = false;
-                     } finally {
-                        if (var62) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("spell-" + var2.skillId());
@@ -72268,13 +71950,11 @@ final class ClientSession implements Runnable {
                      int var40 = !var37 || var36 ? 100 : (var39 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var39);
                      ClientSession var45 = var10 != null && this.playerObjectId() > var10.playerObjectId() ? var10 : this;
                      ClientSession var46 = var10 == null ? this : (var45 == this ? var10 : this);
-                     boolean var61 = false /* VF: Semaphore variable */;
 
                      RuntimeInventory var41;
                      int var42;
                      long var68;
-                     try {
-                        var61 = true;
+                     {
 
                         label888: {
                            try {
@@ -72359,11 +72039,6 @@ final class ClientSession implements Runnable {
                            return;
                         }
 
-                        var61 = false;
-                     } finally {
-                        if (var61) {
-                           ;
-                        }
                      }
 
                      this.cancelMeditation("classic-world-spell-" + var2.skillId());
@@ -72551,14 +72226,12 @@ final class ClientSession implements Runnable {
             int var21 = NativeSkillConsumptionBridges.DamageProtectionSpell_effectiveMpCost_III(var2, var19, var20);
             ClientSession var22 = this.playerObjectId() <= var12.playerObjectId() ? this : var12;
             ClientSession var23 = var22 == this ? var12 : this;
-            Object var24 = null;
+            RuntimeInventory var24 = null;
             boolean var25 = false;
             int var26 = -1;
             long var27 = System.nanoTime();
-            boolean var39 = false /* VF: Semaphore variable */;
 
-            try {
-               var39 = true;
+            {
 
                label533: {
                   try {
@@ -72624,11 +72297,6 @@ final class ClientSession implements Runnable {
                   return;
                }
 
-               var39 = false;
-            } finally {
-               if (var39) {
-                  ;
-               }
             }
 
             if (var25) {
@@ -72659,7 +72327,7 @@ final class ClientSession implements Runnable {
                }
 
                var12.sendEncrypted(Protocol.messageCode(var2.happenMessage()), "S_MESSAGE_CODE immune-to-harm-applied=" + var2.happenMessage());
-               this.sendInventoryDelta((RuntimeInventory)var24, NativeCastMaterial.next(this));
+               this.sendInventoryDelta(var24, NativeCastMaterial.next(this));
                this.sendEncrypted(Protocol.manaPoint(var26, this.playerMaxMp), "S_MANA_POINT immune-to-harm=" + var26 + "/" + this.playerMaxMp);
                System.out
                   .println(
@@ -72729,12 +72397,10 @@ final class ClientSession implements Runnable {
          } else {
             int var27 = this.nativeSkillConsumptionIntelligence();
             int var28 = this.nativeSkillConsumptionOriginalReduction();
-            boolean var32 = false /* VF: Semaphore variable */;
 
             RuntimeInventory var9;
             int var10;
-            try {
-               var32 = true;
+            {
                long var11 = System.nanoTime();
                long var14 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                int var16 = NativeSkillConsumptionBridges.ElementalSummonSpell_effectiveMpCost_I(var2, var27, var28);
@@ -72771,11 +72437,6 @@ final class ClientSession implements Runnable {
                this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var16);
                var10 = this.playerMp;
                this.commitSpellReady(var2.skillId(), var11 + var2.reuseDelayMillis() * 1000000L);
-               var32 = false;
-            } finally {
-               if (var32) {
-                  ;
-               }
             }
 
             this.sendInventoryDelta(var9, NativeCastMaterial.next(this));
@@ -74183,7 +73844,8 @@ final class ClientSession implements Runnable {
                 return 0;
             }
             n3 = clientSession.playerHp;
-            n2 = clientSession.playerHp = (int)Math.min((long)clientSession.playerMaxHp, Math.addExact((long)clientSession.playerHp, (long)n));
+            clientSession.playerHp = (int)Math.min((long)clientSession.playerMaxHp, Math.addExact((long)clientSession.playerHp, (long)n));
+            n2 = clientSession.playerHp;
         }
         if (n2 == n3) {
             return 0;
@@ -74840,7 +74502,8 @@ final class ClientSession implements Runnable {
     }
 
     private ClassicWorldFatalContext sourcePlayerLegacyWorldDirectDamage(double d, long l, CombatPoisonLifecycle.Scope scope) throws IOException {
-        Object object;
+        GameStateStore.GeneralPkState generalPk;
+        GameStateStore.ElfPkState elfPk;
         if (this.phase != Phase.WORLD || this.playerHp <= 0 || d <= 0.0) {
             return ClassicWorldFatalContext.NON_FATAL;
         }
@@ -74863,15 +74526,15 @@ final class ClientSession implements Runnable {
             return ClassicWorldFatalContext.NON_FATAL;
         }
         if (ClassicWorldGuardCatalog.isGuard(snapshot)) {
-            object = this.state.clearGeneralPkAfterGuardDeath(this.stateCharacter());
-            this.generalPkCount = ((GameStateStore.GeneralPkState)object).count();
-            this.lastPkEpochSeconds = ((GameStateStore.GeneralPkState)object).lastPkEpochSeconds();
+            generalPk = this.state.clearGeneralPkAfterGuardDeath(this.stateCharacter());
+            this.generalPkCount = (generalPk).count();
+            this.lastPkEpochSeconds = (generalPk).lastPkEpochSeconds();
             System.out.println("[LiTo] L1Guard death absolution player=" + this.playerName() + " guard=" + snapshot.objectId() + " pk-count=" + this.generalPkCount + " last-pk-cleared=true");
         }
         if (ClassicWorldGuardianCatalog.isGuardian(snapshot)) {
-            object = this.state.clearElfPkAfterGuardianDeath(this.stateCharacter());
-            this.elfPkCount = ((GameStateStore.ElfPkState)object).count();
-            this.lastPkForElfEpochSeconds = ((GameStateStore.ElfPkState)object).lastPkEpochSeconds();
+            elfPk = this.state.clearElfPkAfterGuardianDeath(this.stateCharacter());
+            this.elfPkCount = (elfPk).count();
+            this.lastPkForElfEpochSeconds = (elfPk).lastPkEpochSeconds();
             System.out.println("[LiTo] L1Guardian death absolution player=" + this.playerName() + " guardian=" + snapshot.objectId() + " elf-pk-count=" + this.elfPkCount + " last-pk-for-elf-cleared=true");
         }
         this.deathConfirmationPending = false;
@@ -74973,15 +74636,16 @@ final class ClientSession implements Runnable {
             }
             playerMagicCancellation = new PlayerMagicCancellation(magicCancellation, n, n2, cancellation, cancellation2, bl, form, list, bl2, bl3, cancellation3, bl4, bl5, bl6, bl7, cancellation4, bl8, bl9, bl10, bl11, bl12, bl13, bl14, bl15, bl16, bl17, bl18, bl19, bl20, bl21, bl22, bl23, bl24);
         }
-        object = this.hub.roomMembers(this.currentRoomId);
+        List<ClientSession> recipients = this.hub.roomMembers(this.currentRoomId);
         this.broadcastFatalityEffect(effect, List.of(this));
-        CombatPoisonLifecycle.cancellationNotice(this, this, playerMagicCancellation, (List<ClientSession>)object, l, silenceNotice);
+        CombatPoisonLifecycle.cancellationNotice(this, this, playerMagicCancellation, recipients, l, silenceNotice);
     }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void sourcePoisonBody$attemptEnchantVenomPoison(ClientSession clientSession, BattleQuestEncounter.Snapshot snapshot, BattleTimeAttackEncounter.Snapshot snapshot2, ClassicWorldMonsterPopulation.Snapshot snapshot3, boolean bl, boolean bl2, long l, CombatPoisonLifecycle.Scope scope) throws IOException {
+        byte[] objectPacket;
         Object object;
         boolean bl3;
         long l2 = System.nanoTime();
@@ -75029,28 +74693,28 @@ final class ClientSession implements Runnable {
                 CombatPoisonLifecycle.palette(clientSession, clientSession.currentPoisonPalette(l2), "Enchant-Venom-proc", scope);
             } else if (snapshot != null) {
                 int n3 = this.hub.questMonsterPoisonPalette(this.currentRoomId, snapshot.objectId(), l2);
-                object = Protocol.poison(snapshot.objectId(), n3);
+                objectPacket = Protocol.poison(snapshot.objectId(), n3);
                 for (ClientSession clientSession2 : this.hub.battleRecipients(this.currentRoomId, snapshot.force())) {
-                    clientSession2.sendEncrypted((byte[])object, "S_POISON quest-monster=" + snapshot.objectId() + " type=" + n3 + " reason=Enchant-Venom-proc");
+                    clientSession2.sendEncrypted(objectPacket, "S_POISON quest-monster=" + snapshot.objectId() + " type=" + n3 + " reason=Enchant-Venom-proc");
                 }
             } else if (snapshot2 != null) {
                 int n4 = this.hub.timeAttackActorPoisonPalette(this.currentRoomId, snapshot2.objectId(), l2);
-                object = Protocol.poison(snapshot2.objectId(), n4);
+                objectPacket = Protocol.poison(snapshot2.objectId(), n4);
                 for (ClientSession clientSession3 : this.hub.roomMembers(this.currentRoomId)) {
-                    clientSession3.sendEncrypted((byte[])object, "S_POISON timeattack-actor=" + snapshot2.objectId() + " type=" + n4 + " reason=Enchant-Venom-proc");
+                    clientSession3.sendEncrypted(objectPacket, "S_POISON timeattack-actor=" + snapshot2.objectId() + " type=" + n4 + " reason=Enchant-Venom-proc");
                 }
             } else if (snapshot3 != null) {
                 int n5 = this.hub.classicWorldMonsterPoisonPalette(this.classicWorldMapId, this.classicWorldInstanceId, snapshot3.objectId(), l2);
-                object = CombatMonsterCurseLifecycle.packet(snapshot3.objectId(), n5, this, scope);
+                objectPacket = CombatMonsterCurseLifecycle.packet(snapshot3.objectId(), n5, this, scope);
                 Iterator<ClientSession> iterator = this.classicWorldMembers(this.classicWorldMapId).iterator();
                 while (true) {
                     if (!iterator.hasNext()) {
-                        CombatMonsterCurseLifecycle.paletteFinished((byte[])object, scope);
+                        CombatMonsterCurseLifecycle.paletteFinished(objectPacket, scope);
                         break;
                     }
                     ClientSession clientSession4 = iterator.next();
                     if (!this.sameClassicWorldMap(clientSession4) || !BattleSpellCatalog.isInNativeScreen(clientSession4.positionX, clientSession4.positionY, snapshot3.x(), snapshot3.y())) continue;
-                    CombatMonsterCurseLifecycle.send(clientSession4, (byte[])object, "S_POISON classic-world-monster=" + snapshot3.objectId() + " type=" + n5 + " reason=Enchant-Venom-proc", scope);
+                    CombatMonsterCurseLifecycle.send(clientSession4, objectPacket, "S_POISON classic-world-monster=" + snapshot3.objectId() + " type=" + n5 + " reason=Enchant-Venom-proc", scope);
                 }
             }
         }
@@ -75058,37 +74722,39 @@ final class ClientSession implements Runnable {
     }
 
     private void sourcePoisonBody$publishClassicWorldMonsterPoisonUpdate(ClassicWorldMonsterPopulation.PoisonUpdate poisonUpdate, long l, CombatPoisonLifecycle.Scope scope) throws IOException {
-        Object object;
-        Object object2;
+        ClientSession recipient;
+        ClassicWorldMonsterPopulation.Snapshot monsterSnapshot;
+        Iterator<ClientSession> recipients;
+        byte[] objectPacket;
         List<ClientSession> list = CombatMonsterCurseLifecycle.damageMembers(this, this.classicWorldMapId, poisonUpdate, scope);
         ClientSession clientSession2 = CombatMonsterCurseLifecycle.damageOwner(list.stream().filter(clientSession -> this.sameClassicWorldMap((ClientSession)clientSession) && clientSession.playerObjectId() == poisonUpdate.playerObjectId()).findFirst().orElse(null), poisonUpdate, scope);
         for (ClassicWorldMonsterPopulation.Hit object3 : poisonUpdate.hits()) {
-            object2 = object3.after();
-            object = NativeBattleTamedLifecycle.visualHitRatio(((ClassicWorldMonsterPopulation.Snapshot)object2).objectId(), ((ClassicWorldMonsterPopulation.Snapshot)object2).currentHp(), ((ClassicWorldMonsterPopulation.Snapshot)object2).maximumHp());
+            monsterSnapshot = object3.after();
+            objectPacket = NativeBattleTamedLifecycle.visualHitRatio((monsterSnapshot).objectId(), (monsterSnapshot).currentHp(), (monsterSnapshot).maximumHp());
             for (ClientSession clientSession3 : list) {
-                if (!CombatMonsterCurseLifecycle.damageSameMap(this, clientSession3, poisonUpdate, scope) || !BattleSpellCatalog.isInNativeScreen(clientSession3.positionX, clientSession3.positionY, ((ClassicWorldMonsterPopulation.Snapshot)object2).x(), ((ClassicWorldMonsterPopulation.Snapshot)object2).y())) continue;
-                CombatMonsterCurseLifecycle.damageSend(clientSession3, (byte[])object, "S_HIT_RATIO classic-world-monster=" + ((ClassicWorldMonsterPopulation.Snapshot)object2).objectId() + " hp=" + ((ClassicWorldMonsterPopulation.Snapshot)object2).currentHp() + "/" + ((ClassicWorldMonsterPopulation.Snapshot)object2).maximumHp() + " source=Curse-Poison-tick", poisonUpdate, scope);
+                if (!CombatMonsterCurseLifecycle.damageSameMap(this, clientSession3, poisonUpdate, scope) || !BattleSpellCatalog.isInNativeScreen(clientSession3.positionX, clientSession3.positionY, (monsterSnapshot).x(), (monsterSnapshot).y())) continue;
+                CombatMonsterCurseLifecycle.damageSend(clientSession3, objectPacket, "S_HIT_RATIO classic-world-monster=" + (monsterSnapshot).objectId() + " hp=" + (monsterSnapshot).currentHp() + "/" + (monsterSnapshot).maximumHp() + " source=Curse-Poison-tick", poisonUpdate, scope);
                 if (!object3.diedNow()) continue;
-                CombatMonsterCurseLifecycle.damageSend(clientSession3, Protocol.poison(((ClassicWorldMonsterPopulation.Snapshot)object2).objectId(), 0), "S_POISON classic-world-monster=" + ((ClassicWorldMonsterPopulation.Snapshot)object2).objectId() + " type=0 reason=damage-poison-death", poisonUpdate, scope);
-                CombatMonsterCurseLifecycle.damageSend(clientSession3, Protocol.objectAction(((ClassicWorldMonsterPopulation.Snapshot)object2).objectId(), 8), "S_ACTION classic-world-monster=" + ((ClassicWorldMonsterPopulation.Snapshot)object2).objectId() + " action=8 source=Curse-Poison-tick", poisonUpdate, scope);
+                CombatMonsterCurseLifecycle.damageSend(clientSession3, Protocol.poison((monsterSnapshot).objectId(), 0), "S_POISON classic-world-monster=" + (monsterSnapshot).objectId() + " type=0 reason=damage-poison-death", poisonUpdate, scope);
+                CombatMonsterCurseLifecycle.damageSend(clientSession3, Protocol.objectAction((monsterSnapshot).objectId(), 8), "S_ACTION classic-world-monster=" + (monsterSnapshot).objectId() + " action=8 source=Curse-Poison-tick", poisonUpdate, scope);
             }
             if (object3.diedNow()) {
-                CombatMonsterCurseLifecycle.damageBoss(this, (ClassicWorldMonsterPopulation.Snapshot)object2, object3.contributions(), poisonUpdate, scope);
+                CombatMonsterCurseLifecycle.damageBoss(this, monsterSnapshot, object3.contributions(), poisonUpdate, scope);
                 if (clientSession2 != null) {
-                    clientSession2.distributeClassicWorldMonsterRewards((ClassicWorldMonsterPopulation.Snapshot)object2, object3.contributions());
+                    clientSession2.distributeClassicWorldMonsterRewards(monsterSnapshot, object3.contributions());
                 }
-                CombatMonsterCurseLifecycle.damageSchedule(this.hub, this.classicWorldInstanceId, (ClassicWorldMonsterPopulation.Snapshot)object2, poisonUpdate, scope);
+                CombatMonsterCurseLifecycle.damageSchedule(this.hub, this.classicWorldInstanceId, monsterSnapshot, poisonUpdate, scope);
             }
-            System.out.println("[LiTo] classic-world monster poison tick map=" + this.classicWorldMapId + " instance=" + this.classicWorldInstanceId + " attacker=" + poisonUpdate.attackerObjectId() + " owner=" + poisonUpdate.playerObjectId() + " contributor=" + String.valueOf((Object)poisonUpdate.contributorKind()) + " object=" + ((ClassicWorldMonsterPopulation.Snapshot)object2).objectId() + " damage=" + object3.appliedDamage() + " hp=" + ((ClassicWorldMonsterPopulation.Snapshot)object2).currentHp() + "/" + ((ClassicWorldMonsterPopulation.Snapshot)object2).maximumHp() + " died=" + object3.diedNow());
+            System.out.println("[LiTo] classic-world monster poison tick map=" + this.classicWorldMapId + " instance=" + this.classicWorldInstanceId + " attacker=" + poisonUpdate.attackerObjectId() + " owner=" + poisonUpdate.playerObjectId() + " contributor=" + String.valueOf((Object)poisonUpdate.contributorKind()) + " object=" + (monsterSnapshot).objectId() + " damage=" + object3.appliedDamage() + " hp=" + (monsterSnapshot).currentHp() + "/" + (monsterSnapshot).maximumHp() + " died=" + object3.diedNow());
         }
         if (poisonUpdate.expired() && poisonUpdate.target().alive()) {
             int n = this.hub.classicWorldMonsterPoisonPalette(this.classicWorldMapId, this.classicWorldInstanceId, poisonUpdate.target().objectId(), l);
             byte[] byArray = Protocol.poison(poisonUpdate.target().objectId(), n);
-            object2 = list.iterator();
-            while (((Iterator<?>)object2).hasNext()) {
-                object = (ClientSession)((Iterator<?>)object2).next();
-                if (!CombatMonsterCurseLifecycle.damageSameMap(this, (ClientSession)object, poisonUpdate, scope) || !BattleSpellCatalog.isInNativeScreen(((ClientSession)object).positionX, ((ClientSession)object).positionY, poisonUpdate.target().x(), poisonUpdate.target().y())) continue;
-                CombatMonsterCurseLifecycle.damageSend((ClientSession)object, byArray, "S_POISON classic-world-monster=" + poisonUpdate.target().objectId() + " type=" + n + " reason=damage-poison-expired", poisonUpdate, scope);
+            recipients = list.iterator();
+            while ((recipients).hasNext()) {
+                recipient = (ClientSession)(recipients).next();
+                if (!CombatMonsterCurseLifecycle.damageSameMap(this, recipient, poisonUpdate, scope) || !BattleSpellCatalog.isInNativeScreen((recipient).positionX, (recipient).positionY, poisonUpdate.target().x(), poisonUpdate.target().y())) continue;
+                CombatMonsterCurseLifecycle.damageSend(recipient, byArray, "S_POISON classic-world-monster=" + poisonUpdate.target().objectId() + " type=" + n + " reason=damage-poison-expired", poisonUpdate, scope);
             }
         }
     }
@@ -75339,7 +75005,25 @@ final class ClientSession implements Runnable {
     }
 
     private void sourcePoisonBody$serverExpireTimedStatuses(long l, CombatPoisonLifecycle.Scope scope) throws IOException {
-        Object object;
+        Iterator<ClientSession> battleRecipients;
+        ClientSession hasteRecipient;
+        Iterator<ClientSession> slowRecipients;
+        List<ClientSession> freezeRecipients;
+        List<ClientSession> earthBindRecipients;
+        BattleSpellCatalog.ItemWeaponEnchantSpell weaponEnchantSpell;
+        BattleTimedStatus.SlowExpiration slowExpiration;
+        List<ClientSession> hasteRecipients;
+        BattleCompanion.Snapshot slowSnapshot;
+        BattleCompanion.Snapshot freezeSnapshot;
+        BattleCompanion.Snapshot earthBindSnapshot;
+        BattleSpellCatalog.EarthBlessSpell earthBlessSpell;
+        BattleSpellCatalog.IronSkinSpell ironSkinSpell;
+        Iterator<BattleItemArmorEnchantStatus.Expiration> armorExpirations;
+        BattlePolymorphCatalog.Form expiredPolymorph;
+        BattleCompanion companion;
+        BattleSpellCatalog.ShieldSpell shieldSpell;
+        byte[] object4Packet;
+        byte[] objectPacket;
         BattleExperienceGemCatalog.Gem gem;
         BattleTimedStatus.HasteExpiration hasteExpiration;
         BattleWeaponBuffStatus.Modifier modifier;
@@ -75347,9 +75031,6 @@ final class ClientSession implements Runnable {
         int n2;
         int n3;
         int n4;
-        Object object2;
-        Object object3;
-        Object object4;
         IllusionStatusIcons.sync(this);
         this.serverExpireArenaBotHaste(l);
         this.serverSynchronizeBattleClock(l);
@@ -75370,64 +75051,64 @@ final class ClientSession implements Runnable {
                 Iterator<ClientSession> iterator;
                 int byArray;
                 int effect;
-                object4 = this.ownedCompanion(record.objectId());
-                if (object4 == null || bl2 && this.pollClassicWorldCompanionPoison((BattleCompanion)object4, record, l)) continue;
+                companion = this.ownedCompanion(record.objectId());
+                if (companion == null || bl2 && this.pollClassicWorldCompanionPoison(companion, record, l)) continue;
                 if (bl2) {
-                    this.pollClassicWorldCompanionCurseParalysis((BattleCompanion)object4, record, l);
+                    this.pollClassicWorldCompanionCurseParalysis(companion, record, l);
                 }
-                if (((BattleCompanion)object4).expireEraseMagic(l)) {
+                if ((companion).expireEraseMagic(l)) {
                     System.out.println("[LiTo] native Erase Magic expired companion=" + record.objectId() + " owner=" + this.playerName() + " icon=omitted-no-selected-LiTo-packetbox-receiver");
                 }
-                if (((BattleCompanion)object4).expirePanic(l)) {
+                if ((companion).expirePanic(l)) {
                     System.out.println("[LiTo] native Panic expired companion=" + record.objectId() + " owner=" + this.playerName() + " str=0 con=0 dex=0 int=0 wis=0 cha=unchanged persisted=false");
                 }
-                if ((effect = ((BattleCompanion)object4).expireHaste(l)) != 0) {
-                    BattleCompanion.Snapshot byArray2 = ((BattleCompanion)object4).snapshot();
-                    object3 = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
-                    Iterator iterator2 = ((List<ClientSession>)object3).iterator();
+                if ((effect = (companion).expireHaste(l)) != 0) {
+                    BattleCompanion.Snapshot byArray2 = (companion).snapshot();
+                    hasteRecipients = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
+                    Iterator iterator2 = (hasteRecipients).iterator();
                     while (iterator2.hasNext()) {
-                        object2 = (ClientSession)iterator2.next();
-                        if (bl2 && (!this.sameClassicWorldMap((ClientSession)object2) || !BattleSpellCatalog.isInNativeScreen(((ClientSession)object2).positionX, ((ClientSession)object2).positionY, byArray2.x(), byArray2.y()))) continue;
-                        ((ClientSession)object2).sendEncrypted(Protocol.speed(byArray2.objectId(), Protocol.SpeedMode.fromWire(byArray2.moveSpeed()), 0), "S_SPEED " + (bl2 ? "classic-world-" : "") + "companion=" + byArray2.objectId() + " type=" + byArray2.moveSpeed() + " duration=0 reason=Haste-expired");
+                        hasteRecipient = (ClientSession)iterator2.next();
+                        if (bl2 && (!this.sameClassicWorldMap(hasteRecipient) || !BattleSpellCatalog.isInNativeScreen((hasteRecipient).positionX, (hasteRecipient).positionY, byArray2.x(), byArray2.y()))) continue;
+                        (hasteRecipient).sendEncrypted(Protocol.speed(byArray2.objectId(), Protocol.SpeedMode.fromWire(byArray2.moveSpeed()), 0), "S_SPEED " + (bl2 ? "classic-world-" : "") + "companion=" + byArray2.objectId() + " type=" + byArray2.moveSpeed() + " duration=0 reason=Haste-expired");
                     }
                 }
-                if ((byArray = ((BattleCompanion)object4).expireSlow(l)) != 0) {
-                    object3 = ((BattleCompanion)object4).snapshot();
+                if ((byArray = (companion).expireSlow(l)) != 0) {
+                    slowSnapshot = (companion).snapshot();
                     List<ClientSession> list2 = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
-                    object2 = list2.iterator();
-                    while (((Iterator<?>)object2).hasNext()) {
-                        ClientSession slowRecipient = (ClientSession)((Iterator<?>)object2).next();
-                        if (bl2 && (!this.sameClassicWorldMap(slowRecipient) || !BattleSpellCatalog.isInNativeScreen(slowRecipient.positionX, slowRecipient.positionY, ((BattleCompanion.Snapshot)object3).x(), ((BattleCompanion.Snapshot)object3).y()))) continue;
-                        slowRecipient.sendEncrypted(Protocol.speed(((BattleCompanion.Snapshot)object3).objectId(), Protocol.SpeedMode.fromWire(((BattleCompanion.Snapshot)object3).moveSpeed()), 0), "S_SPEED " + (bl2 ? "classic-world-" : "") + "companion=" + ((BattleCompanion.Snapshot)object3).objectId() + " type=" + ((BattleCompanion.Snapshot)object3).moveSpeed() + " duration=0 reason=" + (byArray == 76 ? "Mass-Slow-expired" : "Entangle-expired"));
+                    slowRecipients = list2.iterator();
+                    while ((slowRecipients).hasNext()) {
+                        ClientSession slowRecipient = (ClientSession)(slowRecipients).next();
+                        if (bl2 && (!this.sameClassicWorldMap(slowRecipient) || !BattleSpellCatalog.isInNativeScreen(slowRecipient.positionX, slowRecipient.positionY, (slowSnapshot).x(), (slowSnapshot).y()))) continue;
+                        slowRecipient.sendEncrypted(Protocol.speed((slowSnapshot).objectId(), Protocol.SpeedMode.fromWire((slowSnapshot).moveSpeed()), 0), "S_SPEED " + (bl2 ? "classic-world-" : "") + "companion=" + (slowSnapshot).objectId() + " type=" + (slowSnapshot).moveSpeed() + " duration=0 reason=" + (byArray == 76 ? "Mass-Slow-expired" : "Entangle-expired"));
                     }
                 }
-                if (((BattleCompanion)object4).expireFreeze(l)) {
-                    object3 = ((BattleCompanion)object4).snapshot();
-                    byte[] byArray3 = Protocol.poison(((BattleCompanion.Snapshot)object3).objectId(), 0);
-                    object2 = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
-                    iterator = ((List<ClientSession>)object2).iterator();
+                if ((companion).expireFreeze(l)) {
+                    freezeSnapshot = (companion).snapshot();
+                    byte[] byArray3 = Protocol.poison((freezeSnapshot).objectId(), 0);
+                    freezeRecipients = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
+                    iterator = (freezeRecipients).iterator();
                     while (iterator.hasNext()) {
                         ClientSession clientSession = iterator.next();
-                        if (bl2 && (!this.sameClassicWorldMap(clientSession) || !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, ((BattleCompanion.Snapshot)object3).x(), ((BattleCompanion.Snapshot)object3).y()))) continue;
-                        clientSession.sendEncrypted(byArray3, "S_POISON " + (bl2 ? "classic-world-" : "") + "companion=" + ((BattleCompanion.Snapshot)object3).objectId() + " type=0 reason=freeze-expired");
+                        if (bl2 && (!this.sameClassicWorldMap(clientSession) || !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, (freezeSnapshot).x(), (freezeSnapshot).y()))) continue;
+                        clientSession.sendEncrypted(byArray3, "S_POISON " + (bl2 ? "classic-world-" : "") + "companion=" + (freezeSnapshot).objectId() + " type=0 reason=freeze-expired");
                     }
                 }
-                if (((BattleCompanion)object4).expireEarthBind(l)) {
-                    object3 = ((BattleCompanion)object4).snapshot();
-                    byte[] byArray4 = Protocol.poison(((BattleCompanion.Snapshot)object3).objectId(), 0);
-                    object2 = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
-                    iterator = ((List<ClientSession>)object2).iterator();
+                if ((companion).expireEarthBind(l)) {
+                    earthBindSnapshot = (companion).snapshot();
+                    byte[] byArray4 = Protocol.poison((earthBindSnapshot).objectId(), 0);
+                    earthBindRecipients = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
+                    iterator = (earthBindRecipients).iterator();
                     while (iterator.hasNext()) {
                         ClientSession clientSession = iterator.next();
-                        if (bl2 && (!this.sameClassicWorldMap(clientSession) || !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, ((BattleCompanion.Snapshot)object3).x(), ((BattleCompanion.Snapshot)object3).y()))) continue;
-                        clientSession.sendEncrypted(byArray4, "S_POISON " + (bl2 ? "classic-world-" : "") + "companion=" + ((BattleCompanion.Snapshot)object3).objectId() + " type=0 reason=earth-bind-expired");
+                        if (bl2 && (!this.sameClassicWorldMap(clientSession) || !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, (earthBindSnapshot).x(), (earthBindSnapshot).y()))) continue;
+                        clientSession.sendEncrypted(byArray4, "S_POISON " + (bl2 ? "classic-world-" : "") + "companion=" + (earthBindSnapshot).objectId() + " type=0 reason=earth-bind-expired");
                     }
                 }
-                if (((BattleCompanion)object4).expireThunderGrab(l)) {
-                    System.out.println("[LiTo] Thunder Grab NPC MOVE_STOP expired target=" + ((BattleCompanion)object4).snapshot().objectId() + " source=" + (bl2 ? "classic-world-companion" : "battle-companion"));
+                if ((companion).expireThunderGrab(l)) {
+                    System.out.println("[LiTo] Thunder Grab NPC MOVE_STOP expired target=" + (companion).snapshot().objectId() + " source=" + (bl2 ? "classic-world-companion" : "battle-companion"));
                 }
-                if (!((BattleCompanion)object4).expireHorrorOfDeath(l)) continue;
-                System.out.println("[LiTo] Horror of Death NPC lease expired target=" + ((BattleCompanion)object4).snapshot().objectId() + " source=" + (bl2 ? "classic-world-companion" : "battle-companion"));
+                if (!(companion).expireHorrorOfDeath(l)) continue;
+                System.out.println("[LiTo] Horror of Death NPC lease expired target=" + (companion).snapshot().objectId() + " source=" + (bl2 ? "classic-world-companion" : "battle-companion"));
             }
         }
         if (this.counterMirrorStatus.expire(l) && (bl || bl2)) {
@@ -75477,21 +75158,21 @@ final class ClientSession implements Runnable {
         }
         if (bl) {
             for (BattleShockStunEffects.Effect royalAuraSpell : this.hub.expireShockStunEffects(this.currentRoomId, l)) {
-                object4 = Protocol.removeObject(royalAuraSpell.objectId());
+                object4Packet = Protocol.removeObject(royalAuraSpell.objectId());
                 for (ClientSession abilityBuffSpell : this.hub.roomMembers(this.currentRoomId)) {
-                    abilityBuffSpell.sendEncrypted((byte[])object4, "S_REMOVE_OBJECT expired Shock Stun effect=" + royalAuraSpell.objectId() + " target=" + royalAuraSpell.targetObjectId());
+                    abilityBuffSpell.sendEncrypted(object4Packet, "S_REMOVE_OBJECT expired Shock Stun effect=" + royalAuraSpell.objectId() + " target=" + royalAuraSpell.targetObjectId());
                 }
             }
             for (BattleBoneBreakEffects.Effect n32 : this.hub.expireBoneBreakEffects(this.currentRoomId, l)) {
-                object4 = Protocol.removeObject(n32.objectId());
+                object4Packet = Protocol.removeObject(n32.objectId());
                 for (ClientSession damageProtectionSpell : this.hub.roomMembers(this.currentRoomId)) {
-                    damageProtectionSpell.sendEncrypted((byte[])object4, "S_REMOVE_OBJECT expired Bone Break effect=" + n32.objectId() + " target=" + n32.targetObjectId());
+                    damageProtectionSpell.sendEncrypted(object4Packet, "S_REMOVE_OBJECT expired Bone Break effect=" + n32.objectId() + " target=" + n32.targetObjectId());
                 }
             }
             for (BattleFreezeEffects.Effect effect : this.hub.expireFreezeEffects(this.currentRoomId, l)) {
-                object4 = Protocol.removeObject(effect.objectId());
+                object4Packet = Protocol.removeObject(effect.objectId());
                 for (ClientSession modifier2 : this.hub.roomMembers(this.currentRoomId)) {
-                    modifier2.sendEncrypted((byte[])object4, "S_REMOVE_OBJECT expired freeze effect=" + effect.objectId() + " target=" + effect.targetObjectId());
+                    modifier2.sendEncrypted(object4Packet, "S_REMOVE_OBJECT expired freeze effect=" + effect.objectId() + " target=" + effect.targetObjectId());
                 }
             }
         }
@@ -75550,14 +75231,14 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] native Resist Magic expired player=" + this.playerName() + " mr=0");
         }
         if ((n3 = this.abilityStatus.expireArmorProtection(l)) != 0 && (bl || bl2)) {
-            object4 = BattleSpellCatalog.shieldSpell(n3);
-            if (object4 == null) {
+            shieldSpell = BattleSpellCatalog.shieldSpell(n3);
+            if (shieldSpell == null) {
                 throw new IllegalStateException("unknown expired armor-protection skill " + n3);
             }
-            this.sendEncrypted(Protocol.mageShield(0, ((BattleSpellCatalog.ShieldSpell)object4).iconType()), "S_MAGE_SHIELD duration=0 type=" + ((BattleSpellCatalog.ShieldSpell)object4).iconType() + " reason=armor-protection-expired");
+            this.sendEncrypted(Protocol.mageShield(0, (shieldSpell).iconType()), "S_MAGE_SHIELD duration=0 type=" + (shieldSpell).iconType() + " reason=armor-protection-expired");
             this.sendEncrypted(this.ownCharacterAttrDef(), "S_AC armor-protection-expired current=" + this.battleArmorClass());
-            if (((BattleSpellCatalog.ShieldSpell)object4).stopMessage() > 0) {
-                this.sendEncrypted(Protocol.messageCode(((BattleSpellCatalog.ShieldSpell)object4).stopMessage(), new String[0]), "S_MESSAGE_CODE armor-protection-expired=" + ((BattleSpellCatalog.ShieldSpell)object4).stopMessage());
+            if ((shieldSpell).stopMessage() > 0) {
+                this.sendEncrypted(Protocol.messageCode((shieldSpell).stopMessage(), new String[0]), "S_MESSAGE_CODE armor-protection-expired=" + (shieldSpell).stopMessage());
             }
             if (!this.selectedCharacter.isBlank()) {
                 this.state.saveTimedArmorProtection(this.stateCharacter(), GameStateStore.TimedArmorProtection.none());
@@ -75684,24 +75365,24 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] native Aqua Protecter expired player=" + this.playerName() + " er-modifier=0 persisted=false icon=omitted-no-selected-LiTo-packetbox-receiver");
         }
         if (this.earthBlessStatus.expire(l)) {
-            object3 = BattleSpellCatalog.earthBlessSpell(159);
+            earthBlessSpell = BattleSpellCatalog.earthBlessSpell(159);
             if (!this.selectedCharacter.isBlank()) {
                 this.state.saveTimedEarthBlessBuff(this.stateCharacter(), GameStateStore.TimedEarthBlessBuff.none());
             }
             if (bl || bl2) {
                 this.sendEncrypted(this.ownCharacterAttrDef(), "S_AC Earth-Bless-expired current=" + this.battleArmorClass());
-                this.sendEncrypted(Protocol.messageCode(((BattleSpellCatalog.EarthBlessSpell)object3).stopMessage(), new String[0]), "S_MESSAGE_CODE Earth-Bless-expired=" + ((BattleSpellCatalog.EarthBlessSpell)object3).stopMessage());
+                this.sendEncrypted(Protocol.messageCode((earthBlessSpell).stopMessage(), new String[0]), "S_MESSAGE_CODE Earth-Bless-expired=" + (earthBlessSpell).stopMessage());
             }
             System.out.println("[LiTo] native Earth Bless expired player=" + this.playerName() + " ac=0 icon=omitted-no-selected-LiTo-icon-config-receiver");
         }
         if (this.ironSkinStatus.expire(l)) {
-            object3 = BattleSpellCatalog.ironSkinSpell(168);
+            ironSkinSpell = BattleSpellCatalog.ironSkinSpell(168);
             if (!this.selectedCharacter.isBlank()) {
                 this.state.saveTimedIronSkinBuff(this.stateCharacter(), GameStateStore.TimedIronSkinBuff.none());
             }
             if (bl || bl2) {
                 this.sendEncrypted(this.ownCharacterAttrDef(), "S_AC Iron-Skin-expired current=" + this.battleArmorClass());
-                this.sendEncrypted(Protocol.messageCode(((BattleSpellCatalog.IronSkinSpell)object3).stopMessage(), new String[0]), "S_MESSAGE_CODE Iron-Skin-expired=" + ((BattleSpellCatalog.IronSkinSpell)object3).stopMessage());
+                this.sendEncrypted(Protocol.messageCode((ironSkinSpell).stopMessage(), new String[0]), "S_MESSAGE_CODE Iron-Skin-expired=" + (ironSkinSpell).stopMessage());
             }
             System.out.println("[LiTo] native Iron Skin expired player=" + this.playerName() + " ac=0 icon=omitted-no-selected-LiTo-icon-config-receiver");
         }
@@ -75745,8 +75426,8 @@ final class ClientSession implements Runnable {
         }
         for (BattleItemWeaponEnchantStatus.Expiration expiration : this.itemWeaponEnchantStatus.expire(l)) {
             int n6;
-            object2 = BattleSpellCatalog.itemWeaponEnchantSpell(expiration.skillId());
-            n6 = object2 != null ? ((BattleSpellCatalog.ItemWeaponEnchantSpell)object2).expirationMessage() : (expiration.skillId() == 12 ? 308 : 0);
+            weaponEnchantSpell = BattleSpellCatalog.itemWeaponEnchantSpell(expiration.skillId());
+            n6 = weaponEnchantSpell != null ? (weaponEnchantSpell).expirationMessage() : (expiration.skillId() == 12 ? 308 : 0);
             if (n6 == 0) {
                 throw new IllegalStateException("unknown expired item weapon enchant " + expiration.skillId());
             }
@@ -75755,9 +75436,9 @@ final class ClientSession implements Runnable {
             }
             System.out.println("[LiTo] native item weapon enchant expired player=" + this.playerName() + " skill=" + expiration.skillId() + " item=" + expiration.itemObjectId() + " damage=0 icon=omitted-no-selected-LiTo-packetbox-receiver");
         }
-        object3 = this.itemArmorEnchantStatus.expire(l).iterator();
-        while (((Iterator<?>)object3).hasNext()) {
-            BattleItemArmorEnchantStatus.Expiration expiration = (BattleItemArmorEnchantStatus.Expiration)((Iterator<?>)object3).next();
+        armorExpirations = this.itemArmorEnchantStatus.expire(l).iterator();
+        while ((armorExpirations).hasNext()) {
+            BattleItemArmorEnchantStatus.Expiration expiration = (BattleItemArmorEnchantStatus.Expiration)(armorExpirations).next();
             if (expiration.skillId() != 21) {
                 throw new IllegalStateException("unknown expired item armor enchant " + expiration.skillId());
             }
@@ -75771,16 +75452,16 @@ final class ClientSession implements Runnable {
             this.sendNativeBattleStatus(l, "weight-spell-expired");
             System.out.println("[LiTo] native weight spell lease expired player=" + this.playerName() + " weight240=" + this.currentWeight240(l));
         }
-        if ((object3 = this.polymorphStatus.expire(l)) != null && (bl || bl2)) {
+        if ((expiredPolymorph = this.polymorphStatus.expire(l)) != null && (bl || bl2)) {
             this.broadcastPolymorphAppearance("polymorph-expired");
         }
         if ((hasteExpiration = this.timedStatus.expireHasteLease(l)).expired() && (bl || bl2)) {
             this.broadcastMovementSpeed(0, 0, "haste-expired");
             this.sendHasteStopMessage(hasteExpiration.skillId(), "haste-expired");
         }
-        if (((BattleTimedStatus.SlowExpiration)(object2 = this.timedStatus.expireSlowLease(l))).expired() && (bl || bl2)) {
-            this.broadcastMovementSpeed(0, 0, ((BattleTimedStatus.SlowExpiration)object2).skillId() == 152 ? "entangle-expired" : "mass-slow-expired");
-            this.sendSlowStopMessage(((BattleTimedStatus.SlowExpiration)object2).skillId(), "slow-expired");
+        if (((slowExpiration = this.timedStatus.expireSlowLease(l))).expired() && (bl || bl2)) {
+            this.broadcastMovementSpeed(0, 0, (slowExpiration).skillId() == 152 ? "entangle-expired" : "mass-slow-expired");
+            this.sendSlowStopMessage((slowExpiration).skillId(), "slow-expired");
         }
         if (bl) {
             for (BattleQuestEncounter.Snapshot snapshot : this.hub.expireQuestMonsterHastes(this.currentRoomId, l)) {
@@ -75993,16 +75674,16 @@ final class ClientSession implements Runnable {
             block41: for (ClassicWorldMonsterPopulation.ParalysisUpdate paralysisUpdate : CombatMonsterCurseLifecycle.pollWorld(this.hub, this.classicWorldMapId, this.classicWorldInstanceId, l, this, scope)) {
                 ClassicWorldMonsterPopulation.Snapshot snapshot = paralysisUpdate.target();
                 int n11 = this.hub.classicWorldMonsterPoisonPalette(this.classicWorldMapId, this.classicWorldInstanceId, snapshot.objectId(), l);
-                object = CombatMonsterCurseLifecycle.packet(snapshot.objectId(), n11, this, scope);
+                objectPacket = CombatMonsterCurseLifecycle.packet(snapshot.objectId(), n11, this, scope);
                 Iterator<ClientSession> iterator = this.classicWorldMembers(this.classicWorldMapId).iterator();
                 while (true) {
                     if (!iterator.hasNext()) {
-                        CombatMonsterCurseLifecycle.paletteFinished((byte[])object, scope);
+                        CombatMonsterCurseLifecycle.paletteFinished(objectPacket, scope);
                         continue block41;
                     }
                     ClientSession clientSession = iterator.next();
                     if (!this.sameClassicWorldMap(clientSession) || !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y())) continue;
-                    CombatMonsterCurseLifecycle.send(clientSession, (byte[])object, "S_POISON classic-world-monster=" + snapshot.objectId() + " type=" + n11 + " reason=" + (paralysisUpdate.poisonParalysis() ? (paralysisUpdate.activated() ? "companion-poison-paralysis-activated" : "companion-poison-paralysis-expired") : "curse-paralysis-expired"), scope);
+                    CombatMonsterCurseLifecycle.send(clientSession, objectPacket, "S_POISON classic-world-monster=" + snapshot.objectId() + " type=" + n11 + " reason=" + (paralysisUpdate.poisonParalysis() ? (paralysisUpdate.activated() ? "companion-poison-paralysis-activated" : "companion-poison-paralysis-expired") : "curse-paralysis-expired"), scope);
                 }
             }
             for (ClassicWorldMonsterPopulation.PoisonUpdate poisonUpdate : CombatMonsterCurseLifecycle.pollDamageWorld(this.hub, this.classicWorldMapId, this.classicWorldInstanceId, l, poisonSpell.tickIntervalMillis(), poisonSpell.tickDamage(), this, scope)) {
@@ -76013,9 +75694,9 @@ final class ClientSession implements Runnable {
             for (BattleQuestEncounter.Snapshot snapshot : this.hub.expireQuestMonsterFreezes(this.currentRoomId, l)) {
                 int n12 = this.hub.questMonsterPoisonPalette(this.currentRoomId, snapshot.objectId(), l);
                 byte[] byArray = Protocol.poison(snapshot.objectId(), n12);
-                object = this.hub.battleRecipients(this.currentRoomId, snapshot.force()).iterator();
-                while (((Iterator<?>)object).hasNext()) {
-                    ClientSession clientSession = (ClientSession)((Iterator<?>)object).next();
+                battleRecipients = this.hub.battleRecipients(this.currentRoomId, snapshot.force()).iterator();
+                while ((battleRecipients).hasNext()) {
+                    ClientSession clientSession = (ClientSession)(battleRecipients).next();
                     clientSession.sendEncrypted(byArray, "S_POISON quest-monster=" + snapshot.objectId() + " type=" + n12 + " reason=freeze-expired");
                 }
             }
@@ -76061,6 +75742,8 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private void sourcePoisonBody$serverPrepareBattle(CombatPoisonLifecycle.Scope scope) {
+        BattlePetRaceFormCatalog.Form petRaceForm;
+        List<ClientSession> battleCombatants;
         DurableBattleSettlement.begin(this);
         this.pendingTournamentShop = null;
         this.deathConfirmationPending = false;
@@ -76085,7 +75768,6 @@ final class ClientSession implements Runnable {
         this.foeSlayerSequence.clear();
         this.clearPetRaceAppearance();
         if (!this.observer) {
-            Object object;
             if (this.hub.roomRules(this.currentRoomId).mode() == BattleRules.Mode.PET_RACE) {
                 ClientSession clientSession = this;
                 CombatPoisonLifecycle.clear(clientSession.timedStatus, clientSession, scope);
@@ -76125,14 +75807,14 @@ final class ClientSession implements Runnable {
                 this.venomEnchantStatus.cancel();
                 this.desireQuestPolymorphGfx = 0;
                 this.desireQuestPolymorphDeadlineNanos = 0L;
-                object = this.hub.petRaceBaseForm(this.currentRoomId);
-                if (object == null) {
+                petRaceForm = this.hub.petRaceBaseForm(this.currentRoomId);
+                if (petRaceForm == null) {
                     throw new IllegalStateException("PET_RACE base form unavailable");
                 }
-                this.petRaceBaseGfx = ((BattlePetRaceFormCatalog.Form)object).gfx();
+                this.petRaceBaseGfx = (petRaceForm).gfx();
             }
             this.resetBattleVitals();
-            object = this.hub.visibleBattleCombatants(this.currentRoomId, this);
+            battleCombatants = this.hub.visibleBattleCombatants(this.currentRoomId, this);
             int n = this.hub.battleSpawnIndex(this.currentRoomId, this);
             ArenaMapCatalog.Arena arena = ArenaMapCatalog.forMap(this.hub.battleMapId(this.currentRoomId, this));
             ArenaMapCatalog.Point point = this.battleSpawn(arena, n);
@@ -76291,13 +75973,13 @@ final class ClientSession implements Runnable {
         NativeAcceptedState.requireReceiver(this);
         NativeAcceptedState.requireReceiver(this);
         NativeAcceptedState.requireReceiver(this);
-        object = this.hub.roomMembers(this.currentRoomId);
+        List<ClientSession> recipients = this.hub.roomMembers(this.currentRoomId);
         NativeAcceptedState.requireReceiver(this);
-        CombatPoisonLifecycle.cancellationNotice(this, this, playerMagicCancellation, (List<ClientSession>)object, l, silenceNotice);
+        CombatPoisonLifecycle.cancellationNotice(this, this, playerMagicCancellation, recipients, l, silenceNotice);
     }
 
     private void sourcePoisonBody$useClassicWorldCurseRemovalSpell(byte[] var1, BattleSpellCatalog.CurseRemovalSpell var2, CombatPoisonLifecycle.Scope var3) throws IOException {
-      Object var37 = null;
+      CombatPoisonLifecycle.SilenceNotice var37 = null;
       Protocol.ObjectSpellRequest var4 = NativeSourceObjectTargetRequest.request(Protocol.objectSpellRequest(var1), this, var2.skillId());
       if (var4.skillId() == var2.skillId()) {
          long var5 = System.nanoTime();
@@ -76435,7 +76117,7 @@ final class ClientSession implements Runnable {
 
                      if (var44 || var46) {
                         CombatPoisonLifecycle.poisonNotice(
-                           var10, var10.currentPoisonPalette(System.nanoTime()), "classic-world-" + var2.key(), (CombatPoisonLifecycle.SilenceNotice)var37
+                           var10, var10.currentPoisonPalette(System.nanoTime()), "classic-world-" + var2.key(), var37
                         );
                      }
                   } else if (var13 != null) {
@@ -76510,7 +76192,7 @@ final class ClientSession implements Runnable {
    }
 
     private void sourcePoisonBody$useCurseRemovalSpell(byte[] var1, BattleSpellCatalog.CurseRemovalSpell var2, CombatPoisonLifecycle.Scope var3) throws IOException {
-      Object var40 = null;
+      CombatPoisonLifecycle.SilenceNotice var40 = null;
       Protocol.ObjectSpellRequest var4 = NativeSourceObjectTargetRequest.request(Protocol.objectSpellRequest(var1), this, var2.skillId());
       if (var4.skillId() == var2.skillId()) {
          long var5 = System.nanoTime();
@@ -76687,7 +76369,7 @@ final class ClientSession implements Runnable {
                   }
 
                   if (var46 || var47) {
-                     CombatPoisonLifecycle.poisonNotice(var9, var9.currentPoisonPalette(System.nanoTime()), var2.key(), (CombatPoisonLifecycle.SilenceNotice)var40);
+                     CombatPoisonLifecycle.poisonNotice(var9, var9.currentPoisonPalette(System.nanoTime()), var2.key(), var40);
                   }
                } else if (var10 != null) {
                   var46 = this.hub.cureQuestMonsterPoison(this.currentRoomId, var10.objectId());
@@ -77186,8 +76868,11 @@ final class ClientSession implements Runnable {
     }
 
     private void sourcePoisonBody$serverClassicWorldMonsterStatusSkillAttack(ClassicWorldMonsterPopulation.StatusSkillAttack statusSkillAttack, int n, CombatPoisonLifecycle.Scope scope) throws IOException {
-        Object object;
-        Object object2;
+        ClientSession recipient;
+        Iterator<ClientSession> recipients;
+        BattleCompanion.NpcCurseParalysisInstallation paralysisInstallation;
+        byte[] object2Packet;
+        byte[] objectPacket;
         BattleSpellCatalog.CounterMagicSpell counterMagicSpell;
         boolean bl;
         int n2;
@@ -77245,20 +76930,20 @@ final class ClientSession implements Runnable {
         boolean bl5 = bl = bl3 && !classicWorldMonsterPhysicalTarget.isCompanion() && clientSession.timedStatus.consumeCounterMagic(l);
         if (bl && (counterMagicSpell = BattleSpellCatalog.counterMagicSpell(31)).consumeEffectGfx() > 0) {
             byte[] byArray = Protocol.effectObject(classicWorldMonsterPhysicalTarget.objectId(), counterMagicSpell.consumeEffectGfx());
-            object2 = list.iterator();
-            while (((Iterator<?>)object2).hasNext()) {
-                object = (ClientSession)((Iterator<?>)object2).next();
-                if (!BattleSpellCatalog.isInNativeScreen(((ClientSession)object).positionX, ((ClientSession)object).positionY, classicWorldMonsterPhysicalTarget.x(), classicWorldMonsterPhysicalTarget.y())) continue;
-                ((ClientSession)object).sendEncrypted(byArray, "S_EFFECT classic-world-counter-magic-consumed target=" + classicWorldMonsterPhysicalTarget.objectId() + " gfx=" + counterMagicSpell.consumeEffectGfx() + " source-skill=" + definition.skillId());
+            recipients = list.iterator();
+            while ((recipients).hasNext()) {
+                recipient = (ClientSession)(recipients).next();
+                if (!BattleSpellCatalog.isInNativeScreen((recipient).positionX, (recipient).positionY, classicWorldMonsterPhysicalTarget.x(), classicWorldMonsterPhysicalTarget.y())) continue;
+                (recipient).sendEncrypted(byArray, "S_EFFECT classic-world-counter-magic-consumed target=" + classicWorldMonsterPhysicalTarget.objectId() + " gfx=" + counterMagicSpell.consumeEffectGfx() + " source-skill=" + definition.skillId());
             }
         }
         boolean bl6 = false;
         boolean bl7 = false;
         if (bl3 && !bl) {
             if (classicWorldMonsterPhysicalTarget.isCompanion()) {
-                object2 = classicWorldMonsterPhysicalTarget.controlled().activateNpcCurseParalysis(l, definition.paralysisDurationMillis());
-                bl7 = ((BattleCompanion.NpcCurseParalysisInstallation)object2).nativeMonsterTarget();
-                bl6 = ((BattleCompanion.NpcCurseParalysisInstallation)object2).applied();
+                paralysisInstallation = classicWorldMonsterPhysicalTarget.controlled().activateNpcCurseParalysis(l, definition.paralysisDurationMillis());
+                bl7 = (paralysisInstallation).nativeMonsterTarget();
+                bl6 = (paralysisInstallation).applied();
             } else if (!clientSession.timedStatus.freezeActive(l)) {
                 bl6 = CombatPoisonLifecycle.curseActivate(clientSession.timedStatus, l, definition.warningDelayMillis(), definition.paralysisDurationMillis(), clientSession, scope);
             }
@@ -77271,16 +76956,16 @@ final class ClientSession implements Runnable {
                 CombatPoisonLifecycle.palette(clientSession, 2, "classic-world-monster-curse-paralysis-warning", scope);
             }
         }
-        object2 = Protocol.objectAction(snapshot.objectId(), definition.actionId());
+        object2Packet = Protocol.objectAction(snapshot.objectId(), definition.actionId());
         for (ClientSession object3 : list) {
             if (!BattleSpellCatalog.isInNativeScreen(object3.positionX, object3.positionY, snapshot.x(), snapshot.y()) && !BattleSpellCatalog.isInNativeScreen(object3.positionX, object3.positionY, classicWorldMonsterPhysicalTarget.x(), classicWorldMonsterPhysicalTarget.y())) continue;
-            object3.sendEncrypted((byte[])object2, "S_ACTION classic-world-monster-status=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " skill=" + definition.skillId() + " action=" + definition.actionId());
+            object3.sendEncrypted(object2Packet, "S_ACTION classic-world-monster-status=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " skill=" + definition.skillId() + " action=" + definition.actionId());
         }
         if (bl3 && !bl) {
-            object = Protocol.effectObject(classicWorldMonsterPhysicalTarget.objectId(), definition.effectGfx());
+            objectPacket = Protocol.effectObject(classicWorldMonsterPhysicalTarget.objectId(), definition.effectGfx());
             for (ClientSession clientSession2 : list) {
                 if (!BattleSpellCatalog.isInNativeScreen(clientSession2.positionX, clientSession2.positionY, classicWorldMonsterPhysicalTarget.x(), classicWorldMonsterPhysicalTarget.y())) continue;
-                clientSession2.sendEncrypted((byte[])object, "S_EFFECT classic-world-monster-status target=" + classicWorldMonsterPhysicalTarget.objectId() + " skill=" + definition.skillId() + " gfx=" + definition.effectGfx());
+                clientSession2.sendEncrypted(objectPacket, "S_EFFECT classic-world-monster-status target=" + classicWorldMonsterPhysicalTarget.objectId() + " skill=" + definition.skillId() + " gfx=" + definition.effectGfx());
             }
         }
         System.out.println("[LiTo] classic-world monster status npc=" + snapshot.npcId() + " object=" + snapshot.objectId() + " skill=" + definition.skillId() + " target=" + classicWorldMonsterPhysicalTarget.objectId() + " companion=" + classicWorldMonsterPhysicalTarget.isCompanion() + " probability=" + n6 + " roll=" + n8 + " success=" + bl3 + " countered=" + bl + " applied=" + bl6 + " target-level=" + n3 + " target-mr=" + n2 + " stone-resistance=" + n5 + " earth-bound=" + bl2 + " erase-magic-consumed=" + bl4 + " native-monster-target=" + bl7 + " trigger-roll=" + String.valueOf(statusSkillAttack.triggerChanceApplied() ? Integer.valueOf(statusSkillAttack.triggerRoll()) : "ignored") + " warning-ms=" + (classicWorldMonsterPhysicalTarget.isCompanion() ? 0 : definition.warningDelayMillis()) + " active-ms=" + definition.paralysisDurationMillis());
@@ -77666,6 +77351,7 @@ final class ClientSession implements Runnable {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     void nativeSourceCompanionClockTick(long l, long l2, Object object) throws IOException {
+        byte[] object2Packet;
         if (!NativeSourceCompanionClock.valid(this, l, object)) {
             return;
         }
@@ -77679,9 +77365,9 @@ final class ClientSession implements Runnable {
                 synchronized (object2) {
                     this.tamedCompanions.removeIf(battleCompanion -> battleCompanion.snapshot().objectId() == snapshot.objectId());
                 }
-                object2 = Protocol.removeObject(snapshot.objectId());
+                object2Packet = Protocol.removeObject(snapshot.objectId());
                 for (ClientSession clientSession : this.hub.roomMembers(l)) {
-                    clientSession.sendEncrypted((byte[])object2, "S_REMOVE_OBJECT summoned-companion-expired=" + snapshot.objectId());
+                    clientSession.sendEncrypted(object2Packet, "S_REMOVE_OBJECT summoned-companion-expired=" + snapshot.objectId());
                 }
                 System.out.println("[LiTo] summoned companion expired owner=" + this.playerName() + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId());
                 continue;
@@ -80345,13 +80031,11 @@ final class ClientSession implements Runnable {
                local.lito381.server.BattleCompanion.MagicCancellation var21 = null;
                local.lito381.server.ClassicWorldMonsterPopulation.MagicCancellation var22 = null;
                long var25 = System.nanoTime();
-               boolean var36 = false /* VF: Semaphore variable */;
 
                RuntimeInventory var20;
                boolean var23;
                int var24;
-               try {
-                  var36 = true;
+               {
                   long var28 = this.spellReadyNanos.getOrDefault(var6.skillId(), 0L);
                   if (var25 < var28
                      || this.playerMp < var19
@@ -80378,8 +80062,8 @@ final class ClientSession implements Runnable {
 
                   RuntimeInventory var30 = this.inventory.copy();
                   // Preserve the candidate patch branch in javac output.
-                  boolean candidateMaterialBranch38 = false;
-                  if (candidateMaterialBranch38) {
+                  boolean candidateMaterialAvailable38 = true;
+                  if (!candidateMaterialAvailable38) {
                      this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE classic-world-Cancellation-missing-reagent=299");
                      System.out
                         .println(
@@ -80444,11 +80128,6 @@ final class ClientSession implements Runnable {
                   this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var19);
                   var24 = this.playerMp;
                   this.commitSpellReady(var6.skillId(), var25 + var6.reuseDelayMillis() * 1000000L);
-                  var36 = false;
-               } finally {
-                  if (var36) {
-                     ;
-                  }
                }
 
                this.cancelAbsoluteBarrier("spell-" + var6.skillId());
@@ -80550,7 +80229,7 @@ final class ClientSession implements Runnable {
     private void nativeCompanionTargetuseClassicWorldAreaAttackSpell(Protocol.AttackSpellRequest var1, BattleSpellCatalog.AreaAttackSpell var2) throws IOException {
       if (NativeSelectedPlayerIntent.attack(this, var1)) {
          local.lito381.server.CombatWorldMultiMagic.Batch var69 = CombatWorldMultiMagic.create();
-         Object var68 = null;
+         CombatMagicDamage.Attempt var68 = null;
          if (var1.skillId() == var2.skillId()) {
             if (this.admitClassicWorldSpellFamily(var2.skillId(), var2.actionId(), "area-attack-" + var2.key())) {
                int var3 = this.classicWorldMapId;
@@ -81114,9 +80793,9 @@ final class ClientSession implements Runnable {
                                  var63 = CombatPlayerMagic.reductions(var134, var63, "classic-world-area-spell-" + var2.skillId());
                                  var63 = CombatPlayerMagic.protect(var134, var63, "classic-world-area-spell-" + var2.skillId());
                                  local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                                    var134, var63, true, ThreadLocalRandom.current().nextInt(100), var42, (CombatMagicDamage.Attempt)var68
+                                    var134, var63, true, ThreadLocalRandom.current().nextInt(100), var42, var68
                                  );
-                                 var63 = CombatMagicDamage.finish(var63, (CombatMagicDamage.Attempt)var68, this, false);
+                                 var63 = CombatMagicDamage.finish(var63, var68, this, false);
                                  local.lito381.server.CombatPlayerMirror.Decision var64 = var10000;
                                  if (var64.triggered()) {
                                     this.publishSourcePlayerCounterMirrorTrigger(var134, var64, "classic-world-area-spell-" + var2.skillId());
@@ -81443,7 +81122,7 @@ final class ClientSession implements Runnable {
 
     private void nativeCompanionTargetuseClassicWorldAttackSpell(Protocol.AttackSpellRequest var1, BattleSpellCatalog.AttackSpell var2) throws IOException {
       if (NativeSelectedPlayerIntent.attack(this, var1)) {
-         Object var82 = null;
+         local.lito381.server.CombatWorldMagic.Attempt var82 = null;
          CombatMagicDamage.Attempt var81 = null;
          if (var1.skillId() == var2.skillId()) {
             BattleSpellCatalog.ThunderGrabSpell var3 = BattleSpellCatalog.thunderGrabSpell(var2.skillId());
@@ -82214,7 +81893,7 @@ final class ClientSession implements Runnable {
                                           );
                                     }
                                  }
-                              } else if (!CombatWorldMagic.enqueue((local.lito381.server.CombatWorldMagic.Attempt)var82, this, var64, var2, var56)) {
+                              } else if (!CombatWorldMagic.enqueue(var82, this, var64, var2, var56)) {
                                  ClassicWorldMonsterPopulation.Hit var109 = var64 <= 0
                                     ? null
                                     : this.hub
@@ -82393,7 +82072,7 @@ final class ClientSession implements Runnable {
 
     private void nativeCompanionTargetuseClassicWorldLineAttackSpell(byte[] var1, BattleSpellCatalog.LineAttackSpell var2) throws IOException {
       local.lito381.server.CombatWorldMultiMagic.Batch var54 = CombatWorldMultiMagic.create();
-      Object var53 = null;
+      CombatMagicDamage.Attempt var53 = null;
       Protocol.AttackSpellRequest var3 = NativeSourceNoneTargetRequest.request(Protocol.attackSpellRequest(var1), this, var2.skillId());
       if (NativeSelectedPlayerIntent.attack(this, var3)) {
          if (var3.skillId() == var2.skillId()) {
@@ -82665,9 +82344,9 @@ final class ClientSession implements Runnable {
                               var48 = CombatPlayerMagic.reductions(var46, var48, "classic-world-line-" + var2.skillId());
                               var48 = CombatPlayerMagic.protect(var46, var48, "classic-world-line-" + var2.skillId());
                               local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                                 var46, var48, true, ThreadLocalRandom.current().nextInt(100), var34, (CombatMagicDamage.Attempt)var53
+                                 var46, var48, true, ThreadLocalRandom.current().nextInt(100), var34, var53
                               );
-                              var48 = CombatMagicDamage.finish(var48, (CombatMagicDamage.Attempt)var53, this, false);
+                              var48 = CombatMagicDamage.finish(var48, var53, this, false);
                               local.lito381.server.CombatPlayerMirror.Decision var49 = var10000;
                               if (var49.triggered()) {
                                  this.publishSourcePlayerCounterMirrorTrigger(var46, var49, "classic-world-line-" + var2.skillId());
@@ -82867,8 +82546,8 @@ final class ClientSession implements Runnable {
    }
 
     void nativeFreezeAcceptedOriginalWorld(byte[] var1, BattleSpellCatalog.FreezeAttackSpell var2) throws IOException {
-      Object var64 = null;
-      Object var63 = null;
+      local.lito381.server.CombatWorldFreeze.Pending var64 = null;
+      CombatMagicDamage.Attempt var63 = null;
       Protocol.AttackSpellRequest var3 = NativeSourceNoneTargetRequest.request(Protocol.attackSpellRequest(var1), this, var2.skillId());
       if (NativeSelectedPlayerIntent.attack(this, var3)) {
          if (var3.skillId() == var2.skillId() && var2.areaRadius() == 0 && !NativeSourceFreezeTarget.line(var2)) {
@@ -83162,9 +82841,9 @@ final class ClientSession implements Runnable {
                                  local.lito381.server.CombatPlayerMirror.Decision var52 = null;
                                  if (var11 != null) {
                                     local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                                       var11, var51, true, ThreadLocalRandom.current().nextInt(100), var39, (CombatMagicDamage.Attempt)var63
+                                       var11, var51, true, ThreadLocalRandom.current().nextInt(100), var39, var63
                                     );
-                                    var51 = CombatMagicDamage.finish(var51, (CombatMagicDamage.Attempt)var63, this, false);
+                                    var51 = CombatMagicDamage.finish(var51, var63, this, false);
                                     var52 = var10000;
                                     if (var52.triggered()) {
                                        this.publishSourcePlayerCounterMirrorTrigger(var11, var52, "classic-world-Ice-Lance-" + var2.skillId());
@@ -83220,7 +82899,7 @@ final class ClientSession implements Runnable {
 
                                     local.lito381.server.BattleCompanion.Snapshot var80 = var13.snapshot();
                                     var57 = var80.active() && var80.hp() > 0;
-                                 } else if (!CombatWorldFreeze.enqueue((local.lito381.server.CombatWorldFreeze.Pending)var64, this, var51)) {
+                                 } else if (!CombatWorldFreeze.enqueue(var64, this, var51)) {
                                     if (var51 > 0) {
                                        var58 = this.hub.damageClassicWorldMonster(var4, var5, var67.objectId(), this.playerObjectId(), var51);
                                     }
@@ -83384,10 +83063,8 @@ final class ClientSession implements Runnable {
             int var24 = -1;
             int var25 = -1;
             long var26 = System.nanoTime();
-            boolean var40 = false /* VF: Semaphore variable */;
 
-            try {
-               var40 = true;
+            {
                long var29 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                if (var26 >= var29
                   && this.playerMp >= var18
@@ -83413,8 +83090,8 @@ final class ClientSession implements Runnable {
 
                      var26 = System.nanoTime();
                      // Preserve the candidate patch branch in javac output.
-                     boolean candidateMaterialBranch39 = false;
-                     if (candidateMaterialBranch39) {
+                     boolean candidateMaterialAvailable39 = true;
+                     if (!candidateMaterialAvailable39) {
                         var20 = true;
                      } else {
                         var19 = NativeCastMaterial.previous(this);
@@ -83439,11 +83116,6 @@ final class ClientSession implements Runnable {
                      );
                }
 
-               var40 = false;
-            } finally {
-               if (var40) {
-                  ;
-               }
             }
 
             if (var25 < 0) {
@@ -83462,10 +83134,8 @@ final class ClientSession implements Runnable {
                for (ClientSession var45 : var28) {
                   if (var45 != this) {
                      this.hub.cancelPendingPlayerTradePrompt(var45);
-                     boolean var37 = false /* VF: Semaphore variable */;
 
-                     try {
-                        var37 = true;
+                     {
                         boolean var33 = var45.phase == var4
                            && !var45.observer
                            && var45.playerHp > 0
@@ -83480,7 +83150,6 @@ final class ClientSession implements Runnable {
                            && this.sameNonemptyClan(var45)
                            && BattleMassTeleport.withinInviteRange(var10, var11, var45.positionX, var45.positionY);
                         if (!var33) {
-                           var37 = false;
                         } else {
                            var45.clearPendingAskCallbacks();
                            ClientSession.PendingMassTeleport var10001 = new ClientSession.PendingMassTeleport(
@@ -83490,11 +83159,6 @@ final class ClientSession implements Runnable {
                            var45.pendingMassTeleport = var10001;
                            var43.add(var45);
                            var45.sendEncrypted(Protocol.massTeleportAsk(), "S_ASK question=" + var2.questionId() + " mass-teleport caster=" + this.playerName());
-                           var37 = false;
-                        }
-                     } finally {
-                        if (var37) {
-                           ;
                         }
                      }
                   }
@@ -83740,13 +83404,11 @@ final class ClientSession implements Runnable {
                                     var2, var28, var33, var29, var38, var37, var34, var39, this, new Object[]{var15, var16, var17, var18, var66}
                                  );
                                  int var42 = var40 ? 100 : (var3 > 0 ? var3 : ThreadLocalRandom.current().nextInt(1, 101));
-                                 boolean var61 = false /* VF: Semaphore variable */;
 
                                  RuntimeInventory var43;
                                  int var44;
                                  long var67;
-                                 try {
-                                    var61 = true;
+                                 {
                                     var67 = System.nanoTime();
                                     long var48 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                                     boolean var50 = var10
@@ -83793,8 +83455,8 @@ final class ClientSession implements Runnable {
 
                                     var67 = System.nanoTime();
                                     // Preserve the candidate patch branch in javac output.
-                                    boolean candidateMaterialBranch40 = false;
-                                    if (candidateMaterialBranch40) {
+                                    boolean candidateMaterialAvailable40 = true;
+                                    if (!candidateMaterialAvailable40) {
                                        this.sendEncrypted(Protocol.messageCode(299), "S_MESSAGE_CODE " + var4.protocolName + "-missing-reagent=299");
                                        System.out
                                           .println(
@@ -83813,11 +83475,6 @@ final class ClientSession implements Runnable {
                                     this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var31);
                                     var44 = this.playerMp;
                                     this.commitSpellReady(var2.skillId(), var67 + var2.reuseDelayMillis() * 1000000L);
-                                    var61 = false;
-                                 } finally {
-                                    if (var61) {
-                                       ;
-                                    }
                                  }
 
                                  this.nativeSpellRevealControlled("spell-" + var2.skillId());
@@ -84269,13 +83926,11 @@ final class ClientSession implements Runnable {
                            int var22 = var19.effectiveIntelligence(this.baseIntelligence());
                            int var23 = BattleSpellCatalog.originalMagicConsumeReduction(var20, var18 == null ? 0 : Math.max(0, var18.originalIntelligence()));
                            int var24 = NativeSkillConsumptionBridges.ShockStunSpell_effectiveMpCost_III(var2, var22, var23);
-                           boolean var61 = false /* VF: Semaphore variable */;
 
                            int var25;
                            int var26;
                            long var64;
-                           try {
-                              var61 = true;
+                           {
                               var64 = System.nanoTime();
                               long var30 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                               if (var64 < var30 || this.playerMp < var24 || this.phase != ClientSession.Phase.BATTLE || this.playerHp <= 0) {
@@ -84310,11 +83965,6 @@ final class ClientSession implements Runnable {
                               this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var24);
                               var26 = this.playerMp;
                               this.commitSpellReady(var2.skillId(), var64 + var2.reuseDelayMillis() * 1000000L);
-                              var61 = false;
-                           } finally {
-                              if (var61) {
-                                 ;
-                              }
                            }
 
                            int var29 = var5 != null
@@ -84977,7 +84627,7 @@ final class ClientSession implements Runnable {
    }
 
     void nativeShockPlayerOriginalWorld(byte[] var1, BattleSpellCatalog.ShockStunSpell var2) throws IOException {
-      Object var59 = null;
+      CombatMagicDamage.Attempt var59 = null;
       Protocol.AttackSpellRequest var3 = NativeSourceNoneTargetRequest.request(Protocol.attackSpellRequest(var1), this, var2.skillId());
       if (NativeSelectedPlayerIntent.attack(this, var3)) {
          if (var3.skillId() == var2.skillId()) {
@@ -85234,7 +84884,7 @@ final class ClientSession implements Runnable {
                               if (var11 != null) {
                                  var50 = CombatPlayerMagic.reductions(var11, var50, "classic-world-Shock-Stun-" + var2.skillId());
                                  var50 = CombatMagicDamage.direct(
-                                    CombatPlayerMagic.protect(var11, var50, "classic-world-Shock-Stun-" + var2.skillId()), (CombatMagicDamage.Attempt)var59, this, var11, false
+                                    CombatPlayerMagic.protect(var11, var50, "classic-world-Shock-Stun-" + var2.skillId()), var59, this, var11, false
                                  );
                               } else if (!this.classicWorldCkewAttackAllowed(var23, var34)) {
                                  var50 = 0;
@@ -85432,7 +85082,7 @@ final class ClientSession implements Runnable {
     // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    void nativeShockPlayerWorldBody(byte[] var1, BattleSpellCatalog.ShockStunSpell var2) throws IOException {
-      Object var59 = null;
+      CombatMagicDamage.Attempt var59 = null;
       Protocol.AttackSpellRequest var3 = NativeSourceNoneTargetRequest.request(Protocol.attackSpellRequest(var1), this, var2.skillId());
       if (NativeSelectedPlayerIntent.attack(this, var3)) {
          if (var3.skillId() == var2.skillId()) {
@@ -85556,13 +85206,11 @@ final class ClientSession implements Runnable {
                            int var29 = var26.effectiveIntelligence(this.baseIntelligence());
                            int var30 = BattleSpellCatalog.originalMagicConsumeReduction(var27, var25 == null ? 0 : Math.max(0, var25.originalIntelligence()));
                            int var31 = NativeSkillConsumptionBridges.ShockStunSpell_effectiveMpCost_III(var2, var29, var30);
-                           boolean var62 = false /* VF: Semaphore variable */;
 
                            int var32;
                            int var33;
                            long var69;
-                           try {
-                              var62 = true;
+                           {
                               var69 = System.nanoTime();
                               long var37 = this.spellReadyNanos.getOrDefault(var2.skillId(), 0L);
                               local.lito381.server.BattleCompanion.Snapshot var39 = var13 == null ? null : var13.snapshot();
@@ -85631,11 +85279,6 @@ final class ClientSession implements Runnable {
                               this.playerMp = NativeSkillConsumption.boundMp(this, this.playerMp - var31);
                               var33 = this.playerMp;
                               this.commitSpellReady(var2.skillId(), var69 + var2.reuseDelayMillis() * 1000000L);
-                              var62 = false;
-                           } finally {
-                              if (var62) {
-                                 ;
-                              }
                            }
 
                            this.cancelAbsoluteBarrier("classic-world-spell-" + var2.skillId());
@@ -85702,7 +85345,7 @@ final class ClientSession implements Runnable {
                               if (var11 != null) {
                                  var50 = CombatPlayerMagic.reductions(var11, var50, "classic-world-Shock-Stun-" + var2.skillId());
                                  var50 = CombatMagicDamage.direct(
-                                    CombatPlayerMagic.protect(var11, var50, "classic-world-Shock-Stun-" + var2.skillId()), (CombatMagicDamage.Attempt)var59, this, var11, false
+                                    CombatPlayerMagic.protect(var11, var50, "classic-world-Shock-Stun-" + var2.skillId()), var59, this, var11, false
                                  );
                               } else if (!this.classicWorldCkewAttackAllowed(var23, var69)) {
                                  var50 = 0;
@@ -86987,7 +86630,7 @@ final class ClientSession implements Runnable {
 
     void nativeSourceControlledOriginal_nativeAreaFreezeOriginalBattle(byte[] var1, BattleSpellCatalog.FreezeAttackSpell var2) throws IOException {
       if (NativeSourceTargetNpc.beforePacket(this, var1)) {
-         Object var58 = null;
+         CombatCompanionSpells.Batch var58 = null;
          CombatMagicDamage.Attempt var57 = null;
          Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
          if (var3.skillId() == var2.skillId() && var2.areaRadius() > 0) {
@@ -87260,7 +86903,7 @@ final class ClientSession implements Runnable {
                   ? this.hub.battleRecipients(this.currentRoomId, this.hub.forceOf(this.currentRoomId, this))
                   : NativeAcceptedAreaFreezeMutation.players(this.hub.roomMembers(this.currentRoomId));
                long var85 = ATTACK_SPELL_SEQUENCE.incrementAndGet();
-               var58 = CombatCompanionSpells.drawCenteredFreeze(this, var2, (CombatCompanionSpells.Batch)var58, var66, var42);
+               var58 = CombatCompanionSpells.drawCenteredFreeze(this, var2, var58, var66, var42);
                if (var42.isEmpty()) {
                   byte[] var92 = Protocol.objectAction(this.playerObjectId(), var2.actionId());
 
@@ -87301,7 +86944,7 @@ final class ClientSession implements Runnable {
 
                this.sendEncrypted(Protocol.manaPoint(var64, this.playerMaxMp), "S_MANA_POINT centered-freeze=" + var64 + "/" + this.playerMaxMp);
                int var94 = 0;
-               var94 = CombatCompanionSpells.commitCenteredFreeze(this, var2, (CombatCompanionSpells.Batch)var58, var66, var81);
+               var94 = CombatCompanionSpells.commitCenteredFreeze(this, var2, var58, var66, var81);
 
                for (Entry var105 : var69.entrySet()) {
                   ClientSession var110 = (ClientSession)var105.getKey();
@@ -87498,7 +87141,7 @@ final class ClientSession implements Runnable {
 
     void nativeSourceControlledOriginal_nativeFreezeAcceptedOriginalBattle(byte[] var1, BattleSpellCatalog.FreezeAttackSpell var2) throws IOException {
       if (NativeSourceTargetNpc.beforePacket(this, var1)) {
-         Object var62 = null;
+         CombatMagicDamage.Attempt var62 = null;
          Protocol.AttackSpellRequest var3 = NativeSourceNoneTargetRequest.request(Protocol.attackSpellRequest(var1), this, var2.skillId());
          if (NativeSelectedPlayerIntent.attack(this, var3)) {
             if (var3.skillId() == var2.skillId()) {
@@ -87796,9 +87439,9 @@ final class ClientSession implements Runnable {
                                  local.lito381.server.CombatPlayerMirror.Decision var48 = null;
                                  if (var5 != null) {
                                     local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                                       var5, var73, true, ThreadLocalRandom.current().nextInt(100), var40, (CombatMagicDamage.Attempt)var62
+                                       var5, var73, true, ThreadLocalRandom.current().nextInt(100), var40, var62
                                     );
-                                    var73 = CombatMagicDamage.finish(var73, (CombatMagicDamage.Attempt)var62, this, false);
+                                    var73 = CombatMagicDamage.finish(var73, var62, this, false);
                                     var48 = var10000;
                                     if (var48.triggered()) {
                                        this.publishSourcePlayerCounterMirrorTrigger(var5, var48, "freeze-spell-" + var2.skillId());
@@ -88024,10 +87667,10 @@ final class ClientSession implements Runnable {
     void nativeSourceControlledOriginal_nativeSourceLightningOriginalBody(Protocol.AttackSpellRequest var1, BattleSpellCatalog.DirectionalLineSpell var2) throws IOException {
       if (NativeSourceTargetNpc.before(this, var1)) {
          if (NativeSelectedPlayerIntent.attack(this, var1)) {
-            Object var64 = null;
+            CombatCompanionSpells.Batch var64 = null;
             CombatLineSpells.Primary var63 = null;
             var63 = CombatLineSpells.primary(this, var1);
-            Object var62 = null;
+            CombatMagicDamage.Attempt var62 = null;
             BattleSpellCatalog.FreezeAttackSpell var3 = var2 instanceof BattleSpellCatalog.FreezeAttackSpell var4 ? var4 : null;
             List<ClientSession> var68 = this.hub.roomCombatants(this.currentRoomId);
             ClientSession var5 = var68.stream().filter(var1x -> var1x.playerObjectId() == var1.targetObjectId()).findFirst().orElse(null);
@@ -88408,9 +88051,9 @@ final class ClientSession implements Runnable {
                                     var92 = CombatPlayerMagic.reductions(var86, var92, "line-spell-" + var2.skillId());
                                     var92 = CombatPlayerMagic.protect(var86, var92, "line-spell-" + var2.skillId());
                                     local.lito381.server.CombatPlayerMirror.Decision var143 = CombatPlayerMirror.decide(
-                                       var86, var92, true, ThreadLocalRandom.current().nextInt(100), var33, (CombatMagicDamage.Attempt)var62
+                                       var86, var92, true, ThreadLocalRandom.current().nextInt(100), var33, var62
                                     );
-                                    var92 = CombatMagicDamage.finish(var92, (CombatMagicDamage.Attempt)var62, this, false);
+                                    var92 = CombatMagicDamage.finish(var92, var62, this, false);
                                     local.lito381.server.CombatPlayerMirror.Decision var98 = var143;
                                     if (var98.triggered()) {
                                        this.publishSourcePlayerCounterMirrorTrigger(var86, var98, "line-spell-" + var2.skillId());
@@ -88470,7 +88113,7 @@ final class ClientSession implements Runnable {
                                  ? this.hub.battleRecipients(this.currentRoomId, var6.force())
                                  : this.hub.roomMembers(this.currentRoomId)
                            );
-                        var64 = CombatLineSpells.draw(this, var2, (CombatCompanionSpells.Batch)var64, var33, var48);
+                        var64 = CombatLineSpells.draw(this, var2, var64, var33, var48);
                         if (var48.isEmpty()) {
                            this.broadcastCounteredSpellAction(var2.actionId(), var2.skillId(), var2.key());
                         } else {
@@ -88512,7 +88155,7 @@ final class ClientSession implements Runnable {
                         }
 
                         label735: {
-                           CombatLineSpells.commit(this, var2, (CombatCompanionSpells.Batch)var64, var33, var96);
+                           CombatLineSpells.commit(this, var2, var64, var33, var96);
                            if (!var78.isEmpty()) {
                               for (Entry var108 : var78.entrySet()) {
                                  this.applyGuardianTowerDamage((Long)var108.getKey(), (Integer)var108.getValue(), "line-spell-" + var2.skillId());
@@ -88712,7 +88355,7 @@ final class ClientSession implements Runnable {
     void nativeSourceControlledOriginal_useAreaAttackSpell(Protocol.AttackSpellRequest request, BattleSpellCatalog.AreaAttackSpell var2) throws IOException {
       Protocol.AttackSpellRequest var1 = NativeSourceNoneTargetRequest.request(request, this, var2.skillId());
       if (NativeSelectedPlayerIntent.attack(this, var1)) {
-         Object var61 = null;
+         CombatMagicDamage.Attempt var61 = null;
          if (var1.skillId() == var2.skillId()) {
             long var3 = this.currentRoomId;
             int var5 = this.hub.battleMapId(var3, this);
@@ -89141,9 +88784,9 @@ final class ClientSession implements Runnable {
                                        var118 = CombatPlayerMagic.reductions(var100, var118, "area-spell-" + var2.skillId());
                                        var118 = CombatPlayerMagic.protect(var100, var118, "area-spell-" + var2.skillId());
                                        local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                                          var100, var118, true, ThreadLocalRandom.current().nextInt(100), var88, (CombatMagicDamage.Attempt)var61
+                                          var100, var118, true, ThreadLocalRandom.current().nextInt(100), var88, var61
                                        );
-                                       var118 = CombatMagicDamage.finish(var118, (CombatMagicDamage.Attempt)var61, this, false);
+                                       var118 = CombatMagicDamage.finish(var118, var61, this, false);
                                        local.lito381.server.CombatPlayerMirror.Decision var54 = var10000;
                                        if (var54.triggered()) {
                                           this.publishSourcePlayerCounterMirrorTrigger(var100, var54, "area-spell-" + var2.skillId());
@@ -90268,7 +89911,7 @@ final class ClientSession implements Runnable {
    }
 
     void nativeSourceControlledOriginal_useCenteredAreaAttackSpell(byte[] var1, BattleSpellCatalog.AreaAttackSpell var2) throws IOException {
-      Object var52 = null;
+      CombatMagicDamage.Attempt var52 = null;
       Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
       if (var3.skillId() == var2.skillId() && var2.maximumRange() == 0 && var2.areaRadius() > 0) {
          if (!BattleAnimationCatalog.get().supportsTimedAction(this.battleGfx(), var2.actionId())) {
@@ -90484,9 +90127,9 @@ final class ClientSession implements Runnable {
                      var45 = CombatPlayerMagic.reductions(var43, var45, "centered-area-spell-" + var2.skillId());
                      var45 = CombatPlayerMagic.protect(var43, var45, "centered-area-spell-" + var2.skillId());
                      local.lito381.server.CombatPlayerMirror.Decision var10000 = CombatPlayerMirror.decide(
-                        var43, var45, true, ThreadLocalRandom.current().nextInt(100), var70, (CombatMagicDamage.Attempt)var52
+                        var43, var45, true, ThreadLocalRandom.current().nextInt(100), var70, var52
                      );
-                     var45 = CombatMagicDamage.finish(var45, (CombatMagicDamage.Attempt)var52, this, false);
+                     var45 = CombatMagicDamage.finish(var45, var52, this, false);
                      local.lito381.server.CombatPlayerMirror.Decision var46 = var10000;
                      if (var46.triggered()) {
                         this.publishSourcePlayerCounterMirrorTrigger(var43, var46, "centered-area-spell-" + var2.skillId());
@@ -91565,26 +91208,27 @@ final class ClientSession implements Runnable {
                                     ? var27.classicWorldMapId == var8 && var27.classicWorldInstanceId == var9
                                     : var27.currentRoomId == var6 && this.hub.battleMapId(var6, var27) == var8
                               );
-                           if (var29) {
-                              int var30 = var2.rollHealing(var19, var1x -> var3 == 0 ? ThreadLocalRandom.current().nextInt(1, var1x + 1) : var3);
-                              int var31 = var2.applyLawfulRevision(var30, var43 == null ? 0L : this.characterLawful());
-                              boolean var32 = var27.waterLifeStatus.active(var23);
-                              int var33 = var32 ? NativeSourceHealingFormula.multiply(var31, 2) : var31;
-                              int var34 = CombatHealing.blessingPlayer(
-                                 BattleHealingRecovery.adjustedAmount(
-                                    var33,
-                                    var27.timedStatus.polluteWaterActive(var23),
-                                    var27.timedStatus.waterDragonDirtyCurrentActive(var23),
-                                    var27.timedStatus.waterDragonHealingErosionActive(var23)
-                                 )
-                              );
-                              boolean var35 = var27.waterLifeStatus.cancel();
-                              if (var34 >= 0 && !NativeSourceHealingHp.handled(var27, var34)) {
-                                 var27.playerHp = Math.min(var27.playerMaxHp, Math.addExact(var27.playerHp, var34));
-                              }
-
-                              var25.add(new PlayerHealing(var27, var27.playerHp, var30, var31, var34, var35));
+                           if (!(var29)) {
+                              continue;
                            }
+                           int var30 = var2.rollHealing(var19, var1x -> var3 == 0 ? ThreadLocalRandom.current().nextInt(1, var1x + 1) : var3);
+                           int var31 = var2.applyLawfulRevision(var30, var43 == null ? 0L : this.characterLawful());
+                           boolean var32 = var27.waterLifeStatus.active(var23);
+                           int var33 = var32 ? NativeSourceHealingFormula.multiply(var31, 2) : var31;
+                           int var34 = CombatHealing.blessingPlayer(
+                              BattleHealingRecovery.adjustedAmount(
+                                 var33,
+                                 var27.timedStatus.polluteWaterActive(var23),
+                                 var27.timedStatus.waterDragonDirtyCurrentActive(var23),
+                                 var27.timedStatus.waterDragonHealingErosionActive(var23)
+                              )
+                           );
+                           boolean var35 = var27.waterLifeStatus.cancel();
+                           if (var34 >= 0 && !NativeSourceHealingHp.handled(var27, var34)) {
+                              var27.playerHp = Math.min(var27.playerMaxHp, Math.addExact(var27.playerHp, var34));
+                           }
+
+                           var25.add(new PlayerHealing(var27, var27.playerHp, var30, var31, var34, var35));
                         }
                      }
 
@@ -91827,27 +91471,28 @@ final class ClientSession implements Runnable {
                         boolean var36 = var4 == ClientSession.Phase.WORLD
                            ? var19.hasLineOfSight(var16, var17, var31.positionX, var31.positionY)
                            : NativeSourceTargetLos.line(var18, var16, var17, var31.positionX, var31.positionY, this, var2.skillId());
-                        if (var35
+                        if (!(var35
                            && !var31.observer
                            && !var31.invisible
                            && var31.playerHp > 0
                            && BattleSpellCatalog.isInNativeScreen(var16, var17, var31.positionX, var31.positionY)
                            && var36
-                           && this.hub.sameClan(this.sourceCharacterIdentity(), var31.sourceCharacterIdentity())) {
-                           int var37 = var31.playerHp;
-                           long var38 = System.nanoTime();
-                           int var40 = BattleHealingRecovery.adjustedAmount(
-                              CombatHealing.groupPlayerBase(var33, var31, var38),
-                              var31.timedStatus.polluteWaterActive(var38),
-                              var31.timedStatus.waterDragonDirtyCurrentActive(var38),
-                              var31.timedStatus.waterDragonHealingErosionActive(var38)
-                           );
-                           if (var40 >= 0 && !NativeSourceHealingHp.handled(var31, var40)) {
-                              var31.playerHp = Math.min(var31.playerMaxHp, var31.playerHp + var40);
-                           }
-
-                           var29.add(new PlayerHealing(var31, var37, var31.playerHp, var49, var40));
+                           && this.hub.sameClan(this.sourceCharacterIdentity(), var31.sourceCharacterIdentity()))) {
+                           continue;
                         }
+                        int var37 = var31.playerHp;
+                        long var38 = System.nanoTime();
+                        int var40 = BattleHealingRecovery.adjustedAmount(
+                           CombatHealing.groupPlayerBase(var33, var31, var38),
+                           var31.timedStatus.polluteWaterActive(var38),
+                           var31.timedStatus.waterDragonDirtyCurrentActive(var38),
+                           var31.timedStatus.waterDragonHealingErosionActive(var38)
+                        );
+                        if (var40 >= 0 && !NativeSourceHealingHp.handled(var31, var40)) {
+                           var31.playerHp = Math.min(var31.playerMaxHp, var31.playerHp + var40);
+                        }
+
+                        var29.add(new PlayerHealing(var31, var37, var31.playerHp, var49, var40));
                      }
                   }
 
