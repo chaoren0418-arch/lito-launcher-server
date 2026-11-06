@@ -2,162 +2,231 @@
 
 ## 結論
 
-**部分完成，需 `needs:claude` 裁定跨批次 private 介面。** 已交付 B03 的 51 份 staged Java。完整整批 javac 失敗，唯一錯誤為 `NativeSourceCubeVisibility.Work implements NativeLightAction.Output` 的 private 存取。排除該外層檔案的診斷編譯成功，131 個產物全部 SAME，完整 135 個驗收 entry 中仍缺 4 個。
+**本批暫存驗收完成：51 份 B03 Java 加上 B08 的 staged `NativeLightAction.java` 一次編譯成功；B03 全部 135 個 entry 均為 SAME，missing／extra 均為空。** 前輪 private Output 阻塞已解除。本輪不需修改任何 Java，保留 `36d3039` 的完整移植成果，只更新本報告。
 
 ## 做了什麼
 
-- 從凍結 `sources/local/lito381/server/` 複製 B03 51 檔作起點，使用候選 JAR 的 CFR 0.152 反編譯內容逐項移植。比對也涵蓋題述 23 個 asm-only entry 以外的實際差異，補上 target mask、裝備輸出與 Icons1 等後續改寫。
-- 補齊傷害 Plan 的全部欄位、接受 HP 後的生命週期回呼、玩家來源保留、cube 顯示與模板守門、娃娃觀眾／被動能力／慢速 epoch、裝備觀眾狀態，以及 ground、fatality、healing、kiringku、light-pair 的轉呼叫。
-- 依 #64 主控裁定，6 個 record 使用 `@AsRecord`。`DollDefense.Receiver`、`DollOutput.Receiver`、`EquipmentOutput.Viewer` 另用 `finalFields` 保留舊建構子的預設欄位值。元件、建構子、額外欄位與 accessor 均由 staged Java 編譯。
-- `NativeSourceDamageHealingSelection.Cursor.nativeSourceTargetMask` 在候選是 final，但舊建構子沒有賦值，新增建構子才賦值。因此使用 #153 擴充的 `@AsmFinal`，交同一個 #102 轉換器補回旗標。該 entry 已驗證 SAME。
-- 候選在換用 detached task 後仍保留 DollOutput 與 EquipmentOutput 的舊 private lambda 方法。本批將保留的方法體直接寫為 Java `lambda$send$1`／`lambda$send$3`，其內部 lambda 仍由 javac 產生。兩個外層 entry 均 SAME。
+- 於既有 `task/64` 工作，從 `36d3039` fetch 並合併最新 `origin/main` `e8871cd`，產生無衝突合併提交 `7983873`。沒有 checkout、重建分支或改寫歷史。
+- main 已包含 #69（PR #94）、#174（PR #178）、#176（PR #193）以及後續比較器修正至 #259。兩個工具均從合併後的來源重新編譯，沒有沿用舊工具 classes。
+- 遵循 [主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/64#issuecomment-6654963452)，把 #69 已放寬 Output 的 `NativeLightAction.java` 加進同一次 javac，僅作編譯依賴，未修改該檔。
+- 保留前輪 23 個 asm-only entry 的移植、6 個 `@AsRecord`、1 個 `@AsmFinal` 及舊 lambda Java 實作。以 git bytes 核對，51 份 B03 staged Java 與 `36d3039` 完全相同。
+- 本輪只直接修改 `docs/reports/issue-64.md`；整個分支相對合併基準的交付仍是 B03 的 51 份 staged Java 與本報告。main 帶入的其他檔案保持原樣；`docs/REPORT.md` 沒有本批修改。
 
 ## 已驗證
 
-### 工作基準與範圍
+### 環境與產物來源
 
-- 日期為 2026-11-05，Windows，Microsoft OpenJDK 17.0.17，Python 3。工作目錄為 `D:/lineage開發/3-lito開發/scratch/wt/task-64`，分支 `task/64`。
-- 初始 HEAD 為 `a87645e`，執行 fetch 後快轉至 `450178d5`，包含 #102、#153、#166。驗證工具直接從此基準的 Java 來源編譯。
-- 提交範圍為 B03 的 51 份 staged Java 與本報告。原始專案資源採唯讀存取。此次工作區變更以快轉後的 `origin/main` 為基準核對。
-- 編譯 classpath 使用候選、正式 JAR、`lib/*`，外加獨立目錄中的 `AsRecord`／`AsmFinal` 編譯期註解。應用產物只收集本批 javac 輸出，註解 class 留在獨立目錄。
-- 唯一應用 class 後處理為現有 AsRecord CLI。CFR 輸入用的抽取 JAR 放在 target，與編譯及比對產物分開。語意比較採預設嚴格模式及真實左側 classpath。
+- 日期：2026-11-06。Windows、Microsoft OpenJDK 17.0.17、Python 3；工作目錄 `D:/lineage開發/3-lito開發/scratch/wt/task-64`。
+- 使用 `javac --release 17 -encoding UTF-8`；classpath 順序為 candidate、base、獨立的 AsRecord／AsmFinal 註解 classes、`lib/*`。本 worktree 的 `lib/*` 沒有額外 JAR。
+- 每次執行在本 worktree `target/issue-64/complete-*` 建立全新輸出目錄，避免殘留 class。暫存腳本、參數及 log 只寫入 `scratch/issue-64/`。
+- 52 個輸入 Java 產出 140 個 class。唯一 class 後處理為現有 `tools/as-record`，其中本批 7 個類別與 B08 的 `NativeLightAction$Ingress` 共轉換 8 個。
+- 轉換完成後，只排除下列 5 個 B08 依賴 class，再將剩餘 135 個原路徑 class 打包。以集合精確核對 `verify_entries`，並核對每個 JAR entry 與轉換器輸出的 SHA-256 相同。
+- 沒有把候選 class bytes 寫入產物，沒有替換或重新命名任何驗收 class。工具只讀取固定 reference JAR；沒有啟動伺服器、遊戲或連接 DB。
 
-### 編譯與比對結果
-
-初始凍結來源整批編譯有 36 個錯誤。完成本批移植後，完整 51 檔重跑輸出如下，退出碼 1。
+排除的編譯依賴（共同前綴 `local/lito381/server/`）：
 
 ```text
-NativeSourceCubeVisibility.java:7: error: Output has private access in NativeLightAction
- static final class Work implements NativeLightAction.Output {
-                                                     ^
-Note: NativeSourceCubeVisibility.java uses unchecked or unsafe operations.
+NativeLightAction.class
+NativeLightAction$Batch.class
+NativeLightAction$Completion.class
+NativeLightAction$Ingress.class
+NativeLightAction$Output.class
+```
+
+### 編譯與語意比對輸出
+
+註解、應用來源、as-record 工具、semantic-diff 工具的 javac 退出碼皆為 0。應用編譯唯一輸出如下，沒有 error；這是既有 CubeVisibility 的 unchecked 提示。
+
+```text
+Note: .../NativeSourceCubeVisibility.java uses unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
-1 error
 ```
 
-診斷編譯只排除 `NativeSourceCubeVisibility.java`，其餘 50 檔同時交給一次 javac，退出碼 0，stdout／stderr 均空。轉換器與比較器輸出如下。
+轉換器與比較器退出碼皆為 0：
 
 ```text
-as-record: scanned=131 converted=7
-SUMMARY SAME=131 SAME_EFFECTS=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=0 ONLY_LEFT=0 ONLY_RIGHT=4 BYTE_SAME=0 ALLOW_METHODS=0
+as-record: scanned=140 converted=8
+SUMMARY SAME=135 SAME_EFFECTS=0 SAME_PATHS=0 ORPHAN_IGNORED=0 SAME_CFG=0 LAMBDA_PAIRED_BY_CALLSITE=0 VISIBILITY_BRIDGE=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=0 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
+ACCEPTED: 135 entries; missing=[]; extra=[]; source and class hashes preserved
 ```
 
-轉換數 7 包含 6 個 AsRecord 與 1 個 AsmFinal。完整 `verify_entries` 照常傳入比較器，`missingLeft` 恰有下列 4 個，`extraLeft=[]`。它們的狀態均為 ONLY_RIGHT。
+`classSelection.missingLeft=[]`、`extraLeft=[]`。前輪尚未產出的 `NativeSourceCubeVisibility`、`$Cache`、`$Rebuild`、`$Work` 這次全部 SAME。SAME 是比較器正規化後的結果，不代表 class bytes 相同；本輪 BYTE_SAME=0。
+
+### 核准清單
+
+依比較器 README 的批次規則，從 `docs/combat-merge/access-widen-approved.txt` 保留本批會引用的精確條目，寫成 `scratch/issue-64/access-widen-approved.txt`，以 `--access-widen` 傳入：
 
 ```text
-local/lito381/server/NativeSourceCubeVisibility.class
-local/lito381/server/NativeSourceCubeVisibility$Cache.class
-local/lito381/server/NativeSourceCubeVisibility$Rebuild.class
-local/lito381/server/NativeSourceCubeVisibility$Work.class
+local/lito381/server/NativeLightAction$Output # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/64#issuecomment-6654963452
 ```
 
-### 唯一剩餘阻塞與主控裁定需求
+原清單另有 A 批次的三個方法，直接傳整份會被工具以 outside comparison scope 拒絕；因此使用裁切副本，沒有修改核准原檔。JSON `innerAccessWiden` 精確包含 `local/lito381/server/NativeLightAction$Output`。放寬僅作用於核准的 InnerClasses 條目，其餘比較照常執行。
 
-候選的 `NativeLightAction$Output` 在 InnerClasses metadata 宣告為 private static，NestHost 為 NativeLightAction。B03 的 Work 屬於 NativeSourceCubeVisibility，Java 存取檢查會拒絕直接實作。候選的 Work 介面清單要求 `local/lito381/server/NativeLightAction$Output`，此處改用其他介面會造成類別屬性差異。
-
-```text
-javap -p -v -classpath reference/candidate-50635f7e.jar 'local.lito381.server.NativeLightAction$Output'
-NestHost: class local/lito381/server/NativeLightAction
-InnerClasses:
-  private static ... // Output=class local/lito381/server/NativeLightAction$Output of class local/lito381/server/NativeLightAction
-```
-
-`NativeLightAction` 屬 B08，超出本次檔案範圍。請主控裁定其 Java 可見性與 B 批次編譯依賴安排，並明確指定可重現的驗收方式。完整批次尚未生成可比對的 JAR，因此這 4 個 entry 的阻塞證據是 javac 存取錯誤及候選 metadata。其餘 131 個 entry 正規化後完整比較皆 SAME，剩餘 DIFF 清單為空。
+同時逐一檢查 effects、layout、extra-methods、metadata-exempt、deviations、exceptions-exempt 核准清單，與 B03 的精確類別交集全部為空，因此不傳入空清單，也不啟用額外豁免。T029 的 allow-methods 只適用 B09，本批不使用。
 
 ## 怎麼驗證
 
-下列完整腳本存為本 worktree 的 `scratch/issue-64/verify.py`，在 worktree 根目錄執行。JDK 與本機 ASM 快取路徑已明列，`asm-analysis` 缺少時下載至本 worktree target 並驗 SHA-256。應用 classes、工具 classes 與 JAR 都在 target，參數檔及輸出都在 scratch。使用乾淨 worktree 執行可重新取得下列結果。
+將下方完整腳本存成本 worktree 的 `scratch/issue-64/verify-complete.py`，於 worktree 根目錄執行。腳本會重新編譯工具、裁切核准清單、檢查全部 135 個 entry 與 missing／extra，遇到失敗即非零退出；不執行應用程式。
 
 ```powershell
-$env:PYTHONIOENCODING = 'utf-8'
-& D:/dev-orchestrator/tools/python/python.exe scratch/issue-64/verify.py all
-# 預期 exit 1，唯一 private Output 錯誤。
-& D:/dev-orchestrator/tools/python/python.exe scratch/issue-64/verify.py diagnostic
-# 預期 javac exit 0，131 SAME、4 ONLY_RIGHT，extraLeft 空。
+& D:/dev-orchestrator/tools/python/python.exe -X utf8 scratch/issue-64/verify-complete.py
 ```
 
+等價的應用編譯與語意比對核心指令（完整絕對路徑及 52 份來源由腳本產生）：
+
+```text
+javac -J-Dfile.encoding=UTF-8 --release 17 -encoding UTF-8 -cp "reference/candidate-50635f7e.jar;reference/base-0.6.71.jar;<annotations>;lib/*" -d <classes> <51 份 B03 staged Java> <B08 staged NativeLightAction.java>
+java -cp <as-record-tool及ASM> local.lito381.asrecord.AsRecord <classes>
+# 排除 5 個 B08 依賴 class，核對剩餘集合恰好為 135 個 verify_entries，再打包 B03.jar。
+java -cp <semantic-diff-tool及ASM> local.lito381.semanticdiff.SemanticDiff --left <B03.jar> --right reference/candidate-50635f7e.jar --classes scratch/issue-64/entries.txt --access-widen scratch/issue-64/access-widen-approved.txt --left-classpath reference/candidate-50635f7e.jar --left-classpath reference/base-0.6.71.jar --right-classpath reference/candidate-50635f7e.jar --right-classpath reference/base-0.6.71.jar --json scratch/issue-64/complete.json --md scratch/issue-64/complete.md
+```
+
+<details>
+<summary>可重現的完整驗證腳本</summary>
+
 ```python
-import json
 import hashlib
-import os
+import json
 from pathlib import Path
+import re
 import subprocess
 import sys
-import zipfile
+import tempfile
 import urllib.request
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 SERVER = ROOT / 'lito伺服器/LiTo381-Server'
 WORK = ROOT / 'scratch/issue-64'
 TARGET = SERVER / 'target/issue-64'
 TARGET.mkdir(parents=True, exist_ok=True)
+BUILD = Path(tempfile.mkdtemp(prefix='complete-', dir=TARGET))
 JDK = Path('C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin')
+STAGED = SERVER / 'merge-inputs/50635f7e/staged/local/lito381/server'
 BATCH = next(b for b in json.loads((ROOT / 'docs/combat-merge/batches.json').read_text('utf-8'))['batches'] if b['id'] == 'B03')
-WORK.mkdir(parents=True, exist_ok=True)
+ENTRIES = set(BATCH['verify_entries'])
+assert len(BATCH['classes']) == 51 and len(ENTRIES) == 135
 (WORK / 'entries.txt').write_text('\n'.join(BATCH['verify_entries']) + '\n', 'utf-8')
+audit = {'build': str(BUILD), 'commands': [], 'policies': {}}
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def run(args, log):
+    args = list(map(str, args))
+    if args[0].endswith('javac.exe'):
+        args.insert(1, '-J-Dfile.encoding=UTF-8')
+    if args[0].endswith('java.exe'):
+        args.insert(1, '-Dfile.encoding=UTF-8')
+    result = subprocess.run(args, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    output = result.stdout.decode('utf-8', errors='replace')
+    (WORK / log).write_text(output, 'utf-8')
+    audit['commands'].append({'args': args, 'exit': result.returncode, 'log': log})
+    print(log, 'exit', result.returncode, flush=True)
+    print(output, end='', flush=True)
+    (WORK / 'complete-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2), 'utf-8')
+    if result.returncode:
+        sys.exit(result.returncode)
+
 analysis = TARGET / 'asm-analysis-9.7.jar'
 if not analysis.exists():
     analysis.write_bytes(urllib.request.urlopen('https://repo.maven.apache.org/maven2/org/ow2/asm/asm-analysis/9.7/asm-analysis-9.7.jar').read())
-assert hashlib.sha256(analysis.read_bytes()).hexdigest() == '7bc6bcbc21379948a0c8c467fb0f864206e5b818f6bc0b546872f5c9f941556f'
-STAGED = SERVER / 'merge-inputs/50635f7e/staged/local/lito381/server'
-CP = ';'.join(str(SERVER / p) for p in ['reference/candidate-50635f7e.jar', 'reference/base-0.6.71.jar', 'lib/*'])
-ASM = ';'.join(str(Path('D:/dev-cache/maven/repository/org/ow2/asm') / a / '9.7' / (a + '-9.7.jar')) for a in ['asm', 'asm-tree']) + ';' + str(TARGET / 'asm-analysis-9.7.jar')
-
-def run(args, log):
-    args = [args[0], '-J-Dfile.encoding=UTF-8', *args[1:]] if str(args[0]).endswith('javac.exe') else args
-    args = [args[0], '-Dfile.encoding=UTF-8', *args[1:]] if str(args[0]).endswith('java.exe') else args
-    result = subprocess.run([str(a) for a in args], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    output = result.stdout.decode('utf-8', errors='replace')
-    (WORK / log).write_text(output, 'utf-8')
-    print(output, end='')
-    print('exit', result.returncode)
-    return result.returncode
-
-mode = sys.argv[1] if len(sys.argv) > 1 else 'all'
-classes = TARGET / mode
-classes.mkdir(parents=True, exist_ok=True)
-annotations = TARGET / 'annotations'
-annotations.mkdir(exist_ok=True)
-run([JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-d', annotations, SERVER / 'src/main/java/local/lito381/server/AsRecord.java', SERVER / 'src/main/java/local/lito381/server/AsmFinal.java'], 'annotations.log')
-sources = [STAGED / (name + '.java') for name in BATCH['classes'] if mode == 'all' or name != 'NativeSourceCubeVisibility']
-args = ['--release', '17', '-encoding', 'UTF-8', '-cp', CP + ';' + str(annotations), '-d', str(classes), *map(str, sources)]
-(WORK / (mode + '-javac.args')).write_text('\n'.join('"' + arg.replace('\\', '/') + '"' for arg in args), 'utf-8')
-if run([JDK / 'javac.exe', '@' + str(WORK / (mode + '-javac.args'))], mode + '-javac.log'):
-    sys.exit(1)
-for name, folder in [('as-record', 'local.lito381.asrecord.AsRecord'), ('semantic-diff', 'local.lito381.semanticdiff.SemanticDiff')]:
-    out = TARGET / name
-    out.mkdir(exist_ok=True)
-    if run([JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', ASM, '-d', out, *sorted((SERVER / 'tools' / name / 'src/main/java').rglob('*.java'))], name + '-build.log'):
-        sys.exit(1)
-if run([JDK / 'java.exe', '-cp', str(TARGET / 'as-record') + ';' + ASM, 'local.lito381.asrecord.AsRecord', classes], mode + '-as-record.log'):
-    sys.exit(1)
-jar = TARGET / (mode + '.jar')
+assert sha(analysis) == '7bc6bcbc21379948a0c8c467fb0f864206e5b818f6bc0b546872f5c9f941556f'
+asm_paths = [Path('D:/dev-cache/maven/repository/org/ow2/asm') / a / '9.7' / (a + '-9.7.jar') for a in ['asm', 'asm-tree']] + [analysis]
+ASM = ';'.join(map(str, asm_paths))
+sources = [STAGED / (name + '.java') for name in BATCH['classes']] + [STAGED / 'NativeLightAction.java']
+audit['sources'] = {str(p.relative_to(ROOT)): sha(p) for p in sources}
+audit['inputs'] = {str(p): sha(p) for p in [SERVER / 'reference/candidate-50635f7e.jar', SERVER / 'reference/base-0.6.71.jar', ROOT / 'docs/combat-merge/batches.json', *asm_paths]}
+annotations = BUILD / 'annotations'
+classes = BUILD / 'classes'
+annotations.mkdir()
+classes.mkdir()
+run([JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-d', annotations, SERVER / 'src/main/java/local/lito381/server/AsRecord.java', SERVER / 'src/main/java/local/lito381/server/AsmFinal.java'], 'complete-annotations.log')
+CP = ';'.join(map(str, [SERVER / 'reference/candidate-50635f7e.jar', SERVER / 'reference/base-0.6.71.jar', annotations, SERVER / 'lib/*']))
+args = ['--release', '17', '-encoding', 'UTF-8', '-cp', CP, '-d', str(classes), *map(str, sources)]
+(WORK / 'complete-javac.args').write_text('\n'.join('"' + arg.replace('\\', '/') + '"' for arg in args), 'utf-8')
+run([JDK / 'javac.exe', '@' + str(WORK / 'complete-javac.args')], 'complete-javac.log')
+audit['javacClasses'] = {p.relative_to(classes).as_posix(): sha(p) for p in sorted(classes.rglob('*.class'))}
+for name in ['as-record', 'semantic-diff']:
+    out = BUILD / name
+    out.mkdir()
+    tool_sources = sorted((SERVER / 'tools' / name / 'src/main/java').rglob('*.java'))
+    audit[name + 'Sources'] = {str(p.relative_to(ROOT)): sha(p) for p in tool_sources}
+    run([JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', ASM, '-d', out, *tool_sources], 'complete-' + name + '-build.log')
+run([JDK / 'java.exe', '-cp', str(BUILD / 'as-record') + ';' + ASM, 'local.lito381.asrecord.AsRecord', classes], 'complete-as-record.log')
+audit['convertedClasses'] = {p.relative_to(classes).as_posix(): sha(p) for p in sorted(classes.rglob('*.class'))}
+extra = set(audit['convertedClasses']) - ENTRIES
+assert ENTRIES <= set(audit['convertedClasses'])
+assert extra and all(n == 'local/lito381/server/NativeLightAction.class' or n.startswith('local/lito381/server/NativeLightAction$') for n in extra), sorted(extra)
+audit['excludedDependencyEntries'] = sorted(extra)
+for name in extra:
+    path = classes / name
+    assert path.resolve().is_relative_to(BUILD.resolve()) and not path.is_symlink()
+    path.unlink()
+assert {p.relative_to(classes).as_posix() for p in classes.rglob('*.class')} == ENTRIES
+jar = BUILD / 'B03.jar'
 with zipfile.ZipFile(jar, 'w') as archive:
-    for path in sorted(classes.rglob('*.class')):
-        archive.write(path, path.relative_to(classes).as_posix())
-run([JDK / 'java.exe', '-cp', str(TARGET / 'semantic-diff') + ';' + ASM, 'local.lito381.semanticdiff.SemanticDiff', '--left', jar, '--right', SERVER / 'reference/candidate-50635f7e.jar', '--left-classpath', SERVER / 'reference/candidate-50635f7e.jar', '--classes', WORK / 'entries.txt', '--json', WORK / (mode + '.json'), '--md', WORK / (mode + '.md')], mode + '-semantic.log')
-data = json.loads((WORK / (mode + '.json')).read_text('utf-8'))
-print(json.dumps(data['counts']))
-for entry in data['classes']:
-    if entry['status'] != 'SAME':
-        print(json.dumps(entry, ensure_ascii=False))
+    for name in sorted(ENTRIES):
+        archive.writestr(zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0)), (classes / name).read_bytes())
+with zipfile.ZipFile(jar) as archive:
+    assert set(archive.namelist()) == ENTRIES
+    assert all(hashlib.sha256(archive.read(n)).hexdigest() == audit['convertedClasses'][n] for n in ENTRIES)
+audit['jarSha256'] = sha(jar)
+policy_flags = {'access-widen-approved.txt': '--access-widen', 'effects-approved.txt': '--effects-methods', 'layout-approved.txt': '--layout-methods', 'extra-methods-approved.txt': '--extra-methods', 'metadata-exempt.txt': '--metadata-exempt', 'deviations.txt': '--deviations', 'exceptions-exempt.txt': '--exceptions-exempt'}
+flags = []
+owners = {n.removesuffix('.class') for n in ENTRIES}
+for filename, flag in policy_flags.items():
+    original = ROOT / 'docs/combat-merge' / filename
+    selected = []
+    for line in original.read_text('utf-8-sig').splitlines():
+        if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        match = re.search(r'local/lito381/server/[^#\s]+', line)
+        assert match, line
+        owner = match.group()
+        if owner in owners or (flag == '--access-widen' and owner == 'local/lito381/server/NativeLightAction$Output'):
+            selected.append(line)
+    audit['policies'][filename] = {'sourceSha256': sha(original), 'entries': selected}
+    if selected:
+        filtered = WORK / filename
+        filtered.write_text('\n'.join(selected) + '\n', 'utf-8')
+        flags.extend([flag, str(filtered)])
+assert '--access-widen' in flags
+cmd = [JDK / 'java.exe', '-cp', str(BUILD / 'semantic-diff') + ';' + ASM, 'local.lito381.semanticdiff.SemanticDiff', '--left', jar, '--right', SERVER / 'reference/candidate-50635f7e.jar', '--classes', WORK / 'entries.txt', *flags]
+for side in ['--left-classpath', '--right-classpath']:
+    for cp in [SERVER / 'reference/candidate-50635f7e.jar', SERVER / 'reference/base-0.6.71.jar', *sorted((SERVER / 'lib').glob('*.jar'))]:
+        cmd.extend([side, cp])
+run([*cmd, '--json', WORK / 'complete.json', '--md', WORK / 'complete.md'], 'complete-semantic.log')
+data = json.loads((WORK / 'complete.json').read_text('utf-8'))
+assert len(data['classes']) == 135
+assert not data['classSelection']['missingLeft'] and not data['classSelection']['extraLeft']
+bad = [c for c in data['classes'] if c['status'] not in {'SAME', 'SAME_EFFECTS', 'SAME_PATHS'}]
+print(json.dumps({'counts': data['counts'], 'bad': bad}, ensure_ascii=False), flush=True)
+assert not bad
+assert audit['sources'] == {str(p.relative_to(ROOT)): sha(p) for p in sources}
+assert audit['convertedClasses'] == {**{n: sha(classes / n) for n in ENTRIES}, **{n: audit['convertedClasses'][n] for n in extra}}
+audit['resultSha256'] = sha(WORK / 'complete.json')
+audit['accepted'] = True
+(WORK / 'complete-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2), 'utf-8')
+print('ACCEPTED: 135 entries; missing=[]; extra=[]; source and class hashes preserved', flush=True)
 
 ```
 
-### 輸入與輸出 SHA-256
+</details>
+
+### 輸入／輸出 SHA-256
 
 | 檔案 | SHA-256 |
 | --- | --- |
-| `candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| `base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| `batches.json` | `985ce87719338034c9b9d42834de2ecdb41fc2e7a9ab3894fc5a23622d03802e` |
-| `CFR 0.152` | `f686e8f3ded377d7bc87d216a90e9e9512df4156e75b06c655a16648ae8765b2` |
-| `diagnostic.jar` | `87c6f81cc7afa225c8423c6a7297e9f83d3477a49caa81f82c90fdddabd48437` |
-| `diagnostic.json` | `a97d30c10c0f8ac224c245ff3d5519238410339f0e5aa15cc8ba132ccb048e85` |
+| `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
+| `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
+| `docs/combat-merge/batches.json` | `985ce87719338034c9b9d42834de2ecdb41fc2e7a9ab3894fc5a23622d03802e` |
+| `docs/combat-merge/access-widen-approved.txt` | `4bf5066b4ba996472337b173330e9fb5306b4378847512d15fe510d9b666ac74` |
+| `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/NativeLightAction.java` | `8561ad87c710bb8ce8faccbf634f221e8dad128a498bcfee3654802a1ed60ca8` |
+| `lito伺服器/LiTo381-Server/target/issue-64/complete-fiys36h5/B03.jar` | `6fb731a14313ba316b8d9777691baf9e5f3da7ea81146d5e2b15f99d6d221db7` |
+| `scratch/issue-64/complete.json` | `7e21a7691aecfcd5c0aeda187a567f1e27d197903e78cff68ad55ad3379fe003` |
 
-### 凍結來源差異
-
-20 份 Java 已移植，其餘 31 份與凍結來源 bytes 相同。移植檔案如下。
+51 份 B03 staged 與凍結 sources 比較：20 份已移植、31 份 bytes 相同；本輪均保留。移植檔名：
 
 ```text
 NativeSourceCubeOrigin
@@ -184,7 +253,7 @@ NativeSourceLightPairLife
 
 ### 完整逐 entry 結果
 
-下列名稱共同前綴為 `local/lito381/server/`，對應 `.class`。
+共同前綴為 `local/lito381/server/`，下列名稱均對應 `.class`。
 
 | Entry | 結果 |
 | --- | --- |
@@ -213,10 +282,10 @@ NativeSourceLightPairLife
 | `NativeSourceCubeTemplate` | SAME |
 | `NativeSourceCubeTemplate$Presentation` | SAME |
 | `NativeSourceCubeTemplate$Template` | SAME |
-| `NativeSourceCubeVisibility` | ONLY_RIGHT |
-| `NativeSourceCubeVisibility$Cache` | ONLY_RIGHT |
-| `NativeSourceCubeVisibility$Rebuild` | ONLY_RIGHT |
-| `NativeSourceCubeVisibility$Work` | ONLY_RIGHT |
+| `NativeSourceCubeVisibility` | SAME |
+| `NativeSourceCubeVisibility$Cache` | SAME |
+| `NativeSourceCubeVisibility$Rebuild` | SAME |
+| `NativeSourceCubeVisibility$Work` | SAME |
 | `NativeSourceDamageCapacity` | SAME |
 | `NativeSourceDamageDisplay` | SAME |
 | `NativeSourceDamageDisplay$Actor` | SAME |
@@ -326,22 +395,23 @@ NativeSourceLightPairLife
 
 ## 推測
 
-主控若提供可編譯且符合候選介面契約的 NativeLightAction 依賴，應可繼續驗證 CubeVisibility 4 個 entry。這部分仍需重新整批編譯及比對。
+無需推測本批驗收結果；上述結論以整批實際編譯、class 集合與語意比對為據。跨批整合後是否仍通過全部驗收，須由 B-land 實跑確認。
 
 ## 待驗證／未驗證什麼
 
-- 51 檔整批 javac 成功、135 個 entry 全 SAME 與 missingLeft 清空，均待跨批次 private 介面裁定。
-- 單元測試與執行期回歸依任務規格留 B-land。真機登入、遊戲與正式 DB 驗收留後續階段。
+- 單元測試及執行期回歸依任務規格不適用於本輪 staged 驗收，留 B-land 統一執行。
+- 沒有宣告 src/main、Maven 整體建置、正式發布或真機遊戲驗收完成。
+- 本批沒有剩餘語意差異、missing、extra 或需新增主控裁定的阻塞。
 
 ## 產出路徑
 
-- `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 的 B03 51 份 Java。
-- `docs/reports/issue-64.md`。
-- 本機重建證據在 `scratch/issue-64/`，含 CFR、`all-javac.log`、`diagnostic-javac.log`、`diagnostic.json`／`.md` 及完整參數檔。
-- 本機產物在 `lito伺服器/LiTo381-Server/target/issue-64/`。上述暫存及產物由重現指令生成。
+- 交付來源：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 的 B03 51 份 `.java`（既有提交保留）。
+- 本輪報告：`docs/reports/issue-64.md`。
+- 本機驗證證據：`scratch/issue-64/complete-javac.args`、`complete-*.log`、`complete.json`、`complete.md`、`complete-audit.json`、核准清單裁切副本與 `verify-complete.py`。audit 含全部工具／輸入來源雜湊、實際命令、退出碼、轉換前後 class 雜湊及排除清單。
+- 本機建置產物：`lito伺服器/LiTo381-Server/target/issue-64/complete-fiys36h5/`，其中 `B03.jar` 精確包含 135 個本批 entry；註解與工具 classes 分開存放。scratch 與 target 都不提交，乾淨 checkout 可使用本報告內腳本重建。
 
 ## 給下一棒的提示
 
-由 Claude 主控接手 private Output 的跨批次裁定。B08 需協調 NativeLightAction 的可見性與本批編譯依賴，裁定後再由本機執行器對全部 51 檔重跑。請以本報告的 131 SAME／4 ONLY_RIGHT 作為診斷基準，完整批次驗收仍待完成。
+由 Claude 主控審查既有 PR #80 的更新與本報告，通過後交使用者合併。B03 已達 135 SAME、missing／extra 空；不用再等待 Output 可見性裁定，也不需要標 `needs:claude` 阻塞。
 
-遠端 task/64 原有退回提交 `c79e9e0d00dc846bc49aad87907a3c67912674b7`。本輪以最新 main 重新開始，交付時保留舊分支提交歷史，以本輪檔案內容建立合併提交，再使用一般 push 更新 task/64。
+B-land（#138）合入時，保留本批 6 個 AsRecord 與 1 個 AsmFinal，使用 #69 的 package-private Output 來源及同一條核准 access-widen；這次只排除獨立驗證 JAR 的 B08 依賴 entry，最終全批 JAR 仍須包含 B08。再統一執行 1,384 個 B entry 語意比對、單元測試與回歸。
