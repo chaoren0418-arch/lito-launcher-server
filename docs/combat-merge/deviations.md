@@ -135,3 +135,32 @@ Java 無法用 private 遮蔽祖先的非 private 同簽名方法；正式 bytec
 **已驗證**：兩側 private、祖先非 private 同簽名、左側無任何原名方法等守門通過後，仍完整比較本體與 metadata；只有成功配對列 DEVIATION。本類 INVOKEVIRTUAL／INVOKESPECIAL 呼叫與遞迴依配對比較，祖先／外類 owner 與 handle 不改名。#73 完整 49 份來源（其中一份使用審查者既有改名試編來源）重新編成 104 entry 後，該類為 DEVIATION，呼叫者為 SAME_PATHS，整批 0 DIFF／ONLY_*。隔離 ClassLoader 反例實際證明覆寫版本的派送結果不同，詳見 [issue-235 報告](../reports/issue-235.md)。
 
 **推測／待驗證**：比較限於固定輸入與工具模型；未實機測試或連 DB。#78 仍須補「刪除 NPC 時呼叫 chat retire」的應用層派送測試，本條目不豁免該驗收。
+
+## #69：NativeLightAction$Batch.emit 的原樣轉拋與區塊排列
+
+識別：`local/lito381/server/NativeLightAction$Batch#emit()V`，類型 `method-diff`。依 [#69 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6672200596)，只追加此精確方法；不改 Java、不改工具，以現有 JAR 重驗，不另開工具任務。其餘方法、欄位、metadata 與 entry 完整性照常比較。
+
+核准的三點理由：
+
+1. 兩側核心 try 都是 `[0,4)`，只保護 `nativeSourceBatchOriginalEmit()`；staged 額外 `[8,13)`、`[23,28)` 只保護兩個 finish 呼叫。其 handler 使用已核准的 `rethrowCandidateFailure`，本體僅 `throw (E) failure;`，原樣轉拋且不返回。
+2. 正常路徑有序事件均為 `originalEmit → finish(null)`；例外路徑均為 `originalEmit 失敗 → finish(error) → ATHROW`。比較器 `RethrowHandlers.normalize` 按區塊實體順序對齊 events，左右正常／例外區塊排列不同而拒絕，並非核心 try 範圍不一致。
+3. 前輪在記憶體複本移除核准 handler 後，既有比較器診斷為 SAME_PATHS（4），主控審查亦獨立確認。診斷不是正式收據；本輪正式結果係由原工具加精確 method-diff 清單產生。
+
+兩側 `javap -p -c -s` 的 `emit()V` 例外表：
+
+```text
+staged:
+  from    to  target type
+      0     4     7   Class java/lang/Throwable
+      8    13    16   Class java/lang/Throwable
+     23    28    31   Class java/lang/Throwable
+candidate:
+  from    to  target type
+      0     4    10   Class java/lang/Throwable
+```
+
+原診斷路徑：`scratch/issue-69/final-254/emit-probe.log`。本輪重新取得的兩側完整 javap 為 `scratch/issue-69/closeout/staged-Batch-javap.log`、`scratch/issue-69/closeout/candidate-Batch-javap.log`；完整方法、unified diff、命令與雜湊見 [issue-69 報告](../reports/issue-69.md)。
+
+**已驗證**：staged JAR SHA-256 `fc7697767d2da777f8e6bfd21bf8297701da1a2698f2795367f724c23859066f`；candidate SHA-256 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`。B08 owner 抽取後的 deviations 清單恰為一條，正式 160 entries 為 141 SAME／10 SAME_PATHS／7 SAME_CFG／1 LAMBDA_PAIRED_BY_CALLSITE／1 DEVIATION，DIFF／missing／extra／ONLY_LEFT／ONLY_RIGHT 均為 0。未修改 Java、工具或 JAR。
+
+**推測／待驗證**：核准只適用本方法與上述輸入，未證明一般 handler 重排等價。B-land #138 負責單元與整合回歸，並檢查手寫 `lambda$deferWeaponTargetOutput$0` 是否與 javac 生成名稱衝突。不得把正常 `finish(null)` 納入核心 try，否則 finish 失敗時可能再次執行 finish。本輪未啟動應用、遊戲或 DB。

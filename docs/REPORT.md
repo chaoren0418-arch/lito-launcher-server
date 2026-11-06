@@ -51,3 +51,4 @@
 - 2026-11-06 — #73 T020-A02: T020-A02: src/main 對齊正式 0.6.71 暫存（nativede，49 類）（code，codex-local，PR #101 已合併）→ [報告](reports/issue-73.md)
 - 2026-11-06 — #254 T020i-11: semantic-diff 移除無作用的「載入後丟棄」＋CFG 比對前合併相同區塊（code，codex-local，PR 已合併）→ [報告](reports/issue-254.md)
 - 2026-11-06 — #259 T020i-12: semantic-diff stack／暫存資料流正規化＋switch-map 依內容配對（code，codex-local，PR 已合併）→ [報告](reports/issue-259.md)
+- 2026-11-06 — #69 T020-B08: 戰鬥併入暫存（existing-native，30 類）（code，codex-local，PR #94 已合併）→ [報告](reports/issue-69.md)
