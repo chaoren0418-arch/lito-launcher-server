@@ -2,11 +2,13 @@
 
 ## 結論
 
-**程式、單元測試及 class 語意驗收已通過；三份建置中繼資料仍待主控裁定，PR 保持草稿，不交 #225 啟動。**
+**程式、單元測試及 class 語意驗收已通過；三份建置中繼資料、CaptureLog adapter 格式邊界及補回的正式資源均已獲主控核准。PR #264 須待 CI 全綠後轉為 ready for review，再由 Claude 審查、使用者合併。**
 
-完整測試 `6050` 項，Failures `0`、Errors `0`、Skipped `110`。A 692 entries 的 DIFF／ONLY_LEFT／ONLY_RIGHT 均為 0，CaptureLog 為 SAME；整顆 JAR 的其他 class 差異為 0。全部 1,366 份遊戲資源逐位元組相同；若嚴格把 Maven 產生的三份 META-INF 中繼資料也納入「非 class 不同數必須為 0」，目前仍有 3 個 DIFF，沒有自行視為已豁免。
+完整測試 `6050` 項，Failures `0`、Errors `0`、Skipped `110`。A 692 entries 的 DIFF／ONLY_LEFT／ONLY_RIGHT 均為 0，CaptureLog 為 SAME；整顆 JAR 的其他 class 差異為 0。全部 1,366 份遊戲資源逐位元組相同，DIFF／ONLY_LEFT／ONLY_RIGHT 均為 0；三份 META-INF 差異另列為「建置中繼資料（已核准）」。
 
 本輪依 [主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/78#issuecomment-6672249950) 完成後續整合；[中繼資料裁定請求](https://github.com/chaoren0418-arch/lito-launcher-server/issues/78#issuecomment-6672434402)。沿用 task/78，合併 main `8df7c89c3a9b4dbdb8eb01b40a5b53462dbac0f8`（含 #254），B-land 尚未合入；不切分支、不改 B staged。
+
+本次短輪依 [主控收尾裁定（依 fa21a92c）](https://github.com/chaoren0418-arch/lito-launcher-server/issues/78#issuecomment-6672896199) 更新本報告，唯讀核對兩側 Manifest 與 JAR SHA-256。未修改程式、POM、測試或資源，因此沿用 `fa21a92c` 的完整 Maven／semantic-diff 證據，依裁定不重跑 semantic-diff。下列 Maven 與語意比對數字均為前輪已完成的結果。
 
 ## 做了什麼
 
@@ -140,9 +142,16 @@ print('classification',{k:dict(collections.Counter(c['status'] for c in v)) for 
 print('SHA256',hashlib.sha256(left.read_bytes()).hexdigest())
 ```
 
-### 全部非 class 資源
+### 遊戲資源與建置中繼資料（已核准）
 
-未排除 META-INF，忽略 ZIP 目錄項，逐份比對 bytes：**SAME=1366、DIFF=3、ONLY_LEFT=0、ONLY_RIGHT=0**。來源專有資源清單為空。全部 entry、左右 SHA 在 evidence.nonclass_entries；725 份補回資源及 11 maps 的前後 SHA 分別在 restored_resources／map_resources。
+原始非 class 比對未排除 META-INF，忽略 ZIP 目錄項，逐份比對 bytes：**SAME=1366、DIFF=3、ONLY_LEFT=0、ONLY_RIGHT=0**。依上述主控收尾裁定，分類為：
+
+| 分類 | SAME | DIFF | ONLY_LEFT | ONLY_RIGHT |
+|---|---:|---:|---:|---:|
+| 遊戲資源 | 1366 | 0 | 0 | 0 |
+| 建置中繼資料（已核准，僅下列三份） | 0 | 3 | 0 | 0 |
+
+來源專有資源清單為空。全部 entry、左右 SHA 在 evidence.nonclass_entries；725 份補回資源及 11 maps 的前後 SHA 分別在 restored_resources／map_resources。保留 evidence 的原始計數，沒有將核准差異改寫為 SAME。
 
 全部不同 entry（完整內容差異在 evidence.metadata_differences）：
 
@@ -150,7 +159,20 @@ print('SHA256',hashlib.sha256(left.read_bytes()).hexdigest())
 - `META-INF/maven/local.lito381/lito381-server/pom.properties`
 - `META-INF/maven/local.lito381/lito381-server/pom.xml`
 
-reference manifest／pom.properties 的版本為 **0.7.864**，現行建置為 **0.6.71**；嵌入 POM 也不同，現行 POM 包含必需的轉換器與 stub 排除接線。未以舊中繼資料取代現行建置資訊，亦未把這 3 份擅自排除後宣稱「全部非 class DIFF=0」。其餘 1,366 份全部相同，缺少項為 0。
+reference manifest／pom.properties 的版本為 **0.7.864**，現行建置為 **0.6.71**；嵌入 POM 也不同，現行 POM 包含必需的轉換器與 stub 排除接線。主控已接受保留本次真實建置資訊，不嵌入 reference 的舊中繼資料。核准僅適用上述三個精確 entry，其餘 1,366 份全部相同，缺少項為 0。
+
+本次從兩顆 JAR 直接讀出 Manifest，展開續行後逐項核對：
+
+| 屬性 | target/LiTo381-Server.jar | reference/base-0.6.71.jar |
+|---|---|---|
+| Main-Class | `local.lito381.server.SharedResourceMain` | `local.lito381.server.SharedResourceMain` |
+| Implementation-Version | `0.6.71` | `0.7.864` |
+| Manifest-Version | `1.0` | `1.0` |
+| Created-By | `Maven JAR Plugin 3.3.0` | `Maven JAR Plugin 3.3.0` |
+| Build-Jdk-Spec | `17` | `17` |
+| Class-Path | `lib/mysql-connector-j-8.0.33.jar lib/protobuf-java-3.21.9.jar lib/HikariCP-5.1.0.jar lib/slf4j-api-1.7.36.jar` | 與左側相同 |
+
+Manifest 唯一差異為 `Implementation-Version`；建置工具欄位相同，其他屬性差異 **0**，沒有單側專有屬性。兩側 `Main-Class` 相同，符合裁定條件。pom.properties 僅 version 不同，groupId／artifactId 相同；嵌入 POM 的完整差異保留於 evidence.metadata_differences。
 
 ## 推測
 
@@ -158,10 +180,10 @@ class 語意與資源檢查支持 A 範圍等於正式（含精確核准偏離�
 
 ## 待驗證／給下一棒的提示
 
-1. Claude 裁定三份 Maven META-INF 中繼資料，以及確認正式 CaptureLog adapter 的格式邊界。裁定前 PR #264 保持草稿，不宣稱 #78 全部閘門通過。
-2. CI 以 PR 最新提交的 checks 為準；本機已執行同一份 class-list 比對步驟，沒有把本機結果冒充 GitHub CI。
+1. 三份 Maven META-INF 中繼資料、正式 CaptureLog adapter 的格式邊界及補回 725 份正式資源已由主控核准，沒有待裁定項。Claude 接續審查 PR #264，使用者合併。
+2. CI 閘門：確認 `fa21a92c` 的 [build](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42134166554)／[package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42134166709) 及本次文件提交的最新 checks 全綠後，再把 PR #264 轉為 ready for review；最終查核結果回覆於 Issue #78。CI 若失敗須逐案列出根因並加 needs:claude。本機結果不代替 GitHub CI。
 3. B-land 若先合入，需依規則整合並重跑 A／B 語意比對；候選 ClientSession 換入後，如 ModernCaptureLog 無呼叫者，依主控裁定一併移除。
-4. #225 只在全部裁定／CI 通過後，使用下列 SHA 的成品驗收。未執行伺服器／遊戲啟動、正式 DB 操作或部署。
+4. A-land 通過審查並合併後，#225 的前置條件只剩 #83（實驗 DB）；屆時使用下列 SHA 的成品驗收。未執行伺服器／遊戲啟動、正式 DB 操作或部署。
 
 ## 產出路徑
 
