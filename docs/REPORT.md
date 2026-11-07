@@ -58,3 +58,4 @@
 - 2026-11-06 — #83 T020c-2: 準備戰鬥回歸用隔離 SQL 設定（SELECT 專用帳號）— 本機對話（resource，dot，PR #280 已合併）→ [報告](reports/issue-83.md)
 - 2026-11-06 — #283 T013: CHECKLIST 改成實驗環境版（正式 0.6.71＋P24 實驗 schema）（code，codex-local，PR 已合併）→ [報告](reports/issue-283.md)
 - 2026-11-07 — #282 重做計畫：以正式 0.6.71 現狀能用為基準，重建 JAR 與整顆同源化移到 Backlog（plan，claude-chat，PR #274 已合併）→ [報告](reports/issue-282.md)
+- 2026-11-07 — #284 T014: 正式 0.6.71 JAR 的實驗設定與啟動到大廳（P24 實驗 schema）（resource，codex-local，PR #287 已合併）→ [報告](reports/issue-284.md)
