@@ -1,0 +1,18 @@
+[LiTo] resource-profile=lito-legacy
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Exception in thread "main" java.lang.IllegalStateException: Cannot load LiTo room policy or qualified resource tables; inspect the nested database error
+	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:35)
+	at local.lito381.server.GameHub.<init>(Unknown Source)
+	at local.lito381.server.Main.main(Unknown Source)
+	at local.lito381.server.SharedResourceMain.main(SharedResourceMain.java:7)
+Caused by: java.sql.SQLSyntaxErrorException: SELECT command denied to user 'lito83_exp'@'127.0.0.1' for table '角色_智力成長'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at local.lito381.server.NativeProcHealBonus.read(NativeProcHealBonus.java:19)
+	at local.lito381.server.NativeProcHealBonus.load(NativeProcHealBonus.java:27)
+	at local.lito381.server.ResourceDatabase.load(Unknown Source)
+	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:33)
+	... 3 more
