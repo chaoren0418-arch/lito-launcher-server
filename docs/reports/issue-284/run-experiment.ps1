@@ -36,7 +36,7 @@ if($PrepareOnly){return}
 if($LASTEXITCODE -ne 0){throw 'Read-only preflight failed; do not start server'}
 & "$PSScriptRoot\verify-run.ps1" -RunDirectory $run
 if(@(Get-ChildItem -LiteralPath "$run\runtime" -Force).Count){throw 'Runtime must still be empty'}
-@('@echo off','"'+$java+'" -Xms512m -Xmx2048m -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8 "-Djava.io.tmpdir=%CD%\tmp" -jar LiTo381-SharedResources-candidate.jar config/experiment.properties 2>&1','exit /b %errorlevel%') | Set-Content -Encoding ASCII "$run\start-java.cmd"
+@('@echo off',('"'+$java+'" -Xms512m -Xmx2048m -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8 "-Djava.io.tmpdir=%CD%\tmp" -jar LiTo381-SharedResources-candidate.jar config/experiment.properties 2>&1'),'exit /b %errorlevel%') | Set-Content -Encoding ASCII "$run\start-java.cmd"
 Write-Host 'Observe startup for at most 120 seconds. On timeout use Ctrl+C in this console; do not retry.'
 Write-Host 'After [LiTo] ready, complete only the authorized login check, then Ctrl+C for normal shutdown.'
 Push-Location -LiteralPath $run
