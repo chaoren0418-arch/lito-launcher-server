@@ -12,7 +12,7 @@ if(Test-Path -LiteralPath "$run/logs/server-console.log"){throw 'Existing attemp
 $settings=@{}
 foreach($line in Get-Content -LiteralPath "$run/config/experiment.properties" -Encoding UTF8){
   if($line -match '^\s*(#|!|$)'){continue}
-  $parts=$line.Split(@('='),2)
+  $parts=$line.Split([char[]]'=',2,[StringSplitOptions]::None)
   if($parts.Count -ne 2 -or $settings.ContainsKey($parts[0])){throw 'Invalid or duplicate setting'}
   $settings[$parts[0]]=$parts[1].Replace('\:',':').Replace('\=','=')
 }

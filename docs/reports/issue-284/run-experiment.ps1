@@ -25,14 +25,14 @@ foreach($f in @((Get-Item "$source\$jar")) + @(Get-ChildItem "$source\lib" -File
  $receipts+=@{File=$relative;Bytes=$f.Length;SHA256=$hash;CopyVerified=$true}
 }
 $receipts|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\artifact-hashes.json"
-& $java -cp "$run\$jar;$run\lib\*" "$PSScriptRoot\Prepare.java" $run 'D:\lineage開發\3-lito開發\scratch\wt\task-83\scratch\t020c\isolated-test.properties' "$root\lito伺服器\LiTo381-Server\config\server.properties.example"
+& $java "-Djava.io.tmpdir=$run\tmp" -cp "$run\$jar;$run\lib\*" "$PSScriptRoot\Prepare.java" $run 'D:\lineage開發\3-lito開發\scratch\wt\task-83\scratch\t020c\isolated-test.properties' "$root\lito伺服器\LiTo381-Server\config\server.properties.example"
 if($LASTEXITCODE -ne 0){throw 'Configuration preparation failed'}
 @{Run=$run;Utc=[DateTime]::UtcNow.ToString('o');RuntimeEntries=@(Get-ChildItem -LiteralPath "$run\runtime" -Force).Count;Java=$java}|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\preparation.json"
 Write-Output "Run=$run"
 if($PrepareOnly){return}
 # P24Lab must already have been cold-backed-up and started by its authorized owner.
 # This entry point never starts/stops MySQL or changes grants/data.
-& $java -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\before.txt"
+& $java "-Djava.io.tmpdir=$run\tmp" -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\before.txt"
 if($LASTEXITCODE -ne 0){throw 'Read-only preflight failed; do not start server'}
 & "$PSScriptRoot\verify-run.ps1" -RunDirectory $run
 if(@(Get-ChildItem -LiteralPath "$run\runtime" -Force).Count){throw 'Runtime must still be empty'}
@@ -46,6 +46,6 @@ try {
  $code=$LASTEXITCODE
  @{ExitCode=$code;EndUtc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content -Encoding UTF8 logs/server-exit.json
 } finally {Pop-Location}
-& $java -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\after.txt"
+& $java "-Djava.io.tmpdir=$run\tmp" -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\after.txt"
 if($LASTEXITCODE -ne 0){throw 'Post-run read-only verification failed'}
 exit $code

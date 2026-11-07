@@ -1,24 +1,36 @@
-# Issue #284：正式 0.6.71／P24 實驗啟動預檢
+# Issue #284：正式 0.6.71／P24 實驗啟動（第 2 次嘗試）
 
 ## 結論
 
-**阻塞，已標記 `needs:claude`。** 2026-11-07，本機執行器以指定正式 JAR、#83 實驗設定及全新 runtime 執行一次啟動。JDBC 連線、實例身分、來源路由與統一設定驗證通過；伺服器在資源初始化階段因 `角色_智力成長` 的 SELECT 權限不足而以退出碼 **1** 結束，未出現 `[LiTo] ready`。
+**blocked／未完成，需 `needs:claude`。** 2026-11-07，本輪依最新授權補足三個實驗 schema 的 SELECT 後，以指定正式 0.6.71 JAR 執行一次啟動。前次「角色_智力成長」權限錯誤已不再出現；本次在 `NativeArmorProc.load` 因 **`Unknown column 'id' in 'field list'`** 退出（工具回傳退出碼 1），未出現 `[LiTo] ready`，42083／42084 無監聽。
 
-依任務失敗處置立即停止，沒有擴權、修程式、補表或搬資料。登入器、大廳登入與截圖未執行，不能作為 T011 的已完成前置。P24Lab 已正常關閉。
+已依遇錯停止規則停止，沒有改程式、欄位、複製資料或追加寫入權限。登入器、大廳登入與 PNG 均未執行；**T014 仍不是已完成前置，不可因本報告合併就放行 #285／T011**。本輪啟動的 P24Lab 已正常關閉。
 
-## 已驗證：範圍、隔離與產物
+## 已驗證：授權與隔離
 
-- 工作目錄：`D:\lineage開發\3-lito開發\scratch\wt\task-284`；分支維持 `task/284`，未 checkout／另建分支。
-- 已讀根 `AGENTS.md`、`docs/REPORT.md`、T014、#83 報告與 P24Lab 既有啟停腳本。`docs/REPORT.md` 未修改。
-- `http://localhost:8787/api/state` 核實 lease：`p24lab`，持有人 `chaoren0418-arch/lito-launcher-server#284`，取得 `2026-11-07T01:22:47.2077813Z`，到期 `2026-11-07T02:07:47.2077813Z`。本次 DB 使用全在有效期間內；RESULT 交回調度器處理 lease，不自行變更 SQLite。
-- 本次實際啟動目錄：`scratch/t014/run-20261107T012544Z/`。來源 JAR／lib 只讀取、普通複製並逐檔核對 SHA-256，未使用硬連結。
-- 正式 JAR 來源：`D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\server\LiTo381-SharedResources-candidate.jar`。
-- 以正式 JAR 內 `UnifiedConfiguration.KEYS` 與 `validate` 驗證完整 **22 鍵**；帳密僅在記憶體讀取 #83 `isolated-test.properties` 並寫入本次 Git 忽略的私密實驗設定，未讀正式 `config/server.properties` 或測試登入密碼。
-- `runtime/` 為新建空目錄，啟動前項目數 **0**；退出後僅有 `battle-settlements/owner.lock`，沒有待 replay 的 `.pending` journal；以獨占方式開啟 lock 檔成功，確認已釋放。
-- 使用 Java 17：`C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe`。未使用 Maven 產物／戰鬥候選替代。
-- 交付前再次核對正式來源 JAR 雜湊相同；7 份公開檔案的實際密碼字串掃描、PowerShell 語法解析與 `git diff --check` 通過，私密設定確實被 Git 忽略。沒有產品程式碼變更，未做 Maven 建置。
+- 工作目錄：`D:\lineage開發\3-lito開發\scratch\wt\task-284`；維持 `task/284`，未 checkout／建分支。已讀 `AGENTS.md`、`docs/REPORT.md`、TASKS 的 T014、#83 報告與既有 P24Lab 啟停腳本；未修改 `docs/REPORT.md`。
+- 透過調度器 `/api/state` 核實 `p24lab` lease：持有人 `chaoren0418-arch/lito-launcher-server#284`，取得 `2026-11-07T02:33:51Z`，到期 `2026-11-07T03:18:51Z`；核對 exp 為 `1794021531.409907`。DB 使用全在有效期內，未自行修改調度器 SQLite。
+- 本輪依任務附上的[最新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6700746563)，只增加三個實驗 schema 的 SELECT。原先禁止擴權條文的本次例外限於這三項；沒有以歷史留言另行擴大寫入、補表或修欄位。
+- 正式 JAR／lib 從原始專案唯讀普通複製至 `scratch/t014/run-20261107T023503Z/`，未用硬連結、未修改正式檔案。未讀正式 `config/server.properties`，未連正式 2000／3306，未啟動遊戲。
+- #83 的 `isolated-test.properties` 只用於私密實驗設定交接；未印出帳密、未讀測試登入密碼。私密設定保留在 Git 忽略目錄。
 
-| 檔案 | bytes | 來源與副本相同的 SHA-256 |
+### 本次實際 GRANT
+
+MySQL `partial_revokes=0`，schema 授權中的底線有萬用字元語意，故以反斜線跳脫，精確限制三個名稱：
+
+```sql
+GRANT SELECT ON `p24\_world\_lito\_exp`.* TO 'lito83_exp'@'127.0.0.1';
+GRANT SELECT ON `p24\_accounts\_lito\_exp`.* TO 'lito83_exp'@'127.0.0.1';
+GRANT SELECT ON `p24\_lito\_lito\_exp`.* TO 'lito83_exp'@'127.0.0.1';
+```
+
+[完整 SHOW GRANTS 前值](issue-284/grants-before.txt) 與 [完整後值](issue-284/grants-after.txt) 的差異**僅以上三項**；81 行增加至 84 行。核對同名帳號只有 Host `127.0.0.1`。原 80 張表級 SELECT 保留；INSERT／UPDATE 仍僅 `p24_accounts_lito_exp.character_lito` 與 `p24_lito_lito_exp.lito_battle_settlement`。全域仍僅 USAGE，沒有新增 DDL、DELETE、GRANT OPTION 或管理權限，沒有給原 P24Lab schema 權限。關閉 DB 不會撤銷這三項持續授權。
+
+## 已驗證：成品、設定與 runtime
+
+來源：`D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\server`。來源與副本逐檔 SHA-256 一致；交付前再次核對正式 JAR 雜湊未變。
+
+| 檔案 | bytes | SHA-256 |
 | --- | ---: | --- |
 | `LiTo381-SharedResources-candidate.jar` | 20054975 | `E1498871C7BE6B287821C57EF5D95933DB1740D9B4D4A80F6C3465F21D99D498` |
 | `lib/HikariCP-5.1.0.jar` | 161840 | `A47A6EE62379694EE52C30036F0931B72F9AEE2A801D590341ED82BD839E2134` |
@@ -26,9 +38,7 @@
 | `lib/protobuf-java-3.21.9.jar` | 1671409 | `1B78B4A76A71512DEBFDFF8F8FC5AEF6BFD459F65758FECF7AFF245E6E6301E4` |
 | `lib/slf4j-api-1.7.36.jar` | 41125 | `D3EF575E3E4979678DC01BF1DCCE51021493B4D11FB7F1BE8AD982877C16A1C0` |
 
-## 已驗證：設定（帳密遮蔽）
-
-設定路徑為本次 `run-20261107T012544Z/config/experiment.properties`；路徑值相對該 `config/`，所以 captures、logs 與 runtime 都落在本次新目錄。
+以正式 JAR 的 `UnifiedConfiguration.KEYS`／`validate` 驗證完整 22 鍵通過。`config/experiment.properties` 設定如下，路徑相對本輪 config：
 
 ```properties
 battle.ai.enabled=false
@@ -55,66 +65,66 @@ startup.timeout.seconds=120
 weight.rate=100.0
 ```
 
-## 已驗證：P24Lab、路由與前後筆數
+runtime 為全新空目錄，啟動前項目數 0；退出後只有 `battle-settlements/owner.lock`，沒有 `.pending` journal，獨占開啟 owner.lock 成功，鎖已釋放。沒有刪除舊 runtime、備份、worktree 或 junction。
 
-沿用 #83 的 P24Lab 啟停方式，先核對離線 UUID／埠無衝突，再建立冷備份 `D:\BinEngine\environments\p24\backups\issue-284-run-20261107T012544Z\db-data`，**1,407 檔逐檔 SHA-256 相同**。一般沙箱在建立備份目錄時拒絕寫入；經工具權限提升後完成既定備份及啟動。沒有搬入／複製 SQL 資料到任何 schema，也沒有修改原有庫或 tw-bin 測試資料的 SQL 操作。
+## 已驗證：P24Lab 與前後資料
 
-P24Lab 由本次啟動：mysqld 監督程序 PID **23644**，監聽子程序 PID **21324**。受限 JDBC 帳號於啟動前後皆核實 `CURRENT_USER()`、43324、bind `127.0.0.1`、UUID `e3443e40-d090-11f1-8040-4cedfb679789`、datadir `D:\BinEngine\environments\p24\db-data\`。
+依 #83 既有流程，在埠無衝突、沒有既有 P24 mysqld、離線 UUID 相符後，建立冷備份 `D:\BinEngine\environments\p24\backups\issue-284-run-20261107T023503Z\db-data`，1,407 檔逐檔 SHA-256 一致；再啟動 P24Lab（本輪監督 PID 1372）。冷備份與啟動使用工具權限提升，未寫回原始專案工作目錄。
 
-來源路由 SELECT 結果只有一列：`source_id=1`、`character_database=p24_accounts_lito_exp`、`enabled=1`。**無須修正，修改前後相同。** 因此預期來源遊戲入口為 `127.0.0.2:42084`，本次未成功建立監聽。
+線上前後核對 port `43324`、bind `127.0.0.1`、UUID `e3443e40-d090-11f1-8040-4cedfb679789`、datadir `D:\BinEngine\environments\p24\db-data\`，以及受限帳號 `CURRENT_USER()` 均相符。
 
-| 表 | 前：01:27:18Z | 後：01:27:54Z | 差異 |
-| --- | ---: | ---: | ---: |
-| `p24_accounts_lito_exp.character_lito` | 2 | 2 | 0 |
-| `p24_lito_lito_exp.lito_battle_settlement` | 0 | 0 | 0 |
+`lito_source_server` 僅一列：`source_id=1`、`character_database=p24_accounts_lito_exp`、`enabled=1`。前後相同，**未修改路由**。
 
-查詢使用公開附件 [Probe.java](issue-284/Probe.java)，只有 SELECT；筆數不變不代表所有欄位皆已逐值比對，也不代表已驗證登入或結算。
+| 核對 | 啟動前（02:37:23Z） | 退出後（02:38:36Z） |
+| --- | ---: | ---: |
+| `p24_accounts_lito_exp.character_lito` | 2 | 2 |
+| `p24_lito_lito_exp.lito_battle_settlement` | 0 | 0 |
 
-Java 主命令於 **01:27:41.3092457Z** 開始，**01:27:42.9124075Z** 結束，約 **1.60 秒**，未達 120 秒期限。JAR 執行一次；先前命令包裝曾因 Windows 引號失敗，當時 Java 尚未啟動，未算作伺服器重試。準備腳本也曾因 PowerShell 5.1 無 BOM 解讀中文路徑而誤報來源雜湊不符，改為 UTF-8 BOM 後核對通過；沒有更換 JAR。
+原 `p24_world`、`p24_accounts`、`p24_lito` 共 270 張表，GRANT 前與伺服器退出後的 `CHECKSUM TABLE EXTENDED` 全部一致；本輪未對原庫或 tw-bin 測試資料執行 DML／DDL。筆數一致本身不代表逐欄驗證實驗角色戰績，亦不代表結算功能通過。
 
-退出後核對兩個 mysqld 的生命週期與已記錄的可執行路徑、啟動時間；正常 SHUTDOWN 前再次核實 DB 身分且沒有其他客戶連線。**01:28:28.2872676Z**，SHUTDOWN exit=0，本次程序已退出；43324、42061、42083、42084 均無監聽。停機守門最初因 Windows PowerShell JSON 將啟動時間截為毫秒而拒絕；核實差異僅為小數精度後，以相同毫秒精度比對成功，未放寬 PID／路徑守門、未強殺程序。
+02:39:27Z 以既有管理入口正常 `SHUTDOWN`（exit=0）。關閉前核對本輪 PID／啟動時間／實例身分，且無其他客戶連線；關閉後本輪程序退出，43324／42061／42083／42084 均無監聽。未強殺任何程序。
 
-## 已驗證：啟動命令與完整主控台輸出
+## 已驗證：啟動輸出與欄位差異
 
-工作目錄為本次 run 目錄；stdout／stderr 合併保存於 `logs/server-console.log`，公開附件 [server-console.txt](issue-284/server-console.txt) 與以下全文相同，僅統一編碼及換行。
+Java 17：`C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe`。工作目錄為本輪 run，02:38:25Z 開始，工具在約 4.4 秒回傳退出碼 1，未達 120 秒逾時。實際 JVM 參數：
 
-```cmd
-"C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe" -Xms512m -Xmx2048m -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8 -jar LiTo381-SharedResources-candidate.jar config/experiment.properties
+```bat
+java -Xms512m -Xmx2048m -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8 "-Djava.io.tmpdir=%CD%\tmp" -jar LiTo381-SharedResources-candidate.jar config/experiment.properties
 ```
+
+[完整 stdout／stderr](issue-284/server-console.txt) 包含：
 
 ```text
-[LiTo] resource-profile=lito-legacy
-SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 Exception in thread "main" java.lang.IllegalStateException: Cannot load LiTo room policy or qualified resource tables; inspect the nested database error
-	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:35)
-	at local.lito381.server.GameHub.<init>(Unknown Source)
-	at local.lito381.server.Main.main(Unknown Source)
-	at local.lito381.server.SharedResourceMain.main(SharedResourceMain.java:7)
-Caused by: java.sql.SQLSyntaxErrorException: SELECT command denied to user 'lito83_exp'@'127.0.0.1' for table '角色_智力成長'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
-	at local.lito381.server.NativeProcHealBonus.read(NativeProcHealBonus.java:19)
-	at local.lito381.server.NativeProcHealBonus.load(NativeProcHealBonus.java:27)
-	at local.lito381.server.ResourceDatabase.load(Unknown Source)
-	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:33)
-	... 3 more
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'id' in 'field list'
+    at local.lito381.server.NativeArmorProc.load(NativeArmorProc.java:14)
 ```
+
+唯讀檢查正式 JAR 的 `NativeArmorProc` bytecode，實際 SELECT 為：
+
+```sql
+SELECT id,item_id,enchant_level,proc_group,on_attack_chance,on_hurt_chance,
+       flat_damage,rand_damage,heal_hp,heal_hp_rand,heal_mp,heal_mp_rand,
+       heal_mode,trigger_skill,skill_time_sec,skill_target,gfx_id,gfx_mode
+FROM `裝備_armor_魔法`
+ORDER BY item_id,enchant_level,proc_group,id
+```
+
+[欄位 metadata](issue-284/armor-columns.tsv) 顯示原 `p24_world` 與 `p24_world_lito_exp` 都有該表，欄名為「編號、道具編號、備註、強化值、觸發效果群組……」，沒有 `id`。這是已核實的欄位格式不相容，不是缺表或本次 SELECT 授權不足。沒有新增 alias、view、欄位或資料。
+
+一般沙箱首次嘗試 cmd 輸出重新導向時顯示 `Access is denied`，沒有建立主控台檔、也未啟動 JVM；權限提升後才進行上述唯一一次伺服器啟動。該次臨時 cmd 的 exit-code.txt 寫入結果為 `ECHO is off.`，**不採用該檔作退出碼證據**；退出碼 1 依 exec 回傳，另記於 `logs/server-exit.json`。完整 Java 輸出保存在 server-console.log。
 
 ## 推測
 
-呼叫鏈顯示正式 JAR 的 `NativeProcHealBonus.load/read` 會在 `ResourceDatabase.load` 階段讀取智力成長表；#83 公開逐表授權清單列了精神／體質／力量／敏捷成長，沒有智力成長。這很可能是正式 JAR 與 #83 授權需求盤點之間的缺口；**不是本輪擴權的授權依據**。
+P24Lab 使用的中文欄位 schema 與正式 JAR 預期的英文欄位 schema 之間，可能需要有明確語義的相容處理。但不能僅憑欄位名稱直接決定對應，也不能推論只補 `id` 就可啟動。map 12000、其他載入器、登入與結算仍可能存在後續缺口。
 
-本次錯誤先於 ready，不能推論排除此項後就能成功，也不能推論 map 12000 或其他欄位／表問題已排除。
+## 待驗證、重跑入口與給下一棒的提示
 
-## 待驗證、產出路徑與給下一棒的提示
-
-1. **Claude 接手裁定**正式 JAR 的精確讀取表需求與 #83 權限差異，另派經核准的前置修復。本輪禁止擴權，沒有執行 GRANT、DDL、UPDATE 或資料補製。#285／T011 仍需等待 T014 真正就緒。
-2. 未啟動登入器／遊戲、未測試登入大廳、未取得 PNG；`docs/reports/issue-284/` 沒有用假圖補交。map 12000、完整 healthCheck、技能與結算均未驗證。
-3. 公開交付為本報告、完整主控台、[run-experiment.cmd](issue-284/run-experiment.cmd)、[run-experiment.ps1](issue-284/run-experiment.ps1)、[verify-run.ps1](issue-284/verify-run.ps1)、[Prepare.java](issue-284/Prepare.java)、[Probe.java](issue-284/Probe.java)。命令不含帳密；Java 輔助程式只做設定準備／唯讀核對，不修改伺服器程式。既有 verify-run 守門同步至本輪設定與 Probe 收據格式；重跑 JVM 暫存固定到新 run 的 tmp。
-4. 重跑前由獲授權的 P24Lab 管理者重新取得 **#284 有效 lease**、先冷備份並啟動既有 43324 實例；不得使用本報告已到期的 lease，也不得接手他人程序。執行 `docs\reports\issue-284\run-experiment.cmd`，每次自建新 `run-<UTC時間>/`、複製核對正式 JAR／lib、驗證 22 鍵、唯讀核對路由／筆數，再執行相同 `java -jar`。已有收據、來源非單一實驗路由、埠衝突或錯誤會停止。此入口不管理 DB 生命週期；使用完由管理者依 #83 流程核實身分與連線後正常 SHUTDOWN。
-5. **重跑入口為有人值守的主控台入口**：`startup.timeout.seconds=120` 是設定值，不會讓直接 `java -jar` 自動退出。操作者須計時，120 秒內未 ready 即在該主控台 Ctrl+C，保存輸出並停止；本次實際錯誤在 1.60 秒內自然退出。成功後只做授權範圍內的登入檢查並 Ctrl+C 正常關閉。若 Ctrl+C 中止 PowerShell 管線使後置 SELECT 未執行，使用 Probe.java 補做筆數核對，不可直接宣稱已清理。
-6. `run-experiment.cmd -PrepareOnly` 已在 P24Lab 關閉狀態實測成功，生成 `scratch/t014/run-20261107T013007Z/`；只驗證複製與設定，不重啟 DB／伺服器。正式主命令與 Probe 已在本輪實際執行；公開包裝的完整再次啟動未重跑，遵守遇錯停止要求。
-7. 本機原始證據保留於 `scratch/t014/run-20261107T012544Z/`：`artifact-hashes.json`、`preparation.json`、`lease.json`、`config-public.properties`、`before.txt`、`after.txt`、`logs/server-console.log`、`logs/server-exit.json`、`p24-backup.json`、`p24-owned-start.json`、`p24-mysql.*.log`、`p24-shutdown-verification.json`。私密設定、二進位、冷備份與原始紀錄均不提交；不刪 worktree、junction、runtime 或備份。
+1. **Claude 接手裁定欄位相容方案**，先確認正式 JAR 上述 18 欄的資料語義，再另派經授權的實驗 schema 修復或其他方案。本輪停止於缺欄位，未繼續修補／重啟。#284 保持 blocked；#285／T011 等待真正 ready 與大廳證據。
+2. 未啟動登入器／遊戲，沒有大廳 PNG、登入驗證、技能或結算驗收；不得用假圖或既有圖替代。本報告更新與授權完成不等於 T014 完成。
+3. [run-experiment.cmd](issue-284/run-experiment.cmd)／[PowerShell 入口](issue-284/run-experiment.ps1) 不含帳密，每次新建 run、複製正式成品、驗證設定與 runtime、執行唯讀 Probe，再啟動 JAR。需先取得當時有效的 #284 lease，依 P24Lab 規範冷備份及啟動；入口不自動管理 DB，也不執行 GRANT。
+4. 本輪修正 [verify-run.ps1](issue-284/verify-run.ps1) 在 Windows PowerShell 5.1 的 Split overload 不相容（明確指定 char[]、count、StringSplitOptions），修後實際預檢通過；Prepare／Probe 的 JVM 暫存亦固定到 run/tmp。沒有產品程式碼變更。
+5. 更新後 `run-experiment.cmd -PrepareOnly` 在 DB 已關閉時通過，生成 `run-20261107T024005Z/`，22 鍵通過；沒有為驗證腳本再次啟動伺服器。重跑完整包裝尚未端到端重測；本輪實際執行過 Prepare、Probe、verify-run 與同參數的 java -jar。
+6. 入口為有人值守的主控台命令：120 秒未 ready 即 Ctrl+C 正常停止，不因設定值就假設自動逾時。若 Ctrl+C 中止 PowerShell 管線，須另以 Probe 補做退出後筆數，並依既有流程正常關閉本次 P24Lab。不要接手或停止他人的程序。
+7. 公開交付：本報告、完整 console、GRANT 前後、欄位 metadata、重跑 cmd／ps1、verify-run.ps1、Prepare.java、Probe.java。原始證據留在 `scratch/t014/run-20261107T023503Z/`，包括 artifact-hashes、lease、preparation、config-public、before／after、grants-applied、schema-privileges-after、original-checksum 前後、p24-backup／identity／owned-start／shutdown 與 logs。私密設定、JAR、lib、冷備份及原始資料不提交。
+8. 交付檢查：10 份公開檔案以本輪實際 DB 密碼比對掃描通過；兩份私密實驗設定皆被 Git 忽略。PowerShell 語法解析及 `git diff --check` 通過；公開 console 僅將換行正規化為 LF，與原始完整輸出逐字相符。沒有產品程式碼變更，未做 Maven 建置或額外服務重啟。
