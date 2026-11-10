@@ -70,3 +70,4 @@
 - 2026-11-11 — #301 T100: LiTo 玩法設計文件（模式、房間流程、結算與排名、跨界規則）（code，claude-local，PR #313 已合併）→ [報告](reports/issue-301.md)
 - 2026-11-11 — #302 T104: 多來源資料庫規格、完整權限清單與中文欄位對照（code，claude-local，PR 已合併）→ [報告](reports/issue-302.md)
 - 2026-11-11 — #138 T020-B-land: B 暫存區併入 src/main（code，claude-local，PR 已合併）→ [報告](reports/issue-138.md)
+- 2026-11-11 — #303 T101: 物理命中／傷害／AC 減傷對照 1-伺服器（規格＋單元測試）（code，claude-local，PR 已合併）→ [報告](reports/issue-303.md)

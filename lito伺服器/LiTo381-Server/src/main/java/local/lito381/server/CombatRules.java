@@ -252,8 +252,11 @@ final class CombatRules {
         return id==91 && field.equals("damageMultiplier") ? number("COUNTER_BARRIER_DMG",original) : original;
     }
     static int extraAcReduction(int ac) {
-        double divisor = number("AC_REDUCTION_DIVISOR", 0);
-        if (ac >= 0 || divisor == 0) return 0;
+        return extraAcReduction(ac, number("AC_REDUCTION_DIVISOR", 0));
+    }
+    static int extraAcReduction(int ac, double divisor) {
+        // 1-伺服器 L1AttackPc.java:979 only applies a strictly positive divisor.
+        if (ac >= 0 || !(divisor > 0)) return 0;
         double reduction = -(double) ac / divisor;
         return (int) Math.min(Integer.MAX_VALUE, reduction);
     }

@@ -47797,12 +47797,10 @@ final class ClientSession implements Runnable {
                                  var50 = this.config.uncannyDodgeHitFixtureD20() > 0
                                     ? this.config.uncannyDodgeHitFixtureD20()
                                     : ThreadLocalRandom.current().nextInt(1, 21);
-                                 if (var18.template().armorClass() < 0) {
-                                    var52 = ThreadLocalRandom.current()
-                                       .nextInt(1, BattlePhysicalAttack.negativeAcRollMaximum(var18.template().armorClass()) + 1);
-                                 }
-
-                                 var53 = BattlePhysicalAttack.hitChanceWithStatBonus(var45, var46, var48, var18.template().armorClass(), var49, 0, var50, var52);
+                                 // 1-伺服器 L1AttackPc.calcNpcHit: NPC defender die is 10 - AC (no negative-AC roll).
+                                 var53 = BattlePhysicalAttack.hitChanceAgainst(
+                                    true, var45, this.elfAttribute, var46, var48, var18.template().armorClass(), var49, 0, 0, 0, var50, var52
+                                 );
                                  var51 = this.config.uncannyDodgeHitFixtureD100() > 0
                                     ? this.config.uncannyDodgeHitFixtureD100()
                                     : ThreadLocalRandom.current().nextInt(1, 101);
@@ -48780,7 +48778,7 @@ final class ClientSession implements Runnable {
         int n17 = n15 < 0 ? ThreadLocalRandom.current().nextInt(1, BattlePhysicalAttack.negativeAcRollMaximum(n15) + 1) : 0;
         int n18 = clientSession.effectivePhysicalDodge(l3);
         int n19 = clientSession.effectivePhysicalDodgeDown(l3);
-        int n20 = BattlePhysicalAttack.hitChanceWithStatBonus(n11, n12, n14, n15, Math.addExact(n5, n9), snapshot.physicalHit(bl2), n18, n19, n16, n17);
+        int n20 = BattlePhysicalAttack.hitChanceAgainst(false, n11, this.elfAttribute, n12, n14, n15, Math.addExact(n5, n9), snapshot.physicalHit(bl2), n18, n19, n16, n17);
         int n21 = this.config.uncannyDodgeHitFixtureD100() > 0 ? this.config.uncannyDodgeHitFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
         boolean bl12 = !this.config.battlePhysicalHitEnabled() || BattlePhysicalAttack.hits(n20, n21);
         boolean bl13 = false;
@@ -85925,11 +85923,12 @@ final class ClientSession implements Runnable {
                                        var98 = this.config.uncannyDodgeHitFixtureD20() > 0
                                           ? this.config.uncannyDodgeHitFixtureD20()
                                           : ThreadLocalRandom.current().nextInt(1, 21);
-                                       int var107 = var97 < 0
+                                       // 1-伺服器 L1AttackPc: only a player target rolls the negative-AC die; NPC uses 10 - AC.
+                                       int var107 = var97 < 0 && var10 != null
                                           ? ThreadLocalRandom.current().nextInt(1, BattlePhysicalAttack.negativeAcRollMaximum(var97) + 1)
                                           : 0;
-                                       var100 = BattlePhysicalAttack.hitChanceWithStatBonus(
-                                          var90, var92, var95, var97, Math.addExact(var78, Math.addExact(var84, var86)), var29, var102, var103, var98, var107
+                                       var100 = BattlePhysicalAttack.hitChanceAgainst(
+                                          var10 == null, var90, this.elfAttribute, var92, var95, var97, Math.addExact(var78, Math.addExact(var84, var86)), var29, var102, var103, var98, var107
                                        );
                                        var99 = this.config.uncannyDodgeHitFixtureD100() > 0
                                           ? this.config.uncannyDodgeHitFixtureD100()
