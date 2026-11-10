@@ -15,7 +15,7 @@ B 擁有的 303 個外層類別已全部併入 `src/main/java/local/lito381/serv
 
 **`mvn -B test`（以 PR #315 的 CI 為準）**
 - 第 5 輪：6,052 項，Failures 5、Errors 1，比第 3 輪的 37 項少了很多。
-- 第 6 輪（`751c7a75`）：Failures 2、Errors 1。修正最後 1 項 fixture 後，第 7 輪預期只剩 Ckew、Rescue 2 項，結果見 PR #315。
+- 第 7 輪（`2954dd16`）：6,052 項，**Failures 2、Errors 0**，只剩 Ckew、Rescue。
 - 剩下的 2 項（Ckew、Rescue）是**候選與正式 0.6.71 行為不同、玩家看得到**的差異。依裁定第 7 點不自行決定，交主控裁定。**這 2 項在裁定之前 CI 不會全綠。**
 
 **需要主控裁定（needs:claude）**
@@ -181,7 +181,7 @@ battle clock 是單執行緒（`GameHub.java:1467`）。
 | 42890240229 | `ab4cf25e` | 失敗：32 項 | 修好缺陷 1、2，5 項通過；新增的 3 項單元測試通過 |
 | 42893352221 | `3ddd435b` | 失敗：6052 run，**5 F，1 E** | 死亡懲罰、配對、租屋相關 26 項全部通過；剩 Ckew、Rescue（needs:claude），以及 4 項行為測試 fixture |
 | 42896918558 | `751c7a75` | 失敗：6052 run，**2 F，1 E** | Honor 2 項、Heal All 1 項通過；剩 Ckew、Rescue（needs:claude），以及 Tournament 行為測試 1 項 E（fixture 的 accounts 是 null） |
-| （第 7 輪） | 本 commit | 見 PR #315 | Tournament fixture 改為傳入 `AccountRepository.open(config)`；預期只剩 Ckew、Rescue 2 項 |
+| 42899286051 | `2954dd16` | 失敗：6052 run，**2 F，0 E**，117 skipped | Tournament 通過；只剩 Ckew、Rescue 2 項（needs:claude，見結論第 1、2 點） |
 
 其他 job（`Server (Java 17 / Maven)`、`Launcher`、`Build-Package.ps1 zip`、`Semantic gap`）每一輪都 pass。
 
