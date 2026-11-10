@@ -29,11 +29,11 @@
 
 | 公式 | S1 來源 | LiTo 現況 | 差距 | 任務 |
 |---|---|---|---|---|
-| PvP 物理命中 | `L1AttackPc.calcPcHit`（S1 §3：hit=Lv+職業補正＋StrHit／DexHit−負重；attackerDice=rnd(20)+2+hit−10；結果 100%／15%） | `BattlePhysicalAttack`（LC B1、B2） | **未驗證**：沒有逐項對照測試 | T101 |
-| 物理傷害 | `L1AttackPc.calcPcDamage`／`calcNpcDamage`、`weaponDamage1/2`、`pcDmgMode` 倍率取最高（S1 §3） | `BattlePhysicalDamage`、`BattlePhysicalOffense`、`BattleWeaponCritical`（LC B3–B5） | **未驗證** | T101 |
-| AC 減傷 | `L1AttackMode.calcPcDefense`（ac=10−AC，rnd(max)+max/8）、NPC：rnd(ac/7)+ac/7（S1 §3） | `BattlePhysicalDefense`（LC B6、B7） | **未驗證** | T101 |
-| 素質補正 | `CalcStat.calcStrHit/DexHit/StrDmg/DexDmg`（查 BaseStatTable） | SQL 成長表換算（LC A4、A6） | **未驗證**；S1 的 `BaseStatTable` 欄位本身待查（S1 §1） | T101 |
-| 職業傷害倍率 | `ConfigPcDamage`（S1 §0.2） | `CombatClassDamage` 讀 `Other_To_is*`；接線是 patch（LC B8） | **未驗證**；B-land 後要確認呼叫點在原始碼裡 | T101 |
+| PvP 物理命中 | `L1AttackPc.calcPcHit`／`calcNpcHit`（S1 §3） | `BattlePhysicalAttack.hitChanceAgainst`（LC B1、B2） | **已對照**（#303，`docs/design/formulas-physical.md` §1）：NPC 防禦骰、龍騎／火妖精倍率已修正；閃避 /8 待裁定（H7） | T101 |
+| 物理傷害 | `L1AttackPc.calcPcDamage`／`calcNpcDamage`、`weaponDamage1/2`、`pcDmgMode` 倍率取最高（S1 §3） | `BattlePhysicalDamage`、`BattlePhysicalOffense`、`BattleWeaponCritical`（LC B3–B5） | **已對照**（#303 §2）：武器骰、鋼爪、空手、屬性係數、倍率取最高一致；弓 DEX×2.5／1.5（D4）、一般武器缺職業攻擊等級（D9）待裁定 | T101 |
+| AC 減傷 | `L1AttackMode.calcPcDefense`（ac=10−AC，rnd(max)+max/8）、NPC：rnd(ac/7)+ac/7（S1 §3） | `BattlePhysicalDefense`（LC B6、B7） | **一致**（#303 §3，逐值測試）；AC 額外減傷除數 ≤0 已修正 | T101 |
+| 素質補正 | `CalcStat.calcStrHit/DexHit/StrDmg/DexDmg`（查 `角色_力量成長`／`角色_敏捷成長`） | 同一張 SQL 表；後備表 `SourcePhysicalGrowthStats.classic381` | **一致**（#303 §6：兩表各 127 列 0 筆不一致） | T101 |
+| 職業傷害倍率 | `ConfigPcDamage`（S1 §0.2） | `CombatClassDamage` 讀 `Other_To_is*` | **一致**；呼叫點已確認在 `src/main`（#303 §4 C3） | T101 |
 | 魔法傷害、MR、技能機率 | `L1SkillUse` 與 `skillmode/*`（S1 §4） | `CombatMagicDamage`、`BattleMagicResistance`、`CombatProbability`（LC A8、A10、B9、B10） | **未驗證**；B10 也是 patch 接線 | T102 |
 | 生命的祝福 +100 | 待在 S1 查證 | 程式依 Source 設為 0；舊文件說缺 +100，兩邊矛盾（LC B12） | **未驗證**（矛盾） | T102 |
 | HP／MP | `L1Character.getMaxHp/getMaxMp`、`CalcStat.calcStatHp/Mp`（S1 §1） | 進場直接補滿，**沒讀** CurHp／CurMp（LC A3）；回復依藥水與技能 | **缺**（設計待定：進場補滿是否為規則） | T100、T103 |

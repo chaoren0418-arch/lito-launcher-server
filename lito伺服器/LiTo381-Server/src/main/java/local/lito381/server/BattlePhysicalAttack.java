@@ -85,6 +85,28 @@ final class BattlePhysicalAttack {
             int targetArmorClass, int equipmentHitBonus, int cookingHitBonus,
             int targetDodgeModifier, int targetDodgeDown,
             int d20, int negativeAcRoll) {
+        return hitChanceAgainst(false, characterType, 0, level, statHitBonus,
+                targetArmorClass, equipmentHitBonus, cookingHitBonus,
+                targetDodgeModifier, targetDodgeDown, d20, negativeAcRoll);
+    }
+
+    /**
+     * Full PC physical-hit envelope (1-伺服器 L1AttackPc calcPcHit/calcNpcHit).
+     *
+     * <p>{@code npcTarget} selects the NPC defender die {@code 10 - AC}
+     * (no negative-AC roll; L1AttackPc.java:487), while a player target keeps
+     * {@code 10 + rnd((int)(AC*1.5)*-1) + 1} for negative AC
+     * (L1AttackPc.java:361-368). The dragon-knight 1.01 and fire-elf 1.02
+     * attacker-die scales (L1AttackPc.java:372-379 / 491-498) are applied
+     * after the dodge modifiers, exactly like the reference compound
+     * assignment.</p>
+     */
+    static int hitChanceAgainst(
+            boolean npcTarget, int characterType, int elfAttribute,
+            int level, int statHitBonus,
+            int targetArmorClass, int equipmentHitBonus, int cookingHitBonus,
+            int targetDodgeModifier, int targetDodgeDown,
+            int d20, int negativeAcRoll) {
         if (characterType < 0 || characterType > 6 || level < 1
                 || cookingHitBonus < 0
                 || targetDodgeModifier < 0 || targetDodgeModifier > 10
@@ -99,8 +121,14 @@ final class BattlePhysicalAttack {
 
         int attackerDice = d20 + 1 + hitRate - 10
                 - targetDodgeModifier + targetDodgeDown;
+        attackerDice = classAttackerDice(characterType, elfAttribute, attackerDice);
         int defenderDice;
-        if (targetArmorClass >= 0) {
+        if (npcTarget) {
+            if (negativeAcRoll != 0) {
+                throw new IllegalArgumentException("NPC AC has no defense roll");
+            }
+            defenderDice = Math.subtractExact(10, targetArmorClass);
+        } else if (targetArmorClass >= 0) {
             if (negativeAcRoll != 0) {
                 throw new IllegalArgumentException("positive AC cannot have a defense roll");
             }
@@ -125,6 +153,17 @@ final class BattlePhysicalAttack {
             throw new IllegalArgumentException("invalid player physical-hit roll");
         }
         return d100 <= hitChance;
+    }
+
+    /**
+     * 1-伺服器 L1AttackPc.java:372-379: {@code attackerDice *= 1.01} for a
+     * dragon knight and {@code *= 1.02} for an elf whose ElfAttr carries the
+     * fire bit (2).  Java compound assignment truncates toward zero.
+     */
+    static int classAttackerDice(int characterType, int elfAttribute, int attackerDice) {
+        if (characterType == 5) return (int) (attackerDice * 1.01);
+        if (characterType == 2 && (elfAttribute & 2) != 0) return (int) (attackerDice * 1.02);
+        return attackerDice;
     }
 
     static int negativeAcRollMaximum(int targetArmorClass) {
