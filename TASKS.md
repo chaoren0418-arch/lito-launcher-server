@@ -14,21 +14,26 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 ---
 
-## M1 能力盤點（主線 4 項，封頂）
+## M1 能力盤點（主線 5 項，封頂；已完成 1）
 
 **完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，會看到：
 1. 角色、道具、戰鬥、技能、跨界（多來源）五個領域，每一列寫：`1-伺服器` 怎麼做（類別或檔案＋行號）／LiTo 現況（正式 0.6.71、候選或未實作）／客戶端需要的協定／差距／對應的 M3 任務；
-2. 每列的證據都可以點開；沒查到的寫「未找到（查過哪裡）」，不推測；
-3. M3 主線清單與排序，以及移到 Backlog 的項目與理由。
+2. 另有三個**獨立區塊**（使用者 2026-11-10 指出的最大缺口）：
+   - **玩法設計**：LiTo 跨界戰鬥模式的規則、房間與對戰流程、勝負與結算規則的現況與缺口；
+   - **核心計算**：傷害、命中、技能效果、HP／MP、經驗或積分等公式，逐項寫出來源（`1-伺服器` 類別、客戶端 BIN 分析位址，或「未找到」）；
+   - **資料庫**：多來源 schema（角色、道具、技能的讀取，`character_lito` 的回存），列出缺少的表與欄位；
+3. 每列的證據都可以點開；沒查到的寫「未找到（查過哪裡）」，不推測；
+4. M3 主線清單與排序，以及移到 Backlog 的項目與理由。
 
 | # | ID | Issue | 內容 | 負責 | 狀態 |
 |---|---|---|---|---|---|
-| 1 | T090 | #291 | 盤點 `1-伺服器` 的角色／道具／戰鬥／技能／多來源實作（唯讀），寫 `docs/reference/server1-inventory.md` | claude-local | todo |
+| 0 | T070 | #288 | 客戶缺口第一版 `docs/reports/customer-gaps.md`（28 項；作為盤點來源） | claude-local | **done** |
+| 1 | T090 | #291 | 盤點 `1-伺服器` 的角色／道具／戰鬥／技能／多來源實作（唯讀），寫 `docs/reference/server1-inventory.md` | claude-local | **done** |
 | 2 | T091 | #292 | LiTo 現況能力矩陣，寫 `docs/reports/lito-capability-current.md`（併入 #288 的 `customer-gaps.md`） | claude-local | todo |
 | 3 | T092 | #293 | 客戶端協定與資源需求（`lito脫殼資源/`＋`0-客戶端`，唯讀），寫 `docs/reference/client-protocol-needs.md` | claude-local | todo |
 | 4 | T093 | #294 | 合併成差距矩陣，拆 M3 任務並封頂 | Claude（主控） | todo（等 1–3） |
 
-## M2 原始碼開發基線（M1 完成後封頂）
+## M2 原始碼開發基線（M1 完成後封頂；已完成 15）
 
 **完成定義（凍結）**：使用者會看到：
 1. `src/main` 已併入候選 `50635f7e…` 的戰鬥內容（B-land），`mvn -f lito伺服器/LiTo381-Server/pom.xml -B test` 為 `Failures: 0, Errors: 0`；
@@ -37,6 +42,10 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 | ID | Issue | 內容 | 狀態 |
 |---|---|---|---|
+| T020-A01～A06 | #72–#77 | `src/main` A 範圍對齊正式 0.6.71（暫存） | **done** |
+| 比較器 | #203、#216、#235、#254、#259 | semantic-diff 擴充（lambda 配對、CFG、metadata、private 改名、載入後丟棄、stack 正規化） | **done** |
+| T020-A-land | #78 | A 暫存併入 `src/main`；A 範圍 692 entries 語意 DIFF=0、`mvn test` 綠燈 | **done** |
+| T020-B01～B08 | #62–#69 | 候選 `50635f7e…` 戰鬥內容暫存（B 範圍 8 批） | **done** |
 | T020-B09 | #70 | existing-core 3 類收尾（依使用者選 C：缺呼叫等改 Java，形狀差異逐條列表） | todo（等 #293） |
 | T020-B-land | #138 | B 暫存併入 `src/main`，`mvn test` 綠燈 | todo（等 #70） |
 | T051 | #281 | `LegacyMySqlRepository` 的 shared-database 接線；B-land 若已帶入候選版本則驗證後關閉 | todo（等 #138） |
@@ -45,9 +54,13 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 **完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，M3 主線的每一列都標為「已實作＋單元測試＋離線回歸通過」，並附 PR 連結；`mvn test` 仍為綠燈。
 
-任務由 T093 開出（PLAN U3-1 估 8–15 張）。已知會併入的：`customer-gaps.md` 的 G03–G08（技能目標／範圍與 Source 不一致）。
+任務由 T093 開出（PLAN U3-1 估 8–15 張）。一定包含：
+- **玩法設計文件**：LiTo 跨界戰鬥模式的規則、房間與對戰流程、勝負與結算規則（先寫設計，再實作）；
+- **核心計算**：依 M1 的公式來源逐項實作與測試；
+- **資料庫**：補齊 M1 列出的缺少表與欄位（只在 LiTo 自己的庫與實驗 schema；來源角色庫維持唯讀，只回存 `character_lito`）；
+- `customer-gaps.md` 的 G03–G08（技能目標／範圍與 Source 不一致）。
 
-## M4 實機驗收與交付（Codex 恢復後；M3 完成後封頂）
+## M4 實機驗收與交付（Codex 恢復後；M3 完成後封頂；已完成 4）
 
 **完成定義（凍結）**：使用者會看到：
 1. 用 M3 的新 JAR 在實驗環境跑完 `docs/acceptance/CHECKLIST.md`（登入 → 大廳 → 進房 → 技能 → 戰鬥 → 結算 → 退出），每步截圖，寫在 `docs/acceptance/<版本>.md`；
@@ -56,21 +69,19 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 | ID | Issue | 內容 | 狀態 |
 |---|---|---|---|
+| T010／T013 | #283 | 實機核對表 `docs/acceptance/CHECKLIST.md`（實驗環境版） | **done** |
+| T040 | #32 | 安裝手冊＋打包腳本（PR #33） | **done** |
+| T020c-2 | #83 | P24Lab 實驗 schema 與受限帳號 | **done** |
+| 善後 | #247、#273 | 正式副本事故稽核、停止 3307 | **done** |
 | T014 | #284 | 實驗環境啟動（改用新 JAR；P24 資料不相容時改用 `environments/` 的 `380_db.sql` 快照，PLAN U4-1） | blocked（等 Codex、M3） |
 | T011 | #285 | 依 CHECKLIST 跑表並截圖 | blocked（等 #284） |
 | T060 | — | 打包新 JAR，更新版本號 | todo |
 | T061 | — | 依 INSTALL 在乾淨目錄安裝並啟動到大廳 | todo |
 | T062 | — | 打 tag 並建 release 收據 | todo |
 
-<details><summary>已完成的項目（計入歷史，不計入上表）</summary>
+<details><summary>更早的已完成項目（計入歷史）</summary>
 
 - T001–T009、T012：CI、建置腳本、版本號、DB 測試守門、類別清單比對等早期項目。
-- T010／T013（#283）：實機核對表 `docs/acceptance/CHECKLIST.md`（實驗環境版）。
-- T040（Issue #32，PR #33）：安裝手冊＋打包腳本。
-- T070（#288）：客戶缺口第一版 `docs/reports/customer-gaps.md`。
-- 原始碼重建 A 階段：A01–A06（#72–#77）、比較器 #203／#216／#235／#254／#259、A-land（#78，A 範圍 692 entries 語意 DIFF=0）。
-- B01–B08（#62–#69）暫存完成。
-- 實驗環境：#83 P24Lab 實驗 schema；事故善後 #247、#273。
 </details>
 
 ---
