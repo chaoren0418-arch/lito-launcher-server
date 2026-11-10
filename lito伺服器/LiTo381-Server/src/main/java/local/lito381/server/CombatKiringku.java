@@ -12,7 +12,7 @@ final class CombatKiringku {
         return enabled(weapon)?new Defense(outcome.acReduction()+outcome.effectiveArmorReduction()+outcome.directionalReduction()+CombatRules.extraAcReduction(ac),true):null;
     }
     static Defense npc(BattlePhysicalDefense.NpcOutcome outcome,SourceWeaponPhysicalStats weapon){return enabled(weapon)?new Defense(outcome.totalReduction(),false):null;}
-    static int magicBonus(int intelligence){return intelligence>43?intelligence-28:BattleTurnUndead.magicBonus(intelligence);}
+    static int magicBonus(int intelligence){return BattleTurnUndead.magicBonus(intelligence);}
     static double prefix(int intelligence,int spellPower,int magicHit,int weaponRoll,int enchant,int mr,boolean player,double perTen) {
         int value=(int)((intelligence+spellPower+magicHit)*1.8);value+=weaponRoll;value+=enchant;
         double damage=value*0.9;

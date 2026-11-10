@@ -20,7 +20,7 @@ final class CombatProbability {
         Integer level=argument(names,args,"targetLevel","targetOwnerLevel","attackerLevel");
         Integer mr=argument(names,args,"targetMagicResistance","targetMr","attackerMagicResistance");
         if(!controls.probabilities().containsKey(skill)) {
-            if(resolved.player!=null)return CombatAccess.integerCall(spell,method,descriptor,args);
+            if(resolved.player!=null)return CombatAccess.integerCall(spell,method,descriptor,withGuardianMr(names,args,resolved.player));
             var target=resolved.target(caster,controls,level,mr,now);
             int modifier=target.boss()?controls.bossModifiers().getOrDefault(skill,-1):-1;
             if(modifier==0)return 0;
@@ -158,6 +158,17 @@ final class CombatProbability {
                 spell.maximumBindSeconds()-spell.minimumBindSeconds()+1);
         return spell.bindDurationSeconds(offset);
     }
+    /** L1MagicMode.getTargetMr adds the PC target's lawful guardian MR to every probability MR term. */
+    private static Object[] withGuardianMr(List<String> names,Object[] args,ClientSession player) {
+        int bonus=CombatPlayerMagic.guardianMr(player.characterLawful());
+        if(bonus==0)return args;
+        for(String name:List.of("targetMagicResistance","targetMr","attackerMagicResistance")) {
+            int index=names.indexOf(name);
+            if(index<0)continue;
+            Object[] copy=args.clone();copy[index]=Math.addExact(((Number)args[index]).intValue(),bonus);return copy;
+        }
+        return args;
+    }
     private static Integer argument(List<String> names,Object[] args,String... aliases) {
         for(String name:aliases) {int index=names.indexOf(name);if(index>=0)return ((Number)args[index]).intValue();}
         return null;
@@ -171,8 +182,9 @@ final class CombatProbability {
                 2,resistance((long)equipment.totalStoneResistance()+CombatAccess.number(eye,"stoneResistance")),
                 3,resistance((long)equipment.totalSleepResistance()+CombatAccess.number(eye,"sleepResistance")),
                 4,equipment.totalBlindResistance(),5,equipment.totalStunResistance(),6,equipment.totalSustainResistance());
+        int mr=requestedMr==null?CombatAccess.integerCall(player,"effectiveBaseMagicResistance","(J)I",now):requestedMr;
         return new SourceSkillControls.Target(requestedLevel==null?summary.level():requestedLevel,
-                requestedMr==null?CombatAccess.integerCall(player,"effectiveBaseMagicResistance","(J)I",now):requestedMr,
+                Math.addExact(mr,CombatPlayerMagic.guardianMr(player.characterLawful())),
                 CombatAccess.integerCall(player,"effectiveConstitution","(J)I",now),
                 CombatAccess.integerCall(player,"effectiveWisdom","(J)I",now),resistances,false);
     }

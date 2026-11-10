@@ -44,7 +44,8 @@ final class NativeCancellationProbability {
   if(cachedSourceGm(target))return 1;
   var controls=CombatDatabase.controlsOrNull();
   if(controls!=null&&controls.probabilities().containsKey(44))
-   return CombatProbability.dispatch(spell,"unusedConfiguredCancellationFallback","(I)I","targetMr",new Object[]{targetMr(target,now)},caster,new Object[]{target});
+   // CombatProbability.playerTarget adds the guardian MR itself; pass the base MR to avoid counting it twice.
+   return CombatProbability.dispatch(spell,"unusedConfiguredCancellationFallback","(I)I","targetMr",new Object[]{CombatAccess.integerCall(target,"effectiveBaseMagicResistance","(J)I",now)},caster,new Object[]{target});
   var summary=(CharacterSummary)CombatAccess.call(caster,"selectedCharacterSummary","()L"+P+"CharacterSummary;");
   var equipment=(SourceEquipmentMagicStats)CombatAccess.call(caster,"requiredEquipmentMagicStats","()L"+P+"SourceEquipmentMagicStats;");
   int intelligence=equipment.effectiveIntelligence(CombatAccess.integerCall(caster,"baseIntelligence","(J)I",now));
