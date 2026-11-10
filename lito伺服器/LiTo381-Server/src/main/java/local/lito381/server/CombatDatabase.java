@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 import java.sql.DriverManager;
@@ -39,6 +40,9 @@ final class CombatDatabase {
     }
     private static volatile Snapshot current;
     static synchronized void load(ServerConfig config) throws Exception {
+        NativeCancellationNpcRules.Snapshot cancellation=null;
+        NativeNpcPhysicalSource.Snapshot physical=null;
+        NativePolymorphSource.Snapshot polymorph=null;
         if (current != null) return;
         // Some baseline record constructors validate other records via accessors.
         // Initialize their structural/native contracts before publishing dynamic
@@ -73,12 +77,14 @@ final class CombatDatabase {
                         throw new SQLException("skills: duplicate skill_id=" + id);
                 }
             }
-            controls=SourceSkillControls.read(c);
+            controls=NativeSkillTargetMetadata.read(c);
+            polymorph=NativePolymorphSource.read(c);physical=NativeNpcPhysicalSource.read(c,config);cancellation=NativeCancellationNpcRules.read(c,config);
             c.rollback(); // Read transaction only; make the write boundary explicit.
         }
         if (skills.isEmpty()) throw new SQLException(db + ".skills is empty");
         validateConsumers(skills);
         current = new Snapshot(skills,controls);
+        NativeCancellationNpcRules.publish(cancellation);NativeNpcPhysicalSource.publish(physical);NativePolymorphSource.publish(polymorph);
         System.out.println("[LiTo] common combat skills loaded: " + skills.size()
                 + "; columns=consumption,cooldown,duration,damage,dice,materials; skill208 time=2 source executor");
         System.out.println("[LiTo] source control snapshots: probabilities="+controls.probabilities().size()

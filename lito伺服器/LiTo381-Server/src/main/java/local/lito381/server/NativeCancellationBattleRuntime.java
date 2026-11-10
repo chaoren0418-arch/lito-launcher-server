@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; three-way baseline: base-0.6.71.jar and src/main
 // ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/cancellation-battle-runtime/NativeCancellationBattleRuntime.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
 import java.io.*;
@@ -94,7 +95,7 @@ final class NativeCancellationBattleRuntime {
   }else{var t=new BattleTimeAttackEncounter.Template(n.get_npcId(),n.get_gfxid(),n.get_nameid(),n.get_level(),n.get_hp(),n.get_mp(),n.get_int());
    created=construct("BattleTimeAttackEncounter$Monster",new Class<?>[]{BattleTimeAttackEncounter.Template.class,int.class,int.class,String.class,String.class},t,x,y,"Source CANCELLATION type2",CombatAccess.field(old,"waveSource"));
    var a=(BattleTimeAttackEncounter.Snapshot)snapshot(created,2);
-   var framed=new BattleTimeAttackEncounter.Snapshot(a.objectId(),a.npcId(),a.x(),a.y(),a.gfx(),a.name(),a.level(),a.hp(),a.maxHp(),a.alive(),(boolean)CombatAccess.field(old,"finalBoss"),a.activeAi(),a.currentMp(),a.maximumMp(),a.intelligence(),a.identitySource(),a.ordinaryWaveSource(),a.placementSource());
+   var framed=new BattleTimeAttackEncounter.Snapshot(a.objectId(),a.npcId(),a.x(),a.y(),a.gfx(),a.name(),a.level(),a.hp(),a.maxHp(),a.alive(),(boolean)CombatAccess.field(old,"finalBoss"),a.activeAi(),a.currentMp(),a.maximumMp(),a.intelligence(),a.identitySource(),a.ordinaryWaveSource(),a.placementSource(),a.nativeSourceNpcFactoryMemory);
    created=construct("BattleTimeAttackEncounter$Monster",new Class<?>[]{BattleTimeAttackEncounter.Snapshot.class},framed);
    CombatAccess.set(created,"hp",n.get_hp());
   }

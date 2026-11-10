@@ -1,23 +1,27 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Native skill167 lease: attack and spell actions take 25 percent longer. */
 import java.util.concurrent.TimeUnit;
 
-/** Native skill167 lease: attack and spell actions take 25 percent longer. */
 final class BattleWindShackleStatus {
-    static final double ACTION_MULTIPLIER = 1.25d;
-
-    record Snapshot(boolean active, int remainingSeconds,
-                    long expiresAtNanos, long nextActionNanos) {}
-
+    static final double ACTION_MULTIPLIER = 1.25;
     private long expiresAtNanos;
     private long nextActionNanos;
+    volatile transient long nativeSourceIcons1Version;
+
+    BattleWindShackleStatus() {
+    }
 
     synchronized boolean activate(long nowNanos, int durationSeconds) {
-        validateTime(nowNanos, durationSeconds);
-        if (active(nowNanos)) return false;
-        expiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
-        nextActionNanos = 0;
+        BattleWindShackleStatus.validateTime(nowNanos, durationSeconds);
+        if (this.active(nowNanos)) {
+            return false;
+        }
+        BattleWindShackleStatus battleWindShackleStatus;
+        (battleWindShackleStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleWindShackleStatus);
+        this.nextActionNanos = 0L;
         return true;
     }
 
@@ -35,38 +39,48 @@ final class BattleWindShackleStatus {
     }
 
     synchronized boolean cancel() {
-        boolean changed = expiresAtNanos != 0 || nextActionNanos != 0;
-        expiresAtNanos = 0;
-        nextActionNanos = 0;
-        return changed;
+        boolean bl = this.expiresAtNanos != 0L || this.nextActionNanos != 0L;
+        BattleWindShackleStatus battleWindShackleStatus;
+        (battleWindShackleStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleWindShackleStatus);
+        this.nextActionNanos = 0L;
+        return bl;
     }
 
     synchronized boolean expire(long nowNanos) {
-        if (nowNanos < 0) {
+        if (nowNanos < 0L) {
             throw new IllegalArgumentException("invalid Wind Shackle expiry time");
         }
-        if (expiresAtNanos == 0 || nowNanos < expiresAtNanos) return false;
-        expiresAtNanos = 0;
-        nextActionNanos = 0;
+        if (this.expiresAtNanos == 0L || nowNanos < this.expiresAtNanos) {
+            return false;
+        }
+        BattleWindShackleStatus battleWindShackleStatus;
+        (battleWindShackleStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleWindShackleStatus);
+        this.nextActionNanos = 0L;
         return true;
     }
 
     synchronized Snapshot snapshot(long nowNanos) {
-        if (nowNanos < 0) {
+        if (nowNanos < 0L) {
             throw new IllegalArgumentException("invalid Wind Shackle snapshot time");
         }
-        if (!active(nowNanos)) {
-            if (expiresAtNanos != 0) {
-                expiresAtNanos = 0;
-                nextActionNanos = 0;
+        if (!this.active(nowNanos)) {
+            if (this.expiresAtNanos != 0L) {
+                long l2 = 0L;
+                BattleWindShackleStatus battleWindShackleStatus = this;
+                this.expiresAtNanos = l2;
+                NativeSourceIcons1Epoch.bump(battleWindShackleStatus);
+                this.nextActionNanos = 0L;
             }
-            return new Snapshot(false, 0, 0, 0);
+            return new Snapshot(false, 0, 0L, 0L);
         }
-        long remaining = expiresAtNanos - nowNanos;
-        long seconds = remaining / 1_000_000_000L;
-        if (remaining % 1_000_000_000L != 0) seconds++;
-        return new Snapshot(true, Math.toIntExact(seconds),
-                expiresAtNanos, nextActionNanos);
+        long l3 = this.expiresAtNanos - nowNanos;
+        long l4 = l3 / 1000000000L;
+        if (l3 % 1000000000L != 0L) {
+            ++l4;
+        }
+        return new Snapshot(true, Math.toIntExact(l4), this.expiresAtNanos, this.nextActionNanos);
     }
 
     static long actionIntervalMillis(long nativeDurationMillis) {
@@ -84,5 +98,8 @@ final class BattleWindShackleStatus {
         if (nowNanos < 0 || durationSeconds <= 0) {
             throw new IllegalArgumentException("invalid Wind Shackle lease");
         }
+    }
+
+    record Snapshot(boolean active, int remainingSeconds, long expiresAtNanos, long nextActionNanos) {
     }
 }

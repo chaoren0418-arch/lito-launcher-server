@@ -1,0 +1,28 @@
+package local.lito381.server;
+import java.util.*;
+/** Original post-MP calculation lists; wrappers and source proofs stay original. */
+final class NativeSourceDamageHealingSelection {
+ static long primary(long original,NativeAreaMaterialAction.Context c,Object[] args,boolean physical){if(physical||args==null||args.length==0||!NativeSourcePlayerFactories.scoped(c))return original;if(args[0] instanceof Protocol.AttackSpellRequest request){var projected=NativeSourceNoneTargetRequest.request(c,c.pc,request,request.skillId());return projected==request?original:projected.targetObjectId();}if(args[0] instanceof byte[] packet&&args.length>1&&args[1] instanceof BattleSpellCatalog.HealingSpell spell){var request=Protocol.objectSpellRequest(packet);var projected=NativeSourceObjectTargetRequest.request(c,c.pc,request,spell.skillId());return projected==request?original:projected.targetObjectId();}return original;}
+ static Object node(Object raw){if(raw!=null&&(raw.getClass().getName().equals("local.lito381.server.ClientSession$CenteredAreaCompanionTarget")||raw.getClass().getName().equals("local.lito381.server.ClientSession$MassSlowCompanionTarget"))){var snapshot=CombatAccess.field(raw,"snapshot");return snapshot!=null?snapshot:CombatAccess.field(raw,"controlled");}return NativeSourceAreaClassSelection.node(raw);}
+ static NativeSourceNpcFactoryType.Stamp known(Object node){var remembered=NativeSourceAreaClassSelection.known(node);if(remembered==null||!(node instanceof BattleCompanion.Snapshot snapshot))return remembered;var c=NativeAreaMaterialAction.current.get();var n=c==null?null:c.npcs.get(snapshot.objectId());var born=n==null?null:NativeSourceNpcFactoryType.stamp(n.actor());return born==remembered||born!=null&&(born.kind()==5||born.kind()==6)&&born.kind()==remembered.kind()&&born.impl().equals(remembered.impl())?remembered:null;}
+
+    static Iterator<?> iterator(Iterator<?> iterator, int n, long l) {
+        NativeSkillTargetMetadata.Row row;
+        NativeAreaMaterialAction.Context context = NativeAreaMaterialAction.current.get();
+        if (!NativeSourcePlayerFactories.scoped(context) || NativeSourceRemainingAreaLists.available(iterator, n) == 0) {
+            return iterator;
+        }
+        try {
+            row = NativeSourceRemainingAreaLists.row(n, iterator);
+        }
+        catch (IllegalStateException illegalStateException) {
+            return iterator;
+        }
+        NativeAreaMaterialAction.Npc npc = row.target().equals("none") ? null : context.npcs.get(l);
+        NativeSourceNpcFactoryType.Stamp stamp = npc == null ? null : (NativeSourceNpcFactoryType.Stamp)NativeSourceNpcFactoryMemory.carry(npc.actor());
+        return new Cursor(iterator, n, stamp, row.target().equals("none"), row.type(), NativeSourceTargetConstruction.capture(row, n));
+    }
+ @AsmFinal({"nativeSourceTargetMask"})
+ static final class Cursor implements Iterator<Object>{Integer nativeSourceTargetMask;final Iterator<?> original;final int skill,type;final NativeSourceNpcFactoryType.Stamp primary;final boolean none;Object next;boolean ready,ended;Cursor(Iterator<?> original,int skill,NativeSourceNpcFactoryType.Stamp primary,boolean none,int type){this.original=original;this.skill=skill;this.primary=primary;this.none=none;this.type=type;}Cursor(Iterator<?> original,int skill,NativeSourceNpcFactoryType.Stamp primary,boolean none,int type,int mask){this.original=original;this.skill=skill;this.primary=primary;this.none=none;this.type=type;this.nativeSourceTargetMask=mask;}public boolean hasNext(){while(!ready&&!ended){if(!original.hasNext()){ended=true;next=null;break;}var raw=original.next();var node=node(raw);var stamp=known(node);if(!NativeSourceTargetConstruction.reject(stamp,stamp!=null&&stamp.kind()==4?NativeSourceAreaClassSelection.maximum(node):100,primary,node instanceof ClientSession,none,type,skill,node,nativeSourceTargetMask)){next=raw;ready=true;}}return ready;}public Object next(){if(!hasNext())throw new NoSuchElementException();var result=next;next=null;ready=false;return result;}}
+ private NativeSourceDamageHealingSelection(){}
+}

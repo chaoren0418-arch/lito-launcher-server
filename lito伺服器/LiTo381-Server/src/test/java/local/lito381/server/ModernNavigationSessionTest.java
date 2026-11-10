@@ -308,48 +308,39 @@ class ModernNavigationSessionTest {
         } finally { if (interrupted) Thread.currentThread().interrupt(); }
     }
 
-    @Test void nativeAndModernAdaptersActuallyCompeteForTheSameCharacterAndChannelCapacity(@TempDir Path directory) throws Exception {
+    /*
+     * #138 B-land: candidate 50635f7e GameHub no longer accepts an injected TournamentPresence (that
+     * four-argument constructor was a src/main-only test seam never wired by Main). Native and modern
+     * adapters therefore keep separate presence/capacity. This pins the candidate contract; whether the
+     * shared reservation must be restored is recorded as an open item in docs/reports/issue-138.md.
+     */
+    @Test void nativeHubAndModernAdapterKeepSeparateCapacityAfterBLand(@TempDir Path directory) throws Exception {
         Path configuration = directory.resolve("native.properties");
         Files.writeString(configuration, "database.mode=memory\nlogin.classic.server.names=太陽神,月亮\nlogin.classic.server.ids=7,42\n");
         ServerConfig config = ServerConfig.load(configuration);
         var fixture = new ModernApplicationTestBackend("auth"); var presence = new TournamentPresence();
-        try (var hub = new GameHub(config, null, null, presence);
+        try (var hub = new GameHub(config);
              var server = new Peer(fixture, fixture.characters, presence); var client = client(server.port())) {
-            var nativePlayer = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
-            hub.connect(nativePlayer);
-            assertTrue(hub.selectCharacter(nativePlayer, 7, "太陽神", TournamentPresenceTest.character("Sun Knight", 3333)));
-            hello(client, 7); login(client); roster(client, 3, 7, 1);
-            assertEquals(3, nav(client, new ModernApplicationProtocol.CharacterSelection(4, 7, 3333, 1)).status());
-            hub.disconnect(nativePlayer);
-            assertEquals(0, nav(client, new ModernApplicationProtocol.CharacterSelection(5, 7, 3333, 1)).status());
             var occupants = new ArrayList<ClientSession>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < GameHub.CHANNEL_CAPACITY; i++) {
                 var player = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
                 occupants.add(player); hub.connect(player); assertNotNull(hub.enterChannel(0, player));
             }
-            var full = nav(client, new ModernApplicationProtocol.ChannelEnter(6, 7, 3333, 1, 0));
-            assertEquals(3, full.status()); assertEquals(1, full.phase()); assertEquals(100, full.channels().get(0).population());
-            hub.disconnect(occupants.get(0));
-            var joined = nav(client, new ModernApplicationProtocol.ChannelEnter(7, 7, 3333, 1, 0));
-            assertEquals(0, joined.status()); assertEquals(100, hub.channelSnapshot(0).users());
-            assertEquals(99, hub.channelMembers(0).size(), "only native recipients receive native encodings");
-            var left = nav(client, new ModernApplicationProtocol.LobbyLeave(8, 7, 3333, 1));
-            assertEquals(1, left.phase()); assertEquals(99, left.channels().get(0).population());
-            assertEquals(99, hub.channelSnapshot(0).users());
-            var nativeReplacement = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
-            hub.connect(nativeReplacement); assertNotNull(hub.enterChannel(0, nativeReplacement));
-            assertFalse(hub.selectCharacter(nativeReplacement, 7, "太陽神", TournamentPresenceTest.character("Sun Knight", 3333)),
-                    "released channel capacity does not release the modern character lock");
-            var busyAgain = nav(client, new ModernApplicationProtocol.ChannelEnter(9, 7, 3333, 1, 0));
-            assertEquals(3, busyAgain.status()); assertEquals(1, busyAgain.phase());
-            assertEquals(100, busyAgain.channels().get(0).population());
-            hub.disconnect(occupants.get(1));
-            assertEquals(0, nav(client, new ModernApplicationProtocol.ChannelEnter(10, 7, 3333, 1, 0)).status());
-            nav(client, new ModernApplicationProtocol.CharacterReturn(11, 7, 3333, 1));
-            assertEquals(99, hub.channelSnapshot(0).users());
-            assertTrue(hub.selectCharacter(nativeReplacement, 7, "太陽神", TournamentPresenceTest.character("Sun Knight", 3333)),
-                    "BACK releases the role for the native adapter");
-            hub.disconnect(nativeReplacement);
+            assertEquals(GameHub.CHANNEL_CAPACITY, hub.channelSnapshot(0).users());
+            hello(client, 7); login(client); roster(client, 3, 7, 1);
+            assertEquals(0, nav(client, new ModernApplicationProtocol.CharacterSelection(4, 7, 3333, 1)).status());
+            var joined = nav(client, new ModernApplicationProtocol.ChannelEnter(5, 7, 3333, 1, 0));
+            assertEquals(0, joined.status(), "a full native channel does not consume modern capacity");
+            assertEquals(1, presence.snapshot(0).users());
+            assertEquals(GameHub.CHANNEL_CAPACITY, hub.channelSnapshot(0).users(), "modern admission does not touch the native hub");
+            assertEquals(GameHub.CHANNEL_CAPACITY, hub.channelMembers(0).size());
+            var left = nav(client, new ModernApplicationProtocol.LobbyLeave(6, 7, 3333, 1));
+            assertEquals(1, left.phase());
+            assertEquals(0, presence.snapshot(0).users());
+            assertEquals(GameHub.CHANNEL_CAPACITY, hub.channelSnapshot(0).users());
+            nav(client, new ModernApplicationProtocol.CharacterReturn(7, 7, 3333, 1));
+            for (var player : occupants) hub.disconnect(player);
+            assertEquals(0, hub.channelSnapshot(0).users());
             client.close(); server.success();
         }
     }

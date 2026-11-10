@@ -1,42 +1,35 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Transient cancelable flat physical-damage reduction for native skill181. */
 import java.util.concurrent.TimeUnit;
 
-/** Transient cancelable flat physical-damage reduction for native skill181. */
 final class BattleDragonSkinStatus {
-    record Snapshot(boolean active, int damageReduction, int remainingSeconds) {
-        static Snapshot none() {
-            return new Snapshot(false, 0, 0);
-        }
+    private ClientSession iconOwner;
+    private long expiresAtNanos;
+    private int damageReduction;
+    volatile transient long nativeSourceIcons1Version;
 
-        int applyTo(int damage) {
-            if (damage < 0) {
-                throw new IllegalArgumentException("negative physical damage");
-            }
-            return active ? Math.max(0, damage - damageReduction) : damage;
-        }
+    BattleDragonSkinStatus() {
     }
 
-    private ClientSession iconOwner;
     void bind(ClientSession owner) { iconOwner = owner; }
+
     private void icon(int seconds) {
         if (iconOwner != null) DragonCombat.sendSkinIcon(iconOwner, seconds);
     }
-    private long expiresAtNanos;
-    private int damageReduction;
 
-    synchronized boolean activate(
-            long nowNanos, int durationSeconds, int reduction) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || reduction <= 0 || reduction > 127) {
+    synchronized boolean activate(long nowNanos, int durationSeconds, int reduction) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || reduction <= 0 || reduction > 127) {
             throw new IllegalArgumentException("invalid native Dragon Skin lease");
         }
-        boolean refreshed = expiresAtNanos != 0 && nowNanos < expiresAtNanos;
-        expiresAtNanos = Math.addExact(
-                nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
-        damageReduction = reduction;
-        icon(durationSeconds);
-        return refreshed;
+        boolean bl = this.expiresAtNanos != 0L && nowNanos < this.expiresAtNanos;
+        BattleDragonSkinStatus battleDragonSkinStatus;
+        (battleDragonSkinStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleDragonSkinStatus);
+        this.damageReduction = reduction;
+        this.icon(durationSeconds);
+        return bl;
     }
 
     synchronized Snapshot snapshot(long nowNanos) {
@@ -69,9 +62,26 @@ final class BattleDragonSkinStatus {
     }
 
     synchronized void clear() {
-        boolean wasActive = expiresAtNanos != 0;
-        expiresAtNanos = 0;
-        damageReduction = 0;
-        if (wasActive) icon(0);
+        boolean bl = this.expiresAtNanos != 0L;
+        BattleDragonSkinStatus battleDragonSkinStatus;
+        (battleDragonSkinStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleDragonSkinStatus);
+        this.damageReduction = 0;
+        if (bl) {
+            this.icon(0);
+        }
+    }
+
+    record Snapshot(boolean active, int damageReduction, int remainingSeconds) {
+        static Snapshot none() {
+            return new Snapshot(false, 0, 0);
+        }
+
+        int applyTo(int damage) {
+            if (damage < 0) {
+                throw new IllegalArgumentException("negative physical damage");
+            }
+            return active ? Math.max(0, damage - damageReduction) : damage;
+        }
     }
 }

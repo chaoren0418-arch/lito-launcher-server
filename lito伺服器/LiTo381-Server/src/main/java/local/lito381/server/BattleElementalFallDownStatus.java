@@ -1,35 +1,30 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
 /** Authoritative retained skill-133 elemental-resistance lease. */
 final class BattleElementalFallDownStatus {
     static final int MODIFIER = -50;
-
-    record Activation(boolean applied, boolean refreshed, int attributeKind,
-                      int remainingSeconds) {}
-
-    record Cancellation(boolean present, int attributeKind) {}
-
-    record Snapshot(boolean active, int attributeKind, int modifier,
-                    int remainingSeconds) {}
-
     private long expiresAtNanos;
     private int attributeKind;
+    volatile transient long nativeSourceIcons1Version;
 
-    synchronized Activation activate(
-            long nowNanos, int durationSeconds, int sourceElfAttribute) {
-        if (nowNanos < 0 || durationSeconds <= 0
-                || sourceElfAttribute < 0 || sourceElfAttribute > 0x0F) {
-            throw new IllegalArgumentException(
-                    "invalid Elemental Fall Down activation");
+    BattleElementalFallDownStatus() {
+    }
+
+    synchronized Activation activate(long nowNanos, int durationSeconds, int sourceElfAttribute) {
+        boolean bl;
+        if (nowNanos < 0L || durationSeconds <= 0 || sourceElfAttribute < 0 || sourceElfAttribute > 15) {
+            throw new IllegalArgumentException("invalid Elemental Fall Down activation");
         }
-        boolean active = expiresAtNanos > nowNanos;
-        boolean applied = !active;
-        if (!active) {
-            attributeKind = retainedAttribute(sourceElfAttribute);
+        boolean bl2 = this.expiresAtNanos > nowNanos;
+        boolean bl3 = bl = !bl2;
+        if (!bl2) {
+            this.attributeKind = BattleElementalFallDownStatus.retainedAttribute(sourceElfAttribute);
         }
-        expiresAtNanos = Math.addExact(nowNanos,
-                Math.multiplyExact((long) durationSeconds, 1_000_000_000L));
-        return new Activation(applied, active, attributeKind, durationSeconds);
+        BattleElementalFallDownStatus battleElementalFallDownStatus;
+        (battleElementalFallDownStatus = this).expiresAtNanos = Math.addExact(nowNanos, Math.multiplyExact((long)durationSeconds, 1000000000L));
+        NativeSourceIcons1Epoch.bump(battleElementalFallDownStatus);
+        return new Activation(bl, bl2, this.attributeKind, durationSeconds);
     }
 
     synchronized int modifier(int requestedAttribute, long nowNanos) {
@@ -63,8 +58,10 @@ final class BattleElementalFallDownStatus {
     }
 
     synchronized void clear() {
-        expiresAtNanos = 0;
-        attributeKind = 0;
+        BattleElementalFallDownStatus battleElementalFallDownStatus;
+        (battleElementalFallDownStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleElementalFallDownStatus);
+        this.attributeKind = 0;
     }
 
     static int retainedAttribute(int sourceElfAttribute) {
@@ -75,5 +72,14 @@ final class BattleElementalFallDownStatus {
             if ((sourceElfAttribute & attribute) != 0) return attribute;
         }
         return 0;
+    }
+
+    record Activation(boolean applied, boolean refreshed, int attributeKind, int remainingSeconds) {
+    }
+
+    record Snapshot(boolean active, int attributeKind, int modifier, int remainingSeconds) {
+    }
+
+    record Cancellation(boolean present, int attributeKind) {
     }
 }

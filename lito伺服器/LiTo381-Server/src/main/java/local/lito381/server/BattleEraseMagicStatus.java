@@ -1,37 +1,26 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Native skill153 lease: quarter MR until expiry or one qualified magic consumes it. */
 import java.util.concurrent.TimeUnit;
 
-/** Native skill153 lease: quarter MR until expiry or one qualified magic consumes it. */
 final class BattleEraseMagicStatus {
-    record Lease(long generation, long expiresAtNanos) {
-        Lease {
-            if (generation < 0 || expiresAtNanos < 0
-                    || (generation == 0) != (expiresAtNanos == 0)) {
-                throw new IllegalArgumentException("invalid Erase Magic lease");
-            }
-        }
-
-        static Lease none() {
-            return new Lease(0, 0);
-        }
-
-        boolean present() {
-            return generation != 0;
-        }
-    }
-
     private long generation;
     private long expiresAtNanos;
+    volatile transient long nativeSourceIcons1Version;
+
+    BattleEraseMagicStatus() {
+    }
 
     synchronized Lease activate(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid Erase Magic activation");
         }
-        generation = nextGeneration(generation);
-        expiresAtNanos = Math.addExact(
-                nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
-        return new Lease(generation, expiresAtNanos);
+        this.generation = BattleEraseMagicStatus.nextGeneration(this.generation);
+        BattleEraseMagicStatus battleEraseMagicStatus;
+        (battleEraseMagicStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleEraseMagicStatus);
+        return new Lease(this.generation, this.expiresAtNanos);
     }
 
     synchronized boolean active(long nowNanos) {
@@ -90,11 +79,29 @@ final class BattleEraseMagicStatus {
     }
 
     private void clearWithNewGeneration() {
-        generation = nextGeneration(generation);
-        expiresAtNanos = 0;
+        this.generation = BattleEraseMagicStatus.nextGeneration(this.generation);
+        BattleEraseMagicStatus battleEraseMagicStatus;
+        (battleEraseMagicStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleEraseMagicStatus);
     }
 
     private static long nextGeneration(long value) {
         return value == Long.MAX_VALUE ? 1 : value + 1;
+    }
+
+    record Lease(long generation, long expiresAtNanos) {
+        Lease {
+            if (generation < 0L || expiresAtNanos < 0L || generation == 0L != (expiresAtNanos == 0L)) {
+                throw new IllegalArgumentException("invalid Erase Magic lease");
+            }
+        }
+
+        static Lease none() {
+            return new Lease(0, 0);
+        }
+
+        boolean present() {
+            return generation != 0;
+        }
     }
 }

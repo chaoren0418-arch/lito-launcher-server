@@ -267,26 +267,41 @@ class TournamentPresenceTest {
         } finally { workers.shutdownNow(); assertTrue(workers.awaitTermination(2, TimeUnit.SECONDS)); }
     }
 
-    @Test void nativeGameHubDerivesCapacityAndReservationsFromTheInjectedCore() throws Exception {
+    /*
+     * #138 B-land: candidate 50635f7e GameHub has no TournamentPresence injection seam (the former
+     * four-argument constructor and selectCharacter(session, sourceId, source, row) were src/main-only and
+     * were never wired by Main). The native hub now owns its own channel capacity; a TournamentPresence
+     * core only governs modern adapters. This test pins that candidate contract on both sides.
+     */
+    @Test void nativeGameHubCapacityIsIndependentOfAModernPresenceCoreAfterBLand() throws Exception {
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         var core = new TournamentPresence();
-        try (var hub = new GameHub(config, null, null, core)) {
-            var nativeSession = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
-            hub.connect(nativeSession);
+        try (var hub = new GameHub(config)) {
             var row = character("Owned", 1234567890123L);
             int sourceId = config.classicServerIds().get(0); String source = config.classicServerNames().get(0);
-            assertTrue(hub.selectCharacter(nativeSession, sourceId, source, row));
             var modern = core.connect();
-            assertEquals(TournamentPresence.SelectStatus.BUSY, core.select(modern, selection(sourceId, row.objectId(), source, row.name(), row.level())));
-            for (int i = 0; i < 100; i++) assertNotNull(core.enterChannel(core.connect(), 0));
-            assertNull(hub.enterChannel(0, nativeSession));
-            assertEquals(100, hub.channelSnapshot(0).users());
-            assertTrue(hub.channelMembers(0).isEmpty(), "modern owners are not fake native packet recipients");
-            assertNotNull(hub.enterChannel(1, nativeSession));
-            assertEquals(1, core.snapshot(1).users()); assertEquals(101, hub.tournamentUserCount());
-            hub.disconnect(nativeSession);
-            assertEquals(0, core.snapshot(1).users());
             assertEquals(TournamentPresence.SelectStatus.ACCEPTED, core.select(modern, selection(sourceId, row.objectId(), source, row.name(), row.level())));
+            for (int i = 0; i < 99; i++) assertNotNull(core.enterChannel(core.connect(), 0));
+            assertNotNull(core.enterChannel(modern, 0));
+            assertEquals(100, core.snapshot(0).users());
+            var natives = new ArrayList<ClientSession>();
+            for (int i = 0; i < GameHub.CHANNEL_CAPACITY; i++) {
+                var nativeSession = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
+                natives.add(nativeSession); hub.connect(nativeSession);
+                assertNotNull(hub.enterChannel(0, nativeSession), "modern occupancy does not consume native capacity");
+            }
+            assertEquals(GameHub.CHANNEL_CAPACITY, hub.channelSnapshot(0).users());
+            assertEquals(GameHub.CHANNEL_CAPACITY, hub.channelMembers(0).size());
+            var overflow = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
+            hub.connect(overflow);
+            assertNull(hub.enterChannel(0, overflow), "native hub still enforces its own channel capacity");
+            assertNotNull(hub.enterChannel(1, overflow));
+            assertEquals(GameHub.CHANNEL_CAPACITY + 1, hub.tournamentUserCount());
+            assertEquals(100, core.snapshot(0).users(), "native admissions do not touch the modern core");
+            assertEquals(0, core.snapshot(1).users());
+            hub.disconnect(natives.get(0));
+            assertNotNull(hub.enterChannel(0, overflow));
+            assertEquals(100, core.snapshot(0).users());
         }
     }
 

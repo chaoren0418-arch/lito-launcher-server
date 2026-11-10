@@ -5,7 +5,7 @@
 
 - 驗證對象：`task/70` staged 三個外層類別編譯產物（JAR SHA-256 `aa94ee447b870509035c1cb947d30085d91eb380321cbc0a0aef311ffed0b679`），對照 `reference/candidate-50635f7e.jar`。
 - 比較器：`tools/semantic-diff`（ASM 9.7），傳入 T029、effects、extra-methods、exceptions、metadata 核准清單（指令見 `docs/reports/issue-70.md`）。
-- 本清單 **174** 個 DIFF 方法 + **9** 個 ONLY_LEFT lambda。另有 1 個方法（`sourceApplicationRun`）不是形狀差異，列在最後一節待主控裁定。
+- 本清單 **174** 個 DIFF 方法 + **9** 個 ONLY_LEFT lambda。另有 1 個方法（`sourceApplicationRun`）多 1 次已核准的 `rethrowUnchecked` 呼叫，依 [#70 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6773685807) 於 B-land（#138）補列於最後一節，一併交 M2 離線回歸驗收。
 
 ## 收錄條件（每個方法都經機器檢查）
 
@@ -3550,8 +3550,12 @@
  ASTORE 3
 ```
 
-## 不屬於形狀差異：`sourceApplicationRun()V`（待主控裁定）
+## `sourceApplicationRun()V`：已核准的額外 `rethrowUnchecked` 呼叫（#70 主控裁定，B-land 補列）
 
 候選第一個陳述式是直接呼叫 `SourceLogin.allowed(Socket, ServerConfig)`（宣告 `throws Exception`），外面沒有 try；而 `sourceApplicationRun` 與呼叫它的 `run()`（T029，正式版 SAME）都沒有 throws。
 Java 原始碼要在不宣告 throws 的方法中呼叫 `throws Exception` 的方法，只有三條路：(1) 加 catch 後轉拋（需要額外呼叫，即目前已核准的 `rethrowUnchecked`）；(2) 方法宣告 `throws Exception`，但 `run()` 是 `Runnable.run` 覆寫，必須再加 catch，會破壞 T029 的 `run()` SAME；(3) catch 後 `throw (RuntimeException) e`，checked 例外會變成 ClassCastException，行為不同。
 因此本輪保留 (1)，事件差異只有「`allowed` 失敗時多一次 `rethrowUnchecked` 呼叫」，該 helper 只做 `throw (E) t`，原例外原樣拋出。其餘 handler／CFG 差異（`readFrames` 迴圈、finally 清理）呼叫與欄位多重集合除上述外相同。
+
+| 方法 | 類別 | 差異 | 驗收 |
+|---|---|---|---|
+| `ClientSession#sourceApplicationRun()V` | `local/lito381/server/ClientSession` | `SourceLogin.allowed` 拋出 checked 例外時多 1 次已核准的 `rethrowUnchecked` 呼叫（原例外原樣拋出）；其餘呼叫與欄位多重集合相同 | M2 離線回歸 |

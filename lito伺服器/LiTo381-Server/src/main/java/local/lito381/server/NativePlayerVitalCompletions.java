@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -11,13 +11,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 import local.lito381.server.ClientSession;
 import local.lito381.server.CombatAccess;
+import local.lito381.server.NativeAreaMaterialAction;
 import local.lito381.server.NativeDeItemPublication;
 import local.lito381.server.NativePlayerActionScope;
 import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativePlayerLifetime;
 import local.lito381.server.NativeReuseShutdown;
 import local.lito381.server.NativeRolePublication;
+import local.lito381.server.NativeSelfCastAction;
 import local.lito381.server.NativeServerLifetime;
+import local.lito381.server.NativeSourceMaterialPairIngress;
+import local.lito381.server.NativeSourceTargetNegativeLife;
+import local.lito381.server.NativeSourceTargetNegativeReserve;
 import local.lito381.server.Protocol;
 
 final class NativePlayerVitalCompletions {
@@ -42,7 +47,7 @@ final class NativePlayerVitalCompletions {
         synchronized (object) {
             boolean bl;
             ArrayDeque<Object> arrayDeque = NativeServerLifetime.packets.get();
-            boolean bl2 = bl = arrayDeque.contains(nativeServerLifetime) || NativePlayerLifetime.onWorker(nativeServerLifetime.hub);
+            bl = arrayDeque.contains(nativeServerLifetime) || NativePlayerLifetime.onWorker(nativeServerLifetime.hub);
             if (arrayDeque.isEmpty()) {
                 NativeServerLifetime.packets.remove();
             }
@@ -152,6 +157,78 @@ final class NativePlayerVitalCompletions {
     }
 
     private NativePlayerVitalCompletions() {
+    }
+
+    static Receipt nativeSourceTargetNegativeReserve(ClientSession clientSession, NativeAreaMaterialAction.Context context, NativeSourceTargetNegativeLife.Proof proof) {
+        if (!NativeSourceTargetNegativeReserve.initial(clientSession, context, proof)) {
+            return null;
+        }
+        NativePlayerLifetime nativePlayerLifetime = NativeSourceTargetNegativeReserve.lifetime(clientSession, context, proof);
+        NativeServerLifetime nativeServerLifetime = nativePlayerLifetime.application;
+        if (nativeServerLifetime == null) {
+            return NativeSourceTargetNegativeReserve.processes(nativePlayerLifetime.processes(), clientSession, context, proof, nativeServerLifetime) ? new Receipt(clientSession, nativePlayerLifetime, null) : null;
+        }
+        Object object = nativeServerLifetime.fence;
+        synchronized (object) {
+            block12: {
+                block11: {
+                    boolean bl;
+                    if (!NativeSourceTargetNegativeReserve.current(clientSession, context, proof, nativeServerLifetime)) break block11;
+                    ArrayDeque<Object> arrayDeque = NativeServerLifetime.packets.get();
+                    bl = arrayDeque.contains(nativeServerLifetime) || NativePlayerLifetime.onWorker(nativeServerLifetime.hub);
+                    if (arrayDeque.isEmpty()) {
+                        NativeServerLifetime.packets.remove();
+                    }
+                    if (!nativeServerLifetime.closing || bl) break block12;
+                }
+                return null;
+            }
+            ++nativeServerLifetime.handlers;
+            try {
+                return new Receipt(clientSession, nativePlayerLifetime, nativeServerLifetime);
+            }
+            catch (Throwable throwable) {
+                --nativeServerLifetime.handlers;
+                nativeServerLifetime.fence.notifyAll();
+                throw throwable;
+            }
+        }
+    }
+
+    static Receipt nativeSourceMaterialPairReserve(ClientSession clientSession, NativeSelfCastAction.Task task) {
+        if (!NativeSourceMaterialPairIngress.initial(clientSession, task)) {
+            return null;
+        }
+        NativePlayerLifetime nativePlayerLifetime = NativeSourceMaterialPairIngress.lifetime(clientSession, task);
+        NativeServerLifetime nativeServerLifetime = nativePlayerLifetime.application;
+        if (nativeServerLifetime == null) {
+            return NativeSourceMaterialPairIngress.processes(nativePlayerLifetime.processes(), clientSession, task, nativeServerLifetime) ? new Receipt(clientSession, nativePlayerLifetime, null) : null;
+        }
+        Object object = nativeServerLifetime.fence;
+        synchronized (object) {
+            block12: {
+                block11: {
+                    boolean bl;
+                    if (!NativeSourceMaterialPairIngress.application(clientSession, task, nativeServerLifetime)) break block11;
+                    ArrayDeque<Object> arrayDeque = NativeServerLifetime.packets.get();
+                    bl = arrayDeque.contains(nativeServerLifetime) || NativePlayerLifetime.onWorker(nativeServerLifetime.hub);
+                    if (arrayDeque.isEmpty()) {
+                        NativeServerLifetime.packets.remove();
+                    }
+                    if (!nativeServerLifetime.closing || bl) break block12;
+                }
+                return null;
+            }
+            ++nativeServerLifetime.handlers;
+            try {
+                return new Receipt(clientSession, nativePlayerLifetime, nativeServerLifetime);
+            }
+            catch (Throwable throwable) {
+                --nativeServerLifetime.handlers;
+                nativeServerLifetime.fence.notifyAll();
+                throw throwable;
+            }
+        }
     }
 
     static final class State {

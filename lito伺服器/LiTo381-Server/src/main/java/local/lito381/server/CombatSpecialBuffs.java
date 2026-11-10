@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 import java.util.List;
@@ -32,7 +33,7 @@ final class CombatSpecialBuffs {
                 ||(boolean)CombatAccess.field(caster,"observer")||((Number)CombatAccess.field(caster,"playerHp")).intValue()<=0
                 ||((Number)CombatAccess.field(caster,"classicWorldMapId")).intValue()!=npc.mapId())return true;
         int x=((Number)CombatAccess.field(caster,"positionX")).intValue(),y=((Number)CombatAccess.field(caster,"positionY")).intValue();
-        if(Math.max(Math.abs(x-npc.x()),Math.abs(y-npc.y()))>5)return true;
+        if(Math.max(Math.abs(x-NativeStaticNpcMotion.x(npc,caster)),Math.abs(y-NativeStaticNpcMotion.y(npc,caster)))>5)return true;
         synchronized(caster) {
             int skill=npc.npcId()==70670?4009:4010;var state=story(caster);boolean changed=false;
             for(int id:BLESSINGS)if(id!=skill)changed|=state.remove(id)!=null;

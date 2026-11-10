@@ -1,9 +1,11 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
 package local.lito381.server;
 
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -26,6 +28,9 @@ import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativePlayerVitalCompletions;
 import local.lito381.server.NativeReuseShutdown;
 import local.lito381.server.NativeServerLifetime;
+import local.lito381.server.NativeSourceDamageCapacity;
+import local.lito381.server.NativeSourceDamageDisplay;
+import local.lito381.server.NativeSummonRetirement;
 
 final class NativePlayerLifetime {
     private static final String FIELD = "sourcePlayerCommitLifetime";
@@ -35,27 +40,41 @@ final class NativePlayerLifetime {
     private static final ThreadLocal<NativePlayerLifetime> worker = new ThreadLocal();
     private static final ThreadLocal<NativePlayerLifetime> commit = new ThreadLocal();
     private static final ThreadLocal<Long> minimumDeadline = new ThreadLocal();
-    final Object admission = new Object();
-    final Set<NativePlayerCommit.Queue> active = ConcurrentHashMap.newKeySet();
-    final Set<NativeNpcLifetime.Lane> npcs = ConcurrentHashMap.newKeySet();
-    final AtomicLong pending = new AtomicLong();
-    final AtomicLong dropped = new AtomicLong();
-    final AtomicLong retries = new AtomicLong();
-    final AtomicLong timerRejections = new AtomicLong();
-    final AtomicLong cancelledTimers = new AtomicLong();
+    final Object admission;
+    final Set<NativePlayerCommit.Queue> active;
+    final Set<NativeNpcLifetime.Lane> npcs;
+    final AtomicLong pending;
+    final AtomicLong dropped;
+    final AtomicLong retries;
+    final AtomicLong timerRejections;
+    final AtomicLong cancelledTimers;
     final ThreadPoolExecutor workers;
     final ScheduledThreadPoolExecutor retry;
-    volatile Mode mode = Mode.OPEN;
+    volatile Mode mode;
     volatile NativeServerLifetime application;
     private Object sourceDeAiTimers;
     private volatile Object sourceDePerceptionJobs;
+    final Set nativeSummonRetirements;
+    final NativeSourceDamageDisplay.Jobs nativeSourceDisplayJobs;
+    final AtomicLong nativeSourceDamagePending = new AtomicLong();
 
     private NativePlayerLifetime() {
+        this.admission = new Object();
+        this.active = ConcurrentHashMap.newKeySet();
+        this.npcs = ConcurrentHashMap.newKeySet();
+        this.pending = new AtomicLong();
+        this.dropped = new AtomicLong();
+        this.retries = new AtomicLong();
+        this.timerRejections = new AtomicLong();
+        this.cancelledTimers = new AtomicLong();
+        this.mode = Mode.OPEN;
         int n = serial.incrementAndGet();
         this.workers = new ThreadPoolExecutor(NativePlayerCommit.WORKERS, NativePlayerCommit.WORKERS, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(NativePlayerCommit.CAPACITY), runnable -> new Thread(runnable, "LiTo-PC-commit-" + n + "-" + threads.incrementAndGet()), new ThreadPoolExecutor.AbortPolicy());
         this.retry = new ScheduledThreadPoolExecutor(1, runnable -> new Thread(runnable, "LiTo-PC-retry-" + n));
         this.retry.setRemoveOnCancelPolicy(true);
         this.retry.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
+        this.nativeSummonRetirements = Collections.newSetFromMap(new IdentityHashMap());
+        this.nativeSourceDisplayJobs = new NativeSourceDamageDisplay.Jobs(this);
     }
 
     private static void purge() {
@@ -103,19 +122,27 @@ final class NativePlayerLifetime {
     }
 
     boolean idle() {
+        if (!NativeSourceDamageCapacity.idle(this)) {
+            return false;
+        }
         return NativePlayerVitalCompletions.pending(this) == 0L && this.pending.get() == 0L && this.active.isEmpty() && this.npcs.isEmpty() && this.workers.getActiveCount() == 0 && this.workers.getQueue().isEmpty();
     }
 
     boolean terminated() {
-        return NativePlayerVitalCompletions.pending(this) == 0L && this.workers.isTerminated() && this.retry.isTerminated();
+        if (!NativeSourceDamageCapacity.idle(this)) {
+            return false;
+        }
+        return NativeSummonRetirement.pending(this) == 0L && this.workers.isTerminated() && this.retry.isTerminated();
     }
 
     static boolean allIdle() {
         NativePlayerLifetime.purge();
         for (NativePlayerLifetime nativePlayerLifetime : lives) {
-            if (nativePlayerLifetime.idle()) continue;
+            if (!(nativePlayerLifetime.idle())) {
             return false;
-        }
+
+            }
+}
         return true;
     }
 
@@ -248,19 +275,21 @@ final class NativePlayerLifetime {
     static void executeFixture(Runnable runnable) {
         NativePlayerLifetime nativePlayerLifetime = null;
         for (NativePlayerLifetime nativePlayerLifetime2 : lives) {
-            if (nativePlayerLifetime2.mode == Mode.STOPPED) continue;
+            if (!(nativePlayerLifetime2.mode == Mode.STOPPED)) {
             if (nativePlayerLifetime != null) {
                 throw new IllegalStateException("fixture must choose its GameHub when multiple applications are live");
             }
             nativePlayerLifetime = nativePlayerLifetime2;
-        }
+
+            }
+}
         if (nativePlayerLifetime == null) {
             throw new IllegalStateException("no live PC fixture application");
         }
-        NativePlayerLifetime selected = nativePlayerLifetime;
-        selected.workers.execute(() -> {
+        NativePlayerLifetime iterator = nativePlayerLifetime;
+        ((NativePlayerLifetime)iterator).workers.execute(() -> {
             NativePlayerLifetime nativePlayerLifetime2 = worker.get();
-            worker.set(selected);
+            worker.set((NativePlayerLifetime)iterator);
             try {
                 runnable.run();
             }
@@ -296,8 +325,11 @@ final class NativePlayerLifetime {
                 this.mode = Mode.STOPPED;
             }
         }
-        NativeDeCorpseTimers.closeAll(this);
+        NativePlayerLifetime nativePlayerLifetime = this;
+        NativeSummonRetirement.closing(nativePlayerLifetime);
+        NativeDeCorpseTimers.closeAll(nativePlayerLifetime);
         NativeDePerceptionJobs.closeAll(this);
+        NativeSourceDamageDisplay.closing(this);
         long l3 = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(Math.max(0L, l));
         if (bl && this.mode == Mode.DRAINING) {
             while (true) {
@@ -307,7 +339,9 @@ final class NativePlayerLifetime {
                 for (NativeNpcLifetime.Lane lane : (NativeNpcLifetime.Lane[])this.npcs.toArray(NativeNpcLifetime.Lane[]::new)) {
                     lane.requestDrain();
                 }
-                if (this.idle()) {
+                NativePlayerLifetime nativePlayerLifetime2 = this;
+                NativeSummonRetirement.drain(nativePlayerLifetime2);
+                if (nativePlayerLifetime2.idle()) {
                     bl3 = true;
                     break;
                 }
@@ -322,10 +356,10 @@ final class NativePlayerLifetime {
             }
         }
         Object objectArray = this.admission;
-        synchronized (this.admission) {
-            boolean bl4;
+        synchronized (objectArray) {
             this.mode = Mode.STOPPED;
-            // ** MonitorExit[objectArray] (shouldn't be in output)
+            }
+        {
             NativeDeCorpseTimers.stop(this);
             NativeDePerceptionJobs.stop(this);
             for (NativePlayerCommit.Queue queue : (NativePlayerCommit.Queue[])this.active.toArray(NativePlayerCommit.Queue[]::new)) {
@@ -359,7 +393,8 @@ final class NativePlayerLifetime {
                     this.workers.shutdownNow();
                 }
             }
-            if (bl4 = this.terminated()) {
+            boolean bl4 = this.terminated();
+            if (bl4) {
                 lives.remove(this);
             }
             if (bl2) {
@@ -383,9 +418,11 @@ final class NativePlayerLifetime {
     static void closeFixture() {
         for (NativePlayerLifetime nativePlayerLifetime : (NativePlayerLifetime[])lives.toArray(NativePlayerLifetime[]::new)) {
             Shutdown shutdown = nativePlayerLifetime.shutdown(false, 5000L);
-            if (shutdown.terminated) continue;
+            if (!(shutdown.terminated)) {
             throw new IllegalStateException("PC fixture workers remain live");
-        }
+
+            }
+}
     }
 
     static enum Mode {

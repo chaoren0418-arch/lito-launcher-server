@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 import java.io.IOException;
@@ -20,21 +21,14 @@ final class CombatRules {
     private static volatile Snapshot current;
     // Only keys with installed consumers are included here. Remaining source controls
     // are tracked by the coverage audit, never reported as implemented by this loader.
-    static final Set<String> SKILL_KEYS = Set.of("NATURES_BLESSING_HEAL","ILLUSION_AVATAR_DAMAGE_RATE",
-            "IMMUNE_TO_HARM", "BURNING_CHANCE", "BURNING_DMG", "DOUBLE_BREAK_CHANCE",
-            "DOUBLE_BREAK_DMG", "ELEMENTAL_FIRE", "ELEMENTAL_FIRE_RND",
-            "SOUL_OF_FLAME_DAMAGE", "STRIKER_DMG2", "JOY_OF_PAIN_COUNTDMG", "JOY_OF_PAIN_DMG",
-            "COUNTER_BARRIER_DMG", "DISINTEGRATE_CRITICAL_RND", "CRITICAL_SPR",
-            "CURSE_READY_TIME", "CURSE_TIME", "BLOODY_SOULADDMP", "SHOCK_STUN_TIMER",
-            "SLAY_BREAK_TIMER","MORTAL_BODY_DMG","MORTAL_BODY_ROM","FOE_SLAYER_DMG",
-            "VULNERABILITY_ROM","VULNERABILITY_1","VULNERABILITY_2","VULNERABILITY_3");
+    static final Set<String> SKILL_KEYS = Set.of("Triple_Arrow_Dmg", "SLAY_BREAK_NOT_TELEPORT", "INVIS_CAST_BREAK", "SOLID_CARRIAGE_MODE", "NATURES_BLESSING_HEAL", "ILLUSION_AVATAR_DAMAGE_RATE", "IMMUNE_TO_HARM", "BURNING_CHANCE", "BURNING_DMG", "DOUBLE_BREAK_CHANCE", "DOUBLE_BREAK_DMG", "ELEMENTAL_FIRE", "ELEMENTAL_FIRE_RND", "SOUL_OF_FLAME_DAMAGE", "STRIKER_DMG2", "JOY_OF_PAIN_COUNTDMG", "JOY_OF_PAIN_DMG", "COUNTER_BARRIER_DMG", "DISINTEGRATE_CRITICAL_RND", "CRITICAL_SPR", "CURSE_READY_TIME", "CURSE_TIME", "BLOODY_SOULADDMP", "SHOCK_STUN_TIMER", "SLAY_BREAK_TIMER", "MORTAL_BODY_DMG", "MORTAL_BODY_ROM", "FOE_SLAYER_DMG", "VULNERABILITY_ROM", "VULNERABILITY_1", "VULNERABILITY_2", "VULNERABILITY_3");
     static final Set<String> DAMAGE_KEYS;
     static {var keys=new java.util.HashSet<>(CombatClassDamage.keys());keys.addAll(CombatMagicDamage.keys());keys.add(CombatKiringku.MR_KEY);keys.add(CombatCompanionDamage.KEY);keys.add("AC_REDUCTION_DIVISOR");keys.add("PET_TO_PC_DAMAGE_MULTIPLIER");DAMAGE_KEYS=Set.copyOf(keys);}
     static final String AWAKE_CLASSIC_MODE = "DragonKnightAwakeClassicMode";
 
     static synchronized void load(ServerConfig config) throws IOException {
         if (current != null) return;
-        Path entry = config.source().toAbsolutePath().getParent().resolve("combat.properties");
+        Path entry = NativeCombatConfigOrigin.entry(config);
         Properties paths = read(entry);
         if (!paths.stringPropertyNames().equals(Set.of("source.skill.file", "source.damage.file","source.character.file","source.map.directory","arena.bot.con","arena.bot.wis")))
             throw new IOException(entry + ": requires source.skill.file, source.damage.file, source.character.file, source.map.directory, arena.bot.con, arena.bot.wis only");
@@ -46,9 +40,13 @@ final class CombatRules {
         var source=snapshot(read(skill), read(damage), skill, damage);
         var combined=new HashMap<>(source.values());
         var defaults=new java.util.HashSet<>(source.defaultedKeys());
-        combined.put(AWAKE_CLASSIC_MODE,awakeClassicMode(read(character),character,defaults)?1.0:0.0);
+        var destination = combined;
+        String awakeKey = AWAKE_CLASSIC_MODE;
+        Properties characterProperties = read(character);
+        NativePetControls.loadFromProperties(characterProperties, combined, defaults, character);
+        destination.put(awakeKey, awakeClassicMode(characterProperties, character, defaults) ? 1.0 : 0.0);
         parse(combined,paths,"arena.bot.con",entry);parse(combined,paths,"arena.bot.wis",entry);
-        current = new Snapshot(combined,skill,damage,character,defaults,maps);
+        current = NativeSourceOtherControls.prepare(new Snapshot(combined,skill,damage,character,defaults,maps));
         System.out.println("[LiTo] source combat controls loaded: " + current.values().size()
                 + "; coverage is limited to installed consumers (see combat coverage audit)");
         if(!current.defaultedKeys().isEmpty())System.out.println("[LiTo] source loader defaults used: "+current.defaultedKeys());
@@ -72,31 +70,67 @@ final class CombatRules {
         return true;
     }
 
-    static Snapshot snapshot(Properties skill, Properties damage, Path skillFile, Path damageFile)
-            throws IOException {
-        Map<String, Double> values = new HashMap<>();
-        var defaults=new java.util.HashSet<String>();
-        for (String key : SKILL_KEYS) {
-            // ConfigSkill._loadFromProperties explicitly uses 23 when this
-            // optional key is absent. An explicit malformed value still fails.
-            if(key.equals("NATURES_BLESSING_HEAL")) {
-                // Current source ConfigSkill declares this field but never assigns it in
-                // _loadFromProperties; even a present property leaves the field at 0.
-                // The source contract probe checks both Java and its compiled loader.
-                values.put(key,0.0);defaults.add(key);
-            }
-            else if(key.equals("ILLUSION_AVATAR_DAMAGE_RATE")){CombatClassDamage.parse(values,skill,key,skillFile,defaults,1.5);if(values.get(key)<0)throw new IOException(skillFile+": negative Avatar incoming rate requires signed fatal-commit support");}
-            else if(key.equals("MORTAL_BODY_ROM")&&!skill.containsKey(key)) {values.put(key,23.0);defaults.add(key);}
-            else if (key.endsWith("_TIMER")) parseTimer(values, skill, key, skillFile);
-            else parse(values, skill, key, skillFile);
+    static Snapshot nativeSourceSkillDefaultsOriginalSnapshot(Properties properties, Properties properties2, Path path, Path path2) throws IOException {
+        Map<String, Double> hashMap = new HashMap<String, Double>();
+        java.util.HashSet<String> hashSet = new java.util.HashSet<String>();
+        for (String string : SKILL_KEYS) {
+            boolean bl;
+            if (string.equals("Triple_Arrow_Dmg")) {
+                CombatClassDamage.parse(hashMap, properties, string, path, hashSet, 1.0);
+            } else if (string.equals("SLAY_BREAK_NOT_TELEPORT")) {
+                String string2 = properties.getProperty(string);
+                bl = true;
+                if (string2 == null || string2.isBlank()) {
+                    hashSet.add(string);
+                } else {
+                    bl = Boolean.parseBoolean(string2.trim());
+                }
+                hashMap.put(string, bl ? 1.0 : 0.0);
+            } else if (string.equals("INVIS_CAST_BREAK")) {
+                String string3 = properties.getProperty(string);
+                bl = false;
+                if (string3 == null || string3.isBlank()) {
+                    hashSet.add(string);
+                } else {
+                    bl = Boolean.parseBoolean(string3.trim());
+                }
+                hashMap.put(string, bl ? 1.0 : 0.0);
+            } else if (string.equals("SOLID_CARRIAGE_MODE")) {
+                int n = 1;
+                String string4 = properties.getProperty(string);
+                try {
+                    if (string4 == null || string4.isBlank()) {
+                        throw new NumberFormatException();
+                    }
+                    n = Integer.parseInt(string4.trim());
+                }
+                catch (NumberFormatException numberFormatException) {
+                    hashSet.add(string);
+                }
+                hashMap.put(string, Double.valueOf(n));
+            } else if (string.equals("NATURES_BLESSING_HEAL")) {
+                hashMap.put(string, 0.0);
+                hashSet.add(string);
+            } else if (string.equals("ILLUSION_AVATAR_DAMAGE_RATE")) {
+                CombatClassDamage.parse(hashMap, properties, string, path, hashSet, 1.5);
+                if (hashMap.get(string) < 0.0) throw new IOException(String.valueOf(path) + ": negative Avatar incoming rate requires signed fatal-commit support");
+            } else if (string.equals("MORTAL_BODY_ROM") && !properties.containsKey(string)) {
+                hashMap.put(string, 23.0);
+                hashSet.add(string);
+            } else if (string.endsWith("_TIMER")) {
+                CombatRules.parseTimer(hashMap, properties, string, path);
+            } else CombatRules.parse(hashMap, properties, string, path);
         }
-        for (String key : DAMAGE_KEYS) {
-            if(key.equals(CombatCompanionDamage.KEY))CombatClassDamage.parse(values,damage,key,damageFile,defaults,0.125);
-            else if(key.equals(CombatKiringku.MR_KEY))CombatClassDamage.parse(values,damage,key,damageFile,defaults,3.0);
-            else if(CombatClassDamage.keys().contains(key)||CombatMagicDamage.keys().contains(key))CombatClassDamage.parse(values,damage,key,damageFile,defaults);
-            else parse(values, damage, key, damageFile);
+        for (String string : DAMAGE_KEYS) {
+            if (string.equals("PC_TO_PET_DAMAGE_MULTIPLIER")) {
+                CombatClassDamage.parse(hashMap, properties2, string, path2, hashSet, 0.125);
+            } else if (string.equals("MR_REDUCTION_PER_10")) {
+                CombatClassDamage.parse(hashMap, properties2, string, path2, hashSet, 3.0);
+            } else if (CombatClassDamage.keys().contains(string) || CombatMagicDamage.keys().contains(string)) {
+                CombatClassDamage.parse(hashMap, properties2, string, path2, hashSet);
+            } else CombatRules.parse(hashMap, properties2, string, path2);
         }
-        return new Snapshot(values, skillFile, damageFile,defaults);
+        return new Snapshot(hashMap, path, path2, hashSet);
     }
     private static void parseTimer(Map<String, Double> out, Properties p, String key, Path file)
             throws IOException {
@@ -243,5 +277,9 @@ final class CombatRules {
             case 5 -> Math.min(4,level/9);
             default -> throw new IllegalArgumentException("unknown source character type="+type);
         };
+    }
+
+    static Snapshot snapshot(Properties properties, Properties properties2, Path path, Path path2) throws IOException {
+        return NativeSourceSkillDefaults.snapshot(properties, properties2, path, path2);
     }
 }

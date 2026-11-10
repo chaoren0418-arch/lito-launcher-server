@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -24,22 +24,43 @@ import local.lito381.server.CombatPoisonAtomic;
 import local.lito381.server.CombatPoisonLifecycle;
 import local.lito381.server.CombatRules;
 import local.lito381.server.GameHub;
+import local.lito381.server.NativeAcceptedFreezeMutation;
 import local.lito381.server.NativeAcceptedHpCompletion;
 import local.lito381.server.NativeAcceptedState;
 import local.lito381.server.NativeArmorProc;
 import local.lito381.server.NativeCombatAttacker;
 import local.lito381.server.NativeCombatOrigin;
+import local.lito381.server.NativeCompanionManaTransfer;
+import local.lito381.server.NativeCompanionRefScene;
+import local.lito381.server.NativeCompanionRoleIdentity;
 import local.lito381.server.NativeDeClientViewer;
 import local.lito381.server.NativeDeItemApplication;
 import local.lito381.server.NativeEffectCompletions;
 import local.lito381.server.NativeEquipmentDefense;
+import local.lito381.server.NativeHpCompletionAdmission;
 import local.lito381.server.NativeMagicDoll;
 import local.lito381.server.NativeMagicDollEffects;
 import local.lito381.server.NativeMassTeleportAnswerLife;
+import local.lito381.server.NativePlayerActionScope;
 import local.lito381.server.NativePlayerLifetime;
 import local.lito381.server.NativePlayerVitalCompletions;
 import local.lito381.server.NativePlayerVitals;
 import local.lito381.server.NativeProcPlayerState;
+import local.lito381.server.NativeProcSkillCatalog;
+import local.lito381.server.NativeSourceCubePlayer;
+import local.lito381.server.NativeSourceDamageCapacity;
+import local.lito381.server.NativeSourceDamageDisplay;
+import local.lito381.server.NativeSourceDollDefense;
+import local.lito381.server.NativeSourceEquipmentProcLife;
+import local.lito381.server.NativeSourceFatalityDamage;
+import local.lito381.server.NativeSourceGroundQueued;
+import local.lito381.server.NativeSourceLightningHp;
+import local.lito381.server.NativeSourceManualScope;
+import local.lito381.server.NativeSourcePendingAdmission;
+import local.lito381.server.NativeSourceProc68FirstQueue;
+import local.lito381.server.NativeSourceProcScalarSkills;
+import local.lito381.server.NativeSourceRawDamage;
+import local.lito381.server.NativeStaticNpcMotion;
 import local.lito381.server.Protocol;
 import local.lito381.server.SourceMagicDollPower;
 
@@ -88,7 +109,7 @@ final class NativePlayerCommit {
             CombatPoisonLifecycle.State state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, true);
             Object object = CombatAccess.field(state, "sourcePlayerOwner");
             if (object == null) {
-                object = new Object();
+                object = NativeCompanionRoleIdentity.nextRole(clientSession);
                 CombatAccess.set(state, "sourcePlayerOwner", object);
             }
             return object;
@@ -97,43 +118,43 @@ final class NativePlayerCommit {
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Converted monitor instructions to comments
+     * Lifted jumps to return sites
      */
-    static void advance(ClientSession clientSession) {
+    static void nativeStaticOriginalAdvance(ClientSession clientSession) {
         ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
-        reentrantLock.lock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
         try {
-            BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-            if (battleTimedStatus == null) {
-                return;
-            }
-            BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-            synchronized (battleTimedStatus2) {
-                CombatPoisonLifecycle.State state;
-                block15: {
+            work: {
+                BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+                if (battleTimedStatus == null) break work;
+                synchronized (battleTimedStatus) {
                     NativeDeClientViewer.retire(battleTimedStatus);
-                    state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
-                    if (state != null) break block15;
-                    return;
-                }
-                Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
-                if (queue != null) {
-                    queue.vitalLock.lock();
-                    try {
-                        queue.drop(true);
-                        CombatAccess.set(state, "sourcePlayerQueue", null);
-                        CombatAccess.set(state, "sourcePlayerOwner", new Object());
+                    CombatPoisonLifecycle.State state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
+                    if (state == null) break work;
+                    Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
+                    if (queue != null) {
+                        queue.vitalLock.lock();
+                        try {
+                            queue.drop(true);
+                            CombatAccess.set(state, "sourcePlayerQueue", null);
+                            CombatAccess.set(state, "sourcePlayerOwner", NativeCompanionRoleIdentity.nextRole(clientSession));
+                        } finally {
+                            queue.vitalLock.unlock();
+                        }
+                    } else {
+                        CombatAccess.set(state, "sourcePlayerOwner", NativeCompanionRoleIdentity.nextRole(clientSession));
                     }
-                    finally {
-                        queue.vitalLock.unlock();
-                    }
-                } else {
-                    CombatAccess.set(state, "sourcePlayerOwner", new Object());
                 }
             }
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
-        finally {
-            reentrantLock.unlock();
-        }
+        NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
 
     /*
@@ -141,40 +162,44 @@ final class NativePlayerCommit {
      */
     private static void assign(ClientSession clientSession, Object object, String string) {
         ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
-        reentrantLock.lock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
         try {
             BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
             if (battleTimedStatus == null) {
                 CombatAccess.set(clientSession, string, object);
-                return;
+            } else {
+                synchronized (battleTimedStatus) {
+                    NativePlayerCommit.advance(clientSession);
+                    NativeProcPlayerState.selectedField(clientSession, string);
+                    CombatAccess.set(clientSession, string, object);
+                }
             }
-            BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-            synchronized (battleTimedStatus2) {
-                NativePlayerCommit.advance(clientSession);
-                NativeProcPlayerState.selectedField(clientSession, string);
-                CombatAccess.set(clientSession, string, object);
-            }
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
-        finally {
-            reentrantLock.unlock();
-        }
+        NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
 
     static void selected(ClientSession clientSession, String string) {
         ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
-        reentrantLock.lock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
         try {
             NativeDeItemApplication.retireClient(clientSession);
             NativeMassTeleportAnswerLife.retireRole(clientSession);
             NativePlayerCommit.assign(clientSession, string, "selectedCharacter");
+            clientSession.nativeSourceShowDamage = true;
+            clientSession.nativeSourceShowProcSpr = true;
         }
-        finally {
-            reentrantLock.unlock();
+        catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
+        NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
 
     static void scene(ClientSession clientSession, Object object, String string) {
-        NativePlayerCommit.assign(clientSession, object, string);
+        NativePlayerCommit.nativeCompanionSceneAssign(clientSession, object, string);
     }
 
     static Frame frame() {
@@ -243,7 +268,6 @@ final class NativePlayerCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean earlyZero(ClientSession clientSession, ClientSession clientSession2, boolean bl, long l) {
-        WorldPlan worldPlan;
         int n;
         CalcTicket calcTicket = calculation.get();
         if (calcTicket == null || !String.valueOf(CombatAccess.field(clientSession, "phase")).equals(bl ? "WORLD" : "BATTLE")) {
@@ -257,33 +281,29 @@ final class NativePlayerCommit {
         try {
             n = NativePlayerCommit.integer(clientSession, "playerHp");
             if (queue.closed || !calcTicket.target.matchesFast(clientSession)) {
-                boolean bl2 = true;
-                return bl2;
+                return true;
             }
             if (queue.terminal) {
-                boolean bl3 = true;
-                return bl3;
+                return true;
             }
             if (!bl && n <= 0 && ((Boolean)CombatAccess.field(clientSession, "deathConfirmationPending")).booleanValue()) {
                 queue.terminal = true;
-                boolean bl4 = true;
-                return bl4;
+                return true;
             }
             if (n > 0) {
-                boolean bl5 = false;
-                return bl5;
+                return false;
             }
         }
         finally {
             queue.vitalLock.unlock();
         }
         Binding binding = calcTicket.caster;
-        WorldPlan worldPlan2 = worldPlan = bl ? worldCalculation.get() : null;
+        WorldPlan worldPlan = bl ? worldCalculation.get() : null;
         long l2 = l != 0L ? l : (binding != null ? binding.object : (calcTicket.attacker == null ? 0L : calcTicket.attacker.id()));
         ClassicWorldMonsterPopulation.Snapshot snapshot = null;
         if (bl) {
             NativeCombatOrigin.Poison poison = NativeCombatOrigin.poison();
-            ClassicWorldMonsterPopulation.Snapshot snapshot2 = snapshot = poison != null ? poison.snapshot() : NativeCombatAttacker.capturedSnapshot(l2);
+            snapshot = poison != null ? poison.snapshot() : NativeCombatAttacker.capturedSnapshot(l2);
             if (snapshot == null && calcTicket.attacker != null && calcTicket.attacker.kind() == 1) {
                 snapshot = NativeCombatAttacker.worldSnapshot(clientSession, calcTicket.attacker);
             }
@@ -312,7 +332,7 @@ final class NativePlayerCommit {
         Binding binding = calcTicket == null ? Binding.capture(clientSession) : calcTicket.target;
         Binding binding2 = calcTicket == null ? Binding.capture(clientSession2) : calcTicket.caster;
         boolean bl3 = calcTicket == null || calcTicket.feedbackPositive;
-        NativePlayerCommit.offer(clientSession, new Event(binding, binding2, n, bl, bl2 || !bl3, l, bl3 ? lease : null, bl3 ? n2 : 0, false, binding2 == null ? 0L : binding2.object, null, null, calcTicket == null ? List.of() : calcTicket.defense, bl3, calcTicket == null ? List.of() : calcTicket.equipment, calcTicket == null ? null : calcTicket.attacker, calcTicket == null ? null : calcTicket.npcFeedback, calcTicket == null ? NativeAcceptedState.Incoming.empty() : calcTicket.incoming, NativePlayerVitals.minimum(), NativePlayerLifetime.deadline()));
+        NativePlayerCommit.offer(clientSession, new Event(binding, binding2, n, bl, bl2 || !bl3, l, bl3 ? lease : null, bl3 ? n2 : 0, false, binding2 == null ? 0L : binding2.object, null, null, calcTicket == null ? List.of() : calcTicket.defense, bl3, calcTicket == null ? List.of() : calcTicket.equipment, calcTicket == null ? null : calcTicket.attacker, calcTicket == null ? null : calcTicket.npcFeedback, calcTicket == null ? NativeAcceptedState.Incoming.empty() : calcTicket.incoming, NativePlayerVitals.minimum(), NativePlayerLifetime.deadline(), calcTicket != null ? calcTicket.sourceDisplay : null));
     }
 
     static void enqueueWorld(ClientSession clientSession, int n, long l, ClassicWorldMonsterPopulation.Snapshot snapshot) {
@@ -335,6 +355,9 @@ final class NativePlayerCommit {
     }
 
     static int signedEarth(ClientSession clientSession, int n, String string) {
+        if (NativeSourceFatalityDamage.skipAttackerCalc(clientSession)) {
+            return n;
+        }
         return n <= 0 ? n : CombatAccess.integerCall(clientSession, "earthBindProtectedCombatDamage", "(ILjava/lang/String;)I", n, string);
     }
 
@@ -480,7 +503,7 @@ final class NativePlayerCommit {
                     n3 = n > 0 ? (int)Math.min((long)n4, (long)n7 + (long)n) : n7;
                     n5 = n2 > 0 ? (int)Math.min((long)n6, (long)n8 + (long)n2) : n8;
                     bl = n3 != n7;
-                    boolean bl3 = bl2 = n5 != n8;
+                    bl2 = n5 != n8;
                     if (bl) {
                         CombatAccess.set(clientSession, "playerHp", n3);
                     }
@@ -520,13 +543,13 @@ final class NativePlayerCommit {
         }
         Object object = CombatAccess.field(clientSession, "activeMagicDollObjectIds");
         synchronized (object) {
-            nativeMagicDoll = (NativeMagicDoll)CombatAccess.field(clientSession, "activeMagicDoll");
+            nativeMagicDoll = (NativeMagicDoll)NativeSourceDollDefense.dollField(clientSession, "activeMagicDoll");
         }
         int n = 0;
         ArrayList<SourceMagicDollPower> arrayList = new ArrayList<SourceMagicDollPower>();
         if (nativeMagicDoll != null) {
             for (SourceMagicDollPower object2 : nativeMagicDoll.type().powerDefinitions()) {
-                if (object2 == null) continue;
+                if (!(object2 == null)) {
                 try {
                     if (!object2.className().equals("ACTIVE_REDUX") && (!object2.className().equals("ACTIVE_DMG") || object2.mode() != 2) || object2.probability() <= 0) continue;
                     defenseRolls.incrementAndGet();
@@ -537,12 +560,14 @@ final class NativePlayerCommit {
                 catch (RuntimeException sourceMagicDollPower) {
                     NativePlayerCommit.defenseCalcFailure(sourceMagicDollPower);
                 }
-            }
+
+                }
+}
         }
         NativeMagicDollEffects.DefenseProc defenseProc = new NativeMagicDollEffects.DefenseProc(n, arrayList);
         if (nativeMagicDoll != null) {
             for (SourceMagicDollPower sourceMagicDollPower : arrayList) {
-                calcTicket.defense.add(new DefenseVisual(nativeMagicDoll, sourceMagicDollPower.id(), 0, calcTicket.target.object, string + "-defense"));
+                calcTicket.defense.add(new DefenseVisual(nativeMagicDoll, sourceMagicDollPower.id(), 0, calcTicket.target.object, string + "-defense", clientSession));
             }
         }
         return defenseProc;
@@ -559,6 +584,9 @@ final class NativePlayerCommit {
     }
 
     static int captureBattleDefense(ClientSession clientSession, int n, boolean bl, String string) {
+        if (NativeSourceFatalityDamage.skipAttackerCalc(clientSession)) {
+            return n;
+        }
         if (!CombatRules.loaded()) {
             return CombatAccess.integerCall(clientSession, "nativeMagicDollDamageAfterActiveReduction", "(IZLjava/lang/String;)I", n, bl, string);
         }
@@ -635,7 +663,7 @@ final class NativePlayerCommit {
         WorldPlan worldPlan2 = worldCalculation.get();
         worldCalculation.set(worldPlan);
         try {
-            CombatAccess.call(clientSession, "takeClassicWorldDirectDamage", "(DJ)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;", n, l);
+            CombatAccess.call(clientSession, "takeClassicWorldDirectDamage", "(DJ)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;", (double)n, l);
         }
         finally {
             if (worldPlan2 == null) {
@@ -709,18 +737,24 @@ final class NativePlayerCommit {
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         if (binding.phase.equals("WORLD")) {
             for (ClientSession clientSession2 : (List<ClientSession>)CombatAccess.call(clientSession, "classicWorldMembers", "(I)Ljava/util/List;", binding.map)) {
-                if (!binding.matches(clientSession2)) continue;
+                if (!(!binding.matches(clientSession2))) {
                 return clientSession2;
-            }
+
+                }
+}
         }
         for (ClientSession clientSession2 : gameHub.roomMembers(binding.room)) {
-            if (!binding.matches(clientSession2)) continue;
+            if (!(!binding.matches(clientSession2))) {
             return clientSession2;
-        }
+
+            }
+}
         for (ClientSession clientSession2 : gameHub.connectedSessionsSnapshot()) {
-            if (!binding.matches(clientSession2)) continue;
+            if (!(!binding.matches(clientSession2))) {
             return clientSession2;
-        }
+
+            }
+}
         return null;
     }
 
@@ -731,6 +765,7 @@ final class NativePlayerCommit {
      * Enabled aggressive exception aggregation
      */
     static void drain(ClientSession clientSession, Queue queue) {
+        NativePlayerVitalCompletions.Receipt receipt = null;
         boolean bl = false;
         try {
             int n = 0;
@@ -749,35 +784,42 @@ final class NativePlayerCommit {
                     try {
                         NativeAcceptedHpCompletion nativeAcceptedHpCompletion;
                         ClientSession clientSession2 = NativePlayerCommit.caster(clientSession, event.caster);
-                        boolean bl3 = NativePlayerVitals.gm(clientSession);
-                        NativeEquipmentDefense.Resolved resolved = !queue.closed && !queue.terminal && event.target.matchesFast(clientSession) && NativePlayerCommit.integer(clientSession, "playerHp") > 0 ? NativeEquipmentDefense.resolve(clientSession, clientSession2, event.equipment, event.attacker) : NativeEquipmentDefense.Resolved.empty();
+                        boolean bl3 = NativeSourceGroundQueued.early(clientSession, event, clientSession2);
+                        boolean bl4 = NativePlayerVitals.gm(clientSession);
+                        NativeEquipmentDefense.Resolved resolved = bl3 && !queue.closed && !queue.terminal && event.target.matchesFast(clientSession) && NativePlayerCommit.integer(clientSession, "playerHp") > 0 ? NativeEquipmentDefense.resolve(clientSession, clientSession2, event.equipment, event.attacker) : NativeEquipmentDefense.Resolved.empty();
                         queue.vitalLock.lock();
                         try {
                             int n2;
                             NativePlayerVitals.Result result;
-                            if (queue.closed || queue.terminal || !event.target.matchesFast(clientSession) || !String.valueOf(CombatAccess.field(clientSession, "phase")).equals(event.world ? "WORLD" : "BATTLE")) {
+                            int n3;
+                            int n4;
+                            receipt = null;
+                            receipt = NativeHpCompletionAdmission.reserve(clientSession, queue);
+                            if (receipt != null && !queue.closed && !queue.terminal && event.target.matchesFast(clientSession) && String.valueOf(CombatAccess.field(clientSession, "phase")).equals(event.world ? "WORLD" : "BATTLE") && NativeSourceGroundQueued.beforeEvent(clientSession, event, clientSession2, bl3)) {
+                                n4 = NativePlayerCommit.integer(clientSession, "playerMaxHp");
+                                n3 = NativePlayerCommit.integer(clientSession, "playerHp");
+                                bl2 = n3 > 0;
+                            } else {
+                                NativeAcceptedFreezeMutation.abandon(event);
                                 dropped.incrementAndGet();
                                 break block21;
                             }
-                            int n3 = NativePlayerCommit.integer(clientSession, "playerMaxHp");
-                            int n4 = NativePlayerCommit.integer(clientSession, "playerHp");
-                            boolean bl4 = bl2 = n4 > 0;
                             if (bl2) {
-                                result = NativePlayerVitals.calculate(n4, n3, event.damage, event.minimumHp, bl3);
+                                result = NativePlayerVitals.calculate(n3, n4, event.damage, event.minimumHp, bl4);
                                 n2 = result.after();
                             } else {
-                                n2 = bl3 ? n4 : 0;
+                                n2 = bl4 ? n3 : 0;
                                 result = new NativePlayerVitals.Result(n2, true);
                                 repairs.incrementAndGet();
                             }
                             queue.terminal = result.fatal();
-                            if (n2 != n4) {
+                            if (n2 != n3) {
                                 CombatAccess.set(clientSession, "playerHp", n2);
                             }
-                            nativeAcceptedHpCompletion = NativeAcceptedHpCompletion.enqueue(new Frame(clientSession, clientSession2, queue, event, n4, n2, n3, result.fatal(), bl2, resolved));
+                            nativeAcceptedHpCompletion = NativeSourceDamageDisplay.enqueue(new Frame(clientSession, clientSession2, queue, event, n3, n2, n4, result.fatal(), bl2, resolved), receipt);
                         }
                         finally {
-                            queue.vitalLock.unlock();
+                            NativeHpCompletionAdmission.unlock(queue.vitalLock, receipt);
                         }
                         NativePlayerVitalCompletions.drain(clientSession);
                         if (nativeAcceptedHpCompletion.suspend()) {
@@ -786,14 +828,16 @@ final class NativePlayerCommit {
                         }
                     }
                     catch (Throwable throwable) {
+                        NativeAcceptedFreezeMutation.abandon(event);
                         if (NativeAcceptedState.isStale(throwable)) {
                             if (bl2) {
                                 committed.incrementAndGet();
                             }
+                        } else {
+                            failed.incrementAndGet();
+                            System.err.println("[LiTo development] PC committed tail failed, no HP replay: " + String.valueOf(throwable));
+                            throwable.printStackTrace();
                         }
-                        failed.incrementAndGet();
-                        System.err.println("[LiTo development] PC committed tail failed, no HP replay: " + String.valueOf(throwable));
-                        throwable.printStackTrace();
                     }
                 }
                 ++n;
@@ -894,7 +938,7 @@ final class NativePlayerCommit {
             if (!NativePlayerCommit.validFrame(frame.pc) || byArray.length == 0) {
                 return;
             }
-            int n2 = n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+            n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
             if (!(frame.accepted && frame.before != frame.after || n != 13 && n != 104)) {
                 return;
             }
@@ -939,9 +983,9 @@ final class NativePlayerCommit {
                 byte[] byArray = defenseVisual.gfx > 0 ? Protocol.effectObject(defenseVisual.target, defenseVisual.gfx) : Protocol.objectAction(defenseVisual.doll.objectId(), 67);
                 String string = defenseVisual.gfx > 0 ? "S_EFFECT magic-doll-proc=" + defenseVisual.power + " target=" + defenseVisual.target + " gfx=" + defenseVisual.gfx : "S_ACTION magic-doll-proc=" + defenseVisual.power + " doll=" + defenseVisual.doll.objectId() + " action=67";
                 try {
-                    for (ClientSession clientSession2 : (List<ClientSession>)CombatAccess.call(clientSession, "nativeMagicDollRecipients", "(Llocal/lito381/server/NativeMagicDoll;)Ljava/util/List;", defenseVisual.doll)) {
+                    for (ClientSession clientSession2 : (List<ClientSession>)(List<?>)NativeSourceDollDefense.recipients(clientSession, "nativeMagicDollRecipients", "(Llocal/lito381/server/NativeMagicDoll;)Ljava/util/List;", new Object[]{defenseVisual.doll}, defenseVisual)) {
                         if (!NativePlayerCommit.validFrame(clientSession)) continue block10;
-                        NativePlayerCommit.safeSend(clientSession2, byArray, string + " defense=true reason=" + defenseVisual.reason);
+                        NativeSourceDollDefense.send(clientSession2, byArray, string + " defense=true reason=" + defenseVisual.reason, defenseVisual, clientSession);
                     }
                 }
                 catch (RuntimeException runtimeException) {
@@ -1017,6 +1061,15 @@ final class NativePlayerCommit {
     }
 
     static boolean validFrame(ClientSession clientSession) {
+        if (!NativeSourceGroundQueued.validFrame(clientSession)) {
+            return false;
+        }
+        if (!NativeSourceCubePlayer.validFrame(clientSession)) {
+            return false;
+        }
+        if (!NativeSourceRawDamage.validFrame(clientSession)) {
+            return false;
+        }
         Frame frame = current.get();
         return frame != null && frame.pc == clientSession && !frame.queue.closed && frame.event.target.matchesFast(clientSession);
     }
@@ -1088,6 +1141,7 @@ final class NativePlayerCommit {
                     if (!bl) break block26;
                     try {
                         NativePlayerCommit.publishDefense(clientSession);
+                        NativeSourceDamageDisplay.accepted(frame);
                     }
                     finally {
                         NativeCombatAttacker.acceptedFeedback(clientSession, event.attacker, event.npcFeedback);
@@ -1122,6 +1176,246 @@ final class NativePlayerCommit {
         }
     }
 
+    static void advance(ClientSession clientSession) {
+        NativeStaticNpcMotion.advance(clientSession);
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Converted monitor instructions to comments
+     * Lifted jumps to return sites
+     */
+    static void nativeCompanionSceneOriginalAdvance(ClientSession clientSession, Object object) {
+        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
+        try {
+            work: {
+                BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+                if (battleTimedStatus == null) break work;
+                synchronized (battleTimedStatus) {
+                    NativeDeClientViewer.retire(battleTimedStatus);
+                    CombatPoisonLifecycle.State state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
+                    if (state == null) break work;
+                    Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
+                    if (queue != null) {
+                        queue.vitalLock.lock();
+                        try {
+                            queue.drop(true);
+                            CombatAccess.set(state, "sourcePlayerQueue", null);
+                            CombatAccess.set(state, "sourcePlayerOwner", object);
+                        } finally {
+                            queue.vitalLock.unlock();
+                        }
+                    } else {
+                        CombatAccess.set(state, "sourcePlayerOwner", object);
+                    }
+                }
+            }
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
+        }
+        NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    private static void nativeCompanionSceneAssign(ClientSession clientSession, Object object, String string) {
+        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
+        try {
+            BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+            if (battleTimedStatus == null) {
+                CombatAccess.set(clientSession, string, object);
+            } else {
+                synchronized (battleTimedStatus) {
+                    NativeStaticNpcMotion.nativeCompanionSceneAdvance(clientSession, object, string);
+                    NativeProcPlayerState.selectedField(clientSession, string);
+                    CombatAccess.set(clientSession, string, object);
+                }
+            }
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
+        }
+        NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
+    }
+
+    static ClientSession nativeRefCompanionCaster(ClientSession clientSession, Binding binding) {
+        if (binding == null) {
+            return null;
+        }
+        if (NativeCompanionRefScene.binding(binding, clientSession)) {
+            return clientSession;
+        }
+        GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
+        if (binding.phase.equals("WORLD")) {
+            for (ClientSession clientSession2 : (List<ClientSession>)CombatAccess.call(clientSession, "classicWorldMembers", "(I)Ljava/util/List;", binding.map)) {
+                if (!(!NativeCompanionRefScene.binding(binding, clientSession2))) {
+                return clientSession2;
+
+                }
+}
+        }
+        for (ClientSession clientSession2 : gameHub.roomMembers(binding.room)) {
+            if (!(!NativeCompanionRefScene.binding(binding, clientSession2))) {
+            return clientSession2;
+
+            }
+}
+        for (ClientSession clientSession2 : gameHub.connectedSessionsSnapshot()) {
+            if (!(!NativeCompanionRefScene.binding(binding, clientSession2))) {
+            return clientSession2;
+
+            }
+}
+        return null;
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static void nativeManaTransferRecover(NativePlayerVitalCompletions.Receipt receipt, ClientSession clientSession, Binding binding, int n, int n2, String string) {
+        if (n <= 0 && n2 <= 0) {
+            return;
+        }
+        Queue queue = NativeCompanionManaTransfer.queue(clientSession, binding);
+        if (queue == null) {
+            return;
+        }
+        NativePlayerVitalCompletions.Receipt receipt2 = receipt;
+        if (receipt2 == null) {
+            return;
+        }
+        try {
+            int n3 = 0;
+            int n4 = 0;
+            int n5 = 0;
+            int n6 = 0;
+            boolean bl = false;
+            boolean bl2 = false;
+            queue.vitalLock.lock();
+            try {
+                if (!queue.closed && binding.matchesFast(clientSession) && NativePlayerCommit.integer(clientSession, "playerHp") > 0) {
+                    int n7 = NativePlayerCommit.integer(clientSession, "playerHp");
+                    int n8 = NativePlayerCommit.integer(clientSession, "playerMp");
+                    n4 = NativePlayerCommit.integer(clientSession, "playerMaxHp");
+                    n6 = NativePlayerCommit.integer(clientSession, "playerMaxMp");
+                    n3 = n > 0 ? (int)Math.min((long)n4, (long)n7 + (long)n) : n7;
+                    n5 = n2 > 0 ? (int)Math.min((long)n6, (long)n8 + (long)n2) : n8;
+                    bl = n3 != n7;
+                    bl2 = n5 != n8;
+                    if (bl) {
+                        CombatAccess.set(clientSession, "playerHp", n3);
+                    }
+                    if (bl2) {
+                        CombatAccess.set(clientSession, "playerMp", n5);
+                    }
+                    if (bl || bl2) {
+                        NativePlayerVitalCompletions.recovery(receipt2, binding, n3, n4, n5, n6, bl, bl2, string);
+                    }
+                }
+            }
+            finally {
+                queue.vitalLock.unlock();
+            }
+        }
+        finally {
+            receipt2.close();
+            NativePlayerVitalCompletions.drain(clientSession);
+        }
+    }
+
+    static CalcTicket nativeSourceFatalityCalculation() {
+        return calculation.get();
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static Queue nativeSourceScalarQueue(ClientSession clientSession, Binding binding, BattleTimedStatus battleTimedStatus, NativeSourceEquipmentProcLife.Proof proof, NativeProcSkillCatalog.Catalog catalog) {
+        Queue queue = null;
+        synchronized (battleTimedStatus) {
+            if (NativeSourceProcScalarSkills.queueCurrent(binding, clientSession, battleTimedStatus, proof, catalog)) {
+                Object object = NativeSourceProcScalarSkills.state(battleTimedStatus);
+                queue = (Queue)CombatAccess.field(object, "sourcePlayerQueue");
+                if (queue == null || !queue.owner.equals(binding)) {
+                    if (queue != null) queue.drop(true);
+                    queue = new Queue(binding, proof.lifetime(), clientSession.nativePlayerActionLock());
+                    CombatAccess.set(object, "sourcePlayerQueue", queue);
+                }
+            }
+        }
+        return (Queue)NativeSourceProcScalarSkills.queueValue(queue, proof);
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static boolean nativeSourceScalarMutateOwned(ClientSession clientSession, Binding binding, BooleanSupplier booleanSupplier, BattleTimedStatus battleTimedStatus, NativeSourceEquipmentProcLife.Proof proof, NativeProcSkillCatalog.Catalog catalog) {
+        Frame frame = current.get();
+        if (binding == null || frame == null || !NativePlayerCommit.validFrame(frame.pc)) {
+            return false;
+        }
+        Queue queue = NativePlayerCommit.nativeSourceScalarQueue(clientSession, binding, battleTimedStatus, proof, catalog);
+        if (queue == null) {
+            return false;
+        }
+        queue.vitalLock.lock();
+        try {
+            boolean bl = !queue.closed && binding.matchesFast(clientSession) && NativePlayerCommit.integer(clientSession, "playerHp") > 0 && booleanSupplier.getAsBoolean();
+            return bl;
+        }
+        finally {
+            queue.vitalLock.unlock();
+        }
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static Queue nativeSourceProc68Queue(ClientSession clientSession, Binding binding, BattleTimedStatus battleTimedStatus, NativeSourceEquipmentProcLife.Proof proof, NativeProcSkillCatalog.Catalog catalog, BattleAbilityStatus battleAbilityStatus) {
+        Queue queue = null;
+        synchronized (battleTimedStatus) {
+            if (NativeSourceProc68FirstQueue.current(binding, clientSession, battleTimedStatus, proof, catalog, battleAbilityStatus)) {
+                Object object = NativeSourceProcScalarSkills.state(battleTimedStatus);
+                queue = (Queue)CombatAccess.field(object, "sourcePlayerQueue");
+                if (queue == null || !queue.owner.equals(binding)) {
+                    if (queue != null) queue.drop(true);
+                    queue = new Queue(binding, proof.lifetime(), clientSession.nativePlayerActionLock());
+                    CombatAccess.set(object, "sourcePlayerQueue", queue);
+                }
+            }
+        }
+        return (Queue)NativeSourceProcScalarSkills.queueValue(queue, proof);
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static boolean nativeSourceProc68MutateOwned(ClientSession clientSession, Binding binding, BooleanSupplier booleanSupplier, BattleTimedStatus battleTimedStatus, NativeSourceEquipmentProcLife.Proof proof, NativeProcSkillCatalog.Catalog catalog, BattleAbilityStatus battleAbilityStatus) {
+        Frame frame = current.get();
+        if (binding == null || frame == null || !NativePlayerCommit.validFrame(frame.pc)) {
+            return false;
+        }
+        Queue queue = NativePlayerCommit.nativeSourceProc68Queue(clientSession, binding, battleTimedStatus, proof, catalog, battleAbilityStatus);
+        if (queue == null) {
+            return false;
+        }
+        queue.vitalLock.lock();
+        try {
+            boolean bl = !queue.closed && binding.matchesFast(clientSession) && NativePlayerCommit.integer(clientSession, "playerHp") > 0 && booleanSupplier.getAsBoolean();
+            return bl;
+        }
+        finally {
+            queue.vitalLock.unlock();
+        }
+    }
+
     static final class Queue {
         final Binding owner;
         final NativePlayerLifetime life;
@@ -1143,14 +1437,14 @@ final class NativePlayerCommit {
         /*
          * WARNING - Removed try catching itself - possible behaviour change.
          */
-        synchronized boolean offer(Event event) {
+        synchronized boolean nativeFreezeAcceptedOriginalOffer(Event event) {
             Object object = this.life.admission;
             synchronized (object) {
-                if (this.closed || this.retired || !this.life.admits() || this.events.size() >= TARGET || this.life.pending.get() >= GLOBAL) {
+                if (this.closed || this.retired || !this.life.admits() || this.events.size() >= TARGET || !NativeSourcePendingAdmission.reserve(this.life.nativeSourceDamagePending, GLOBAL)) {
                     rejected.incrementAndGet();
                     return false;
                 }
-                this.events.add(event);
+                NativeSourcePendingAdmission.add(this.events, event, this.life.nativeSourceDamagePending);
                 this.life.pending.incrementAndGet();
                 pending.incrementAndGet();
                 this.life.active.add(this);
@@ -1188,6 +1482,7 @@ final class NativePlayerCommit {
             if (event != null) {
                 pending.decrementAndGet();
                 this.life.pending.decrementAndGet();
+                NativeSourceDamageCapacity.release(this.life, 1L);
             }
             return event;
         }
@@ -1249,9 +1544,12 @@ final class NativePlayerCommit {
                 this.removeWait(this.waiting);
             }
             int n = this.events.size();
-            this.events.clear();
+            ArrayDeque<Event> arrayDeque = this.events;
+            NativeAcceptedFreezeMutation.clearEvents(arrayDeque);
+            arrayDeque.clear();
             pending.addAndGet(-n);
             this.life.pending.addAndGet(-n);
+            NativeSourceDamageCapacity.release(this.life, n);
             dropped.addAndGet(n);
             this.life.dropped.addAndGet(n);
             if (!this.running) {
@@ -1289,6 +1587,10 @@ final class NativePlayerCommit {
             this.owner = binding;
             this.life = nativePlayerLifetime;
         }
+
+        synchronized boolean offer(Event event) {
+            return NativeAcceptedFreezeMutation.offer(this, event);
+        }
     }
 
     static final class Frame {
@@ -1304,6 +1606,9 @@ final class NativePlayerCommit {
         final NativeEquipmentDefense.Resolved equipment;
         boolean defensePublished;
         boolean defenseActive;
+        volatile Object nativeSourceDollDefenseOutput;
+        volatile Object nativeSourceAcceptedPlayers;
+        volatile Object nativeSourceEquipmentOutputScope;
 
         Frame(ClientSession clientSession, ClientSession clientSession2, Queue queue, Event event, int n, int n2, int n3, boolean bl, boolean bl2, NativeEquipmentDefense.Resolved resolved) {
             this.pc = clientSession;
@@ -1318,10 +1623,166 @@ final class NativePlayerCommit {
             this.equipment = resolved;
         }
     }
+@AsRecord(components={"target","caster","damage","earth","suppress","terminal","joy","joyDamage","world","attackerObject","npc","plan","defense","feedbackPositive","equipment","attacker","npcFeedback","incoming","minimumHp","deadline","sourceDisplay"})
 
-    record Event(Binding target, Binding caster, int damage, boolean earth, boolean suppress, long terminal, BattleJoyOfPainStatus.Lease joy, int joyDamage, boolean world, long attackerObject, ClassicWorldMonsterPopulation.Snapshot npc, WorldPlan plan, List<DefenseVisual> defense, boolean feedbackPositive, List<NativeArmorProc.Rule> equipment, NativeCombatAttacker.Ref attacker, NativeCombatAttacker.Feedback npcFeedback, NativeAcceptedState.Incoming incoming, int minimumHp, long deadline) {Event {
-            defense = List.copyOf(defense);
-            equipment = List.copyOf(equipment);
+    static final class Event
+    {
+        private final Binding target;
+        private final Binding caster;
+        private final int damage;
+        private final boolean earth;
+        private final boolean suppress;
+        private final long terminal;
+        private final BattleJoyOfPainStatus.Lease joy;
+        private final int joyDamage;
+        private final boolean world;
+        private final long attackerObject;
+        private final ClassicWorldMonsterPopulation.Snapshot npc;
+        private final WorldPlan plan;
+        private final List<DefenseVisual> defense;
+        private final boolean feedbackPositive;
+        private final List<NativeArmorProc.Rule> equipment;
+        private final NativeCombatAttacker.Ref attacker;
+        private final NativeCombatAttacker.Feedback npcFeedback;
+        private final NativeAcceptedState.Incoming incoming;
+        private final int minimumHp;
+        private final long deadline;
+        private final NativeSourceDamageDisplay.Plan sourceDisplay;
+
+        Event(Binding binding, Binding binding2, int n, boolean bl, boolean bl2, long l, BattleJoyOfPainStatus.Lease lease, int n2, boolean bl3, long l2, ClassicWorldMonsterPopulation.Snapshot snapshot, WorldPlan worldPlan, List<DefenseVisual> list, boolean bl4, List<NativeArmorProc.Rule> list2, NativeCombatAttacker.Ref ref, NativeCombatAttacker.Feedback feedback, NativeAcceptedState.Incoming incoming, int n3, long l3) {
+            list = List.copyOf(list);
+            list2 = List.copyOf(list2);
+            this.target = binding;
+            this.caster = binding2;
+            this.damage = n;
+            this.earth = bl;
+            this.suppress = bl2;
+            this.terminal = l;
+            this.joy = lease;
+            this.joyDamage = n2;
+            this.world = bl3;
+            this.attackerObject = l2;
+            this.npc = snapshot;
+            this.plan = worldPlan;
+            this.defense = (List<DefenseVisual>)(List<?>)NativeSourceLightningHp.link(list, binding, binding2);
+            this.feedbackPositive = bl4;
+            this.equipment = list2;
+            this.attacker = ref;
+            this.npcFeedback = feedback;
+            this.incoming = incoming;
+            this.minimumHp = n3;
+            this.deadline = l3;
+            this.sourceDisplay = null;
+        }
+
+        public Binding target() {
+            return this.target;
+        }
+
+        public Binding caster() {
+            return this.caster;
+        }
+
+        public int damage() {
+            return this.damage;
+        }
+
+        public boolean earth() {
+            return this.earth;
+        }
+
+        public boolean suppress() {
+            return this.suppress;
+        }
+
+        public long terminal() {
+            return this.terminal;
+        }
+
+        public BattleJoyOfPainStatus.Lease joy() {
+            return this.joy;
+        }
+
+        public int joyDamage() {
+            return this.joyDamage;
+        }
+
+        public boolean world() {
+            return this.world;
+        }
+
+        public long attackerObject() {
+            return this.attackerObject;
+        }
+
+        public ClassicWorldMonsterPopulation.Snapshot npc() {
+            return this.npc;
+        }
+
+        public WorldPlan plan() {
+            return this.plan;
+        }
+
+        public List<DefenseVisual> defense() {
+            return this.defense;
+        }
+
+        public boolean feedbackPositive() {
+            return this.feedbackPositive;
+        }
+
+        public List<NativeArmorProc.Rule> equipment() {
+            return this.equipment;
+        }
+
+        public NativeCombatAttacker.Ref attacker() {
+            return this.attacker;
+        }
+
+        public NativeCombatAttacker.Feedback npcFeedback() {
+            return this.npcFeedback;
+        }
+
+        public NativeAcceptedState.Incoming incoming() {
+            return this.incoming;
+        }
+
+        public int minimumHp() {
+            return this.minimumHp;
+        }
+
+        public long deadline() {
+            return this.deadline;
+        }
+
+        Event(Binding binding, Binding binding2, int n, boolean bl, boolean bl2, long l, BattleJoyOfPainStatus.Lease lease, int n2, boolean bl3, long l2, ClassicWorldMonsterPopulation.Snapshot snapshot, WorldPlan worldPlan, List list, boolean bl4, List list2, NativeCombatAttacker.Ref ref, NativeCombatAttacker.Feedback feedback, NativeAcceptedState.Incoming incoming, int n3, long l3, NativeSourceDamageDisplay.Plan plan) {
+            list = List.copyOf(list);
+            list2 = List.copyOf(list2);
+            this.target = binding;
+            this.caster = binding2;
+            this.damage = n;
+            this.earth = bl;
+            this.suppress = bl2;
+            this.terminal = l;
+            this.joy = lease;
+            this.joyDamage = n2;
+            this.world = bl3;
+            this.attackerObject = l2;
+            this.npc = snapshot;
+            this.plan = worldPlan;
+            this.defense = (List<DefenseVisual>)(List<?>)NativeSourceLightningHp.link(list, binding, binding2);
+            this.feedbackPositive = bl4;
+            this.equipment = list2;
+            this.attacker = ref;
+            this.npcFeedback = feedback;
+            this.incoming = incoming;
+            this.minimumHp = n3;
+            this.deadline = l3;
+            this.sourceDisplay = plan;
+        }
+
+        public NativeSourceDamageDisplay.Plan sourceDisplay() {
+            return this.sourceDisplay;
         }
     }
 
@@ -1363,6 +1824,7 @@ final class NativePlayerCommit {
         final List<NativeArmorProc.Rule> equipment = new ArrayList<NativeArmorProc.Rule>();
         boolean rawNonpositive;
         boolean feedbackPositive = true;
+        NativeSourceDamageDisplay.Plan sourceDisplay;
 
         CalcTicket(Binding binding, Binding binding2, NativeCombatAttacker.Ref ref, CalcTicket calcTicket) {
             this.target = binding;
@@ -1371,7 +1833,48 @@ final class NativePlayerCommit {
             this.previous = calcTicket;
         }
     }
+@AsRecord(components={"doll","power","gfx","target","reason"}, finalFields={"nativeSourceDollDefenseProof"})
 
-    record DefenseVisual(NativeMagicDoll doll, int power, int gfx, long target, String reason) {
+    static final class DefenseVisual
+    {
+        private final NativeMagicDoll doll;
+        private final int power;
+        private final int gfx;
+        private final long target;
+        private final String reason;
+        Object nativeSourceDollDefenseProof;
+
+        DefenseVisual(NativeMagicDoll nativeMagicDoll, int n, int n2, long l, String string) {
+            this.doll = nativeMagicDoll;
+            this.power = n;
+            this.gfx = n2;
+            this.target = l;
+            this.reason = string;
+        }
+
+        public NativeMagicDoll doll() {
+            return this.doll;
+        }
+
+        public int power() {
+            return this.power;
+        }
+
+        public int gfx() {
+            return this.gfx;
+        }
+
+        public long target() {
+            return this.target;
+        }
+
+        public String reason() {
+            return this.reason;
+        }
+
+        DefenseVisual(NativeMagicDoll nativeMagicDoll, int n, int n2, long l, String string, ClientSession clientSession) {
+            this(nativeMagicDoll, n, n2, l, string);
+            this.nativeSourceDollDefenseProof = NativeSourceDollDefense.proof(this, clientSession);
+        }
     }
 }

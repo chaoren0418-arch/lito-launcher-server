@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import local.lito381.server.NativeSourceEquipmentColumns;
 
 final class NativeDeItemDefinitionsSql {
     static final Set<String> QUERIES = Set.of("SELECT * FROM `\u88dd\u5099_weapon_\u5c6c\u6027` ORDER BY `id`", "SELECT * FROM `\u88dd\u5099_weapon_bless_\u985e\u578b`", "SELECT * FROM `\u88dd\u5099_armor_bless_\u985e\u578b`", "SELECT * FROM `\u88dd\u5099_weapon_enchant_\u985e\u578b`", "SELECT * FROM `\u88dd\u5099_armor_enchant_\u985e\u578b`", "SELECT * FROM `\u88dd\u5099_weapon_enchant_\u6307\u5b9a`", "SELECT * FROM `\u88dd\u5099_armor_enchant_\u6307\u5b9a`", "SELECT * FROM `\u88dd\u5099_weapon_greater_\u985e\u578b`", "SELECT * FROM `\u88dd\u5099_armor_greater_\u985e\u578b`", "SELECT * FROM `\u88dd\u5099_weapon_bless_\u6307\u5b9a`", "SELECT * FROM `\u88dd\u5099_armor_bless_\u6307\u5b9a`", "SELECT * FROM `\u88dd\u5099_\u7279\u6b8a_\u9b54\u77f3_\u9b54\u6cd5` ORDER BY `item_id`, `tier`", "SELECT * FROM `\u88dd\u5099_\u7279\u6b8a_\u5361\u7247_\u80fd\u529b`", "SELECT * FROM `\u88dd\u5099_weapon_\u9b54\u6cd5` ORDER BY `weapon_id`, `id`", "SELECT * FROM `\u88dd\u5099_armor_\u9b54\u6cd5` ORDER BY `item_id`, `enchant_level`, `proc_group`, `id`");
@@ -97,48 +98,50 @@ final class NativeDeItemDefinitionsSql {
         for (Lease object2 : this.leases) {
             for (StatementLease statementLease : object2.statementsOwned) {
                 for (ResultLease resultLease : statementLease.results) {
-                    if (resultLease.closed) continue;
+                    if (!(resultLease.closed)) {
                     ++this.lifecycleFailures;
                     try {
                         resultLease.close();
                     }
                     catch (Throwable throwable) {
-                        SQLException sQLException2;
-                        sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException2 = (SQLException)throwable) : new SQLException("owned leaked-resource cleanup failed", throwable));
+                        sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException2 ? sQLException2 : new SQLException("owned leaked-resource cleanup failed", throwable));
                     }
-                }
-                if (statementLease.closed) continue;
+
+                    }
+}
+                if (!(statementLease.closed)) {
                 ++this.lifecycleFailures;
                 try {
                     statementLease.close();
                 }
                 catch (Throwable throwable) {
-                    SQLException sQLException3;
-                    sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException3 = (SQLException)throwable) : new SQLException("owned leaked-resource cleanup failed", throwable));
+                    sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException3 ? sQLException3 : new SQLException("owned leaked-resource cleanup failed", throwable));
                 }
-            }
-            if (object2.closed) continue;
+
+                }
+}
+            if (!(object2.closed)) {
             ++this.lifecycleFailures;
             object2.closed = true;
-        }
+
+            }
+}
         this.active = false;
         try {
             this.raw.rollback();
             ++this.rolledBack;
         }
         catch (Throwable throwable) {
-            SQLException sQLException4;
             ++this.lifecycleFailures;
-            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException4 = (SQLException)throwable) : new SQLException("owned transaction cleanup failed", throwable));
+            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException4 ? sQLException4 : new SQLException("owned transaction cleanup failed", throwable));
         }
         try {
             this.raw.close();
             ++this.physicalClosed;
         }
         catch (Throwable throwable) {
-            SQLException sQLException5;
             ++this.lifecycleFailures;
-            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException5 = (SQLException)throwable) : new SQLException("owned transaction cleanup failed", throwable));
+            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException5 ? sQLException5 : new SQLException("owned transaction cleanup failed", throwable));
         }
         if (sQLException != null) {
             throw sQLException;
@@ -166,7 +169,6 @@ final class NativeDeItemDefinitionsSql {
         }
 
         Object call(Object object, Method method, Object[] objectArray) throws Throwable {
-            Object object2;
             if (method.getDeclaringClass() == Object.class) {
                 return NativeDeItemDefinitionsSql.objectMethod(object, method, objectArray);
             }
@@ -184,19 +186,19 @@ final class NativeDeItemDefinitionsSql {
             if (string.equals("isWrapperFor")) {
                 return false;
             }
-            if (string.equals("prepareStatement") && objectArray.length == 1 && (object2 = objectArray[0]) instanceof String) {
-                String string2 = (String)object2;
+            if (string.equals("prepareStatement") && objectArray.length == 1 && objectArray[0] instanceof String string2) {
+                PreparedStatement statement;
                 if (!NativeDeItemDefinitionsSql.this.allowedQueries.contains(string2)) {
                     throw NativeDeItemDefinitionsSql.this.forbidden("non-whitelisted query");
                 }
                 try {
-                    object2 = NativeDeItemDefinitionsSql.this.raw.prepareStatement(string2);
+                    statement = NativeSourceEquipmentColumns.prepare(NativeDeItemDefinitionsSql.this.raw, string2);
                 }
                 catch (SQLException sQLException) {
                     ++NativeDeItemDefinitionsSql.this.lifecycleFailures;
                     throw sQLException;
                 }
-                StatementLease statementLease = new StatementLease(this, string2, (PreparedStatement)object2);
+                StatementLease statementLease = new StatementLease(this, string2, statement);
                 this.statementsOwned.add(statementLease);
                 ++NativeDeItemDefinitionsSql.this.statements;
                 return statementLease.proxy;
