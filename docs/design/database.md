@@ -607,6 +607,6 @@ LiTo 的 `S/NativeDeItemTable.java` 與 1-伺服器 `ItemTable.java` 是同一�
 
 ### 已驗證／推測／待驗證
 
-- **已驗證**：本機 `mvn -o -DskipTests test-compile` 編譯通過；盤點表的行號逐一讀過。單元測試 `SourceObjectIdsTest`（兩來源同 objid 同房 DEATHMATCH、勝負各自、結算身分各自）由 CI 執行，結果見 `docs/reports/issue-306.md`。
+- **已驗證**：本機 `mvn -o -DskipTests test-compile` 編譯通過；盤點表的行號逐一讀過。單元測試 `SourceObjectIdsTest`（兩來源同 objid 同房 DEATHMATCH、勝負各自、結算身分各自）CI 6 個全過（PR #322，Failures 0、Errors 0，詳見 `docs/reports/issue-306.md`）。
 - **推測**：所有送給客戶端的玩家 objectId 都經過 `playerObjectId()`（grep `Protocol.*(…).objectId()` 未找到直接用角色原 objid 的封包）。
 - **待驗證**：真機兩個來源同 objid 角色同房對戰的畫面與結算；正式 JAR（0.6.71）尚未包含本修改。

@@ -26,7 +26,10 @@
 
 ## CI 結果
 
-（push 後補）
+PR #322，CI run 42925233689（合併 main `d931ca00` 後的 commit）：5 個檢查全部 pass。
+- `Server tests`（`mvn -B test`，MySQL／本機檔案測試照例 skip）：各測試類別加總 931 個類別、5197 run、**Failures 0、Errors 0**、Skipped 94。
+- `SourceObjectIdsTest`：Tests run 6, Failures 0, Errors 0, Skipped 0（整合測試沒被 skip）。
+- `Server (Java 17 / Maven)`、`Launcher`、`Build-Package.ps1 zip`、`Semantic gap` 皆 pass。
 
 ## 已驗證／推測／待驗證
 
