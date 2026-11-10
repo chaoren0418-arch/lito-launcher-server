@@ -59,3 +59,4 @@
 - 2026-11-06 — #283 T013: CHECKLIST 改成實驗環境版（正式 0.6.71＋P24 實驗 schema）（code，codex-local，PR 已合併）→ [報告](reports/issue-283.md)
 - 2026-11-07 — #282 重做計畫：以正式 0.6.71 現狀能用為基準，重建 JAR 與整顆同源化移到 Backlog（plan，claude-chat，PR #274 已合併）→ [報告](reports/issue-282.md)
 - 2026-11-07 — #284 T014: 正式 0.6.71 JAR 的實驗設定與啟動到大廳（P24 實驗 schema）（resource，codex-local，PR #287 已合併）→ [報告](reports/issue-284.md)
+- 2026-11-10 — #288 T070: M2 客戶缺口盤點（第一版：合約要求與候選已修項）（code，claude-local，PR #289 已合併）→ [報告](reports/issue-288.md)
