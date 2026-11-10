@@ -18,6 +18,8 @@ final class NativeSkillTargetMetadata {
  }
  static Row row(int skill){var result=rows.get(skill);if(result==null)throw new IllegalStateException("skill target metadata not loaded");return result;}
  static int size(){return rows.size();}
+ /** 測試專用（Issue #305）：以 380_db.skills 擷取列取代快照，回傳先前內容供還原。 */
+ static Map<Integer,Row> replaceForTesting(Map<Integer,Row> next){var prior=rows;rows=Map.copyOf(next);return prior;}
  static int windValue(int original,String field){var row=rows.get(167);if(row==null)return original;return switch(field){case "area"->row.area();case "targetTo"->row.targetTo();case "maximumRange"->row.ranged();case "attribute"->row.attribute();case "type"->row.type();case "nativeId"->row.nativeId();default->throw new IllegalArgumentException("unreviewed target field");};}
  private NativeSkillTargetMetadata(){}
 }
