@@ -175,7 +175,7 @@ CI 指令：`mvn -B test`（`.github/workflows/build.yml` 的 Server tests job�
 - 已修或預期已修：7 類 14 項，另加我自己改寫的 2 項。
 - 候選缺陷待裁定：6 項。
 - 待分析：約 33 項，含 WaterDragon／PcActionReward 中非拆檔的部分。
-- 第 3 輪 CI（commit `562bdb9f`）結果見「CI 結果」。
+- 第 3 輪 CI 已確認：49 → 37 項（28 F＋9 E）。剩下：DeathPenalty 16、GameHubChannel 6（含缺陷 1 的 1 項）、缺陷 1 其他 3 項、缺陷 2 1 項、RentalTown／Teleport timeout 3、Ckew 1、Rescue 1、原始碼稽核 6（WaterDragon 1、PcActionReward 1、HonorRespawn 1、MatchEndEconomy 1、GroupHealing 2）。
 
 ## 推測
 
@@ -195,7 +195,7 @@ CI 指令：`mvn -B test`（`.github/workflows/build.yml` 的 Server tests job�
 |---|---|---|---|
 | 42876069149 | `0e957635` | 取消（卡住超過 24 分鐘） | 主分支同一個 job 約 8.5 分鐘；跑到第 1,005／1,271 個測試類別時死鎖 |
 | 42882305652 | `28247dd8` | **失敗**：6048 run，38 F，11 E，117 skipped | 含暫時診斷；thread dump 定位死鎖 |
-| （第 3 輪） | `562bdb9f` | 執行中，結果見 PR #315 | 本輪的逐案修正 |
+| 42885291818／42885667308 | `562bdb9f`／`14e958bb` | **失敗**：6048 run，**28 F，9 E**，117 skipped，7:36（不再卡住） | 本輪修正的 7 類全部通過；PcActionReward 由 3 項降為 1 項。剩下 15 類 37 項：候選缺陷 6 項，其餘待分析 |
 
 其他 job：`Server (Java 17 / Maven)`、`Launcher`、`Build-Package.ps1 zip`、`Semantic gap (non-blocking)` 兩輪都是 pass。
 
