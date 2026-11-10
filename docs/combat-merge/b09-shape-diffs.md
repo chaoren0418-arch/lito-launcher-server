@@ -3559,3 +3559,23 @@ Java 原始碼要在不宣告 throws 的方法中呼叫 `throws Exception` 的�
 | 方法 | 類別 | 差異 | 驗收 |
 |---|---|---|---|
 | `ClientSession#sourceApplicationRun()V` | `local/lito381/server/ClientSession` | `SourceLogin.allowed` 拋出 checked 例外時多 1 次已核准的 `rethrowUnchecked` 呼叫（原例外原樣拋出）；其餘呼叫與欄位多重集合相同 | M2 離線回歸 |
+
+## M2 回歸：monster tick／companion tick 取鎖順序（#138 主控裁定第 3 點）
+
+兩把鎖：`GameHub` 物件 monitor（下稱 hub）與 `ClassicWorldMonsterPopulation` 物件 monitor（下稱 population；`classicWorldMonsters`、Ckew／水龍副本各自一個）。行號為 B-land 後 `src/main`。
+
+| 路徑 | 執行緒 | 取鎖順序 | 呼叫鏈 |
+|---|---|---|---|
+| monster tick | `lito381-battle-clock`（`GameHub.java:1494` 排程 `classicWorldMonsterTickSafely`） | population → hub | `classicWorldMonsterTick`（不持 hub）→ `population.moveToward`（synchronized，`ClassicWorldMonsterPopulation.java:4345`）→ `ClassicWorldNpcPathfinder` 的 blocked lambda → `NativeStaticNpcMotion.occupies(map,x,y,population)`（`:240`）→ `occupies(hub,…)`（`:75`）→ `NativeStaticCancellationReplacement.all/live` → `synchronized(hub)`（`NativeStaticCancellationReplacement.java:6`）。`moveAway`、`idleMove`、`itemAction`、`returnGuardHome`、`nearTeleport`、`respawn`／`spawnQuestMonsterAt`（經 `place`／`commitIfAvailable`）同樣在 population 內呼叫 `NativeStaticNpcMotion.occupies` |
+| companion tick（static NPC motion） | `lito381-battle-clock`（`GameHub.java:1483` 排程 `companionTickSafely` → `NativeStaticNpcMotion.tickSafely`） | hub → population | `NativeStaticNpcMotion.tick` `synchronized(hub)`（`:171`）→ `synchronized(population)`（`:186`） |
+| 玩家近戰 C_ATTACK | client 執行緒（`ClientSession.run` 封包分派，`ClientSession.java:1764`） | hub → population | `attack` → `nativeSourceControlledOriginal_attack` → `attackClassicWorld` → `CombatWorldCommit.prepare`：`synchronized(hub)`（`CombatWorldCommit.java:19`）→ `synchronized(a.population())`（`:21`）；`:31`、`:40` 同順序 |
+| 玩家魔法攻擊 | client 執行緒（`ClientSession.java:81832` `CombatWorldMagic.prepare`） | hub → population | `CombatWorldMagic.java:20/24/30`：`synchronized(hub)` → `synchronized(a.population())` |
+| 馴服捕捉 | client 執行緒（`ClientSession.java:64378` `NativeTamedCaptureLifecycle.capture` 等） | hub → population | `NativeTamedCaptureLifecycle.java:15-16/41/52-53/64` |
+| 斷線清理 | client 執行緒（`ClientSession.run()` finally → `GameHub.disconnect`） | hub → population | `nativeSummonOriginalDisconnect`（synchronized，`GameHub.java:1832`）→ `clearClassicWorldTargetsForOwner`（`:2076`）→ `clearClassicWorldMonsterTargets` → `population.clearTargetsForPlayer`（synchronized） |
+
+battle clock 是 `newSingleThreadScheduledExecutor`（`GameHub.java:1467`），monster tick 與 companion tick 彼此串行，**兩者之間**不會死鎖。
+但 client 執行緒的 hub → population（攻擊、魔法、捕捉、斷線）與 battle clock monster tick 的 population → hub 方向相反：client 持 hub 等 population、battle clock 在 `moveToward` 內持 population 等 hub，即可形成死鎖（CI 第 1、2 輪 thread dump 的形狀相同，只是當時由測試執行緒扮演 monster tick）。
+
+對正式版：`CombatWorldCommit`、`CombatWorldMagic`、`ClassicWorldNpcPathfinder` 對 `base-0.6.71.jar` 為 SAME（client 的 hub → population 在 0.6.71 已存在）；`NativeStaticNpcMotion`、`NativeStaticCancellationReplacement` 與 `ClassicWorldMonsterPopulation.lambda$moveToward$32` 在 0.6.71 不存在（ONLY_LEFT）。也就是 population → hub 這個方向是候選 50635f7e 新增的，0.6.71 沒有這個反向。
+
+M2 回歸要驗：多名玩家在有 static NPC 的地圖持續近戰／施法打怪，同時怪物在追擊移動（`moveToward`），長時間（建議 ≥30 分鐘）不得卡住；卡住時取 `jstack`，確認是否為上述兩條鏈。已列 needs:claude 請主控裁定是否在 M2 之前修正（例如 population 內改用不取 hub 的 static NPC 佔位快照）。

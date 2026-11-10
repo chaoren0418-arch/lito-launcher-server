@@ -8,42 +8,13 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 final class PcActionRewardSqlFirstSourceAuditTest {
-    @Test
-    void helperCapabilityPrecedesWorldCompanionRoutingAndClaimIsSqlFirst()
-            throws Exception {
-        String session = LocalResources.readString(Path.of("src/main/java/local/lito381/server/ClientSession.java"),
-                StandardCharsets.UTF_8);
-        int shape = session.indexOf("handleShapeChangeAction(request, shapeChange)");
-        int reward = session.indexOf("handlePendingRewardAction(request)", shape);
-        int world = session.indexOf("if (phase == Phase.WORLD)", reward);
-        assertTrue(shape >= 0 && reward > shape && world > reward);
-        assertTrue(session.contains("definition.catalogId() == InventoryCatalog.PC_ACTION_HELPER"));
-        assertTrue(session.contains("selectedSourceAccounts().claimPendingReward("));
-        assertTrue(session.indexOf("claim.status() != RepositoryPendingRewardClaimStatus.SUCCESS")
-                < session.indexOf("inventory = afterInventory"));
-    }
-
-    @Test
-    void rewardRowAndDestinationShareOneLockedMutationDomain() throws Exception {
-        String repository = LocalResources.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
-                StandardCharsets.UTF_8)
-                // #138 B-land: LegacyMySqlRepository now lives in its own file.
-                + LocalResources.readString(Path.of(
-                        "src/main/java/local/lito381/server/LegacyMySqlRepository.java"),
-                        StandardCharsets.UTF_8);
-        int method = repository.indexOf("claimPendingReward(",
-                repository.indexOf("final class LegacyMySqlRepository"));
-        int lock = repository.indexOf("LOCK TABLES characters READ", method);
-        int inventory = repository.indexOf("character_items WRITE", lock);
-        int warehouse = repository.indexOf("character_warehouse WRITE", lock);
-        int pending = repository.indexOf("`server_紀錄_獎勵` WRITE", lock);
-        int exactUpdate = repository.indexOf("AND `強化值`=? AND `領取狀態`=0", pending);
-        assertTrue(method >= 0 && lock > method && inventory > lock
-                && warehouse > inventory && pending > warehouse && exactUpdate > pending);
-        assertTrue(repository.contains("compensatePendingRewardInventory"));
-        assertTrue(repository.contains("characterIdentityMatches"));
-    }
-
+    // #138 B-land (主控裁定第 4 點): two text audits were removed from this file.
+    //  - helperCapabilityPrecedesWorldCompanionRoutingAndClaimIsSqlFirst -> replaced by the
+    //    behavior tests in PcActionRewardBehaviorTest (helper opens pc_action in WORLD; inventory
+    //    is published only after a SUCCESS SQL claim; refusal keeps inventory and pending row).
+    //  - rewardRowAndDestinationShareOneLockedMutationDomain -> the SQL lock group / exact-row
+    //    update is exercised by LitoMySqlCastleIntegrationTest (read-only refusal, SUCCESS,
+    //    NOT_FOUND replay and personal-warehouse fallback against a real MySQL route).
     @Test
     void newLitoCharactersReceiveOnlyTheNativeHelperTemplate() throws Exception {
         String repository = LocalResources.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),

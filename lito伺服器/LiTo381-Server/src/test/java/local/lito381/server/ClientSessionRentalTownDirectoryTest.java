@@ -311,6 +311,18 @@ final class ClientSessionRentalTownDirectoryTest {
 
             List<Long> rentalObjectIds = rentalInventory.items().stream()
                     .map(RuntimeInventory.Item::objectId).toList();
+            // #138 B-land: in 0.6.71 and candidate 50635f7e exitRoomBeforePolyMe tests
+            // phase == BATTLE first (T029 method, SAME_EFFECTS vs 0.6.71), so C_D0 inside the
+            // BATTLE-phase rental-town scene is an ordinary battle withdrawal. With no GameHub
+            // room behind the synthetic town room id nothing is sent and the scene stays.
+            invoke(session, "exitRoom", new Class<?>[0]);
+            assertThrows(SocketTimeoutException.class,
+                    () -> receive(client, receiver));
+            assertEquals("BATTLE", field(session, "phase").toString());
+            assertTrue((boolean) field(session, "rentalTownRoomState"));
+            assertEquals(0x5000_0001L, field(session, "currentRoomId"));
+            // The rental-town directory-return branch runs once the scene is outside BATTLE.
+            setPhase(session, "ROOM");
             invoke(session, "exitRoom", new Class<?>[0]);
             for (long objectId : rentalObjectIds) {
                 assertArrayEquals(Protocol.removeInventory(objectId),
@@ -703,6 +715,16 @@ final class ClientSessionRentalTownDirectoryTest {
             assertArrayEquals(action, receive(firstClient, firstReceiver));
             assertArrayEquals(action, receive(secondClient, secondReceiver));
 
+            // #138 B-land: 0.6.71 / candidate 50635f7e treat C_D0 inside the BATTLE-phase
+            // rental-town scene as an ordinary battle withdrawal (exitRoomBeforePolyMe tests
+            // BATTLE first). No GameHub room exists, so neither player sees a departure.
+            invoke(second, "exitRoom", new Class<?>[0]);
+            assertThrows(SocketTimeoutException.class,
+                    () -> receive(firstClient, firstReceiver));
+            assertEquals("BATTLE", field(second, "phase").toString());
+            assertTrue((boolean) field(second, "rentalTownRoomState"));
+            // Outside BATTLE the rental-town departure branch publishes removal to the peer.
+            setPhase(second, "ROOM");
             invoke(second, "exitRoom", new Class<?>[0]);
             assertArrayEquals(Protocol.removeObject(second.playerObjectId()),
                     receive(firstClient, firstReceiver));

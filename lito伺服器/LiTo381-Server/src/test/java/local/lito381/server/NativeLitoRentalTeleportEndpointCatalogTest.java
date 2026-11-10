@@ -109,6 +109,20 @@ final class NativeLitoRentalTeleportEndpointCatalogTest {
                     receive(client, receiver));
             assertTrue((boolean) field(session, "rentalTownTransferPending"));
 
+            // #138 B-land: 0.6.71 and candidate 50635f7e test phase == BATTLE first in
+            // quitFight() and treat C_D9 as an ordinary battle withdrawal
+            // (settleRequestedBattleExit). The old src/main-only "rental handoff before
+            // withdrawal" ordering is gone; the staged transfer stays pending and nothing
+            // is sent for this room-less fixture.
+            invoke(session, "quitFight", new Class<?>[0]);
+            assertThrows(SocketTimeoutException.class,
+                    () -> receive(client, receiver));
+            assertEquals("BATTLE", field(session, "phase").toString());
+            assertTrue((boolean) field(session, "rentalTownTransferPending"));
+            assertTrue((boolean) field(session, "rentalTownRoomState"));
+
+            // Outside BATTLE the configured-endpoint rental handoff branch runs.
+            setPhase(session, "ROOM");
             invoke(session, "quitFight", new Class<?>[0]);
             assertArrayEquals(new Protocol.Writer()
                             .c(Protocol.S_LITO_QUIT_FIGHT).c(0).bytes(),
