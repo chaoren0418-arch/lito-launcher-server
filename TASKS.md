@@ -1,130 +1,98 @@
 # TASKS — lito-launcher-server
 
 格式：`ID | 狀態 | 負責 | 範圍 | 驗收條件`。狀態：todo / doing / review / done / blocked。
-PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「盤點：已知範圍」。
+PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「盤點：已知範圍與不確定項」。
 
-## 規則（2026-11-06 範圍凍結，Issue #231）
+## 規則（2026-11-10，#290 重定方向；沿用 #231 的凍結規則）
+- **主線是伺服器功能開發**：角色、道具、戰鬥、技能、跨界（多來源）。行為參考 `D:\lineage開發\1-伺服器`（唯讀），協定以 `D:\lineage開發\0-客戶端` 為準（唯讀）。任務必須寫明參考的類別或檔案。
+- **開發基線是 `src/main`**（M2 完成後）。不再在 `tools/*/build.py` patch 鏈上做新功能。
 - **進度只算 `## M*` 區段**；`## Backlog` 只顯示數量，不算進度。
 - 每個里程碑的「**完成定義**」一經寫定即凍結。要修改，須另開 Issue 說明理由並標 `needs:user`。
 - **主線封頂**：最近一個未完成的里程碑，其剩餘任務一次列完，標題註明「主線 N 項，封頂」。之後新發現的工作一律進 Backlog；要升格為主線，必須同時刪掉一項主線，或經使用者同意。**唯一的例外**是 `PLAN.md` 已列的不確定項兌現：可以直接增加主線，但 PR 必須引用當初的估計。
-- 比較器（semantic-diff）的工具缺口：先併進**尚未開工**的工具任務；若唯一的工具任務已在執行中，才另開一張，並視為 M0 不確定項 U0-1 的兌現。
+- 本機任務預設 `runner: claude-local`；本專案同時最多 1 個本機任務，TW BIN 優先。需要 P24Lab 或實機的任務等 Codex 恢復（2026-11-13 18:11 之後）。
+- 不碰正式 2000／3306；不改 `0-客戶端`、正式 `LiTo.bin`、shared BIN、TW／LHZ 資源。
 
 ---
 
-## M0 從原始碼建出正式版，並啟動到大廳（主線 12 項，封頂；已完成 7、剩餘 5）
+## M1 能力盤點（主線 5 項，封頂；已完成 1）
 
-**完成定義（凍結）**：使用者打開 Issue #225，會看到：
-1. 一行指令 `mvn -f lito伺服器/LiTo381-Server/pom.xml -B test` 的輸出，結果為 `Failures: 0, Errors: 0`。
-2. `src/main` 用 `mvn package` 建出 `LiTo381-Server.jar`，與正式 `reference/base-0.6.71.jar` 做語意比對，摘要分成：
-   - **A 範圍** 692 個 entry：**DIFF=0**（核准的偏離另行列出）；
-   - **整顆 JAR**：差異只能落在下面兩類，**其他差異必須為 0**：
-     - (i) **B 範圍中與正式版不同的 entry**：約 205 個，即 DIFF 203＋ONLY_RIGHT 2（設計 §7-1；不同於 M2 第 1 點所說候選的全部 B entry 1,384 個）。這些類別在 M2 會改成候選 `50635f7e…` 的內容，**不會**變回正式版；
-     - (ii) **`src/main` 專有的 ONLY_LEFT**：約 1,380 個（`Modern*` 等，T007 刻意排除）。
-   - 因此 M0 的 JAR **不是**整顆等價於正式版。
-3. 三張截圖，都是用上述 JAR 在**實驗環境**中拍的：伺服器主控台啟動完成、登入器連線、遊戲**大廳**。實驗環境指 P24Lab，或由 `environments/` 快照建立的隔離 DB，不碰正式 MySQL 3306 與正式設定。
-4. 一份使用者可以自己重跑的指令清單。
+**完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，會看到：
+1. 角色、道具、戰鬥、技能、跨界（多來源）五個領域，每一列寫：`1-伺服器` 怎麼做（類別或檔案＋行號）／LiTo 現況（正式 0.6.71、候選或未實作）／客戶端需要的協定／差距／對應的 M3 任務；
+2. 另有三個**獨立區塊**（使用者 2026-11-10 指出的最大缺口）：
+   - **玩法設計**：LiTo 跨界戰鬥模式的規則、房間與對戰流程、勝負與結算規則的現況與缺口；
+   - **核心計算**：傷害、命中、技能效果、HP／MP、經驗或積分等公式，逐項寫出來源（`1-伺服器` 類別、客戶端 BIN 分析位址，或「未找到」）；
+   - **資料庫**：多來源 schema（角色、道具、技能的讀取，`character_lito` 的回存），列出缺少的表與欄位；
+3. 每列的證據都可以點開；沒查到的寫「未找到（查過哪裡）」，不推測；
+4. M3 主線清單與排序，以及移到 Backlog 的項目與理由。
 
-| # | ID | Issue | 內容 | 狀態（2026-11-05 21:35 UTC 查詢） |
-|---|---|---|---|---|
-| 1 | T020-A01 | #72 | src/main 對齊正式（nativede，49 類）暫存 | **done**（closed） |
-| 2 | T020-A02 | #73 | 同上（nativede，49 類） | queued；`cancelNpcChatTimer` 改名，等 #235 |
-| 3 | T020-A03 | #74 | 同上（nativede，47 類） | **done**（closed） |
-| 4 | T020-A04 | #75 | 同上（battle-combat，25 類） | **done**（closed） |
-| 5 | T020-A05 | #76 | 同上（other，27 類） | **done**（closed） |
-| 6 | T020-A06 | #77 | 同上（other，27 類） | **done**（closed） |
-| 7 | T020i-8 | #203 | 比較器：依呼叫點配對 lambda、CFG 比對、可見性 bridge | **done**（closed） |
-| 8 | T020i-9 | #216 | 比較器：單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner | **done**（closed） |
-| 9 | T020i-10 | #235 | 比較器：private 方法改名配對（不確定項 U0-1 兌現第 1 張） | doing |
-| 10 | T020-A-land | #78 | A 暫存併入 src/main，補 7 項單元測試，`mvn test` 綠燈，A 範圍語意 DIFF=0 | todo（等 2、9） |
-| 11 | T020c-2 | #83 | 實驗 DB：從 P24Lab 或 `environments/` 快照建立隔離的實驗 schema／實例與實驗設定（dot） | blocked（needs:user：處理誤匯出的正式副本，預設 C 凍結並改走 P24；事故稽核另由 #247 執行） |
-| 12 | T050 | #225 | 用實驗環境啟動到大廳並截圖（dot） | todo（等 10、11） |
+| # | ID | Issue | 內容 | 負責 | 狀態 |
+|---|---|---|---|---|---|
+| 0 | T070 | #288 | 客戶缺口第一版 `docs/reports/customer-gaps.md`（28 項；作為盤點來源） | claude-local | **done** |
+| 1 | T090 | #291 | 盤點 `1-伺服器` 的角色／道具／戰鬥／技能／多來源實作（唯讀），寫 `docs/reference/server1-inventory.md` | claude-local | **done** |
+| 2 | T091 | #292 | LiTo 現況能力矩陣，寫 `docs/reports/lito-capability-current.md`（併入 #288 的 `customer-gaps.md`） | claude-local | todo |
+| 3 | T092 | #293 | 客戶端協定與資源需求（`lito脫殼資源/`＋`0-客戶端`，唯讀），寫 `docs/reference/client-protocol-needs.md` | claude-local | todo |
+| 4 | T093 | #294 | 合併成差距矩陣，拆 M3 任務並封頂 | Claude（主控） | todo（等 1–3） |
 
-<details><summary>M0 之前已完成的早期項目（計入歷史，不計入上表）</summary>
-
-- T001 done：CI（Maven compile＋登入器 dotnet build）。
-- T002 done（第一階段）：`src/main` 補齊缺漏類別、pom 改 0.6.71、加上 Main-Class。A 範圍對齊正式版由上表第 10 項完成。B 範圍的類別在 M2 改成候選內容，`src/main` 專有類別（T007）照舊保留；最終 JAR 依設計 §6-2，是「B 類別＝候選，其他＝正式」，並非整顆等於正式版。
-- T003 done（Issue #4，PR #8）：`Build.ps1` 去掉硬編路徑。
-- T004 done（Issue #5）：版本號與文件統一為 0.6.71。
-- T005 done（Issue #3；經 #12/#15、#20/#22 達成）：DB 依賴測試加守門，Server tests 改為阻斷式。
-- T006 done：真實 `server.properties` 不進 git。
-- T007 done（Issue #2，PR #7）：CI 比對類別清單（`docs/server-source-gap.md`）。
-- T008 done（否定結果，Issue #6）：evidence.zip 內找不到 266 個 DECOMPILED 類別的原始碼。
-- T009 done（Issue #12，PR #15）：本機資源依賴測試加守門。
-- T012 done（Issue #37，PR #39）：修正不穩定的測試。
-- 比較器與轉換器：#102、#108、#132、#134、#135、#153、#166、#174、#176、#186 皆 done。
-</details>
-
-## M1 正式版實機回歸（實驗環境；M0 完成後封頂）
-
-**完成定義（凍結）**：使用者打開 `docs/acceptance/0.6.71.md`，會看到：用 M0 建出的伺服器，在**實驗環境**（同 M0 定義）完成「登入 → 大廳 → 進房 → 一場戰鬥 → 結算 → 正常退出」，每一步都有截圖；結算後實驗庫的 `character_lito` 勝敗筆數有變化，附 `SELECT` 前後對照。
-
-| ID | 內容 | 狀態 |
-|---|---|---|
-| T010 | 實機核對表 `docs/acceptance/CHECKLIST.md` | done（需依 T013 改寫） |
-| T013 | 把 CHECKLIST 改成實驗環境版：不用 `config/server.properties` 與正式 DB；補上登入器已知未驗的 GM 魔杖滑鼠點選、`ddraw.dll`／`litoddraw.dll` 入口名稱 | todo |
-| T011 | 依 CHECKLIST 在實驗環境跑一次，寫 `docs/acceptance/0.6.71.md`（dot 執行，使用者觀看驗收） | blocked（等 M0、T013） |
-
-## M2 戰鬥技能同源化（M1 完成後封頂）
+## M2 原始碼開發基線（M1 完成後封頂；已完成 15）
 
 **完成定義（凍結）**：使用者會看到：
-1. B-land 之後，`mvn package` 產物對候選 `50635f7e…` 的語意比對摘要：B 範圍（候選的**全部** B entry）1,384 個、**DIFF=0**（核准的偏離另列）。
-2. `tools/combat-continuation` 既有的 2,400 案、5,164 組合、curse-clock 24 案，在 Maven 產物上重跑的對照表，全部一致。
-3. 在實驗環境用新建置打一場戰鬥，技能 29、152、153 各施放一次並截圖。這三個技能有 `50635f7e…` 同 SHA 的專項收據（`docs/maintenance/source-negative-final-frame.zh-TW.md`）。
+1. `src/main` 已併入候選 `50635f7e…` 的戰鬥內容（B-land），`mvn -f lito伺服器/LiTo381-Server/pom.xml -B test` 為 `Failures: 0, Errors: 0`；
+2. `mvn package` 產物對候選的語意比對摘要：B 範圍除了 `docs/combat-merge/b09-shape-diffs.md` 逐條列出的形狀差異外，DIFF=0；
+3. 離線戰鬥回歸（`tools/combat-continuation`）在 Maven 產物上的執行結果；跑不起來時寫明原因（PLAN U2-2）。
 
-已知主線（M2 封頂時從 Backlog 升格）：B01–B09（#62–#70）、B-land（#138）、T020-close（#139）、T020c-3（#84）、#31 收尾。
+| ID | Issue | 內容 | 狀態 |
+|---|---|---|---|
+| T020-A01～A06 | #72–#77 | `src/main` A 範圍對齊正式 0.6.71（暫存） | **done** |
+| 比較器 | #203、#216、#235、#254、#259 | semantic-diff 擴充（lambda 配對、CFG、metadata、private 改名、載入後丟棄、stack 正規化） | **done** |
+| T020-A-land | #78 | A 暫存併入 `src/main`；A 範圍 692 entries 語意 DIFF=0、`mvn test` 綠燈 | **done** |
+| T020-B01～B08 | #62–#69 | 候選 `50635f7e…` 戰鬥內容暫存（B 範圍 8 批） | **done** |
+| T020-B09 | #70 | existing-core 3 類收尾（依使用者選 C：缺呼叫等改 Java，形狀差異逐條列表） | todo（等 #293） |
+| T020-B-land | #138 | B 暫存併入 `src/main`，`mvn test` 綠燈 | todo（等 #70） |
+| T051 | #281 | `LegacyMySqlRepository` 的 shared-database 接線；B-land 若已帶入候選版本則驗證後關閉 | todo（等 #138） |
 
-## M3 交付（M2 完成後封頂）
+## M3 功能開發（M1 的 T093 完成後封頂）
+
+**完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，M3 主線的每一列都標為「已實作＋單元測試＋離線回歸通過」，並附 PR 連結；`mvn test` 仍為綠燈。
+
+任務由 T093 開出（PLAN U3-1 估 8–15 張）。一定包含：
+- **玩法設計文件**：LiTo 跨界戰鬥模式的規則、房間與對戰流程、勝負與結算規則（先寫設計，再實作）；
+- **核心計算**：依 M1 的公式來源逐項實作與測試；
+- **資料庫**：補齊 M1 列出的缺少表與欄位（只在 LiTo 自己的庫與實驗 schema；來源角色庫維持唯讀，只回存 `character_lito`）；
+- `customer-gaps.md` 的 G03–G08（技能目標／範圍與 Source 不一致）。
+
+## M4 實機驗收與交付（Codex 恢復後；M3 完成後封頂；已完成 4）
 
 **完成定義（凍結）**：使用者會看到：
-1. 一個 `release/package-0.6.x.zip` 檔案。
-2. 依 `docs/INSTALL.md` 在乾淨的 Windows 目錄安裝後，於實驗環境啟動到大廳的截圖。
+1. 用 M3 的新 JAR 在實驗環境跑完 `docs/acceptance/CHECKLIST.md`（登入 → 大廳 → 進房 → 技能 → 戰鬥 → 結算 → 退出），每步截圖，寫在 `docs/acceptance/<版本>.md`；
+2. `release/package-0.6.x.zip`，依 `docs/INSTALL.md` 在乾淨目錄安裝並啟動到大廳的截圖；
 3. git tag `launcher-v0.6.x`／`server-v0.6.x`。
 
-| ID | 內容 | 狀態 |
-|---|---|---|
-| T040 | 安裝手冊＋打包腳本（Issue #32，PR #33） | done |
-| T060 | 打包改用 src/main 的 Maven 產物，並更新版本號 | todo |
-| T061 | 依 INSTALL 在乾淨目錄安裝並啟動到大廳（dot，實驗環境） | todo |
-| T062 | 打 tag 並建 release 收據 | todo |
+| ID | Issue | 內容 | 狀態 |
+|---|---|---|---|
+| T010／T013 | #283 | 實機核對表 `docs/acceptance/CHECKLIST.md`（實驗環境版） | **done** |
+| T040 | #32 | 安裝手冊＋打包腳本（PR #33） | **done** |
+| T020c-2 | #83 | P24Lab 實驗 schema 與受限帳號 | **done** |
+| 善後 | #247、#273 | 正式副本事故稽核、停止 3307 | **done** |
+| T014 | #284 | 實驗環境啟動（改用新 JAR；P24 資料不相容時改用 `environments/` 的 `380_db.sql` 快照，PLAN U4-1） | blocked（等 Codex、M3） |
+| T011 | #285 | 依 CHECKLIST 跑表並截圖 | blocked（等 #284） |
+| T060 | — | 打包新 JAR，更新版本號 | todo |
+| T061 | — | 依 INSTALL 在乾淨目錄安裝並啟動到大廳 | todo |
+| T062 | — | 打 tag 並建 release 收據 | todo |
+
+<details><summary>更早的已完成項目（計入歷史）</summary>
+
+- T001–T009、T012：CI、建置腳本、版本號、DB 測試守門、類別清單比對等早期項目。
+</details>
 
 ---
 
 ## Backlog（不算進度）
-
-### M2 已知項目（M1 完成後升格）
 | ID | Issue | 內容 | 狀態 |
 |---|---|---|---|
-| T020-B01 | #62 | new-asm 17 類 | review |
-| T020-B02 | #63 | new-java 51 類 | **done** |
-| T020-B03 | #64 | new-java 51 類 | queued（等 #69） |
-| T020-B04 | #65 | new-java 51 類 | **done** |
-| T020-B05 | #66 | new-java 48 類 | **done** |
-| T020-B06 | #67 | existing-battle 29 類 | **done** |
-| T020-B07 | #68 | existing-combat-material 23 類 | review |
-| T020-B08 | #69 | existing-native 30 類 | running |
-| T020-B09 | #70 | existing-core 3 類（含 T029 八方法） | queued |
-| T020-B-land | #138 | B 暫存併入 src/main | 等 B01–B09 |
-| T020-close | #139 | 總語意比對＋Maven 產物全套戰鬥回歸 | 等 #78、#138、#84 |
-| T020c-3 | #84 | 8d26c9d7 基準完整回歸 | 等 #83 |
-| T020c | #31 | 回歸工具參數化（review:pass，仍 open 待關閉） | 收尾 |
-
-設計：`docs/design/T020-combat-merge.md`（§6 B 階段、§7 A 階段）。
-
-### M4（未立）Source 全技能對齊——不在目前合約里程碑內
-`docs/maintenance/combat-closeout-current.zh-TW.md` 的 12 項收尾矩陣與下列開放缺口，屬於「技能行為與原版完全一致」的長期開發，範圍超出 M2「把已驗證的候選併進原始碼」。M3 交付後，與使用者／廠商確認範圍時再決定是否立案。
-- T021 技能目標／Ctrl 政策（807 列技能 × 正常／Ctrl，既有 3,814 案未驗證此政策）
-- T022 26／42 自施：Source26 不按 Ctrl 無法自施（需真實游標與送包證據）
-- T023 受控 NPC（PET／SUMMON）Source 語意：1,472 組目標失敗＋1,472 組正常順序
-- T024 HP 生產端：魔杖／反射／毒傷／裝備／魔石／武器 proc、魔法娃娃 proc、fatality、cube、ground pulse、AI
-- T025 58 列材料技能逐列（剩 27、36、41、44；靜態掃描剩 3 個舊呼叫）
-- T026 外控完整鏈：讀取器→消費端、動態鍵／別名、SQL 控制（252 列盤點，141 列待審）
-- T027 生命週期：receipt 保留／排空、成對鎖、退役／死亡復活／同 ID 替換、DRAINING／STOPPED／Main
-- T028 顯示與 NPC 語意：HPBAR／傷害數字／奇古獸、NPC 工廠／AI／hate、免疫時序
-- T029 正式功能隔離合成（大部分已由 B09 的 T029 八方法涵蓋）
-- T030 同 SHA 後端全回歸
-- T031 實機：游標／前景／多視窗／大廳集中驗收（使用者）
-- T032 中文 MySQL 真裝備角色唯讀重載（使用者延後）
-- 候選 `3ccbb…`（76／167 主目標修補）與 `046c58c5…`（2026-10-29 收尾開發，「已實作、待測」）相對 `50635f7e…` 的差異
-
-### 其他
-- 登入器已知未驗中，CHECKLIST 尚未涵蓋的只剩：斷線結算的長時間壓力與災難復原。結算職業圖示、Ctrl 強制攻擊雙視窗、斷線結算已在 CHECKLIST 步驟 10、14、12；GM 魔杖與 ddraw 名稱由 T013 補進。
+| T050 | #225 | 用 `src/main` 的 JAR 在實驗環境啟動到大廳並截圖（由 M4 的 T014 取代） | blocked |
+| T020c-3 | #84 | 8d26c9d7 基準完整回歸 | todo |
+| T020c | #31 | 回歸工具參數化（review:pass，待關閉） | 收尾 |
+| — | — | 可重現封裝（固定 `project.build.outputTimestamp`） | todo |
+| — | — | 候選 `3ccbb…`／`046c58c5…` 相對 `50635f7e…` 的差異，依 T093 決定是否併入 M3 | todo |
+| — | — | `customer-gaps.md` 的 G09–G28（依 T093 重新分類） | todo |
+| — | — | 斷線結算的長時間壓力與災難復原 | todo |
