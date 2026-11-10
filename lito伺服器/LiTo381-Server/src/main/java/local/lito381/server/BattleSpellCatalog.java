@@ -1104,10 +1104,12 @@ final class BattleSpellCatalog {
             // action19/gfx6508 and the player-only AC+15 lease.  Its negative
             // probability row is 55/45/35 + INT*0.35 + magic-hit - MR*0.05,
             // with no magic-level term; boss modifier zero means immunity.
+            // Issue #305: targetTo/type follow skills.target_to=3/type=1
+            // (they previously held probability_dice=26 and target_to=3).
             GUARD_BRAKE, new GuardBrakeSpell(
                     GUARD_BRAKE, 22, 6, 23, 6, 19, 6_508,
-                    0, 25, 1_000, 1_800, 60, 3, 0, 26,
-                    ATTRIBUTE_UNSPECIFIED, 3, 64,
+                    0, 25, 1_000, 1_800, 60, 3, 0, 3,
+                    ATTRIBUTE_UNSPECIFIED, 1, 64,
                     55, 45, 35, 0.35D, true, false, 0.05D, 0,
                     15, 0, 0, 280, false, "guard-brake"),
             // Exact primary/secondary row193 and selected LiTo zero-based
@@ -1121,8 +1123,8 @@ final class BattleSpellCatalog {
             // the selected Counter Magic bypass table.
             HORROR_OF_DEATH, new GuardBrakeSpell(
                     HORROR_OF_DEATH, 24, 0, 25, 0, 19, 6_588,
-                    0, 50, 1_000, 0, 60, 3, 0, 26,
-                    ATTRIBUTE_UNSPECIFIED, 3, 1,
+                    0, 50, 1_000, 0, 60, 3, 0, 3,
+                    ATTRIBUTE_UNSPECIFIED, 1, 1,
                     55, 45, 35, 0.35D, true, false, 0.05D, 0,
                     0, 0, 0, 280, false, "horror-of-death")
     );
@@ -1137,10 +1139,12 @@ final class BattleSpellCatalog {
             // level; boss modifier zero means immunity. Retained target-based
             // RESIST_FEAR adds five dodge-down points to a PC target. The
             // primary magic-screen exception table makes Counter Magic bypass.
+            // Issue #305: targetTo/type follow skills.target_to=3/type=1
+            // (they previously held probability_dice=35 and target_to=3).
             RESIST_FEAR, new ResistFearSpell(
                     RESIST_FEAR, 23, 3, 24, 3, 19, 6_586,
-                    0, 30, 1_000, 1_200, 60, 3, 0, 35,
-                    ATTRIBUTE_UNSPECIFIED, 3, 8,
+                    0, 30, 1_000, 1_200, 60, 3, 0, 3,
+                    ATTRIBUTE_UNSPECIFIED, 1, 8,
                     45, 38, 30, 0.40D, true, false, 0.05D, 0,
                     5, 0, 0, 280, true, "resist-fear")
     );
@@ -6447,8 +6451,8 @@ final class BattleSpellCatalog {
                     || actionId != 19 || mpCost != 0
                     || reuseDelayMillis != 1_000
                     || durationSeconds != 60 || maximumRange != 3
-                    || area != 0 || targetTo != 26
-                    || attribute != ATTRIBUTE_UNSPECIFIED || type != 3
+                    || area != 0 || targetTo != 3
+                    || attribute != ATTRIBUTE_UNSPECIFIED || type != 1
                     || probabilityHigh != 55 || probabilityEqual != 45
                     || probabilityLow != 35
                     || Double.compare(intelligenceMultiplier, 0.35D) != 0
@@ -6550,8 +6554,8 @@ final class BattleSpellCatalog {
                     || reuseDelayMillis != 1_000
                     || clientCastClockMillis != 1_200
                     || durationSeconds != 60 || maximumRange != 3
-                    || area != 0 || targetTo != 35
-                    || attribute != ATTRIBUTE_UNSPECIFIED || type != 3
+                    || area != 0 || targetTo != 3
+                    || attribute != ATTRIBUTE_UNSPECIFIED || type != 1
                     || nativeId != 8
                     || probabilityHigh != 45 || probabilityEqual != 38
                     || probabilityLow != 30

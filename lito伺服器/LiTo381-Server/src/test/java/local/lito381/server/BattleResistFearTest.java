@@ -41,7 +41,7 @@ final class BattleResistFearTest {
         assertEquals(1_200, spell.clientCastClockMillis());
         assertEquals(60, spell.durationSeconds());
         assertEquals(3, spell.maximumRange());
-        assertEquals(35, spell.targetTo());
+        assertEquals(3, spell.targetTo());
         assertEquals(5, spell.dodgeDownModifier());
         assertEquals(280, spell.failureMessage());
         assertTrue(spell.counterMagicBypass());
