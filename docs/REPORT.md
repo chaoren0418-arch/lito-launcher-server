@@ -61,3 +61,4 @@
 - 2026-11-07 — #284 T014: 正式 0.6.71 JAR 的實驗設定與啟動到大廳（P24 實驗 schema）（resource，codex-local，PR #287 已合併）→ [報告](reports/issue-284.md)
 - 2026-11-10 — #288 T070: M2 客戶缺口盤點（第一版：合約要求與候選已修項）（code，claude-local，PR #289 已合併）→ [報告](reports/issue-288.md)
 - 2026-11-10 — #290 使用者重定方向：伺服器支援角色、道具、戰鬥、技能與多資料庫跨界戰鬥（參考 1-伺服器）——重做 PLAN／TASKS（plan，claude-chat，PR #295 已合併）→ [報告](reports/issue-290.md)
+- 2026-11-11 — #291 T090: 盤點 1-伺服器 的角色／道具／戰鬥／技能／多來源實作（唯讀）（resource，claude-local，PR #296 已合併）→ [報告](reports/issue-291.md)
