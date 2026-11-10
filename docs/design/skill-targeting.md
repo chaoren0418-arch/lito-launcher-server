@@ -95,5 +95,5 @@ PK 旗標：主目標不是怪物、`target == "attack"`、主目標不是自己
 | 76 排除自己與寵物 | `NativeSourceMassSelfTarget.java:5`、`NativeSourceMassSlowTargets.java:78,326-350`、`NativeSourceAreaCasterTargets.java:13` | 一致（G05） |
 | 148／149 只對 PC、畫面距離 | `NativeSourceWeaponBuffTargets.java:9,19-21` | 一致（G07，僅 BATTLE） |
 | 40／103 距離與目標 | `NativeBlindSceneAction.java:21`（`selected`） | 一致（G08） |
-| 範圍攻擊打誰（e、f、j、k） | 競技場：`ClientSession.java:90019-90024`（`hub.canAttack`） | **刻意不同**：LiTo 依房間敵我判定，見報告「需要使用者決定」 |
+| 範圍攻擊打誰（e、f、j、k） | 競技場：`ClientSession.java:90022-90027`（`hub.canAttack`） | **刻意不同**：LiTo 依房間敵我判定，見報告「需要使用者決定」 |
 | 反制魔法例外表 | `ClientSession` 欄位 `sourceCounterMagicBypassSkills`（DB 載入）；目錄 `counterMagicBypass` 欄 | 未在本任務比對（T107–T109） |
