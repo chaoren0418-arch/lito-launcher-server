@@ -1,5 +1,5 @@
 {
-  "left_sha256": "20f4c6afb65c3547b23ff5b073bfc75af0b611bae1620cc4ec0a5b3eb7d80d93",
+  "left_sha256": "b4a718e6cbcded4821d5e924657fc0516bb135d848a15665f223b35a83d7e45e",
   "candidate_sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729",
   "base_sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498",
   "b_entries": 1384,
@@ -11,7 +11,7 @@
   "b-approved": {
     "exit": 0,
     "counts": {
-      "SAME": 1349,
+      "SAME": 1347,
       "SAME_EFFECTS": 3,
       "SAME_LAYOUT": 0,
       "SAME_PATHS": 15,
@@ -19,7 +19,7 @@
       "LAMBDA_PAIRED_BY_CALLSITE": 2,
       "VISIBILITY_BRIDGE": 0,
       "ORPHAN_IGNORED": 1,
-      "DEVIATION": 4,
+      "DEVIATION": 6,
       "DIFF": 1,
       "ONLY_LEFT": 0,
       "ONLY_RIGHT": 0,
