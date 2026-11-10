@@ -1,0 +1,89 @@
+{
+  "left_sha256": "55f63a7e3ad308d3793dd0e516bf8fb86f4c3cb06f712cd61f14328159112bda",
+  "candidate_sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729",
+  "base_sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498",
+  "b_entries": 1384,
+  "a_entries": 692,
+  "b_missing_in_left": [],
+  "b_extra_vs_candidate": [],
+  "remove_entries_declared": [],
+  "remove_entries_present": [],
+  "full_classification": {
+    "SOURCE_ONLY": {
+      "ONLY_LEFT": 1380
+    },
+    "B": {
+      "DIFF": 145,
+      "ONLY_LEFT": 483
+    }
+  },
+  "full_other": [],
+  "b-approved": {
+    "exit": 0,
+    "counts": {
+      "SAME": 1351,
+      "SAME_EFFECTS": 3,
+      "SAME_LAYOUT": 0,
+      "SAME_PATHS": 15,
+      "SAME_CFG": 9,
+      "LAMBDA_PAIRED_BY_CALLSITE": 2,
+      "VISIBILITY_BRIDGE": 0,
+      "ORPHAN_IGNORED": 1,
+      "DEVIATION": 2,
+      "DIFF": 1,
+      "ONLY_LEFT": 0,
+      "ONLY_RIGHT": 0,
+      "BYTE_SAME": 10
+    },
+    "missingLeft": [],
+    "extraLeft_count": 3033,
+    "bad": [
+      {
+        "name": "local/lito381/server/ClientSession",
+        "status": "DIFF"
+      }
+    ]
+  },
+  "a": {
+    "exit": 0,
+    "counts": {
+      "SAME": 665,
+      "SAME_EFFECTS": 4,
+      "SAME_LAYOUT": 1,
+      "SAME_PATHS": 16,
+      "SAME_CFG": 0,
+      "LAMBDA_PAIRED_BY_CALLSITE": 0,
+      "VISIBILITY_BRIDGE": 0,
+      "ORPHAN_IGNORED": 0,
+      "DEVIATION": 6,
+      "DIFF": 0,
+      "ONLY_LEFT": 0,
+      "ONLY_RIGHT": 0,
+      "BYTE_SAME": 91
+    },
+    "missingLeft": [],
+    "extraLeft_count": 3725,
+    "bad": []
+  },
+  "full": {
+    "exit": 0,
+    "counts": {
+      "SAME": 2381,
+      "SAME_EFFECTS": 4,
+      "SAME_LAYOUT": 1,
+      "SAME_PATHS": 17,
+      "SAME_CFG": 0,
+      "LAMBDA_PAIRED_BY_CALLSITE": 0,
+      "VISIBILITY_BRIDGE": 0,
+      "ORPHAN_IGNORED": 0,
+      "DEVIATION": 6,
+      "DIFF": 145,
+      "ONLY_LEFT": 1863,
+      "ONLY_RIGHT": 0,
+      "BYTE_SAME": 680
+    },
+    "missingLeft": null,
+    "extraLeft_count": 0,
+    "bad": 2008
+  }
+}
