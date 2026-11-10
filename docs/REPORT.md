@@ -72,3 +72,4 @@
 - 2026-11-11 — #138 T020-B-land: B 暫存區併入 src/main（code，claude-local，PR 已合併）→ [報告](reports/issue-138.md)
 - 2026-11-11 — #303 T101: 物理命中／傷害／AC 減傷對照 1-伺服器（規格＋單元測試）（code，claude-local，PR 已合併）→ [報告](reports/issue-303.md)
 - 2026-11-11 — #304 T102: 魔法傷害／MR／技能機率對照 1-伺服器（規格＋單元測試）（code，claude-local，PR 已合併）→ [報告](reports/issue-304.md)
+- 2026-11-11 — #305 T106: 技能目標與範圍判定對照 1-伺服器（含 customer-gaps G03–G08）（code，claude-local，PR 已合併）→ [報告](reports/issue-305.md)
