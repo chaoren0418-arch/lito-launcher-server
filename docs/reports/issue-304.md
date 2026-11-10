@@ -33,7 +33,7 @@
   - `skills_負面技能控制` 34 列、`skills_負面boss免疫` 40 列原樣寫進測試。
 - 原始素質四張表（`L1PcOriginal`）、職業基礎 MR、7 職業魔法等級：逐行讀過，與 LiTo 相同，並由測試全值域列舉。
 - 既有測試相容性推論：`BattleTurnUndeadTest` 只測到 INT 40（仍為 15）；守護相關變更都在 `CombatRules.loaded()`／控制表載入之後才生效；來源稽核測試沒有比對被改到的字串（已搜尋 `magicDamage(n3`、`unusedConfiguredCancellationFallback`、`intelligence>43`、`guardianMr` 等）。
-- **CI**：待 PR 的 GitHub Actions 結果（push 後補記）。
+- **PR #319 CI（run 42916472996，測試修訂 `f59dd0cd`）**：`Server tests` 通過，`mvn -B test` → **Tests run: 6087, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`；`MagicFormulaServer1ParityTest` 15 項全過（0.741 s）。Server（Maven 建置）、Launcher、Build-Package（run 42916472847）、Semantic gap 也都通過。守護 MR／邪惡守護／INT≥44 MagicBonus 的行為改變沒有讓任何既有自測失敗。
 
 ### 推測
 - M11（`SKD3` 技能減免清單）、M16（寵物倍率、聖結界）、M17（「傷害為 0」狀態清單）、R8（各 buff MR）：結構一致，未逐值測（屬 T107～T109 技能範圍）。
