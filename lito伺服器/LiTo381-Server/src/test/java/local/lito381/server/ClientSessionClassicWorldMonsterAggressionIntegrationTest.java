@@ -21,11 +21,29 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
 
 /** Production scheduler proof for retained passive-red and hidden hate semantics. */
+// TEMPORARY #138 diagnostic (to be removed): a hang after B-land; time out in a separate thread and dump stacks.
+@Timeout(value = 120, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
 final class ClientSessionClassicWorldMonsterAggressionIntegrationTest {
+    private long diagnosticStarted;
+    @BeforeEach void diagnosticStart() { diagnosticStarted = System.nanoTime(); }
+    @AfterEach void diagnosticDump(org.junit.jupiter.api.TestInfo info) {
+        if (System.nanoTime() - diagnosticStarted < 100_000_000_000L) return;
+        StringBuilder out = new StringBuilder("#138-THREAD-DUMP " + info.getDisplayName() + "\n");
+        for (var e : Thread.getAllStackTraces().entrySet()) {
+            out.append("THREAD ").append(e.getKey().getName()).append(' ').append(e.getKey().getState()).append('\n');
+            for (var frame : e.getValue()) out.append("    at ").append(frame).append('\n');
+        }
+        for (var info2 : java.lang.management.ManagementFactory.getThreadMXBean().dumpAllThreads(true, true))
+            if (info2.getLockOwnerName() != null) out.append("LOCK ").append(info2.getThreadName()).append(" waits ").append(info2.getLockName()).append(" owned-by ").append(info2.getLockOwnerName()).append('\n');
+        System.out.println(out);
+    }
     private static final int MAP_ID = 4;
     private static final long PLAYER_OBJECT_ID = 0x4200_0404L;
 
