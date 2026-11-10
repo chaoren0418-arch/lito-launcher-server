@@ -65,3 +65,4 @@
 - 2026-11-11 — #292 T091: LiTo 現況能力矩陣（角色／道具／戰鬥／技能／跨界）（resource，claude-local，PR #297 已合併）→ [報告](reports/issue-292.md)
 - 2026-11-11 — #298 plan: 接續舊計畫——已完成項目放回里程碑，加入玩法設計／核心計算／資料庫三區塊（#290 補充）（plan，claude-chat，PR #299 已合併）→ [報告](reports/issue-298.md)
 - 2026-11-11 — #293 T092: 客戶端協定與資源需求（lito脫殼資源＋0-客戶端，唯讀）（resource，claude-local，PR #300 已合併）→ [報告](reports/issue-293.md)
+- 2026-11-11 — #294 T093: 差距矩陣與 M3 功能開發任務拆分（主控）（plan，claude-chat，PR #312 已合併）→ [報告](reports/issue-294.md)
