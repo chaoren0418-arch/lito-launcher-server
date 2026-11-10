@@ -67,3 +67,4 @@
 - 2026-11-11 — #293 T092: 客戶端協定與資源需求（lito脫殼資源＋0-客戶端，唯讀）（resource，claude-local，PR #300 已合併）→ [報告](reports/issue-293.md)
 - 2026-11-11 — #294 T093: 差距矩陣與 M3 功能開發任務拆分（主控）（plan，claude-chat，PR #312 已合併）→ [報告](reports/issue-294.md)
 - 2026-11-11 — #70 T020-B09: 戰鬥併入暫存（existing-core，3 類）（code，claude-local，PR #95 已合併）→ [報告](reports/issue-70.md)
+- 2026-11-11 — #301 T100: LiTo 玩法設計文件（模式、房間流程、結算與排名、跨界規則）（code，claude-local，PR #313 已合併）→ [報告](reports/issue-301.md)
