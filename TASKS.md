@@ -14,7 +14,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 ---
 
-## M1 能力盤點（主線 5 項，封頂；已完成 1）
+## M1 能力盤點（主線 5 項，封頂；已完成 5）
 
 **完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，會看到：
 1. 角色、道具、戰鬥、技能、跨界（多來源）五個領域，每一列寫：`1-伺服器` 怎麼做（類別或檔案＋行號）／LiTo 現況（正式 0.6.71、候選或未實作）／客戶端需要的協定／差距／對應的 M3 任務；
@@ -29,9 +29,9 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 |---|---|---|---|---|---|
 | 0 | T070 | #288 | 客戶缺口第一版 `docs/reports/customer-gaps.md`（28 項；作為盤點來源） | claude-local | **done** |
 | 1 | T090 | #291 | 盤點 `1-伺服器` 的角色／道具／戰鬥／技能／多來源實作（唯讀），寫 `docs/reference/server1-inventory.md` | claude-local | **done** |
-| 2 | T091 | #292 | LiTo 現況能力矩陣，寫 `docs/reports/lito-capability-current.md`（併入 #288 的 `customer-gaps.md`） | claude-local | todo |
-| 3 | T092 | #293 | 客戶端協定與資源需求（`lito脫殼資源/`＋`0-客戶端`，唯讀），寫 `docs/reference/client-protocol-needs.md` | claude-local | todo |
-| 4 | T093 | #294 | 合併成差距矩陣，拆 M3 任務並封頂 | Claude（主控） | todo（等 1–3） |
+| 2 | T091 | #292 | LiTo 現況能力矩陣，寫 `docs/reports/lito-capability-current.md`（併入 #288 的 `customer-gaps.md`） | claude-local | **done** |
+| 3 | T092 | #293 | 客戶端協定與資源需求（`lito脫殼資源/`＋`0-客戶端`，唯讀），寫 `docs/reference/client-protocol-needs.md` | claude-local | **done** |
+| 4 | T093 | #294 | 合併成差距矩陣 `docs/reports/server-capability-matrix.md`，拆 M3 任務並封頂 | Claude（主控） | **done** |
 
 ## M2 原始碼開發基線（M1 完成後封頂；已完成 15）
 
@@ -50,15 +50,25 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 | T020-B-land | #138 | B 暫存併入 `src/main`，`mvn test` 綠燈 | todo（等 #70） |
 | T051 | #281 | `LegacyMySqlRepository` 的 shared-database 接線；B-land 若已帶入候選版本則驗證後關閉 | todo（等 #138） |
 
-## M3 功能開發（M1 的 T093 完成後封頂）
+## M3 功能開發（主線 11 項，封頂）
 
-**完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，M3 主線的每一列都標為「已實作＋單元測試＋離線回歸通過」，並附 PR 連結；`mvn test` 仍為綠燈。
+**完成定義（凍結）**：使用者打開 `docs/reports/server-capability-matrix.md`，M3 主線的每一列都標為「已實作＋單元測試＋離線回歸通過」，並附 PR 連結；`mvn test` 仍為綠燈；`docs/design/` 有玩法、資料庫、公式與技能的規格文件。
 
-任務由 T093 開出（PLAN U3-1 估 8–15 張）。一定包含：
-- **玩法設計文件**：LiTo 跨界戰鬥模式的規則、房間與對戰流程、勝負與結算規則（先寫設計，再實作）；
-- **核心計算**：依 M1 的公式來源逐項實作與測試；
-- **資料庫**：補齊 M1 列出的缺少表與欄位（只在 LiTo 自己的庫與實驗 schema；來源角色庫維持唯讀，只回存 `character_lito`）；
-- `customer-gaps.md` 的 G03–G08（技能目標／範圍與 Source 不一致）。
+依 #294 差距矩陣封頂。T100、T104 不改程式，可先做；其餘改 `src/main` 的任務等 B-land（#138）。
+
+| ID | Issue | 內容 | 狀態 |
+|---|---|---|---|
+| T100 | #301 | 玩法設計文件（模式、房間流程、結算與排名、跨界規則） | todo |
+| T104 | #302 | 多來源資料庫規格、完整權限清單、中文欄位對照 | todo |
+| T101 | #303 | 物理計算對照 1-伺服器（規格＋單元測試） | todo |
+| T102 | #304 | 魔法傷害／MR／技能機率對照（規格＋單元測試） | todo |
+| T106 | #305 | 技能目標與範圍判定（含 G03–G08） | todo |
+| T105 | #306 | 跨來源角色 ID 撞號處理 | todo |
+| T107 | #307 | 技能行為驗證：共通魔法／法師（79） | todo |
+| T108 | #308 | 技能行為驗證：妖精（40） | todo |
+| T109 | #309 | 技能行為驗證：騎士／黑妖／王族／龍騎／幻術（62） | todo |
+| T103 | #310 | HP／MP 與積分規則實作（依 T100） | todo |
+| T110 | #311 | 協定修正：魔法娃娃圖示不送 0xFA | todo |
 
 ## M4 實機驗收與交付（Codex 恢復後；M3 完成後封頂；已完成 4）
 
@@ -94,5 +104,5 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 | T020c | #31 | 回歸工具參數化（review:pass，待關閉） | 收尾 |
 | — | — | 可重現封裝（固定 `project.build.outputTimestamp`） | todo |
 | — | — | 候選 `3ccbb…`／`046c58c5…` 相對 `50635f7e…` 的差異，依 T093 決定是否併入 M3 | todo |
-| — | — | `customer-gaps.md` 的 G09–G28（依 T093 重新分類） | todo |
+| — | — | `customer-gaps.md` 的 G09–G28、T111 藥水與消耗品改讀 SQL、受控 NPC 完整語意、588 列非玩家技能、跨程式互連（#294 移入） | todo |
 | — | — | 斷線結算的長時間壓力與災難復原 | todo |
