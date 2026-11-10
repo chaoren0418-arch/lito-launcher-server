@@ -1,0 +1,61 @@
+{
+ "_說明": "人工核對設定。scan_db_access.py 讀 helpers／routed_to_lito／db_overrides；gen_grants.py 讀其餘欄位。每項都附理由與證據（路徑相對 lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/）。",
+ "helpers": {
+  "SettlementSql.java": {"\\btable\\(\\s*\\w+\\s*\\)": "lito_battle_settlement"}
+ },
+ "routed_to_lito": ["lito_battle_rule", "lito_battle_object", "lito_battle_spawn", "lito_battle_player_spawn", "lito_tournament_shop", "commands"],
+ "_routed_to_lito": "SharedDatabase.java:21-22 的 TABLES；正式 JAR 由 shared-database patch 把這 6 表導向 database.lito.database（SharedDatabase.java:64-68）。src/main 的 Accounts.resourceTable（Accounts.java:12932-12937）尚未接這個掛鉤（server-capability X14），以正式 JAR 行為為準。",
+ "db_overrides": {
+  "character_lito": "character"
+ },
+ "_db_overrides": "character_lito 不在 db/380_ac_1.sql 傾印（傾印早於該表），實際在每個來源角色庫：SharedDatabase.java:74-77（DATABASE() 即來源庫）、db/lito_battle_settlement.sql:19-24。",
+ "exclude_class_prefix": ["Modern"],
+ "_exclude_class_prefix": "Modern* 屬 classifier=modern 的另一個入口 ModernStandaloneMain（pom.xml:141-151），不在正式 0.6.71 流程（docs/reports/lito-capability-current.md B24）。",
+ "gated_ranges": [
+  {"file": "Accounts.java", "from": 4361, "to": 4495, "reason": "healthCheck 內 `if (repositoryMode.equals(\"lito_mysql\"))` 區塊（Accounts.java:4361）；共用模式固定 legacy_mysql（SharedDatabase.java:50-52）"},
+  {"file": "Accounts.java", "from": 4498, "to": 4700, "reason": "migrateLitoExtensions：`if (!repositoryMode.equals(\"lito_mysql\")) return;`（Accounts.java:4499）"}
+ ],
+ "excluded_tables": {
+  "lito_account_origin": "lito_mysql 擴充表：healthCheck 只在 lito_mysql 檢查（Accounts.java:4363）；寫入路徑有 readOnly／lito_mysql 守門（Accounts.java:4842、4897）",
+  "lito_board_topic": "lito_mysql 擴充表（Accounts.java:4377）",
+  "lito_buddy_group": "lito_mysql 擴充表（Accounts.java:4369）",
+  "lito_buddy_metadata": "lito_mysql 擴充表（Accounts.java:4370）",
+  "lito_castle_metadata": "lito_mysql 擴充表（Accounts.java:4372）",
+  "lito_castle_security_settlement": "lito_mysql 擴充表（Accounts.java:4373-4374）",
+  "lito_character_origin": "lito_mysql 擴充表（Accounts.java:4362）",
+  "lito_clan_metadata": "lito_mysql 擴充表（Accounts.java:4371）",
+  "lito_hotel_lease_key": "lito_mysql 擴充表（Accounts.java:4385-4386）",
+  "lito_house_auction_metadata": "lito_mysql 擴充表（Accounts.java:4375-4376）",
+  "lito_item_origin": "lito_mysql 擴充表（Accounts.java:4364）",
+  "lito_private_inventory": "lito_mysql 擴充表（Accounts.java:4365-4366）",
+  "lito_tournament_profile": "lito_mysql 且 classicSourceId==0（Accounts.java:4378-4380）",
+  "lito_warehouse_item_origin": "lito_mysql 擴充表（Accounts.java:4367-4368）",
+  "lito_water_dragon_pass": "lito_mysql 擴充表（Accounts.java:4387-4388）",
+  "lito_tournament_character_record": "中央戰績表只在 lito_mysql 且 classicSourceId>0（Accounts.java:4381-4384、9356-9358）；共用模式改走 character_lito（docs/reports/lito-capability-current.md X9）",
+  "character_buff_snapshot": "SourceBuffRead 先看 character_buff 有沒有 snapshot_version，沒有就走舊單表分支（SourceBuffRead.java:11-26；#83 實測 380_ac 系列沒有此欄）。若部署庫有 snapshot_version 欄，需另外補此表 SELECT"
+ },
+ "manual_includes": [
+  {"db": "static", "table": "道具_物品詳細說明", "privs": ["SELECT"], "startup": false,
+   "evidence": "正式 JAR 的 ClientSession 引用 LiToItemTemplates（jar_tables.py／常數池），src/main 看不到呼叫點；讀取 LiToItemTemplates.java:21，僅在 -Dlito.extendedItemDetails=true（lito登入器/LiTo381-Launcher/src/FormalStandardSources.cs:37）時預載；缺表（42S02）可容忍，權限拒絕會讓物品詳細說明整體停用（LiToItemTemplates.java:23,26）"}
+ ],
+ "optional_tables": {
+  "server_紀錄_獎勵": "待領獎勵 UI（Accounts.java:12028-12041，ClientSession.java:22913-22916）會讀；1-伺服器 現行 db/380_ac.sql 沒有這張表，表不存在時表級 GRANT 會失敗，所以範本預設註解，部署庫有此表才取消註解"
+ },
+ "write_allowed": {
+  "character_lito": ["INSERT", "UPDATE"],
+  "lito_battle_settlement": ["INSERT", "UPDATE"]
+ },
+ "_write_allowed": "SharedDatabase.java:9-11、101-102（只有結算呼叫點能開寫入）；SettlementSql.java:14、38-39、42。其他表的寫入程式只在 lito_mysql 且非唯讀時執行，連線池本身也是唯讀（Accounts.java:4234 setReadOnly）。",
+ "startup_classes": ["UnifiedConfiguration", "ResourceDatabase", "NativeProcNpcCatalog", "NativeProcEncounterCatalog", "NativeProcSkillCatalog", "NativeProcHealBonus", "NativeArmorProc", "GmTravel", "CombatDatabase", "SourceSkillControls", "SourceEyeControls", "SourceBlessingControls", "NativeDeSprites", "NativeDeSpriteCatalog", "NativeDeFactoryControls", "NativeDeControlCatalog", "NativeDeNpcTemplateResources", "NativeDeNpcTemplateMobLoader", "NativeDeNpcTemplateNpcLoader", "NativeDeTerrainResources", "NativeDeTerrainTable", "NativeDeShopResources", "NativeDeShopTable", "NativeDeChatResources", "NativeDeChatTable", "NativeRoomRules", "LegacyInventoryWeightLoader"],
+ "_startup_classes": "ResourceDatabase.load（ResourceDatabase.java:13-81）依序呼叫的載入器與其表類別；CombatDatabase.java:76 → SourceSkillControls.read → SourceEyeControls／SourceBlessingControls（SourceSkillControls.java:128-129）；GameHub.java:1196 NativeRoomRules.install；Accounts.java:4288 LegacyInventoryWeightLoader.healthCheck。",
+ "startup_tables": {
+  "character_items_time": "Accounts.java:4313-4314 啟動時跑 sourceInventorySql() + LIMIT 0，該 SQL 在 Accounts.java:13070-13071 JOIN 此表",
+  "etcitem_doll_type": "同上，sourceInventorySql() 在 Accounts.java:13140-13143 JOIN 此表"
+ },
+ "startup_ranges": [
+  {"file": "Accounts.java", "from": 4249, "to": 4360, "reason": "LegacyMySqlRepository.healthCheck（lito_mysql 區塊之前）"},
+  {"file": "LegacyEquipmentMagicLoader.java", "from": 1, "to": 171, "reason": "REQUIRED_RESOURCE_TABLES 與 healthCheck（LegacyEquipmentMagicLoader.java:31-60、103-171）"},
+  {"file": "SharedDatabase.java", "from": 69, "to": 81, "reason": "SharedDatabase.check"},
+  {"file": "SettlementSql.java", "from": 7, "to": 7, "reason": "SettlementSql.check"}
+ ]
+}
