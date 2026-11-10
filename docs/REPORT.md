@@ -63,3 +63,4 @@
 - 2026-11-10 — #290 使用者重定方向：伺服器支援角色、道具、戰鬥、技能與多資料庫跨界戰鬥（參考 1-伺服器）——重做 PLAN／TASKS（plan，claude-chat，PR #295 已合併）→ [報告](reports/issue-290.md)
 - 2026-11-11 — #291 T090: 盤點 1-伺服器 的角色／道具／戰鬥／技能／多來源實作（唯讀）（resource，claude-local，PR #296 已合併）→ [報告](reports/issue-291.md)
 - 2026-11-11 — #292 T091: LiTo 現況能力矩陣（角色／道具／戰鬥／技能／跨界）（resource，claude-local，PR #297 已合併）→ [報告](reports/issue-292.md)
+- 2026-11-11 — #298 plan: 接續舊計畫——已完成項目放回里程碑，加入玩法設計／核心計算／資料庫三區塊（#290 補充）（plan，claude-chat，PR #299 已合併）→ [報告](reports/issue-298.md)
