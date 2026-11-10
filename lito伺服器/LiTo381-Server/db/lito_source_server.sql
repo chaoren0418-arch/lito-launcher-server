@@ -1,5 +1,7 @@
 -- LiTo 0.6.42：來源目錄。權限：執行帳號只需 SELECT 此表。
 -- 已有列不覆寫；修改後重啟 LiTo 與登入器。
+-- 下列 INSERT 是初始種子（文件以此為準）；實際部署值由營運在現場表設定，以現場表為準。
+-- 欄位規則、啟用步驟與完整權限清單：docs/design/database.md（repo 根目錄）。
 CREATE TABLE IF NOT EXISTS `380_lito`.`lito_source_server` (
   `source_id` TINYINT UNSIGNED NOT NULL PRIMARY KEY COMMENT '固定來源編號 1~8，勿重編既有來源',
   `display_name` VARCHAR(45) NOT NULL COMMENT '原生選服顯示名稱（MS950 最多63 bytes）',
