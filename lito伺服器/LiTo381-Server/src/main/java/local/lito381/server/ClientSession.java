@@ -52656,7 +52656,7 @@ final class ClientSession implements Runnable {
         int originalIntelligence = character == null
                 ? 0 : Math.max(0, character.originalIntelligence());
         int criticalRoll = ThreadLocalRandom.current().nextInt(1, 101);
-        int skillLevel = ((skillId - 1) >> 3) + 1;
+        int skillLevel = BattleMagicResistance.skillLevel(skillId);
         BattleMagicResistance.MagicAttackerResult attacker =
                 BattleMagicResistance.attackerBonuses(
                         elementalDamage, skillLevel, criticalRoll,
@@ -74036,12 +74036,14 @@ final class ClientSession implements Runnable {
         SourceEquipmentMagicStats sourceEquipmentMagicStats = this.requiredEquipmentMagicStats();
         int n7 = this.spellPowerModifier(System.nanoTime());
         int n8 = BattleCookingCatalog.magicIntelligenceAfterCooking(sourceEquipmentMagicStats.magicIntelligenceTerm(this.baseIntelligence()), n7);
-        int n9 = BattleElementalResistance.magicDamage(n3, n8, n4);
+        // 1-server calcMagicDiceDamage/getTargetSp: evil guardian adds to the dice sum and to item SP.
+        int evilGuardian = n3 > 0 ? CombatPlayerMagic.evilGuardian(this.characterLawful()) : 0;
+        int n9 = BattleElementalResistance.magicDamage(n3 + evilGuardian, n8 + evilGuardian, n4);
         CharacterSummary characterSummary = this.selectedCharacterSummary();
         int n10 = characterSummary == null ? 0 : characterSummary.type();
         int n11 = characterSummary == null ? 0 : Math.max(0, characterSummary.originalIntelligence());
         int n12 = ThreadLocalRandom.current().nextInt(1, 101);
-        int n13 = (n - 1 >> 3) + 1;
+        int n13 = BattleMagicResistance.skillLevel(n);
         BattleMagicResistance.MagicAttackerResult magicAttackerResult = BattleMagicResistance.attackerBonuses(n9, n13, n12, n10, n11, Math.addExact(sourceEquipmentMagicStats.totalMagicDamage(), this.activeMagicDollPowers().value("PASSIVE_MAGIC_DMG_MODIFIER")));
         int n14 = n6 > 10 ? ThreadLocalRandom.current().nextInt(n6 - 10) : 0;
         int n15 = BattleMagicResistance.armorDamageReduction(n6, n14);
@@ -74056,12 +74058,13 @@ final class ClientSession implements Runnable {
         SourceEquipmentMagicStats sourceEquipmentMagicStats = this.requiredEquipmentMagicStats();
         int n7 = this.spellPowerModifier(System.nanoTime());
         int n8 = BattleCookingCatalog.magicIntelligenceAfterCooking(sourceEquipmentMagicStats.magicIntelligenceTerm(this.baseIntelligence()), n7);
-        int n9 = BattleElementalResistance.magicDamage(n3, n8, n4);
+        int evilGuardian = n3 > 0 ? CombatPlayerMagic.evilGuardian(this.characterLawful()) : 0;
+        int n9 = BattleElementalResistance.magicDamage(n3 + evilGuardian, n8 + evilGuardian, n4);
         CharacterSummary characterSummary = this.selectedCharacterSummary();
         int n10 = characterSummary == null ? 0 : characterSummary.type();
         int n11 = characterSummary == null ? 0 : Math.max(0, characterSummary.originalIntelligence());
         int n12 = ThreadLocalRandom.current().nextInt(1, 101);
-        int n13 = (n - 1 >> 3) + 1;
+        int n13 = BattleMagicResistance.skillLevel(n);
         BattleMagicResistance.MagicAttackerResult magicAttackerResult = BattleMagicResistance.attackerBonuses(n9, n13, n12, n10, n11, Math.addExact(sourceEquipmentMagicStats.totalMagicDamage(), this.activeMagicDollPowers().value("PASSIVE_MAGIC_DMG_MODIFIER")));
         int n14 = n6 > 10 ? ThreadLocalRandom.current().nextInt(n6 - 10) : 0;
         int n15 = BattleMagicResistance.armorDamageReduction(n6, n14);

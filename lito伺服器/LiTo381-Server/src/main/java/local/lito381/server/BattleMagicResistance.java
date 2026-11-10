@@ -124,6 +124,16 @@ final class BattleMagicResistance {
         };
     }
 
+    /**
+     * skills.skill_level used by the calcMagicDiceDamage critical gate
+     * (skill_level <= 6).  Every non-placeholder 380_db skills row satisfies
+     * {@code ((skillId - 1) >> 3) + 1}.
+     */
+    static int skillLevel(int skillId) {
+        if (skillId <= 0) throw new IllegalArgumentException("skill id must be positive");
+        return ((skillId - 1) >> 3) + 1;
+    }
+
     /** Exact post-elemental attacker additions in calcMagicDiceDamage. */
     static MagicAttackerResult attackerBonuses(
             int elementalDamage, int skillLevel, int criticalRoll,
