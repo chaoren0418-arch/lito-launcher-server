@@ -470,7 +470,9 @@ final class ClassicWorldMonsterPopulation {
     record TamedRelease(Snapshot hidden, Snapshot released) {
         TamedRelease {
             if (hidden == null || released == null
-                    || hidden.objectId() == released.objectId()
+                    // #138 approved deviation: candidate 50635f7e compared with == (ifeq -> throw), so the
+                    // two snapshots of the same actor taken by releaseTamed always failed; 0.6.71 uses !=.
+                    || hidden.objectId() != released.objectId()
                     || !hidden.alive() || hidden.present()
                     || !released.alive() || !released.present()) {
                 throw new IllegalArgumentException("invalid classic monster release");

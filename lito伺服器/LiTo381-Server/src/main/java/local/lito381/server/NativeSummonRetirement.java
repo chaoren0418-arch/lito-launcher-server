@@ -12,7 +12,11 @@ final class NativeSummonRetirement {
   var h=(GameHub)CombatAccess.field(owner,"hub");return pet.snapshot().kind()==BattleCompanion.Kind.SUMMON&&!pet.snapshot().active()&&NativeLightAction.retainedMaterial(owner)&&owner.nativePlayerActionLock().isHeldByCurrentThread()&&!(boolean)CombatAccess.field(h,"nativeStaticMotionClosed")&&NativeSummonTerminalLifecycle.registered(owner,h);
  }
  static void beforeDisconnect(GameHub h,ClientSession owner){
-  if(owner==null)return;var binding=NativePlayerCommit.Binding.capture(owner);var handoffs=new ArrayList<Work>();boolean[] entered={false};
+  // #138 approved deviation: a session that never bound a source account/character (login failure,
+  // port scan, lobby-only fixture) owns no summon; 0.6.71 disconnect has no retirement step at all.
+  if(owner==null)return;
+  try{owner.sourceCharacterIdentity();owner.sourceAccountIdentity();}catch(IllegalArgumentException unbound){return;}
+  var binding=NativePlayerCommit.Binding.capture(owner);var handoffs=new ArrayList<Work>();boolean[] entered={false};
   try{NativeLightAction.commitPair(owner,owner,()->{entered[0]=true;prepare(h,owner,binding,true,handoffs);});}
   catch(IOException error){NativeReuseLog.getLogger(NativeSummonRetirement.class).error("Summon logout return failed; canonical bags retained for worker deletion",error);}
   finally{

@@ -1,9 +1,12 @@
 package local.lito381.server;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InputStream;
@@ -1334,6 +1337,42 @@ final class ClassicWorldMonsterCatalogTest {
         assertFalse(abandoned.alive());
         assertFalse(abandoned.present());
         assertNotNull(population.respawn(4, source.objectId()));
+    }
+
+    /** #138 approved deviation: TamedRelease requires both snapshots to describe the same actor (0.6.71 semantics). */
+    @Test
+    void tamedReleaseAcceptsSameActorAndRejectsSnapshotsOfDifferentActors() {
+        ClassicWorldMonsterPopulation population =
+                new ClassicWorldMonsterPopulation();
+        ClassicWorldMonsterPopulation.Snapshot source = population.nearest(
+                4, ClassicWorldMapCatalog.WORLD_TREE_X,
+                ClassicWorldMapCatalog.WORLD_TREE_Y, 45065);
+        assertNotNull(source);
+        ClassicWorldMonsterPopulation.Capture capture =
+                population.captureTamed(4, source.objectId());
+        assertNotNull(capture);
+        ClassicWorldMonsterPopulation.Snapshot hidden = capture.hidden();
+
+        ClassicWorldMonsterPopulation.Snapshot other = population.nearest(
+                4, ClassicWorldMapCatalog.WORLD_TREE_X,
+                ClassicWorldMapCatalog.WORLD_TREE_Y, 45065);
+        assertNotNull(other);
+        assertNotEquals(hidden.objectId(), other.objectId());
+        assertTrue(other.alive());
+        assertTrue(other.present());
+        assertThrows(IllegalArgumentException.class,
+                () -> new ClassicWorldMonsterPopulation.TamedRelease(hidden, other));
+
+        BattleCompanion companion = BattleCompanion.tamedFromClassicWorld(
+                0x6000_0A37L, source, -1,
+                SourceNpcPhysicalStats.memoryFixture(source.npcId()));
+        ClassicWorldMonsterPopulation.TamedRelease release = assertDoesNotThrow(
+                () -> population.releaseTamed(4, source.objectId(), companion.snapshot()));
+        assertNotNull(release);
+        assertEquals(hidden.objectId(), release.hidden().objectId());
+        assertEquals(hidden.objectId(), release.released().objectId());
+        assertDoesNotThrow(() -> new ClassicWorldMonsterPopulation.TamedRelease(
+                release.hidden(), release.released()));
     }
 
     @Test
