@@ -23,8 +23,9 @@
 - 職業命中補正、職業攻擊等級除數、AC 減傷除數：1-伺服器 `classes/L1*ClassFeature.java` 七個職業逐一讀過，與 LiTo 相同。
 - 既有測試相容性推論：舊的 `hitChanceWithStatBonus` 多載改成委派（`npcTarget=false, elfAttribute=0`），只有龍騎在攻擊骰 ≥ 100 時才會 +1，那時已經達到必中門檻（`hit+10`）；`ModernRangedFormulaCrossCheckTest` 的輸入範圍內攻擊骰非必中時最大 99，結果不變。來源稽核測試沒有比對被改到的 `ClientSession` 字串（已搜尋 `hitChanceWithStatBonus`、`negativeAcRollMaximum`、`var97 < 0`、`armorClass() < 0`）。
 
-### 待驗證（交給 CI／Codex）
-- `mvn -B test` 結果：push 後看 PR CI，目標 `Failures: 0, Errors: 0`。特別注意 WORLD 打怪與競技場打負 AC NPC 的自測（命中率會變：例如 AC −20 的 NPC 防禦骰從 11..40 變成固定 30）。
+- **PR #316 CI（run 42910866946，測試修訂 `2d6df013`＝PR 合併提交，內容為 `0dc1a540`）**：`Server tests` 通過，`mvn -B test` → **Tests run: 6072, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`；`PhysicalFormulaServer1ParityTest` 18 項全過（0.135 s）。Server（Maven 建置）、Launcher、Build-Package、Semantic gap 也都通過。WORLD 打怪與競技場打負 AC NPC 的命中率改變（例：AC −20 的 NPC 防禦骰從 11..40 變成固定 30），沒有讓任何既有自測失敗。
+
+### 待驗證（交給 Codex／使用者）
 - 實機：負 AC 怪物的命中手感、龍騎／火妖精命中，需要使用者或 Codex 實機確認。
 - 文件 §2 D11（PvE 屬性抗性來源）、D12（祝福旗標 0／1 慣例）、§1 H4／H13（負重、千分比迴避在 WORLD 是否需要）。
 
