@@ -5859,7 +5859,7 @@ final class ClientSession implements Runnable {
       } else {
          String var3 = var1.action().toLowerCase(Locale.ROOT);
 
-         byte var4 = switch (var3) {
+         int var4 = switch (var3) {
             case "earth" -> 1;
             case "fire" -> 2;
             case "water" -> 4;
@@ -24720,35 +24720,39 @@ final class ClientSession implements Runnable {
     void serverHonorRespawnDue(long l, long l2, int n, int n2) throws IOException {
         byte[] objectPacket;
         NativePlayerActionScope.Ticket ticket;
+        int n3;
+        int n4;
+        int n5;
+        ticket = NativeSourceManualScope.enterRespawn(this);
         block4: {
-            ticket = NativeSourceManualScope.enterRespawn(this);
             try {
-                if (this.honorRespawnPending(l, l2)) break block4;
+                if (!this.honorRespawnPending(l, l2)) break block4;
+                this.pendingHonorRespawnToken = 0L;
+                int restoredHp = this.playerMaxHp;
+                NativePlayerCommit.advance(this);
+                this.playerHp = restoredHp;
+                CombatPoisonLifecycle.last(this, null);
+                this.positionX = n;
+                this.positionY = n2;
+                n3 = this.playerHp;
+                n4 = this.playerMaxHp;
+                n5 = this.battleGfx();
             }
             catch (Throwable throwable) {
                 NativeSourceManualScope.exitRespawn(this, ticket, throwable);
                 throw throwable;
             }
             NativeSourceManualScope.exitRespawn(this, ticket, null);
+            objectPacket = Protocol.resurrect(this.playerObjectId(), 0, this.playerObjectId(), n5);
+            for (ClientSession clientSession : this.hub.roomMembers(l)) {
+                clientSession.sendEncrypted(objectPacket, "S_RESURRECT honor target=" + this.playerObjectId() + " source=" + this.playerObjectId() + " gfx=" + n5 + " position=" + n + "," + n2);
+            }
+            this.sendEncrypted(new Protocol.Writer().c(13).h(n3).h(n4).bytes(), "S_HIT_POINT honor-respawn=" + n3 + "/" + n4);
+            this.broadcastOwnHitRatio("honor-respawn");
+            System.out.println("[LiTo] Honor respawn completed room=" + l + " player=" + this.playerName() + " position=" + n + "," + n2);
             return;
         }
-        this.pendingHonorRespawnToken = 0L;
-        NativePlayerCommit.advance(this);
-        this.playerHp = this.playerMaxHp;
-        CombatPoisonLifecycle.last(this, null);
-        this.positionX = n;
-        this.positionY = n2;
-        int n3 = this.playerHp;
-        int n4 = this.playerMaxHp;
-        int n5 = this.battleGfx();
         NativeSourceManualScope.exitRespawn(this, ticket, null);
-        objectPacket = Protocol.resurrect(this.playerObjectId(), 0, this.playerObjectId(), n5);
-        for (ClientSession clientSession : this.hub.roomMembers(l)) {
-            clientSession.sendEncrypted(objectPacket, "S_RESURRECT honor target=" + this.playerObjectId() + " source=" + this.playerObjectId() + " gfx=" + n5 + " position=" + n + "," + n2);
-        }
-        this.sendEncrypted(new Protocol.Writer().c(13).h(n3).h(n4).bytes(), "S_HIT_POINT honor-respawn=" + n3 + "/" + n4);
-        this.broadcastOwnHitRatio("honor-respawn");
-        System.out.println("[LiTo] Honor respawn completed room=" + l + " player=" + this.playerName() + " position=" + n + "," + n2);
     }
 
     private void respawnAtBattleSpawn() throws IOException {
@@ -32475,7 +32479,7 @@ final class ClientSession implements Runnable {
                   int var35 = combatProbability$1(var2, var23, var27, var24, var33, var30, var34, this, new Object[]{var14, var17});
                   int var36 = var2.horrorOfDeath() ? this.config.horrorOfDeathFixtureD100() : this.config.guardBrakeFixtureD100();
                   int var37 = var36 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var36;
-                  short var40 = 0;
+                  int var40 = 0;
                   int var38;
                   int var39;
                   long var41;
@@ -32984,7 +32988,7 @@ final class ClientSession implements Runnable {
                   int var32 = combatProbability$2(var2, var20, var24, var21, var30, var27, var31, this, new Object[]{var12, var15});
                   int var33 = this.config.resistFearFixtureD100();
                   int var34 = var33 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var33;
-                  short var37 = 0;
+                  int var37 = 0;
                   int var35;
                   int var36;
                   long var38;
@@ -33233,7 +33237,7 @@ final class ClientSession implements Runnable {
                   var11 == null ? 0 : var11.type(), var11 == null ? 0 : Math.max(0, var11.originalIntelligence())
                );
                int var15 = NativeSkillConsumptionBridges.ReductionArmorSpell_effectiveMpCost_III(var2, var13, var14);
-               short var16 = 0;
+               int var16 = 0;
                long var19 = System.nanoTime();
                int var17;
                int var18;
@@ -33396,7 +33400,7 @@ final class ClientSession implements Runnable {
                   var11 == null ? 0 : var11.type(), var11 == null ? 0 : Math.max(0, var11.originalIntelligence())
                );
                int var15 = NativeSkillConsumptionBridges.BounceAttackSpell_effectiveMpCost_III(var2, var13, var14);
-               short var16 = 0;
+               int var16 = 0;
                long var19 = System.nanoTime();
                int var17;
                int var18;
@@ -33573,7 +33577,7 @@ final class ClientSession implements Runnable {
                   var12 == null ? 0 : var12.type(), var12 == null ? 0 : Math.max(0, var12.originalIntelligence())
                );
                int var16 = NativeSkillConsumptionBridges.SolidCarriageSpell_effectiveMpCost_III(var2, var14, var15);
-               short var17 = 0;
+               int var17 = 0;
                long var20 = System.nanoTime();
                int var18;
                int var19;
@@ -33759,7 +33763,7 @@ final class ClientSession implements Runnable {
                var12 == null ? 0 : var12.type(), var12 == null ? 0 : Math.max(0, var12.originalIntelligence())
             );
             int var16 = NativeSkillConsumptionBridges.CounterBarrierSpell_effectiveMpCost_III(var2, var14, var15);
-            short var17 = 0;
+            int var17 = 0;
             long var20 = System.nanoTime();
             int var18;
             int var19;
@@ -33910,7 +33914,7 @@ final class ClientSession implements Runnable {
                int var8 = this.classicWorldInstanceId;
                int var9 = this.positionX;
                int var10 = this.positionY;
-               short var13 = 0;
+               int var13 = 0;
                long var14 = System.nanoTime();
                int var21 = NativeZeroMpConsumption.cost(this, var2);
                byte[] var22 = null;
@@ -42312,7 +42316,7 @@ final class ClientSession implements Runnable {
                int var8 = this.classicWorldInstanceId;
                int var9 = this.positionX;
                int var10 = this.positionY;
-               short var13 = 0;
+               int var13 = 0;
                long var14 = System.nanoTime();
                int var21 = NativeZeroMpConsumption.cost(this, var2);
                byte[] var22 = null;
@@ -42487,7 +42491,7 @@ final class ClientSession implements Runnable {
                ClientSession.FoeSlayerTarget var12 = this.resolveFoeSlayerTarget(var4, var6, var8, var9, var10, var11, var2.maximumRange());
                var29 = CombatWorldFoe.capture(this, var12);
                if (var12 != null) {
-                  short var15 = 0;
+                  int var15 = 0;
                   int var30 = this.nativeSkillConsumptionIntelligence();
                   int var31 = this.nativeSkillConsumptionOriginalReduction();
                   int var13;
@@ -42880,7 +42884,7 @@ final class ClientSession implements Runnable {
                int var8 = this.classicWorldInstanceId;
                int var9 = this.positionX;
                int var10 = this.positionY;
-               short var13 = 0;
+               int var13 = 0;
                long var14 = System.nanoTime();
                int var21 = NativeZeroMpConsumption.cost(this, var2);
                byte[] var22 = null;
@@ -48387,7 +48391,9 @@ final class ClientSession implements Runnable {
         if (n < this.config.classicWorldScarecrowMaxLevel()) {
             this.applyClassicWorldNpcReward(monsterTemplate, staticNpc.experience(), 0, 1L, 1L);
         }
-        if (!NativeStaticNpcScene.turn(this.hub, staticNpc, n3 = (n2 = NativeStaticNpcScene.heading(this.hub, staticNpc, this)) + 1 & 7, this)) {
+        n2 = NativeStaticNpcScene.heading(this.hub, staticNpc, this);
+        n3 = n2 + 1 & 7;
+        if (!NativeStaticNpcScene.turn(this.hub, staticNpc, n3, this)) {
             throw new IOException("canonical scarecrow heading update failed object=" + staticNpc.objectId());
         }
         byte[] byArray = new Protocol.Writer().c(28).d(staticNpc.objectId()).c(n3).bytes();
@@ -48786,8 +48792,9 @@ final class ClientSession implements Runnable {
             n23 = this.config.rangedEvasionFixtureD100() > 0 ? this.config.rangedEvasionFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
             bl12 = BattleRangedEvasion.hitsAfterEvasion(n22, n23);
         }
+        BattleFoeSlayerSequence foeSlayerSequence = this.foeSlayerSequence;
         bl12 = CombatKiringku.hit(bl12, sourceWeaponPhysicalStats2);
-        BattleFoeSlayerSequence.Strike strike = this.foeSlayerSequence.next(clientSession.playerObjectId());
+        BattleFoeSlayerSequence.Strike strike = foeSlayerSequence.next(clientSession.playerObjectId());
         BattleCounterBarrier.Decision decision = BattleCounterBarrier.Decision.inactive();
         if (bl12 && !bl2 && (decision = CombatProbability.counterDecision(clientSession, n12, this.effectiveBaseMagicResistance(), false, this.counterBarrierRoll(), l3, this, new Object[0])).triggered()) {
             this.commitClassicWorldPlayerCounterBarrier(clientSession, decision);
@@ -52955,9 +52962,11 @@ final class ClientSession implements Runnable {
             return NativeCompanionPlacement.snapshots(this, List.of());
         }
         List<BattleCompanion> list = this.tamedCompanions;
+        List<BattleCompanion.Snapshot> eligible;
         synchronized (list) {
-            return NativeCompanionPlacement.snapshots(this, this.tamedCompanions.stream().map(BattleCompanion::snapshot).filter(snapshot -> snapshot.kind().classicWorldEligible()).toList());
+            eligible = this.tamedCompanions.stream().map(BattleCompanion::snapshot).filter(snapshot -> snapshot.kind().classicWorldEligible()).toList();
         }
+        return NativeCompanionPlacement.snapshots(this, eligible);
     }
 
     BattleCompanion.Snapshot classicWorldCompanionSnapshot(long objectId) {
@@ -57807,7 +57816,7 @@ final class ClientSession implements Runnable {
                int var11 = this.classicWorldInstanceId;
                int var12 = this.positionX;
                int var13 = this.positionY;
-               short var18 = 0;
+               int var18 = 0;
                long var19 = System.nanoTime();
                int var26 = this.nativeSkillConsumptionIntelligence();
                int var27 = this.nativeSkillConsumptionOriginalReduction();
@@ -59047,7 +59056,7 @@ final class ClientSession implements Runnable {
                int var9 = this.classicWorldInstanceId;
                int var10 = this.positionX;
                int var11 = this.positionY;
-               short var17 = 0;
+               int var17 = 0;
                int var26 = this.nativeSkillConsumptionIntelligence();
                int var27 = this.nativeSkillConsumptionOriginalReduction();
 
@@ -59258,7 +59267,7 @@ final class ClientSession implements Runnable {
                int var8 = this.classicWorldInstanceId;
                int var9 = this.positionX;
                int var10 = this.positionY;
-               short var15 = 0;
+               int var15 = 0;
                int var25 = this.nativeSkillConsumptionIntelligence();
                int var26 = this.nativeSkillConsumptionOriginalReduction();
 
@@ -61856,7 +61865,7 @@ final class ClientSession implements Runnable {
                                  "[LiTo] C_USE_SPELL Wind Shackle rejected target="
                                     + var4.targetObjectId()
                                     + " present="
-                                    + var21
+                                    + (var21 != 0)
                                     + " range="
                                     + var58
                                     + " max="
@@ -65430,7 +65439,7 @@ final class ClientSession implements Runnable {
                   int var24 = combatProbability$0(var2, var20, Math.max(1, var12.level()), var23, this, new Object[]{var12});
                   int var25 = this.config.armorBreakFixtureD100();
                   int var26 = var25 == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : var25;
-                  short var30 = 0;
+                  int var30 = 0;
 
                   RuntimeInventory var27;
                   int var28;
@@ -74172,19 +74181,23 @@ final class ClientSession implements Runnable {
                 return classicWorldFatalContext;
             }
             if (NativePlayerCommit.earlyZero(this, null, true, l) || this.phase != Phase.WORLD || this.playerHp <= 0 || !NativePlayerCommit.admitWorld(d)) {
+                ClassicWorldFatalContext nonFatal = ClassicWorldFatalContext.NON_FATAL;
                 NativePlayerCommit.endCalc(calcTicket);
-                return ClassicWorldFatalContext.NON_FATAL;
+                return nonFatal;
             }
             ClassicWorldMonsterPopulation.Snapshot snapshot = this.hub.classicWorldMonster(this.classicWorldMapId, this.classicWorldInstanceId, l);
             BattleAbilityStatus.IllusionAvatar illusionAvatar = this.abilityStatus.illusionAvatar(System.nanoTime());
             int n = CombatIncomingSource.worldBefore(d, illusionAvatar);
-            if (!NativePlayerCommit.allowDefenseValue(n = NativePlayerCommit.captureWorldDefense(this, n, true, "classic-world", d, illusionAvatar))) {
+            int n2 = NativePlayerCommit.captureWorldDefense(this, n, true, "classic-world", d, illusionAvatar);
+            if (!NativePlayerCommit.allowDefenseValue(n2)) {
+                ClassicWorldFatalContext nonFatal = ClassicWorldFatalContext.NON_FATAL;
                 NativePlayerCommit.endCalc(calcTicket);
-                return ClassicWorldFatalContext.NON_FATAL;
+                return nonFatal;
             }
-            NativePlayerCommit.enqueueWorld(this, n, l, snapshot);
+            NativePlayerCommit.enqueueWorld(this, n2, l, snapshot);
+            ClassicWorldFatalContext nonFatal = ClassicWorldFatalContext.NON_FATAL;
             NativePlayerCommit.endCalc(calcTicket);
-            return ClassicWorldFatalContext.NON_FATAL;
+            return nonFatal;
         }
         catch (Throwable throwable) {
             NativePlayerCommit.endCalc(calcTicket);
@@ -74595,8 +74608,9 @@ final class ClientSession implements Runnable {
             int n = this.timedStatus.hasteSkillId(l);
             int n2 = this.timedStatus.slowSkillId(l);
             ClientSession clientSession = this;
+            BattleTimedStatus battleTimedStatus = clientSession.timedStatus;
             silenceNotice = CombatPoisonLifecycle.silenceNotice(clientSession);
-            BattleTimedStatus.MagicCancellation magicCancellation = CombatPoisonLifecycle.magic(clientSession.timedStatus, clientSession, scope);
+            BattleTimedStatus.MagicCancellation magicCancellation = CombatPoisonLifecycle.magic(battleTimedStatus, clientSession, scope);
             BattleAbilityStatus.Cancellation cancellation = this.abilityStatus.cancelMagicEffects();
             BattleWeaponBuffStatus.Cancellation cancellation2 = this.weaponBuffStatus.cancelMagicEffects();
             boolean bl = this.weightStatus.cancelMagicEffects();
@@ -75840,129 +75854,166 @@ final class ClientSession implements Runnable {
         Object object = this;
         synchronized (object) {
             NativeAcceptedState.requireReceiver(this);
+            BattleTimedStatus timedStatusReceiver1 = this.timedStatus;
             NativeAcceptedState.requireReceiver(this);
-            int n = this.timedStatus.hasteSkillId(l);
+            int n = timedStatusReceiver1.hasteSkillId(l);
             NativeAcceptedState.requireReceiver(this);
+            BattleTimedStatus timedStatusReceiver2 = this.timedStatus;
             NativeAcceptedState.requireReceiver(this);
-            int n2 = this.timedStatus.slowSkillId(l);
+            int n2 = timedStatusReceiver2.slowSkillId(l);
             ClientSession clientSession = this;
             NativeAcceptedState.requireReceiver(this);
+            BattleTimedStatus timedStatusReceiver = clientSession.timedStatus;
             NativeAcceptedState.requireReceiver(this);
             silenceNotice = CombatPoisonLifecycle.silenceNotice(clientSession);
             NativeAcceptedState.requireReceiver(this);
-            BattleTimedStatus.MagicCancellation magicCancellation = CombatPoisonLifecycle.magic(clientSession.timedStatus, clientSession, scope);
+            BattleTimedStatus.MagicCancellation magicCancellation = CombatPoisonLifecycle.magic(timedStatusReceiver, clientSession, scope);
             NativeAcceptedState.requireReceiver(this);
             BattleTimedStatus.MagicCancellation magicCancellation2 = CombatDeathCancellation.timed(magicCancellation, this);
             NativeAcceptedState.requireReceiver(this);
+            BattleAbilityStatus abilityStatusReceiver3 = this.abilityStatus;
             NativeAcceptedState.requireReceiver(this);
-            BattleAbilityStatus.Cancellation cancellation = this.abilityStatus.cancelMagicEffects();
+            BattleAbilityStatus.Cancellation cancellation = abilityStatusReceiver3.cancelMagicEffects();
             NativeAcceptedState.requireReceiver(this);
             BattleAbilityStatus.Cancellation cancellation2 = CombatDeathCancellation.ability(cancellation, this);
             NativeAcceptedState.requireReceiver(this);
+            BattleWeaponBuffStatus weaponBuffStatusReceiver4 = this.weaponBuffStatus;
             NativeAcceptedState.requireReceiver(this);
-            BattleWeaponBuffStatus.Cancellation cancellation3 = this.weaponBuffStatus.cancelMagicEffects();
+            BattleWeaponBuffStatus.Cancellation cancellation3 = weaponBuffStatusReceiver4.cancelMagicEffects();
             NativeAcceptedState.requireReceiver(this);
             BattleWeaponBuffStatus.Cancellation cancellation4 = CombatDeathCancellation.weapon(cancellation3, this);
             NativeAcceptedState.requireReceiver(this);
+            BattleWeightStatus weightStatusReceiver5 = this.weightStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl = this.weightStatus.cancelMagicEffects();
+            boolean bl = weightStatusReceiver5.cancelMagicEffects();
             NativeAcceptedState.requireReceiver(this);
+            BattlePolymorphStatus polymorphStatusReceiver6 = this.polymorphStatus;
             NativeAcceptedState.requireReceiver(this);
-            BattlePolymorphCatalog.Form form = this.polymorphStatus.clear();
+            BattlePolymorphCatalog.Form form = polymorphStatusReceiver6.clear();
             NativeAcceptedState.requireReceiver(this);
             this.pendingShapeChange = null;
             NativeAcceptedState.requireReceiver(this);
+            BattleCookingStatus cookingStatusReceiver7 = this.cookingStatus;
             NativeAcceptedState.requireReceiver(this);
-            List<BattleCookingCatalog.Recipe> list = CombatDeathCancellation.cooking(this.cookingStatus);
+            List<BattleCookingCatalog.Recipe> list = CombatDeathCancellation.cooking(cookingStatusReceiver7);
             NativeAcceptedState.requireReceiver(this);
             boolean bl2 = this.cancelInvisibilityState();
             NativeAcceptedState.requireReceiver(this);
+            BattleVenomEnchantStatus venomEnchantStatusReceiver8 = this.venomEnchantStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl3 = this.venomEnchantStatus.cancel();
+            boolean bl3 = venomEnchantStatusReceiver8.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleElementalFallDownStatus elementalFallDownStatusReceiver9 = this.elementalFallDownStatus;
             NativeAcceptedState.requireReceiver(this);
-            BattleElementalFallDownStatus.Cancellation cancellation5 = this.elementalFallDownStatus.cancel();
+            BattleElementalFallDownStatus.Cancellation cancellation5 = elementalFallDownStatusReceiver9.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleEraseMagicStatus eraseMagicStatusReceiver10 = this.eraseMagicStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl4 = this.eraseMagicStatus.cancel();
+            boolean bl4 = eraseMagicStatusReceiver10.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleCounterMirrorStatus counterMirrorStatusReceiver11 = this.counterMirrorStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl5 = this.counterMirrorStatus.cancel();
+            boolean bl5 = counterMirrorStatusReceiver11.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleClearMindStatus clearMindStatusReceiver12 = this.clearMindStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl6 = this.clearMindStatus.cancel();
+            boolean bl6 = clearMindStatusReceiver12.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleResistElementalStatus resistElementalStatusReceiver13 = this.resistElementalStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl7 = this.resistElementalStatus.cancel();
+            boolean bl7 = resistElementalStatusReceiver13.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleElementalProtectionStatus elementalProtectionStatusReceiver14 = this.elementalProtectionStatus;
             NativeAcceptedState.requireReceiver(this);
-            BattleElementalProtectionStatus.Cancellation cancellation6 = this.elementalProtectionStatus.cancel();
+            BattleElementalProtectionStatus.Cancellation cancellation6 = elementalProtectionStatusReceiver14.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleFireWeaponStatus fireWeaponStatusReceiver15 = this.fireWeaponStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl8 = this.fireWeaponStatus.cancel();
+            boolean bl8 = fireWeaponStatusReceiver15.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleBurningWeaponStatus burningWeaponStatusReceiver16 = this.burningWeaponStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl9 = this.burningWeaponStatus.cancel();
+            boolean bl9 = burningWeaponStatusReceiver16.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleWindShotStatus windShotStatusReceiver17 = this.windShotStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl10 = this.windShotStatus.cancel();
+            boolean bl10 = windShotStatusReceiver17.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleFireBlessStatus fireBlessStatusReceiver18 = this.fireBlessStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl11 = this.fireBlessStatus.cancel();
+            boolean bl11 = fireBlessStatusReceiver18.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleStormEyeStatus stormEyeStatusReceiver19 = this.stormEyeStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl12 = this.stormEyeStatus.cancel();
+            boolean bl12 = stormEyeStatusReceiver19.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleStormShotStatus stormShotStatusReceiver20 = this.stormShotStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl13 = this.stormShotStatus.cancel();
+            boolean bl13 = stormShotStatusReceiver20.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleWindShackleStatus windShackleStatusReceiver21 = this.windShackleStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl14 = this.windShackleStatus.cancel();
+            boolean bl14 = windShackleStatusReceiver21.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleNaturesTouchStatus naturesTouchStatusReceiver22 = this.naturesTouchStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl15 = this.naturesTouchStatus.cancel();
+            boolean bl15 = naturesTouchStatusReceiver22.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleAquaProtectStatus aquaProtectStatusReceiver23 = this.aquaProtectStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl16 = this.aquaProtectStatus.cancel();
+            boolean bl16 = aquaProtectStatusReceiver23.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleWaterLifeStatus waterLifeStatusReceiver24 = this.waterLifeStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl17 = this.waterLifeStatus.cancel();
+            boolean bl17 = waterLifeStatusReceiver24.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleEarthBlessStatus earthBlessStatusReceiver25 = this.earthBlessStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl18 = this.earthBlessStatus.cancel();
+            boolean bl18 = earthBlessStatusReceiver25.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleIronSkinStatus ironSkinStatusReceiver26 = this.ironSkinStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl19 = this.ironSkinStatus.cancel();
+            boolean bl19 = ironSkinStatusReceiver26.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleDragonSkinStatus dragonSkinStatusReceiver27 = this.dragonSkinStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl20 = this.dragonSkinStatus.cancel();
+            boolean bl20 = dragonSkinStatusReceiver27.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleBurningSlashStatus burningSlashStatusReceiver28 = this.burningSlashStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl21 = this.burningSlashStatus.cancel();
+            boolean bl21 = burningSlashStatusReceiver28.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleGuardBrakeStatus guardBrakeStatusReceiver29 = this.guardBrakeStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl22 = this.guardBrakeStatus.cancel();
+            boolean bl22 = guardBrakeStatusReceiver29.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleArmBreakerStatus armBreakerStatusReceiver30 = this.armBreakerStatus;
             NativeAcceptedState.requireReceiver(this);
-            this.armBreakerStatus.cancel();
+            armBreakerStatusReceiver30.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleJoyOfPainStatus joyOfPainStatusReceiver31 = this.joyOfPainStatus;
             NativeAcceptedState.requireReceiver(this);
-            this.joyOfPainStatus.cancel();
+            joyOfPainStatusReceiver31.cancel();
             NativeAcceptedState.requireReceiver(this);
+            BattleResistFearStatus resistFearStatusReceiver32 = this.resistFearStatus;
             NativeAcceptedState.requireReceiver(this);
-            boolean bl23 = this.resistFearStatus.cancel();
+            boolean bl23 = resistFearStatusReceiver32.cancel();
             NativeAcceptedState.requireReceiver(this);
+            GameHub hubReceiver1 = this.hub;
             NativeAcceptedState.requireReceiver(this);
+            long l4 = this.currentRoomId;
             NativeAcceptedState.requireReceiver(this);
             long l2 = this.playerObjectId();
             NativeAcceptedState.requireReceiver(this);
-            boolean bl24 = this.hub.cancelArmorBreak(this.currentRoomId, l2);
+            boolean bl24 = hubReceiver1.cancelArmorBreak(l4, l2);
             NativeAcceptedState.requireReceiver(this);
+            GameHub hubReceiver2 = this.hub;
             NativeAcceptedState.requireReceiver(this);
+            long l5 = this.currentRoomId;
             NativeAcceptedState.requireReceiver(this);
             long l3 = this.playerObjectId();
             NativeAcceptedState.requireReceiver(this);
-            this.hub.cancelPatience(this.currentRoomId, l3);
+            hubReceiver2.cancelPatience(l5, l3);
             NativeAcceptedState.requireReceiver(this);
             if (magicCancellation2.poison()) {
                 NativeAcceptedState.requireReceiver(this);
@@ -75971,9 +76022,11 @@ final class ClientSession implements Runnable {
             playerMagicCancellation = new PlayerMagicCancellation(magicCancellation2, n, n2, cancellation2, cancellation4, bl, form, list, bl2, bl3, cancellation5, bl4, bl5, bl6, bl7, cancellation6, bl8, bl9, bl10, bl11, bl12, bl13, bl14, bl15, bl16, bl17, bl18, bl19, bl20, bl21, bl22, bl23, bl24);
         }
         NativeAcceptedState.requireReceiver(this);
+        GameHub hubReceiver3 = this.hub;
         NativeAcceptedState.requireReceiver(this);
+        long l6 = this.currentRoomId;
         NativeAcceptedState.requireReceiver(this);
-        List<ClientSession> recipients = this.hub.roomMembers(this.currentRoomId);
+        List<ClientSession> recipients = hubReceiver3.roomMembers(l6);
         NativeAcceptedState.requireReceiver(this);
         CombatPoisonLifecycle.cancellationNotice(this, this, playerMagicCancellation, recipients, l, silenceNotice);
     }
@@ -78740,10 +78793,11 @@ final class ClientSession implements Runnable {
         NativeAcceptedState.requireCurrent();
         if (NativePlayerCommit.deathHp(this) == 0 && l > 0L) {
             NativeAcceptedState.requireCurrent();
+            long l8 = this.terminalEffectResultNotBeforeNanos;
             NativeAcceptedState.requireCurrent();
             long l2 = System.nanoTime() + l * 1000000L;
             NativeAcceptedState.requireCurrent();
-            long l3 = Math.max(this.terminalEffectResultNotBeforeNanos, l2);
+            long l3 = Math.max(l8, l2);
             NativeAcceptedState.requireCurrent();
             this.terminalEffectResultNotBeforeNanos = l3;
         }
@@ -78779,62 +78833,76 @@ final class ClientSession implements Runnable {
         NativeAcceptedState.requireCurrent();
         if (NativePlayerCommit.deathHp(this) == 0) {
             NativeAcceptedState.requireCurrent();
+            GameHub gameHub = this.hub;
             NativeAcceptedState.requireCurrent();
+            long l9 = this.currentRoomId;
             NativeAcceptedState.requireCurrent();
             long l4 = this.playerObjectId();
             NativeAcceptedState.requireCurrent();
-            this.hub.cancelArmorBreak(this.currentRoomId, l4);
+            gameHub.cancelArmorBreak(l9, l4);
             NativeAcceptedState.requireCurrent();
+            GameHub gameHub2 = this.hub;
             NativeAcceptedState.requireCurrent();
+            long l10 = this.currentRoomId;
             NativeAcceptedState.requireCurrent();
             long l5 = this.playerObjectId();
             NativeAcceptedState.requireCurrent();
-            this.hub.cancelPatience(this.currentRoomId, l5);
+            gameHub2.cancelPatience(l10, l5);
             NativeAcceptedState.requireCurrent();
             CombatDeathCancellation.death(this);
             NativeAcceptedState.requireCurrent();
+            BattleTimedStatus battleTimedStatus = this.timedStatus;
             NativeAcceptedState.requireCurrent();
-            this.timedStatus.clearWaterDragonAffliction();
+            battleTimedStatus.clearWaterDragonAffliction();
             NativeAcceptedState.requireCurrent();
+            BattleDragonSkinStatus battleDragonSkinStatus = this.dragonSkinStatus;
             NativeAcceptedState.requireCurrent();
-            this.dragonSkinStatus.clear();
+            battleDragonSkinStatus.clear();
             NativeAcceptedState.requireCurrent();
+            BattleAwakenStatus battleAwakenStatus = this.awakenStatus;
             NativeAcceptedState.requireCurrent();
-            BattleAwakenStatus.Snapshot snapshot = this.awakenStatus.clear();
+            BattleAwakenStatus.Snapshot snapshot = battleAwakenStatus.clear();
             NativeAcceptedState.requireCurrent();
             BattleAwakenStatus.Snapshot snapshot2 = CombatBuffLeases.onDeath(snapshot, this);
             NativeAcceptedState.requireCurrent();
             if (snapshot2.active()) {
                 NativeAcceptedState.requireCurrent();
+                BattlePolymorphStatus battlePolymorphStatus = this.polymorphStatus;
                 NativeAcceptedState.requireCurrent();
-                this.polymorphStatus.clear();
+                battlePolymorphStatus.clear();
                 NativeAcceptedState.requireCurrent();
                 long l6 = System.nanoTime();
                 NativeAcceptedState.requireCurrent();
                 this.rebuildMaximumVitals(l6);
             }
             NativeAcceptedState.requireCurrent();
+            BattleBurningSlashStatus battleBurningSlashStatus = this.burningSlashStatus;
             NativeAcceptedState.requireCurrent();
-            this.burningSlashStatus.clear();
+            battleBurningSlashStatus.clear();
             NativeAcceptedState.requireCurrent();
+            BattleGuardBrakeStatus battleGuardBrakeStatus = this.guardBrakeStatus;
             NativeAcceptedState.requireCurrent();
-            this.guardBrakeStatus.clear();
+            battleGuardBrakeStatus.clear();
             NativeAcceptedState.requireCurrent();
+            BattleArmBreakerStatus battleArmBreakerStatus = this.armBreakerStatus;
             NativeAcceptedState.requireCurrent();
-            this.armBreakerStatus.clear();
+            battleArmBreakerStatus.clear();
             NativeAcceptedState.requireCurrent();
+            BattleJoyOfPainStatus battleJoyOfPainStatus = this.joyOfPainStatus;
             NativeAcceptedState.requireCurrent();
-            this.joyOfPainStatus.clear();
+            battleJoyOfPainStatus.clear();
             NativeAcceptedState.requireCurrent();
+            BattleResistFearStatus battleResistFearStatus = this.resistFearStatus;
             NativeAcceptedState.requireCurrent();
-            this.resistFearStatus.clear();
+            battleResistFearStatus.clear();
             NativeAcceptedState.requireCurrent();
+            GameStateStore gameStateStore = this.state;
             NativeAcceptedState.requireCurrent();
             String string4 = this.stateCharacter();
             NativeAcceptedState.requireCurrent();
             GameStateStore.TimedResistFearBuff timedResistFearBuff = GameStateStore.TimedResistFearBuff.none();
             NativeAcceptedState.requireCurrent();
-            this.state.saveTimedResistFearBuff(string4, timedResistFearBuff);
+            gameStateStore.saveTimedResistFearBuff(string4, timedResistFearBuff);
             NativeAcceptedState.requireCurrent();
             this.cancelParalysis("player-death");
             NativeAcceptedState.requireCurrent();
@@ -78866,9 +78934,11 @@ final class ClientSession implements Runnable {
             NativeAcceptedState.requireCurrent();
             byte[] byArray2 = writer8.bytes();
             NativeAcceptedState.requireCurrent();
+            GameHub gameHub3 = this.hub;
             NativeAcceptedState.requireCurrent();
+            long l11 = this.currentRoomId;
             NativeAcceptedState.requireCurrent();
-            List<ClientSession> list = this.hub.roomMembers(this.currentRoomId);
+            List<ClientSession> list = gameHub3.roomMembers(l11);
             NativeAcceptedState.requireCurrent();
             Iterator<ClientSession> iterator = list.iterator();
             while (true) {
