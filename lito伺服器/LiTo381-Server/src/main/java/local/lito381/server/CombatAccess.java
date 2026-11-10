@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 import java.lang.invoke.MethodHandle;
@@ -20,6 +21,7 @@ final class CombatAccess {
         var handle=HANDLES.get(object.getClass()).computeIfAbsent("set:"+name,key->setter(object.getClass(),name));
         try {Object ignored=(Object)handle.invokeExact(object,new Object[]{value});}
         catch(Throwable failure){throw new IllegalStateException("combat field update "+name+" failed",failure);}
+        NativeSourceIcons1Epoch.reflected(object,name);
     }
     private static MethodHandle setter(Class<?> type,String name) {
         for(Class<?> owner=type;owner!=null;owner=owner.getSuperclass())try {

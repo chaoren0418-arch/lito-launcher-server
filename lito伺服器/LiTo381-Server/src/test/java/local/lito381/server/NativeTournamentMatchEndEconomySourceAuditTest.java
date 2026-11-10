@@ -7,28 +7,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
-/** Pins the selected-client per-match economy boundary to RESULT creation. */
+/**
+ * Pins the selected-client per-match economy reset reasons.
+ *
+ * <p>#138 B-land: the RESULT ordering audit was replaced by
+ * {@link NativeTournamentMatchEndEconomyBehaviorTest}. The remaining check only asserts that the
+ * three reset call sites still exist in the candidate source (the reason literals survived
+ * decompilation unchanged); it is kept pending 主控 review of the room-exit/disconnect paths.
+ */
 final class NativeTournamentMatchEndEconomySourceAuditTest {
-    @Test
-    void resultPublishesPrizeBeforeRemovingBoughtMatchItems() throws Exception {
-        String source = Files.readString(Path.of(
-                "src/main/java/local/lito381/server/ClientSession.java"),
-                StandardCharsets.UTF_8).replace("\r\n", "\n");
-        int start = source.indexOf(
-                "void serverEndBattle(BattleRules.Resolution resolution)");
-        int end = source.indexOf("private boolean isPetRaceBattle()", start);
-        assertTrue(start >= 0 && end > start);
-        String handler = source.substring(start, end);
-
-        int result = handler.indexOf("phase = Phase.RESULT;");
-        int record = handler.indexOf("recordBattleResult(", result);
-        int prize = handler.indexOf("awardPetRacePrize();", record);
-        int reset = handler.indexOf(
-                "resetNativeTournamentEconomy(\"battle-result\")", prize);
-        assertTrue(result >= 0 && record > result && prize > record && reset > prize,
-                "RESULT must record outcome and publish any prize before economy reset");
-    }
-
     @Test
     void roomExitBattleQuitAndDisconnectRemainIdempotentSafetyNets()
             throws Exception {

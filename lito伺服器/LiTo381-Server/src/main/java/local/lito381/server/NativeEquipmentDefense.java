@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -15,11 +15,16 @@ import local.lito381.server.CombatAccess;
 import local.lito381.server.CombatWorldPhysical;
 import local.lito381.server.NativeArmorProc;
 import local.lito381.server.NativeCombatAttacker;
+import local.lito381.server.NativeCompanionManaTransfer;
 import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativeProcHealingCompanion;
 import local.lito381.server.NativeProcHealingEncounter;
 import local.lito381.server.NativeProcHealingPlayer;
 import local.lito381.server.NativeProcHealingWorld;
+import local.lito381.server.NativeSourceEquipmentProcLife;
+import local.lito381.server.NativeSourceProc68Icon;
+import local.lito381.server.NativeSourceProcScalarSkills;
+import local.lito381.server.NativeSourceProcTimedRefresh;
 import local.lito381.server.Protocol;
 import local.lito381.server.RuntimeInventory;
 
@@ -40,16 +45,20 @@ final class NativeEquipmentDefense {
         RuntimeInventory runtimeInventory = (RuntimeInventory)CombatAccess.field(clientSession, "inventory");
         NativeArmorProc.Catalog catalog = NativeArmorProc.catalog();
         for (RuntimeInventory.Item item : runtimeInventory.items()) {
-            if (!item.equipped() || !item.definition().sourceArmor()) continue;
+            if (!(!item.equipped() || !item.definition().sourceArmor())) {
             for (NativeArmorProc.Rule rule : catalog.selected(Math.toIntExact(item.definition().catalogId()), item.enchantLevel())) {
                 int n = Math.min(100, Math.max(0, rule.hurt()));
-                if (n == 0) continue;
+                if (!(n == 0)) {
                 probabilityDraws.incrementAndGet();
                 if (ThreadLocalRandom.current().nextInt(100) >= n) continue;
                 arrayList.add(rule);
                 prepared.incrementAndGet();
+
+                }
+}
+
             }
-        }
+}
         return List.copyOf(arrayList);
     }
 
@@ -88,10 +97,12 @@ final class NativeEquipmentDefense {
             n = NativeEquipmentDefense.add(n, n5);
             n2 = NativeEquipmentDefense.add(n2, n6);
             n3 = NativeEquipmentDefense.add(n3, rule.selfHeal() ? n7 : 0);
-            int n8 = n4 = rule.selfHeal() ? 0 : n7;
-            if (n4 <= 0 && rule.gfx() <= 0 && rule.skill() <= 0) continue;
+            n4 = rule.selfHeal() ? 0 : n7;
+            if (!(n4 <= 0 && rule.gfx() <= 0 && rule.skill() <= 0)) {
             arrayList.add(new Effect(rule, n4));
-        }
+
+            }
+}
         return new Resolved(n, n2, n3, arrayList);
     }
 
@@ -109,20 +120,18 @@ final class NativeEquipmentDefense {
                 if (!NativePlayerCommit.validFrame(clientSession) || !NativeEquipmentDefense.alive(clientSession)) break;
                 NativeArmorProc.Rule rule = effect.rule;
                 try {
-                    boolean bl = ref != null
-                            ? NativeCombatAttacker.alive(clientSession, ref)
-                            : clientSession2 != null && binding2 != null && binding2.matches(clientSession2) && NativeEquipmentDefense.alive(clientSession2);
-                    boolean bl2 = bl;
+                    ClientSession clientSession3;
+                    boolean bl;
+                    bl = ref != null ? NativeCombatAttacker.alive(clientSession, ref) : (clientSession2 != null && binding2 != null && binding2.matches(clientSession2) && NativeEquipmentDefense.alive(clientSession2));
                     if (rule.needsTarget() && !bl) continue;
                     if (effect.mpDrain > 0 && bl && (ref != null || clientSession != clientSession2)) {
                         int n;
-                        int n2 = n = ref == null ? NativePlayerCommit.debitMp(clientSession2, binding2, effect.mpDrain) : NativeCombatAttacker.debit(clientSession, ref, effect.mpDrain);
+                        n = ref == null ? NativePlayerCommit.debitMp(clientSession2, binding2, effect.mpDrain) : NativeCompanionManaTransfer.drain(clientSession, ref, effect.mpDrain);
                         if (n > 0) {
                             NativePlayerCommit.recover(clientSession, binding, 0, n, "equipment-drain");
                         }
                     }
-                    ClientSession clientSession3 = rule.selfSkill() ? clientSession : (bl && ref == null ? clientSession2 : null);
-                    ClientSession clientSession4 = clientSession3;
+                    clientSession3 = rule.selfSkill() ? clientSession : (bl && ref == null ? clientSession2 : null);
                     if (!rule.selfSkill() && ref != null && bl) {
                         if (rule.gfx() > 0) {
                             if (rule.gfxMode() == 0 || rule.gfxMode() == 2) {
@@ -177,7 +186,10 @@ final class NativeEquipmentDefense {
         }
     }
 
-    static void skill(ClientSession clientSession, ClientSession clientSession2, NativeArmorProc.Rule rule) {
+    static void nativeSourceEquipmentProcOriginalSkill(ClientSession clientSession, ClientSession clientSession2, NativeArmorProc.Rule rule) {
+        if (NativeSourceProcScalarSkills.handle(clientSession, clientSession2, rule)) {
+            return;
+        }
         if (NativeProcHealingPlayer.apply(clientSession, clientSession2, rule.skill())) {
             return;
         }
@@ -187,21 +199,20 @@ final class NativeEquipmentDefense {
         long l = System.nanoTime();
         BattleAbilityStatus battleAbilityStatus = (BattleAbilityStatus)CombatAccess.field(clientSession2, "abilityStatus");
         BattleSpellCatalog.DamageProtectionSpell damageProtectionSpell = BattleSpellCatalog.damageProtectionSpell(68);
-        boolean bl = NativePlayerCommit.mutateOwned(clientSession2, NativePlayerCommit.frameBinding(clientSession2), () -> {
-            BattleAbilityStatus battleAbilityStatus2 = battleAbilityStatus;
-            synchronized (battleAbilityStatus2) {
+        boolean bl = NativeSourceEquipmentProcLife.nativeSourceTimedRefreshMutateOwned(clientSession2, NativePlayerCommit.frameBinding(clientSession2), () -> {
+            synchronized (battleAbilityStatus) {
                 if (rule.selfSkill() && battleAbilityStatus.immuneToHarm(l).remainingSeconds() > 0) {
                     return false;
                 }
                 int n = rule.seconds() > 0 ? rule.seconds() : damageProtectionSpell.durationSeconds();
-                battleAbilityStatus.activateImmuneToHarm(l, n, damageProtectionSpell.damageDivisor());
+                NativeSourceProcTimedRefresh.activate68(battleAbilityStatus, l, n, damageProtectionSpell.damageDivisor(), rule);
                 return true;
             }
-        });
+        }, clientSession, clientSession2, battleAbilityStatus, rule);
         if (!bl) {
             return;
         }
-        NativePlayerCommit.safeAuxSend(rule.seconds() > 0 ? clientSession : clientSession2, Protocol.effectObject(clientSession2.playerObjectId(), damageProtectionSpell.effectGfx()), "S_EFFECT equipment-hurt skill=68 seconds=" + (rule.seconds() > 0 ? rule.seconds() : damageProtectionSpell.durationSeconds()));
+        NativeSourceProc68Icon.output(rule.seconds() > 0 ? clientSession : clientSession2, Protocol.effectObject(clientSession2.playerObjectId(), damageProtectionSpell.effectGfx()), "S_EFFECT equipment-hurt skill=68 seconds=" + (rule.seconds() > 0 ? rule.seconds() : damageProtectionSpell.durationSeconds()), clientSession, clientSession2, rule);
     }
 
     static long probabilityDraws() {
@@ -220,7 +231,12 @@ final class NativeEquipmentDefense {
         return applied.get();
     }
 
-    record Resolved(int reflect, int hp, int mp, List<Effect> effects) {Resolved {
+    static void skill(ClientSession clientSession, ClientSession clientSession2, NativeArmorProc.Rule rule) {
+        NativeSourceEquipmentProcLife.skill(clientSession, clientSession2, rule);
+    }
+
+    record Resolved(int reflect, int hp, int mp, List<Effect> effects) {
+        Resolved {
             effects = List.copyOf(effects);
         }
 

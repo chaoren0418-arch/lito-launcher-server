@@ -1,43 +1,40 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Transient cancelable player AC penalty for native skill183. */
 import java.util.concurrent.TimeUnit;
 
-/** Transient cancelable player AC penalty for native skill183. */
 final class BattleGuardBrakeStatus {
-    record Snapshot(boolean active, int armorClass, int remainingSeconds) {
-        static Snapshot none() {
-            return new Snapshot(false, 0, 0);
-        }
-    }
-
     private long expiresAtNanos;
     private int armorClass;
+    volatile transient long nativeSourceIcons1Version;
 
-    synchronized boolean activate(
-            long nowNanos, int durationSeconds, int armorClassModifier) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || armorClassModifier <= 0 || armorClassModifier > 127) {
+    BattleGuardBrakeStatus() {
+    }
+
+    synchronized boolean activate(long nowNanos, int durationSeconds, int armorClassModifier) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || armorClassModifier <= 0 || armorClassModifier > 127) {
             throw new IllegalArgumentException("invalid native Guard Brake lease");
         }
-        boolean refreshed = expiresAtNanos != 0 && nowNanos < expiresAtNanos;
-        expiresAtNanos = Math.addExact(
-                nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
-        armorClass = armorClassModifier;
-        return refreshed;
+        boolean bl = this.expiresAtNanos != 0L && nowNanos < this.expiresAtNanos;
+        BattleGuardBrakeStatus battleGuardBrakeStatus;
+        (battleGuardBrakeStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleGuardBrakeStatus);
+        this.armorClass = armorClassModifier;
+        return bl;
     }
 
     synchronized Snapshot snapshot(long nowNanos) {
-        if (nowNanos < 0) {
+        if (nowNanos < 0L) {
             throw new IllegalArgumentException("invalid Guard Brake time");
         }
-        if (expiresAtNanos == 0 || nowNanos >= expiresAtNanos) {
+        if (this.expiresAtNanos == 0L || nowNanos >= this.expiresAtNanos) {
             return Snapshot.none();
         }
-        long remainingNanos = expiresAtNanos - nowNanos;
-        long second = TimeUnit.SECONDS.toNanos(1);
-        int remaining = (int) Math.min(0xFFFFL,
-                Math.max(1L, (remainingNanos + second - 1) / second));
-        return new Snapshot(true, armorClass, remaining);
+        long l2 = this.expiresAtNanos - nowNanos;
+        long l3 = TimeUnit.SECONDS.toNanos(1L);
+        int n = (int)Math.min(65535L, Math.max(1L, (l2 + l3 - 1L) / l3));
+        return new Snapshot(true, CombatBuffLeases.value(this.armorClass, 183, "AC"), n);
     }
 
     synchronized int armorClass(long nowNanos) {
@@ -60,7 +57,15 @@ final class BattleGuardBrakeStatus {
     }
 
     synchronized void clear() {
-        expiresAtNanos = 0;
-        armorClass = 0;
+        BattleGuardBrakeStatus battleGuardBrakeStatus;
+        (battleGuardBrakeStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleGuardBrakeStatus);
+        this.armorClass = 0;
+    }
+
+    record Snapshot(boolean active, int armorClass, int remainingSeconds) {
+        static Snapshot none() {
+            return new Snapshot(false, 0, 0);
+        }
     }
 }

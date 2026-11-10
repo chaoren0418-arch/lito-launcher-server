@@ -1304,7 +1304,28 @@ final class ClientSessionClassicWorldMonsterAggressionIntegrationTest {
             Method method = GameHub.class.getDeclaredMethod(
                     "classicWorldMonsterTickSafely");
             method.setAccessible(true);
-            method.invoke(hub);
+            onBattleClock(() -> method.invoke(hub));
+        }
+
+        /**
+         * #138 B-land: production schedules the monster tick on the single battle clock.  Candidate
+         * 50635f7e nests population -> hub monitors there, so a test-thread tick racing the live
+         * companion tick (hub -> population) deadlocks.  Run it where production runs it.
+         */
+        private void onBattleClock(java.util.concurrent.Callable<Object> body) throws Exception {
+            Field field = GameHub.class.getDeclaredField("battleClock");
+            field.setAccessible(true);
+            ScheduledExecutorService clock = (ScheduledExecutorService) field.get(hub);
+            if (clock.isShutdown()) {
+                body.call();
+                return;
+            }
+            try {
+                clock.submit(body).get(30, TimeUnit.SECONDS);
+            } catch (java.util.concurrent.ExecutionException failure) {
+                if (failure.getCause() instanceof Exception cause) throw cause;
+                throw failure;
+            }
         }
 
         void tick(ClassicWorldMonsterPopulation selectedPopulation,
@@ -1313,7 +1334,7 @@ final class ClientSessionClassicWorldMonsterAggressionIntegrationTest {
                     "classicWorldMonsterTick", int.class, int.class,
                     ClassicWorldMonsterPopulation.class, long.class);
             method.setAccessible(true);
-            method.invoke(hub, MAP_ID, -1, selectedPopulation, nowNanos);
+            onBattleClock(() -> method.invoke(hub, MAP_ID, -1, selectedPopulation, nowNanos));
         }
 
         @Override

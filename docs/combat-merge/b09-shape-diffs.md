@@ -5,7 +5,7 @@
 
 - 驗證對象：`task/70` staged 三個外層類別編譯產物（JAR SHA-256 `aa94ee447b870509035c1cb947d30085d91eb380321cbc0a0aef311ffed0b679`），對照 `reference/candidate-50635f7e.jar`。
 - 比較器：`tools/semantic-diff`（ASM 9.7），傳入 T029、effects、extra-methods、exceptions、metadata 核准清單（指令見 `docs/reports/issue-70.md`）。
-- 本清單 **174** 個 DIFF 方法 + **9** 個 ONLY_LEFT lambda。另有 1 個方法（`sourceApplicationRun`）不是形狀差異，列在最後一節待主控裁定。
+- 本清單 **174** 個 DIFF 方法 + **9** 個 ONLY_LEFT lambda。另有 1 個方法（`sourceApplicationRun`）多 1 次已核准的 `rethrowUnchecked` 呼叫，依 [#70 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6773685807) 於 B-land（#138）補列於最後一節，一併交 M2 離線回歸驗收。
 
 ## 收錄條件（每個方法都經機器檢查）
 
@@ -3550,8 +3550,39 @@
  ASTORE 3
 ```
 
-## 不屬於形狀差異：`sourceApplicationRun()V`（待主控裁定）
+## `sourceApplicationRun()V`：已核准的額外 `rethrowUnchecked` 呼叫（#70 主控裁定，B-land 補列）
 
 候選第一個陳述式是直接呼叫 `SourceLogin.allowed(Socket, ServerConfig)`（宣告 `throws Exception`），外面沒有 try；而 `sourceApplicationRun` 與呼叫它的 `run()`（T029，正式版 SAME）都沒有 throws。
 Java 原始碼要在不宣告 throws 的方法中呼叫 `throws Exception` 的方法，只有三條路：(1) 加 catch 後轉拋（需要額外呼叫，即目前已核准的 `rethrowUnchecked`）；(2) 方法宣告 `throws Exception`，但 `run()` 是 `Runnable.run` 覆寫，必須再加 catch，會破壞 T029 的 `run()` SAME；(3) catch 後 `throw (RuntimeException) e`，checked 例外會變成 ClassCastException，行為不同。
 因此本輪保留 (1)，事件差異只有「`allowed` 失敗時多一次 `rethrowUnchecked` 呼叫」，該 helper 只做 `throw (E) t`，原例外原樣拋出。其餘 handler／CFG 差異（`readFrames` 迴圈、finally 清理）呼叫與欄位多重集合除上述外相同。
+
+| 方法 | 類別 | 差異 | 驗收 |
+|---|---|---|---|
+| `ClientSession#sourceApplicationRun()V` | `local/lito381/server/ClientSession` | `SourceLogin.allowed` 拋出 checked 例外時多 1 次已核准的 `rethrowUnchecked` 呼叫（原例外原樣拋出）；其餘呼叫與欄位多重集合相同 | M2 離線回歸 |
+
+## M2 回歸：monster tick／companion tick 取鎖順序（#138 主控裁定第 3 點）
+
+兩把鎖：`GameHub` 物件 monitor（下稱 hub）與 `ClassicWorldMonsterPopulation` 物件 monitor（下稱 population；`classicWorldMonsters`、Ckew／水龍副本各自一個）。行號為 B-land 後 `src/main`。
+
+| 路徑 | 執行緒 | 取鎖順序 | 呼叫鏈 |
+|---|---|---|---|
+| monster tick | `lito381-battle-clock`（`GameHub.java:1494` 排程 `classicWorldMonsterTickSafely`） | population → hub | `classicWorldMonsterTick`（不持 hub）→ `population.moveToward`（synchronized，`ClassicWorldMonsterPopulation.java:4345`）→ `ClassicWorldNpcPathfinder` 的 blocked lambda → `NativeStaticNpcMotion.occupies(map,x,y,population)`（`:240`）→ `occupies(hub,…)`（`:75`）→ `NativeStaticCancellationReplacement.all/live` → `synchronized(hub)`（`NativeStaticCancellationReplacement.java:6`）。`moveAway`、`idleMove`、`itemAction`、`returnGuardHome`、`nearTeleport`、`respawn`／`spawnQuestMonsterAt`（經 `place`／`commitIfAvailable`）同樣在 population 內呼叫 `NativeStaticNpcMotion.occupies` |
+| companion tick（static NPC motion） | `lito381-battle-clock`（`GameHub.java:1483` 排程 `companionTickSafely` → `NativeStaticNpcMotion.tickSafely`） | hub → population | `NativeStaticNpcMotion.tick` `synchronized(hub)`（`:171`）→ `synchronized(population)`（`:186`） |
+| 玩家近戰 C_ATTACK | client 執行緒（`ClientSession.run` 封包分派，`ClientSession.java:1764`） | hub → population | `attack` → `nativeSourceControlledOriginal_attack` → `attackClassicWorld` → `CombatWorldCommit.prepare`：`synchronized(hub)`（`CombatWorldCommit.java:19`）→ `synchronized(a.population())`（`:21`）；`:31`、`:40` 同順序 |
+| 玩家魔法攻擊 | client 執行緒（`ClientSession.java:81832` `CombatWorldMagic.prepare`） | hub → population | `CombatWorldMagic.java:20/24/30`：`synchronized(hub)` → `synchronized(a.population())` |
+| 馴服捕捉 | client 執行緒（`ClientSession.java:64378` `NativeTamedCaptureLifecycle.capture` 等） | hub → population | `NativeTamedCaptureLifecycle.java:15-16/41/52-53/64` |
+| 斷線清理 | client 執行緒（`ClientSession.run()` finally → `GameHub.disconnect`） | hub → population | `nativeSummonOriginalDisconnect`（synchronized，`GameHub.java:1832`）→ `clearClassicWorldTargetsForOwner`（`:2076`）→ `clearClassicWorldMonsterTargets` → `population.clearTargetsForPlayer`（synchronized） |
+
+battle clock 是 `newSingleThreadScheduledExecutor`（`GameHub.java:1467`），monster tick 與 companion tick 彼此串行，**兩者之間**不會死鎖。
+但 client 執行緒的 hub → population（攻擊、魔法、捕捉、斷線）與 battle clock monster tick 的 population → hub 方向相反：client 持 hub 等 population、battle clock 在 `moveToward` 內持 population 等 hub，即可形成死鎖（CI 第 1、2 輪 thread dump 的形狀相同，只是當時由測試執行緒扮演 monster tick）。
+
+對正式版：`CombatWorldCommit`、`CombatWorldMagic`、`ClassicWorldNpcPathfinder` 對 `base-0.6.71.jar` 為 SAME（client 的 hub → population 在 0.6.71 已存在）；`NativeStaticNpcMotion`、`NativeStaticCancellationReplacement` 與 `ClassicWorldMonsterPopulation.lambda$moveToward$32` 在 0.6.71 不存在（ONLY_LEFT）。也就是 population → hub 這個方向是候選 50635f7e 新增的，0.6.71 沒有這個反向。
+
+M2 回歸要驗：多名玩家在有 static NPC 的地圖持續近戰／施法打怪，同時怪物在追擊移動（`moveToward`），長時間（建議 ≥30 分鐘）不得卡住；卡住時取 `jstack`，確認是否為上述兩條鏈。已列 needs:claude 請主控裁定是否在 M2 之前修正（例如 population 內改用不取 hub 的 static NPC 佔位快照）。
+### 修正（#138 主控裁定 @ `d256af70` 第 3 點，已登記 method-diff）
+
+- `NativeStaticNpcMotion.occupies(map,x,y,population)` 改為**不取 hub 監視器**：直接讀 volatile 的 `State.poses`（不可變 `Map.copyOf`）與 `NativeStaticNpcScene.State.actors`（改為 `ConcurrentHashMap`，寫入端仍持 hub）判斷靜態 NPC 佔位與 Cancellation 取代（retired）狀態，結果與 hub 鎖內的 `occupies(hub,…)` 相同。
+- monster tick 因此只持 population、不再等 hub，population → hub 的反向消失；companion tick 與 client 執行緒維持 0.6.71 的 hub → population。
+- 讀到的是最近一次在 hub 鎖內發布的快照，最多落後一次 publish（與 tick 先後順序的一般競態同級；真正的落地提交仍在 hub 鎖內）。
+- 確定性測試：`NativeStaticNpcMotionLockOrderTest`（兩條執行緒以 latch 各拿一把鎖；以 `ThreadMXBean` 判斷 tick 是否 BLOCKED 在 client 持有的 hub 上，不靠逾時）。
+- M2 回歸仍建議照上段做長時間打怪，確認 `jstack` 沒有其他鎖鏈。

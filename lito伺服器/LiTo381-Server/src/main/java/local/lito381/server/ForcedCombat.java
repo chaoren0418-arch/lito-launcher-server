@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 import java.lang.reflect.*;
@@ -35,7 +36,7 @@ final class ForcedCombat {
                 | ((packet[offset+2]&255L)<<16) | ((packet[offset+3]&255L)<<24);
     }
 
-    static byte[] unwrap(byte[] packet) {
+    static byte[] nativeForestOriginalUnwrap(byte[] packet) {
         if (packet == null || packet.length < 15) return packet;
         int end = packet.length-8;
         for (int i=0;i<4;i++) if (packet[end+i]!=MAGIC[i]) return packet;
@@ -89,5 +90,14 @@ final class ForcedCombat {
         CURRENT.remove();
         try { return hub.canAttack(roomId, attacker, owner); }
         finally { CURRENT.set(intent); }
+    }
+
+    static byte[] unwrap(byte[] byArray) {
+        return NativeSelectorOnlyCtrl.unwrap(byArray);
+    }
+
+    static boolean nativeSelectedObjectIntent(ClientSession clientSession, long l) {
+        Intent intent = CURRENT.get();
+        if(intent != null && intent.attacker() == clientSession && intent.target() == l) return true; return false;
     }
 }

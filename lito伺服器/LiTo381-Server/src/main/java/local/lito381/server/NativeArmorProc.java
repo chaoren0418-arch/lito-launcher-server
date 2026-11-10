@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -37,7 +37,7 @@ final class NativeArmorProc {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(4);
             try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("SELECT id,item_id,enchant_level,proc_group,on_attack_chance,on_hurt_chance,flat_damage,rand_damage,heal_hp,heal_hp_rand,heal_mp,heal_mp_rand,heal_mode,trigger_skill,skill_time_sec,skill_target,gfx_id,gfx_mode FROM `\u88dd\u5099_armor_\u9b54\u6cd5` ORDER BY item_id,enchant_level,proc_group,id");){
+                 ResultSet resultSet = statement.executeQuery("SELECT `\u7de8\u865f` AS `id`,`\u9053\u5177\u7de8\u865f` AS `item_id`,`\u5f37\u5316\u503c` AS `enchant_level`,`\u89f8\u767c\u6548\u679c\u7fa4\u7d44` AS `proc_group`,`\u653b\u64ca\u89f8\u767c\u6a5f\u7387` AS `on_attack_chance`,`\u53d7\u50b7\u89f8\u767c\u6a5f\u7387` AS `on_hurt_chance`,`\u56fa\u5b9a\u984d\u5916\u50b7\u5bb3` AS `flat_damage`,`\u96a8\u6a5f\u984d\u5916\u50b7\u5bb3` AS `rand_damage`,`\u56fa\u5b9a\u9ad4\u529b\u56de\u5fa9` AS `heal_hp`,`\u96a8\u6a5f\u9ad4\u529b\u56de\u5fa9` AS `heal_hp_rand`,`\u56fa\u5b9a\u9b54\u529b\u91cf` AS `heal_mp`,`\u96a8\u6a5f\u9b54\u529b\u91cf` AS `heal_mp_rand`,`\u9b54\u529b\u56de\u5fa9\u6a21\u5f0f` AS `heal_mode`,`\u89f8\u767c\u6280\u80fd\u7de8\u865f` AS `trigger_skill`,`\u6280\u80fd\u6301\u7e8c\u79d2\u6578` AS `skill_time_sec`,`\u6280\u80fd\u76ee\u6a19` AS `skill_target`,`\u7279\u6548\u7de8\u865f` AS `gfx_id`,`\u7279\u6548\u6a21\u5f0f` AS `gfx_mode` FROM `\u88dd\u5099_armor_\u9b54\u6cd5` ORDER BY item_id,enchant_level,proc_group,id");){
                 while (resultSet.next()) {
                     Rule rule = new Rule(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5), resultSet.getInt(6), resultSet.getInt(7), resultSet.getInt(8), resultSet.getInt(9), resultSet.getInt(10), resultSet.getInt(11), resultSet.getInt(12), resultSet.getInt(13), resultSet.getInt(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getInt(17), resultSet.getInt(18));
                     linkedHashMap.computeIfAbsent(rule.item, n -> new ArrayList()).add(rule);
@@ -58,8 +58,9 @@ final class NativeArmorProc {
         return catalog;
     }
 
-    record Catalog(String database, Map<Integer, List<Rule>> items, int rows) {Catalog {
-            LinkedHashMap<Integer, List<Rule>> linkedHashMap = new LinkedHashMap<Integer, List<Rule>>();
+    record Catalog(String database, Map<Integer, List<Rule>> items, int rows) {
+        Catalog {
+            LinkedHashMap linkedHashMap = new LinkedHashMap();
             items.forEach((n, list) -> linkedHashMap.put(n, List.copyOf(list)));
             items = Map.copyOf(linkedHashMap);
         }

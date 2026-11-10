@@ -1,3 +1,5 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
+// 待驗證：候選的 nativeShockCompanionBody 保留移除 monitor 後的 POP／例外表；尚未通過完整語意驗收，見 issue-68 報告。
 package local.lito381.server;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -53,7 +55,7 @@ final class CombatCompanionSpells {
         int frozen=0;if(batch==null)return frozen;
         for(var hit:batch.hits()) {
             if(hit.damage()<0||!available(caster,hit.target()))continue;var controlled=(BattleCompanion)CombatAccess.get(hit.target(),"controlled");
-            int applied=CombatAccess.integerCall(caster,"applyBattleSpellCompanionDamage","("+T+"II)I",hit.target(),hit.damage(),skill);boolean accepted=applied>0||hit.damage()==0&&available(caster,hit.target());
+            int applied=NativeSourceControlledDisplay.invokeMagic(caster,"applyBattleSpellCompanionDamage","("+T+"II)I",new Object[]{hit.target(),hit.damage(),skill});boolean accepted=applied>0||hit.damage()==0&&available(caster,hit.target());
             if(accepted){controlled.consumeEraseMagic(hit.attempt().eraseMagic());controlled.cancelSleep();}
             boolean freeze=spell!=null&&accepted&&hit.attempt().probability()>=hit.roll()&&hit.roll()>0&&available(caster,hit.target())&&controlled.activateFreeze(now,spell.durationSeconds());
             if(freeze) {
@@ -80,26 +82,31 @@ final class CombatCompanionSpells {
     static boolean shock(ClientSession caster,byte[] payload,BattleSpellCatalog.ShockStunSpell spell) {
         return shock(caster,payload,spell,sides->ThreadLocalRandom.current().nextInt(1,sides+1));
     }
-    static boolean shock(ClientSession caster,byte[] payload,BattleSpellCatalog.ShockStunSpell spell,IntUnaryOperator roll) {
+    static boolean shock(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.ShockStunSpell shockStunSpell, IntUnaryOperator intUnaryOperator) {
+        return NativeShockCompanionAction.shock(clientSession, byArray, shockStunSpell, intUnaryOperator);
+    }
+    static int checkedRoll(IntUnaryOperator roll,int sides){int value=roll.applyAsInt(sides);if(value<1||value>sides)throw new IllegalArgumentException("controlled spell random out of range");return value;}
+
+    static boolean nativeShockCompanionBody(ClientSession caster,byte[] payload,BattleSpellCatalog.ShockStunSpell spell,IntUnaryOperator roll,Object selectedTarget) {
         if(!CombatRules.loaded())return false;
         var request=Protocol.attackSpellRequest(payload);if(request.skillId()!=spell.skillId())return false;
-        Object target=CombatAccess.call(caster,"resolveBattleSpellCompanion","(J)"+T,request.targetObjectId());if(target==null)return false;
+        Object target=selectedTarget;if(target==null)return false;
         var owner=(ClientSession)CombatAccess.get(target,"owner");var controlled=(BattleCompanion)CombatAccess.get(target,"controlled");var actor=(BattleCompanion.Snapshot)CombatAccess.get(target,"snapshot");var stats=(SourceNpcPhysicalStats)CombatAccess.get(target,"stats");
         var hub=(GameHub)CombatAccess.field(caster,"hub");long room=((Number)CombatAccess.field(caster,"currentRoomId")).longValue();int sx=integer(caster,"positionX"),sy=integer(caster,"positionY");int map=hub.battleMapId(room,caster),walk=caster.battleWalkAction(),action=BattleActionCodes.attackForWalk(walk);
-        if(stats==null||!available(caster,target)||owner!=caster&&!hub.canAttack(room,caster,owner)
+        if(stats==null||!NativeShockCompanionAction.available(caster,target)||owner!=caster&&!hub.canAttack(room,caster,owner)
                 ||Math.max(Math.abs(sx-actor.x()),Math.abs(sy-actor.y()))>spell.maximumRange()||!spell.supportsWalkAction(walk)
                 ||!BattleAnimationCatalog.get().supportsTimedAction(caster.battleGfx(),action)
                 ||!BattleSpellCatalog.isInNativeScreen(sx,sy,actor.x(),actor.y())
                 ||!BattleSpellCatalog.hasNativeLineOfSight(ArenaMapCatalog.forMap(map),sx,sy,actor.x(),actor.y()))return true;
         var summary=(CharacterSummary)CombatAccess.call(caster,"selectedCharacterSummary","()L"+P+"CharacterSummary;");var equipment=(SourceEquipmentMagicStats)CombatAccess.call(caster,"requiredEquipmentMagicStats","()L"+P+"SourceEquipmentMagicStats;");
-        int intelligence=equipment.effectiveIntelligence(CombatAccess.integerCall(caster,"baseIntelligence","()I"));int mpCost=spell.effectiveMpCost(intelligence,BattleSpellCatalog.originalMagicConsumeReduction(summary.type(),summary.originalIntelligence()));
+        int intelligence=equipment.effectiveIntelligence(CombatAccess.integerCall(caster,"baseIntelligence","()I"));int mpCost=NativeSkillConsumptionBridges.ShockStunSpell_effectiveMpCost_III(spell,intelligence,BattleSpellCatalog.originalMagicConsumeReduction(summary.type(),summary.originalIntelligence()));
         int hpCost=CombatDatabase.value(0,87,"ShockStunSpell","hpCost"),material=CombatDatabase.value(0,87,"ShockStunSpell","itemConsumeId"),count=CombatDatabase.value(0,87,"ShockStunSpell","itemConsumeCount");
         var attempt=prepare(caster,controlled,stats,spell,System.nanoTime());long now;int hp,mp;RuntimeInventory previous=null,inventory;
-        synchronized(caster) {
+        { // Candidate admission owns the player action lock; no caster monitor.
             now=System.nanoTime();var ready=(Map<Integer,Long>)CombatAccess.field(caster,"spellReadyNanos");hp=integer(caster,"playerHp");mp=integer(caster,"playerMp");
-            if(!available(caster,target)||sx!=integer(caster,"positionX")||sy!=integer(caster,"positionY")||hp<=hpCost||mp<mpCost||now<ready.getOrDefault(87,0L))return true;
-            inventory=(RuntimeInventory)CombatAccess.field(caster,"inventory");if(material!=0)previous=inventory.copy();if(!CombatDatabase.consumeMaterial(inventory,material,count))return true;
-            CombatAccess.call(caster,"cancelMeditation","(Ljava/lang/String;)V","spell-87");hp-=hpCost;mp-=mpCost;CombatAccess.set(caster,"playerHp",hp);CombatAccess.set(caster,"playerMp",mp);CombatAccess.call(caster,"commitSpellReady","(IJ)V",87,now+spell.reuseDelayMillis()*1_000_000L);
+            if(!NativeShockCompanionAction.available(caster,target)||sx!=integer(caster,"positionX")||sy!=integer(caster,"positionY")||hp<=hpCost||mp<mpCost||now<ready.getOrDefault(87,0L))return true;
+            previous=null;inventory=null;if(!NativeShockCompanionAction.admit(caster,target,spell))return true;previous=NativeCastMaterial.previous(caster);inventory=NativeCastMaterial.next(caster);now=System.nanoTime();
+            CombatAccess.call(caster,"cancelMeditation","(Ljava/lang/String;)V","spell-87");hp-=hpCost;mp-=mpCost;CombatAccess.set(caster,"playerHp",hp);CombatAccess.set(caster,"playerMp",mp=NativeSkillConsumption.boundMp(caster,mp));CombatAccess.call(caster,"commitSpellReady","(IJ)V",87,now+spell.reuseDelayMillis()*1_000_000L);
         }
         if(previous!=null)CombatAccess.call(caster,"sendInventoryDelta","(L"+P+"RuntimeInventory;L"+P+"RuntimeInventory;)V",previous,inventory);
         int source=spell.baseDamage();for(int i=0;i<spell.diceCount();i++)source=Math.addExact(source,checkedRoll(roll,spell.dieSides()));
@@ -110,13 +117,13 @@ final class CombatCompanionSpells {
         byte[] attack=Protocol.shockStunAttack(action,caster.playerObjectId(),actor.objectId(),damage,face),impact=Protocol.effectObject(actor.objectId(),spell.impactGfx());
         for(var member:recipients){if(!(boolean)CombatAccess.field(caster,"invisible")||member==caster)send(member,attack,"S_ATTACK controlled Shock Stun target="+actor.objectId()+" damage="+damage);send(member,impact,"S_EFFECT controlled Shock Stun target="+actor.objectId());}
         send(caster,Protocol.manaPoint(mp,integer(caster,"playerMaxMp")),"S_MANA_POINT controlled Shock Stun");if(hpCost!=0)send(caster,new Protocol.Writer().c(Protocol.S_HIT_POINT).h(hp).h(integer(caster,"playerMaxHp")).bytes(),"S_HIT_POINT controlled Shock Stun");
-        int appliedDamage=CombatAccess.integerCall(caster,"applyBattleSpellCompanionDamage","("+T+"II)I",target,damage,87);
+        int appliedDamage=NativeSourceControlledDisplay.invokeMagic(caster,"applyBattleSpellCompanionDamage","("+T+"II)I",new Object[]{target,damage,87});
         // Damaging attempts release target mutations only after native damage acceptance.
         // The source queues zero-damage target mutations directly after accepted cast costs.
-        boolean accepted=appliedDamage>0||damage==0&&available(caster,target);
+        boolean accepted=appliedDamage>0||damage==0&&NativeShockCompanionAction.available(caster,target);
         if(accepted){controlled.consumeEraseMagic(attempt.eraseMagic());controlled.cancelSleep();}
         int percentile=checkedRoll(roll,100),duration=0;boolean stunned=false;
-        if(accepted&&attempt.probability()>0&&percentile<=attempt.probability()&&available(caster,target)) {
+        if(accepted&&attempt.probability()>0&&percentile<=attempt.probability()&&NativeShockCompanionAction.available(caster,target)) {
             duration=spell.rollStunSeconds(sides->checkedRoll(roll,sides));var status=(BattleTimedStatus)CombatAccess.field(controlled,"timedStatus");
             synchronized(controlled){status.cancelShockStun();stunned=controlled.activateShockStun(now,duration,spell.maximumStunSeconds())!=null;}
             if(stunned){var placement=hub.placeShockStunEffect(room,actor.objectId(),actor.x(),actor.y(),now,duration);if(placement!=null)for(var member:recipients){if(placement.previous()!=null)send(member,Protocol.removeObject(placement.previous().objectId()),"S_REMOVE_OBJECT controlled Shock Stun effect="+placement.previous().objectId());send(member,Protocol.shockStunEffect(placement.placed()),"S_PUT_OBJECT controlled Shock Stun effect="+placement.placed().objectId()+" target="+actor.objectId()+" duration="+duration);}}
@@ -124,5 +131,4 @@ final class CombatCompanionSpells {
         System.out.println("[LiTo] controlled BATTLE Shock Stun target="+actor.objectId()+" kind="+actor.kind()+" damage="+appliedDamage+" probability="+attempt.probability()+" roll="+percentile+" mr="+attempt.magicResistance()+" applied="+stunned+" seconds="+duration+" mp-cost="+mpCost+" hp-cost="+hpCost);
         return true;
     }
-    static int checkedRoll(IntUnaryOperator roll,int sides){int value=roll.applyAsInt(sides);if(value<1||value>sides)throw new IllegalArgumentException("controlled spell random out of range");return value;}
 }

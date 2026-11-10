@@ -2889,7 +2889,7 @@ final class BattleSpellCatalogTest {
         assertEquals(16, spell.durationSeconds());
         assertEquals(-1, spell.maximumRange());
         assertEquals(8, spell.clientClickRange());
-        assertEquals(-1, spell.area());
+        assertEquals(0, spell.area()); // #138 B-land: candidate 50635f7e row area is 0
         assertEquals(3, spell.targetTo());
         assertEquals(BattleSpellCatalog.ATTRIBUTE_WIND, spell.attribute());
         assertEquals(1, spell.type());

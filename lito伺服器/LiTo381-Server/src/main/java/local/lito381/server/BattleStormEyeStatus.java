@@ -1,45 +1,40 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Authoritative cancelable lease for native Elf skill156 Storm Eye. */
 import java.util.concurrent.TimeUnit;
 
-/** Authoritative cancelable lease for native Elf skill156 Storm Eye. */
 final class BattleStormEyeStatus {
-    record Snapshot(
-            boolean active, int rangedHit, int rangedDamage,
-            int remainingSeconds) {
-        static Snapshot none() {
-            return new Snapshot(false, 0, 0, 0);
-        }
-    }
-
     private long expiresAtNanos;
     private int rangedHit;
     private int rangedDamage;
+    volatile transient long nativeSourceIcons1Version;
 
-    synchronized boolean activate(
-            long nowNanos, int durationSeconds,
-            int hitModifier, int damageModifier) {
-        validate(nowNanos, durationSeconds, hitModifier, damageModifier);
-        boolean refreshed = expiresAtNanos != 0 && nowNanos < expiresAtNanos;
-        expiresAtNanos = Math.addExact(
-                nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
-        rangedHit = hitModifier;
-        rangedDamage = damageModifier;
-        return refreshed;
+    BattleStormEyeStatus() {
+    }
+
+    synchronized boolean activate(long nowNanos, int durationSeconds, int hitModifier, int damageModifier) {
+        BattleStormEyeStatus.validate(nowNanos, durationSeconds, hitModifier, damageModifier);
+        boolean bl = this.expiresAtNanos != 0L && nowNanos < this.expiresAtNanos;
+        BattleStormEyeStatus battleStormEyeStatus;
+        (battleStormEyeStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleStormEyeStatus);
+        this.rangedHit = hitModifier;
+        this.rangedDamage = damageModifier;
+        return bl;
     }
 
     synchronized Snapshot snapshot(long nowNanos) {
-        if (nowNanos < 0) {
+        if (nowNanos < 0L) {
             throw new IllegalArgumentException("invalid Storm Eye time");
         }
-        if (expiresAtNanos == 0 || nowNanos >= expiresAtNanos) {
+        if (this.expiresAtNanos == 0L || nowNanos >= this.expiresAtNanos) {
             return Snapshot.none();
         }
-        long remainingNanos = expiresAtNanos - nowNanos;
-        long second = TimeUnit.SECONDS.toNanos(1);
-        int remaining = (int) Math.min(0xFFFFL,
-                Math.max(1L, (remainingNanos + second - 1) / second));
-        return new Snapshot(true, rangedHit, rangedDamage, remaining);
+        long l2 = this.expiresAtNanos - nowNanos;
+        long l3 = TimeUnit.SECONDS.toNanos(1L);
+        int n = (int)Math.min(65535L, Math.max(1L, (l2 + l3 - 1L) / l3));
+        return new Snapshot(true, CombatBuffLeases.value(this.rangedHit, 156, "BOW_HIT"), CombatBuffLeases.value(this.rangedDamage, 156, "BOW_DMG"), n);
     }
 
     synchronized int physicalHit(boolean ranged, long nowNanos) {
@@ -66,9 +61,11 @@ final class BattleStormEyeStatus {
     }
 
     synchronized void clear() {
-        expiresAtNanos = 0;
-        rangedHit = 0;
-        rangedDamage = 0;
+        BattleStormEyeStatus battleStormEyeStatus;
+        (battleStormEyeStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleStormEyeStatus);
+        this.rangedHit = 0;
+        this.rangedDamage = 0;
     }
 
     private static void validate(
@@ -78,6 +75,12 @@ final class BattleStormEyeStatus {
                 || hitModifier <= 0 || hitModifier > 127
                 || damageModifier <= 0 || damageModifier > 127) {
             throw new IllegalArgumentException("invalid native Storm Eye lease");
+        }
+    }
+
+    record Snapshot(boolean active, int rangedHit, int rangedDamage, int remainingSeconds) {
+        static Snapshot none() {
+            return new Snapshot(false, 0, 0, 0);
         }
     }
 }

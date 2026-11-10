@@ -1,7 +1,15 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
+
+import java.util.Iterator;
+
+import java.util.HashMap;
+
+import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,12 +94,155 @@ final class BattleQuestEncounter {
         }
     }
 
-    record Snapshot(long objectId, int force, int roomNumber, int npcId,
-                    int x, int y, int gfx, String name, int level,
-                    int hp, int maxHp, boolean alive, int currentMp,
-                    int maximumMp, int intelligence,
-                    String speciesSource, String countSource,
-                    String placementSource) {}
+    @AsRecord(components = {"objectId", "force", "roomNumber", "npcId", "x", "y", "gfx", "name", "level", "hp", "maxHp", "alive", "currentMp", "maximumMp", "intelligence", "speciesSource", "countSource", "placementSource"}, finalFields = {"nativeSourceNpcFactoryMemory", "nativeSourceNpcFirstView"})
+    static final class Snapshot {
+        private final long objectId;
+        private final int force;
+        private final int roomNumber;
+        private final int npcId;
+        private final int x;
+        private final int y;
+        private final int gfx;
+        private final String name;
+        private final int level;
+        private final int hp;
+        private final int maxHp;
+        private final boolean alive;
+        private final int currentMp;
+        private final int maximumMp;
+        private final int intelligence;
+        private final String speciesSource;
+        private final String countSource;
+        private final String placementSource;
+        private volatile Object nativeBattleTamedCompanion;
+        private Object nativeZombieCorpseActor;
+        private RuntimeInventory nativeZombieCorpseBag;
+        transient Object nativeSourceNpcFactoryMemory;
+        transient Object nativeSourceNpcFirstView;
+
+        Snapshot(long l, int n, int n2, int n3, int n4, int n5, int n6, String string, int n7, int n8, int n9, boolean bl, int n10, int n11, int n12, String string2, String string3, String string4) {
+            this.objectId = l;
+            this.force = n;
+            this.roomNumber = n2;
+            this.npcId = n3;
+            this.x = n4;
+            this.y = n5;
+            this.gfx = n6;
+            this.name = string;
+            this.level = n7;
+            this.hp = n8;
+            this.maxHp = n9;
+            this.alive = bl;
+            this.currentMp = n10;
+            this.maximumMp = n11;
+            this.intelligence = n12;
+            this.speciesSource = string2;
+            this.countSource = string3;
+            this.placementSource = string4;
+        }
+
+
+
+
+        public long objectId() {
+            return this.objectId;
+        }
+
+        public int force() {
+            return this.force;
+        }
+
+        public int roomNumber() {
+            return this.roomNumber;
+        }
+
+        public int npcId() {
+            return this.npcId;
+        }
+
+        public int x() {
+            return this.x;
+        }
+
+        public int y() {
+            return this.y;
+        }
+
+        public int gfx() {
+            return this.gfx;
+        }
+
+        public String name() {
+            return this.name;
+        }
+
+        public int level() {
+            return this.level;
+        }
+
+        public int hp() {
+            return this.hp;
+        }
+
+        public int maxHp() {
+            return this.maxHp;
+        }
+
+        public boolean alive() {
+            return this.alive;
+        }
+
+        public int currentMp() {
+            return this.currentMp;
+        }
+
+        public int maximumMp() {
+            return this.maximumMp;
+        }
+
+        public int intelligence() {
+            return this.intelligence;
+        }
+
+        public String speciesSource() {
+            return this.speciesSource;
+        }
+
+        public String countSource() {
+            return this.countSource;
+        }
+
+        public String placementSource() {
+            return this.placementSource;
+        }
+
+        Snapshot(long l, int n, int n2, int n3, int n4, int n5, int n6, String string, int n7, int n8, int n9, boolean bl, int n10, int n11, int n12, String string2, String string3, String string4, Object object) {
+            this.objectId = l;
+            this.force = n;
+            this.roomNumber = n2;
+            this.npcId = n3;
+            this.x = n4;
+            this.y = n5;
+            this.gfx = n6;
+            this.name = string;
+            this.level = n7;
+            this.hp = n8;
+            this.maxHp = n9;
+            this.alive = bl;
+            this.currentMp = n10;
+            this.maximumMp = n11;
+            this.intelligence = n12;
+            this.speciesSource = string2;
+            this.countSource = string3;
+            this.placementSource = string4;
+            this.nativeSourceNpcFactoryMemory = object;
+        }
+
+        Snapshot(long l, int n, int n2, int n3, int n4, int n5, int n6, String string, int n7, int n8, int n9, boolean bl, int n10, int n11, int n12, String string2, String string3, String string4, Object object, Object object2) {
+            this(l, n, n2, n3, n4, n5, n6, string, n7, n8, n9, bl, n10, n11, n12, string2, string3, string4, object);
+            this.nativeSourceNpcFirstView = object2;
+        }
+    }
 
     record AiAttack(
             Snapshot actor, boolean magic,
@@ -154,13 +305,42 @@ final class BattleQuestEncounter {
 
     }
 
-    record PoisonUpdate(long attackerObjectId, Snapshot target,
-                        List<Hit> hits, boolean expired) {
-        PoisonUpdate {
-            if (attackerObjectId <= 0 || target == null) {
+    @AsRecord(components = {"attackerObjectId", "target", "hits", "expired"})
+    static final class PoisonUpdate {
+        private final long attackerObjectId;
+        private final Snapshot target;
+        private final List<Hit> hits;
+        private final boolean expired;
+        volatile Object nativeSourceArenaPoisonProof;
+
+        PoisonUpdate(long l, Snapshot snapshot, List<Hit> list, boolean bl) {
+            if (l <= 0L || snapshot == null) {
                 throw new IllegalArgumentException("invalid Quest poison update");
             }
-            hits = List.copyOf(hits);
+            list = List.copyOf(list);
+            this.attackerObjectId = l;
+            this.target = snapshot;
+            this.hits = list;
+            this.expired = bl;
+        }
+
+
+
+
+        public long attackerObjectId() {
+            return this.attackerObjectId;
+        }
+
+        public Snapshot target() {
+            return this.target;
+        }
+
+        public List<Hit> hits() {
+            return this.hits;
+        }
+
+        public boolean expired() {
+            return this.expired;
         }
     }
 
@@ -237,6 +417,7 @@ final class BattleQuestEncounter {
     private boolean active;
     private boolean perRoomSymbols;
     private List<List<SpawnPlan>> configuredWaves = List.of();
+    private volatile Object sourceProcEncounterGeneration;
 
     synchronized void reset(BattleRules.RuleSet rules,
                             ArenaMapCatalog.Arena encounterArena) {
@@ -265,22 +446,23 @@ final class BattleQuestEncounter {
     }
 
     synchronized void deactivate() {
-        active = false;
-        perRoomSymbols = false;
-        configuredWaves = List.of();
-        arenas[0] = null;
-        arenas[1] = null;
-        for (Lane lane : lanes) {
+        NativeProcHealingEncounter.retire(this);
+        this.active = false;
+        this.perRoomSymbols = false;
+        this.configuredWaves = List.of();
+        this.arenas[0] = null;
+        this.arenas[1] = null;
+        for (Lane lane : this.lanes) {
             lane.roomIndex = 0;
             lane.awaitingObjective = false;
             lane.completed = false;
             lane.monsters.clear();
         }
-        corpses.clear();
+        this.corpses.clear();
     }
 
     synchronized List<Snapshot> snapshots() {
-        if (!active) return List.of();
+        if (!active) return (List<Snapshot>) (List<?>) NativeSourceNpcFirstView.owner(List.of(), this);
         List<Snapshot> result = new ArrayList<>();
         for (Lane lane : lanes) {
             for (Monster monster : lane.monsters) {
@@ -288,7 +470,7 @@ final class BattleQuestEncounter {
                 if (snapshot != null && snapshot.alive()) result.add(snapshot);
             }
         }
-        return List.copyOf(result);
+        return (List<Snapshot>) (List<?>) NativeSourceNpcFirstView.owner(List.copyOf(result), this);
     }
 
     synchronized List<Snapshot> snapshots(int force) {
@@ -324,6 +506,11 @@ final class BattleQuestEncounter {
     }
 
     private Hit applyDamage(Lane lane, Monster target, int amount,
+                            boolean poisonDamage) {
+        return NativeSourcePoisonNpc.questDamage(this, lane, target, amount, poisonDamage);
+    }
+
+    Hit nativeSourcePoisonOriginalApplyDamage(Lane lane, Monster target, int amount,
                             boolean poisonDamage) {
         Damage damage = poisonDamage
                 ? target.poisonDamage(amount) : target.damage(amount);
@@ -394,8 +581,10 @@ final class BattleQuestEncounter {
                 }
                 Snapshot finalTarget = hits.isEmpty()
                         ? target.snapshot() : hits.get(hits.size() - 1).damage().after();
-                updates.add(new PoisonUpdate(attackerObjectId, finalTarget,
-                        hits, poll.expired()));
+                PoisonUpdate update = new PoisonUpdate(attackerObjectId, finalTarget,
+                        hits, poll.expired());
+                NativeSourceArenaPoison.stamp(update, target);
+                updates.add(update);
             }
         }
         return List.copyOf(updates);
@@ -482,38 +671,36 @@ final class BattleQuestEncounter {
     }
 
     synchronized Resurrection resurrectCorpse(long objectId, int force, long nowNanos) {
-        return resurrectCorpse(objectId, force, nowNanos, 4);
+        return this.resurrectCorpse(objectId, force, nowNanos, 4);
     }
 
-    synchronized Resurrection resurrectCorpse(
-            long objectId, int force, long nowNanos, int hpDivisor) {
-        Snapshot corpse = findCorpse(objectId, force, nowNanos);
-        if ((hpDivisor != 1 && hpDivisor != 4) || corpse == null
-                || !BattleSpellCatalog.npcAllowsResurrection(corpse.npcId())) {
-            return null;
+    synchronized Resurrection resurrectCorpse(long objectId, int force, long nowNanos, int hpDivisor) {
+        Snapshot snapshot = this.findCorpse(objectId, force, nowNanos);
+        if (hpDivisor != 1 && hpDivisor != 4 || snapshot == null || !BattleSpellCatalog.npcAllowsResurrection(snapshot.npcId())) {
+            return (Resurrection)NativeCreateZombieLifecycle.resurrected(null, this, snapshot, 1);
         }
-        Monster target = null;
-        for (Lane lane : lanes) {
-            target = lane.monsters.stream()
-                    .filter(monster -> monster.objectId == objectId && !monster.alive())
-                    .findFirst().orElse(null);
-            if (target != null) break;
+        Monster monster2 = null;
+        for (Lane lane : this.lanes) {
+            monster2 = lane.monsters.stream().filter(monster -> monster.objectId == objectId && !monster.alive()).findFirst().orElse(null);
+            if (monster2 != null) break;
         }
-        if (target == null) {
-            target = new Monster(corpse);
-            lanes[force].monsters.add(target);
+        if (monster2 == null) {
+            monster2 = new Monster(snapshot);
+            this.lanes[force].monsters.add(monster2);
         }
-        Snapshot before = target.snapshot();
-        target.resurrect(Math.max(1, corpse.maxHp() / hpDivisor));
-        corpses.removeIf(entry -> entry.snapshot().objectId() == objectId);
-        return new Resurrection(before, target.snapshot());
+        Snapshot snapshot2 = monster2.snapshot();
+        monster2.resurrect(Math.max(1, snapshot.maxHp() / hpDivisor));
+        this.corpses.removeIf(corpse -> corpse.snapshot().objectId() == objectId);
+        return (Resurrection)NativeCreateZombieLifecycle.resurrected(new Resurrection(snapshot2, monster2.snapshot()), this, snapshot, 1);
     }
 
-    private void rememberCorpse(Snapshot corpse, long nowNanos) {
-        if (corpse == null || corpse.alive() || nowNanos < 0) return;
-        corpses.removeIf(entry -> entry.snapshot().objectId() == corpse.objectId());
-        corpses.add(new Corpse(corpse, Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(CORPSE_LIFETIME_SECONDS))));
+    private void rememberCorpse(Snapshot snapshot, long nowNanos) {
+        NativeCreateZombieLifecycle.retainCorpse(this, snapshot, 1);
+        if (snapshot == null || snapshot.alive() || nowNanos < 0L) {
+            return;
+        }
+        this.corpses.removeIf(corpse -> corpse.snapshot().objectId() == snapshot.objectId());
+        this.corpses.add(new Corpse(snapshot, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(3L))));
     }
 
     private void pruneCorpses(long nowNanos) {
@@ -1239,30 +1426,22 @@ final class BattleQuestEncounter {
     }
 
     synchronized Snapshot moveForAi(long objectId, int x, int y, long nowNanos) {
-        Monster monster = monster(objectId);
-        if (!active || monster == null || !monster.ready(nowNanos)
-                || monster.blindActive(nowNanos)
-                || monster.sleepActive(nowNanos)
-                || monster.paralysisActive(nowNanos)
-                || monster.shockStunActive(nowNanos)
-                || monster.boneBreakActive(nowNanos)
-                || monster.thunderGrabActive(nowNanos)
-                || monster.freezeActive(nowNanos)
-                || monster.earthBindActive(nowNanos)) return null;
-        ArenaMapCatalog.Arena laneArena = arenas[monster.force];
-        if (laneArena == null || !laneArena.nativeCanStep(monster.x, monster.y, x, y)
-                || BattleQuestBoundary.blocksMap(laneArena.mapId(), monster.roomNumber,
-                        monster.x, monster.y, x, y)) {
+        Monster monster = this.monster(objectId);
+        if (!this.active || monster == null || !NativeSourceNpcMovement.allowed(monster.ready(nowNanos), monster) || monster.blindActive(nowNanos) || monster.sleepActive(nowNanos) || monster.paralysisActive(nowNanos) || monster.shockStunActive(nowNanos) || monster.boneBreakActive(nowNanos) || monster.thunderGrabActive(nowNanos) || monster.freezeActive(nowNanos) || monster.earthBindActive(nowNanos)) {
             return null;
         }
-        Lane lane = lanes[monster.force];
-        boolean occupied = lane.monsters.stream().anyMatch(candidate ->
-                candidate != monster && candidate.alive()
-                        && candidate.x == x && candidate.y == y);
-        if (occupied) return null;
-        monster.x = x;
+        ArenaMapCatalog.Arena arena = this.arenas[monster.force];
+        if (arena == null || !arena.nativeCanStep(monster.x, monster.y, x, y) || BattleQuestBoundary.blocksMap(arena.mapId(), monster.roomNumber, monster.x, monster.y, x, y)) {
+            return null;
+        }
+        Lane lane = this.lanes[monster.force];
+        boolean bl = lane.monsters.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == x && monster2.y == y);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(x, monster, y);
         monster.y = y;
-        monster.schedule(nowNanos, BattleActionCodes.WALK);
+        monster.schedule(nowNanos, 0);
         return monster.snapshot();
     }
 
@@ -1282,26 +1461,20 @@ final class BattleQuestEncounter {
         return monster.snapshot();
     }
 
-    synchronized AiAttack aiAttackFor(long objectId, int targetX, int targetY,
-                                      long nowNanos) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        Monster monster = monster(objectId);
-        if (monster == null) return null;
-        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> rows =
-                BattleTimeAttackMagicSkillCatalog.rowsForNpc(
-                        monster.template.npcId());
-        int[] triggerRolls = new int[rows.size()];
-        for (int index = 0; index < triggerRolls.length; index++) {
-            triggerRolls[index] = random.nextInt(1, 101);
+    synchronized AiAttack aiAttackFor(long objectId, int targetX, int targetY, long nowNanos) {
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        Monster monster = this.monster(objectId);
+        if (monster == null) {
+            return null;
         }
-        BattleTimeAttackMagicSkillCatalog.SummonDefinition summon =
-                BattleTimeAttackMagicSkillCatalog.summonForNpc(
-                        monster.template.npcId());
-        int summonCountRoll = summon == null ? 0
-                : random.nextInt(summon.summonRandomBound());
-        return aiAttackFor(objectId, targetX, targetY, nowNanos,
-                triggerRolls, random.nextInt(Integer.MAX_VALUE),
-                summonCountRoll);
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.template.npcId());
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < nArray.length; ++i) {
+            nArray[i] = threadLocalRandom.nextInt(1, 101);
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
+        int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
+        return this.aiAttackFor(objectId, targetX, targetY, nowNanos, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
     }
 
     /** Deterministic fixture preserving every selected mobskill actNo. */
@@ -1362,8 +1535,8 @@ final class BattleQuestEncounter {
                 || monster.freezeActive(nowNanos)
                 || monster.earthBindActive(nowNanos)) return null;
 
-        int distance = Math.max(Math.abs(monster.x - targetX),
-                Math.abs(monster.y - targetY));
+        int distance = NativeSourceNpcMotion.onTarget(
+                Math.max(Math.abs(monster.x - targetX), Math.abs(monster.y - targetY)), monster);
         record Eligible(BattleTimeAttackMagicSkillCatalog.MobskillRow row,
                         int triggerRoll) {}
         List<Eligible> eligible = new ArrayList<>(rows.size());
@@ -1406,7 +1579,11 @@ final class BattleQuestEncounter {
             }
             if (chosen.row() instanceof BattleTimeAttackMagicSkillCatalog
                     .PhysicalDefinition physical) {
-                monster.schedule(nowNanos, physical.effectiveActionId());
+                Monster scheduledMonster = monster;
+                long scheduledAt = nowNanos;
+                int actionId = physical.effectiveActionId();
+                NativeSourceNpcMotion.facing(monster, targetX, targetY);
+                scheduledMonster.schedule(scheduledAt, actionId);
                 return new AiAttack(monster.snapshot(), false, null,
                         physical, null, List.of(), chosen.triggerRoll(), selected);
             }
@@ -1423,7 +1600,11 @@ final class BattleQuestEncounter {
 
         if (distance <= 1 && BattleAnimationCatalog.get().supportsTimedAction(
                 monster.template.gfx(), BattleActionCodes.ATTACK)) {
-            monster.schedule(nowNanos, BattleActionCodes.ATTACK);
+            Monster scheduledMonster = monster;
+            long scheduledAt = nowNanos;
+            int actionId = BattleActionCodes.ATTACK;
+            NativeSourceNpcMotion.facing(monster, targetX, targetY);
+            scheduledMonster.schedule(scheduledAt, actionId);
             return new AiAttack(monster.snapshot(), false, null,
                     null, null, List.of(), 0, 0);
         }
@@ -1568,7 +1749,7 @@ final class BattleQuestEncounter {
             throw new IllegalStateException("Quest anchor is not native standing floor: "
                     + arena.mapId() + " room=" + roomNumber);
         }
-        final int radius = 6;
+        int radius = 6;
         ArrayDeque<ArenaMapCatalog.Point> queue = new ArrayDeque<>();
         Set<ArenaMapCatalog.Point> visited = new HashSet<>();
         List<ArenaMapCatalog.Point> candidates = new ArrayList<>();
@@ -1583,7 +1764,7 @@ final class BattleQuestEncounter {
                     ArenaMapCatalog.Point next = new ArenaMapCatalog.Point(
                             current.x() + dx, current.y() + dy);
                     if (Math.max(Math.abs(next.x() - anchor.x()),
-                            Math.abs(next.y() - anchor.y())) > radius
+                            Math.abs(next.y() - anchor.y())) > 6
                             || visited.contains(next)
                             || !arena.nativeCanStep(current.x(), current.y(),
                                     next.x(), next.y())) continue;
@@ -1648,6 +1829,173 @@ final class BattleQuestEncounter {
                 maximumMp, intelligence);
     }
 
+    synchronized Snapshot nativeSourceEscapeMoveForAi(long l, int n, int n2, long l2) {
+        Monster monster = this.monster(l);
+        if (!this.active || monster == null || !NativeSourceNpcMovement.allowed(monster.ready(l2), monster) || NativeSourceNpcEscape.blind(monster.blindActive(l2), monster) || monster.sleepActive(l2) || monster.paralysisActive(l2) || monster.shockStunActive(l2) || monster.boneBreakActive(l2) || monster.thunderGrabActive(l2) || monster.freezeActive(l2) || monster.earthBindActive(l2)) {
+            return null;
+        }
+        ArenaMapCatalog.Arena arena = this.arenas[monster.force];
+        if (arena == null || !arena.nativeCanStep(monster.x, monster.y, n, n2) || BattleQuestBoundary.blocksMap(arena.mapId(), monster.roomNumber, monster.x, monster.y, n, n2)) {
+            return null;
+        }
+        Lane lane = this.lanes[monster.force];
+        boolean bl = lane.monsters.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == n && monster2.y == n2);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(n, monster, n2);
+        monster.y = n2;
+        monster.schedule(l2, 0);
+        return monster.snapshot();
+    }
+
+    synchronized Snapshot nativeSourceViewActionMoveForAi(long l, int n, int n2, long l2, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        Monster monster = this.monster(l);
+        if (!this.active || monster == null || !NativeSourceNpcMovement.allowed(monster.ready(l2), monster) || monster.blindActive(l2) || monster.sleepActive(l2) || monster.paralysisActive(l2) || monster.shockStunActive(l2) || monster.boneBreakActive(l2) || monster.thunderGrabActive(l2) || monster.freezeActive(l2) || monster.earthBindActive(l2)) {
+            return null;
+        }
+        ArenaMapCatalog.Arena arena = this.arenas[monster.force];
+        if (arena == null || !arena.nativeCanStep(monster.x, monster.y, n, n2) || BattleQuestBoundary.blocksMap(arena.mapId(), monster.roomNumber, monster.x, monster.y, n, n2)) {
+            return null;
+        }
+        Lane lane = this.lanes[monster.force];
+        boolean bl = lane.monsters.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == n && monster2.y == n2);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(n, monster, n2);
+        monster.y = n2;
+        monster.schedule(l2, 0);
+        return monster.snapshot();
+    }
+
+    synchronized AiAttack nativeSourceViewActionAiAttackFor(long l, int n, int n2, long l2, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        Monster monster = this.monster(l);
+        if (monster == null) {
+            return null;
+        }
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.template.npcId());
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < nArray.length; ++i) {
+            nArray[i] = threadLocalRandom.nextInt(1, 101);
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
+        int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
+        return this.aiAttackFor(l, n, n2, l2, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
+    }
+
+    synchronized AiAttack nativeSourceViewActionAiAttackForActNoFixture(long l, int n, int n2, long l2, int n3, int n4, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        if (n3 < 0 || n4 < 0) {
+            throw new IllegalArgumentException("invalid Quest actNo fixture");
+        }
+        Monster monster = this.monster(l);
+        List list = monster == null ? List.of() : BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.template.npcId());
+        int[] nArray = new int[list.size()];
+        Arrays.fill(nArray, 100);
+        int n5 = -1;
+        for (int i = 0; i < list.size(); ++i) {
+            if (((BattleTimeAttackMagicSkillCatalog.MobskillRow)list.get(i)).actNo() == n3) {
+                n5 = i;
+                nArray[i] = 1;
+                break;
+            }
+        }
+        if (n5 < 0) {
+            return null;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
+        int n6 = summonDefinition == null ? 0 : n4 % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(l, n, n2, l2, nArray, n4, n6);
+    }
+
+    synchronized Snapshot nativeSourceNpcPlayerFirstMoveForAi(long l, int n, int n2, long l2, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        Monster monster = this.monster(l);
+        if (!this.active || monster == null || !NativeSourceNpcMovement.allowed(monster.ready(l2), monster) || monster.blindActive(l2) || monster.sleepActive(l2) || monster.paralysisActive(l2) || monster.shockStunActive(l2) || monster.boneBreakActive(l2) || monster.thunderGrabActive(l2) || monster.freezeActive(l2) || monster.earthBindActive(l2)) {
+            return null;
+        }
+        ArenaMapCatalog.Arena arena = this.arenas[monster.force];
+        if (arena == null || !arena.nativeCanStep(monster.x, monster.y, n, n2) || BattleQuestBoundary.blocksMap(arena.mapId(), monster.roomNumber, monster.x, monster.y, n, n2)) {
+            return null;
+        }
+        Lane lane = this.lanes[monster.force];
+        boolean bl = lane.monsters.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == n && monster2.y == n2);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(n, monster, n2);
+        monster.y = n2;
+        monster.schedule(l2, 0);
+        return monster.snapshot();
+    }
+
+    synchronized AiAttack nativeSourceNpcPlayerFirstAiAttackFor(long l, int n, int n2, long l2, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        Monster monster = this.monster(l);
+        if (monster == null) {
+            return null;
+        }
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.template.npcId());
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < nArray.length; ++i) {
+            nArray[i] = threadLocalRandom.nextInt(1, 101);
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
+        int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
+        return this.aiAttackFor(l, n, n2, l2, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
+    }
+
+    synchronized AiAttack nativeSourceNpcPlayerFirstAiAttackForActNoFixture(long l, int n, int n2, long l2, int n3, int n4, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        if (n3 < 0 || n4 < 0) {
+            throw new IllegalArgumentException("invalid Quest actNo fixture");
+        }
+        Monster monster = this.monster(l);
+        List list = monster == null ? List.of() : BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.template.npcId());
+        int[] nArray = new int[list.size()];
+        Arrays.fill(nArray, 100);
+        int n5 = -1;
+        for (int i = 0; i < list.size(); ++i) {
+            if (((BattleTimeAttackMagicSkillCatalog.MobskillRow)list.get(i)).actNo() == n3) {
+                n5 = i;
+                nArray[i] = 1;
+                break;
+            }
+        }
+        if (n5 < 0) {
+            return null;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
+        int n6 = summonDefinition == null ? 0 : n4 % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(l, n, n2, l2, nArray, n4, n6);
+    }
+
     private static final class Lane {
         final int force;
         final List<Monster> monsters = new ArrayList<>();
@@ -1660,20 +2008,19 @@ final class BattleQuestEncounter {
         }
     }
 
+    @AsmFinal({"nativeSourceHpViewers", "nativeSourceNpcFactoryType"})
     private static final class Monster {
         final long objectId;
         final int force;
         final int roomNumber;
         final Template template;
-        int x;
-        int y;
-        int hp;
+        volatile int x;
+        volatile int y;
+        volatile int hp;
         int mp;
         int maxMp;
-        final java.util.Map<Integer, Long> skillReadyNanos =
-                new java.util.HashMap<>();
-        final java.util.Map<Integer, Integer> skillUseCounts =
-                new java.util.HashMap<>();
+        final Map<Integer, Long> skillReadyNanos = new HashMap<Integer, Long>();
+        final Map<Integer, Integer> skillUseCounts = new HashMap<Integer, Integer>();
         final boolean summoned;
         final String placementSource;
         long nextActionNanos;
@@ -1688,91 +2035,90 @@ final class BattleQuestEncounter {
         long strikerGaleExpiresAtNanos;
         long sleepExpiresAtNanos;
         long paralysisExpiresAtNanos;
-        long shockStunExpiresAtNanos;
-        long boneBreakExpiresAtNanos;
+        volatile long shockStunExpiresAtNanos;
+        volatile long boneBreakExpiresAtNanos;
         long thunderGrabExpiresAtNanos;
-        long freezeExpiresAtNanos;
+        volatile long freezeExpiresAtNanos;
         long earthBindExpiresAtNanos;
-        long hasteExpiresAtNanos;
-        long slowExpiresAtNanos;
+        volatile long hasteExpiresAtNanos;
+        volatile long slowExpiresAtNanos;
         int weaponBreakStacks;
-        final BattleElementalFallDownStatus elementalFallDownStatus =
-                new BattleElementalFallDownStatus();
-        final BattleEraseMagicStatus eraseMagicStatus =
-                new BattleEraseMagicStatus();
-        final BattleArmBreakerStatus armBreakerStatus =
-                new BattleArmBreakerStatus();
+        final BattleElementalFallDownStatus elementalFallDownStatus = new BattleElementalFallDownStatus();
+        final BattleEraseMagicStatus eraseMagicStatus = new BattleEraseMagicStatus();
+        final BattleArmBreakerStatus armBreakerStatus = new BattleArmBreakerStatus();
         final BattlePanicStatus panicStatus = new BattlePanicStatus();
-        final BattleJoyOfPainStatus joyOfPainStatus =
-                new BattleJoyOfPainStatus();
+        final BattleJoyOfPainStatus joyOfPainStatus = new BattleJoyOfPainStatus();
         final BattleTimedStatus damagePoison = new BattleTimedStatus();
-        final RuntimeInventory inventory = new RuntimeInventory();
+        RuntimeInventory inventory = new RuntimeInventory();
         long poisonAttackerObjectId;
+        NativeSourceMonsterHp.Cache nativeSourceHpViewers;
+        volatile Object nativeSourceArenaPoisonLease;
+        volatile Object nativeSourceDollSlowEpoch;
+        volatile Object nativeSourceTargetFreezeLease;
+        volatile Object nativeSourceTargetShockLease;
+        volatile Object nativeSourceSpecialBoneLease;
+        Object nativeSourceNpcFactoryType;
+        private volatile transient Object nativeSourceNpcMotion;
 
-        Monster(int force, int roomNumber, Template template, int x, int y) {
-            this(force, roomNumber, template, x, y, false);
+        Monster(int n, int n2, Template template, int n3, int n4) {
+            this(n, n2, template, n3, n4, false);
         }
 
-        Monster(int force, int roomNumber, Template template, int x, int y,
-                boolean summoned) {
-            this(force, roomNumber, template, x, y, summoned,
-                    summoned ? SUMMON_PLACEMENT_SOURCE : PLACEMENT_SOURCE);
+        Monster(int n, int n2, Template template, int n3, int n4, boolean bl) {
+            this(n, n2, template, n3, n4, bl, bl ? BattleQuestEncounter.SUMMON_PLACEMENT_SOURCE : BattleQuestEncounter.PLACEMENT_SOURCE);
         }
 
-        Monster(int force, int roomNumber, Template template, int x, int y,
-                boolean summoned, String placementSource) {
-            this.objectId = NEXT_OBJECT_ID.getAndUpdate(current ->
-                    current >= 0x6CFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
-            this.force = force;
-            this.roomNumber = roomNumber;
+        Monster(int n, int n2, Template template, int n3, int n4, boolean bl, String string) {
+            this.objectId = NEXT_OBJECT_ID.getAndUpdate(l -> l >= 0x6CFFFFFFL ? 0x6C000000L : l + 1L);
+            this.force = n;
+            this.roomNumber = n2;
             this.template = template;
-            this.x = x;
-            this.y = y;
+            this.x = n3;
+            this.y = n4;
             this.maxMp = template.maximumMp();
-            this.mp = maxMp;
-            this.summoned = summoned;
-            this.placementSource = placementSource;
-            hp = template.maxHp();
+            this.mp = this.maxMp;
+            this.summoned = bl;
+            this.placementSource = string;
+            this.hp = template.maxHp();
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryType.birth(this, null);
         }
 
-        Monster(Snapshot corpse) {
-            this.objectId = corpse.objectId();
-            this.force = corpse.force();
-            this.roomNumber = corpse.roomNumber();
-            this.template = new Template(corpse.npcId(), corpse.gfx(), corpse.name(),
-                    corpse.level(), corpse.maxHp(), corpse.maximumMp(),
-                    corpse.intelligence());
-            this.x = corpse.x();
-            this.y = corpse.y();
+        Monster(Snapshot snapshot) {
+            this.objectId = snapshot.objectId();
+            this.force = snapshot.force();
+            this.roomNumber = snapshot.roomNumber();
+            this.template = new Template(snapshot.npcId(), snapshot.gfx(), snapshot.name(), snapshot.level(), snapshot.maxHp(), snapshot.maximumMp(), snapshot.intelligence());
+            this.x = snapshot.x();
+            this.y = snapshot.y();
             this.hp = 0;
-            this.maxMp = corpse.maximumMp();
-            this.mp = corpse.currentMp();
-            this.summoned = corpse.npcId() == SPARTOI.npcId();
-            this.placementSource = corpse.placementSource();
+            this.maxMp = snapshot.maximumMp();
+            this.mp = snapshot.currentMp();
+            this.summoned = snapshot.npcId() == SPARTOI.npcId();
+            this.placementSource = snapshot.placementSource();
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryMemory.restore(this, null, snapshot);
         }
 
-        Monster(Snapshot captured, BattleCompanion.Snapshot companion,
-                List<RuntimeInventory.Item> carriedItems) {
-            this.objectId = NEXT_OBJECT_ID.getAndUpdate(current ->
-                    current >= 0x6CFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
-            this.force = captured.force();
-            this.roomNumber = captured.roomNumber();
-            this.template = new Template(captured.npcId(), captured.gfx(),
-                    captured.name(), captured.level(), captured.maxHp(),
-                    captured.maximumMp(), captured.intelligence());
-            this.x = companion.x();
-            this.y = companion.y();
-            this.hp = Math.max(1, Math.min(companion.hp(), captured.maxHp()));
-            this.maxMp = captured.maximumMp();
-            this.mp = Math.max(0, Math.min(companion.mp(), maxMp));
-            this.summoned = captured.npcId() == SPARTOI.npcId();
-            this.placementSource = captured.placementSource();
-            for (RuntimeInventory.Item item : carriedItems) {
-                if (!inventory.add(item, item.quantity())) {
-                    throw new IllegalStateException(
-                            "released quest monster inventory exceeds native capacity");
+        Monster(Snapshot snapshot, BattleCompanion.Snapshot snapshot2, List<RuntimeInventory.Item> list) {
+            this.objectId = NEXT_OBJECT_ID.getAndUpdate(l -> l >= 0x6CFFFFFFL ? 0x6C000000L : l + 1L);
+            this.force = snapshot.force();
+            this.roomNumber = snapshot.roomNumber();
+            this.template = new Template(snapshot.npcId(), snapshot.gfx(), snapshot.name(), snapshot.level(), snapshot.maxHp(), snapshot.maximumMp(), snapshot.intelligence());
+            this.x = snapshot2.x();
+            this.y = snapshot2.y();
+            this.hp = Math.max(1, Math.min(snapshot2.hp(), snapshot.maxHp()));
+            this.maxMp = snapshot.maximumMp();
+            this.mp = Math.max(0, Math.min(snapshot2.mp(), this.maxMp));
+            this.summoned = snapshot.npcId() == SPARTOI.npcId();
+            this.placementSource = snapshot.placementSource();
+            for (RuntimeInventory.Item item : list) {
+                if (!this.inventory.add(item, (long)item.quantity())) {
+                    throw new IllegalStateException("released quest monster inventory exceeds native capacity");
                 }
             }
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryMemory.restore(this, snapshot2, snapshot);
         }
 
         boolean alive() {
@@ -1780,18 +2126,12 @@ final class BattleQuestEncounter {
         }
 
         Snapshot snapshot() {
-            return new Snapshot(objectId, force, roomNumber, template.npcId(),
-                    x, y, template.gfx(), template.name(), template.level(),
-                    hp, template.maxHp(), hp > 0, mp, maxMp,
-                    template.intelligence(),
-                    summoned ? DEATH_KNIGHT_SUMMON_SOURCE : SPECIES_SOURCE,
-                    summoned ? "selected-mobskill-summon-count"
-                            : COUNT_SOURCE,
-                    placementSource);
+            Object object = NativeSourceNpcFirstView.capture(this);
+            return new Snapshot(this.objectId, this.force, this.roomNumber, this.template.npcId(), this.x, this.y, this.template.gfx(), this.template.name(), this.template.level(), this.hp, this.template.maxHp(), this.hp > 0, this.mp, this.maxMp, this.template.intelligence(), this.summoned ? BattleQuestEncounter.DEATH_KNIGHT_SUMMON_SOURCE : BattleQuestEncounter.SPECIES_SOURCE, this.summoned ? "selected-mobskill-summon-count" : BattleQuestEncounter.COUNT_SOURCE, this.placementSource, NativeSourceNpcFactoryMemory.carry(this), object);
         }
 
         Damage damage(int amount) {
-            return damage(amount, true);
+            return this.damage(amount, true);
         }
 
         Damage poisonDamage(int amount) {
@@ -1799,40 +2139,41 @@ final class BattleQuestEncounter {
         }
 
         private Damage damage(int amount, boolean earthBindBlocks) {
-            if (hp <= 0 || amount <= 0
-                    || (earthBindBlocks && earthBindActive(System.nanoTime()))) return null;
-            Snapshot before = snapshot();
-            hp = Math.max(0, hp - amount);
-            sleepExpiresAtNanos = 0;
-            if (hp == 0) {
-                skillReadyNanos.clear();
-                skillUseCounts.clear();
-                paralysisExpiresAtNanos = 0;
-                shockStunExpiresAtNanos = 0;
-                boneBreakExpiresAtNanos = 0;
-                thunderGrabExpiresAtNanos = 0;
-                freezeExpiresAtNanos = 0;
-                earthBindExpiresAtNanos = 0;
-                hasteExpiresAtNanos = 0;
-                slowExpiresAtNanos = 0;
-                weaponBreakStacks = 0;
-                weaknessExpiresAtNanos = 0;
-                diseaseExpiresAtNanos = 0;
-                silenceExpiresAtNanos = 0;
-                areaSilenceExpiresAtNanos = 0;
-                windShackleExpiresAtNanos = 0;
-                decayPotionExpiresAtNanos = 0;
-                polluteWaterExpiresAtNanos = 0;
-                strikerGaleExpiresAtNanos = 0;
-                elementalFallDownStatus.clear();
-                eraseMagicStatus.clear();
-                armBreakerStatus.clear();
-                panicStatus.clear();
-                joyOfPainStatus.clear();
-                curePoison();
+            if (this.hp <= 0 || amount <= 0 || NativeCombatAttacker.earth(earthBindBlocks, this) && this.earthBindActive(System.nanoTime())) {
+                return null;
             }
-            Snapshot after = snapshot();
-            return new Damage(before, after, before.alive() && !after.alive());
+            Snapshot snapshot = this.snapshot();
+            this.hp = Math.max(0, this.hp - amount);
+            this.sleepExpiresAtNanos = 0L;
+            if (this.hp == 0) {
+                this.skillReadyNanos.clear();
+                this.skillUseCounts.clear();
+                this.paralysisExpiresAtNanos = 0L;
+                NativeSourceTargetNpc.writeShock(this, 0L);
+                NativeSourceSpecialNpc.writeBone(this, 0L);
+                this.thunderGrabExpiresAtNanos = 0L;
+                NativeSourceTargetNpc.writeFreeze(this, 0L);
+                this.earthBindExpiresAtNanos = 0L;
+                this.hasteExpiresAtNanos = 0L;
+                this.slowExpiresAtNanos = 0L;
+                this.weaponBreakStacks = 0;
+                this.weaknessExpiresAtNanos = 0L;
+                this.diseaseExpiresAtNanos = 0L;
+                this.silenceExpiresAtNanos = 0L;
+                this.areaSilenceExpiresAtNanos = 0L;
+                this.windShackleExpiresAtNanos = 0L;
+                this.decayPotionExpiresAtNanos = 0L;
+                this.polluteWaterExpiresAtNanos = 0L;
+                this.strikerGaleExpiresAtNanos = 0L;
+                this.elementalFallDownStatus.clear();
+                this.eraseMagicStatus.clear();
+                this.armBreakerStatus.clear();
+                this.panicStatus.clear();
+                this.joyOfPainStatus.clear();
+                this.curePoison();
+            }
+            Snapshot snapshot2 = this.snapshot();
+            return new Damage(snapshot, snapshot2, snapshot.alive() && !snapshot2.alive());
         }
 
         boolean activatePoison(long attackerObjectId, long nowNanos,
@@ -1863,35 +2204,40 @@ final class BattleQuestEncounter {
         }
 
         void resurrect(int restoredHp) {
-            if (hp > 0 || restoredHp <= 0) throw new IllegalStateException("invalid Quest resurrection");
-            hp = Math.min(template.maxHp(), restoredHp);
-            nextActionNanos = 0;
-            skillReadyNanos.clear();
-            skillUseCounts.clear();
-            blindExpiresAtNanos = 0;
-            weaknessExpiresAtNanos = 0;
-            diseaseExpiresAtNanos = 0;
-            silenceExpiresAtNanos = 0;
-            areaSilenceExpiresAtNanos = 0;
-            windShackleExpiresAtNanos = 0;
-            decayPotionExpiresAtNanos = 0;
-            polluteWaterExpiresAtNanos = 0;
-            strikerGaleExpiresAtNanos = 0;
-            elementalFallDownStatus.clear();
-            eraseMagicStatus.clear();
-            armBreakerStatus.clear();
-            panicStatus.clear();
-            joyOfPainStatus.clear();
-            sleepExpiresAtNanos = 0;
-            paralysisExpiresAtNanos = 0;
-            shockStunExpiresAtNanos = 0;
-            boneBreakExpiresAtNanos = 0;
-            thunderGrabExpiresAtNanos = 0;
-            freezeExpiresAtNanos = 0;
-            earthBindExpiresAtNanos = 0;
-            hasteExpiresAtNanos = 0;
-            slowExpiresAtNanos = 0;
-            weaponBreakStacks = 0;
+            if (this.hp > 0 || restoredHp <= 0) {
+                throw new IllegalStateException("invalid Quest resurrection");
+            }
+            Monster recipient = this;
+            int n2 = Math.min(this.template.maxHp(), restoredHp);
+            NativeCombatAttacker.advance(this);
+            recipient.hp = n2;
+            this.nextActionNanos = 0L;
+            this.skillReadyNanos.clear();
+            this.skillUseCounts.clear();
+            this.blindExpiresAtNanos = 0L;
+            this.weaknessExpiresAtNanos = 0L;
+            this.diseaseExpiresAtNanos = 0L;
+            this.silenceExpiresAtNanos = 0L;
+            this.areaSilenceExpiresAtNanos = 0L;
+            this.windShackleExpiresAtNanos = 0L;
+            this.decayPotionExpiresAtNanos = 0L;
+            this.polluteWaterExpiresAtNanos = 0L;
+            this.strikerGaleExpiresAtNanos = 0L;
+            this.elementalFallDownStatus.clear();
+            this.eraseMagicStatus.clear();
+            this.armBreakerStatus.clear();
+            this.panicStatus.clear();
+            this.joyOfPainStatus.clear();
+            this.sleepExpiresAtNanos = 0L;
+            this.paralysisExpiresAtNanos = 0L;
+            NativeSourceTargetNpc.writeShock(this, 0L);
+            NativeSourceSpecialNpc.writeBone(this, 0L);
+            this.thunderGrabExpiresAtNanos = 0L;
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
+            this.earthBindExpiresAtNanos = 0L;
+            this.hasteExpiresAtNanos = 0L;
+            this.slowExpiresAtNanos = 0L;
+            this.weaponBreakStacks = 0;
         }
 
         int addWeaponBreakStack() {
@@ -1988,54 +2334,50 @@ final class BattleQuestEncounter {
         }
 
         MagicCancellation cancelMagicEffects() {
-            if (!alive()) return null;
-            Snapshot target = snapshot();
-            boolean haste = hasteExpiresAtNanos != 0;
-            boolean slow = slowExpiresAtNanos != 0;
-            boolean blind = blindExpiresAtNanos != 0;
-            boolean weakness = weaknessExpiresAtNanos != 0;
-            boolean disease = diseaseExpiresAtNanos != 0;
-            boolean silence = silenceExpiresAtNanos != 0
-                    || areaSilenceExpiresAtNanos != 0;
-            boolean decayPotion = decayPotionExpiresAtNanos != 0;
-            boolean polluteWater = polluteWaterExpiresAtNanos != 0;
-            boolean strikerGale = strikerGaleExpiresAtNanos != 0;
-            boolean sleep = sleepExpiresAtNanos != 0;
-            boolean paralysis = paralysisExpiresAtNanos != 0;
-            boolean freeze = freezeExpiresAtNanos != 0;
-            boolean earthBind = earthBindExpiresAtNanos != 0;
-            boolean thunderGrab = thunderGrabExpiresAtNanos != 0;
-            boolean horrorOfDeath = damagePoison.cancelHorrorOfDeath();
-            boolean boneBreak = boneBreakExpiresAtNanos != 0;
-            boolean windShackle = windShackleExpiresAtNanos != 0;
-            BattleElementalFallDownStatus.Cancellation elementalFallDown =
-                    elementalFallDownStatus.cancel();
-            boolean eraseMagic = eraseMagicStatus.cancel();
-            armBreakerStatus.cancel();
-            boolean panic = panicStatus.cancel();
-            joyOfPainStatus.cancel();
-            hasteExpiresAtNanos = 0;
-            slowExpiresAtNanos = 0;
-            blindExpiresAtNanos = 0;
-            weaknessExpiresAtNanos = 0;
-            diseaseExpiresAtNanos = 0;
-            silenceExpiresAtNanos = 0;
-            areaSilenceExpiresAtNanos = 0;
-            decayPotionExpiresAtNanos = 0;
-            polluteWaterExpiresAtNanos = 0;
-            strikerGaleExpiresAtNanos = 0;
-            sleepExpiresAtNanos = 0;
-            paralysisExpiresAtNanos = 0;
-            freezeExpiresAtNanos = 0;
-            earthBindExpiresAtNanos = 0;
-            thunderGrabExpiresAtNanos = 0;
-            boneBreakExpiresAtNanos = 0;
-            windShackleExpiresAtNanos = 0;
-            return new MagicCancellation(target, haste, slow, blind, weakness, disease,
-                    silence, decayPotion, polluteWater, strikerGale,
-                    sleep, paralysis, freeze,
-                    earthBind, thunderGrab, horrorOfDeath, boneBreak, windShackle,
-                    elementalFallDown, eraseMagic, panic);
+            if (!this.alive()) {
+                return null;
+            }
+            Snapshot snapshot = this.snapshot();
+            boolean bl = this.hasteExpiresAtNanos != 0L;
+            boolean bl2 = this.slowExpiresAtNanos != 0L;
+            boolean bl3 = this.blindExpiresAtNanos != 0L;
+            boolean bl4 = this.weaknessExpiresAtNanos != 0L;
+            boolean bl5 = this.diseaseExpiresAtNanos != 0L;
+            boolean bl6 = this.silenceExpiresAtNanos != 0L || this.areaSilenceExpiresAtNanos != 0L;
+            boolean bl7 = this.decayPotionExpiresAtNanos != 0L;
+            boolean bl8 = this.polluteWaterExpiresAtNanos != 0L;
+            boolean bl9 = this.strikerGaleExpiresAtNanos != 0L;
+            boolean bl10 = this.sleepExpiresAtNanos != 0L;
+            boolean bl11 = this.paralysisExpiresAtNanos != 0L;
+            boolean bl12 = this.freezeExpiresAtNanos != 0L;
+            boolean bl13 = this.earthBindExpiresAtNanos != 0L;
+            boolean bl14 = this.thunderGrabExpiresAtNanos != 0L;
+            boolean bl15 = this.damagePoison.cancelHorrorOfDeath();
+            boolean bl16 = this.boneBreakExpiresAtNanos != 0L;
+            boolean bl17 = this.windShackleExpiresAtNanos != 0L;
+            BattleElementalFallDownStatus.Cancellation cancellation = this.elementalFallDownStatus.cancel();
+            boolean bl18 = this.eraseMagicStatus.cancel();
+            this.armBreakerStatus.cancel();
+            boolean bl19 = this.panicStatus.cancel();
+            this.joyOfPainStatus.cancel();
+            this.hasteExpiresAtNanos = 0L;
+            this.slowExpiresAtNanos = 0L;
+            this.blindExpiresAtNanos = 0L;
+            this.weaknessExpiresAtNanos = 0L;
+            this.diseaseExpiresAtNanos = 0L;
+            this.silenceExpiresAtNanos = 0L;
+            this.areaSilenceExpiresAtNanos = 0L;
+            this.decayPotionExpiresAtNanos = 0L;
+            this.polluteWaterExpiresAtNanos = 0L;
+            this.strikerGaleExpiresAtNanos = 0L;
+            this.sleepExpiresAtNanos = 0L;
+            this.paralysisExpiresAtNanos = 0L;
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
+            this.earthBindExpiresAtNanos = 0L;
+            this.thunderGrabExpiresAtNanos = 0L;
+            NativeSourceSpecialNpc.writeBone(this, 0L);
+            this.windShackleExpiresAtNanos = 0L;
+            return new MagicCancellation(snapshot, bl, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12, bl13, bl14, bl15, bl16, bl17, cancellation, bl18, bl19);
         }
 
         boolean activateBlind(long nowNanos, int durationSeconds) {
@@ -2221,9 +2563,10 @@ final class BattleQuestEncounter {
         }
 
         boolean activateShockStun(long nowNanos, int durationSeconds) {
-            if (!alive() || nowNanos < 0 || durationSeconds <= 0) return false;
-            shockStunExpiresAtNanos = Math.addExact(nowNanos,
-                    TimeUnit.SECONDS.toNanos(durationSeconds));
+            if (!this.alive() || nowNanos < 0L || durationSeconds <= 0) {
+                return false;
+            }
+            NativeSourceTargetNpc.writeShock(this, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
             return true;
         }
 
@@ -2232,10 +2575,10 @@ final class BattleQuestEncounter {
         }
 
         boolean activateBoneBreak(long nowNanos, int durationSeconds) {
-            if (!alive() || nowNanos < 0 || durationSeconds <= 0
-                    || boneBreakActive(nowNanos)) return false;
-            boneBreakExpiresAtNanos = Math.addExact(nowNanos,
-                    TimeUnit.SECONDS.toNanos(durationSeconds));
+            if (!this.alive() || nowNanos < 0L || durationSeconds <= 0 || this.boneBreakActive(nowNanos)) {
+                return false;
+            }
+            NativeSourceSpecialNpc.writeBone(this, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
             return true;
         }
 
@@ -2279,10 +2622,10 @@ final class BattleQuestEncounter {
         }
 
         boolean activateFreeze(long nowNanos, int durationSeconds) {
-            if (!alive() || nowNanos < 0 || durationSeconds <= 0
-                    || freezeActive(nowNanos)) return false;
-            freezeExpiresAtNanos = Math.addExact(nowNanos,
-                    TimeUnit.SECONDS.toNanos(durationSeconds));
+            if (!this.alive() || nowNanos < 0L || durationSeconds <= 0 || this.freezeActive(nowNanos)) {
+                return false;
+            }
+            NativeSourceTargetNpc.writeFreeze(this, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
             return true;
         }
 
@@ -2291,16 +2634,18 @@ final class BattleQuestEncounter {
         }
 
         boolean expireFreeze(long nowNanos) {
-            if (freezeExpiresAtNanos == 0 || nowNanos < freezeExpiresAtNanos) {
+            if (this.freezeExpiresAtNanos == 0L || nowNanos < this.freezeExpiresAtNanos) {
                 return false;
             }
-            freezeExpiresAtNanos = 0;
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
             return true;
         }
 
         boolean cancelFreeze() {
-            if (freezeExpiresAtNanos == 0) return false;
-            freezeExpiresAtNanos = 0;
+            if (this.freezeExpiresAtNanos == 0L) {
+                return false;
+            }
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
             return true;
         }
 
@@ -2329,11 +2674,8 @@ final class BattleQuestEncounter {
         }
 
         void schedule(long nowNanos, int action) {
-            long delay = TimeUnit.MILLISECONDS.toNanos(
-                    BattleActionInterval.npcMillis(
-                            template.gfx(), action, hasteActive(nowNanos),
-                            slowActive(nowNanos), windShackleActive(nowNanos)));
-            nextActionNanos = Math.addExact(nowNanos, delay);
+            long l2 = TimeUnit.MILLISECONDS.toNanos(NativeSourceNpcBaseSpeeds.npcMillis(this.template.gfx(), action, this.hasteActive(nowNanos), this.slowActive(nowNanos), this.windShackleActive(nowNanos), this));
+            this.nextActionNanos = Math.addExact(nowNanos, l2);
         }
 
         boolean magicReady(BattleTimeAttackMagicSkillCatalog.Definition skill,
@@ -2343,26 +2685,24 @@ final class BattleQuestEncounter {
                     && nowNanos >= skillReadyNanos.getOrDefault(skill.actNo(), 0L);
         }
 
-        void scheduleMagic(long nowNanos,
-                           BattleTimeAttackMagicSkillCatalog.Definition skill) {
-            if (!magicReady(skill, nowNanos)) {
+        void scheduleMagic(long nowNanos, BattleTimeAttackMagicSkillCatalog.Definition skill) {
+            if (!this.magicReady(skill, nowNanos)) {
                 throw new IllegalStateException("Quest magic was not ready");
             }
-            mp -= skill.mpCost();
-            int delay = skill.actionDelayMillis();
-            if (slowActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.SLOW_MULTIPLIER);
-            } else if (hasteActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.HASTE_MULTIPLIER);
+            this.mp -= skill.mpCost();
+            int n = NativeSourceNpcSpellTiming.base(skill.actionDelayMillis(), this, skill);
+            if (this.slowActive(nowNanos)) {
+                n = (int)((double)n * 2.0);
+            } else if (this.hasteActive(nowNanos)) {
+                n = (int)((double)n * 0.755);
             }
-            if (windShackleActive(nowNanos)) {
-                delay = (int) (delay
-                        * BattleActionInterval.WIND_SHACKLE_MULTIPLIER);
+            boolean windShackle = this.windShackleActive(nowNanos);
+            n = NativeSourceNpcActionIntervals.brave(n, this);
+            if (windShackle) {
+                n = (int)((double)n * 1.25);
             }
-            nextActionNanos = Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(Math.max(1, delay)));
-            skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
+            this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
+            this.skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
         }
 
         boolean summonReady(
@@ -2372,24 +2712,42 @@ final class BattleQuestEncounter {
                         < summon.triggerCount();
         }
 
-        void scheduleSummon(long nowNanos,
-                            BattleTimeAttackMagicSkillCatalog.SummonDefinition summon) {
-            if (!summonReady(summon)) {
+        void scheduleSummon(long nowNanos, BattleTimeAttackMagicSkillCatalog.SummonDefinition summon) {
+            if (!this.summonReady(summon)) {
                 throw new IllegalStateException("Quest summon was not ready");
             }
-            int delay = summon.actionDelayMillis();
-            if (slowActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.SLOW_MULTIPLIER);
-            } else if (hasteActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.HASTE_MULTIPLIER);
+            int n = NativeSourceNpcSpellTiming.base(summon.actionDelayMillis(), this, summon);
+            if (this.slowActive(nowNanos)) {
+                n = (int)((double)n * 2.0);
+            } else if (this.hasteActive(nowNanos)) {
+                n = (int)((double)n * 0.755);
             }
-            if (windShackleActive(nowNanos)) {
-                delay = (int) (delay
-                        * BattleActionInterval.WIND_SHACKLE_MULTIPLIER);
+            boolean windShackle = this.windShackleActive(nowNanos);
+            n = NativeSourceNpcActionIntervals.brave(n, this);
+            if (windShackle) {
+                n = (int)((double)n * 1.25);
             }
-            nextActionNanos = Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(Math.max(1, delay)));
-            skillUseCounts.merge(summon.actNo(), 1, Integer::sum);
+            this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
+            this.skillUseCounts.merge(summon.actNo(), 1, Integer::sum);
+        }
+
+        int nativeSourceCubeRemainderRecoverMana(int n) {
+            if (!this.alive() || n <= 0) {
+                return 0;
+            }
+            int n2 = this.mp;
+            this.mp = Math.min(this.maxMp, NativeSourceCubeRemainder.cappedAdd(this.mp, n));
+            return this.mp - n2;
+        }
+
+        Healing nativeSourceNpcMagicHeal(int n) {
+            if (this.hp <= 0 || n < 0) {
+                return null;
+            }
+            Snapshot snapshot = this.snapshot();
+            this.hp = NativeSourceNpcMagicEffects.capped(this.template.maxHp(), this.hp, n);
+            Snapshot snapshot2 = this.snapshot();
+            return new Healing(snapshot, snapshot2, snapshot2.hp() - snapshot.hp());
         }
     }
 }

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -25,10 +25,21 @@ import local.lito381.server.CombatWorldCommit;
 import local.lito381.server.CombatWorldPhysical;
 import local.lito381.server.GameHub;
 import local.lito381.server.NativeCombatOrigin;
+import local.lito381.server.NativeCompanionCombatScene;
+import local.lito381.server.NativeCompanionRefScene;
+import local.lito381.server.NativeCompanionReflectionScene;
 import local.lito381.server.NativeDeAiTimers;
 import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativeProcHealingEncounter;
 import local.lito381.server.NativeProcHealingWorld;
+import local.lito381.server.NativeSourceCompanionClock;
+import local.lito381.server.NativeSourceCompanionFirstActor;
+import local.lito381.server.NativeSourceCubeNpc;
+import local.lito381.server.NativeSourceCubePlayer;
+import local.lito381.server.NativeSourceNpcPlayer;
+import local.lito381.server.NativeSourceNpcTickView;
+import local.lito381.server.NativeSourceRawDamage;
+import local.lito381.server.NativeSourceRefRawNpc;
 import local.lito381.server.Protocol;
 
 final class NativeCombatAttacker {
@@ -97,16 +108,16 @@ final class NativeCombatAttacker {
 
     static Ingress enterCompanion(ClientSession clientSession, BattleCompanion battleCompanion) {
         if (!CombatRules.loaded()) {
-            return null;
+            return (Ingress)NativeSourceNpcPlayer.attach(null, clientSession, null, battleCompanion);
         }
-        return NativeCombatAttacker.enter(NativeCombatAttacker.companion(clientSession, battleCompanion));
+        return (Ingress)NativeSourceNpcPlayer.attach(NativeCombatAttacker.enter(NativeCombatAttacker.companion(clientSession, battleCompanion)), clientSession, null, battleCompanion);
     }
 
     static Ingress enterMonster(ClientSession clientSession, GameHub.MonsterAiTick monsterAiTick) {
         if (!CombatRules.loaded()) {
-            return null;
+            return (Ingress)NativeSourceNpcPlayer.attach(null, clientSession, monsterAiTick, null);
         }
-        return NativeCombatAttacker.enter(NativeCombatOrigin.tickAttacker(monsterAiTick));
+        return (Ingress)NativeSourceNpcPlayer.attach(NativeCombatAttacker.enter(NativeCombatOrigin.tickAttacker(monsterAiTick)), clientSession, monsterAiTick, null);
     }
 
     static Ingress enterWorld(ClientSession clientSession, long l) {
@@ -158,6 +169,7 @@ final class NativeCombatAttacker {
     }
 
     static void leave(Ingress ingress) {
+        NativeSourceNpcPlayer.clear(ingress);
         if (ingress == null) {
             return;
         }
@@ -199,7 +211,7 @@ final class NativeCombatAttacker {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static Ref companion(ClientSession clientSession, BattleCompanion battleCompanion) {
+    static Ref nativeRefOriginalCompanion(ClientSession clientSession, BattleCompanion battleCompanion) {
         if (clientSession == null || battleCompanion == null) {
             return null;
         }
@@ -246,11 +258,11 @@ final class NativeCombatAttacker {
      */
     static Ref encounter(ClientSession clientSession, GameHub.MonsterAiTick monsterAiTick) {
         GameHub gameHub;
-        int n = 0;
+        int n;
         if (clientSession == null || monsterAiTick == null) {
             return null;
         }
-        int n2 = monsterAiTick.mode() == BattleRules.Mode.QUEST_BATTLE ? 3 : (n = monsterAiTick.mode() == BattleRules.Mode.TIME_ATTACK ? 4 : 0);
+        n = monsterAiTick.mode() == BattleRules.Mode.QUEST_BATTLE ? 3 : (monsterAiTick.mode() == BattleRules.Mode.TIME_ATTACK ? 4 : 0);
         if (n == 0) {
             return null;
         }
@@ -267,11 +279,11 @@ final class NativeCombatAttacker {
             Object object2 = object;
             synchronized (object2) {
                 Object object3 = CombatAccess.call(object, "monster", "(J)Llocal/lito381/server/" + (n == 3 ? "BattleQuestEncounter" : "BattleTimeAttackEncounter") + "$Monster;", monsterAiTick.objectId());
-                if (object3 == null) {
+                if (!NativeSourceNpcTickView.encounter(object3, monsterAiTick, object)) {
                     return null;
                 }
                 BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(object3, "damagePoison");
-                return new Ref(n, monsterAiTick.objectId(), NativeCombatAttacker.token(battleTimedStatus, true), 0L, null, monsterAiTick.roomId(), 0, -1);
+                return new Ref(n, monsterAiTick.objectId(), NativeCombatAttacker.token(battleTimedStatus, true), 0L, null, monsterAiTick.roomId(), 0, -1, null, monsterAiTick.nativeSourceNpcTickView);
             }
         }
     }
@@ -286,13 +298,13 @@ final class NativeCombatAttacker {
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    private static Live live(ClientSession clientSession, Ref ref) {
+    private static Live nativeRefOriginalLive(ClientSession clientSession, Ref ref) {
         if (ref == null) {
             return null;
         }
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         if (ref.kind == 2) {
-            ClientSession clientSession2 = NativePlayerCommit.caster(clientSession, ref.master);
+            ClientSession clientSession2 = NativePlayerCommit.nativeRefCompanionCaster(clientSession, ref.master);
             if (clientSession2 == null) {
                 return null;
             }
@@ -306,7 +318,7 @@ final class NativeCombatAttacker {
                 BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(battleCompanion, "timedStatus");
                 if (!snapshot.active()) return null;
                 if (snapshot.hp() <= 0) return null;
-                if (!NativeCombatAttacker.same(ref, battleCompanion, battleTimedStatus)) return null;
+                if (!NativeSourceCompanionFirstActor.live(NativeCompanionRefScene.liveSame(ref, battleCompanion, battleTimedStatus, clientSession2), ref, battleCompanion)) return null;
                 Live live = new Live(ref, battleCompanion, battleCompanion, battleTimedStatus, snapshot, clientSession2);
                 return live;
             }
@@ -348,7 +360,7 @@ final class NativeCombatAttacker {
                     return null;
                 }
                 BattleTimedStatus battleTimedStatus = (BattleTimedStatus)CombatAccess.field(object3, "damagePoison");
-                if (!NativeCombatAttacker.same(ref, object3, battleTimedStatus)) {
+                if (!NativeSourceNpcTickView.live(NativeCombatAttacker.same(ref, object3, battleTimedStatus), ref, object, object3)) {
                     return null;
                 }
                 Object object4 = CombatAccess.call(object3, "snapshot", "()Llocal/lito381/server/" + (ref.kind == 3 ? "BattleQuestEncounter" : "BattleTimeAttackEncounter") + "$Snapshot;", new Object[0]);
@@ -358,13 +370,16 @@ final class NativeCombatAttacker {
     }
 
     static boolean alive(ClientSession clientSession, Ref ref) {
+        if (NativeSourceCubePlayer.effect(ref)) {
+            return NativeSourceCubePlayer.alive(clientSession, ref);
+        }
         return NativeCombatAttacker.live(clientSession, ref) != null;
     }
 
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static int debit(ClientSession clientSession, Ref ref, int n) {
+    static int nativeCombatSceneOriginalDebit(ClientSession clientSession, Ref ref, int n) {
         if (n <= 0) {
             return 0;
         }
@@ -429,6 +444,9 @@ final class NativeCombatAttacker {
     }
 
     static Feedback feedback(ClientSession clientSession, Ref ref) {
+        if (NativeSourceCubePlayer.effect(ref)) {
+            return null;
+        }
         Live live = NativeCombatAttacker.live(clientSession, ref);
         if (live == null) {
             return null;
@@ -444,11 +462,14 @@ final class NativeCombatAttacker {
 
     static void reaction(ClientSession clientSession, Ref ref, String string) {
         int n;
+        if (NativeSourceCubePlayer.effect(ref)) {
+            return;
+        }
         Live live = NativeCombatAttacker.live(clientSession, ref);
         if (live == null) {
             return;
         }
-        int n2 = n = ref.kind == 1 ? ((ClassicWorldMonsterPopulation.Snapshot)live.snapshot).gfxId() : ((Number)CombatAccess.field(live.snapshot, "gfx")).intValue();
+        n = ref.kind == 1 ? ((ClassicWorldMonsterPopulation.Snapshot)live.snapshot).gfxId() : ((Number)CombatAccess.field(live.snapshot, "gfx")).intValue();
         if (!BattleHitReactionSuppressCatalog.shouldSendDamageAction(n)) {
             return;
         }
@@ -458,7 +479,7 @@ final class NativeCombatAttacker {
         }
     }
 
-    static void acceptedFeedback(ClientSession clientSession, Ref ref, Feedback feedback) {
+    static void nativeRawOriginalFeedback(ClientSession clientSession, Ref ref, Feedback feedback) {
         if (feedback == null || !NativePlayerCommit.validFrame(clientSession) || !NativeCombatAttacker.alive(clientSession, ref)) {
             return;
         }
@@ -492,7 +513,7 @@ final class NativeCombatAttacker {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static void damage(ClientSession clientSession, Ref ref, int n, String string) {
+    static void nativeReflectionOriginalDamage(ClientSession clientSession, Ref ref, int n, String string) {
         if (n <= 0 || !NativePlayerCommit.validFrame(clientSession)) {
             return;
         }
@@ -532,7 +553,7 @@ final class NativeCombatAttacker {
             if (ref.kind == 2) {
                 CombatAccess.call(clientSession, "applyCompanionDefenseFeedbackDamage", "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;ILjava/util/List;Ljava/lang/String;)V", live.master, live.actor, n, NativeCombatAttacker.viewers(clientSession, ref), string);
             } else {
-                CombatAccess.call(clientSession, ref.kind == 3 ? "applyQuestMonsterDamage" : "applyTimeAttackActorDamage", "(JILjava/lang/String;)I", ref.id, n, string);
+                NativeSourceRefRawNpc.call(clientSession, ref.kind == 3 ? "applyQuestMonsterDamage" : "applyTimeAttackActorDamage", "(JILjava/lang/String;)I", new Object[]{ref.id, n, string}, ref, live);
             }
         }
         finally {
@@ -547,7 +568,7 @@ final class NativeCombatAttacker {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static BattleCompanion.Damage companionDamage(BattleCompanion battleCompanion, int n) {
+    static BattleCompanion.Damage nativeReflectionOriginalCompanionDamage(BattleCompanion battleCompanion, int n) {
         Ref ref = reflecting.get();
         if (ref == null) {
             return battleCompanion.applyDamage(n);
@@ -568,6 +589,9 @@ final class NativeCombatAttacker {
     }
 
     static boolean earth(boolean bl, Object object) {
+        if (NativeSourceCubeNpc.rawEffectTarget(object)) {
+            return false;
+        }
         if (NativeProcHealingEncounter.direct(object)) {
             return false;
         }
@@ -637,7 +661,147 @@ final class NativeCombatAttacker {
         CombatAccess.call(clientSession, "sourceWorldDollCommitted", "(Llocal/lito381/server/ClassicWorldMonsterPopulation$Hit;Ljava/lang/String;JLlocal/lito381/server/ClassicWorldMonsterPopulation$PoisonUpdate;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V", poisonUpdate.hits().get(0), reflection.source, poisonUpdate.target().objectId(), poisonUpdate, scope);
     }
 
-    record Ref(int kind, long id, Object owner, long epoch, NativePlayerCommit.Binding master, long room, int map, int instance) {
+    static Ref companion(ClientSession clientSession, BattleCompanion battleCompanion) {
+        return NativeCompanionRefScene.capture(clientSession, battleCompanion);
+    }
+
+    private static Live live(ClientSession clientSession, Ref ref) {
+        if (NativeCompanionRefScene.worldRef(ref)) {
+            GameHub gameHub = NativeCompanionRefScene.hub(clientSession);
+            synchronized (gameHub) {
+                Live live = NativeCombatAttacker.nativeRefOriginalLive(clientSession, ref);
+                return live;
+            }
+        }
+        return NativeCombatAttacker.nativeRefOriginalLive(clientSession, ref);
+    }
+
+    static int debit(ClientSession clientSession, Ref ref, int n) {
+        return NativeCompanionCombatScene.debit(clientSession, ref, n);
+    }
+
+    static void damage(ClientSession clientSession, Ref ref, int n, String string) {
+        NativeCompanionReflectionScene.damage(clientSession, ref, n, string);
+    }
+
+    static BattleCompanion.Damage companionDamage(BattleCompanion battleCompanion, int n) {
+        return NativeCompanionReflectionScene.companionDamage(battleCompanion, n);
+    }
+
+    static Ref nativeReflectionRef() {
+        return reflecting.get();
+    }
+
+    static void acceptedFeedback(ClientSession clientSession, Ref ref, Feedback feedback) {
+        if (NativeSourceCubePlayer.effect(ref)) {
+            return;
+        }
+        NativeSourceRawDamage.feedback(clientSession, ref, feedback);
+    }
+
+    static Ref nativeSourceCubeCurrent() {
+        return reflecting.get();
+    }
+
+    static Object nativeSourceNpcReactionLive(ClientSession clientSession, Ref ref) {
+        return NativeCombatAttacker.live(clientSession, ref);
+    }
+
+    static Object nativeSourceNpcPlayerCurrent() {
+        Ingress ingress = NativeCombatAttacker.ingress.get();
+        if (ingress != null) {
+            return ingress.nativeSourceNpcPlayerScope;
+        }
+        return null;
+    }
+
+    static Ingress nativeSourceCompanionClockEnter(ClientSession clientSession, BattleCompanion battleCompanion, Object object) {
+        if (!CombatRules.loaded()) {
+            return (Ingress)NativeSourceCompanionClock.attach(null, clientSession, null, battleCompanion, object);
+        }
+        return (Ingress)NativeSourceCompanionClock.attach(NativeCombatAttacker.enter(NativeSourceCompanionClock.ref(clientSession, battleCompanion, object)), clientSession, null, battleCompanion, object);
+    }
+
+    static Ingress nativeSourceCompanionFirstEnter(ClientSession clientSession, BattleCompanion battleCompanion, Object object, Object object2) {
+        if (!CombatRules.loaded()) {
+            return (Ingress)NativeSourceCompanionClock.attach(null, clientSession, null, battleCompanion, object);
+        }
+        return (Ingress)NativeSourceCompanionClock.attach(NativeCombatAttacker.enter(NativeSourceCompanionFirstActor.ref(clientSession, battleCompanion, object, object2)), clientSession, null, battleCompanion, object);
+    }
+@AsRecord(components={"kind","id","owner","epoch","master","room","map","instance"}, finalFields={"nativeSourceNpcMasterProof","nativeSourceNpcTickView"})
+
+    static final class Ref
+    {
+        private final int kind;
+        private final long id;
+        private final Object owner;
+        private final long epoch;
+        private final NativePlayerCommit.Binding master;
+        private final long room;
+        private final int map;
+        private final int instance;
+        Object nativeSourceNpcMasterProof;
+        transient Object nativeSourceNpcTickView;
+
+        Ref(int n, long l, Object object, long l2, NativePlayerCommit.Binding binding, long l3, int n2, int n3) {
+            this.kind = n;
+            this.id = l;
+            this.owner = object;
+            this.epoch = l2;
+            this.master = binding;
+            this.room = l3;
+            this.map = n2;
+            this.instance = n3;
+        }
+
+        public int kind() {
+            return this.kind;
+        }
+
+        public long id() {
+            return this.id;
+        }
+
+        public Object owner() {
+            return this.owner;
+        }
+
+        public long epoch() {
+            return this.epoch;
+        }
+
+        public NativePlayerCommit.Binding master() {
+            return this.master;
+        }
+
+        public long room() {
+            return this.room;
+        }
+
+        public int map() {
+            return this.map;
+        }
+
+        public int instance() {
+            return this.instance;
+        }
+
+        Ref(int n, long l, Object object, long l2, NativePlayerCommit.Binding binding, long l3, int n2, int n3, Object object2) {
+            this.kind = n;
+            this.id = l;
+            this.owner = object;
+            this.epoch = l2;
+            this.master = binding;
+            this.room = l3;
+            this.map = n2;
+            this.instance = n3;
+            this.nativeSourceNpcMasterProof = object2;
+        }
+
+        Ref(int n, long l, Object object, long l2, NativePlayerCommit.Binding binding, long l3, int n2, int n3, Object object2, Object object3) {
+            this(n, l, object, l2, binding, l3, n2, n3, object2);
+            this.nativeSourceNpcTickView = object3;
+        }
     }
 
     static final class Ingress {
@@ -646,6 +810,7 @@ final class NativeCombatAttacker {
         final boolean blocked;
         NativePlayerCommit.Binding lastTarget;
         ClassicWorldMonsterPopulation.Snapshot snapshot;
+        Object nativeSourceNpcPlayerScope;
 
         Ingress(Ref ref, Ingress ingress, boolean bl) {
             this.attacker = ref;

@@ -1,9 +1,10 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 // ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/target-negative-material/NativeTargetNegativeMaterialAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
 import java.io.IOException;import java.util.List;
 /** The private native kind stays inside ClientSession's lambda lookup. */
 final class NativeTargetNegativeMaterialAction {
- static void cast(ClientSession pc,byte[] packet,NativeSelfCastAction.Task body)throws IOException{
+ static void nativeControlledOriginalCast(ClientSession pc,byte[] packet,NativeSelfCastAction.Task body)throws IOException{
   var request=Protocol.attackSpellRequest(packet);var hub=(GameHub)CombatAccess.field(pc,"hub");
   boolean world=String.valueOf(CombatAccess.field(pc,"phase")).equals("WORLD");
   List<ClientSession> peers=world?(List<ClientSession>)CombatAccess.call(pc,"classicWorldMembers","(I)Ljava/util/List;",(int)CombatAccess.field(pc,"classicWorldMapId")):hub.roomCombatants((long)CombatAccess.field(pc,"currentRoomId"));
@@ -15,4 +16,8 @@ final class NativeTargetNegativeMaterialAction {
   return NativeLightAction.admitPair(pc,target==null?pc:target,skill,action,reuse);
  }
  private NativeTargetNegativeMaterialAction(){}
+
+    static void cast(ClientSession clientSession, byte[] byArray, NativeSelfCastAction.Task task) throws IOException {
+        NativeControlledNegativeMaterial.cast(clientSession, byArray, task);
+    }
 }

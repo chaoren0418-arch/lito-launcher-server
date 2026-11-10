@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -15,6 +15,11 @@ import local.lito381.server.CombatNpcDamageQueue;
 import local.lito381.server.GameHub;
 import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativePlayerLifetime;
+import local.lito381.server.NativeSourceCubeNpcQueue;
+import local.lito381.server.NativeSourceDamageCapacity;
+import local.lito381.server.NativeSourcePendingAdmission;
+import local.lito381.server.NativeSourcePhysicalNpc;
+import local.lito381.server.NativeSourcePoisonNpc;
 
 final class NativeNpcLifetime {
     static final String FIELD = "sourceDamageLifetime";
@@ -42,7 +47,7 @@ final class NativeNpcLifetime {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static boolean offer(CombatNpcDamageQueue.Queue queue, CombatNpcDamageQueue.Event event, GameHub gameHub) {
+    static boolean nativeSourceCubeQueueOriginalOffer(CombatNpcDamageQueue.Queue queue, CombatNpcDamageQueue.Event event, GameHub gameHub) {
         CombatNpcDamageQueue.Queue queue2 = queue;
         synchronized (queue2) {
             Lane lane = NativeNpcLifetime.lane(queue, gameHub);
@@ -91,6 +96,7 @@ final class NativeNpcLifetime {
                 throw new IllegalStateException("NPC admission receipt missing");
             }
             lane.life.pending.decrementAndGet();
+            NativeSourceDamageCapacity.release(lane.life, 1L);
         }
         return event;
     }
@@ -104,6 +110,9 @@ final class NativeNpcLifetime {
     }
 
     static void clearing(CombatNpcDamageQueue.Queue queue, boolean bl) {
+        NativeSourcePhysicalNpc.clearing(queue);
+        NativeSourcePoisonNpc.clearing(queue);
+        NativeSourceCubeNpcQueue.clearing(queue);
         Lane lane = NativeNpcLifetime.lane(queue);
         if (lane == null) {
             return;
@@ -111,6 +120,7 @@ final class NativeNpcLifetime {
         int n = lane.deadlines.size();
         lane.deadlines.clear();
         lane.life.pending.addAndGet(-n);
+        NativeSourceDamageCapacity.release(lane.life, n);
         lane.life.dropped.addAndGet(n);
         lane.cancel();
         if (lane.scheduled == 0) {
@@ -212,6 +222,10 @@ final class NativeNpcLifetime {
                 }
             }
         }
+    }
+
+    static boolean offer(CombatNpcDamageQueue.Queue queue, CombatNpcDamageQueue.Event event, GameHub gameHub) {
+        return NativeSourcePendingAdmission.offer(queue, event, gameHub);
     }
 
     static final class Lane {

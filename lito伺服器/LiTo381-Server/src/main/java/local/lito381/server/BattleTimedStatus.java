@@ -1,8 +1,8 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
 import java.util.concurrent.TimeUnit;
 
-/** Server-authoritative actor statuses shared by native world rebuild packets. */
 final class BattleTimedStatus {
     static final int NORMAL = 0;
     static final int HASTE = 1;
@@ -13,39 +13,9 @@ final class BattleTimedStatus {
     static final int BRAVE_HOLY_WALK = 4;
     static final int BRAVE_SECOND = 5;
     static final int BRAVE_BLOODLUST = 6;
-
-    record Speed(int type, int remainingSeconds) {}
-    record SpeedChange(int type, int durationSeconds, int stoppedSkillId) {}
-    record HasteExpiration(boolean expired, int skillId) {}
-    record SlowExpiration(boolean expired, int skillId) {}
-    record Brave(int mode, int remainingSeconds) {}
-    record Breath(int remainingSeconds) {}
-    record PoisonPoll(int damageTicks, boolean expired) {}
-    record ParalysisPoll(boolean activated, boolean expired, boolean unlockRequired) {}
-    record ParalysisCancellation(boolean present, boolean unlockRequired) {}
-    record ShockStunActivation(int durationSeconds, boolean refreshed) {}
-    enum PoisonKind { DAMAGE, SILENCE, PARALYSIS }
-    record CurseRemoval(boolean poisonCured,
-                        ParalysisCancellation paralysisCancellation) {}
-    record MagicCancellation(
-            boolean haste, boolean slow, boolean brave, boolean blind, boolean weakness,
-            boolean disease, boolean silence, boolean decayPotion, boolean polluteWater,
-            boolean strikerGale,
-            boolean light,
-            boolean bluePotion, boolean wisdomPotion, boolean meditation, boolean concentration,
-            boolean counterMagic, boolean breath, boolean poison,
-            boolean sleep, boolean freeze, boolean earthBind,
-            boolean burningSpirit, boolean elementalFire, boolean soulOfFlame,
-             boolean venomResist, boolean doubleBrake,
-             boolean horrorOfDeath,
-             boolean thunderGrab,
-             boolean boneBreak,
-            ParalysisCancellation paralysisCancellation) {}
-
-    private long hasteExpiresAtNanos;
-    /** Zero denotes an item/potion lease; spell leases retain their native skill id. */
+    private volatile long hasteExpiresAtNanos;
     private int hasteSkillId;
-    private long slowExpiresAtNanos;
+    private volatile long slowExpiresAtNanos;
     private int slowSkillId;
     private long braveExpiresAtNanos;
     private int braveMode;
@@ -53,7 +23,6 @@ final class BattleTimedStatus {
     private long weaknessExpiresAtNanos;
     private long diseaseExpiresAtNanos;
     private long silenceExpiresAtNanos;
-    /** Skill161 remains independent from skill64 and poison silence. */
     private long areaSilenceExpiresAtNanos;
     private long decayPotionExpiresAtNanos;
     private long polluteWaterExpiresAtNanos;
@@ -70,10 +39,9 @@ final class BattleTimedStatus {
     private long breathExpiresAtNanos;
     private long poisonExpiresAtNanos;
     private long poisonNextTickAtNanos;
-    /** Retained L1SilencePoison has no timer and lasts until poison cure. */
     private boolean poisonSilence;
     private long sleepExpiresAtNanos;
-    private long freezeExpiresAtNanos;
+    private volatile long freezeExpiresAtNanos;
     private long earthBindExpiresAtNanos;
     private long absoluteBarrierExpiresAtNanos;
     private long advanceSpiritExpiresAtNanos;
@@ -83,36 +51,47 @@ final class BattleTimedStatus {
     private long venomResistExpiresAtNanos;
     private long doubleBrakeExpiresAtNanos;
     private long shockStunExpiresAtNanos;
-    /** Skill208 BONE_BREAK is an independent, fixed, non-refreshing stun. */
     private long boneBreakExpiresAtNanos;
-    /** Skill192 MOVE_STOP lease; client lock/unlock uses S_PARALYSE 24/25. */
     private long thunderGrabExpiresAtNanos;
-    /** Skill193 player-only STR/INT debuff; no selected CharBuff persistence. */
     private long horrorOfDeathExpiresAtNanos;
     private long paralysisActivatesAtNanos;
     private long paralysisExpiresAtNanos;
     private boolean paralysisLockEmitted;
-    /** Source poison and curse paralysis have independent transient leases. ASM-added; not a full class rebuild. */
-    private BattleTimedStatus sourcePoisonParalysis;
-    /** Exact damage-poison reservation and in-flight callbacks; transient ASM-added state. */
-    private CombatPoisonLifecycle.State sourcePoisonLifecycle;
     private boolean drunken;
+    private BattleTimedStatus sourcePoisonParalysis;
+    private volatile CombatPoisonLifecycle.State sourcePoisonLifecycle;
+    private volatile Object sourceSleepLease;
+    private Object sourceProcPlayerState;
+    private Object sourceProcNpcState;
+    private Object sourceDeActorState;
+    private volatile Object sourceDeKnownViewer;
+    volatile Object nativeSourceDollSlowEpoch;
+    volatile transient int nativeSourceIcons1BraveSkill;
+    volatile transient long nativeSourceIcons1Version;
+
+    BattleTimedStatus() {
+    }
 
     synchronized Speed speed(long nowNanos) {
-        long expiresAt = 0;
-        int type = NORMAL;
-        if (slowExpiresAtNanos != 0 && nowNanos < slowExpiresAtNanos) {
-            expiresAt = slowExpiresAtNanos;
-            type = SLOW;
-        } else if (hasteExpiresAtNanos != 0 && nowNanos < hasteExpiresAtNanos) {
-            expiresAt = hasteExpiresAtNanos;
-            type = HASTE;
+        Speed speed = NativeSourceDollSlow.extendedSpeed(this, nowNanos);
+        if (speed != null) {
+            return speed;
         }
-        if (type == NORMAL) return new Speed(NORMAL, 0);
-        long remainingNanos = expiresAt - nowNanos;
-        long seconds = (remainingNanos + TimeUnit.SECONDS.toNanos(1) - 1)
-                / TimeUnit.SECONDS.toNanos(1);
-        return new Speed(type, (int) Math.min(0xFFFFL, Math.max(1L, seconds)));
+        long l2 = 0L;
+        int n = 0;
+        if (this.slowExpiresAtNanos != 0L && nowNanos < this.slowExpiresAtNanos) {
+            l2 = this.slowExpiresAtNanos;
+            n = 2;
+        } else if (this.hasteExpiresAtNanos != 0L && nowNanos < this.hasteExpiresAtNanos) {
+            l2 = this.hasteExpiresAtNanos;
+            n = 1;
+        }
+        if (n == 0) {
+            return new Speed(0, 0);
+        }
+        long l3 = l2 - nowNanos;
+        long l4 = (l3 + TimeUnit.SECONDS.toNanos(1L) - 1L) / TimeUnit.SECONDS.toNanos(1L);
+        return new Speed(n, (int)Math.min(65535L, Math.max(1L, l4)));
     }
 
     synchronized SpeedChange activateHaste(long nowNanos, int durationSeconds) {
@@ -210,27 +189,44 @@ final class BattleTimedStatus {
     }
 
     synchronized void activateBrave(long nowNanos, int durationSeconds) {
-        activateBrave(nowNanos, durationSeconds, BRAVE_FIRST);
+        this.activateBrave(nowNanos, durationSeconds, 1);
     }
 
     synchronized void activateBrave(long nowNanos, int durationSeconds, int mode) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native brave duration");
         }
-        if (mode != BRAVE_FIRST && mode != BRAVE_ELF
-                && mode != BRAVE_HOLY_WALK && mode != BRAVE_SECOND
-                && mode != BRAVE_BLOODLUST) {
+        if (mode != 1 && mode != 3 && mode != 4 && mode != 5 && mode != 6) {
             throw new IllegalArgumentException("invalid native brave mode");
         }
-        braveExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
-        braveMode = mode;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).braveExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        int n3 = 0;
+        battleTimedStatus = this;
+        this.nativeSourceIcons1BraveSkill = n3;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        n3 = mode;
+        battleTimedStatus = this;
+        this.braveMode = n3;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean expireBrave(long nowNanos) {
-        if (braveExpiresAtNanos == 0 || nowNanos < braveExpiresAtNanos) return false;
-        braveExpiresAtNanos = 0;
-        braveMode = BRAVE_NORMAL;
+        if (this.braveExpiresAtNanos == 0L || nowNanos < this.braveExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).braveExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        int n = 0;
+        battleTimedStatus = this;
+        this.nativeSourceIcons1BraveSkill = n;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        n = 0;
+        battleTimedStatus = this;
+        this.braveMode = n;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -257,18 +253,21 @@ final class BattleTimedStatus {
     }
 
     synchronized void activateWeakness(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Weakness duration");
         }
-        weaknessExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).weaknessExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean expireWeakness(long nowNanos) {
-        if (weaknessExpiresAtNanos == 0 || nowNanos < weaknessExpiresAtNanos) {
+        if (this.weaknessExpiresAtNanos == 0L || nowNanos < this.weaknessExpiresAtNanos) {
             return false;
         }
-        weaknessExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).weaknessExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -277,18 +276,21 @@ final class BattleTimedStatus {
     }
 
     synchronized void activateDisease(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Disease duration");
         }
-        diseaseExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).diseaseExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean expireDisease(long nowNanos) {
-        if (diseaseExpiresAtNanos == 0 || nowNanos < diseaseExpiresAtNanos) {
+        if (this.diseaseExpiresAtNanos == 0L || nowNanos < this.diseaseExpiresAtNanos) {
             return false;
         }
-        diseaseExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).diseaseExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -375,20 +377,25 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean activateDecayPotion(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid Decay Potion duration");
         }
-        if (decayPotionActive(nowNanos)) return false;
-        decayPotionExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        if (this.decayPotionActive(nowNanos)) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).decayPotionExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized boolean expireDecayPotion(long nowNanos) {
-        if (decayPotionExpiresAtNanos == 0 || nowNanos < decayPotionExpiresAtNanos) {
+        if (this.decayPotionExpiresAtNanos == 0L || nowNanos < this.decayPotionExpiresAtNanos) {
             return false;
         }
-        decayPotionExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).decayPotionExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -398,19 +405,21 @@ final class BattleTimedStatus {
     }
 
     synchronized void activatePolluteWater(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid Pollute Water duration");
         }
-        polluteWaterExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).polluteWaterExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean expirePolluteWater(long nowNanos) {
-        if (polluteWaterExpiresAtNanos == 0
-                || nowNanos < polluteWaterExpiresAtNanos) {
+        if (this.polluteWaterExpiresAtNanos == 0L || nowNanos < this.polluteWaterExpiresAtNanos) {
             return false;
         }
-        polluteWaterExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).polluteWaterExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -420,19 +429,21 @@ final class BattleTimedStatus {
     }
 
     synchronized void activateStrikerGale(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid Striker Gale duration");
         }
-        strikerGaleExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).strikerGaleExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean expireStrikerGale(long nowNanos) {
-        if (strikerGaleExpiresAtNanos == 0
-                || nowNanos < strikerGaleExpiresAtNanos) {
+        if (this.strikerGaleExpiresAtNanos == 0L || nowNanos < this.strikerGaleExpiresAtNanos) {
             return false;
         }
-        strikerGaleExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).strikerGaleExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -576,11 +587,12 @@ final class BattleTimedStatus {
     }
 
     synchronized void activateMeditation(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native meditation duration");
         }
-        meditationExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).meditationExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean meditationActive(long nowNanos) {
@@ -588,25 +600,32 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireMeditation(long nowNanos) {
-        if (meditationExpiresAtNanos == 0 || nowNanos < meditationExpiresAtNanos) {
+        if (this.meditationExpiresAtNanos == 0L || nowNanos < this.meditationExpiresAtNanos) {
             return false;
         }
-        meditationExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).meditationExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized boolean cancelMeditation() {
-        if (meditationExpiresAtNanos == 0) return false;
-        meditationExpiresAtNanos = 0;
+        if (this.meditationExpiresAtNanos == 0L) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).meditationExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized void activateConcentration(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native concentration duration");
         }
-        concentrationExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).concentrationExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean concentrationActive(long nowNanos) {
@@ -614,19 +633,22 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireConcentration(long nowNanos) {
-        if (concentrationExpiresAtNanos == 0 || nowNanos < concentrationExpiresAtNanos) {
+        if (this.concentrationExpiresAtNanos == 0L || nowNanos < this.concentrationExpiresAtNanos) {
             return false;
         }
-        concentrationExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).concentrationExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized void activateCounterMagic(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Counter Magic duration");
         }
-        counterMagicExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).counterMagicExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean counterMagicActive(long nowNanos) {
@@ -634,22 +656,28 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireCounterMagic(long nowNanos) {
-        if (counterMagicExpiresAtNanos == 0
-                || nowNanos < counterMagicExpiresAtNanos) return false;
-        counterMagicExpiresAtNanos = 0;
+        if (this.counterMagicExpiresAtNanos == 0L || nowNanos < this.counterMagicExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).counterMagicExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
-    /** Consumes the one-shot ward only while its authoritative lease is active. */
     synchronized boolean consumeCounterMagic(long nowNanos) {
-        if (!counterMagicActive(nowNanos)) {
-            if (counterMagicExpiresAtNanos != 0
-                    && nowNanos >= counterMagicExpiresAtNanos) {
-                counterMagicExpiresAtNanos = 0;
+        if (!this.counterMagicActive(nowNanos)) {
+            if (this.counterMagicExpiresAtNanos != 0L && nowNanos >= this.counterMagicExpiresAtNanos) {
+                long l2 = 0L;
+                BattleTimedStatus battleTimedStatus = this;
+                this.counterMagicExpiresAtNanos = l2;
+                NativeSourceIcons1Epoch.bump(battleTimedStatus);
             }
             return false;
         }
-        counterMagicExpiresAtNanos = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).counterMagicExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -772,23 +800,35 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean activateSleep(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native sleep duration");
         }
-        sleepExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus recipient = this;
+        long expiration = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeAcceptedState.sleepChanged(this);
+        recipient.sleepExpiresAtNanos = expiration;
         return true;
     }
 
     synchronized boolean expireSleep(long nowNanos) {
-        if (sleepExpiresAtNanos == 0 || nowNanos < sleepExpiresAtNanos) return false;
-        sleepExpiresAtNanos = 0;
+        if (this.sleepExpiresAtNanos == 0L || nowNanos < this.sleepExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus sleepRecipient = this;
+        long clearedExpiration = 0L;
+        NativeAcceptedState.sleepChanged(this);
+        sleepRecipient.sleepExpiresAtNanos = clearedExpiration;
         return true;
     }
 
     synchronized boolean cancelSleep() {
-        if (sleepExpiresAtNanos == 0) return false;
-        sleepExpiresAtNanos = 0;
+        if (this.sleepExpiresAtNanos == 0L) {
+            return false;
+        }
+        BattleTimedStatus sleepRecipient = this;
+        long clearedExpiration = 0L;
+        NativeAcceptedState.sleepChanged(this);
+        sleepRecipient.sleepExpiresAtNanos = clearedExpiration;
         return true;
     }
 
@@ -847,11 +887,12 @@ final class BattleTimedStatus {
     }
 
     synchronized void activateAbsoluteBarrier(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Absolute Barrier duration");
         }
-        absoluteBarrierExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).absoluteBarrierExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean absoluteBarrierActive(long nowNanos) {
@@ -860,15 +901,22 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireAbsoluteBarrier(long nowNanos) {
-        if (absoluteBarrierExpiresAtNanos == 0
-                || nowNanos < absoluteBarrierExpiresAtNanos) return false;
-        absoluteBarrierExpiresAtNanos = 0;
+        if (this.absoluteBarrierExpiresAtNanos == 0L || nowNanos < this.absoluteBarrierExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).absoluteBarrierExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized boolean cancelAbsoluteBarrier() {
-        if (absoluteBarrierExpiresAtNanos == 0) return false;
-        absoluteBarrierExpiresAtNanos = 0;
+        if (this.absoluteBarrierExpiresAtNanos == 0L) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).absoluteBarrierExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -915,16 +963,15 @@ final class BattleTimedStatus {
         return true;
     }
 
-    synchronized boolean activateElementalFire(
-            long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+    synchronized boolean activateElementalFire(long nowNanos, int durationSeconds) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Elemental Fire duration");
         }
-        boolean refreshed = elementalFireExpiresAtNanos != 0
-                && nowNanos < elementalFireExpiresAtNanos;
-        elementalFireExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
-        return refreshed;
+        boolean bl = this.elementalFireExpiresAtNanos != 0L && nowNanos < this.elementalFireExpiresAtNanos;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).elementalFireExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        return bl;
     }
 
     synchronized boolean elementalFireActive(long nowNanos) {
@@ -933,22 +980,24 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireElementalFire(long nowNanos) {
-        if (elementalFireExpiresAtNanos == 0
-                || nowNanos < elementalFireExpiresAtNanos) return false;
-        elementalFireExpiresAtNanos = 0;
+        if (this.elementalFireExpiresAtNanos == 0L || nowNanos < this.elementalFireExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).elementalFireExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
-    synchronized boolean activateSoulOfFlame(
-            long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+    synchronized boolean activateSoulOfFlame(long nowNanos, int durationSeconds) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Soul of Flame duration");
         }
-        boolean refreshed = soulOfFlameExpiresAtNanos != 0
-                && nowNanos < soulOfFlameExpiresAtNanos;
-        soulOfFlameExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
-        return refreshed;
+        boolean bl = this.soulOfFlameExpiresAtNanos != 0L && nowNanos < this.soulOfFlameExpiresAtNanos;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).soulOfFlameExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        return bl;
     }
 
     synchronized boolean soulOfFlameActive(long nowNanos) {
@@ -957,20 +1006,22 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireSoulOfFlame(long nowNanos) {
-        if (soulOfFlameExpiresAtNanos == 0
-                || nowNanos < soulOfFlameExpiresAtNanos) return false;
-        soulOfFlameExpiresAtNanos = 0;
+        if (this.soulOfFlameExpiresAtNanos == 0L || nowNanos < this.soulOfFlameExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).soulOfFlameExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized void activateVenomResist(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Venom Resist duration");
         }
-        // Retained VENOM_RESIST is admission-only: it never cures an existing
-        // poison lease when cast and simply refreshes its own duration.
-        venomResistExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).venomResistExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
     }
 
     synchronized boolean venomResistActive(long nowNanos) {
@@ -986,9 +1037,12 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireVenomResist(long nowNanos) {
-        if (venomResistExpiresAtNanos == 0
-                || nowNanos < venomResistExpiresAtNanos) return false;
-        venomResistExpiresAtNanos = 0;
+        if (this.venomResistExpiresAtNanos == 0L || nowNanos < this.venomResistExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).venomResistExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -1131,17 +1185,17 @@ final class BattleTimedStatus {
         return true;
     }
 
-    synchronized boolean activateHorrorOfDeath(
-            long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
-            throw new IllegalArgumentException(
-                    "invalid native Horror of Death duration");
+    synchronized boolean activateHorrorOfDeath(long nowNanos, int durationSeconds) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
+            throw new IllegalArgumentException("invalid native Horror of Death duration");
         }
-        boolean alreadyActive = horrorOfDeathActive(nowNanos);
-        // Retained addMagicList does not replace an existing duration lease.
-        if (alreadyActive) return true;
-        horrorOfDeathExpiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        boolean bl = this.horrorOfDeathActive(nowNanos);
+        if (bl) {
+            return true;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).horrorOfDeathExpiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return false;
     }
 
@@ -1151,15 +1205,22 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean expireHorrorOfDeath(long nowNanos) {
-        if (horrorOfDeathExpiresAtNanos == 0
-                || nowNanos < horrorOfDeathExpiresAtNanos) return false;
-        horrorOfDeathExpiresAtNanos = 0;
+        if (this.horrorOfDeathExpiresAtNanos == 0L || nowNanos < this.horrorOfDeathExpiresAtNanos) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).horrorOfDeathExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
     synchronized boolean cancelHorrorOfDeath() {
-        if (horrorOfDeathExpiresAtNanos == 0) return false;
-        horrorOfDeathExpiresAtNanos = 0;
+        if (this.horrorOfDeathExpiresAtNanos == 0L) {
+            return false;
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).horrorOfDeathExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
         return true;
     }
 
@@ -1184,13 +1245,11 @@ final class BattleTimedStatus {
     }
 
     synchronized boolean paralysisVisualActive(long nowNanos) {
-        return paralysisActivatesAtNanos != 0 && nowNanos < paralysisExpiresAtNanos;
+        return CombatPoisonParalysis.otherVisual(this.paralysisActivatesAtNanos != 0L && nowNanos < this.paralysisExpiresAtNanos, this, nowNanos);
     }
 
     synchronized boolean paralysisActive(long nowNanos) {
-        return paralysisActivatesAtNanos != 0
-                && nowNanos >= paralysisActivatesAtNanos
-                && nowNanos < paralysisExpiresAtNanos;
+        return CombatPoisonParalysis.otherActive(this.paralysisActivatesAtNanos != 0L && nowNanos >= this.paralysisActivatesAtNanos && nowNanos < this.paralysisExpiresAtNanos, this, nowNanos);
     }
 
     synchronized ParalysisPoll pollParalysis(long nowNanos) {
@@ -1231,81 +1290,121 @@ final class BattleTimedStatus {
         return new CurseRemoval(poisonCured, cancelParalysis());
     }
 
-    /** Selected CANCELLATION clears skills 1-220, statuses 998-1026 and freeze 4000. */
     synchronized MagicCancellation cancelMagicEffects() {
-        boolean haste = hasteExpiresAtNanos != 0;
-        boolean slow = slowExpiresAtNanos != 0;
-        boolean brave = braveExpiresAtNanos != 0;
-        boolean blind = blindExpiresAtNanos != 0;
-        boolean weakness = weaknessExpiresAtNanos != 0;
-        boolean disease = diseaseExpiresAtNanos != 0;
-        boolean silence = silenceExpiresAtNanos != 0
-                || areaSilenceExpiresAtNanos != 0 || poisonSilence;
-        boolean decayPotion = decayPotionExpiresAtNanos != 0;
-        boolean polluteWater = polluteWaterExpiresAtNanos != 0;
-        boolean strikerGale = strikerGaleExpiresAtNanos != 0;
-        boolean light = lightExpiresAtNanos != 0;
-        boolean bluePotion = bluePotionExpiresAtNanos != 0;
-        boolean wisdomPotion = wisdomPotionExpiresAtNanos != 0;
-        boolean meditation = meditationExpiresAtNanos != 0;
-        boolean concentration = concentrationExpiresAtNanos != 0;
-        boolean counterMagic = counterMagicExpiresAtNanos != 0;
-        boolean breath = breathExpiresAtNanos != 0;
-        boolean poison = poisonExpiresAtNanos != 0 || poisonSilence;
-        boolean sleep = sleepExpiresAtNanos != 0;
-        boolean freeze = freezeExpiresAtNanos != 0;
-        boolean earthBind = earthBindExpiresAtNanos != 0;
-        boolean burningSpirit = burningSpiritExpiresAtNanos != 0;
-        boolean elementalFire = elementalFireExpiresAtNanos != 0;
-        boolean soulOfFlame = soulOfFlameExpiresAtNanos != 0;
-        boolean venomResist = venomResistExpiresAtNanos != 0;
-        boolean doubleBrake = doubleBrakeExpiresAtNanos != 0;
-        boolean horrorOfDeath = horrorOfDeathExpiresAtNanos != 0;
-        boolean thunderGrab = thunderGrabExpiresAtNanos != 0;
-        boolean boneBreak = boneBreakExpiresAtNanos != 0;
-        ParalysisCancellation paralysis = cancelParalysis();
-        hasteExpiresAtNanos = 0;
-        hasteSkillId = 0;
-        slowExpiresAtNanos = 0;
-        slowSkillId = 0;
-        braveExpiresAtNanos = 0;
-        braveMode = BRAVE_NORMAL;
-        blindExpiresAtNanos = 0;
-        weaknessExpiresAtNanos = 0;
-        diseaseExpiresAtNanos = 0;
-        silenceExpiresAtNanos = 0;
-        areaSilenceExpiresAtNanos = 0;
-        decayPotionExpiresAtNanos = 0;
-        polluteWaterExpiresAtNanos = 0;
-        strikerGaleExpiresAtNanos = 0;
-        lightExpiresAtNanos = 0;
-        bluePotionExpiresAtNanos = 0;
-        wisdomPotionExpiresAtNanos = 0;
-        meditationExpiresAtNanos = 0;
-        concentrationExpiresAtNanos = 0;
-        counterMagicExpiresAtNanos = 0;
-        breathExpiresAtNanos = 0;
-        poisonExpiresAtNanos = 0;
-        poisonNextTickAtNanos = 0;
-        poisonSilence = false;
-        sleepExpiresAtNanos = 0;
-        freezeExpiresAtNanos = 0;
-        earthBindExpiresAtNanos = 0;
-        burningSpiritExpiresAtNanos = 0;
-        elementalFireExpiresAtNanos = 0;
-        soulOfFlameExpiresAtNanos = 0;
-        venomResistExpiresAtNanos = 0;
-        doubleBrakeExpiresAtNanos = 0;
-        horrorOfDeathExpiresAtNanos = 0;
-        thunderGrabExpiresAtNanos = 0;
-        boneBreakExpiresAtNanos = 0;
-        return new MagicCancellation(haste, slow, brave, blind, weakness, disease, silence,
-                decayPotion, polluteWater, strikerGale, light,
-                bluePotion, wisdomPotion, meditation, concentration, counterMagic, breath,
-                poison, sleep, freeze, earthBind, burningSpirit, elementalFire,
-                soulOfFlame,
-                venomResist,
-                doubleBrake, horrorOfDeath, thunderGrab, boneBreak, paralysis);
+        boolean bl = this.hasteExpiresAtNanos != 0L;
+        boolean bl2 = this.slowExpiresAtNanos != 0L;
+        boolean bl3 = this.braveExpiresAtNanos != 0L;
+        boolean bl4 = NativeBlindSourceState.removed(this.blindExpiresAtNanos != 0L);
+        boolean bl5 = this.weaknessExpiresAtNanos != 0L;
+        boolean bl6 = this.diseaseExpiresAtNanos != 0L;
+        boolean bl7 = this.silenceExpiresAtNanos != 0L || this.areaSilenceExpiresAtNanos != 0L || this.poisonSilence;
+        boolean bl8 = this.decayPotionExpiresAtNanos != 0L;
+        boolean bl9 = this.polluteWaterExpiresAtNanos != 0L;
+        boolean bl10 = this.strikerGaleExpiresAtNanos != 0L;
+        boolean bl11 = this.lightExpiresAtNanos != 0L;
+        boolean bl12 = this.bluePotionExpiresAtNanos != 0L;
+        boolean bl13 = this.wisdomPotionExpiresAtNanos != 0L;
+        boolean bl14 = this.meditationExpiresAtNanos != 0L;
+        boolean bl15 = this.concentrationExpiresAtNanos != 0L;
+        boolean bl16 = this.counterMagicExpiresAtNanos != 0L;
+        boolean bl17 = this.breathExpiresAtNanos != 0L;
+        boolean bl18 = this.poisonExpiresAtNanos != 0L || this.poisonSilence;
+        boolean bl19 = this.sleepExpiresAtNanos != 0L;
+        boolean bl20 = this.freezeExpiresAtNanos != 0L;
+        boolean bl21 = this.earthBindExpiresAtNanos != 0L;
+        boolean bl22 = this.burningSpiritExpiresAtNanos != 0L;
+        boolean bl23 = this.elementalFireExpiresAtNanos != 0L;
+        boolean bl24 = this.soulOfFlameExpiresAtNanos != 0L;
+        boolean bl25 = this.venomResistExpiresAtNanos != 0L;
+        boolean bl26 = this.doubleBrakeExpiresAtNanos != 0L;
+        boolean bl27 = this.horrorOfDeathExpiresAtNanos != 0L;
+        boolean bl28 = this.thunderGrabExpiresAtNanos != 0L;
+        boolean bl29 = this.boneBreakExpiresAtNanos != 0L;
+        ParalysisCancellation paralysisCancellation = this.cancelParalysis();
+        this.hasteExpiresAtNanos = 0L;
+        this.hasteSkillId = 0;
+        this.slowExpiresAtNanos = 0L;
+        this.slowSkillId = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).braveExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        int n = 0;
+        battleTimedStatus = this;
+        this.nativeSourceIcons1BraveSkill = n;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        n = 0;
+        battleTimedStatus = this;
+        this.braveMode = n;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.blindExpiresAtNanos = NativeBlindSourceState.cleared(this.blindExpiresAtNanos);
+        long l2 = 0L;
+        battleTimedStatus = this;
+        this.weaknessExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.diseaseExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.silenceExpiresAtNanos = 0L;
+        this.areaSilenceExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.decayPotionExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.polluteWaterExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.strikerGaleExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.lightExpiresAtNanos = 0L;
+        this.bluePotionExpiresAtNanos = 0L;
+        this.wisdomPotionExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.meditationExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.concentrationExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.counterMagicExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.breathExpiresAtNanos = 0L;
+        this.poisonExpiresAtNanos = 0L;
+        this.poisonNextTickAtNanos = 0L;
+        this.poisonSilence = false;
+        BattleTimedStatus sleepRecipient = this;
+        long clearedExpiration = 0L;
+        NativeAcceptedState.sleepChanged(this);
+        sleepRecipient.sleepExpiresAtNanos = clearedExpiration;
+        this.freezeExpiresAtNanos = 0L;
+        this.earthBindExpiresAtNanos = 0L;
+        this.burningSpiritExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.elementalFireExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.soulOfFlameExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.venomResistExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.doubleBrakeExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.horrorOfDeathExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.thunderGrabExpiresAtNanos = 0L;
+        this.boneBreakExpiresAtNanos = 0L;
+        return new MagicCancellation(bl, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12, bl13, bl14, bl15, bl16, bl17, bl18, bl19, bl20, bl21, bl22, bl23, bl24, bl25, bl26, bl27, bl28, bl29, paralysisCancellation);
     }
 
     private void clearParalysisFields() {
@@ -1315,48 +1414,157 @@ final class BattleTimedStatus {
     }
 
     synchronized void clear() {
-        hasteExpiresAtNanos = 0;
-        hasteSkillId = 0;
-        slowExpiresAtNanos = 0;
-        slowSkillId = 0;
-        braveExpiresAtNanos = 0;
-        braveMode = BRAVE_NORMAL;
-        blindExpiresAtNanos = 0;
-        weaknessExpiresAtNanos = 0;
-        diseaseExpiresAtNanos = 0;
-        silenceExpiresAtNanos = 0;
-        areaSilenceExpiresAtNanos = 0;
-        decayPotionExpiresAtNanos = 0;
-        polluteWaterExpiresAtNanos = 0;
-        strikerGaleExpiresAtNanos = 0;
-        waterDragonPotionErosionExpiresAtNanos = 0;
-        waterDragonDirtyCurrentExpiresAtNanos = 0;
-        waterDragonHealingErosionExpiresAtNanos = 0;
-        lightExpiresAtNanos = 0;
-        bluePotionExpiresAtNanos = 0;
-        wisdomPotionExpiresAtNanos = 0;
-        meditationExpiresAtNanos = 0;
-        concentrationExpiresAtNanos = 0;
-        counterMagicExpiresAtNanos = 0;
-        breathExpiresAtNanos = 0;
-        poisonExpiresAtNanos = 0;
-        poisonNextTickAtNanos = 0;
-        poisonSilence = false;
-        sleepExpiresAtNanos = 0;
-        freezeExpiresAtNanos = 0;
-        earthBindExpiresAtNanos = 0;
-        absoluteBarrierExpiresAtNanos = 0;
-        advanceSpiritExpiresAtNanos = 0;
-        burningSpiritExpiresAtNanos = 0;
-        elementalFireExpiresAtNanos = 0;
-        soulOfFlameExpiresAtNanos = 0;
-        venomResistExpiresAtNanos = 0;
-        doubleBrakeExpiresAtNanos = 0;
-        shockStunExpiresAtNanos = 0;
-        boneBreakExpiresAtNanos = 0;
-        thunderGrabExpiresAtNanos = 0;
-        horrorOfDeathExpiresAtNanos = 0;
-        drunken = false;
-        clearParalysisFields();
+        NativeDeClientViewer.retire(this);
+        NativeDeActorState.clear(this);
+        NativeProcNpcState.clear(this);
+        NativeProcPlayerState.clear(this);
+        CombatPoisonParalysis.discard(this);
+        this.hasteExpiresAtNanos = 0L;
+        this.hasteSkillId = 0;
+        this.slowExpiresAtNanos = 0L;
+        this.slowSkillId = 0;
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).braveExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        int n = 0;
+        battleTimedStatus = this;
+        this.nativeSourceIcons1BraveSkill = n;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        n = 0;
+        battleTimedStatus = this;
+        this.braveMode = n;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.blindExpiresAtNanos = 0L;
+        long l2 = 0L;
+        battleTimedStatus = this;
+        this.weaknessExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.diseaseExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.silenceExpiresAtNanos = 0L;
+        this.areaSilenceExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.decayPotionExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.polluteWaterExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.strikerGaleExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.waterDragonPotionErosionExpiresAtNanos = 0L;
+        this.waterDragonDirtyCurrentExpiresAtNanos = 0L;
+        this.waterDragonHealingErosionExpiresAtNanos = 0L;
+        this.lightExpiresAtNanos = 0L;
+        this.bluePotionExpiresAtNanos = 0L;
+        this.wisdomPotionExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.meditationExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.concentrationExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.counterMagicExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.breathExpiresAtNanos = 0L;
+        this.poisonExpiresAtNanos = 0L;
+        this.poisonNextTickAtNanos = 0L;
+        this.poisonSilence = false;
+        BattleTimedStatus sleepRecipient = this;
+        long clearedExpiration = 0L;
+        NativeAcceptedState.sleepChanged(this);
+        sleepRecipient.sleepExpiresAtNanos = clearedExpiration;
+        this.freezeExpiresAtNanos = 0L;
+        this.earthBindExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.absoluteBarrierExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.advanceSpiritExpiresAtNanos = 0L;
+        this.burningSpiritExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.elementalFireExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.soulOfFlameExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.venomResistExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.doubleBrakeExpiresAtNanos = 0L;
+        this.shockStunExpiresAtNanos = 0L;
+        this.boneBreakExpiresAtNanos = 0L;
+        this.thunderGrabExpiresAtNanos = 0L;
+        l2 = 0L;
+        battleTimedStatus = this;
+        this.horrorOfDeathExpiresAtNanos = l2;
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+        this.drunken = false;
+        this.clearParalysisFields();
+        NativeShockPlayerAction.deathReset(this);
+    }
+
+    synchronized void nativeSourceProcActivateDecayPotion(long l, int n) {
+        if (l < 0L || n <= 0 || n > 65535) {
+            throw new IllegalArgumentException("invalid native Source proc Decay Potion duration");
+        }
+        BattleTimedStatus battleTimedStatus;
+        (battleTimedStatus = this).decayPotionExpiresAtNanos = Math.addExact(l, TimeUnit.SECONDS.toNanos(n));
+        NativeSourceIcons1Epoch.bump(battleTimedStatus);
+    }
+
+    record Speed(int type, int remainingSeconds) {
+    }
+
+    record SpeedChange(int type, int durationSeconds, int stoppedSkillId) {
+    }
+
+    record SlowExpiration(boolean expired, int skillId) {
+    }
+
+    record HasteExpiration(boolean expired, int skillId) {
+    }
+
+    record Brave(int mode, int remainingSeconds) {
+    }
+
+    record Breath(int remainingSeconds) {
+    }
+
+    static enum PoisonKind {
+        DAMAGE,
+        SILENCE,
+        PARALYSIS;
+
+    }
+
+    record PoisonPoll(int damageTicks, boolean expired) {
+    }
+
+    record ShockStunActivation(int durationSeconds, boolean refreshed) {
+    }
+
+    record ParalysisPoll(boolean activated, boolean expired, boolean unlockRequired) {
+    }
+
+    record ParalysisCancellation(boolean present, boolean unlockRequired) {
+    }
+
+    record CurseRemoval(boolean poisonCured, ParalysisCancellation paralysisCancellation) {
+    }
+
+    record MagicCancellation(boolean haste, boolean slow, boolean brave, boolean blind, boolean weakness, boolean disease, boolean silence, boolean decayPotion, boolean polluteWater, boolean strikerGale, boolean light, boolean bluePotion, boolean wisdomPotion, boolean meditation, boolean concentration, boolean counterMagic, boolean breath, boolean poison, boolean sleep, boolean freeze, boolean earthBind, boolean burningSpirit, boolean elementalFire, boolean soulOfFlame, boolean venomResist, boolean doubleBrake, boolean horrorOfDeath, boolean thunderGrab, boolean boneBreak, ParalysisCancellation paralysisCancellation) {
     }
 }

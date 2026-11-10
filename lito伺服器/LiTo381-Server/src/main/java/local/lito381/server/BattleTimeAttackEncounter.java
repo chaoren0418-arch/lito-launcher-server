@@ -1,6 +1,14 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+import java.util.Iterator;
+
+import java.util.HashMap;
+
+import java.util.Map;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.ThreadLocalRandom;
@@ -174,12 +182,155 @@ final class BattleTimeAttackEncounter {
         }
     }
 
-    record Snapshot(long objectId, int npcId, int x, int y, int gfx,
-                    String name, int level, int hp, int maxHp, boolean alive,
-                    boolean finalBoss, boolean activeAi,
-                    int currentMp, int maximumMp, int intelligence,
-                    String identitySource, String ordinaryWaveSource,
-                    String placementSource) {}
+    @AsRecord(components = {"objectId", "npcId", "x", "y", "gfx", "name", "level", "hp", "maxHp", "alive", "finalBoss", "activeAi", "currentMp", "maximumMp", "intelligence", "identitySource", "ordinaryWaveSource", "placementSource"}, finalFields = {"nativeSourceNpcFactoryMemory", "nativeSourceNpcFirstView"})
+    static final class Snapshot {
+        private final long objectId;
+        private final int npcId;
+        private final int x;
+        private final int y;
+        private final int gfx;
+        private final String name;
+        private final int level;
+        private final int hp;
+        private final int maxHp;
+        private final boolean alive;
+        private final boolean finalBoss;
+        private final boolean activeAi;
+        private final int currentMp;
+        private final int maximumMp;
+        private final int intelligence;
+        private final String identitySource;
+        private final String ordinaryWaveSource;
+        private final String placementSource;
+        private volatile Object nativeBattleTamedCompanion;
+        private Object nativeZombieCorpseActor;
+        private RuntimeInventory nativeZombieCorpseBag;
+        transient Object nativeSourceNpcFactoryMemory;
+        transient Object nativeSourceNpcFirstView;
+
+        Snapshot(long l, int n, int n2, int n3, int n4, String string, int n5, int n6, int n7, boolean bl, boolean bl2, boolean bl3, int n8, int n9, int n10, String string2, String string3, String string4) {
+            this.objectId = l;
+            this.npcId = n;
+            this.x = n2;
+            this.y = n3;
+            this.gfx = n4;
+            this.name = string;
+            this.level = n5;
+            this.hp = n6;
+            this.maxHp = n7;
+            this.alive = bl;
+            this.finalBoss = bl2;
+            this.activeAi = bl3;
+            this.currentMp = n8;
+            this.maximumMp = n9;
+            this.intelligence = n10;
+            this.identitySource = string2;
+            this.ordinaryWaveSource = string3;
+            this.placementSource = string4;
+        }
+
+
+
+
+        public long objectId() {
+            return this.objectId;
+        }
+
+        public int npcId() {
+            return this.npcId;
+        }
+
+        public int x() {
+            return this.x;
+        }
+
+        public int y() {
+            return this.y;
+        }
+
+        public int gfx() {
+            return this.gfx;
+        }
+
+        public String name() {
+            return this.name;
+        }
+
+        public int level() {
+            return this.level;
+        }
+
+        public int hp() {
+            return this.hp;
+        }
+
+        public int maxHp() {
+            return this.maxHp;
+        }
+
+        public boolean alive() {
+            return this.alive;
+        }
+
+        public boolean finalBoss() {
+            return this.finalBoss;
+        }
+
+        public boolean activeAi() {
+            return this.activeAi;
+        }
+
+        public int currentMp() {
+            return this.currentMp;
+        }
+
+        public int maximumMp() {
+            return this.maximumMp;
+        }
+
+        public int intelligence() {
+            return this.intelligence;
+        }
+
+        public String identitySource() {
+            return this.identitySource;
+        }
+
+        public String ordinaryWaveSource() {
+            return this.ordinaryWaveSource;
+        }
+
+        public String placementSource() {
+            return this.placementSource;
+        }
+
+        Snapshot(long l, int n, int n2, int n3, int n4, String string, int n5, int n6, int n7, boolean bl, boolean bl2, boolean bl3, int n8, int n9, int n10, String string2, String string3, String string4, Object object) {
+            this.objectId = l;
+            this.npcId = n;
+            this.x = n2;
+            this.y = n3;
+            this.gfx = n4;
+            this.name = string;
+            this.level = n5;
+            this.hp = n6;
+            this.maxHp = n7;
+            this.alive = bl;
+            this.finalBoss = bl2;
+            this.activeAi = bl3;
+            this.currentMp = n8;
+            this.maximumMp = n9;
+            this.intelligence = n10;
+            this.identitySource = string2;
+            this.ordinaryWaveSource = string3;
+            this.placementSource = string4;
+            this.nativeSourceNpcFactoryMemory = object;
+        }
+
+        Snapshot(long l, int n, int n2, int n3, int n4, String string, int n5, int n6, int n7, boolean bl, boolean bl2, boolean bl3, int n8, int n9, int n10, String string2, String string3, String string4, Object object, Object object2) {
+            this(l, n, n2, n3, n4, string, n5, n6, n7, bl, bl2, bl3, n8, n9, n10, string2, string3, string4, object);
+            this.nativeSourceNpcFirstView = object2;
+        }
+    }
 
     record AiAttack(
             Snapshot actor, boolean magic,
@@ -267,13 +418,42 @@ final class BattleTimeAttackEncounter {
         }
     }
 
-    record PoisonUpdate(long attackerObjectId, Snapshot target,
-                        List<Hit> hits, boolean expired) {
-        PoisonUpdate {
-            if (attackerObjectId <= 0 || target == null) {
+    @AsRecord(components = {"attackerObjectId", "target", "hits", "expired"})
+    static final class PoisonUpdate {
+        private final long attackerObjectId;
+        private final Snapshot target;
+        private final List<Hit> hits;
+        private final boolean expired;
+        volatile Object nativeSourceArenaPoisonProof;
+
+        PoisonUpdate(long l, Snapshot snapshot, List<Hit> list, boolean bl) {
+            if (l <= 0L || snapshot == null) {
                 throw new IllegalArgumentException("invalid Time Attack poison update");
             }
-            hits = List.copyOf(hits);
+            list = List.copyOf(list);
+            this.attackerObjectId = l;
+            this.target = snapshot;
+            this.hits = list;
+            this.expired = bl;
+        }
+
+
+
+
+        public long attackerObjectId() {
+            return this.attackerObjectId;
+        }
+
+        public Snapshot target() {
+            return this.target;
+        }
+
+        public List<Hit> hits() {
+            return this.hits;
+        }
+
+        public boolean expired() {
+            return this.expired;
         }
     }
 
@@ -344,6 +524,7 @@ final class BattleTimeAttackEncounter {
     private String selectedPatternId = "unit-mechanics-fixture";
     private Template selectedDragon;
     private boolean dragonStageSpawned;
+    private volatile Object sourceProcEncounterGeneration;
 
     synchronized void reset(BattleRules.RuleSet rules,
                             ArenaMapCatalog.Arena encounterArena) {
@@ -401,13 +582,15 @@ final class BattleTimeAttackEncounter {
     }
 
     synchronized void deactivate() {
-        actors.clear();
-        corpses.clear();
-        arena = null;
-        phase = Phase.INACTIVE;
-        ordinaryFragmentIndex = -1;
-        selectedDragon = null;
-        dragonStageSpawned = false;
+        NativeProcHealingEncounter.retire(this);
+        LiToGmNpcs.clear(this);
+        this.actors.clear();
+        this.corpses.clear();
+        this.arena = null;
+        this.phase = Phase.INACTIVE;
+        this.ordinaryFragmentIndex = -1;
+        this.selectedDragon = null;
+        this.dragonStageSpawned = false;
     }
 
     synchronized List<Snapshot> startAfterTowerDestroyed() {
@@ -427,10 +610,10 @@ final class BattleTimeAttackEncounter {
     }
 
     synchronized List<Snapshot> snapshots() {
-        if (phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT
-                && phase != Phase.FINAL_BOSSES) return List.of();
-        return actors.stream().filter(Monster::alive)
-                .map(Monster::snapshot).toList();
+        if (this.phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT && this.phase != Phase.FINAL_BOSSES) {
+            return (List<Snapshot>) (List<?>) NativeSourceNpcFirstView.owner(List.of(), this);
+        }
+        return (List<Snapshot>) (List<?>) NativeSourceNpcFirstView.owner(this.actors.stream().filter(Monster::alive).map(Monster::snapshot).toList(), this);
     }
 
     synchronized Snapshot find(long objectId) {
@@ -455,6 +638,13 @@ final class BattleTimeAttackEncounter {
     }
 
     private Hit applyDamage(Monster target, int amount, boolean poisonDamage) {
+        return NativeSourcePoisonNpc.timeDamage(this, target, amount, poisonDamage);
+    }
+
+    Hit nativeSourcePoisonOriginalApplyDamage(Monster target, int amount, boolean poisonDamage) {
+        if (LiToGmNpcs.active(this)) {
+            return LiToGmNpcs.damage(this, target, amount, poisonDamage);
+        }
         Damage damage = poisonDamage
                 ? target.poisonDamage(amount) : target.damage(amount);
         if (damage != null && damage.diedNow()) {
@@ -520,30 +710,41 @@ final class BattleTimeAttackEncounter {
             }
             Snapshot finalTarget = hits.isEmpty()
                     ? target.snapshot() : hits.get(hits.size() - 1).damage().after();
-            updates.add(new PoisonUpdate(attackerObjectId, finalTarget,
-                    hits, poll.expired()));
+            PoisonUpdate update = new PoisonUpdate(attackerObjectId, finalTarget,
+                    hits, poll.expired());
+                NativeSourceArenaPoison.stamp(update, target);
+                updates.add(update);
         }
         return List.copyOf(updates);
     }
 
     synchronized Capture capture(long objectId) {
-        if (!canAttack(objectId)) return null;
-        Monster target = actors.stream()
-                .filter(monster -> monster.objectId == objectId)
-                .findFirst().orElse(null);
-        if (target == null || target.finalBoss) return null;
-        Snapshot captured = target.snapshot();
-        actors.remove(target);
-        int remaining = (int) actors.stream().filter(Monster::alive).count();
-        if (remaining != 0) return new Capture(captured, remaining, List.of());
-        if (phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT) return null;
-        int nextFragment = ordinaryFragmentIndex + 1;
-        if (nextFragment < selectedOrdinaryFragments.size()) {
-            List<Snapshot> spawned = spawnOrdinaryFragment(nextFragment);
-            return new Capture(captured, spawned.size(), spawned);
+        if (LiToGmNpcs.active(this)) {
+            return LiToGmNpcs.capture(this, objectId);
         }
-        List<Snapshot> spawned = spawnFinalBosses();
-        return new Capture(captured, spawned.size(), spawned);
+        if (!this.canAttack(objectId)) {
+            return null;
+        }
+        Monster monster2 = this.actors.stream().filter(monster -> monster.objectId == objectId).findFirst().orElse(null);
+        if (monster2 == null || monster2.finalBoss) {
+            return null;
+        }
+        Snapshot snapshot = monster2.snapshot();
+        this.actors.remove(monster2);
+        int n = (int)this.actors.stream().filter(Monster::alive).count();
+        if (n != 0) {
+            return new Capture(snapshot, n, List.of());
+        }
+        if (this.phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT) {
+            return null;
+        }
+        int n2 = this.ordinaryFragmentIndex + 1;
+        if (n2 < this.selectedOrdinaryFragments.size()) {
+            List<Snapshot> list = this.spawnOrdinaryFragment(n2);
+            return new Capture(snapshot, list.size(), list);
+        }
+        List<Snapshot> list = this.spawnFinalBosses();
+        return new Capture(snapshot, list.size(), list);
     }
 
     /** Retained tamed-summon liberation for RETURN_TO_NATURE. */
@@ -585,34 +786,32 @@ final class BattleTimeAttackEncounter {
     }
 
     synchronized Resurrection resurrectCorpse(long objectId, long nowNanos) {
-        return resurrectCorpse(objectId, nowNanos, 4);
+        return this.resurrectCorpse(objectId, nowNanos, 4);
     }
 
-    synchronized Resurrection resurrectCorpse(
-            long objectId, long nowNanos, int hpDivisor) {
-        Snapshot corpse = findCorpse(objectId, nowNanos);
-        if ((hpDivisor != 1 && hpDivisor != 4) || corpse == null
-                || !BattleSpellCatalog.npcAllowsResurrection(corpse.npcId())) {
-            return null;
+    synchronized Resurrection resurrectCorpse(long objectId, long nowNanos, int hpDivisor) {
+        Snapshot snapshot = this.findCorpse(objectId, nowNanos);
+        if (hpDivisor != 1 && hpDivisor != 4 || snapshot == null || !BattleSpellCatalog.npcAllowsResurrection(snapshot.npcId())) {
+            return (Resurrection)NativeCreateZombieLifecycle.resurrected(null, this, snapshot, 2);
         }
-        Monster target = actors.stream()
-                .filter(actor -> actor.objectId == objectId && !actor.alive())
-                .findFirst().orElse(null);
-        if (target == null) {
-            target = new Monster(corpse);
-            actors.add(target);
+        Monster monster2 = this.actors.stream().filter(monster -> monster.objectId == objectId && !monster.alive()).findFirst().orElse(null);
+        if (monster2 == null) {
+            monster2 = new Monster(snapshot);
+            this.actors.add(monster2);
         }
-        Snapshot before = target.snapshot();
-        target.resurrect(Math.max(1, corpse.maxHp() / hpDivisor));
-        corpses.removeIf(entry -> entry.snapshot().objectId() == objectId);
-        return new Resurrection(before, target.snapshot());
+        Snapshot snapshot2 = monster2.snapshot();
+        monster2.resurrect(Math.max(1, snapshot.maxHp() / hpDivisor));
+        this.corpses.removeIf(corpse -> corpse.snapshot().objectId() == objectId);
+        return (Resurrection)NativeCreateZombieLifecycle.resurrected(new Resurrection(snapshot2, monster2.snapshot()), this, snapshot, 2);
     }
 
-    private void rememberCorpse(Snapshot corpse, long nowNanos) {
-        if (corpse == null || corpse.alive() || nowNanos < 0) return;
-        corpses.removeIf(entry -> entry.snapshot().objectId() == corpse.objectId());
-        corpses.add(new Corpse(corpse, Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(CORPSE_LIFETIME_SECONDS))));
+    private void rememberCorpse(Snapshot snapshot, long nowNanos) {
+        NativeCreateZombieLifecycle.retainCorpse(this, snapshot, 2);
+        if (snapshot == null || snapshot.alive() || nowNanos < 0L) {
+            return;
+        }
+        this.corpses.removeIf(corpse -> corpse.snapshot().objectId() == snapshot.objectId());
+        this.corpses.add(new Corpse(snapshot, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(3L))));
     }
 
     private void pruneCorpses(long nowNanos) {
@@ -1150,29 +1349,17 @@ final class BattleTimeAttackEncounter {
     }
 
     synchronized Snapshot moveForAi(long objectId, int x, int y, long nowNanos) {
-        Monster monster = monster(objectId);
-        if ((phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT
-                && phase != Phase.FINAL_BOSSES) || arena == null || monster == null
-                || !monster.activeAi
-                || !monster.ready(nowNanos)
-                || monster.blindActive(nowNanos)
-                || monster.sleepActive(nowNanos)
-                || monster.paralysisActive(nowNanos)
-                || monster.shockStunActive(nowNanos)
-                || monster.boneBreakActive(nowNanos)
-                || monster.thunderGrabActive(nowNanos)
-                || monster.freezeActive(nowNanos)
-                || monster.earthBindActive(nowNanos)
-                || Math.max(Math.abs(monster.x - x),
-                    Math.abs(monster.y - y)) != 1
-                || !arena.nativeCanStep(monster.x, monster.y, x, y)) return null;
-        boolean occupied = actors.stream().anyMatch(candidate ->
-                candidate != monster && candidate.alive()
-                        && candidate.x == x && candidate.y == y);
-        if (occupied) return null;
-        monster.x = x;
+        Monster monster = this.monster(objectId);
+        if (this.phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT && this.phase != Phase.FINAL_BOSSES || this.arena == null || monster == null || !monster.activeAi || !NativeSourceNpcMovement.allowed(monster.ready(nowNanos), monster) || monster.blindActive(nowNanos) || monster.sleepActive(nowNanos) || monster.paralysisActive(nowNanos) || monster.shockStunActive(nowNanos) || monster.boneBreakActive(nowNanos) || monster.thunderGrabActive(nowNanos) || monster.freezeActive(nowNanos) || monster.earthBindActive(nowNanos) || Math.max(Math.abs(monster.x - x), Math.abs(monster.y - y)) != 1 || !this.arena.nativeCanStep(monster.x, monster.y, x, y)) {
+            return null;
+        }
+        boolean bl = this.actors.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == x && monster2.y == y);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(x, monster, y);
         monster.y = y;
-        monster.schedule(nowNanos, BattleActionCodes.WALK);
+        monster.schedule(nowNanos, 0);
         return monster.snapshot();
     }
 
@@ -1195,52 +1382,38 @@ final class BattleTimeAttackEncounter {
         return monster.snapshot();
     }
 
-    synchronized AiAttack aiAttackFor(long objectId, int targetX, int targetY,
-                                      long nowNanos) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        Monster monster = monster(objectId);
-        if (monster == null) return null;
-        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> rows =
-                BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
-        int[] triggerRolls = new int[rows.size()];
-        for (int index = 0; index < triggerRolls.length; index++) {
-            triggerRolls[index] = random.nextInt(1, 101);
+    synchronized AiAttack aiAttackFor(long objectId, int targetX, int targetY, long nowNanos) {
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        Monster monster = this.monster(objectId);
+        if (monster == null) {
+            return null;
         }
-        BattleTimeAttackMagicSkillCatalog.SummonDefinition summon =
-                BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
-        int summonCountRoll = summon == null ? 0
-                : random.nextInt(summon.summonRandomBound());
-        return aiAttackFor(objectId, targetX, targetY, nowNanos,
-                triggerRolls, random.nextInt(Integer.MAX_VALUE),
-                summonCountRoll);
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < nArray.length; ++i) {
+            nArray[i] = threadLocalRandom.nextInt(1, 101);
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
+        return this.aiAttackFor(objectId, targetX, targetY, nowNanos, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
     }
 
-    /** Deterministic package fixture for exact selected mobskill selection. */
-    synchronized AiAttack aiAttackFor(
-            long objectId, int targetX, int targetY, long nowNanos,
-            int magicTriggerRoll, int physicalTriggerRoll,
-            int candidateSelector) {
-        if (magicTriggerRoll < 1 || magicTriggerRoll > 100
-                || physicalTriggerRoll < 1 || physicalTriggerRoll > 100
-                || candidateSelector < 0) {
+    synchronized AiAttack aiAttackFor(long objectId, int targetX, int targetY, long nowNanos, int magicTriggerRoll, int physicalTriggerRoll, int candidateSelector) {
+        if (magicTriggerRoll < 1 || magicTriggerRoll > 100 || physicalTriggerRoll < 1 || physicalTriggerRoll > 100 || candidateSelector < 0) {
             throw new IllegalArgumentException("invalid Time Attack AI fixture");
         }
-        Monster monster = monster(objectId);
-        if (monster == null) return null;
-        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> rows =
-                BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
-        int[] triggerRolls = new int[rows.size()];
-        for (int index = 0; index < rows.size(); index++) {
-            triggerRolls[index] = rows.get(index)
-                    instanceof BattleTimeAttackMagicSkillCatalog.PhysicalDefinition
-                        ? physicalTriggerRoll : magicTriggerRoll;
+        Monster monster = this.monster(objectId);
+        if (monster == null) {
+            return null;
         }
-        BattleTimeAttackMagicSkillCatalog.SummonDefinition summon =
-                BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
-        int summonCountRoll = summon == null ? 0
-                : candidateSelector % summon.summonRandomBound();
-        return aiAttackFor(objectId, targetX, targetY, nowNanos,
-                triggerRolls, candidateSelector, summonCountRoll);
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < list.size(); ++i) {
+            nArray[i] = list.get(i) instanceof BattleTimeAttackMagicSkillCatalog.PhysicalDefinition ? physicalTriggerRoll : magicTriggerRoll;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n6 = summonDefinition == null ? 0 : candidateSelector % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(objectId, targetX, targetY, nowNanos, nArray, candidateSelector, n6);
     }
 
     /** Select one retained actNo while preserving the full independent roll vector. */
@@ -1303,8 +1476,8 @@ final class BattleTimeAttackEncounter {
                 || monster.freezeActive(nowNanos)
                 || monster.earthBindActive(nowNanos)) return null;
 
-        int distance = Math.max(Math.abs(monster.x - targetX),
-                Math.abs(monster.y - targetY));
+        int distance = NativeSourceNpcMotion.onTarget(
+                Math.max(Math.abs(monster.x - targetX), Math.abs(monster.y - targetY)), monster);
         record Eligible(BattleTimeAttackMagicSkillCatalog.MobskillRow row,
                         int triggerRoll) {}
         List<Eligible> eligible = new ArrayList<>(rows.size());
@@ -1371,7 +1544,11 @@ final class BattleTimeAttackEncounter {
             }
             if (chosen.row() instanceof BattleTimeAttackMagicSkillCatalog
                     .PhysicalDefinition physical) {
-                monster.schedule(nowNanos, physical.effectiveActionId());
+                Monster scheduledMonster = monster;
+                long scheduledAt = nowNanos;
+                int actionId = physical.effectiveActionId();
+                NativeSourceNpcMotion.facing(monster, targetX, targetY);
+                scheduledMonster.schedule(scheduledAt, actionId);
                 return new AiAttack(monster.snapshot(), false, null,
                         physical, null, List.of(), chosen.triggerRoll(), selected);
             }
@@ -1397,7 +1574,11 @@ final class BattleTimeAttackEncounter {
         // rejected mobskill. Only sprites with exact action 1 may do so.
         if (distance <= 1 && BattleAnimationCatalog.get().supportsTimedAction(
                 monster.gfx, BattleActionCodes.ATTACK)) {
-            monster.schedule(nowNanos, BattleActionCodes.ATTACK);
+            Monster scheduledMonster = monster;
+            long scheduledAt = nowNanos;
+            int actionId = BattleActionCodes.ATTACK;
+            NativeSourceNpcMotion.facing(monster, targetX, targetY);
+            scheduledMonster.schedule(scheduledAt, actionId);
             return new AiAttack(monster.snapshot(), false, null,
                     null, null, List.of(), 0, 0);
         }
@@ -1484,6 +1665,203 @@ final class BattleTimeAttackEncounter {
         return true;
     }
 
+    synchronized Snapshot nativeSourceEscapeMoveForAi(long l, int n, int n2, long l2) {
+        Monster monster = this.monster(l);
+        if (this.phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT && this.phase != Phase.FINAL_BOSSES || this.arena == null || monster == null || !monster.activeAi || !NativeSourceNpcMovement.allowed(monster.ready(l2), monster) || NativeSourceNpcEscape.blind(monster.blindActive(l2), monster) || monster.sleepActive(l2) || monster.paralysisActive(l2) || monster.shockStunActive(l2) || monster.boneBreakActive(l2) || monster.thunderGrabActive(l2) || monster.freezeActive(l2) || monster.earthBindActive(l2) || Math.max(Math.abs(monster.x - n), Math.abs(monster.y - n2)) != 1 || !this.arena.nativeCanStep(monster.x, monster.y, n, n2)) {
+            return null;
+        }
+        boolean bl = this.actors.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == n && monster2.y == n2);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(n, monster, n2);
+        monster.y = n2;
+        monster.schedule(l2, 0);
+        return monster.snapshot();
+    }
+
+    synchronized Snapshot nativeSourceViewActionMoveForAi(long l, int n, int n2, long l2, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        Monster monster = this.monster(l);
+        if (this.phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT && this.phase != Phase.FINAL_BOSSES || this.arena == null || monster == null || !monster.activeAi || !NativeSourceNpcMovement.allowed(monster.ready(l2), monster) || monster.blindActive(l2) || monster.sleepActive(l2) || monster.paralysisActive(l2) || monster.shockStunActive(l2) || monster.boneBreakActive(l2) || monster.thunderGrabActive(l2) || monster.freezeActive(l2) || monster.earthBindActive(l2) || Math.max(Math.abs(monster.x - n), Math.abs(monster.y - n2)) != 1 || !this.arena.nativeCanStep(monster.x, monster.y, n, n2)) {
+            return null;
+        }
+        boolean bl = this.actors.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == n && monster2.y == n2);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(n, monster, n2);
+        monster.y = n2;
+        monster.schedule(l2, 0);
+        return monster.snapshot();
+    }
+
+    synchronized AiAttack nativeSourceViewActionAiAttackFor(long l, int n, int n2, long l2, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        Monster monster = this.monster(l);
+        if (monster == null) {
+            return null;
+        }
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < nArray.length; ++i) {
+            nArray[i] = threadLocalRandom.nextInt(1, 101);
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
+        return this.aiAttackFor(l, n, n2, l2, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
+    }
+
+    synchronized AiAttack nativeSourceViewActionAiAttackFor(long l, int n, int n2, long l2, int n3, int n4, int n5, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        if (n3 < 1 || n3 > 100 || n4 < 1 || n4 > 100 || n5 < 0) {
+            throw new IllegalArgumentException("invalid Time Attack AI fixture");
+        }
+        Monster monster = this.monster(l);
+        if (monster == null) {
+            return null;
+        }
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < list.size(); ++i) {
+            nArray[i] = list.get(i) instanceof BattleTimeAttackMagicSkillCatalog.PhysicalDefinition ? n4 : n3;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n6 = summonDefinition == null ? 0 : n5 % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(l, n, n2, l2, nArray, n5, n6);
+    }
+
+    synchronized AiAttack nativeSourceViewActionAiAttackForActNoFixture(long l, int n, int n2, long l2, int n3, int n4, Object object) {
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        if (n3 < 0 || n4 < 0) {
+            throw new IllegalArgumentException("invalid Time Attack actNo fixture");
+        }
+        Monster monster = this.monster(l);
+        List list = monster == null ? List.of() : BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        Arrays.fill(nArray, 100);
+        int n5 = -1;
+        for (int i = 0; i < list.size(); ++i) {
+            if (((BattleTimeAttackMagicSkillCatalog.MobskillRow)list.get(i)).actNo() == n3) {
+                n5 = i;
+                nArray[i] = 1;
+                break;
+            }
+        }
+        if (n5 < 0) {
+            return null;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n6 = summonDefinition == null ? 0 : n4 % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(l, n, n2, l2, nArray, n4, n6);
+    }
+
+    synchronized Snapshot nativeSourceNpcPlayerFirstMoveForAi(long l, int n, int n2, long l2, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        Monster monster = this.monster(l);
+        if (this.phase != Phase.ORDINARY_DOCUMENTED_FRAGMENT && this.phase != Phase.FINAL_BOSSES || this.arena == null || monster == null || !monster.activeAi || !NativeSourceNpcMovement.allowed(monster.ready(l2), monster) || monster.blindActive(l2) || monster.sleepActive(l2) || monster.paralysisActive(l2) || monster.shockStunActive(l2) || monster.boneBreakActive(l2) || monster.thunderGrabActive(l2) || monster.freezeActive(l2) || monster.earthBindActive(l2) || Math.max(Math.abs(monster.x - n), Math.abs(monster.y - n2)) != 1 || !this.arena.nativeCanStep(monster.x, monster.y, n, n2)) {
+            return null;
+        }
+        boolean bl = this.actors.stream().anyMatch(monster2 -> monster2 != monster && monster2.alive() && monster2.x == n && monster2.y == n2);
+        if (bl) {
+            return null;
+        }
+        monster.x = NativeSourceNpcMotion.moving(n, monster, n2);
+        monster.y = n2;
+        monster.schedule(l2, 0);
+        return monster.snapshot();
+    }
+
+    synchronized AiAttack nativeSourceNpcPlayerFirstAiAttackFor(long l, int n, int n2, long l2, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        Monster monster = this.monster(l);
+        if (monster == null) {
+            return null;
+        }
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < nArray.length; ++i) {
+            nArray[i] = threadLocalRandom.nextInt(1, 101);
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
+        return this.aiAttackFor(l, n, n2, l2, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
+    }
+
+    synchronized AiAttack nativeSourceNpcPlayerFirstAiAttackFor(long l, int n, int n2, long l2, int n3, int n4, int n5, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        if (n3 < 1 || n3 > 100 || n4 < 1 || n4 > 100 || n5 < 0) {
+            throw new IllegalArgumentException("invalid Time Attack AI fixture");
+        }
+        Monster monster = this.monster(l);
+        if (monster == null) {
+            return null;
+        }
+        List<BattleTimeAttackMagicSkillCatalog.MobskillRow> list = BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        for (int i = 0; i < list.size(); ++i) {
+            nArray[i] = list.get(i) instanceof BattleTimeAttackMagicSkillCatalog.PhysicalDefinition ? n4 : n3;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n6 = summonDefinition == null ? 0 : n5 % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(l, n, n2, l2, nArray, n5, n6);
+    }
+
+    synchronized AiAttack nativeSourceNpcPlayerFirstAiAttackForActNoFixture(long l, int n, int n2, long l2, int n3, int n4, Object object, Object object2) {
+        if (!NativeSourceNpcPlayerView.current(object2)) {
+            return null;
+        }
+        if (!NativeSourceNpcViewAction.allowed(this, l, object)) {
+            return null;
+        }
+        if (n3 < 0 || n4 < 0) {
+            throw new IllegalArgumentException("invalid Time Attack actNo fixture");
+        }
+        Monster monster = this.monster(l);
+        List list = monster == null ? List.of() : BattleTimeAttackMagicSkillCatalog.rowsForNpc(monster.npcId);
+        int[] nArray = new int[list.size()];
+        Arrays.fill(nArray, 100);
+        int n5 = -1;
+        for (int i = 0; i < list.size(); ++i) {
+            if (((BattleTimeAttackMagicSkillCatalog.MobskillRow)list.get(i)).actNo() == n3) {
+                n5 = i;
+                nArray[i] = 1;
+                break;
+            }
+        }
+        if (n5 < 0) {
+            return null;
+        }
+        BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.npcId);
+        int n6 = summonDefinition == null ? 0 : n4 % summonDefinition.summonRandomBound();
+        return this.aiAttackFor(l, n, n2, l2, nArray, n4, n6);
+    }
+
     private Monster monster(long objectId) {
         return actors.stream()
                 .filter(candidate -> candidate.objectId == objectId && candidate.alive())
@@ -1536,6 +1914,7 @@ final class BattleTimeAttackEncounter {
                 maximumMp, intelligence);
     }
 
+    @AsmFinal({"nativeSourceHpViewers", "nativeSourceNpcFactoryType"})
     private static final class Monster {
         final long objectId;
         final int npcId;
@@ -1548,15 +1927,13 @@ final class BattleTimeAttackEncounter {
         final boolean activeAi;
         final String identitySource;
         final String waveSource;
-        int x;
-        int y;
-        int hp;
+        volatile int x;
+        volatile int y;
+        volatile int hp;
         int mp;
         int maxMp;
-        final java.util.Map<Integer, Long> skillReadyNanos =
-                new java.util.HashMap<>();
-        final java.util.Map<Integer, Integer> skillUseCounts =
-                new java.util.HashMap<>();
+        final Map<Integer, Long> skillReadyNanos = new HashMap<Integer, Long>();
+        final Map<Integer, Integer> skillUseCounts = new HashMap<Integer, Integer>();
         long nextActionNanos;
         long blindExpiresAtNanos;
         long weaknessExpiresAtNanos;
@@ -1569,138 +1946,139 @@ final class BattleTimeAttackEncounter {
         long strikerGaleExpiresAtNanos;
         long sleepExpiresAtNanos;
         long paralysisExpiresAtNanos;
-        long shockStunExpiresAtNanos;
-        long boneBreakExpiresAtNanos;
+        volatile long shockStunExpiresAtNanos;
+        volatile long boneBreakExpiresAtNanos;
         long thunderGrabExpiresAtNanos;
-        long freezeExpiresAtNanos;
+        volatile long freezeExpiresAtNanos;
         long earthBindExpiresAtNanos;
-        long hasteExpiresAtNanos;
-        long slowExpiresAtNanos;
+        volatile long hasteExpiresAtNanos;
+        volatile long slowExpiresAtNanos;
         int weaponBreakStacks;
-        final BattleElementalFallDownStatus elementalFallDownStatus =
-                new BattleElementalFallDownStatus();
-        final BattleEraseMagicStatus eraseMagicStatus =
-                new BattleEraseMagicStatus();
-        final BattleArmBreakerStatus armBreakerStatus =
-                new BattleArmBreakerStatus();
+        final BattleElementalFallDownStatus elementalFallDownStatus = new BattleElementalFallDownStatus();
+        final BattleEraseMagicStatus eraseMagicStatus = new BattleEraseMagicStatus();
+        final BattleArmBreakerStatus armBreakerStatus = new BattleArmBreakerStatus();
         final BattlePanicStatus panicStatus = new BattlePanicStatus();
-        final BattleJoyOfPainStatus joyOfPainStatus =
-                new BattleJoyOfPainStatus();
+        final BattleJoyOfPainStatus joyOfPainStatus = new BattleJoyOfPainStatus();
         final BattleTimedStatus damagePoison = new BattleTimedStatus();
-        final RuntimeInventory inventory = new RuntimeInventory();
+        RuntimeInventory inventory = new RuntimeInventory();
         long poisonAttackerObjectId;
+        NativeSourceMonsterHp.Cache nativeSourceHpViewers;
+        volatile Object nativeSourceArenaPoisonLease;
+        volatile Object nativeSourceDollSlowEpoch;
+        volatile Object nativeSourceTargetFreezeLease;
+        volatile Object nativeSourceTargetShockLease;
+        volatile Object nativeSourceSpecialBoneLease;
+        Object nativeSourceNpcFactoryType;
+        private volatile transient Object nativeSourceNpcMotion;
 
-        Monster(Template template, int x, int y,
-                String identitySource, String waveSource) {
-            this.objectId = NEXT_OBJECT_ID.getAndUpdate(current ->
-                    current >= 0x6DFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
+        Monster(Template template, int n, int n2, String string, String string2) {
+            this.objectId = NEXT_OBJECT_ID.getAndUpdate(l -> l >= 0x6DFFFFFFL ? 0x6D000000L : l + 1L);
             this.npcId = template.npcId();
             this.gfx = template.gfx();
             this.name = template.name();
             this.level = template.level();
             this.maxHp = template.maxHp();
             this.maxMp = template.maximumMp();
-            this.mp = maxMp;
+            this.mp = this.maxMp;
             this.intelligence = template.intelligence();
             this.finalBoss = true;
             this.activeAi = true;
-            this.identitySource = identitySource;
-            this.waveSource = waveSource;
-            this.x = x;
-            this.y = y;
-            hp = maxHp;
+            this.identitySource = string;
+            this.waveSource = string2;
+            this.x = n;
+            this.y = n2;
+            this.hp = this.maxHp;
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryType.birth(this, null);
         }
 
-        Monster(DocumentedOrdinaryFragment fragment, int x, int y,
-                String waveSource) {
-            this.objectId = NEXT_OBJECT_ID.getAndUpdate(current ->
-                    current >= 0x6DFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
-            this.npcId = fragment.npcId();
-            this.gfx = fragment.gfx();
-            this.name = fragment.name();
-            this.level = fragment.level();
-            this.maxHp = fragment.maxHp();
-            this.maxMp = fragment.maximumMp();
-            this.mp = maxMp;
-            this.intelligence = fragment.intelligence();
+        Monster(DocumentedOrdinaryFragment documentedOrdinaryFragment, int n, int n2, String string) {
+            this.objectId = NEXT_OBJECT_ID.getAndUpdate(l -> l >= 0x6DFFFFFFL ? 0x6D000000L : l + 1L);
+            this.npcId = documentedOrdinaryFragment.npcId();
+            this.gfx = documentedOrdinaryFragment.gfx();
+            this.name = documentedOrdinaryFragment.name();
+            this.level = documentedOrdinaryFragment.level();
+            this.maxHp = documentedOrdinaryFragment.maxHp();
+            this.maxMp = documentedOrdinaryFragment.maximumMp();
+            this.mp = this.maxMp;
+            this.intelligence = documentedOrdinaryFragment.intelligence();
             this.finalBoss = false;
-            this.activeAi = BattleAnimationCatalog.get().supportsTimedAction(
-                    gfx, BattleActionCodes.WALK)
-                    && (BattleAnimationCatalog.get().supportsTimedAction(
-                            gfx, BattleActionCodes.ATTACK)
-                        || BattleTimeAttackMagicSkillCatalog.magicForNpc(npcId) != null);
-            this.identitySource = fragment.source();
-            this.waveSource = waveSource;
-            this.x = x;
-            this.y = y;
-            hp = maxHp;
+            this.activeAi = BattleAnimationCatalog.get().supportsTimedAction(this.gfx, 0) && (BattleAnimationCatalog.get().supportsTimedAction(this.gfx, 1) || BattleTimeAttackMagicSkillCatalog.magicForNpc(this.npcId) != null);
+            this.identitySource = documentedOrdinaryFragment.source();
+            this.waveSource = string;
+            this.x = n;
+            this.y = n2;
+            this.hp = this.maxHp;
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryType.birth(this, null);
         }
 
-        Monster(SummonedTemplate template, int x, int y,
-                String identitySource, String waveSource) {
-            this.objectId = NEXT_OBJECT_ID.getAndUpdate(current ->
-                    current >= 0x6DFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
-            this.npcId = template.npcId();
-            this.gfx = template.gfx();
-            this.name = template.name();
-            this.level = template.level();
-            this.maxHp = template.maxHp();
-            this.maxMp = template.maximumMp();
-            this.mp = maxMp;
-            this.intelligence = template.intelligence();
+        Monster(SummonedTemplate summonedTemplate, int n, int n2, String string, String string2) {
+            this.objectId = NEXT_OBJECT_ID.getAndUpdate(l -> l >= 0x6DFFFFFFL ? 0x6D000000L : l + 1L);
+            this.npcId = summonedTemplate.npcId();
+            this.gfx = summonedTemplate.gfx();
+            this.name = summonedTemplate.name();
+            this.level = summonedTemplate.level();
+            this.maxHp = summonedTemplate.maxHp();
+            this.maxMp = summonedTemplate.maximumMp();
+            this.mp = this.maxMp;
+            this.intelligence = summonedTemplate.intelligence();
             this.finalBoss = false;
             this.activeAi = true;
-            this.identitySource = identitySource;
-            this.waveSource = waveSource;
-            this.x = x;
-            this.y = y;
-            hp = maxHp;
+            this.identitySource = string;
+            this.waveSource = string2;
+            this.x = n;
+            this.y = n2;
+            this.hp = this.maxHp;
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryType.birth(this, null);
         }
 
-        Monster(Snapshot corpse) {
-            this.objectId = corpse.objectId();
-            this.npcId = corpse.npcId();
-            this.gfx = corpse.gfx();
-            this.name = corpse.name();
-            this.level = corpse.level();
-            this.maxHp = corpse.maxHp();
-            this.maxMp = corpse.maximumMp();
-            this.mp = corpse.currentMp();
-            this.intelligence = corpse.intelligence();
-            this.finalBoss = corpse.finalBoss();
-            this.activeAi = corpse.activeAi();
-            this.identitySource = corpse.identitySource();
-            this.waveSource = corpse.ordinaryWaveSource();
-            this.x = corpse.x();
-            this.y = corpse.y();
+        Monster(Snapshot snapshot) {
+            this.objectId = snapshot.objectId();
+            this.npcId = snapshot.npcId();
+            this.gfx = snapshot.gfx();
+            this.name = snapshot.name();
+            this.level = snapshot.level();
+            this.maxHp = snapshot.maxHp();
+            this.maxMp = snapshot.maximumMp();
+            this.mp = snapshot.currentMp();
+            this.intelligence = snapshot.intelligence();
+            this.finalBoss = snapshot.finalBoss();
+            this.activeAi = snapshot.activeAi();
+            this.identitySource = snapshot.identitySource();
+            this.waveSource = snapshot.ordinaryWaveSource();
+            this.x = snapshot.x();
+            this.y = snapshot.y();
             this.hp = 0;
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryMemory.restore(this, null, snapshot);
         }
 
-        Monster(Snapshot captured, BattleCompanion.Snapshot companion,
-                List<RuntimeInventory.Item> carriedItems) {
-            this.objectId = NEXT_OBJECT_ID.getAndUpdate(current ->
-                    current >= 0x6DFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
-            this.npcId = captured.npcId();
-            this.gfx = captured.gfx();
-            this.name = captured.name();
-            this.level = captured.level();
-            this.maxHp = captured.maxHp();
-            this.maxMp = captured.maximumMp();
-            this.mp = Math.max(0, Math.min(companion.mp(), maxMp));
-            this.intelligence = captured.intelligence();
+        Monster(Snapshot snapshot, BattleCompanion.Snapshot snapshot2, List<RuntimeInventory.Item> list) {
+            this.objectId = NEXT_OBJECT_ID.getAndUpdate(l -> l >= 0x6DFFFFFFL ? 0x6D000000L : l + 1L);
+            this.npcId = snapshot.npcId();
+            this.gfx = snapshot.gfx();
+            this.name = snapshot.name();
+            this.level = snapshot.level();
+            this.maxHp = snapshot.maxHp();
+            this.maxMp = snapshot.maximumMp();
+            this.mp = Math.max(0, Math.min(snapshot2.mp(), this.maxMp));
+            this.intelligence = snapshot.intelligence();
             this.finalBoss = false;
-            this.activeAi = captured.activeAi();
-            this.identitySource = captured.identitySource();
-            this.waveSource = captured.ordinaryWaveSource();
-            this.x = companion.x();
-            this.y = companion.y();
-            this.hp = Math.max(1, Math.min(companion.hp(), maxHp));
-            for (RuntimeInventory.Item item : carriedItems) {
-                if (!inventory.add(item, item.quantity())) {
-                    throw new IllegalStateException(
-                            "released Time Attack monster inventory exceeds native capacity");
+            this.activeAi = snapshot.activeAi();
+            this.identitySource = snapshot.identitySource();
+            this.waveSource = snapshot.ordinaryWaveSource();
+            this.x = snapshot2.x();
+            this.y = snapshot2.y();
+            this.hp = Math.max(1, Math.min(snapshot2.hp(), this.maxHp));
+            for (RuntimeInventory.Item item : list) {
+                if (!this.inventory.add(item, (long)item.quantity())) {
+                    throw new IllegalStateException("released Time Attack monster inventory exceeds native capacity");
                 }
             }
+            this.nativeSourceHpViewers = new NativeSourceMonsterHp.Cache();
+            this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryMemory.restore(this, snapshot2, snapshot);
         }
 
         boolean alive() {
@@ -1708,16 +2086,12 @@ final class BattleTimeAttackEncounter {
         }
 
         Snapshot snapshot() {
-            return new Snapshot(objectId, npcId, x, y,
-                    gfx, name, level, hp,
-                    maxHp, hp > 0, finalBoss, activeAi,
-                    mp, maxMp, intelligence,
-                    identitySource,
-                    waveSource, PLACEMENT_SOURCE);
+            Object object = NativeSourceNpcFirstView.capture(this);
+            return new Snapshot(this.objectId, this.npcId, this.x, this.y, this.gfx, this.name, this.level, this.hp, this.maxHp, this.hp > 0, this.finalBoss, this.activeAi, this.mp, this.maxMp, this.intelligence, this.identitySource, this.waveSource, BattleTimeAttackEncounter.PLACEMENT_SOURCE, NativeSourceNpcFactoryMemory.carry(this), object);
         }
 
         Damage damage(int amount) {
-            return damage(amount, true);
+            return this.damage(amount, true);
         }
 
         Damage poisonDamage(int amount) {
@@ -1725,37 +2099,38 @@ final class BattleTimeAttackEncounter {
         }
 
         private Damage damage(int amount, boolean earthBindBlocks) {
-            if (hp <= 0 || amount <= 0
-                    || (earthBindBlocks && earthBindActive(System.nanoTime()))) return null;
-            Snapshot before = snapshot();
-            hp = Math.max(0, hp - amount);
-            sleepExpiresAtNanos = 0;
-            if (hp == 0) {
-                blindExpiresAtNanos = 0;
-                weaknessExpiresAtNanos = 0;
-                diseaseExpiresAtNanos = 0;
-                silenceExpiresAtNanos = 0;
-                areaSilenceExpiresAtNanos = 0;
-                windShackleExpiresAtNanos = 0;
-                decayPotionExpiresAtNanos = 0;
-                polluteWaterExpiresAtNanos = 0;
-                strikerGaleExpiresAtNanos = 0;
-                elementalFallDownStatus.clear();
-                eraseMagicStatus.clear();
-                paralysisExpiresAtNanos = 0;
-                shockStunExpiresAtNanos = 0;
-                boneBreakExpiresAtNanos = 0;
-                thunderGrabExpiresAtNanos = 0;
-                freezeExpiresAtNanos = 0;
-                earthBindExpiresAtNanos = 0;
-                hasteExpiresAtNanos = 0;
-                slowExpiresAtNanos = 0;
-                weaponBreakStacks = 0;
-                curePoison();
-                joyOfPainStatus.clear();
+            if (this.hp <= 0 || amount <= 0 || NativeCombatAttacker.earth(earthBindBlocks, this) && this.earthBindActive(System.nanoTime())) {
+                return null;
             }
-            Snapshot after = snapshot();
-            return new Damage(before, after, before.alive() && !after.alive());
+            Snapshot snapshot = this.snapshot();
+            this.hp = Math.max(0, this.hp - amount);
+            this.sleepExpiresAtNanos = 0L;
+            if (this.hp == 0) {
+                this.blindExpiresAtNanos = 0L;
+                this.weaknessExpiresAtNanos = 0L;
+                this.diseaseExpiresAtNanos = 0L;
+                this.silenceExpiresAtNanos = 0L;
+                this.areaSilenceExpiresAtNanos = 0L;
+                this.windShackleExpiresAtNanos = 0L;
+                this.decayPotionExpiresAtNanos = 0L;
+                this.polluteWaterExpiresAtNanos = 0L;
+                this.strikerGaleExpiresAtNanos = 0L;
+                this.elementalFallDownStatus.clear();
+                this.eraseMagicStatus.clear();
+                this.paralysisExpiresAtNanos = 0L;
+                NativeSourceTargetNpc.writeShock(this, 0L);
+                NativeSourceSpecialNpc.writeBone(this, 0L);
+                this.thunderGrabExpiresAtNanos = 0L;
+                NativeSourceTargetNpc.writeFreeze(this, 0L);
+                this.earthBindExpiresAtNanos = 0L;
+                this.hasteExpiresAtNanos = 0L;
+                this.slowExpiresAtNanos = 0L;
+                this.weaponBreakStacks = 0;
+                this.curePoison();
+                this.joyOfPainStatus.clear();
+            }
+            Snapshot snapshot2 = this.snapshot();
+            return new Damage(snapshot, snapshot2, snapshot.alive() && !snapshot2.alive());
         }
 
         boolean activatePoison(long attackerObjectId, long nowNanos,
@@ -1786,33 +2161,36 @@ final class BattleTimeAttackEncounter {
         }
 
         void resurrect(int restoredHp) {
-            if (hp > 0 || restoredHp <= 0) {
+            if (this.hp > 0 || restoredHp <= 0) {
                 throw new IllegalStateException("invalid Time Attack resurrection");
             }
-            hp = Math.min(maxHp, restoredHp);
-            nextActionNanos = 0;
-            skillReadyNanos.clear();
-            blindExpiresAtNanos = 0;
-            weaknessExpiresAtNanos = 0;
-            diseaseExpiresAtNanos = 0;
-            silenceExpiresAtNanos = 0;
-            areaSilenceExpiresAtNanos = 0;
-            windShackleExpiresAtNanos = 0;
-            decayPotionExpiresAtNanos = 0;
-            polluteWaterExpiresAtNanos = 0;
-            strikerGaleExpiresAtNanos = 0;
-            elementalFallDownStatus.clear();
-            eraseMagicStatus.clear();
-            sleepExpiresAtNanos = 0;
-            paralysisExpiresAtNanos = 0;
-            shockStunExpiresAtNanos = 0;
-            boneBreakExpiresAtNanos = 0;
-            thunderGrabExpiresAtNanos = 0;
-            freezeExpiresAtNanos = 0;
-            earthBindExpiresAtNanos = 0;
-            hasteExpiresAtNanos = 0;
-            slowExpiresAtNanos = 0;
-            weaponBreakStacks = 0;
+            Monster recipient = this;
+            int n2 = Math.min(this.maxHp, restoredHp);
+            NativeCombatAttacker.advance(this);
+            recipient.hp = n2;
+            this.nextActionNanos = 0L;
+            this.skillReadyNanos.clear();
+            this.blindExpiresAtNanos = 0L;
+            this.weaknessExpiresAtNanos = 0L;
+            this.diseaseExpiresAtNanos = 0L;
+            this.silenceExpiresAtNanos = 0L;
+            this.areaSilenceExpiresAtNanos = 0L;
+            this.windShackleExpiresAtNanos = 0L;
+            this.decayPotionExpiresAtNanos = 0L;
+            this.polluteWaterExpiresAtNanos = 0L;
+            this.strikerGaleExpiresAtNanos = 0L;
+            this.elementalFallDownStatus.clear();
+            this.eraseMagicStatus.clear();
+            this.sleepExpiresAtNanos = 0L;
+            this.paralysisExpiresAtNanos = 0L;
+            NativeSourceTargetNpc.writeShock(this, 0L);
+            NativeSourceSpecialNpc.writeBone(this, 0L);
+            this.thunderGrabExpiresAtNanos = 0L;
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
+            this.earthBindExpiresAtNanos = 0L;
+            this.hasteExpiresAtNanos = 0L;
+            this.slowExpiresAtNanos = 0L;
+            this.weaponBreakStacks = 0;
         }
 
         int addWeaponBreakStack() {
@@ -1909,54 +2287,50 @@ final class BattleTimeAttackEncounter {
         }
 
         MagicCancellation cancelMagicEffects() {
-            if (!alive()) return null;
-            Snapshot target = snapshot();
-            boolean haste = hasteExpiresAtNanos != 0;
-            boolean slow = slowExpiresAtNanos != 0;
-            boolean blind = blindExpiresAtNanos != 0;
-            boolean weakness = weaknessExpiresAtNanos != 0;
-            boolean disease = diseaseExpiresAtNanos != 0;
-            boolean silence = silenceExpiresAtNanos != 0
-                    || areaSilenceExpiresAtNanos != 0;
-            boolean decayPotion = decayPotionExpiresAtNanos != 0;
-            boolean polluteWater = polluteWaterExpiresAtNanos != 0;
-            boolean strikerGale = strikerGaleExpiresAtNanos != 0;
-            boolean sleep = sleepExpiresAtNanos != 0;
-            boolean paralysis = paralysisExpiresAtNanos != 0;
-            boolean freeze = freezeExpiresAtNanos != 0;
-            boolean earthBind = earthBindExpiresAtNanos != 0;
-            boolean thunderGrab = thunderGrabExpiresAtNanos != 0;
-            boolean horrorOfDeath = damagePoison.cancelHorrorOfDeath();
-            boolean boneBreak = boneBreakExpiresAtNanos != 0;
-            boolean windShackle = windShackleExpiresAtNanos != 0;
-            BattleElementalFallDownStatus.Cancellation elementalFallDown =
-                    elementalFallDownStatus.cancel();
-            boolean eraseMagic = eraseMagicStatus.cancel();
-            armBreakerStatus.cancel();
-            boolean panic = panicStatus.cancel();
-            joyOfPainStatus.cancel();
-            hasteExpiresAtNanos = 0;
-            slowExpiresAtNanos = 0;
-            blindExpiresAtNanos = 0;
-            weaknessExpiresAtNanos = 0;
-            diseaseExpiresAtNanos = 0;
-            silenceExpiresAtNanos = 0;
-            areaSilenceExpiresAtNanos = 0;
-            decayPotionExpiresAtNanos = 0;
-            polluteWaterExpiresAtNanos = 0;
-            strikerGaleExpiresAtNanos = 0;
-            sleepExpiresAtNanos = 0;
-            paralysisExpiresAtNanos = 0;
-            freezeExpiresAtNanos = 0;
-            earthBindExpiresAtNanos = 0;
-            thunderGrabExpiresAtNanos = 0;
-            boneBreakExpiresAtNanos = 0;
-            windShackleExpiresAtNanos = 0;
-            return new MagicCancellation(target, haste, slow, blind, weakness, disease,
-                    silence, decayPotion, polluteWater, strikerGale,
-                    sleep, paralysis, freeze,
-                    earthBind, thunderGrab, horrorOfDeath, boneBreak, windShackle,
-                    elementalFallDown, eraseMagic, panic);
+            if (!this.alive()) {
+                return null;
+            }
+            Snapshot snapshot = this.snapshot();
+            boolean bl = this.hasteExpiresAtNanos != 0L;
+            boolean bl2 = this.slowExpiresAtNanos != 0L;
+            boolean bl3 = this.blindExpiresAtNanos != 0L;
+            boolean bl4 = this.weaknessExpiresAtNanos != 0L;
+            boolean bl5 = this.diseaseExpiresAtNanos != 0L;
+            boolean bl6 = this.silenceExpiresAtNanos != 0L || this.areaSilenceExpiresAtNanos != 0L;
+            boolean bl7 = this.decayPotionExpiresAtNanos != 0L;
+            boolean bl8 = this.polluteWaterExpiresAtNanos != 0L;
+            boolean bl9 = this.strikerGaleExpiresAtNanos != 0L;
+            boolean bl10 = this.sleepExpiresAtNanos != 0L;
+            boolean bl11 = this.paralysisExpiresAtNanos != 0L;
+            boolean bl12 = this.freezeExpiresAtNanos != 0L;
+            boolean bl13 = this.earthBindExpiresAtNanos != 0L;
+            boolean bl14 = this.thunderGrabExpiresAtNanos != 0L;
+            boolean bl15 = this.damagePoison.cancelHorrorOfDeath();
+            boolean bl16 = this.boneBreakExpiresAtNanos != 0L;
+            boolean bl17 = this.windShackleExpiresAtNanos != 0L;
+            BattleElementalFallDownStatus.Cancellation cancellation = this.elementalFallDownStatus.cancel();
+            boolean bl18 = this.eraseMagicStatus.cancel();
+            this.armBreakerStatus.cancel();
+            boolean bl19 = this.panicStatus.cancel();
+            this.joyOfPainStatus.cancel();
+            this.hasteExpiresAtNanos = 0L;
+            this.slowExpiresAtNanos = 0L;
+            this.blindExpiresAtNanos = 0L;
+            this.weaknessExpiresAtNanos = 0L;
+            this.diseaseExpiresAtNanos = 0L;
+            this.silenceExpiresAtNanos = 0L;
+            this.areaSilenceExpiresAtNanos = 0L;
+            this.decayPotionExpiresAtNanos = 0L;
+            this.polluteWaterExpiresAtNanos = 0L;
+            this.strikerGaleExpiresAtNanos = 0L;
+            this.sleepExpiresAtNanos = 0L;
+            this.paralysisExpiresAtNanos = 0L;
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
+            this.earthBindExpiresAtNanos = 0L;
+            this.thunderGrabExpiresAtNanos = 0L;
+            NativeSourceSpecialNpc.writeBone(this, 0L);
+            this.windShackleExpiresAtNanos = 0L;
+            return new MagicCancellation(snapshot, bl, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12, bl13, bl14, bl15, bl16, bl17, cancellation, bl18, bl19);
         }
 
         boolean activateBlind(long nowNanos, int durationSeconds) {
@@ -2165,9 +2539,10 @@ final class BattleTimeAttackEncounter {
         }
 
         boolean activateShockStun(long nowNanos, int durationSeconds) {
-            if (!alive() || nowNanos < 0 || durationSeconds <= 0) return false;
-            shockStunExpiresAtNanos = Math.addExact(nowNanos,
-                    TimeUnit.SECONDS.toNanos(durationSeconds));
+            if (!this.alive() || nowNanos < 0L || durationSeconds <= 0) {
+                return false;
+            }
+            NativeSourceTargetNpc.writeShock(this, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
             return true;
         }
 
@@ -2176,10 +2551,10 @@ final class BattleTimeAttackEncounter {
         }
 
         boolean activateBoneBreak(long nowNanos, int durationSeconds) {
-            if (!alive() || nowNanos < 0 || durationSeconds <= 0
-                    || boneBreakActive(nowNanos)) return false;
-            boneBreakExpiresAtNanos = Math.addExact(nowNanos,
-                    TimeUnit.SECONDS.toNanos(durationSeconds));
+            if (!this.alive() || nowNanos < 0L || durationSeconds <= 0 || this.boneBreakActive(nowNanos)) {
+                return false;
+            }
+            NativeSourceSpecialNpc.writeBone(this, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
             return true;
         }
 
@@ -2223,10 +2598,10 @@ final class BattleTimeAttackEncounter {
         }
 
         boolean activateFreeze(long nowNanos, int durationSeconds) {
-            if (!alive() || finalBoss || nowNanos < 0 || durationSeconds <= 0
-                    || freezeActive(nowNanos)) return false;
-            freezeExpiresAtNanos = Math.addExact(nowNanos,
-                    TimeUnit.SECONDS.toNanos(durationSeconds));
+            if (!this.alive() || this.finalBoss || nowNanos < 0L || durationSeconds <= 0 || this.freezeActive(nowNanos)) {
+                return false;
+            }
+            NativeSourceTargetNpc.writeFreeze(this, Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
             return true;
         }
 
@@ -2235,16 +2610,18 @@ final class BattleTimeAttackEncounter {
         }
 
         boolean expireFreeze(long nowNanos) {
-            if (freezeExpiresAtNanos == 0 || nowNanos < freezeExpiresAtNanos) {
+            if (this.freezeExpiresAtNanos == 0L || nowNanos < this.freezeExpiresAtNanos) {
                 return false;
             }
-            freezeExpiresAtNanos = 0;
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
             return true;
         }
 
         boolean cancelFreeze() {
-            if (freezeExpiresAtNanos == 0) return false;
-            freezeExpiresAtNanos = 0;
+            if (this.freezeExpiresAtNanos == 0L) {
+                return false;
+            }
+            NativeSourceTargetNpc.writeFreeze(this, 0L);
             return true;
         }
 
@@ -2273,11 +2650,8 @@ final class BattleTimeAttackEncounter {
         }
 
         void schedule(long nowNanos, int action) {
-            long delay = TimeUnit.MILLISECONDS.toNanos(
-                    BattleActionInterval.npcMillis(
-                            gfx, action, hasteActive(nowNanos),
-                            slowActive(nowNanos), windShackleActive(nowNanos)));
-            nextActionNanos = Math.addExact(nowNanos, delay);
+            long l2 = TimeUnit.MILLISECONDS.toNanos(NativeSourceNpcBaseSpeeds.npcMillis(this.gfx, action, this.hasteActive(nowNanos), this.slowActive(nowNanos), this.windShackleActive(nowNanos), this));
+            this.nextActionNanos = Math.addExact(nowNanos, l2);
         }
 
         boolean magicReady(BattleTimeAttackMagicSkillCatalog.Definition skill,
@@ -2294,26 +2668,24 @@ final class BattleTimeAttackEncounter {
                     && nowNanos >= skillReadyNanos.getOrDefault(skill.actNo(), 0L);
         }
 
-        void scheduleVisual(long nowNanos,
-                            BattleTimeAttackMagicSkillCatalog.VisualDefinition skill) {
-            if (!visualReady(skill, nowNanos)) {
+        void scheduleVisual(long nowNanos, BattleTimeAttackMagicSkillCatalog.VisualDefinition skill) {
+            if (!this.visualReady(skill, nowNanos)) {
                 throw new IllegalStateException("Time Attack visual skill was not ready");
             }
-            mp -= skill.mpCost();
-            int delay = skill.actionDelayMillis();
-            if (slowActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.SLOW_MULTIPLIER);
-            } else if (hasteActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.HASTE_MULTIPLIER);
+            this.mp -= skill.mpCost();
+            int n = NativeSourceNpcSpellTiming.base(skill.actionDelayMillis(), this, skill);
+            if (this.slowActive(nowNanos)) {
+                n = (int)((double)n * 2.0);
+            } else if (this.hasteActive(nowNanos)) {
+                n = (int)((double)n * 0.755);
             }
-            if (windShackleActive(nowNanos)) {
-                delay = (int) (delay
-                        * BattleActionInterval.WIND_SHACKLE_MULTIPLIER);
+            boolean windShackle = this.windShackleActive(nowNanos);
+            n = NativeSourceNpcActionIntervals.brave(n, this);
+            if (windShackle) {
+                n = (int)((double)n * 1.25);
             }
-            nextActionNanos = Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(Math.max(1, delay)));
-            skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
+            this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
+            this.skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
         }
 
         boolean groundReady(BattleTimeAttackMagicSkillCatalog.GroundDefinition skill,
@@ -2323,47 +2695,44 @@ final class BattleTimeAttackEncounter {
                     && nowNanos >= skillReadyNanos.getOrDefault(skill.actNo(), 0L);
         }
 
-        void scheduleGround(long nowNanos,
-                            BattleTimeAttackMagicSkillCatalog.GroundDefinition skill) {
-            if (!groundReady(skill, nowNanos)) {
+        void scheduleGround(long nowNanos, BattleTimeAttackMagicSkillCatalog.GroundDefinition skill) {
+            if (!this.groundReady(skill, nowNanos)) {
                 throw new IllegalStateException("Time Attack ground skill was not ready");
             }
-            mp -= skill.mpCost();
-            int delay = skill.actionDelayMillis();
-            if (slowActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.SLOW_MULTIPLIER);
-            } else if (hasteActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.HASTE_MULTIPLIER);
+            this.mp -= skill.mpCost();
+            int n = NativeSourceNpcSpellTiming.base(skill.actionDelayMillis(), this, skill);
+            if (this.slowActive(nowNanos)) {
+                n = (int)((double)n * 2.0);
+            } else if (this.hasteActive(nowNanos)) {
+                n = (int)((double)n * 0.755);
             }
-            if (windShackleActive(nowNanos)) {
-                delay = (int) (delay
-                        * BattleActionInterval.WIND_SHACKLE_MULTIPLIER);
+            boolean windShackle = this.windShackleActive(nowNanos);
+            n = NativeSourceNpcActionIntervals.brave(n, this);
+            if (windShackle) {
+                n = (int)((double)n * 1.25);
             }
-            nextActionNanos = Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(Math.max(1, delay)));
-            skillReadyNanos.put(skill.actNo(), nextActionNanos);
+            this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
+            this.skillReadyNanos.put(skill.actNo(), this.nextActionNanos);
         }
 
-        void scheduleMagic(long nowNanos,
-                           BattleTimeAttackMagicSkillCatalog.Definition skill) {
-            if (!magicReady(skill, nowNanos)) {
+        void scheduleMagic(long nowNanos, BattleTimeAttackMagicSkillCatalog.Definition skill) {
+            if (!this.magicReady(skill, nowNanos)) {
                 throw new IllegalStateException("Time Attack magic was not ready");
             }
-            mp -= skill.mpCost();
-            int delay = skill.actionDelayMillis();
-            if (slowActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.SLOW_MULTIPLIER);
-            } else if (hasteActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.HASTE_MULTIPLIER);
+            this.mp -= skill.mpCost();
+            int n = NativeSourceNpcSpellTiming.base(skill.actionDelayMillis(), this, skill);
+            if (this.slowActive(nowNanos)) {
+                n = (int)((double)n * 2.0);
+            } else if (this.hasteActive(nowNanos)) {
+                n = (int)((double)n * 0.755);
             }
-            if (windShackleActive(nowNanos)) {
-                delay = (int) (delay
-                        * BattleActionInterval.WIND_SHACKLE_MULTIPLIER);
+            boolean windShackle = this.windShackleActive(nowNanos);
+            n = NativeSourceNpcActionIntervals.brave(n, this);
+            if (windShackle) {
+                n = (int)((double)n * 1.25);
             }
-            nextActionNanos = Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(Math.max(1, delay)));
-            skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
+            this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
+            this.skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
         }
 
         boolean summonReady(
@@ -2373,24 +2742,42 @@ final class BattleTimeAttackEncounter {
                         < summon.triggerCount();
         }
 
-        void scheduleSummon(long nowNanos,
-                            BattleTimeAttackMagicSkillCatalog.SummonDefinition summon) {
-            if (!summonReady(summon)) {
+        void scheduleSummon(long nowNanos, BattleTimeAttackMagicSkillCatalog.SummonDefinition summon) {
+            if (!this.summonReady(summon)) {
                 throw new IllegalStateException("Time Attack summon was not ready");
             }
-            int delay = summon.actionDelayMillis();
-            if (slowActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.SLOW_MULTIPLIER);
-            } else if (hasteActive(nowNanos)) {
-                delay = (int) (delay * BattleActionInterval.HASTE_MULTIPLIER);
+            int n = NativeSourceNpcSpellTiming.base(summon.actionDelayMillis(), this, summon);
+            if (this.slowActive(nowNanos)) {
+                n = (int)((double)n * 2.0);
+            } else if (this.hasteActive(nowNanos)) {
+                n = (int)((double)n * 0.755);
             }
-            if (windShackleActive(nowNanos)) {
-                delay = (int) (delay
-                        * BattleActionInterval.WIND_SHACKLE_MULTIPLIER);
+            boolean windShackle = this.windShackleActive(nowNanos);
+            n = NativeSourceNpcActionIntervals.brave(n, this);
+            if (windShackle) {
+                n = (int)((double)n * 1.25);
             }
-            nextActionNanos = Math.addExact(nowNanos,
-                    TimeUnit.MILLISECONDS.toNanos(Math.max(1, delay)));
-            skillUseCounts.merge(summon.actNo(), 1, Integer::sum);
+            this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
+            this.skillUseCounts.merge(summon.actNo(), 1, Integer::sum);
+        }
+
+        int nativeSourceCubeRemainderRecoverMana(int n) {
+            if (!this.alive() || n <= 0) {
+                return 0;
+            }
+            int n2 = this.mp;
+            this.mp = Math.min(this.maxMp, NativeSourceCubeRemainder.cappedAdd(this.mp, n));
+            return this.mp - n2;
+        }
+
+        Healing nativeSourceNpcMagicHeal(int n) {
+            if (this.hp <= 0 || n < 0) {
+                return null;
+            }
+            Snapshot snapshot = this.snapshot();
+            this.hp = NativeSourceNpcMagicEffects.capped(this.maxHp, this.hp, n);
+            Snapshot snapshot2 = this.snapshot();
+            return new Healing(snapshot, snapshot2, snapshot2.hp() - snapshot.hp());
         }
     }
 }

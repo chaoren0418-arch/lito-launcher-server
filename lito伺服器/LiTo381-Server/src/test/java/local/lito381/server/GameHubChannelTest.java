@@ -129,7 +129,12 @@ final class GameHubChannelTest {
             long publicRoom = hub.createRoom(0, new GameHub.RoomSettings(
                     "Public", "", 4, 0, 0, 0, 0, 0));
 
-            assertEquals(publicRoom, hub.matchRoom(0, 52, false));
+            // #138 B-land: 0.6.71 and candidate 50635f7e matchRoom have no test-room filter, so
+            // an unrestricted quick match returns the per-channel Local Lobby first.  The
+            // protected-room skip is still exercised through the pet-race mode filter.
+            assertEquals(localLobby(hub, 0), hub.matchRoom(0, 52, false));
+            assertEquals(publicRoom, hub.matchRoom(0, 52, false, BattleRules.Mode.PET_RACE));
+            assertNotEquals(protectedRoom, hub.matchRoom(0, 52, false, BattleRules.Mode.PET_RACE));
         }
     }
 
@@ -138,7 +143,10 @@ final class GameHubChannelTest {
         try (GameHub hub = new GameHub(config)) {
             hub.createRoom(0, new GameHub.RoomSettings(
                     "Protected", "secret", 4, 0, 0, 0, 0, 0));
-            assertEquals(0, hub.matchRoom(0, 52, false));
+            // #138 B-land: Local Lobby (deathmatch) stays matchable as in 0.6.71; the
+            // only pet-race room is protected, so a pet-race quick match is rejected.
+            assertEquals(localLobby(hub, 0), hub.matchRoom(0, 52, false));
+            assertEquals(0, hub.matchRoom(0, 52, false, BattleRules.Mode.PET_RACE));
         }
         try (GameHub hub = new GameHub(config)) {
             ClientSession occupant = session(config, hub);
@@ -147,7 +155,8 @@ final class GameHubChannelTest {
             long fullRoom = hub.createRoom(0, new GameHub.RoomSettings(
                     "Full", "", 1, 0, 0, 0, 0, 0));
             hub.joinRoom(fullRoom, occupant);
-            assertEquals(0, hub.matchRoom(0, 52, false));
+            assertEquals(localLobby(hub, 0), hub.matchRoom(0, 52, false));
+            assertEquals(0, hub.matchRoom(0, 52, false, BattleRules.Mode.PET_RACE));
         }
     }
 
@@ -158,7 +167,12 @@ final class GameHubChannelTest {
                     "Rental Town", "", 100, 0, 6, 0, 0, 0, 0,
                     List.of(500, 560)));
             assertTrue(town > 0);
-            assertEquals(0, hub.matchRoom(0, 52, false));
+            // #138 B-land: the only matchable room is the deathmatch Local Lobby (0.6.71
+            // behaviour); the mode-6 rental town is never returned, with or without a mode.
+            assertEquals(localLobby(hub, 0), hub.matchRoom(0, 52, false));
+            assertNotEquals(town, hub.matchRoom(0, 52, false));
+            assertEquals(0, hub.matchRoom(0, 52, false, BattleRules.Mode.PET_RACE));
+            assertEquals(0, hub.matchRoom(0, 52, true, BattleRules.Mode.PET_RACE));
         }
     }
 
@@ -189,8 +203,12 @@ final class GameHubChannelTest {
         try (GameHub hub = new GameHub(config)) {
             hub.createRoom(1, new GameHub.RoomSettings(
                     "Baphomet Closed", "", 4, 0, 0, 0, 0, 0, 0, List.of()));
+            // Level 52 belongs to channel 0; neither Baphomet room allows upper-tier entry.
             assertEquals(0, hub.matchRoom(1, 52, false));
-            assertEquals(0, hub.matchRoom(1, 47, true));
+            // #138 B-land: an eligible level-47 observer is matched into the observable
+            // Local Lobby (0.6.71 has no test-room filter), never into the closed room.
+            assertEquals(localLobby(hub, 1), hub.matchRoom(1, 47, true));
+            assertEquals(0, hub.matchRoom(1, 47, true, BattleRules.Mode.PET_RACE));
         }
     }
 
@@ -562,6 +580,12 @@ final class GameHubChannelTest {
 
             assertEquals(GameHub.ReadyTransition.NONE,
                     hub.setReady(roomId, participant, true).transition());
+            // #138 B-land: like 0.6.71, tryJoinRoom only auto-balances SIEGE_WAR, so both
+            // deathmatch players start on red and the team-based start is refused.
+            GameHub.ReadyUpdate oneSided = hub.requestOwnerStart(roomId, owner);
+            assertTrue(oneSided.ready());
+            assertEquals(GameHub.ReadyTransition.NONE, oneSided.transition());
+            assertTrue(hub.setForce(roomId, participant, 1).changed());
             GameHub.ReadyUpdate started = hub.requestOwnerStart(roomId, owner);
             assertTrue(started.ready());
             assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED, started.transition());
@@ -637,6 +661,14 @@ final class GameHubChannelTest {
             assertEquals(BattleRules.SIEGE_MAXIMUM_PLAYERS_PER_FORCE + 1,
                     rejected.firstDisallowedPlayersPerForceWarning());
         }
+    }
+
+    /** Id of the per-channel default room created by ensureDefaultRoom (selftest policy enables it). */
+    private static long localLobby(GameHub hub, int channelId) {
+        return hub.roomSnapshots(channelId).stream()
+                .filter(room -> room.settings().name().equals("Local Lobby"))
+                .mapToLong(GameHub.RoomSnapshot::id)
+                .findFirst().orElseThrow();
     }
 
     private static ClientSession session(ServerConfig config, GameHub hub) {

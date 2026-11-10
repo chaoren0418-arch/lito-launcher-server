@@ -1,16 +1,16 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
 package local.lito381.server;
 
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import local.lito381.server.ClientSession;
 import local.lito381.server.NativeCastMaterialPolicy;
 import local.lito381.server.NativeDeItemApplication;
 import local.lito381.server.NativePlayerLifetime;
+import local.lito381.server.NativeRetiredReuseTimer;
 
 final class NativeReuseActor {
     final ClientSession pc;
@@ -33,7 +33,7 @@ final class NativeReuseActor {
     }
 
     public ScheduledFuture<?> pcSchedule(Runnable runnable, long l) {
-        return this.life.retry.schedule(runnable, l, TimeUnit.MILLISECONDS);
+        return NativeRetiredReuseTimer.schedule(this, runnable, l);
     }
 
     public void setSkillDelay(boolean bl) {

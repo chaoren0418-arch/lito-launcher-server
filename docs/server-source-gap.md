@@ -17,10 +17,10 @@
 | 集合 | 數量 |
 |---|---|
 | reference `.class` | 2554 |
-| target `.class` | 3935 |
-| 交集 | 2553 |
-| 只在 reference | 1 |
-| 只在 target | 1382 |
+| target `.class` | 4417 |
+| 交集 | 2554 |
+| 只在 reference | 0 |
+| 只在 target | 1863 |
 
 ### 只在 reference 分類計數
 
@@ -28,7 +28,7 @@
 |---|---|---|
 | Modern* | 0 | 正式 JAR 有、現行 src 標為 Modern 候選 |
 | 刻意排除 | 0 | 外層類已在 target；inner／匿名類形狀與正式 JAR 不同 |
-| 待補 | 1 | 頂層類或外層類不在 target，需補來源 |
+| 待補 | 0 | 頂層類或外層類不在 target，需補來源 |
 
 ## 已驗證／推測／待驗證
 
@@ -38,11 +38,9 @@
 
 ## 只在 reference
 
-### 待補（1）
+### 待補（0）
 
-| 類別 | 說明 |
-|---|---|
-| `local/lito381/server/NativeResurrectionMaterialAction$Target.class` | 現行用 private static method target()，不再產 Target inner class。 |
+_（無）_
 
 ### 刻意排除（0）
 
@@ -54,7 +52,7 @@ _（無）_
 
 ## 只在 target
 
-### Modern*（1332）
+### Modern*（1330）
 
 現行 `src/main` 的 Modern 候選堆疊；正式 0.6.71 JAR 不含。刻意保留在 Maven 產物（另有 `LiTo381-Server-modern.jar` classifier）。
 
@@ -372,8 +370,6 @@ local/lito381/server/ModernBattleWorldProtocol$State.class
 local/lito381/server/ModernBattleWorldProtocol.class
 local/lito381/server/ModernBotTemplate.class
 local/lito381/server/ModernBuffProtocol.class
-local/lito381/server/ModernCaptureLog$Connection.class
-local/lito381/server/ModernCaptureLog.class
 local/lito381/server/ModernCharacterArmor.class
 local/lito381/server/ModernCharacterData$InventoryItem.class
 local/lito381/server/ModernCharacterData$ItemKind.class
@@ -1393,7 +1389,7 @@ local/lito381/server/ModernWorldSpawns$Plan.class
 local/lito381/server/ModernWorldSpawns.class
 ```
 
-### 其他非 Modern（50）
+### 其他非 Modern（533）
 
 src/main 多出來、正式 JAR 沒有的輔助型別（裝備規則、競技場存在感、外觀依賴解析等）。
 
@@ -1422,6 +1418,18 @@ local/lito381/server/EquipmentRules$UnknownFacts.class
 local/lito381/server/EquipmentRules$WeaponFacts.class
 local/lito381/server/EquipmentRules.class
 local/lito381/server/LegacyJdbcNetworkDefaults.class
+local/lito381/server/NativeAcceptedAreaFreezeMutation$Group.class
+local/lito381/server/NativeAcceptedAreaFreezeMutation$Npc.class
+local/lito381/server/NativeAcceptedAreaFreezeMutation$Output.class
+local/lito381/server/NativeAcceptedAreaFreezeMutation$Player.class
+local/lito381/server/NativeAcceptedAreaFreezeMutation.class
+local/lito381/server/NativeAcceptedFreezeMutation$Batch.class
+local/lito381/server/NativeAcceptedFreezeMutation$Linked.class
+local/lito381/server/NativeAcceptedFreezeMutation$Output.class
+local/lito381/server/NativeAcceptedFreezeMutation.class
+local/lito381/server/NativeAcceptedShockMutation$Output.class
+local/lito381/server/NativeAcceptedShockMutation$Plan.class
+local/lito381/server/NativeAcceptedShockMutation.class
 local/lito381/server/NativeAppearanceDependencyResolver$1.class
 local/lito381/server/NativeAppearanceDependencyResolver$Action.class
 local/lito381/server/NativeAppearanceDependencyResolver$Binding.class
@@ -1433,8 +1441,479 @@ local/lito381/server/NativeAppearanceDependencyResolver$PlannedFrame.class
 local/lito381/server/NativeAppearanceDependencyResolver$Row.class
 local/lito381/server/NativeAppearanceDependencyResolver$State.class
 local/lito381/server/NativeAppearanceDependencyResolver.class
+local/lito381/server/NativeBattleControlledCancellation$Output.class
+local/lito381/server/NativeBattleControlledCancellation$Scope.class
+local/lito381/server/NativeBattleControlledCancellation.class
+local/lito381/server/NativeBattleTamedLifecycle$CaptureRollback.class
+local/lito381/server/NativeBattleTamedLifecycle.class
+local/lito381/server/NativeBlindSceneAction.class
+local/lito381/server/NativeBlindSourceState.class
+local/lito381/server/NativeCompanionArea.class
+local/lito381/server/NativeCompanionCombatScene.class
+local/lito381/server/NativeCompanionEarth.class
+local/lito381/server/NativeCompanionExpiry$Due.class
+local/lito381/server/NativeCompanionExpiry.class
+local/lito381/server/NativeCompanionForestArea.class
+local/lito381/server/NativeCompanionForestCancellation.class
+local/lito381/server/NativeCompanionLanding$Terrain.class
+local/lito381/server/NativeCompanionLanding.class
+local/lito381/server/NativeCompanionManaTransfer.class
+local/lito381/server/NativeCompanionNature.class
+local/lito381/server/NativeCompanionNegative.class
+local/lito381/server/NativeCompanionPlacement$Removal.class
+local/lito381/server/NativeCompanionPlacement$Scene.class
+local/lito381/server/NativeCompanionPlacement$State.class
+local/lito381/server/NativeCompanionPlacement$Transition.class
+local/lito381/server/NativeCompanionPlacement$Viewer.class
+local/lito381/server/NativeCompanionPlacement.class
+local/lito381/server/NativeCompanionProcScene.class
+local/lito381/server/NativeCompanionRefScene.class
+local/lito381/server/NativeCompanionReflectionScene.class
+local/lito381/server/NativeCompanionResurrection$Corpse.class
+local/lito381/server/NativeCompanionResurrection$NpcCorpse.class
+local/lito381/server/NativeCompanionResurrection.class
+local/lito381/server/NativeCompanionRoleIdentity$Epoch.class
+local/lito381/server/NativeCompanionRoleIdentity$Role.class
+local/lito381/server/NativeCompanionRoleIdentity.class
+local/lito381/server/NativeCompanionTargets$Death.class
+local/lito381/server/NativeCompanionTargets$Scope.class
+local/lito381/server/NativeCompanionTargets.class
+local/lito381/server/NativeCompanionWindAction.class
+local/lito381/server/NativeCompanionWindState.class
+local/lito381/server/NativeControlledNegativeMaterial.class
+local/lito381/server/NativeCreateZombieLifecycle$Stage.class
+local/lito381/server/NativeCreateZombieLifecycle.class
+local/lito381/server/NativeHpCompletionAdmission.class
+local/lito381/server/NativeNpcWeaponBreakActions.class
+local/lito381/server/NativeNpcWeaponBreakAreaActions.class
+local/lito381/server/NativeNpcWeaponBreakDamage.class
+local/lito381/server/NativePairedCastSafety.class
 local/lito381/server/NativePlayerLoadoutAdapter$Captured.class
 local/lito381/server/NativePlayerLoadoutAdapter.class
+local/lito381/server/NativeResurrectionQueueLife.class
+local/lito381/server/NativeRetiredReuseTimer$Retired.class
+local/lito381/server/NativeRetiredReuseTimer.class
+local/lito381/server/NativeSelectedPlayerIntent.class
+local/lito381/server/NativeSelectorOnlyCtrl.class
+local/lito381/server/NativeShockCompanionAction$Death.class
+local/lito381/server/NativeShockCompanionAction.class
+local/lito381/server/NativeShockPlayerAction$Linked.class
+local/lito381/server/NativeShockPlayerAction$Scope.class
+local/lito381/server/NativeShockPlayerAction.class
+local/lito381/server/NativeSkillTargetMetadata$Row.class
+local/lito381/server/NativeSkillTargetMetadata.class
+local/lito381/server/NativeSourceAcceptedPlayers$Participant.class
+local/lito381/server/NativeSourceAcceptedPlayers$Proof.class
+local/lito381/server/NativeSourceAcceptedPlayers.class
+local/lito381/server/NativeSourceAreaCasterTargets$Cursor.class
+local/lito381/server/NativeSourceAreaCasterTargets$Selection.class
+local/lito381/server/NativeSourceAreaCasterTargets.class
+local/lito381/server/NativeSourceAreaClassSelection$Cursor.class
+local/lito381/server/NativeSourceAreaClassSelection.class
+local/lito381/server/NativeSourceAreaPlayerProof.class
+local/lito381/server/NativeSourceArenaPoison$Lease.class
+local/lito381/server/NativeSourceArenaPoison$Output.class
+local/lito381/server/NativeSourceArenaPoison$Proof.class
+local/lito381/server/NativeSourceArenaPoison$Viewer.class
+local/lito381/server/NativeSourceArenaPoison.class
+local/lito381/server/NativeSourceBarrierTargets.class
+local/lito381/server/NativeSourceBatchTerminal.class
+local/lito381/server/NativeSourceCompanionClock.class
+local/lito381/server/NativeSourceCompanionElemental$Lease.class
+local/lito381/server/NativeSourceCompanionElemental.class
+local/lito381/server/NativeSourceCompanionFirstActor$View.class
+local/lito381/server/NativeSourceCompanionFirstActor.class
+local/lito381/server/NativeSourceControlledAudience$Proof.class
+local/lito381/server/NativeSourceControlledAudience.class
+local/lito381/server/NativeSourceControlledDisplay$Action.class
+local/lito381/server/NativeSourceControlledDisplay$Output.class
+local/lito381/server/NativeSourceControlledDisplay$Proof.class
+local/lito381/server/NativeSourceControlledDisplay$Target.class
+local/lito381/server/NativeSourceControlledDisplay.class
+local/lito381/server/NativeSourceControlledHealing$Frozen.class
+local/lito381/server/NativeSourceControlledHealing$Output.class
+local/lito381/server/NativeSourceControlledHealing$Scope.class
+local/lito381/server/NativeSourceControlledHealing.class
+local/lito381/server/NativeSourceControlledNegativeFinal$Scope.class
+local/lito381/server/NativeSourceControlledNegativeFinal$Value.class
+local/lito381/server/NativeSourceControlledNegativeFinal.class
+local/lito381/server/NativeSourceControlledRoleFrame.class
+local/lito381/server/NativeSourceCubeClock$Phase.class
+local/lito381/server/NativeSourceCubeClock.class
+local/lito381/server/NativeSourceCubeNpc$Commit.class
+local/lito381/server/NativeSourceCubeNpc$Effect.class
+local/lito381/server/NativeSourceCubeNpc$Output.class
+local/lito381/server/NativeSourceCubeNpc$Spawn.class
+local/lito381/server/NativeSourceCubeNpc.class
+local/lito381/server/NativeSourceCubeNpcLease.class
+local/lito381/server/NativeSourceCubeNpcQueue$Ticket.class
+local/lito381/server/NativeSourceCubeNpcQueue.class
+local/lito381/server/NativeSourceCubeOrigin$Creator.class
+local/lito381/server/NativeSourceCubeOrigin$Entity.class
+local/lito381/server/NativeSourceCubeOrigin$Event.class
+local/lito381/server/NativeSourceCubeOrigin$Lease.class
+local/lito381/server/NativeSourceCubeOrigin$Scan.class
+local/lito381/server/NativeSourceCubeOrigin$Scene.class
+local/lito381/server/NativeSourceCubeOrigin$Target.class
+local/lito381/server/NativeSourceCubeOrigin.class
+local/lito381/server/NativeSourceCubePlacement$Draft.class
+local/lito381/server/NativeSourceCubePlacement.class
+local/lito381/server/NativeSourceCubePlayer$Effect.class
+local/lito381/server/NativeSourceCubePlayer$Proof.class
+local/lito381/server/NativeSourceCubePlayer$Reaction.class
+local/lito381/server/NativeSourceCubePlayer.class
+local/lito381/server/NativeSourceCubePresentation.class
+local/lito381/server/NativeSourceCubeRelation.class
+local/lito381/server/NativeSourceCubeRemainder$Notice.class
+local/lito381/server/NativeSourceCubeRemainder$Publication.class
+local/lito381/server/NativeSourceCubeRemainder.class
+local/lito381/server/NativeSourceCubeStatus$Emission.class
+local/lito381/server/NativeSourceCubeStatus$Link.class
+local/lito381/server/NativeSourceCubeStatus.class
+local/lito381/server/NativeSourceCubeTemplate$Presentation.class
+local/lito381/server/NativeSourceCubeTemplate$Template.class
+local/lito381/server/NativeSourceCubeTemplate.class
+local/lito381/server/NativeSourceCubeVisibility$Cache.class
+local/lito381/server/NativeSourceCubeVisibility$Rebuild.class
+local/lito381/server/NativeSourceCubeVisibility$Work.class
+local/lito381/server/NativeSourceCubeVisibility.class
+local/lito381/server/NativeSourceDamageCapacity.class
+local/lito381/server/NativeSourceDamageDisplay$Actor.class
+local/lito381/server/NativeSourceDamageDisplay$Job.class
+local/lito381/server/NativeSourceDamageDisplay$Jobs.class
+local/lito381/server/NativeSourceDamageDisplay$Plan.class
+local/lito381/server/NativeSourceDamageDisplay.class
+local/lito381/server/NativeSourceDamageHealingSelection$Cursor.class
+local/lito381/server/NativeSourceDamageHealingSelection.class
+local/lito381/server/NativeSourceDisplayPlan$Effect.class
+local/lito381/server/NativeSourceDisplayPlan$Settings.class
+local/lito381/server/NativeSourceDisplayPlan.class
+local/lito381/server/NativeSourceDollAccepted$Pending.class
+local/lito381/server/NativeSourceDollAccepted.class
+local/lito381/server/NativeSourceDollAction$Action.class
+local/lito381/server/NativeSourceDollAction$Stamp.class
+local/lito381/server/NativeSourceDollAction.class
+local/lito381/server/NativeSourceDollAudience$Audience.class
+local/lito381/server/NativeSourceDollAudience$Life.class
+local/lito381/server/NativeSourceDollAudience.class
+local/lito381/server/NativeSourceDollCommit$NpcProof.class
+local/lito381/server/NativeSourceDollCommit$PreVisual.class
+local/lito381/server/NativeSourceDollCommit.class
+local/lito381/server/NativeSourceDollDefense$Output.class
+local/lito381/server/NativeSourceDollDefense$Proof.class
+local/lito381/server/NativeSourceDollDefense$Receiver.class
+local/lito381/server/NativeSourceDollDefense$Snapshot.class
+local/lito381/server/NativeSourceDollDefense.class
+local/lito381/server/NativeSourceDollDefenseAudience.class
+local/lito381/server/NativeSourceDollDetachedOutput.class
+local/lito381/server/NativeSourceDollNpc$Scope.class
+local/lito381/server/NativeSourceDollNpc.class
+local/lito381/server/NativeSourceDollOutput$Output.class
+local/lito381/server/NativeSourceDollOutput$Proof.class
+local/lito381/server/NativeSourceDollOutput$Receiver.class
+local/lito381/server/NativeSourceDollOutput$Snapshot.class
+local/lito381/server/NativeSourceDollOutput$Speed.class
+local/lito381/server/NativeSourceDollOutput.class
+local/lito381/server/NativeSourceDollPassive$Choice.class
+local/lito381/server/NativeSourceDollPassive.class
+local/lito381/server/NativeSourceDollSkillData$Row.class
+local/lito381/server/NativeSourceDollSkillData.class
+local/lito381/server/NativeSourceDollSkills$View.class
+local/lito381/server/NativeSourceDollSkills.class
+local/lito381/server/NativeSourceDollSlow.class
+local/lito381/server/NativeSourceDollSlowWire.class
+local/lito381/server/NativeSourceElementAudience$Audience.class
+local/lito381/server/NativeSourceElementAudience$Receiver.class
+local/lito381/server/NativeSourceElementAudience.class
+local/lito381/server/NativeSourceElementTransport$Inherited.class
+local/lito381/server/NativeSourceElementTransport.class
+local/lito381/server/NativeSourceEquipmentColumns.class
+local/lito381/server/NativeSourceEquipmentFinalOutput$First.class
+local/lito381/server/NativeSourceEquipmentFinalOutput.class
+local/lito381/server/NativeSourceEquipmentOutput$Detached.class
+local/lito381/server/NativeSourceEquipmentOutput$Link.class
+local/lito381/server/NativeSourceEquipmentOutput$Output.class
+local/lito381/server/NativeSourceEquipmentOutput$Scope.class
+local/lito381/server/NativeSourceEquipmentOutput$Viewer.class
+local/lito381/server/NativeSourceEquipmentOutput.class
+local/lito381/server/NativeSourceEquipmentProcLife$Proof.class
+local/lito381/server/NativeSourceEquipmentProcLife.class
+local/lito381/server/NativeSourceFatalityDamage$Output.class
+local/lito381/server/NativeSourceFatalityDamage$Proof.class
+local/lito381/server/NativeSourceFatalityDamage$Root.class
+local/lito381/server/NativeSourceFatalityDamage.class
+local/lito381/server/NativeSourceFirstPlayers$Builder.class
+local/lito381/server/NativeSourceFirstPlayers$Snapshot.class
+local/lito381/server/NativeSourceFirstPlayers.class
+local/lito381/server/NativeSourceFreezeTarget.class
+local/lito381/server/NativeSourceGroundNpc$Audience.class
+local/lito381/server/NativeSourceGroundNpc$Proof.class
+local/lito381/server/NativeSourceGroundNpc$Selected.class
+local/lito381/server/NativeSourceGroundNpc.class
+local/lito381/server/NativeSourceGroundOrigin$Actor.class
+local/lito381/server/NativeSourceGroundOrigin$Creator.class
+local/lito381/server/NativeSourceGroundOrigin$Entity.class
+local/lito381/server/NativeSourceGroundOrigin$PulseProof.class
+local/lito381/server/NativeSourceGroundOrigin$Scene.class
+local/lito381/server/NativeSourceGroundOrigin.class
+local/lito381/server/NativeSourceGroundPlacement$Draft.class
+local/lito381/server/NativeSourceGroundPlacement.class
+local/lito381/server/NativeSourceGroundPlayer.class
+local/lito381/server/NativeSourceGroundQueued.class
+local/lito381/server/NativeSourceHealingCast$Cast.class
+local/lito381/server/NativeSourceHealingCast.class
+local/lito381/server/NativeSourceHealingFormula$Growth.class
+local/lito381/server/NativeSourceHealingFormula.class
+local/lito381/server/NativeSourceHealingHp$Recovery.class
+local/lito381/server/NativeSourceHealingHp.class
+local/lito381/server/NativeSourceHealingType.class
+local/lito381/server/NativeSourceHitReaction.class
+local/lito381/server/NativeSourceIcons1$Rule.class
+local/lito381/server/NativeSourceIcons1$Snapshot.class
+local/lito381/server/NativeSourceIcons1.class
+local/lito381/server/NativeSourceIcons1BraveOrigin.class
+local/lito381/server/NativeSourceIcons1Epoch$1.class
+local/lito381/server/NativeSourceIcons1Epoch$Cell.class
+local/lito381/server/NativeSourceIcons1Epoch.class
+local/lito381/server/NativeSourceIcons1Output$Output.class
+local/lito381/server/NativeSourceIcons1Output$Patience.class
+local/lito381/server/NativeSourceIcons1Output.class
+local/lito381/server/NativeSourceIcons1Policy$Columns.class
+local/lito381/server/NativeSourceIcons1Policy$Policy.class
+local/lito381/server/NativeSourceIcons1Policy.class
+local/lito381/server/NativeSourceIcons1Projection$Entry.class
+local/lito381/server/NativeSourceIcons1Projection.class
+local/lito381/server/NativeSourceIndirectPlayerProof.class
+local/lito381/server/NativeSourceKiringkuAdmission$Aim.class
+local/lito381/server/NativeSourceKiringkuAdmission.class
+local/lito381/server/NativeSourceKiringkuPresentation$Output.class
+local/lito381/server/NativeSourceKiringkuPresentation$Viewer.class
+local/lito381/server/NativeSourceKiringkuPresentation.class
+local/lito381/server/NativeSourceLightPairLife$Actor.class
+local/lito381/server/NativeSourceLightPairLife$Proof.class
+local/lito381/server/NativeSourceLightPairLife.class
+local/lito381/server/NativeSourceLightningArea.class
+local/lito381/server/NativeSourceLightningHp$Linked.class
+local/lito381/server/NativeSourceLightningHp.class
+local/lito381/server/NativeSourceLightningLifetime$Aim.class
+local/lito381/server/NativeSourceLightningLifetime$Output.class
+local/lito381/server/NativeSourceLightningLifetime.class
+local/lito381/server/NativeSourceMagicNpc$After.class
+local/lito381/server/NativeSourceMagicNpc$Npc.class
+local/lito381/server/NativeSourceMagicNpc$Snapshot.class
+local/lito381/server/NativeSourceMagicNpc.class
+local/lito381/server/NativeSourceManualScope.class
+local/lito381/server/NativeSourceMassSelfTarget.class
+local/lito381/server/NativeSourceMassSlowTargets$Aim.class
+local/lito381/server/NativeSourceMassSlowTargets$Output.class
+local/lito381/server/NativeSourceMassSlowTargets.class
+local/lito381/server/NativeSourceMassTeleportExit$Proof.class
+local/lito381/server/NativeSourceMassTeleportExit.class
+local/lito381/server/NativeSourceMaterialFirstLife.class
+local/lito381/server/NativeSourceMaterialMain.class
+local/lito381/server/NativeSourceMaterialPairGuard$Guarded.class
+local/lito381/server/NativeSourceMaterialPairGuard.class
+local/lito381/server/NativeSourceMaterialPairIngress.class
+local/lito381/server/NativeSourceMonsterHp$Aim.class
+local/lito381/server/NativeSourceMonsterHp$Cache.class
+local/lito381/server/NativeSourceMonsterHp$Viewer.class
+local/lito381/server/NativeSourceMonsterHp.class
+local/lito381/server/NativeSourceNegativeFailure.class
+local/lito381/server/NativeSourceNegativeFinalFrame$Scope.class
+local/lito381/server/NativeSourceNegativeFinalFrame$Value.class
+local/lito381/server/NativeSourceNegativeFinalFrame.class
+local/lito381/server/NativeSourceNegativePairFirst$First.class
+local/lito381/server/NativeSourceNegativePairFirst.class
+local/lito381/server/NativeSourceNegativePhase.class
+local/lito381/server/NativeSourceNegativeSelf.class
+local/lito381/server/NativeSourceNegativeTargets$Aim.class
+local/lito381/server/NativeSourceNegativeTargets$Output.class
+local/lito381/server/NativeSourceNegativeTargets.class
+local/lito381/server/NativeSourceNoneTargetRequest.class
+local/lito381/server/NativeSourceNpcActionIntervals.class
+local/lito381/server/NativeSourceNpcBaseSpeeds.class
+local/lito381/server/NativeSourceNpcDamageDisplay$Proof.class
+local/lito381/server/NativeSourceNpcDamageDisplay$Receipt.class
+local/lito381/server/NativeSourceNpcDamageDisplay.class
+local/lito381/server/NativeSourceNpcEscape.class
+local/lito381/server/NativeSourceNpcFactoryMemory.class
+local/lito381/server/NativeSourceNpcFactoryType$Stamp.class
+local/lito381/server/NativeSourceNpcFactoryType.class
+local/lito381/server/NativeSourceNpcFirstLife.class
+local/lito381/server/NativeSourceNpcFirstView$View.class
+local/lito381/server/NativeSourceNpcFirstView.class
+local/lito381/server/NativeSourceNpcHpOutput$Accepted.class
+local/lito381/server/NativeSourceNpcHpOutput$Input.class
+local/lito381/server/NativeSourceNpcHpOutput$Output.class
+local/lito381/server/NativeSourceNpcHpOutput$Viewer.class
+local/lito381/server/NativeSourceNpcHpOutput.class
+local/lito381/server/NativeSourceNpcMagicDirect$Mutation.class
+local/lito381/server/NativeSourceNpcMagicDirect.class
+local/lito381/server/NativeSourceNpcMagicEffects$After.class
+local/lito381/server/NativeSourceNpcMagicEffects$Output.class
+local/lito381/server/NativeSourceNpcMagicEffects$Source.class
+local/lito381/server/NativeSourceNpcMagicEffects.class
+local/lito381/server/NativeSourceNpcMotion$Motion.class
+local/lito381/server/NativeSourceNpcMotion$Saved.class
+local/lito381/server/NativeSourceNpcMotion.class
+local/lito381/server/NativeSourceNpcMovement.class
+local/lito381/server/NativeSourceNpcOrigins$Master.class
+local/lito381/server/NativeSourceNpcOrigins.class
+local/lito381/server/NativeSourceNpcPlayer$Origin.class
+local/lito381/server/NativeSourceNpcPlayer$Scope.class
+local/lito381/server/NativeSourceNpcPlayer.class
+local/lito381/server/NativeSourceNpcPlayerView$Builder.class
+local/lito381/server/NativeSourceNpcPlayerView.class
+local/lito381/server/NativeSourceNpcReaction.class
+local/lito381/server/NativeSourceNpcSpellTiming$Data.class
+local/lito381/server/NativeSourceNpcSpellTiming$Route.class
+local/lito381/server/NativeSourceNpcSpellTiming.class
+local/lito381/server/NativeSourceNpcTargetFailure$Cursor.class
+local/lito381/server/NativeSourceNpcTargetFailure.class
+local/lito381/server/NativeSourceNpcTickView.class
+local/lito381/server/NativeSourceNpcViewAction.class
+local/lito381/server/NativeSourceObjectTargetRequest.class
+local/lito381/server/NativeSourceOtherControls$Snapshot.class
+local/lito381/server/NativeSourceOtherControls.class
+local/lito381/server/NativeSourceOuterPair.class
+local/lito381/server/NativeSourcePairAdmission.class
+local/lito381/server/NativeSourcePairThird.class
+local/lito381/server/NativeSourcePairedScope.class
+local/lito381/server/NativeSourcePendingAdmission.class
+local/lito381/server/NativeSourcePhysicalAudience$Audience.class
+local/lito381/server/NativeSourcePhysicalAudience$Receiver.class
+local/lito381/server/NativeSourcePhysicalAudience.class
+local/lito381/server/NativeSourcePhysicalNpc$Commit.class
+local/lito381/server/NativeSourcePhysicalNpc$Origin.class
+local/lito381/server/NativeSourcePhysicalNpc$Output.class
+local/lito381/server/NativeSourcePhysicalNpc$Spawn.class
+local/lito381/server/NativeSourcePhysicalNpc$Ticket.class
+local/lito381/server/NativeSourcePhysicalNpc.class
+local/lito381/server/NativeSourcePlayerFactories.class
+local/lito381/server/NativeSourcePoisonAudience.class
+local/lito381/server/NativeSourcePoisonNpc$Commit.class
+local/lito381/server/NativeSourcePoisonNpc$Origin.class
+local/lito381/server/NativeSourcePoisonNpc$Output.class
+local/lito381/server/NativeSourcePoisonNpc$Spawn.class
+local/lito381/server/NativeSourcePoisonNpc$Status.class
+local/lito381/server/NativeSourcePoisonNpc$Ticket.class
+local/lito381/server/NativeSourcePoisonNpc.class
+local/lito381/server/NativeSourcePoisonPc.class
+local/lito381/server/NativeSourceProc68FirstQueue.class
+local/lito381/server/NativeSourceProc68Graphics$Actors.class
+local/lito381/server/NativeSourceProc68Graphics$Output.class
+local/lito381/server/NativeSourceProc68Graphics.class
+local/lito381/server/NativeSourceProc68Icon$Output.class
+local/lito381/server/NativeSourceProc68Icon$Proof.class
+local/lito381/server/NativeSourceProc68Icon.class
+local/lito381/server/NativeSourceProcScalarExtras.class
+local/lito381/server/NativeSourceProcScalarOutput$Output.class
+local/lito381/server/NativeSourceProcScalarOutput$Target.class
+local/lito381/server/NativeSourceProcScalarOutput.class
+local/lito381/server/NativeSourceProcScalarSkills.class
+local/lito381/server/NativeSourceProcTimedRefresh.class
+local/lito381/server/NativeSourceRawAudience$Proof.class
+local/lito381/server/NativeSourceRawAudience.class
+local/lito381/server/NativeSourceRawDamage$Action.class
+local/lito381/server/NativeSourceRawDamage$Guard.class
+local/lito381/server/NativeSourceRawDamage$Member.class
+local/lito381/server/NativeSourceRawDamage$Npc.class
+local/lito381/server/NativeSourceRawDamage$Output.class
+local/lito381/server/NativeSourceRawDamage.class
+local/lito381/server/NativeSourceRawNpc$Admission.class
+local/lito381/server/NativeSourceRawNpc$Source.class
+local/lito381/server/NativeSourceRawNpc.class
+local/lito381/server/NativeSourceRefRawNpc.class
+local/lito381/server/NativeSourceRemainingAreaLists$Cursor.class
+local/lito381/server/NativeSourceRemainingAreaLists$FrozenCursor.class
+local/lito381/server/NativeSourceRemainingAreaLists$Targets.class
+local/lito381/server/NativeSourceRemainingAreaLists.class
+local/lito381/server/NativeSourceRemainingMaterials$Aim.class
+local/lito381/server/NativeSourceRemainingMaterials$Output.class
+local/lito381/server/NativeSourceRemainingMaterials.class
+local/lito381/server/NativeSourceSelfFinalFrame$First.class
+local/lito381/server/NativeSourceSelfFinalFrame$Output.class
+local/lito381/server/NativeSourceSelfFinalFrame$Participant.class
+local/lito381/server/NativeSourceSelfFinalFrame$Scope.class
+local/lito381/server/NativeSourceSelfFinalFrame$SelfTask.class
+local/lito381/server/NativeSourceSelfFinalFrame.class
+local/lito381/server/NativeSourceSignedRecovery$Intent.class
+local/lito381/server/NativeSourceSignedRecovery.class
+local/lito381/server/NativeSourceSingleNpc$Output.class
+local/lito381/server/NativeSourceSingleNpc$Single.class
+local/lito381/server/NativeSourceSingleNpc.class
+local/lito381/server/NativeSourceSkillDefaults.class
+local/lito381/server/NativeSourceSleepConstruction$Cursor.class
+local/lito381/server/NativeSourceSleepConstruction$Frozen.class
+local/lito381/server/NativeSourceSleepConstruction$Selection.class
+local/lito381/server/NativeSourceSleepConstruction.class
+local/lito381/server/NativeSourceSlowFailureMetadata.class
+local/lito381/server/NativeSourceSpecialNpc$Bone.class
+local/lito381/server/NativeSourceSpecialNpc$Output.class
+local/lito381/server/NativeSourceSpecialNpc$Stage.class
+local/lito381/server/NativeSourceSpecialNpc.class
+local/lito381/server/NativeSourceTargetConstruction.class
+local/lito381/server/NativeSourceTargetIconBatch$Work.class
+local/lito381/server/NativeSourceTargetIconBatch.class
+local/lito381/server/NativeSourceTargetLos.class
+local/lito381/server/NativeSourceTargetMask.class
+local/lito381/server/NativeSourceTargetNegativeLife$Proof.class
+local/lito381/server/NativeSourceTargetNegativeLife.class
+local/lito381/server/NativeSourceTargetNegativeReserve.class
+local/lito381/server/NativeSourceTargetNpc$Mutation.class
+local/lito381/server/NativeSourceTargetNpc$Output.class
+local/lito381/server/NativeSourceTargetNpc$Status.class
+local/lito381/server/NativeSourceTargetNpc.class
+local/lito381/server/NativeSourceVisibilityRange.class
+local/lito381/server/NativeSourceWandReaction.class
+local/lito381/server/NativeSourceWeaponBuffTargets$Aim.class
+local/lito381/server/NativeSourceWeaponBuffTargets$Output.class
+local/lito381/server/NativeSourceWeaponBuffTargets.class
+local/lito381/server/NativeSourceWeaponCounterMagic.class
+local/lito381/server/NativeSourceWeaponFinalFrame$Npc.class
+local/lito381/server/NativeSourceWeaponFinalFrame$Output.class
+local/lito381/server/NativeSourceWeaponFinalFrame$Participant.class
+local/lito381/server/NativeSourceWeaponFinalFrame$Proof.class
+local/lito381/server/NativeSourceWeaponFinalFrame.class
+local/lito381/server/NativeSourceWeaponPlayerCounter.class
+local/lito381/server/NativeSourceWeaponTargetLife.class
+local/lito381/server/NativeSourceWindTargets$Aim.class
+local/lito381/server/NativeSourceWindTargets$Output.class
+local/lito381/server/NativeSourceWindTargets.class
+local/lito381/server/NativeStaticCancellationReplacement$Allocation.class
+local/lito381/server/NativeStaticCancellationReplacement$Retired.class
+local/lito381/server/NativeStaticCancellationReplacement.class
+local/lito381/server/NativeStaticNpcMotion$1.class
+local/lito381/server/NativeStaticNpcMotion$Epoch.class
+local/lito381/server/NativeStaticNpcMotion$Motion.class
+local/lito381/server/NativeStaticNpcMotion$Pose.class
+local/lito381/server/NativeStaticNpcMotion$Scene.class
+local/lito381/server/NativeStaticNpcMotion$State.class
+local/lito381/server/NativeStaticNpcMotion$Terrain.class
+local/lito381/server/NativeStaticNpcMotion$View.class
+local/lito381/server/NativeStaticNpcMotion.class
+local/lito381/server/NativeStaticNpcRespawn$Plan.class
+local/lito381/server/NativeStaticNpcRespawn$Respawn.class
+local/lito381/server/NativeStaticNpcRespawn.class
+local/lito381/server/NativeStaticNpcScene$Actor.class
+local/lito381/server/NativeStaticNpcScene$Key.class
+local/lito381/server/NativeStaticNpcScene$State.class
+local/lito381/server/NativeStaticNpcScene.class
+local/lito381/server/NativeStaticSpawnMetadata$Row.class
+local/lito381/server/NativeStaticSpawnMetadata.class
+local/lito381/server/NativeSummonGroundTransfer$Stage.class
+local/lito381/server/NativeSummonGroundTransfer.class
+local/lito381/server/NativeSummonOwnerLifecycle.class
+local/lito381/server/NativeSummonRetirement$Work.class
+local/lito381/server/NativeSummonRetirement.class
+local/lito381/server/NativeSummonTerminalLifecycle.class
+local/lito381/server/NativeTamedCaptureLifecycle$Preparation.class
+local/lito381/server/NativeTamedCaptureLifecycle.class
+local/lito381/server/NativeTamedWorldLifecycle$Respawn.class
+local/lito381/server/NativeTamedWorldLifecycle.class
+local/lito381/server/NativeWeaponBreakBattleCompanion.class
+local/lito381/server/NativeWeaponBreakTargetLifecycle.class
+local/lito381/server/NativeWindSourceTargets.class
 local/lito381/server/TournamentPresence$ChannelSnapshot.class
 local/lito381/server/TournamentPresence$CharacterKey.class
 local/lito381/server/TournamentPresence$DeletionGeneration.class
@@ -1449,12 +1928,3 @@ local/lito381/server/TournamentPresence.class
 local/lito381/server/TournamentRoomPolicy$1.class
 local/lito381/server/TournamentRoomPolicy.class
 ```
-
-## #78 A-land 來源專有搬移
-
-新增來源專有 2 個，原因：CaptureLog 對齊正式。
-
-- `local/lito381/server/ModernCaptureLog.class`
-- `local/lito381/server/ModernCaptureLog$Connection.class`
-
-同時移除舊 `CaptureLog$Connection`，所以相對 e34dfb8 的 ONLY_LEFT 淨增 1。Main／SourceLogin／NativeServerLifetime 保持正式 CaptureLog 介面，ClientSession 的相容建構子委派正式記錄格式；明確使用 ModernCaptureLog 的入口保留擴充欄位。B-land 後依 #78 裁定檢查是否仍有呼叫者。

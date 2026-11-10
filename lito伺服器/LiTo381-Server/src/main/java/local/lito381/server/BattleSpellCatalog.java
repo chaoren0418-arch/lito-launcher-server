@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
 import java.util.Map;
@@ -896,7 +897,7 @@ final class BattleSpellCatalog {
             // 55/45/35 + INT*0.30 + MagicHit - MR*0.05; bosses are immune.
             WIND_SHACKLE, new WindShackleSpell(
                     WIND_SHACKLE, 20, 6, 21, 6, 19, 1_799,
-                    50, 100, 0, 600, 16, -1, 8, -1, 3,
+                    50, 100, 0, 600, 16, -1, 8, 0, 3,
                     ATTRIBUTE_WIND, 1, 64, 1_001, 0, 280,
                     55, 45, 35, 0.30D, 0.05D,
                     false, true, 0, false,
@@ -3443,6 +3444,9 @@ final class BattleSpellCatalog {
 
     /** Exact values from 380_db.sql table 角色_智力成長. */
     static int healDiceBonus(int intelligence) {
+        if (NativeSourceHealingFormula.enabled()) {
+            return NativeSourceHealingFormula.bonus(intelligence);
+        }
         if (intelligence < 1 || intelligence > 127) {
             throw new IllegalArgumentException("intelligence outside native resource table");
         }
@@ -3482,6 +3486,30 @@ final class BattleSpellCatalog {
                         int effectGfx, int mpCost, int reuseDelayMillis,
                         int maximumRange, int baseDiceCount, int dieSides,
                         int attribute, int happenMessage, int failureMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "HealingSpell", "actionId");
+        }
+
+        public int baseDiceCount() {
+            return ResourceDatabase.value(this.baseDiceCount, this.skillId, "HealingSpell", "baseDiceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "HealingSpell", "dieSides");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "HealingSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "HealingSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "HealingSpell", "reuseDelayMillis");
+        }
+
         HealingSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3497,10 +3525,13 @@ final class BattleSpellCatalog {
         }
 
         int diceCount(int intelligence) {
-            return Math.max(0, baseDiceCount + healDiceBonus(intelligence));
+            return Math.max(0, ResourceDatabase.value(this.baseDiceCount, this.skillId, "HealingSpell", "baseDiceCount") + healDiceBonus(intelligence));
         }
 
         int applyLawfulRevision(int rolledHealing, long lawful) {
+            if (NativeSourceHealingFormula.enabled()) {
+                return NativeSourceHealingFormula.lawful(rolledHealing, lawful);
+            }
             if (rolledHealing < 0 || lawful < -32768 || lawful > 32767) {
                 throw new IllegalArgumentException("invalid native healing inputs");
             }
@@ -3515,7 +3546,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid native healing MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "HealingSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 23 && skillId <= 80) result--;
@@ -3527,17 +3558,20 @@ final class BattleSpellCatalog {
                     && (skillId == BASIC_HEAL || skillId == EXTRA_HEAL)) {
                 result >>= 1;
             }
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "HealingSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
 
-        /** Retained TYPE_HEAL target rule: undead1 is damaged; undead3 is unaffected. */
         int npcHpDelta(int undeadType, int healingAmount) {
-            if (undeadType < 0 || undeadType > 3 || healingAmount < 0) {
+            if (undeadType < 0 || undeadType > 3) {
                 throw new IllegalArgumentException("invalid native healing target inputs");
             }
-            if (undeadType == 1) return -healingAmount;
-            if (undeadType == 3) return 0;
+            if (undeadType == 1) {
+                return -healingAmount;
+            }
+            if (undeadType == 3) {
+                return 0;
+            }
             return healingAmount;
         }
     }
@@ -3546,6 +3580,34 @@ final class BattleSpellCatalog {
                              int effectGfx, int mpCost, int hpCost,
                              int reuseDelayMillis, int area,
                              int baseDiceCount, int dieSides, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "GroupHealingSpell", "actionId");
+        }
+
+        public int baseDiceCount() {
+            return ResourceDatabase.value(this.baseDiceCount, this.skillId, "GroupHealingSpell", "baseDiceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "GroupHealingSpell", "dieSides");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "GroupHealingSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "GroupHealingSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "GroupHealingSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "GroupHealingSpell", "reuseDelayMillis");
+        }
+
         GroupHealingSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3559,25 +3621,28 @@ final class BattleSpellCatalog {
         }
 
         int diceCount(int intelligence) {
-            return Math.max(0, baseDiceCount + healDiceBonus(intelligence));
+            return Math.max(0, ResourceDatabase.value(this.baseDiceCount, this.skillId, "GroupHealingSpell", "baseDiceCount") + healDiceBonus(intelligence));
         }
 
         int rollHealing(int intelligence, IntUnaryOperator dieRoller) {
             if (dieRoller == null) {
                 throw new IllegalArgumentException("missing native healing die roller");
             }
-            int result = 0;
-            for (int index = 0; index < diceCount(intelligence); index++) {
-                int roll = dieRoller.applyAsInt(dieSides);
-                if (roll < 1 || roll > dieSides) {
+            int n2 = 0;
+            for (int i = 0; i < this.diceCount(intelligence); ++i) {
+                int n3 = dieRoller.applyAsInt(ResourceDatabase.value(this.dieSides, this.skillId, "GroupHealingSpell", "dieSides"));
+                if (n3 < 1 || n3 > ResourceDatabase.value(this.dieSides, this.skillId, "GroupHealingSpell", "dieSides")) {
                     throw new IllegalArgumentException("invalid native healing die roll");
                 }
-                result = Math.addExact(result, roll);
+                n2 = NativeSourceHealingFormula.add(n2, n3);
             }
-            return result;
+            return n2;
         }
 
         int applyLawfulRevision(int rolledHealing, long lawful) {
+            if (NativeSourceHealingFormula.enabled()) {
+                return NativeSourceHealingFormula.lawful(rolledHealing, lawful);
+            }
             if (rolledHealing < 0 || lawful < -32768 || lawful > 32767) {
                 throw new IllegalArgumentException("invalid native group-healing inputs");
             }
@@ -3591,7 +3656,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native group-healing MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "GroupHealingSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 23 && skillId <= 80) result--;
@@ -3599,7 +3664,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "GroupHealingSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -3610,6 +3675,30 @@ final class BattleSpellCatalog {
             int targetTo, int area, int baseDiceCount, int dieSides,
             int attribute, int type, int nativeId,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "NaturesBlessingSpell", "actionId");
+        }
+
+        public int baseDiceCount() {
+            return ResourceDatabase.value(this.baseDiceCount, this.skillId, "NaturesBlessingSpell", "baseDiceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "NaturesBlessingSpell", "dieSides");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "NaturesBlessingSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "NaturesBlessingSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "NaturesBlessingSpell", "reuseDelayMillis");
+        }
+
         NaturesBlessingSpell {
             if (skillId != NATURES_BLESSING
                     || skillId != (row << 3) + column + 1
@@ -3626,27 +3715,28 @@ final class BattleSpellCatalog {
         }
 
         int diceCount(int intelligence) {
-            return Math.max(0, baseDiceCount + healDiceBonus(intelligence));
+            return Math.max(0, ResourceDatabase.value(this.baseDiceCount, this.skillId, "NaturesBlessingSpell", "baseDiceCount") + healDiceBonus(intelligence));
         }
 
         int rollHealing(int intelligence, IntUnaryOperator dieRoller) {
             if (dieRoller == null) {
-                throw new IllegalArgumentException(
-                        "missing native Nature's Blessing die roller");
+                throw new IllegalArgumentException("missing native Nature's Blessing die roller");
             }
-            int result = 0;
-            for (int index = 0; index < diceCount(intelligence); index++) {
-                int roll = dieRoller.applyAsInt(dieSides);
-                if (roll < 1 || roll > dieSides) {
-                    throw new IllegalArgumentException(
-                            "invalid native Nature's Blessing die roll");
+            int n2 = 0;
+            for (int i = 0; i < this.diceCount(intelligence); ++i) {
+                int n3 = dieRoller.applyAsInt(ResourceDatabase.value(this.dieSides, this.skillId, "NaturesBlessingSpell", "dieSides"));
+                if (n3 < 1 || n3 > ResourceDatabase.value(this.dieSides, this.skillId, "NaturesBlessingSpell", "dieSides")) {
+                    throw new IllegalArgumentException("invalid native Nature's Blessing die roll");
                 }
-                result = Math.addExact(result, roll);
+                n2 = NativeSourceHealingFormula.add(n2, n3);
             }
-            return result;
+            return n2;
         }
 
         int applyLawfulRevision(int rolledHealing, long lawful) {
+            if (NativeSourceHealingFormula.enabled()) {
+                return NativeSourceHealingFormula.lawful(rolledHealing, lawful);
+            }
             if (rolledHealing < 0 || lawful < -32768 || lawful > 32767) {
                 throw new IllegalArgumentException(
                         "invalid native Nature's Blessing healing inputs");
@@ -3660,7 +3750,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Nature's Blessing original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "NaturesBlessingSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -3668,6 +3758,26 @@ final class BattleSpellCatalog {
                       int effectGfx, int mpCost, int reuseDelayMillis,
                       int durationSeconds, int lightRange, int soundId,
                       String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "LightSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "LightSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "LightSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "LightSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "LightSpell", "reuseDelayMillis");
+        }
+
         LightSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3694,6 +3804,38 @@ final class BattleSpellCatalog {
                        int reuseDelayMillis, int durationSeconds,
                        long itemConsumeId, int itemConsumeCount,
                        WeightEffect effect, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WeightSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WeightSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WeightSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "WeightSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "WeightSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WeightSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WeightSpell", "reuseDelayMillis");
+        }
+
         WeightSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3716,6 +3858,34 @@ final class BattleSpellCatalog {
                        boolean originalIntelligenceReduction,
                        Targeting targeting, int happenMessage, int stopMessage,
                        int failureMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ShieldSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ShieldSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ShieldSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "ShieldSpell", "hpCost");
+        }
+
+        public int iconType() {
+            return ResourceDatabase.value(this.iconType, this.skillId, "ShieldSpell", "iconType");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ShieldSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ShieldSpell", "reuseDelayMillis");
+        }
+
         ShieldSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3739,7 +3909,7 @@ final class BattleSpellCatalog {
                         "invalid native shield-spell original INT reduction");
             }
             return originalIntelligenceReduction
-                    ? Math.max(0, mpCost - originalReduction) : mpCost;
+                    ? Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ShieldSpell", "mpCost") - originalReduction) : ResourceDatabase.value(this.mpCost, this.skillId, "ShieldSpell", "mpCost");
         }
     }
 
@@ -3748,6 +3918,38 @@ final class BattleSpellCatalog {
                              int durationSeconds, long itemConsumeId,
                              int itemConsumeCount, int consumeEffectGfx,
                              String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CounterMagicSpell", "actionId");
+        }
+
+        public int consumeEffectGfx() {
+            return ResourceDatabase.value(this.consumeEffectGfx, this.skillId, "CounterMagicSpell", "consumeEffectGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CounterMagicSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CounterMagicSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CounterMagicSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CounterMagicSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CounterMagicSpell", "reuseDelayMillis");
+        }
+
         CounterMagicSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3766,7 +3968,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native Counter Magic original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "CounterMagicSpell", "mpCost") - originalReduction);
         }
 
     }
@@ -3775,6 +3977,34 @@ final class BattleSpellCatalog {
                                 int effectGfx, int mpCost, int reuseDelayMillis,
                                 int durationSeconds, long itemConsumeId,
                                 int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AbsoluteBarrierSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AbsoluteBarrierSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AbsoluteBarrierSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "AbsoluteBarrierSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AbsoluteBarrierSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AbsoluteBarrierSpell", "reuseDelayMillis");
+        }
+
         AbsoluteBarrierSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -3793,7 +4023,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native Absolute Barrier MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "AbsoluteBarrierSpell", "mpCost");
             if (intelligence > 12) result--;
             if (intelligence > 13) result--;
             if (intelligence > 14) result--;
@@ -3810,6 +4040,26 @@ final class BattleSpellCatalog {
                               int durationSeconds, int maximumRange, int targetTo,
                               int baseMaximumDivisor, int failureMessage,
                               String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AdvanceSpiritSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AdvanceSpiritSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AdvanceSpiritSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AdvanceSpiritSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AdvanceSpiritSpell", "reuseDelayMillis");
+        }
+
         AdvanceSpiritSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != ADVANCE_SPIRIT
@@ -3854,7 +4104,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native Advance Spirit MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "AdvanceSpiritSpell", "mpCost");
             if (intelligence > 12) result--;
             if (intelligence > 13) result--;
             if (intelligence > 14) result--;
@@ -3877,6 +4127,42 @@ final class BattleSpellCatalog {
             int baseStunSeconds, int randomStunSeconds,
             int firstRequiredWalkAction, int secondRequiredWalkAction,
             int failureMessage, String key) {
+        public int baseDamage() {
+            return ResourceDatabase.value(this.baseDamage, this.skillId, "ShockStunSpell", "baseDamage");
+        }
+
+        public int baseStunSeconds() {
+            return ResourceDatabase.value(this.baseStunSeconds, this.skillId, "ShockStunSpell", "baseStunSeconds");
+        }
+
+        public int diceCount() {
+            return ResourceDatabase.value(this.diceCount, this.skillId, "ShockStunSpell", "diceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "ShockStunSpell", "dieSides");
+        }
+
+        public int effectNpcGfx() {
+            return ResourceDatabase.value(this.effectNpcGfx, this.skillId, "ShockStunSpell", "effectNpcGfx");
+        }
+
+        public int impactGfx() {
+            return ResourceDatabase.value(this.impactGfx, this.skillId, "ShockStunSpell", "impactGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ShockStunSpell", "mpCost");
+        }
+
+        public int randomStunSeconds() {
+            return ResourceDatabase.value(this.randomStunSeconds, this.skillId, "ShockStunSpell", "randomStunSeconds");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ShockStunSpell", "reuseDelayMillis");
+        }
+
         ShockStunSpell {
             if (skillId != (row << 3) + column + 1 || skillId != SHOCK_STUN
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -3910,7 +4196,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Shock Stun MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ShockStunSpell", "mpCost");
             if (effectiveIntelligence > 12) {
                 result -= effectiveIntelligence - 12;
             }
@@ -3945,15 +4231,15 @@ final class BattleSpellCatalog {
             if (oneBasedRoll == null) {
                 throw new IllegalArgumentException("Shock Stun duration roll is required");
             }
-            int random = oneBasedRoll.applyAsInt(randomStunSeconds + 1) - 1;
-            if (random < 0 || random > randomStunSeconds) {
+            int n = oneBasedRoll.applyAsInt(ResourceDatabase.value(this.randomStunSeconds, this.skillId, "ShockStunSpell", "randomStunSeconds") + 1) - 1;
+            if (n < 0 || n > ResourceDatabase.value(this.randomStunSeconds, this.skillId, "ShockStunSpell", "randomStunSeconds")) {
                 throw new IllegalArgumentException("Shock Stun duration roll is outside range");
             }
-            return baseStunSeconds + random;
+            return ResourceDatabase.value(this.baseStunSeconds, this.skillId, "ShockStunSpell", "baseStunSeconds") + n;
         }
 
         int maximumStunSeconds() {
-            return baseStunSeconds + randomStunSeconds;
+            return ResourceDatabase.value(this.baseStunSeconds, this.skillId, "ShockStunSpell", "baseStunSeconds") + ResourceDatabase.value(this.randomStunSeconds, this.skillId, "ShockStunSpell", "randomStunSeconds");
         }
     }
 
@@ -3964,6 +4250,38 @@ final class BattleSpellCatalog {
             int probabilityHigh, int probabilityEqual, int probabilityLow,
             int bossModifier, long itemConsumeId, int itemConsumeCount,
             int failureMessage, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ArmorBreakSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ArmorBreakSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ArmorBreakSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "ArmorBreakSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ArmorBreakSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ArmorBreakSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ArmorBreakSpell", "reuseDelayMillis");
+        }
+
         ArmorBreakSpell {
             if (skillId != (row << 3) + column + 1 || skillId != ARMOR_BREAK
                     || row != 13 || column != 7 || actionId != 19
@@ -3984,7 +4302,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Armor Break MP inputs");
             }
-            return Math.max(0, Math.max(mpCost, 1) - originalReduction);
+            return Math.max(0, Math.max(ResourceDatabase.value(this.mpCost, this.skillId, "ArmorBreakSpell", "mpCost"), 1) - originalReduction);
         }
 
         int probability(int casterLevel, int targetLevel, boolean bossImmune) {
@@ -4001,6 +4319,30 @@ final class BattleSpellCatalog {
             int levelThreshold, int levelDivisor,
             int playerPhysicalBaseReduction, int otherBaseReduction,
             String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ReductionArmorSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ReductionArmorSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ReductionArmorSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "ReductionArmorSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ReductionArmorSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ReductionArmorSpell", "reuseDelayMillis");
+        }
+
         ReductionArmorSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != REDUCTION_ARMOR
@@ -4024,7 +4366,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Reduction Armor MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ReductionArmorSpell", "mpCost");
             if (effectiveIntelligence > 12) {
                 result -= effectiveIntelligence - 12;
             }
@@ -4057,6 +4399,30 @@ final class BattleSpellCatalog {
             int mpCost, int hpCost, int reuseDelayMillis, int durationSeconds,
             int armorClassModifier, int meleeHitModifier,
             int weaponDamageChance, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BounceAttackSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "BounceAttackSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BounceAttackSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "BounceAttackSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BounceAttackSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BounceAttackSpell", "reuseDelayMillis");
+        }
+
         BounceAttackSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != BOUNCE_ATTACK
@@ -4080,7 +4446,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Bounce Attack MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "BounceAttackSpell", "mpCost");
             if (effectiveIntelligence > 12) result -= effectiveIntelligence - 12;
             result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
@@ -4091,6 +4457,30 @@ final class BattleSpellCatalog {
             int skillId, int row, int column, int actionId, int effectGfx,
             int mpCost, int hpCost, int reuseDelayMillis, int durationSeconds,
             int evasionRateModifier, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "SolidCarriageSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "SolidCarriageSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "SolidCarriageSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "SolidCarriageSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "SolidCarriageSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "SolidCarriageSpell", "reuseDelayMillis");
+        }
+
         SolidCarriageSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != SOLID_CARRIAGE
@@ -4110,7 +4500,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Solid Carriage MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "SolidCarriageSpell", "mpCost");
             if (effectiveIntelligence > 12) result -= effectiveIntelligence - 12;
             result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
@@ -4126,6 +4516,34 @@ final class BattleSpellCatalog {
             double magicResistanceMultiplier, int maximumProbability,
             int bossModifier, int triggerEffectGfx,
             double damageMultiplier, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CounterBarrierSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CounterBarrierSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CounterBarrierSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "CounterBarrierSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CounterBarrierSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CounterBarrierSpell", "reuseDelayMillis");
+        }
+
+        public int triggerEffectGfx() {
+            return ResourceDatabase.value(this.triggerEffectGfx, this.skillId, "CounterBarrierSpell", "triggerEffectGfx");
+        }
+
         CounterBarrierSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != COUNTER_BARRIER
@@ -4152,7 +4570,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Counter Barrier MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "CounterBarrierSpell", "mpCost");
             if (effectiveIntelligence > 12) result -= effectiveIntelligence - 12;
             result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
@@ -4182,11 +4600,15 @@ final class BattleSpellCatalog {
         }
 
         int reflectedSourceDamage(SourceWeaponPhysicalStats weapon) {
-            if (!supportsWeapon(weapon)) return 0;
-            int base = Math.max(0, Math.addExact(
-                    Math.addExact(weapon.damageLarge(), weapon.enchantLevel()),
-                    weapon.damageModifier()));
-            return Math.max(0, (int) ((base << 1) * damageMultiplier));
+            if (!this.supportsWeapon(weapon)) {
+                return 0;
+            }
+            int base = Math.max(0, Math.addExact(Math.addExact(weapon.damageLarge(), weapon.enchantLevel()), weapon.damageModifier()));
+            return Math.max(0, (int)((double)(base << 1) * CombatRules.doubleField(this.damageMultiplier, this.skillId, "damageMultiplier")));
+        }
+
+        public double damageMultiplier() {
+            return CombatRules.doubleField(this.damageMultiplier, this.skillId, "damageMultiplier");
         }
     }
 
@@ -4202,6 +4624,10 @@ final class BattleSpellCatalog {
             int durationSeconds, int actionId, int castGfx,
             boolean templatePresent,
             RequestShape requestShape) {
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ReservedSkillSlot", "durationSeconds");
+        }
+
         ReservedSkillSlot {
             boolean wizardGap = skillId == RESERVED_WIZARD_24
                     && row == 2 && column == 7 && skillLevel == 0
@@ -4277,6 +4703,38 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int magicResistance, int stopMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "MagicResistanceSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "MagicResistanceSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "MagicResistanceSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "MagicResistanceSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "MagicResistanceSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "MagicResistanceSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "MagicResistanceSpell", "reuseDelayMillis");
+        }
+
         MagicResistanceSpell {
             if (skillId != RESIST_MAGIC
                     || skillId != (row << 3) + column + 1
@@ -4304,7 +4762,7 @@ final class BattleSpellCatalog {
             }
             // Skill 129 is outside general-magic circle reductions.  The
             // retained original-INT class reduction is still applied last.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "MagicResistanceSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4317,6 +4775,42 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int happenMessage, int stopMessage, int failureMessage,
             int manaGain, boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BodyToMindSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "BodyToMindSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BodyToMindSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "BodyToMindSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "BodyToMindSpell", "itemConsumeCount");
+        }
+
+        public int manaGain() {
+            return ResourceDatabase.value(this.manaGain, this.skillId, "BodyToMindSpell", "manaGain");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BodyToMindSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BodyToMindSpell", "reuseDelayMillis");
+        }
+
         BodyToMindSpell {
             boolean bodyToMind = skillId == BODY_TO_MIND
                     && row == 16 && column == 1 && skillLevel == 17
@@ -4355,22 +4849,21 @@ final class BattleSpellCatalog {
             if (currentHp < 0) {
                 throw new IllegalArgumentException("invalid current HP");
             }
-            return currentHp >= hpCost + 1;
+            return currentHp >= ResourceDatabase.value(this.hpCost, this.skillId, "BodyToMindSpell", "hpCost") + 1;
         }
 
         int hitPointsAfter(int currentHp) {
-            if (!hasEnoughHitPoints(currentHp)) {
-                throw new IllegalArgumentException(
-                        "Body to Mind must preserve one hit point");
+            if (!this.hasEnoughHitPoints(currentHp)) {
+                throw new IllegalArgumentException("Body to Mind must preserve one hit point");
             }
-            return currentHp - hpCost;
+            return currentHp - ResourceDatabase.value(this.hpCost, this.skillId, "BodyToMindSpell", "hpCost");
         }
 
         int manaAfter(int currentMp, int maximumMp) {
             if (currentMp < 0 || maximumMp < 0 || currentMp > maximumMp) {
                 throw new IllegalArgumentException("invalid current/maximum MP");
             }
-            return Math.min(maximumMp, currentMp + manaGain);
+            return Math.min(maximumMp, currentMp + ResourceDatabase.value(this.manaGain, this.skillId, "BodyToMindSpell", "manaGain"));
         }
     }
 
@@ -4382,6 +4875,22 @@ final class BattleSpellCatalog {
             int maximumRange, int through,
             int attribute, int type, int nativeId, int hitCount,
             boolean counterMagicBypass, String key) {
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "TripleArrowSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "TripleArrowSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "TripleArrowSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "TripleArrowSpell", "reuseDelayMillis");
+        }
+
         TripleArrowSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != TRIPLE_ARROW || row != 16 || column != 3
@@ -4405,7 +4914,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native Triple Arrow MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "TripleArrowSpell", "mpCost");
             if (intelligence > 12) result -= intelligence - 12;
             return Math.max(0, Math.max(1, result) - originalReduction);
         }
@@ -4421,6 +4930,26 @@ final class BattleSpellCatalog {
             double intelligenceMultiplier, double magicResistanceMultiplier,
             boolean includeMagicLevel, boolean includeMagicHit,
             int bossModifier, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ElementalFallDownSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ElementalFallDownSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ElementalFallDownSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ElementalFallDownSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ElementalFallDownSpell", "reuseDelayMillis");
+        }
+
         ElementalFallDownSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != ELEMENTAL_FALL_DOWN
@@ -4478,7 +5007,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Elemental Fall Down MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ElementalFallDownSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4493,6 +5022,34 @@ final class BattleSpellCatalog {
             double intelligenceMultiplier, double magicResistanceMultiplier,
             boolean includeMagicLevel, boolean includeMagicHit,
             int bossModifier, boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ReturnToNatureSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ReturnToNatureSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ReturnToNatureSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ReturnToNatureSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ReturnToNatureSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ReturnToNatureSpell", "reuseDelayMillis");
+        }
+
         ReturnToNatureSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != RETURN_TO_NATURE
@@ -4542,7 +5099,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Return to Nature MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ReturnToNatureSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4554,6 +5111,34 @@ final class BattleSpellCatalog {
             int attribute, int type, int nativeId,
             long itemConsumeId, int itemConsumeCount,
             int failureMessage, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CounterMirrorSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CounterMirrorSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CounterMirrorSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CounterMirrorSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CounterMirrorSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CounterMirrorSpell", "reuseDelayMillis");
+        }
+
         CounterMirrorSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != COUNTER_MIRROR
@@ -4578,7 +5163,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Counter Mirror MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "CounterMirrorSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4591,6 +5176,34 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int wisdomModifier, int happenMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ClearMindSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ClearMindSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ClearMindSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ClearMindSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ClearMindSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ClearMindSpell", "reuseDelayMillis");
+        }
+
         ClearMindSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != CLEAR_MIND || row != 17 || column != 0
@@ -4615,7 +5228,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Clear Mind MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ClearMindSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4628,6 +5241,34 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int resistanceModifier, int happenMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ResistElementalSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ResistElementalSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ResistElementalSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ResistElementalSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ResistElementalSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ResistElementalSpell", "reuseDelayMillis");
+        }
+
         ResistElementalSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != RESIST_ELEMENTAL || row != 17 || column != 1
@@ -4652,7 +5293,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Resist Elemental MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ResistElementalSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4665,6 +5306,34 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int resistanceModifier, int happenMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ElementalProtectionSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ElementalProtectionSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ElementalProtectionSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ElementalProtectionSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ElementalProtectionSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ElementalProtectionSpell", "reuseDelayMillis");
+        }
+
         ElementalProtectionSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != ELEMENTAL_PROTECTION
@@ -4689,7 +5358,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Elemental Protection MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ElementalProtectionSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4702,6 +5371,26 @@ final class BattleSpellCatalog {
             int meleeHitModifier, int meleeDamageModifier,
             int happenMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "FireWeaponSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "FireWeaponSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "FireWeaponSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "FireWeaponSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "FireWeaponSpell", "reuseDelayMillis");
+        }
+
         FireWeaponSpell {
             boolean fire = skillId == FIRE_WEAPON
                     && row == 18 && column == 3 && level == 19 && number == 3
@@ -4734,7 +5423,7 @@ final class BattleSpellCatalog {
             }
             // Elf skills148/163 are outside general-magic circle reductions.
             // Retained isHPMPConsume applies only the original-INT reduction.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "FireWeaponSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4746,6 +5435,26 @@ final class BattleSpellCatalog {
             int attribute, int type, int nativeId,
             int rangedHitModifier, int happenMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WindShotSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WindShotSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WindShotSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WindShotSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WindShotSpell", "reuseDelayMillis");
+        }
+
         WindShotSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != WIND_SHOT
@@ -4769,7 +5478,7 @@ final class BattleSpellCatalog {
                         "invalid Wind Shot MP inputs");
             }
             // Elf skill149 is outside the general-magic circle reductions.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "WindShotSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4781,6 +5490,26 @@ final class BattleSpellCatalog {
             int attribute, int type, int nativeId,
             int meleeDamageModifier, int happenMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "FireBlessSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "FireBlessSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "FireBlessSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "FireBlessSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "FireBlessSpell", "reuseDelayMillis");
+        }
+
         FireBlessSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != FIRE_BLESS
@@ -4804,7 +5533,7 @@ final class BattleSpellCatalog {
                         "invalid Fire Bless MP inputs");
             }
             // Elf skill155 is outside the general-magic circle reductions.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "FireBlessSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4816,6 +5545,26 @@ final class BattleSpellCatalog {
             int attribute, int type, int nativeId,
             int rangedHitModifier, int rangedDamageModifier, int happenMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "StormEyeSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "StormEyeSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "StormEyeSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "StormEyeSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "StormEyeSpell", "reuseDelayMillis");
+        }
+
         StormEyeSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != STORM_EYE
@@ -4839,7 +5588,7 @@ final class BattleSpellCatalog {
                         "invalid Storm Eye MP inputs");
             }
             // Elf skill156 is outside the general-magic circle reductions.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "StormEyeSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4852,6 +5601,26 @@ final class BattleSpellCatalog {
             int rangedHitModifier, int rangedDamageModifier,
             int happenMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "StormShotSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "StormShotSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "StormShotSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "StormShotSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "StormShotSpell", "reuseDelayMillis");
+        }
+
         StormShotSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != STORM_SHOT
@@ -4876,7 +5645,7 @@ final class BattleSpellCatalog {
                         "invalid Storm Shot MP inputs");
             }
             // Elf skill166 is outside the general-magic circle reductions.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "StormShotSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -4893,6 +5662,34 @@ final class BattleSpellCatalog {
             boolean includeMagicLevel, boolean includeMagicHit,
             int bossModifier, boolean counterMagicBypass,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WindShackleSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WindShackleSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WindShackleSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "WindShackleSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WindShackleSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WindShackleSpell", "reuseDelayMillis");
+        }
+
         WindShackleSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != WIND_SHACKLE
@@ -4901,7 +5698,7 @@ final class BattleSpellCatalog {
                     || reuseDelayMillis != 100 || secondaryReuseDelayMillis != 0
                     || clientCastClockMillis != 600 || durationSeconds != 16
                     || maximumRange != -1 || clientClickRange != 8
-                    || area != -1 || targetTo != 3
+                    || area != 0 || targetTo != 3
                     || attribute != ATTRIBUTE_WIND || type != 1
                     || nativeId != 64 || happenMessage != 1_001
                     || stopMessage != 0 || failureMessage != 280
@@ -4955,7 +5752,31 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Wind Shackle MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "WindShackleSpell", "mpCost") - originalReduction);
+        }
+
+        public int maximumRange() {
+            return NativeSkillTargetMetadata.windValue(this.maximumRange, "maximumRange");
+        }
+
+        public int area() {
+            return NativeSkillTargetMetadata.windValue(this.area, "area");
+        }
+
+        public int targetTo() {
+            return NativeSkillTargetMetadata.windValue(this.targetTo, "targetTo");
+        }
+
+        public int attribute() {
+            return NativeSkillTargetMetadata.windValue(this.attribute, "attribute");
+        }
+
+        public int type() {
+            return NativeSkillTargetMetadata.windValue(this.type, "type");
+        }
+
+        public int nativeId() {
+            return NativeSkillTargetMetadata.windValue(this.nativeId, "nativeId");
         }
     }
 
@@ -4967,6 +5788,26 @@ final class BattleSpellCatalog {
             int attribute, int type, int nativeId,
             int hpRegenModifier, int happenMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "NaturesTouchSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "NaturesTouchSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "NaturesTouchSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "NaturesTouchSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "NaturesTouchSpell", "reuseDelayMillis");
+        }
+
         NaturesTouchSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != NATURES_TOUCH
@@ -4990,7 +5831,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Nature's Touch MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "NaturesTouchSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5003,6 +5844,30 @@ final class BattleSpellCatalog {
             int armorClassModifier, int legacyIconType, int coexistGraphic,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "EarthBlessSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "EarthBlessSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "EarthBlessSpell", "effectGfx");
+        }
+
+        public int legacyIconType() {
+            return ResourceDatabase.value(this.legacyIconType, this.skillId, "EarthBlessSpell", "legacyIconType");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "EarthBlessSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "EarthBlessSpell", "reuseDelayMillis");
+        }
+
         EarthBlessSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != EARTH_BLESS
@@ -5026,7 +5891,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Earth Bless MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "EarthBlessSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5039,6 +5904,34 @@ final class BattleSpellCatalog {
             int armorClassModifier, int legacyIconType, int coexistGraphic,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "IronSkinSpell", "actionId");
+        }
+
+        public int coexistGraphic() {
+            return ResourceDatabase.value(this.coexistGraphic, this.skillId, "IronSkinSpell", "coexistGraphic");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "IronSkinSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "IronSkinSpell", "effectGfx");
+        }
+
+        public int legacyIconType() {
+            return ResourceDatabase.value(this.legacyIconType, this.skillId, "IronSkinSpell", "legacyIconType");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "IronSkinSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "IronSkinSpell", "reuseDelayMillis");
+        }
+
         IronSkinSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != IRON_SKIN
@@ -5062,7 +5955,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Iron Skin MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "IronSkinSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5074,6 +5967,30 @@ final class BattleSpellCatalog {
             int attribute, int type, int nativeId,
             int damageReduction, int happenMessage, int stopMessage,
             int failureMessage, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "DragonSkinSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "DragonSkinSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "DragonSkinSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "DragonSkinSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "DragonSkinSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "DragonSkinSpell", "reuseDelayMillis");
+        }
+
         DragonSkinSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != DRAGON_SKIN
@@ -5108,6 +6025,42 @@ final class BattleSpellCatalog {
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, boolean cancellationImmune,
             String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AwakenSpell", "actionId");
+        }
+
+        public int dragonGfx() {
+            return ResourceDatabase.value(this.dragonGfx, this.skillId, "AwakenSpell", "dragonGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AwakenSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AwakenSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "AwakenSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "AwakenSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AwakenSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AwakenSpell", "reuseDelayMillis");
+        }
+
         AwakenSpell {
             if (skillId != (row << 3) + column + 1
                     || actionId != 19
@@ -5175,6 +6128,34 @@ final class BattleSpellCatalog {
             int baseReflectionDamage,
             boolean counterMagicBypass, boolean cancellationImmune,
             String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "MortalBodySpell", "actionId");
+        }
+
+        public int baseReflectionDamage() {
+            return ResourceDatabase.value(this.baseReflectionDamage, this.skillId, "MortalBodySpell", "baseReflectionDamage");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "MortalBodySpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "MortalBodySpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "MortalBodySpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "MortalBodySpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "MortalBodySpell", "reuseDelayMillis");
+        }
+
         MortalBodySpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != MORTAL_BODY
@@ -5218,6 +6199,38 @@ final class BattleSpellCatalog {
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, boolean cancellationImmune,
             int braveMode, double attackMultiplier, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BloodlustSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "BloodlustSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BloodlustSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "BloodlustSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "BloodlustSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BloodlustSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BloodlustSpell", "reuseDelayMillis");
+        }
+
         BloodlustSpell {
             if (skillId != (row << 3) + column + 1 || skillId != BLOODLUST
                     || row != 23 || column != 1 || level != 24 || number != 1
@@ -5257,6 +6270,42 @@ final class BattleSpellCatalog {
             int attackerEffectGfx, int targetEffectGfx,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "FoeSlayerSpell", "actionId");
+        }
+
+        public int attackerEffectGfx() {
+            return ResourceDatabase.value(this.attackerEffectGfx, this.skillId, "FoeSlayerSpell", "attackerEffectGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "FoeSlayerSpell", "durationSeconds");
+        }
+
+        public int exposureDamageStep() {
+            return ResourceDatabase.value(this.exposureDamageStep, this.skillId, "FoeSlayerSpell", "exposureDamageStep");
+        }
+
+        public int hitCount() {
+            return ResourceDatabase.value(this.hitCount, this.skillId, "FoeSlayerSpell", "hitCount");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "FoeSlayerSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "FoeSlayerSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "FoeSlayerSpell", "reuseDelayMillis");
+        }
+
+        public int targetEffectGfx() {
+            return ResourceDatabase.value(this.targetEffectGfx, this.skillId, "FoeSlayerSpell", "targetEffectGfx");
+        }
+
         FoeSlayerSpell {
             if (skillId != (row << 3) + column + 1 || skillId != FOE_SLAYER
                     || row != 23 || column != 2 || level != 24 || number != 2
@@ -5283,7 +6332,7 @@ final class BattleSpellCatalog {
             if (level < 0 || level > 3) {
                 throw new IllegalArgumentException("invalid exposure level");
             }
-            return level * exposureDamageStep;
+            return level * ResourceDatabase.value(this.exposureDamageStep, this.skillId, "FoeSlayerSpell", "exposureDamageStep");
         }
     }
 
@@ -5296,6 +6345,34 @@ final class BattleSpellCatalog {
             int nextMeleeDamage, int impactGfx, int happenMessage,
             int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BurningSlashSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "BurningSlashSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BurningSlashSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "BurningSlashSpell", "hpCost");
+        }
+
+        public int impactGfx() {
+            return ResourceDatabase.value(this.impactGfx, this.skillId, "BurningSlashSpell", "impactGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BurningSlashSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BurningSlashSpell", "reuseDelayMillis");
+        }
+
         BurningSlashSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != BURNING_SLASH
@@ -5328,6 +6405,30 @@ final class BattleSpellCatalog {
             int bossModifier, int armorClassModifier,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "GuardBrakeSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "GuardBrakeSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "GuardBrakeSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "GuardBrakeSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "GuardBrakeSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "GuardBrakeSpell", "reuseDelayMillis");
+        }
+
         GuardBrakeSpell {
             boolean guardBrake = skillId == GUARD_BRAKE
                     && row == 22 && column == 6 && level == 23 && number == 6
@@ -5366,7 +6467,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Guard Brake MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "GuardBrakeSpell", "mpCost") - originalReduction);
         }
 
         int probabilityForTarget(
@@ -5416,6 +6517,30 @@ final class BattleSpellCatalog {
             int bossModifier, int dodgeDownModifier,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ResistFearSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ResistFearSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ResistFearSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "ResistFearSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ResistFearSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ResistFearSpell", "reuseDelayMillis");
+        }
+
         ResistFearSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != RESIST_FEAR
@@ -5446,7 +6571,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Resist Fear MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ResistFearSpell", "mpCost") - originalReduction);
         }
 
         int probabilityForTarget(
@@ -5482,6 +6607,34 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ExoticVitalizeSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ExoticVitalizeSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ExoticVitalizeSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ExoticVitalizeSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ExoticVitalizeSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ExoticVitalizeSpell", "reuseDelayMillis");
+        }
+
         ExoticVitalizeSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != EXOTIC_VITALIZE
@@ -5506,7 +6659,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Exotic Vitalize MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "ExoticVitalizeSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5520,6 +6673,34 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AdditionalFireSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AdditionalFireSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AdditionalFireSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "AdditionalFireSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AdditionalFireSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AdditionalFireSpell", "reuseDelayMillis");
+        }
+
         AdditionalFireSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != ADDITIONAL_FIRE
@@ -5544,7 +6725,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Additional Fire MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "AdditionalFireSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5558,6 +6739,34 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int happenMessage, int stopMessage, int failureMessage,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WaterLifeSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WaterLifeSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WaterLifeSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "WaterLifeSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WaterLifeSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WaterLifeSpell", "reuseDelayMillis");
+        }
+
         WaterLifeSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != WATER_LIFE
@@ -5583,7 +6792,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Water Life MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "WaterLifeSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5594,6 +6803,26 @@ final class BattleSpellCatalog {
             int durationSeconds, int maximumRange, int area, int targetTo,
             int attribute, int type, int nativeId,
             int evasionRateModifier, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AquaProtectSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AquaProtectSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AquaProtectSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AquaProtectSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AquaProtectSpell", "reuseDelayMillis");
+        }
+
         AquaProtectSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != AQUA_PROTECTER
@@ -5616,7 +6845,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Aqua Protecter MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "AquaProtectSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5629,6 +6858,34 @@ final class BattleSpellCatalog {
             double intelligenceMultiplier, double magicResistanceMultiplier,
             boolean includeMagicHit, int bossModifier,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AreaSilenceSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AreaSilenceSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AreaSilenceSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "AreaSilenceSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AreaSilenceSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AreaSilenceSpell", "reuseDelayMillis");
+        }
+
         AreaSilenceSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != AREA_OF_SILENCE || row != 20 || column != 0
@@ -5655,7 +6912,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Area of Silence MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "AreaSilenceSpell", "mpCost") - originalReduction);
         }
 
         int probability(int casterLevel, int targetLevel,
@@ -5684,6 +6941,38 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount, int destinationMapId,
             int destinationX, int destinationY, int destinationHeading,
             int mapRejectedMessage, boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WorldTreeCallSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WorldTreeCallSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WorldTreeCallSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "WorldTreeCallSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "WorldTreeCallSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WorldTreeCallSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WorldTreeCallSpell", "reuseDelayMillis");
+        }
+
         WorldTreeCallSpell {
             if (skillId != WORLD_TREE_CALL
                     || skillId != (row << 3) + column + 1
@@ -5711,7 +7000,7 @@ final class BattleSpellCatalog {
             }
             // Skill 131 is outside general-magic circle reductions.  The
             // retained original-INT class reduction is still applied last.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "WorldTreeCallSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -5721,6 +7010,26 @@ final class BattleSpellCatalog {
                             int activeType, int stopType,
                             int happenMessage, int stopMessage,
                             RequestShape requestShape, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AbilityBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "AbilityBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AbilityBuffSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AbilityBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AbilityBuffSpell", "reuseDelayMillis");
+        }
+
         AbilityBuffSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -5746,7 +7055,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native ability-buff MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "AbilityBuffSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -5757,7 +7066,7 @@ final class BattleSpellCatalog {
             if (matchingMagicHelmEquipped
                     && (skillId == PHYSICAL_ENCHANT_DEX
                         || skillId == PHYSICAL_ENCHANT_STR)) result >>= 1;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "AbilityBuffSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -5767,6 +7076,26 @@ final class BattleSpellCatalog {
                       int durationSeconds, int maximumRange,
                       int happenMessage, int stopMessage,
                       int failureMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "HasteSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "HasteSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "HasteSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "HasteSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "HasteSpell", "reuseDelayMillis");
+        }
+
         HasteSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -5788,7 +7117,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid native Haste MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "HasteSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -5797,7 +7126,7 @@ final class BattleSpellCatalog {
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
             if (hasteCostHalvingHelmEquipped) result >>= 1;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "HasteSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -5806,6 +7135,26 @@ final class BattleSpellCatalog {
                           int effectGfx, int mpCost, int reuseDelayMillis,
                           int durationSeconds, int happenMessage, int stopMessage,
                           String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "SelfHasteSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "SelfHasteSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "SelfHasteSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "SelfHasteSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "SelfHasteSpell", "reuseDelayMillis");
+        }
+
         SelfHasteSpell {
             if (skillId != (row << 3) + column + 1 || skillId != GREATER_HASTE
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -5827,7 +7176,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid native self-Haste MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "SelfHasteSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -5836,7 +7185,7 @@ final class BattleSpellCatalog {
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
             if (windHelmEquipped) result >>= 1;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "SelfHasteSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -5846,6 +7195,26 @@ final class BattleSpellCatalog {
                            int durationSeconds, int maximumRange, int targetTo,
                            int armorClass, int meleeHit, int meleeDamage,
                            int failureMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CombatBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CombatBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CombatBuffSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CombatBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CombatBuffSpell", "reuseDelayMillis");
+        }
+
         CombatBuffSpell {
             if (skillId != (row << 3) + column + 1 || skillId != BERSERKERS
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -5867,7 +7236,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid native combat-buff MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "CombatBuffSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -5875,7 +7244,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "CombatBuffSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -5886,6 +7255,34 @@ final class BattleSpellCatalog {
             int maximumRange, int targetTo, int damageDivisor,
             int happenMessage, int stopMessage, int failureMessage,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "DamageProtectionSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "DamageProtectionSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "DamageProtectionSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "DamageProtectionSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "DamageProtectionSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "DamageProtectionSpell", "reuseDelayMillis");
+        }
+
         DamageProtectionSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != IMMUNE_TO_HARM
@@ -5911,7 +7308,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native damage-protection MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "DamageProtectionSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -5919,7 +7316,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "DamageProtectionSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
 
@@ -5934,6 +7331,30 @@ final class BattleSpellCatalog {
             int mpCost, int reuseDelayMillis, long itemConsumeId,
             int itemConsumeCount, int targetTo, int randomRange,
             int inviteRange, int questionId, int failureMessage, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "MassTeleportSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "MassTeleportSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "MassTeleportSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "MassTeleportSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "MassTeleportSpell", "reuseDelayMillis");
+        }
+
         MassTeleportSpell {
             if (skillId != (row << 3) + column + 1
                     || skillId != MASS_TELEPORT
@@ -5956,7 +7377,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native mass-teleport MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "MassTeleportSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -5964,7 +7385,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "MassTeleportSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -5974,6 +7395,26 @@ final class BattleSpellCatalog {
                              int durationSeconds, int attribute, int sourceType,
                              int braveMode, double movementMultiplier,
                              String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "MovementBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "MovementBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "MovementBuffSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "MovementBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "MovementBuffSpell", "reuseDelayMillis");
+        }
+
         MovementBuffSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -5996,7 +7437,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid movement-buff MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "MovementBuffSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6004,7 +7445,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "MovementBuffSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
 
@@ -6023,6 +7464,34 @@ final class BattleSpellCatalog {
             double damageMultiplier, int nativeId, int happenMessage,
             int stopMessage, long itemConsumeId, int itemConsumeCount,
             String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PhysicalProcBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PhysicalProcBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PhysicalProcBuffSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "PhysicalProcBuffSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PhysicalProcBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PhysicalProcBuffSpell", "reuseDelayMillis");
+        }
+
         PhysicalProcBuffSpell {
             boolean common = skillId == (row << 3) + column + 1
                     && actionId == 19
@@ -6085,7 +7554,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid physical-proc-buff MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "PhysicalProcBuffSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6093,7 +7562,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "PhysicalProcBuffSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6108,6 +7577,30 @@ final class BattleSpellCatalog {
             int attribute, int sourceType, int nativeId,
             int happenMessage, int stopMessage, int failureMessage,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "OtherNoEffectSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "OtherNoEffectSpell", "durationSeconds");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "OtherNoEffectSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "OtherNoEffectSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "OtherNoEffectSpell", "reuseDelayMillis");
+        }
+
         OtherNoEffectSpell {
             if (skillId != STORM_WALK
                     || skillId != (row << 3) + column + 1
@@ -6131,7 +7624,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid other/no-effect MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "OtherNoEffectSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6139,7 +7632,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "OtherNoEffectSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6150,6 +7643,26 @@ final class BattleSpellCatalog {
             int attribute, int sourceType, int nativeId,
             int happenMessage, int stopMessage, int failureMessage,
             String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PoisonResistanceSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PoisonResistanceSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PoisonResistanceSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PoisonResistanceSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PoisonResistanceSpell", "reuseDelayMillis");
+        }
+
         PoisonResistanceSpell {
             if (skillId != VENOM_RESIST || skillId != (row << 3) + column + 1
                     || row != 12 || column != 7 || actionId != 19
@@ -6172,7 +7685,7 @@ final class BattleSpellCatalog {
             }
             // Skill 104 is above the general-magic circle reductions. The
             // retained original-INT class reduction is still applied last.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "PoisonResistanceSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -6182,6 +7695,26 @@ final class BattleSpellCatalog {
             int durationSeconds,
             int attribute, int sourceType, int nativeId, int dodgeModifier,
             String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "DodgeBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "DodgeBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "DodgeBuffSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "DodgeBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "DodgeBuffSpell", "reuseDelayMillis");
+        }
+
         DodgeBuffSpell {
             if (skillId != (row << 3) + column + 1 || actionId != 19
                     || attribute != ATTRIBUTE_UNSPECIFIED || sourceType != 2
@@ -6215,7 +7748,7 @@ final class BattleSpellCatalog {
             }
             // Skills106/201 are outside general-magic circle reductions. The
             // retained original-INT class reduction remains the final step.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "DodgeBuffSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -6224,6 +7757,26 @@ final class BattleSpellCatalog {
             int mpCost, int reuseDelayMillis, int durationSeconds,
             int attribute, int sourceType, int nativeId,
             int evasionRateModifier, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "RangedEvasionBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "RangedEvasionBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "RangedEvasionBuffSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "RangedEvasionBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "RangedEvasionBuffSpell", "reuseDelayMillis");
+        }
+
         RangedEvasionBuffSpell {
             if (skillId != DRESS_EVASION
                     || skillId != (row << 3) + column + 1
@@ -6246,7 +7799,7 @@ final class BattleSpellCatalog {
             }
             // Skill 111 is outside the general-magic circle reductions. The
             // retained original-INT class reduction is still applied last.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "RangedEvasionBuffSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -6257,6 +7810,34 @@ final class BattleSpellCatalog {
             int meleeDamage, int rangedDamage,
             int invalidItemMessage, int successMessage, int expirationMessage,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ItemWeaponEnchantSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ItemWeaponEnchantSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ItemWeaponEnchantSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ItemWeaponEnchantSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ItemWeaponEnchantSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ItemWeaponEnchantSpell", "reuseDelayMillis");
+        }
+
         ItemWeaponEnchantSpell {
             boolean enchantWeapon = skillId == ENCHANT_WEAPON
                     && row == 1 && column == 3 && actionId == 19
@@ -6292,7 +7873,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid item weapon-enchant MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ItemWeaponEnchantSpell", "mpCost");
             if (skillId == ENCHANT_WEAPON) {
                 // Retained isHPMPConsume order: general-magic INT reduction,
                 // Strength Magic Helm 20015 halving, positive-cost floor,
@@ -6312,7 +7893,7 @@ final class BattleSpellCatalog {
         }
 
         boolean consumesItem() {
-            return itemConsumeId > 0 && itemConsumeCount > 0;
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId") > 0L && ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ItemWeaponEnchantSpell", "itemConsumeCount") > 0;
         }
 
         String displayName() {
@@ -6326,6 +7907,26 @@ final class BattleSpellCatalog {
             int attribute, int sourceType, int nativeId, int armorClass,
             int invalidItemMessage, int successMessage, int expirationMessage,
             String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ItemArmorEnchantSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "ItemArmorEnchantSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ItemArmorEnchantSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ItemArmorEnchantSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ItemArmorEnchantSpell", "reuseDelayMillis");
+        }
+
         ItemArmorEnchantSpell {
             if (skillId != BLESSED_ARMOR
                     || skillId != (row << 3) + column + 1
@@ -6348,7 +7949,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid item armor-enchant MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ItemArmorEnchantSpell", "mpCost");
             if (effectiveIntelligence > 12) result--;
             if (effectiveIntelligence > 13) result--;
             result = Math.max(result, 1);
@@ -6367,6 +7968,26 @@ final class BattleSpellCatalog {
                            int rangedHit, int rangedDamage,
                            int missingWeaponMessage, int successMessage,
                            String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WeaponBuffSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WeaponBuffSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WeaponBuffSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WeaponBuffSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WeaponBuffSpell", "reuseDelayMillis");
+        }
+
         WeaponBuffSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -6392,7 +8013,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid weapon-buff MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "WeaponBuffSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6400,7 +8021,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (effectiveIntelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "WeaponBuffSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6410,6 +8031,38 @@ final class BattleSpellCatalog {
                              int maximumRange, int failureMessage,
                              long itemConsumeId, int itemConsumeCount,
                              String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int nativeSourceVisibilityOriginalRange() {
+            return this.maximumRange;
+        }
+
+        public int maximumRange() {
+            return NativeSourceVisibilityRange.value(this.skillId(), this.nativeSourceVisibilityOriginalRange());
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CancellationSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CancellationSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CancellationSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CancellationSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CancellationSpell", "reuseDelayMillis");
+        }
+
         CancellationSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -6428,7 +8081,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid native Cancellation MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "CancellationSpell", "mpCost");
             if (intelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (intelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (intelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6436,7 +8089,7 @@ final class BattleSpellCatalog {
             if (intelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (intelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (intelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "CancellationSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6448,6 +8101,30 @@ final class BattleSpellCatalog {
                       Targeting targeting, int maximumRange,
                       RegenEffect effect, int mprBonus,
                       boolean breaksOnActivity, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "RegenSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "RegenSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "RegenSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "RegenSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "RegenSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "RegenSpell", "reuseDelayMillis");
+        }
+
         RegenSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -6473,7 +8150,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid native regen-spell MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "RegenSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6481,7 +8158,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (effectiveIntelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "RegenSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6491,6 +8168,34 @@ final class BattleSpellCatalog {
                        int reuseDelayMillis, int durationSeconds,
                        int pulseIntervalMillis, int effectRadius, int segmentCount,
                        long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "GroundSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "GroundSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "GroundSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "GroundSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "GroundSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "GroundSpell", "reuseDelayMillis");
+        }
+
         GroundSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -6511,7 +8216,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid ground-spell MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "GroundSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6521,7 +8226,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
             if (effectiveIntelligence > 19 && skillId > 64 && skillId <= 80) result--;
             if (effectiveIntelligence > 20 && skillId > 72 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "GroundSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6532,6 +8237,42 @@ final class BattleSpellCatalog {
                        int dieSides, int attribute, int minimumLawful,
                        int specialCriticalChancePercent, int specialCriticalGfx,
                        boolean finalBurn, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AttackSpell", "actionId");
+        }
+
+        public int baseDamage() {
+            return ResourceDatabase.value(this.baseDamage, this.skillId, "AttackSpell", "baseDamage");
+        }
+
+        public int diceCount() {
+            return ResourceDatabase.value(this.diceCount, this.skillId, "AttackSpell", "diceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "AttackSpell", "dieSides");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AttackSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AttackSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AttackSpell", "reuseDelayMillis");
+        }
+
+        public int specialCriticalChancePercent() {
+            return ResourceDatabase.value(this.specialCriticalChancePercent, this.skillId, "AttackSpell", "specialCriticalChancePercent");
+        }
+
+        public int specialCriticalGfx() {
+            return ResourceDatabase.value(this.specialCriticalGfx, this.skillId, "AttackSpell", "specialCriticalGfx");
+        }
+
         AttackSpell(int skillId, int row, int column, int actionId,
                     int effectGfx, int mpCost, int reuseDelayMillis,
                     int maximumRange, int baseDamage, int diceCount,
@@ -6599,13 +8340,14 @@ final class BattleSpellCatalog {
         }
 
         boolean specialCritical(IntUnaryOperator percentileRoll) {
-            if (specialCriticalChancePercent == 0) return false;
+            if (ResourceDatabase.value(this.specialCriticalChancePercent, this.skillId, "AttackSpell", "specialCriticalChancePercent") == 0) {
+                return false;
+            }
             int roll = percentileRoll.applyAsInt(100);
             if (roll < 1 || roll > 100) {
-                throw new IllegalArgumentException(
-                        "critical roll is outside percentile range");
+                throw new IllegalArgumentException("critical roll is outside percentile range");
             }
-            return roll <= specialCriticalChancePercent;
+            return roll <= ResourceDatabase.value(this.specialCriticalChancePercent, this.skillId, "AttackSpell", "specialCriticalChancePercent");
         }
 
         int damageAfterSpecialCritical(int damage, boolean critical) {
@@ -6618,7 +8360,7 @@ final class BattleSpellCatalog {
         }
 
         int effectGfx(boolean critical) {
-            return critical ? specialCriticalGfx : effectGfx;
+            return critical ? ResourceDatabase.value(this.specialCriticalGfx, this.skillId, "AttackSpell", "specialCriticalGfx") : ResourceDatabase.value(this.effectGfx, this.skillId, "AttackSpell", "effectGfx");
         }
 
         /** Retained L1SkillUse assigns the final calculated damage to heal. */
@@ -6637,7 +8379,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid attack-spell MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "AttackSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -6647,7 +8389,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
             if (effectiveIntelligence > 19 && skillId > 64 && skillId <= 80) result--;
             if (effectiveIntelligence > 20 && skillId > 72 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "AttackSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -6660,6 +8402,10 @@ final class BattleSpellCatalog {
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, int dormantBossModifier,
             boolean counterMagicBypass, String key) {
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, skillId(), "ArmBreakerSpell", "durationSeconds");
+        }
+
         ArmBreakerSpell {
             if (attackSpell == null || attackSpell.skillId() != ARM_BREAKER
                     || attackSpell.row() != 26 || attackSpell.column() != 4
@@ -6699,6 +8445,14 @@ final class BattleSpellCatalog {
             boolean counterMagicBypass, int targetMessageCode,
             int dormantDatabaseDamageValue, long skillBookItemId,
             String skillBookNameId, String skillRowNameId, String key) {
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, skillId(), "ConfusionSpell", "durationSeconds");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, skillId(), "ConfusionSpell", "hpCost");
+        }
+
         ConfusionSpell {
             if (attackSpell == null || attackSpell.skillId() != CONFUSION
                     || attackSpell.row() != 25 || attackSpell.column() != 1
@@ -6789,6 +8543,10 @@ final class BattleSpellCatalog {
             int damageMultiplier, long skillBookItemId,
             String skillBookNameId, String skillRowNameId,
             boolean counterMagicBypass, String key) {
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, skillId(), "MindBreakSpell", "hpCost");
+        }
+
         MindBreakSpell {
             if (attackSpell == null || attackSpell.skillId() != MIND_BREAK
                     || attackSpell.row() != 25 || attackSpell.column() != 6
@@ -6859,6 +8617,10 @@ final class BattleSpellCatalog {
             double dormantMagicResistanceMultiplier,
             int primaryBossModifier, int secondaryBossModifier,
             boolean counterMagicBypass, String key) {
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, skillId(), "BoneBreakSpell", "durationSeconds");
+        }
+
         BoneBreakSpell {
             if (attackSpell == null || attackSpell.skillId() != BONE_BREAK
                     || attackSpell.row() != 25 || attackSpell.column() != 7
@@ -6922,6 +8684,26 @@ final class BattleSpellCatalog {
             int nativeSkillId, int meleeHit, int meleeDamage,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "IllusionOgreSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "IllusionOgreSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "IllusionOgreSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "IllusionOgreSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "IllusionOgreSpell", "reuseDelayMillis");
+        }
+
         IllusionOgreSpell {
             if (skillId != ILLUSION_OGRE
                     || skillId != (row << 3) + column + 1
@@ -6950,7 +8732,7 @@ final class BattleSpellCatalog {
             }
             // Skill204 is outside the general-magic circle reductions. The
             // retained original-INT class reduction is applied last.
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "IllusionOgreSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -6962,6 +8744,26 @@ final class BattleSpellCatalog {
             int nativeSkillId, int spellPower,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "IllusionLichSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "IllusionLichSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "IllusionLichSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "IllusionLichSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "IllusionLichSpell", "reuseDelayMillis");
+        }
+
         IllusionLichSpell {
             if (skillId != ILLUSION_LICH
                     || skillId != (row << 3) + column + 1
@@ -6988,7 +8790,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Illusion: Lich original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "IllusionLichSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7002,6 +8804,26 @@ final class BattleSpellCatalog {
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass,
             boolean persisted, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "IllusionAvatarSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "IllusionAvatarSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "IllusionAvatarSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "IllusionAvatarSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "IllusionAvatarSpell", "reuseDelayMillis");
+        }
+
         IllusionAvatarSpell {
             if (skillId != ILLUSION_AVATAR
                     || skillId != (row << 3) + column + 1
@@ -7031,7 +8853,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Illusion: Avatar original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "IllusionAvatarSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7044,6 +8866,26 @@ final class BattleSpellCatalog {
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass,
             boolean persisted, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "DiamondGolemSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "DiamondGolemSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "DiamondGolemSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "DiamondGolemSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "DiamondGolemSpell", "reuseDelayMillis");
+        }
+
         DiamondGolemSpell {
             if (skillId != ILLUSION_DIAMOND_GOLEM
                     || skillId != (row << 3) + column + 1
@@ -7070,7 +8912,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Diamond Golem original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "DiamondGolemSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7083,6 +8925,26 @@ final class BattleSpellCatalog {
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass,
             boolean persisted, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "InsightSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "InsightSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "InsightSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "InsightSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "InsightSpell", "reuseDelayMillis");
+        }
+
         InsightSpell {
             if (skillId != INSIGHT
                     || skillId != (row << 3) + column + 1
@@ -7110,7 +8972,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Insight original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "InsightSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7128,6 +8990,30 @@ final class BattleSpellCatalog {
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass,
             boolean persisted, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PanicSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PanicSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PanicSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "PanicSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PanicSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PanicSpell", "reuseDelayMillis");
+        }
+
         PanicSpell {
             if (skillId != PANIC
                     || skillId != (row << 3) + column + 1
@@ -7161,7 +9047,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Panic original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "PanicSpell", "mpCost") - originalReduction);
         }
 
         int probability(int casterLevel, int targetLevel,
@@ -7193,6 +9079,30 @@ final class BattleSpellCatalog {
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, boolean counterMagicBypass,
             boolean persisted, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "JoyOfPainSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "JoyOfPainSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "JoyOfPainSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "JoyOfPainSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "JoyOfPainSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "JoyOfPainSpell", "reuseDelayMillis");
+        }
+
         JoyOfPainSpell {
             if (skillId != JOY_OF_PAIN
                     || skillId != (row << 3) + column + 1
@@ -7219,7 +9129,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Joy of Pain original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "JoyOfPainSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7233,6 +9143,42 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount, int effectNpcId,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CubeIgnitionSpell", "actionId");
+        }
+
+        public int allyEffectGfx() {
+            return ResourceDatabase.value(this.allyEffectGfx, this.skillId, "CubeIgnitionSpell", "allyEffectGfx");
+        }
+
+        public int cubeGfx() {
+            return ResourceDatabase.value(this.cubeGfx, this.skillId, "CubeIgnitionSpell", "cubeGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CubeIgnitionSpell", "durationSeconds");
+        }
+
+        public int enemyEffectGfx() {
+            return ResourceDatabase.value(this.enemyEffectGfx, this.skillId, "CubeIgnitionSpell", "enemyEffectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CubeIgnitionSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CubeIgnitionSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CubeIgnitionSpell", "reuseDelayMillis");
+        }
+
         CubeIgnitionSpell {
             if (skillId != CUBE_IGNITION
                     || skillId != (row << 3) + column + 1
@@ -7264,7 +9210,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Cube: Ignition original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "CubeIgnitionSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7278,6 +9224,42 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount, int effectNpcId,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CubeQuakeSpell", "actionId");
+        }
+
+        public int allyEffectGfx() {
+            return ResourceDatabase.value(this.allyEffectGfx, this.skillId, "CubeQuakeSpell", "allyEffectGfx");
+        }
+
+        public int cubeGfx() {
+            return ResourceDatabase.value(this.cubeGfx, this.skillId, "CubeQuakeSpell", "cubeGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CubeQuakeSpell", "durationSeconds");
+        }
+
+        public int enemyEffectGfx() {
+            return ResourceDatabase.value(this.enemyEffectGfx, this.skillId, "CubeQuakeSpell", "enemyEffectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CubeQuakeSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CubeQuakeSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CubeQuakeSpell", "reuseDelayMillis");
+        }
+
         CubeQuakeSpell {
             if (skillId != CUBE_QUAKE
                     || skillId != (row << 3) + column + 1
@@ -7309,7 +9291,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Cube: Quake original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "CubeQuakeSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7323,6 +9305,42 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount, int effectNpcId,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CubeShockSpell", "actionId");
+        }
+
+        public int allyEffectGfx() {
+            return ResourceDatabase.value(this.allyEffectGfx, this.skillId, "CubeShockSpell", "allyEffectGfx");
+        }
+
+        public int cubeGfx() {
+            return ResourceDatabase.value(this.cubeGfx, this.skillId, "CubeShockSpell", "cubeGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CubeShockSpell", "durationSeconds");
+        }
+
+        public int enemyEffectGfx() {
+            return ResourceDatabase.value(this.enemyEffectGfx, this.skillId, "CubeShockSpell", "enemyEffectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CubeShockSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CubeShockSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CubeShockSpell", "reuseDelayMillis");
+        }
+
         CubeShockSpell {
             if (skillId != CUBE_SHOCK
                     || skillId != (row << 3) + column + 1
@@ -7357,7 +9375,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Cube: Shock original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "CubeShockSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7371,6 +9389,38 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount, int effectNpcId,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CubeHarmonySpell", "actionId");
+        }
+
+        public int cubeGfx() {
+            return ResourceDatabase.value(this.cubeGfx, this.skillId, "CubeHarmonySpell", "cubeGfx");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "CubeHarmonySpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CubeHarmonySpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CubeHarmonySpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CubeHarmonySpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CubeHarmonySpell", "reuseDelayMillis");
+        }
+
         CubeHarmonySpell {
             if (skillId != CUBE_HARMONY
                     || skillId != (row << 3) + column + 1
@@ -7402,7 +9452,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Cube: Harmony original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "CubeHarmonySpell", "mpCost") - originalReduction);
         }
     }
 
@@ -7415,6 +9465,26 @@ final class BattleSpellCatalog {
             boolean counterMagicBypass, boolean persisted,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PatienceSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PatienceSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PatienceSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PatienceSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PatienceSpell", "reuseDelayMillis");
+        }
+
         PatienceSpell {
             if (skillId != PATIENCE
                     || skillId != (row << 3) + column + 1
@@ -7444,7 +9514,11 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Patience original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "PatienceSpell", "mpCost") - originalReduction);
+        }
+
+        public int physicalDamageReduction() {
+            return CombatSourceReductions.patience(this.physicalDamageReduction);
         }
     }
 
@@ -7459,6 +9533,30 @@ final class BattleSpellCatalog {
             boolean persisted,
             long skillBookItemId, String skillBookNameId,
             String skillRowNameId, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PhantasmSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PhantasmSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PhantasmSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "PhantasmSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PhantasmSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PhantasmSpell", "reuseDelayMillis");
+        }
+
         PhantasmSpell {
             if (skillId != PHANTASM
                     || skillId != (row << 3) + column + 1
@@ -7487,7 +9585,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Phantasm original INT reduction");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "PhantasmSpell", "mpCost") - originalReduction);
         }
 
         int probability(int casterLevel, int targetLevel,
@@ -7515,6 +9613,18 @@ final class BattleSpellCatalog {
             int lowerLevelChancePercent, int maximumChancePercent,
             boolean counterMagicBypass, long skillBookItemId,
             String skillBookNameId, String key) {
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, skillId(), "ThunderGrabSpell", "hpCost");
+        }
+
+        public int maximumBindSeconds() {
+            return ResourceDatabase.value(this.maximumBindSeconds, skillId(), "ThunderGrabSpell", "maximumBindSeconds");
+        }
+
+        public int minimumBindSeconds() {
+            return ResourceDatabase.value(this.minimumBindSeconds, skillId(), "ThunderGrabSpell", "minimumBindSeconds");
+        }
+
         ThunderGrabSpell {
             if (attackSpell == null
                     || attackSpell.skillId() != THUNDER_GRAB
@@ -7575,13 +9685,11 @@ final class BattleSpellCatalog {
         }
 
         int bindDurationSeconds(int inclusiveRandomOffset) {
-            int maximumOffset = maximumBindSeconds - minimumBindSeconds;
-            if (inclusiveRandomOffset < 0
-                    || inclusiveRandomOffset > maximumOffset) {
-                throw new IllegalArgumentException(
-                        "Thunder Grab duration offset is outside source range");
+            int n2 = ResourceDatabase.value(this.maximumBindSeconds, this.skillId(), "ThunderGrabSpell", "maximumBindSeconds") - ResourceDatabase.value(this.minimumBindSeconds, this.skillId(), "ThunderGrabSpell", "minimumBindSeconds");
+            if (inclusiveRandomOffset < 0 || inclusiveRandomOffset > n2) {
+                throw new IllegalArgumentException("Thunder Grab duration offset is outside source range");
             }
-            return minimumBindSeconds + inclusiveRandomOffset;
+            return ResourceDatabase.value(this.minimumBindSeconds, this.skillId(), "ThunderGrabSpell", "minimumBindSeconds") + inclusiveRandomOffset;
         }
     }
 
@@ -7620,6 +9728,51 @@ final class BattleSpellCatalog {
                              double magicResistanceMultiplier,
                              boolean includeMagicLevel, boolean includeMagicHit,
                              String key) implements DirectionalLineSpell {
+        int nativeSourceOriginalMaximumRange() {
+            return this.maximumRange;
+        }
+
+        @Override
+        public int maximumRange() {
+            return NativeSourceFreezeTarget.range(this);
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "FreezeAttackSpell", "actionId");
+        }
+
+        public int baseDamage() {
+            return ResourceDatabase.value(this.baseDamage, this.skillId, "FreezeAttackSpell", "baseDamage");
+        }
+
+        public int diceCount() {
+            return ResourceDatabase.value(this.diceCount, this.skillId, "FreezeAttackSpell", "diceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "FreezeAttackSpell", "dieSides");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "FreezeAttackSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "FreezeAttackSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "FreezeAttackSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "FreezeAttackSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "FreezeAttackSpell", "reuseDelayMillis");
+        }
+
         FreezeAttackSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7677,7 +9830,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid freeze MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "FreezeAttackSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -7685,7 +9838,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (effectiveIntelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "FreezeAttackSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -7696,6 +9849,38 @@ final class BattleSpellCatalog {
                            int maximumRange, int areaRadius, int baseDamage,
                            int diceCount, int dieSides, int attribute,
                            int lawfulDelta, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "AreaAttackSpell", "actionId");
+        }
+
+        public int baseDamage() {
+            return ResourceDatabase.value(this.baseDamage, this.skillId, "AreaAttackSpell", "baseDamage");
+        }
+
+        public int diceCount() {
+            return ResourceDatabase.value(this.diceCount, this.skillId, "AreaAttackSpell", "diceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "AreaAttackSpell", "dieSides");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "AreaAttackSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "AreaAttackSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "AreaAttackSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "AreaAttackSpell", "reuseDelayMillis");
+        }
+
         AreaAttackSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7729,7 +9914,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid area-attack MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "AreaAttackSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -7737,7 +9922,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (effectiveIntelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "AreaAttackSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -7747,6 +9932,26 @@ final class BattleSpellCatalog {
                            int maximumRange, int sourceAreaValue, int baseDamage,
                            int diceCount, int dieSides, int attribute, String key)
             implements DirectionalLineSpell {
+        @Override
+        public int baseDamage() {
+            return ResourceDatabase.value(this.baseDamage, this.skillId, "LineAttackSpell", "baseDamage");
+        }
+
+        @Override
+        public int diceCount() {
+            return ResourceDatabase.value(this.diceCount, this.skillId, "LineAttackSpell", "diceCount");
+        }
+
+        @Override
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "LineAttackSpell", "dieSides");
+        }
+
+        @Override
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "LineAttackSpell", "effectGfx");
+        }
+
         LineAttackSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7757,12 +9962,46 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException("invalid native line-attack spell metadata");
             }
         }
+        @Override
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "LineAttackSpell", "actionId");
+        }
+
+        @Override
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "LineAttackSpell", "mpCost");
+        }
+
+        @Override
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "LineAttackSpell", "reuseDelayMillis");
+        }
     }
 
     record TurnUndeadSpell(int skillId, int row, int column, int actionId,
                            int effectGfx, int mpCost, int reuseDelayMillis,
                            int maximumRange, int probabilityDice,
                            int probabilityValue, int failureMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "TurnUndeadSpell", "actionId");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "TurnUndeadSpell", "mpCost");
+        }
+
+        public int probabilityDice() {
+            return ResourceDatabase.value(this.probabilityDice, this.skillId, "TurnUndeadSpell", "probabilityDice");
+        }
+
+        public int probabilityValue() {
+            return ResourceDatabase.value(this.probabilityValue, this.skillId, "TurnUndeadSpell", "probabilityValue");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "TurnUndeadSpell", "reuseDelayMillis");
+        }
+
         TurnUndeadSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7781,6 +10020,30 @@ final class BattleSpellCatalog {
                           int reuseDelayMillis, int maximumRange,
                           int probabilityDice, int bossModifier,
                           int failureMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ManaDrainSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ManaDrainSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "ManaDrainSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ManaDrainSpell", "mpCost");
+        }
+
+        public int probabilityDice() {
+            return ResourceDatabase.value(this.probabilityDice, this.skillId, "ManaDrainSpell", "probabilityDice");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ManaDrainSpell", "reuseDelayMillis");
+        }
+
         ManaDrainSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7798,7 +10061,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid mana-drain MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ManaDrainSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -7816,6 +10079,34 @@ final class BattleSpellCatalog {
                       boolean includeMagicLevel, boolean includeMagicHit,
                       int bossModifier, long itemConsumeId, int itemConsumeCount,
                       String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BlindSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "BlindSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BlindSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "BlindSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BlindSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BlindSpell", "reuseDelayMillis");
+        }
+
         BlindSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7876,7 +10167,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid blind MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "BlindSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -7895,6 +10186,30 @@ final class BattleSpellCatalog {
                             boolean includeMagicLevel, boolean includeMagicHit,
                             int bossModifier, long itemConsumeId,
                             int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WeaponBreakSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WeaponBreakSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "WeaponBreakSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WeaponBreakSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WeaponBreakSpell", "reuseDelayMillis");
+        }
+
         WeaponBreakSpell {
             if (skillId != WEAPON_BREAK || skillId != (row << 3) + column + 1
                     || row != 3 || column != 2 || actionId != 19
@@ -7941,7 +10256,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Weapon Break MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "WeaponBreakSpell", "mpCost");
             if (effectiveIntelligence > 12) result--;
             if (effectiveIntelligence > 13) result--;
             if (effectiveIntelligence > 14) result--;
@@ -7958,6 +10273,38 @@ final class BattleSpellCatalog {
                          int armorClassModifier, int lawfulDelta,
                          int happenMessage, int failureMessage,
                          long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "WeaknessSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "WeaknessSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "WeaknessSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "WeaknessSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "WeaknessSpell", "mpCost");
+        }
+
+        public int probabilityDice() {
+            return ResourceDatabase.value(this.probabilityDice, this.skillId, "WeaknessSpell", "probabilityDice");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "WeaknessSpell", "reuseDelayMillis");
+        }
+
         WeaknessSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -7976,17 +10323,11 @@ final class BattleSpellCatalog {
             }
         }
 
-        int probability(int characterType, int casterLevel,
-                        int effectiveIntelligence, int originalMagicHit,
-                        int equipmentMagicHit, int targetMagicResistance,
-                        int targetBossModifier, IntUnaryOperator dieRoll) {
-            if (targetBossModifier != -1 && targetBossModifier != bossModifier) {
+        int probability(int characterType, int casterLevel, int effectiveIntelligence, int originalMagicHit, int equipmentMagicHit, int targetMagicResistance, int targetBossModifier, IntUnaryOperator dieRoll) {
+            if (targetBossModifier != -1 && targetBossModifier != this.bossModifier) {
                 throw new IllegalArgumentException("invalid Weakness boss modifier");
             }
-            return BattleTurnUndead.probability(
-                    characterType, casterLevel, effectiveIntelligence,
-                    originalMagicHit, equipmentMagicHit, targetMagicResistance,
-                    probabilityDice, targetBossModifier, dieRoll);
+            return BattleTurnUndead.probability(characterType, casterLevel, effectiveIntelligence, originalMagicHit, equipmentMagicHit, targetMagicResistance, ResourceDatabase.value(this.probabilityDice, this.skillId, "WeaknessSpell", "probabilityDice"), targetBossModifier, dieRoll);
         }
 
         int effectiveMpCost(int effectiveIntelligence, int originalReduction) {
@@ -7994,7 +10335,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Weakness MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "WeaknessSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8011,6 +10352,46 @@ final class BattleSpellCatalog {
                          int probabilityDice, int bossModifier,
                          int failureMessage, long itemConsumeId,
                          int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int nativeSourceVisibilityOriginalRange() {
+            return this.maximumRange;
+        }
+
+        public int maximumRange() {
+            return NativeSourceVisibilityRange.value(this.skillId(), this.nativeSourceVisibilityOriginalRange());
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "MassSlowSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "MassSlowSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "MassSlowSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "MassSlowSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "MassSlowSpell", "mpCost");
+        }
+
+        public int probabilityDice() {
+            return ResourceDatabase.value(this.probabilityDice, this.skillId, "MassSlowSpell", "probabilityDice");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "MassSlowSpell", "reuseDelayMillis");
+        }
+
         MassSlowSpell {
             if (skillId != MASS_SLOW || skillId != (row << 3) + column + 1
                     || row != 9 || column != 3 || actionId != 19
@@ -8026,14 +10407,8 @@ final class BattleSpellCatalog {
             }
         }
 
-        int probability(int characterType, int casterLevel,
-                        int effectiveIntelligence, int originalMagicHit,
-                        int equipmentMagicHit, int targetMagicResistance,
-                        boolean targetBoss, IntUnaryOperator dieRoll) {
-            return BattleTurnUndead.probability(
-                    characterType, casterLevel, effectiveIntelligence,
-                    originalMagicHit, equipmentMagicHit, targetMagicResistance,
-                    probabilityDice, targetBoss ? bossModifier : -1, dieRoll);
+        int probability(int characterType, int casterLevel, int effectiveIntelligence, int originalMagicHit, int equipmentMagicHit, int targetMagicResistance, boolean targetBoss, IntUnaryOperator dieRoll) {
+            return BattleTurnUndead.probability(characterType, casterLevel, effectiveIntelligence, originalMagicHit, equipmentMagicHit, targetMagicResistance, ResourceDatabase.value(this.probabilityDice, this.skillId, "MassSlowSpell", "probabilityDice"), targetBoss ? this.bossModifier : -1, dieRoll);
         }
 
         int effectiveMpCost(int effectiveIntelligence, int originalReduction) {
@@ -8041,7 +10416,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Mass Slow MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "MassSlowSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8065,6 +10440,42 @@ final class BattleSpellCatalog {
             boolean includeMagicLevel, boolean includeMagicHit,
             int bossModifier, boolean counterMagicBypass,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int nativeSourceVisibilityOriginalRange() {
+            return this.maximumRange;
+        }
+
+        public int maximumRange() {
+            return NativeSourceVisibilityRange.value(this.skillId(), this.nativeSourceVisibilityOriginalRange());
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "EntangleSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "EntangleSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "EntangleSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "EntangleSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "EntangleSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "EntangleSpell", "reuseDelayMillis");
+        }
+
         EntangleSpell {
             boolean nativeSlow = skillId == SLOW
                     && row == 3 && column == 4 && level == 4 && number == 4
@@ -8136,7 +10547,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Slow/Entangle MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "EntangleSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8168,6 +10579,38 @@ final class BattleSpellCatalog {
             boolean includeMagicLevel, boolean includeMagicHit,
             int bossModifier, boolean counterMagicBypass,
             long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        int nativeSourceEraseOriginalSelectionRange() {
+            return 10;
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "EraseMagicSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "EraseMagicSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "EraseMagicSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "EraseMagicSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "EraseMagicSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "EraseMagicSpell", "reuseDelayMillis");
+        }
+
         EraseMagicSpell {
             if (skillId != ERASE_MAGIC || skillId != (row << 3) + column + 1
                     || row != 19 || column != 0 || level != 20 || number != 0
@@ -8227,12 +10670,12 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Erase Magic MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "EraseMagicSpell", "mpCost") - originalReduction);
         }
 
         /** LiTo.bin sub_4CA6E0 rejects the case152 target beyond ten cells. */
         int selectionRange() {
-            return 10;
+            return NativeSourceVisibilityRange.value(this.skillId(), this.nativeSourceEraseOriginalSelectionRange());
         }
     }
 
@@ -8244,6 +10687,38 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount,
             int mapFailureMessage, int spawnEffectGfx, int lifetimeSeconds,
             boolean counterMagicBypass, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ElementalSummonSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ElementalSummonSpell", "effectGfx");
+        }
+
+        int effectiveMpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ElementalSummonSpell", "mpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ElementalSummonSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ElementalSummonSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ElementalSummonSpell", "reuseDelayMillis");
+        }
+
+        public int spawnEffectGfx() {
+            return ResourceDatabase.value(this.spawnEffectGfx, this.skillId, "ElementalSummonSpell", "spawnEffectGfx");
+        }
+
         ElementalSummonSpell {
             boolean lesser = skillId == LESSER_ELEMENTAL
                     && row == 19 && column == 1 && level == 20
@@ -8277,11 +10752,6 @@ final class BattleSpellCatalog {
             return 0;
         }
 
-        /** Skills154/162 are outside retained circle/original-INT MP reduction. */
-        int effectiveMpCost() {
-            return mpCost;
-        }
-
         int petCost(int charisma) {
             if (charisma < 0 || charisma > 0xFF) {
                 throw new IllegalArgumentException("invalid elemental charisma");
@@ -8299,6 +10769,34 @@ final class BattleSpellCatalog {
                         boolean includeMagicLevel, boolean includeMagicHit,
                         int bossModifier, long itemConsumeId, int itemConsumeCount,
                         String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "SilenceSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "SilenceSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "SilenceSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "SilenceSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "SilenceSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "SilenceSpell", "reuseDelayMillis");
+        }
+
         SilenceSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -8353,7 +10851,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Silence MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "SilenceSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8373,6 +10871,38 @@ final class BattleSpellCatalog {
                             int probabilityDice, int bossModifier,
                             int failureMessage, long itemConsumeId,
                             int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "DecayPotionSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "DecayPotionSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "DecayPotionSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "DecayPotionSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "DecayPotionSpell", "mpCost");
+        }
+
+        public int probabilityDice() {
+            return ResourceDatabase.value(this.probabilityDice, this.skillId, "DecayPotionSpell", "probabilityDice");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "DecayPotionSpell", "reuseDelayMillis");
+        }
+
         DecayPotionSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -8389,14 +10919,8 @@ final class BattleSpellCatalog {
             }
         }
 
-        int probability(int characterType, int casterLevel,
-                        int effectiveIntelligence, int originalMagicHit,
-                        int equipmentMagicHit, int targetMagicResistance,
-                        boolean targetBoss, IntUnaryOperator dieRoll) {
-            return BattleTurnUndead.probability(
-                    characterType, casterLevel, effectiveIntelligence,
-                    originalMagicHit, equipmentMagicHit, targetMagicResistance,
-                    probabilityDice, targetBoss ? bossModifier : -1, dieRoll);
+        int probability(int characterType, int casterLevel, int effectiveIntelligence, int originalMagicHit, int equipmentMagicHit, int targetMagicResistance, boolean targetBoss, IntUnaryOperator dieRoll) {
+            return BattleTurnUndead.probability(characterType, casterLevel, effectiveIntelligence, originalMagicHit, equipmentMagicHit, targetMagicResistance, ResourceDatabase.value(this.probabilityDice, this.skillId, "DecayPotionSpell", "probabilityDice"), targetBoss ? this.bossModifier : -1, dieRoll);
         }
 
         int effectiveMpCost(int effectiveIntelligence, int originalReduction) {
@@ -8404,7 +10928,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Decay Potion MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "DecayPotionSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8428,6 +10952,34 @@ final class BattleSpellCatalog {
             int bossModifier, boolean counterMagicBypass,
             long itemConsumeId, int itemConsumeCount, String key)
             implements TargetNegativeStatusSpell {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PolluteWaterSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PolluteWaterSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PolluteWaterSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "PolluteWaterSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PolluteWaterSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PolluteWaterSpell", "reuseDelayMillis");
+        }
+
         PolluteWaterSpell {
             if (skillId != (row << 3) + column + 1 || skillId != POLLUTE_WATER
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -8489,7 +11041,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Pollute Water MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "PolluteWaterSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -8504,6 +11056,34 @@ final class BattleSpellCatalog {
             int bossModifier, boolean counterMagicBypass,
             long itemConsumeId, int itemConsumeCount, String key)
             implements TargetNegativeStatusSpell {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "StrikerGaleSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "StrikerGaleSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "StrikerGaleSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "StrikerGaleSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "StrikerGaleSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "StrikerGaleSpell", "reuseDelayMillis");
+        }
+
         StrikerGaleSpell {
             if (skillId != (row << 3) + column + 1 || skillId != STRIKER_GALE
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -8571,7 +11151,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Striker Gale MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "StrikerGaleSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -8581,6 +11161,34 @@ final class BattleSpellCatalog {
                                  int clientCastClockMillis, int nativeArea,
                                  int baseDamage, int diceCount, int dieSides,
                                  int attribute, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CounterDetectionSpell", "actionId");
+        }
+
+        public int baseDamage() {
+            return ResourceDatabase.value(this.baseDamage, this.skillId, "CounterDetectionSpell", "baseDamage");
+        }
+
+        public int diceCount() {
+            return ResourceDatabase.value(this.diceCount, this.skillId, "CounterDetectionSpell", "diceCount");
+        }
+
+        public int dieSides() {
+            return ResourceDatabase.value(this.dieSides, this.skillId, "CounterDetectionSpell", "dieSides");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CounterDetectionSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CounterDetectionSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CounterDetectionSpell", "reuseDelayMillis");
+        }
+
         CounterDetectionSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -8596,15 +11204,13 @@ final class BattleSpellCatalog {
 
         int rollDamage(IntUnaryOperator dieRoller) {
             if (dieRoller == null) {
-                throw new IllegalArgumentException(
-                        "missing Counter Detection die roller");
+                throw new IllegalArgumentException("missing Counter Detection die roller");
             }
-            int damage = baseDamage;
-            for (int index = 0; index < diceCount; index++) {
-                int roll = dieRoller.applyAsInt(dieSides);
-                if (roll < 1 || roll > dieSides) {
-                    throw new IllegalArgumentException(
-                            "invalid Counter Detection die roll");
+            int damage = ResourceDatabase.value(this.baseDamage, this.skillId, "CounterDetectionSpell", "baseDamage");
+            for (int index = 0; index < ResourceDatabase.value(this.diceCount, this.skillId, "CounterDetectionSpell", "diceCount"); ++index) {
+                int roll = dieRoller.applyAsInt(ResourceDatabase.value(this.dieSides, this.skillId, "CounterDetectionSpell", "dieSides"));
+                if (roll < 1 || roll > ResourceDatabase.value(this.dieSides, this.skillId, "CounterDetectionSpell", "dieSides")) {
+                    throw new IllegalArgumentException("invalid Counter Detection die roll");
                 }
                 damage += roll;
             }
@@ -8617,7 +11223,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Counter Detection MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "CounterDetectionSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8636,6 +11242,38 @@ final class BattleSpellCatalog {
             int areaRadius, int sourceType, int nativeId, int failureMessage,
             int earthEffectGfx, int fireEffectGfx, int waterEffectGfx,
             int windEffectGfx, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "RevealWeaknessSpell", "actionId");
+        }
+
+        public int earthEffectGfx() {
+            return ResourceDatabase.value(this.earthEffectGfx, this.skillId, "RevealWeaknessSpell", "earthEffectGfx");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "RevealWeaknessSpell", "effectGfx");
+        }
+
+        public int fireEffectGfx() {
+            return ResourceDatabase.value(this.fireEffectGfx, this.skillId, "RevealWeaknessSpell", "fireEffectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "RevealWeaknessSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "RevealWeaknessSpell", "reuseDelayMillis");
+        }
+
+        public int waterEffectGfx() {
+            return ResourceDatabase.value(this.waterEffectGfx, this.skillId, "RevealWeaknessSpell", "waterEffectGfx");
+        }
+
+        public int windEffectGfx() {
+            return ResourceDatabase.value(this.windEffectGfx, this.skillId, "RevealWeaknessSpell", "windEffectGfx");
+        }
+
         RevealWeaknessSpell {
             if (skillId != REVEAL_WEAKNESS
                     || skillId != (row << 3) + column + 1
@@ -8658,20 +11296,20 @@ final class BattleSpellCatalog {
         }
 
         int[] weaknessEffects(int weakAttribute) {
-            int count = Integer.bitCount(weakAttribute & 0x0F);
+            int count = Integer.bitCount(weakAttribute & 0xF);
             int[] effects = new int[count];
             int index = 0;
-            if ((weakAttribute & ATTRIBUTE_EARTH) == ATTRIBUTE_EARTH) {
-                effects[index++] = earthEffectGfx;
+            if ((weakAttribute & 1) == 1) {
+                effects[index++] = ResourceDatabase.value(this.earthEffectGfx, this.skillId, "RevealWeaknessSpell", "earthEffectGfx");
             }
-            if ((weakAttribute & ATTRIBUTE_FIRE) == ATTRIBUTE_FIRE) {
-                effects[index++] = fireEffectGfx;
+            if ((weakAttribute & 2) == 2) {
+                effects[index++] = ResourceDatabase.value(this.fireEffectGfx, this.skillId, "RevealWeaknessSpell", "fireEffectGfx");
             }
-            if ((weakAttribute & ATTRIBUTE_WATER) == ATTRIBUTE_WATER) {
-                effects[index++] = waterEffectGfx;
+            if ((weakAttribute & 4) == 4) {
+                effects[index++] = ResourceDatabase.value(this.waterEffectGfx, this.skillId, "RevealWeaknessSpell", "waterEffectGfx");
             }
-            if ((weakAttribute & ATTRIBUTE_WIND) == ATTRIBUTE_WIND) {
-                effects[index] = windEffectGfx;
+            if ((weakAttribute & 8) == 8) {
+                effects[index] = ResourceDatabase.value(this.windEffectGfx, this.skillId, "RevealWeaknessSpell", "windEffectGfx");
             }
             return effects;
         }
@@ -8683,7 +11321,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Reveal Weakness MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "RevealWeaknessSpell", "mpCost");
             if (effectiveIntelligence > 12) result--;
             if (effectiveIntelligence > 13) result--;
             // The retained third-circle boundary is strictly skillId > 23,
@@ -8697,6 +11335,22 @@ final class BattleSpellCatalog {
                           int effectGfx, int mpCost, int reuseDelayMillis,
                           int nativeArea, int sourceType, int nativeId,
                           String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "DetectionSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "DetectionSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "DetectionSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "DetectionSpell", "reuseDelayMillis");
+        }
+
         DetectionSpell {
             if (skillId != DETECTION || skillId != (row << 3) + column + 1
                     || row != 1 || column != 4 || actionId != 19
@@ -8716,7 +11370,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Detection MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "DetectionSpell", "mpCost");
             // Retained isHPMPConsume order: circle-2 INT reduction, Strength
             // Magic Helm 20015 halving, positive-cost floor, then the class
             // original-INT reduction.
@@ -8737,6 +11391,30 @@ final class BattleSpellCatalog {
                               long itemConsumeId, int itemConsumeCount,
                               int happenMessage, int failureMessage,
                               int successMessage, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "MagicalWeaponSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "MagicalWeaponSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "MagicalWeaponSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "MagicalWeaponSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "MagicalWeaponSpell", "reuseDelayMillis");
+        }
+
         MagicalWeaponSpell {
             if (skillId != (row << 3) + column + 1 || row != 9 || column != 0
                     || actionId != 19 || effectGfx != 763 || mpCost != 200
@@ -8757,7 +11435,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Create Magical Weapon MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "MagicalWeaponSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8775,6 +11453,34 @@ final class BattleSpellCatalog {
                              int reuseDelayMillis, int maximumRange,
                              int failureMessage, long itemConsumeId,
                              int itemConsumeCount, int petCost, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CreateZombieSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CreateZombieSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "CreateZombieSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "CreateZombieSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CreateZombieSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CreateZombieSpell", "reuseDelayMillis");
+        }
+
         CreateZombieSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -8793,7 +11499,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid create-zombie MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "CreateZombieSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8811,6 +11517,30 @@ final class BattleSpellCatalog {
                              int questionId, int playerHpDivisor,
                              int npcHpDivisor, boolean restoresExperience,
                              int requiredElfAttribute, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ResurrectionSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ResurrectionSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ResurrectionSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ResurrectionSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ResurrectionSpell", "reuseDelayMillis");
+        }
+
         ResurrectionSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -8852,7 +11582,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid resurrection MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ResurrectionSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8870,6 +11600,38 @@ final class BattleSpellCatalog {
                        int mapFailureMessage, int capacityFailureMessage,
                        int levelFailureMessage, int spawnEffectGfx,
                        int lifetimeSeconds, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "SummonSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "SummonSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "SummonSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "SummonSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "SummonSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "SummonSpell", "reuseDelayMillis");
+        }
+
+        public int spawnEffectGfx() {
+            return ResourceDatabase.value(this.spawnEffectGfx, this.skillId, "SummonSpell", "spawnEffectGfx");
+        }
+
         SummonSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -8913,7 +11675,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid summon MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "SummonSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -8960,6 +11722,34 @@ final class BattleSpellCatalog {
                       double intelligenceMultiplier, double magicResistanceMultiplier,
                       boolean includeMagicLevel, boolean includeMagicHit,
                       long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "SleepSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "SleepSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "SleepSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "SleepSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "SleepSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "SleepSpell", "reuseDelayMillis");
+        }
+
         SleepSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -9006,7 +11796,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid sleep MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "SleepSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -9024,6 +11814,38 @@ final class BattleSpellCatalog {
                           int reuseDelayMillis, int durationSeconds,
                           int maximumRange, long itemConsumeId,
                           int itemConsumeCount, int failureMessage, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PolymorphSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PolymorphSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PolymorphSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "PolymorphSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "PolymorphSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PolymorphSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PolymorphSpell", "reuseDelayMillis");
+        }
+
         PolymorphSpell {
             if (skillId != (row << 3) + column + 1 || skillId != SHAPE_CHANGE
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -9043,7 +11865,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid native polymorph MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "PolymorphSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 23 && skillId <= 80) result--;
@@ -9051,7 +11873,7 @@ final class BattleSpellCatalog {
             if (effectiveIntelligence > 16 && skillId > 40 && skillId <= 80) result--;
             if (effectiveIntelligence > 17 && skillId > 48 && skillId <= 80) result--;
             if (effectiveIntelligence > 18 && skillId > 56 && skillId <= 80) result--;
-            if (mpCost > 0) result = Math.max(result, 1);
+            if (ResourceDatabase.value(this.mpCost, this.skillId, "PolymorphSpell", "mpCost") > 0) result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
         }
     }
@@ -9063,6 +11885,34 @@ final class BattleSpellCatalog {
                      double intelligenceMultiplier,
                      boolean includeMagicLevel, boolean includeMagicHit,
                      long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BindSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "BindSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BindSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "BindSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BindSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BindSpell", "reuseDelayMillis");
+        }
+
         BindSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -9101,7 +11951,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Earth Bind MP inputs");
             }
-            return Math.max(0, mpCost - originalReduction);
+            return Math.max(0, ResourceDatabase.value(this.mpCost, this.skillId, "BindSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -9112,6 +11962,38 @@ final class BattleSpellCatalog {
                        int probabilityDice, int bossModifier,
                        int lawfulDelta, int failureMessage,
                        long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "PoisonSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "PoisonSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "PoisonSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "PoisonSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "PoisonSpell", "mpCost");
+        }
+
+        public int probabilityDice() {
+            return ResourceDatabase.value(this.probabilityDice, this.skillId, "PoisonSpell", "probabilityDice");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "PoisonSpell", "reuseDelayMillis");
+        }
+
         PoisonSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -9127,14 +12009,8 @@ final class BattleSpellCatalog {
             }
         }
 
-        int probability(int characterType, int casterLevel,
-                        int effectiveIntelligence, int originalMagicHit,
-                        int equipmentMagicHit, int targetMagicResistance,
-                        boolean targetBoss, IntUnaryOperator dieRoll) {
-            return BattleTurnUndead.probability(
-                    characterType, casterLevel, effectiveIntelligence,
-                    originalMagicHit, equipmentMagicHit, targetMagicResistance,
-                    probabilityDice, targetBoss ? bossModifier : -1, dieRoll);
+        int probability(int characterType, int casterLevel, int effectiveIntelligence, int originalMagicHit, int equipmentMagicHit, int targetMagicResistance, boolean targetBoss, IntUnaryOperator dieRoll) {
+            return BattleTurnUndead.probability(characterType, casterLevel, effectiveIntelligence, originalMagicHit, equipmentMagicHit, targetMagicResistance, ResourceDatabase.value(this.probabilityDice, this.skillId, "PoisonSpell", "probabilityDice"), targetBoss ? this.bossModifier : -1, dieRoll);
         }
 
         int effectiveMpCost(int effectiveIntelligence, int originalReduction) {
@@ -9142,7 +12018,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Curse Poison MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "PoisonSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             result = Math.max(result, 1);
             return Math.max(0, result - originalReduction);
@@ -9160,6 +12036,38 @@ final class BattleSpellCatalog {
                           double magicResistanceMultiplier,
                           boolean includeMagicLevel, boolean includeMagicHit,
                           long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "ParalysisSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "ParalysisSpell", "effectGfx");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "ParalysisSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "ParalysisSpell", "mpCost");
+        }
+
+        public int paralysisDurationMillis() {
+            return ResourceDatabase.value(this.paralysisDurationMillis, this.skillId, "ParalysisSpell", "paralysisDurationMillis");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "ParalysisSpell", "reuseDelayMillis");
+        }
+
+        public int warningDelayMillis() {
+            return ResourceDatabase.value(this.warningDelayMillis, this.skillId, "ParalysisSpell", "warningDelayMillis");
+        }
+
         ParalysisSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -9208,7 +12116,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid paralysis MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "ParalysisSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -9227,6 +12135,38 @@ final class BattleSpellCatalog {
                        double magicResistanceMultiplier,
                        boolean includeMagicLevel, boolean includeMagicHit,
                        long itemConsumeId, int itemConsumeCount, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "TamingSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "TamingSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "TamingSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "TamingSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "TamingSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "TamingSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "TamingSpell", "reuseDelayMillis");
+        }
+
         TamingSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -9268,7 +12208,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid taming MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "TamingSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -9282,6 +12222,22 @@ final class BattleSpellCatalog {
                              int effectGfx, int mpCost, int reuseDelayMillis,
                              int maximumRange, boolean curesCurseParalysis,
                              String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CurseRemovalSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "CurseRemovalSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CurseRemovalSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CurseRemovalSpell", "reuseDelayMillis");
+        }
+
         CurseRemovalSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || (skillId != CURE_POISON && skillId != REMOVE_CURSE)
@@ -9300,7 +12256,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid poison/curse cure MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "CurseRemovalSpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -9316,6 +12272,30 @@ final class BattleSpellCatalog {
                              int durationSeconds, long itemConsumeId,
                              int itemConsumeCount, RequestShape requestShape,
                              String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "InvisibilitySpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "InvisibilitySpell", "durationSeconds");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "InvisibilitySpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "InvisibilitySpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "InvisibilitySpell", "reuseDelayMillis");
+        }
+
         InvisibilitySpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || actionId < 0 || actionId > 0xFF
@@ -9338,7 +12318,7 @@ final class BattleSpellCatalog {
                     || originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid invisibility MP inputs");
             }
-            int result = mpCost;
+            int result = ResourceDatabase.value(this.mpCost, this.skillId, "InvisibilitySpell", "mpCost");
             if (effectiveIntelligence > 12 && skillId > 8 && skillId <= 80) result--;
             if (effectiveIntelligence > 13 && skillId > 16 && skillId <= 80) result--;
             if (effectiveIntelligence > 14 && skillId > 24 && skillId <= 80) result--;
@@ -9354,6 +12334,38 @@ final class BattleSpellCatalog {
             long itemConsumeId, int itemConsumeCount, int procPercent,
             int poisonDurationSeconds, int tickIntervalMillis,
             int tickDamage, String key) {
+        public long itemConsumeId() {
+            return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
+        }
+
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "EnchantVenomSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "EnchantVenomSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "EnchantVenomSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "EnchantVenomSpell", "hpCost");
+        }
+
+        public int itemConsumeCount() {
+            return ResourceDatabase.value(this.itemConsumeCount, this.skillId, "EnchantVenomSpell", "itemConsumeCount");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "EnchantVenomSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "EnchantVenomSpell", "reuseDelayMillis");
+        }
+
         EnchantVenomSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7
@@ -9381,7 +12393,7 @@ final class BattleSpellCatalog {
                 throw new IllegalArgumentException(
                         "invalid Enchant Venom MP inputs");
             }
-            return Math.max(0, Math.max(mpCost, 1) - originalReduction);
+            return Math.max(0, Math.max(ResourceDatabase.value(this.mpCost, this.skillId, "EnchantVenomSpell", "mpCost"), 1) - originalReduction);
         }
     }
 
@@ -9389,6 +12401,22 @@ final class BattleSpellCatalog {
             int skillId, int row, int column, int actionId, int effectGfx,
             int mpCost, int reuseDelayMillis, int failureMessage,
             int successMessage, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "BringStoneSpell", "actionId");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "BringStoneSpell", "effectGfx");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "BringStoneSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "BringStoneSpell", "reuseDelayMillis");
+        }
+
         BringStoneSpell {
             if (skillId != (row << 3) + column + 1 || skillId != BRING_STONE
                     || row < 0 || row > 0xFF || column < 0 || column > 7
@@ -9408,7 +12436,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Bring Stone MP inputs");
             }
-            return Math.max(0, Math.max(mpCost, 1) - originalReduction);
+            return Math.max(0, Math.max(ResourceDatabase.value(this.mpCost, this.skillId, "BringStoneSpell", "mpCost"), 1) - originalReduction);
         }
 
         int successThreshold(int tier, int level, int wisdom) {
@@ -9458,6 +12486,30 @@ final class BattleSpellCatalog {
                            int maximumRange, int targetTo, int attribute,
                            int sourceType, int nativeId, String nameId,
                            boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "TrueTargetSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "TrueTargetSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "TrueTargetSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "TrueTargetSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "TrueTargetSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "TrueTargetSpell", "reuseDelayMillis");
+        }
+
         TrueTargetSpell {
             if (skillId != (row << 3) + column + 1 || row < 0 || row > 0xFF
                     || column < 0 || column > 7 || skillLevel != 15
@@ -9479,7 +12531,7 @@ final class BattleSpellCatalog {
             }
             // Retained isHPMPConsume keeps every positive native MP cost at
             // least one after the class/original-INT reduction.
-            return Math.max(1, mpCost - originalReduction);
+            return Math.max(1, ResourceDatabase.value(this.mpCost, this.skillId, "TrueTargetSpell", "mpCost") - originalReduction);
         }
     }
 
@@ -9492,6 +12544,30 @@ final class BattleSpellCatalog {
             int armorClass, int meleeHit, int rangedHit, int magicResistance,
             int meleeDamage,
             boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "RoyalAuraSpell", "actionId");
+        }
+
+        public int durationSeconds() {
+            return ResourceDatabase.value(this.durationSeconds, this.skillId, "RoyalAuraSpell", "durationSeconds");
+        }
+
+        public int effectGfx() {
+            return ResourceDatabase.value(this.effectGfx, this.skillId, "RoyalAuraSpell", "effectGfx");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "RoyalAuraSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "RoyalAuraSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "RoyalAuraSpell", "reuseDelayMillis");
+        }
+
         RoyalAuraSpell {
             boolean glowing = skillId == GLOWING_AURA
                     && column == 1 && effectGfx == 2277 && targetTo == 8
@@ -9527,7 +12603,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid royal-aura MP inputs");
             }
-            return Math.max(0, Math.max(mpCost, 1) - originalReduction);
+            return Math.max(0, Math.max(ResourceDatabase.value(this.mpCost, this.skillId, "RoyalAuraSpell", "mpCost"), 1) - originalReduction);
         }
     }
 
@@ -9537,6 +12613,22 @@ final class BattleSpellCatalog {
             int maximumRange, int area, int attribute, int sourceType,
             int nativeId, String nameId, int effectGfx, int questionId,
             int failureMessage, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "CallClanSpell", "actionId");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "CallClanSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "CallClanSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "CallClanSpell", "reuseDelayMillis");
+        }
+
         CallClanSpell {
             if (skillId != CALL_CLAN || skillId != (row << 3) + column + 1
                     || row != 14 || column != 3 || skillLevel != 15
@@ -9557,7 +12649,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Call Clan MP inputs");
             }
-            return Math.max(0, Math.max(mpCost, 1) - originalReduction);
+            return Math.max(0, Math.max(ResourceDatabase.value(this.mpCost, this.skillId, "CallClanSpell", "mpCost"), 1) - originalReduction);
         }
     }
 
@@ -9567,6 +12659,22 @@ final class BattleSpellCatalog {
             int maximumRange, int area, int attribute, int sourceType,
             int nativeId, String nameId, int effectGfx,
             int failureMessage, boolean counterMagicBypass, String key) {
+        public int actionId() {
+            return ResourceDatabase.value(this.actionId, this.skillId, "RunClanSpell", "actionId");
+        }
+
+        public int hpCost() {
+            return ResourceDatabase.value(this.hpCost, this.skillId, "RunClanSpell", "hpCost");
+        }
+
+        public int mpCost() {
+            return ResourceDatabase.value(this.mpCost, this.skillId, "RunClanSpell", "mpCost");
+        }
+
+        public int reuseDelayMillis() {
+            return ResourceDatabase.value(this.reuseDelayMillis, this.skillId, "RunClanSpell", "reuseDelayMillis");
+        }
+
         RunClanSpell {
             if (skillId != RUN_CLAN || skillId != (row << 3) + column + 1
                     || row != 14 || column != 5 || skillLevel != 15
@@ -9586,7 +12694,7 @@ final class BattleSpellCatalog {
             if (originalReduction < 0 || originalReduction > 2) {
                 throw new IllegalArgumentException("invalid Run Clan MP inputs");
             }
-            return Math.max(0, Math.max(mpCost, 1) - originalReduction);
+            return Math.max(0, Math.max(ResourceDatabase.value(this.mpCost, this.skillId, "RunClanSpell", "mpCost"), 1) - originalReduction);
         }
     }
 }
