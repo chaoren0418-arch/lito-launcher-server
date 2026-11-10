@@ -52,12 +52,17 @@ final class NativeWorldGroupHealingBehaviorTest {
             ClientSession stranger = peer(sockets, config, accounts, state, hub, "stranger", 0x3813_8402);
             ClientSession otherInstance = peer(sockets, config, accounts, state, hub, "instance", 0x3813_8403);
 
-            initialize(caster, character("HealAllCaster", 3, 0x3813_8400L), source, X, Y);
+            // Four distinct standing-passable cells within three tiles of the world tree (all on screen).
+            List<int[]> cells = passableCellsNearWorldTree(4);
+            initialize(caster, character("HealAllCaster", 3, 0x3813_8400L), source,
+                    cells.get(0)[0], cells.get(0)[1]);
             setField(caster, "learnedSkills", Set.of(BattleSpellCatalog.HEAL_ALL));
-            initialize(clanMate, character("HealAllClanMate", 1, 0x3813_8401L), source, X + 1, Y);
-            initialize(stranger, character("HealAllStranger", 1, 0x3813_8402L), source, X + 2, Y);
+            initialize(clanMate, character("HealAllClanMate", 1, 0x3813_8401L), source,
+                    cells.get(1)[0], cells.get(1)[1]);
+            initialize(stranger, character("HealAllStranger", 1, 0x3813_8402L), source,
+                    cells.get(2)[0], cells.get(2)[1]);
             initialize(otherInstance, character("HealAllOtherInstance", 1, 0x3813_8403L),
-                    source, X, Y + 1);
+                    source, cells.get(3)[0], cells.get(3)[1]);
             for (ClientSession session : List.of(caster, clanMate, stranger, otherInstance)) {
                 hub.connect(session);
                 hub.enterClassicWorld(session, MAP,
@@ -146,6 +151,21 @@ final class NativeWorldGroupHealingBehaviorTest {
         reader.setDaemon(true);
         reader.start();
         return session;
+    }
+
+    private static List<int[]> passableCellsNearWorldTree(int count) {
+        ClassicWorldMapCatalog.ClassicMap map = ClassicWorldMapCatalog.forMap(MAP);
+        List<int[]> cells = new ArrayList<>();
+        for (int radius = 0; radius <= 3 && cells.size() < count; radius++) {
+            for (int dy = -radius; dy <= radius && cells.size() < count; dy++) {
+                for (int dx = -radius; dx <= radius && cells.size() < count; dx++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dy)) != radius) continue;
+                    if (map.standingPassable(X + dx, Y + dy)) cells.add(new int[] {X + dx, Y + dy});
+                }
+            }
+        }
+        assertEquals(count, cells.size(), "world tree neighbourhood must offer passable cells");
+        return cells;
     }
 
     private static void initialize(ClientSession session, CharacterSummary character,

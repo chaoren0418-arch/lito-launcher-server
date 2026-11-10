@@ -110,14 +110,16 @@ final class NativeTournamentMatchEndEconomyBehaviorTest {
         long roomId = hub.createRoom(0, new GameHub.RoomSettings(
                 "Match End Economy", "", 2,
                 BattleRules.Mode.DEATHMATCH.wireId(), 0, 0, 0, 0));
-        hub.joinRoom(roomId, attacker);
-        hub.joinRoom(roomId, target);
+        assertTrue(hub.tryJoinRoom(roomId, attacker).joined());
+        assertTrue(hub.tryJoinRoom(roomId, target).joined());
         hub.setForce(roomId, attacker, 0);
         hub.setForce(roomId, target, 1);
-        // Same start sequence as GameHubVirtualPlayerTest: the room owner (first joiner) does
-        // not ready; the second real player readies and starts the countdown.
-        assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED,
+        // Same start sequence as GameHubChannelTest#opcodeOnlyNativeStart...: the participant
+        // readies (no transition yet); the room owner (first joiner) then starts the countdown.
+        assertEquals(GameHub.ReadyTransition.NONE,
                 hub.setReady(roomId, target, true).transition());
+        assertEquals(GameHub.ReadyTransition.COUNTDOWN_STARTED,
+                hub.requestOwnerStart(roomId, attacker).transition());
         Method countdown = GameHub.class.getDeclaredMethod("countdownWork", long.class);
         countdown.setAccessible(true);
         long future = System.nanoTime() + 60_000_000_000L;
