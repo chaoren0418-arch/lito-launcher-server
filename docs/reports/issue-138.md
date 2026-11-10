@@ -2,219 +2,206 @@
 
 ## 結論
 
-B 擁有的 303 個外層類別已全部併入 `src/main/java/local/lito381/server/`；`mvn -DskipTests package` 在本機成功，AsRecord 轉換了 54 個類別。
-語意比對結果：
-- **B 範圍**：1,384 個 entry 無缺漏，也沒有多出或該移除的 entry。DIFF 只剩 1 類，就是 `ClientSession`；它的 184 個差異方法和 #70 主控裁定交給 M2 離線回歸的 `b09-shape-diffs.md` 清單**完全一致**。
-- **T029**：8 個方法對 `base-0.6.71.jar` 為 SAME（其中 7 個）或 SAME_EFFECTS（1 個）。
-- **A 範圍**：A-land（#78）已合入，本輪重跑，692 個 entry 全部可接受，DIFF＝0。
-- **整顆 JAR**：其他類別的差異為 0。
+B 擁有的 303 個外層類別已全部併入 `src/main/java/local/lito381/server/`，`mvn -DskipTests package` 在本機成功（AsRecord 轉換 54 個類別）。
+本輪套用了[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6777167802)的 7 點。
 
-**`mvn -B test` 尚未全綠，本任務未完成驗收。** 依本機限制不在本機跑測試，結果以 PR #315 的 CI 為準：
-- 第 2 輪 CI（完整跑完）：6,048 項，Failures 38、Errors 11，分布在 21 個測試類別。
-- 本輪已逐案修正其中 7 類／14 項（見「測試逐案判斷」）。
-- 剩下的項目中，有一部分是**候選 JAR 本身的程式缺陷**，修正就會讓 B 類別偏離候選，必須先由主控裁定；其餘是綁死舊實作文字的原始碼稽核與行為測試，尚待逐案分析。
+**語意比對（r3，本輪重跑）**
+- **B 範圍**：1,384 個 entry 無缺漏、無多出、無該移除的 entry。
+  - 唯一的 DIFF 是 `ClientSession`，它的 184 個方法與 `b09-shape-diffs.md` 一一對應（#70 已裁定交 M2）。
+  - DEVIATION 4 個：既有的 2 個，加上本輪核准的 2 個 method-diff。
+- **T029**：8 個方法對 `base-0.6.71.jar` 為 SAME（7 個）或 SAME_EFFECTS（1 個）。
+- **A 範圍**：692 個 entry 全部可接受，DIFF＝0。
+- **整顆 JAR**：其他類別差異為 0。
 
-需要主控裁定（needs:claude）：
-1. **候選缺陷：未登入就斷線的 session 會拋例外。** 候選 `GameHub.disconnect` 新增了 `NativeSummonRetirement.beforeDisconnect`，它會取 `sourceAccountIdentity()`。登入前就斷線（登入失敗、掃 port）的 session 沒有這個身分，會拋 IAE，而且是在 `ClientSession.run()` 的 finally 裡拋，後續清理全被跳過。正式 0.6.71 的 `disconnect` 沒有這個呼叫。影響 5 項測試。
-2. **候選缺陷：馴服怪物的釋放必定失敗。** 候選 `ClassicWorldMonsterPopulation$TamedRelease` 的檢查是 `lcmp; ifeq → throw`（objectId 相同就拋），正式版是 `ifne`。`releaseTamed` 傳入的兩個快照來自同一個 actor，objectId 必然相同，所以候選版每次釋放都會拋 IAE。影響 1 項測試。
-3. **潛在死鎖（推測）。** CI thread dump 顯示候選版 monster tick 的取鎖順序是 population → hub（`NativeStaticCancellationReplacement.live`），companion tick 則是 hub → population。正式環境中兩者都在同一條 `lito381-battle-clock` 執行緒上，不會彼此鎖死；但如果有 client 執行緒以 hub → population 的順序呼叫，就可能死鎖。測試已改成和正式環境一樣在 battle clock 上 tick；正式環境是否真的有風險，交 M2 驗證。
-4. **原始碼文字稽核要怎麼處理（政策）。** 約 7 類 `*SourceAuditTest` 用字串綁死舊 src/main 的實作文字。候選版是反編譯來的（變數名如 `var237`、補上 `this.`、結構也改了），要逐條重寫並重新確認語意。請裁定：是逐條改寫成對候選文字的稽核，還是改用行為測試取代。
-5. 依 #69 第 3 點新增的 23 條 throws-only `exceptions-exempt` 條目，以及 4 條 #69 補同步的條目，請確認。
-6. 舊 GameHub「native 與 modern adapter 共用 TournamentPresence」的接縫（只有測試用到，Main 從來沒接上）在候選版中不存在。相關 2 個測試已改寫，請裁定這項功能要不要補回。
+**`mvn -B test`（以 PR #315 的 CI 為準）**
+- 第 5 輪：6,052 項，Failures 5、Errors 1，比第 3 輪的 37 項少了很多。
+- 第 6 輪（`751c7a75`）：Failures 2、Errors 1。修正最後 1 項 fixture 後，第 7 輪預期只剩 Ckew、Rescue 2 項，結果見 PR #315。
+- 剩下的 2 項（Ckew、Rescue）是**候選與正式 0.6.71 行為不同、玩家看得到**的差異。依裁定第 7 點不自行決定，交主控裁定。**這 2 項在裁定之前 CI 不會全綠。**
 
-## 做了什麼
+**需要主控裁定（needs:claude）**
+1. **Ckew 入口 NPC 首次對話**：候選會讓 L1Quest NPC 轉向說話者並送 `S_CHANGE_DIRECTION`，正式版不會。
+2. **Rescue 觀察者收不到 `S_REMOVE_OBJECT`**：候選的 `NativeStaticNpcMotion.nativeSourceWeaponFrame` 會把可見 L1Quest 靜態 NPC 的移除封包吞掉，正式版直接送出。
+3. **取鎖順序有真實死鎖路徑（裁定 3 的結果）**
+   - 正式 0.6.71 已有的路徑：client 執行緒以 hub → population 取鎖，例如 C_ATTACK、魔法、馴服、斷線。
+   - 候選新增的路徑：battle clock 的 monster tick 以 population → hub 取鎖（`moveToward` → `NativeStaticNpcMotion.occupies` → `NativeStaticCancellationReplacement.live`）。
+   - 兩者同時發生就會互相等待。battle clock 是單執行緒，只能防止 tick 與 tick 之間的死鎖，擋不住 client 與 battle clock 之間這種。
+4. **（提醒）租屋城鎮的退戰流程**：正式版與候選都把「租屋城鎮按離開（C_D0）」和「租屋傳送師（C_D9）」當成一般退戰處理。舊 src/main 原本修好了這兩條流程，B-land 之後這個修正消失。
+   - 依裁定 7，測試已改成候選＝正式的行為。
+   - 相對舊 src/main，這是玩家看得到的退步。要不要補回，請裁定。
+5. **（提醒）死亡懲罰程式碼**：dispatcher 還留在 src/main，但正式版與候選都走不到。要不要清掉可以留給 M2。
+
+## 本輪依裁定做了什麼
+
+| 裁定 | 處理 |
+|---|---|
+| 1 未登入斷線拋例外 | `NativeSummonRetirement.beforeDisconnect`：session 無法組出來源角色／帳號身分時直接 return（`sourceCharacterIdentity()`／`sourceAccountIdentity()` 拋 IAE 就略過），之後照常走 `nativeSummonOriginalDisconnect` 的完整清理。<br>登記 `deviations.txt` method-diff。<br>新增 `NativeSummonRetirementUnboundDisconnectTest` 2 項：未登入 session 斷線不拋例外且離開 hub；已認證但沒選來源的 session 斷線後釋放帳號。<br>原本受影響的 4 項＋改寫的 2 項在第 4 輪 CI 全部通過 |
+| 2 `TamedRelease` 條件反了 | 改成 `hidden.objectId() != released.objectId()` 時才拋例外（正式版的 `ifne`），登記 method-diff。<br>新增 `ClassicWorldMonsterCatalogTest#tamedReleaseAcceptsSameActorAndRejectsSnapshotsOfDifferentActors`：同一 actor 正常釋放不拋例外；不同 actor 的快照會拋 IAE。<br>原失敗項與新測試在第 4 輪 CI 都通過。<br>整顆 JAR 對正式比對，此類別變成 SAME |
+| 3 鎖順序 | `b09-shape-diffs.md` 末尾新增一節「M2 回歸：monster tick／companion tick 取鎖順序」。client 執行緒路徑見下文「取鎖順序」，找到可能死鎖的路徑，所以標 needs:claude |
+| 4 文字稽核改行為測試 | 見下文「原始碼文字稽核」 |
+| 5 `exceptions-exempt` | 已接受，不需再處理 |
+| 6 TournamentPresence 接縫 | 不補回。前輪已改寫的 2 項測試保留，列在下文 |
+| 7 其餘失敗 | 逐案分類，見下文「測試逐案判斷」 |
+
+偏離登記（`docs/combat-merge/deviations.txt`）：
+```text
+local/lito381/server/NativeSummonRetirement#beforeDisconnect(Llocal/lito381/server/GameHub;Llocal/lito381/server/ClientSession;)V  method-diff  # approved: …#issuecomment-6777167802
+local/lito381/server/ClassicWorldMonsterPopulation$TamedRelease#<init>(…$Snapshot;…$Snapshot;)V  method-diff  # approved: …#issuecomment-6777167802
+```
+
+## 前輪已完成的落地工作（摘要）
 
 | 項目 | 內容 |
 |---|---|
-| 搬入 | `merge-inputs/50635f7e/staged/local/lito381/server/*.java` 303 份複製進 `src/main`：覆蓋 84 個同名檔、新增 219 個檔（`docs/reports/issue-138/land.py`） |
-| 第 85 個既有類別 | `LegacyMySqlRepository` 原本共置在 A 擁有的 `Accounts.java` 尾端（第 4153–13309 行）。現在改成 staged 的獨立檔；`Accounts.java` 只刪掉這個類別，其餘 A 內容逐字未動 |
-| checked exception 鏈 | 詳見下一節；23 個方法各補一個 `throws IOException`，方法本體不變 |
-| 核准清單同步 | `exceptions-exempt.txt` 新增 #69 漏同步的 3 條，以及本輪的 23 條；`extra-methods-approved.txt` 新增 #69 漏同步的 `NativeLightAction$Batch#rethrowCandidateFailure` 1 條 |
-| ModernCaptureLog | 依 #78 主控備註：候選 `ClientSession` 用回 `CaptureLog` 之後，`ModernCaptureLog` 就沒有呼叫者了，所以刪除它和 `ModernCaptureLogTest`（2 項），並重新產生 `docs/server-source-gap.md` |
-| `b09-shape-diffs.md` | 依 #70 主控備註補上 `ClientSession#sourceApplicationRun()V` 一列，並把該節標題從「待裁定」改成「已核准」 |
-| 測試 | 修了 3 個檔，見「測試逐案判斷」 |
-
-沒有碰：A 擁有的其他類別、`pom.xml`、機密設定、封存、`releases/`、`docs/REPORT.md`。
-
-### checked exception 鏈（主控請確認）
-
-B 批次各自對候選 JAR 編譯，每批只看得到其他類別的**位元組碼**，而位元組碼不檢查 checked 例外。
-`NativeWeaponBreakTargetLifecycle#captureOutput` 依 #62 核准宣告了 `throws IOException`。可是在候選中，呼叫它的 `NativeAreaMaterialAction#nativeShockOriginalCaptureOutput` 沒有 throws，這條委派鏈一路往上的 22 個方法也都沒有。
-所以全部放進同一個原始碼樹後，`javac` 一層一層報 `unreported exception java.io.IOException`。
-
-處理方式：每輪編譯後，在出錯位置所屬的方法宣告補上 `throws IOException`（`throws_fix.py`；lambda 內出錯會另外標示，這次沒有出現），共 23 輪後 BUILD SUCCESS。
-
-我沒有用 try/catch 包起來：那樣會改變方法本體與例外型別，屬於行為差異。
-只補 throws 宣告則只影響 Exceptions 屬性，正好符合 [#69 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666508373) 第 3 點：「若差異只在 `throws` 宣告，而且 Java 不宣告就無法編譯，可以加入 `exceptions-exempt.txt`，並附 javac 失敗證據」。
-語意比對確認這 23 個方法除了 Exceptions 屬性之外都與候選相同：只套用舊清單時的 firstDiff 都是 `left=java/io/IOException right=`；加入清單後全部變成 SAME 或 SAME_PATHS。
-
-javac 失敗證據（`mvn -B -DskipTests -Dmaven.test.skip=true compile`，每輪只報 1 個錯誤）：
-
-```text
-round 1 : NativeAreaMaterialAction.java:[439,62] unreported exception java.io.IOException; must be caught or declared to be thrown
-round 2 : NativeShockCompanionAction.java:[27,184] unreported exception java.io.IOException; ...
-round 3 : NativeAreaMaterialAction.java:[443,56] ...
-round 4 : NativeShockPlayerAction.java:[50,205] ...
-round 5 : NativeAreaMaterialAction.java:[447,53] ...
-round 6 : NativeAcceptedShockMutation.java:[16,331] ...
-round 7 : NativeAreaMaterialAction.java:[451,57] ...
-round 8 : NativeStaticNpcRespawn.java:[13,175] ...
-round 9 : NativeAreaMaterialAction.java:[455,52] ...
-round 10 : NativeAcceptedFreezeMutation.java:[31,205] ...
-round 11 : NativeAcceptedAreaFreezeMutation.java:[16,179] ...
-round 12 : NativeAcceptedFreezeMutation.java:[48,128] ...
-round 13–22 : NativeAreaMaterialAction.java:[459|466|473|480|487|494|501|508|515|522,…] ...
-round 23 : NativeLightAction.java:[422,51] ...
-round 24 : BUILD SUCCESS
-```
-
-補了 throws 的 23 個方法，描述子都是 `(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z`：
-`NativeAcceptedAreaFreezeMutation#captureOutput`、`NativeAcceptedFreezeMutation#{nativeAreaFreezeOriginalCaptureOutput,captureOutput}`、`NativeAcceptedShockMutation#captureOutput`、
-`NativeAreaMaterialAction#{nativeShock,nativeShockPlayer,nativeAcceptedShock,nativeStaticRespawn,nativeFreezeAccepted,nativeBattleControlled,nativeSourceMassSlow,nativeSourceWind,nativeSourceNegative,nativeSourceLightning,nativeSourceWeaponBuff,nativeSourceRemaining,nativeSourceControlled,nativeRaw}OriginalCaptureOutput`、`NativeAreaMaterialAction#captureOutput`、
-`NativeLightAction#deferSelfSend`、`NativeShockCompanionAction#captureOutput`、`NativeShockPlayerAction#captureOutput`、`NativeStaticNpcRespawn#captureOutput`。
+| 搬入 | `merge-inputs/50635f7e/staged/local/lito381/server/*.java` 303 份：覆蓋 84 個同名檔、新增 219 個檔（`docs/reports/issue-138/land.py`） |
+| 第 85 個既有類別 | `LegacyMySqlRepository` 原本放在 A 擁有的 `Accounts.java` 尾端，現改為 staged 的獨立檔；`Accounts.java` 只刪掉這個類別，其餘 A 內容沒動 |
+| checked exception 鏈 | 23 個方法各補一個 `throws IOException`，方法本體不變。javac 每輪報錯的證據見前輪報告（git 歷史）。主控裁定 5 已接受 |
+| 核准清單同步 | `exceptions-exempt.txt` 新增 3＋23 條；`extra-methods-approved.txt` 新增 1 條 |
+| ModernCaptureLog | 依 #78 刪除（含測試 2 項），並重新產生 `docs/server-source-gap.md` |
+| `b09-shape-diffs.md` | 依 #70 補上 `ClientSession#sourceApplicationRun()V` |
 
 ## 已驗證
 
 ### 建置（本機，只編譯）
 
-環境：Microsoft OpenJDK 17.0.17、Apache Maven 3.9.9。Maven 從 Maven Central 下載到 `scratch/issue-138/tools/`，SHA-512 與官方 `.sha512` 相符；本機原本沒有 mvn。TEMP 和 java.io.tmpdir 都指向 `scratch/issue-138/tmp`。
+環境：Microsoft OpenJDK 17.0.17、Apache Maven 3.9.9（放在 `scratch/issue-138/tools/`，SHA-512 與官方相符）。TEMP 指向 `scratch/issue-138/tmp`。
 
 ```powershell
-# 從 worktree 根目錄執行；mvn.ps1 設定 JAVA_HOME／TEMP 並在 LiTo381-Server 執行 mvn -B
-scratch/issue-138/mvn.ps1 compile24.log "-DskipTests" "-Dmaven.test.skip=true" compile   # exit 0
-scratch/issue-138/mvn.ps1 testcompile2.log test-compile                                   # exit 0
-scratch/issue-138/mvn.ps1 package1.log "-DskipTests" package                             # exit 0
-#   as-record: scanned=4433 converted=54 ; as-record(test): scanned=2039 converted=1 ; BUILD SUCCESS
+scratch/issue-138/mvn.ps1 compile-r4.log "-DskipTests" "-Dmaven.test.skip=true" compile   # exit 0
+scratch/issue-138/mvn.ps1 package-r3.log "-DskipTests" package                           # exit 0
+#   as-record: scanned=4433 converted=54 ; as-record(test): scanned=2044 converted=1 ; BUILD SUCCESS
+scratch/issue-138/mvn.ps1 testcompile-r6.log test-compile                                 # exit 0
 ```
 
-`target/LiTo381-Server.jar` SHA-256：`55f63a7e3ad308d3793dd0e516bf8fb86f4c3cb06f712cd61f14328159112bda`。
+`target/LiTo381-Server.jar` SHA-256：`20f4c6afb65c3547b23ff5b073bfc75af0b611bae1620cc4ec0a5b3eb7d80d93`（r3）。
 
-### 語意比對（`semantic-diff`，靜態位元組碼分析）
+### 語意比對（r3）
 
-工具從本分支的 `tools/semantic-diff/src` 重新編譯，使用 ASM 9.7（asm／asm-tree／asm-analysis，SHA-256 與 `build-support.sh` 釘定的值相同）。
-指令：`py -I scratch/issue-138/verify.py r2`（腳本副本在 `docs/reports/issue-138/verify.py`，要放回 `scratch/issue-138/` 執行）。完整 argv 在 `docs/reports/issue-138/semantic-commands.json`，摘要在 `semantic-summary.json`。
-每份核准清單都先裁切到本輪比較範圍內的 owner（做法同 #78），用不到的條目另外記錄。B 範圍實際傳入的 exceptions 清單是 `docs/reports/issue-138/b-approved-exceptions-exempt.txt`。
+指令：`py -I scratch/issue-138/verify.py r3`。腳本副本在 `docs/reports/issue-138/verify.py`；argv 在 `semantic-commands.json`，摘要在 `semantic-summary.json`，B 範圍實際傳入的 deviations 清單在 `b-approved-deviations.txt`。
 
 | 比較 | 右側 | 範圍 | SAME | SAME_EFFECTS | SAME_PATHS | SAME_CFG | LAMBDA_PAIRED | ORPHAN | SAME_LAYOUT | DEVIATION | DIFF | ONLY_LEFT | ONLY_RIGHT |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| B | candidate-50635f7e（T029 → base） | `--classes` 1,384 | 1351 | 3 | 15 | 9 | 2 | 1 | 0 | 2 | **1** | 0 | 0 |
-| A（rebase 後重跑） | base-0.6.71 | `--classes` 692 | 665 | 4 | 16 | 0 | 0 | 0 | 1 | 6 | **0** | 0 | 0 |
-| 整顆 JAR | base-0.6.71 | 全部 | 2381 | 4 | 17 | 0 | 0 | 0 | 1 | 6 | 145 | 1863 | 0 |
+| B | candidate-50635f7e（T029 → base） | `--classes` 1,384 | 1349 | 3 | 15 | 9 | 2 | 1 | 0 | **4** | **1** | 0 | 0 |
+| A | base-0.6.71 | `--classes` 692 | 665 | 4 | 16 | 0 | 0 | 0 | 1 | 6 | **0** | 0 | 0 |
+| 整顆 JAR | base-0.6.71 | 全部 | 2382 | 4 | 17 | 0 | 0 | 0 | 1 | 6 | 144 | 1863 | 0 |
 
-- **B**：`classSelection.missingLeft=[]`。`extraLeft` 都是非 B 的 entry，也就是 JAR 裡的其他類別，不算入比較。
-  - 唯一的 DIFF 是 `ClientSession`：DIFF 175 個方法（174 個形狀差異＋`sourceApplicationRun`），ONLY_LEFT 9 個 lambda。
-  - `shape_check.py` 確認這 184 個方法與 `b09-shape-diffs.md` 列出的 184 項**一一對應**（不在清單內的為 0）。依 #70 主控裁定，這些不再追求靜態 DIFF=0，交給 M2 離線回歸。
-  - 依 #69 主控裁定，SAME_PATHS、SAME_CFG、LAMBDA_PAIRED_BY_CALLSITE、ORPHAN_IGNORED 都算通過。2 個 DEVIATION 是已核准的 `NativeLightAction$Batch#emit()V` method-diff，以及 B09 的 deviation。
-- **T029**：`--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`，8 個方法都套用了。7 個為 SAME；`exitRoomBeforePolyMe(Z)V` 為 SAME_EFFECTS（`effects-approved.txt` 的既有條目）。
-- **remove_entries**：9 批宣告 0 個，JAR 中也確實不存在（`remove_entries_present=[]`）。
-- **整顆 JAR 分類**：B `{DIFF:145, ONLY_LEFT:483}`。這些是候選相對正式版本來就有的戰鬥修改與新類別，B 範圍已經對候選驗收過。
-  - SOURCE_ONLY `{ONLY_LEFT:1380}`：來源專有的 Modern 等類別，原本 1,382 個，少的 2 個是刪掉的 ModernCaptureLog。
-  - **OTHER＝0**，代表 A 與其他類別沒有引入任何差異。
+- **B 範圍**：`b_missing_in_left=[]`、`b_extra_vs_candidate=[]`。
+  - DEVIATION 4 個：`NativeLightAction$Batch`、`NativeSourcePhysicalNpc`（既有），以及本輪的 `NativeSummonRetirement`、`ClassicWorldMonsterPopulation$TamedRelease`。
+  - DIFF 1 個是 `ClientSession`。`py -I scratch/issue-138/shape_check.py r3` 的輸出為 `bad 184 in-shape-list 184 NOT-in-list []`。
+- **remove_entries**：9 批共宣告 0 個，`remove_entries_present=[]`。
+- **整顆 JAR**：`full_other=[]`，代表 A 與其他類別沒有引入差異。B 的 DIFF 由 145 降到 144，就是 TamedRelease 改回正式版的結果。
 
-第一輪（`r1`）只用 main 上的共用清單，B 的 DIFF 為 11 類：
-- 1 類是 ClientSession（形狀差異）；
-- 9 類是 23 個 throws 方法；
-- 1 類是 `LegacyMySqlRepository` 3 個 throws（#69 已核准，但沒同步到共用清單）；
-- 1 類是 `NativeLightAction$Batch`（`rethrowCandidateFailure` 同樣漏同步）。
+### 判斷「候選＝正式」的方法
 
-`approvals_gap.py` 掃描 B01–B09 報告中所有 `# approved:` 條目與共用清單的差集，只找到上面這 4 條；同步之後，第二輪（`r2`）只剩 ClientSession。
+- `py -I docs/reports/issue-138/basediff.py <類別> [方法片段]`：讀取 `full.json`（Maven JAR 對 `base-0.6.71.jar`），列出不是 SAME 的方法。SAME 就代表候選與正式相同。
+- 搭配 `javap -p -c` 看正式 JAR，以及 `git show origin/main:<path>` 看舊 src/main。
 
-### 主控備註逐項
+### 測試逐案判斷（比照 T010；沒有停用或跳過任何測試，也沒有放寬 timeout）
 
-| 備註 | 結果 |
-|---|---|
-| #69：手寫 `NativeLightAction#lambda$deferWeaponTargetOutput$0` 會不會和 javac 產生的 lambda 撞名 | **不撞名**。編譯產物（javap）中手寫的 `lambda$deferWeaponTargetOutput$0` 保留原名；javac 為 `deferWeaponTargetOutput` 裡的 lambda 產生 `lambda$deferWeaponTargetOutput$11`。語意比對中 NativeLightAction 為可接受狀態（LAMBDA_PAIRED／SAME 系列）。 |
-| #69：保留六個 AsRecord、治療 monitor／vitalLock finally、Output 可見性、helper／Exceptions／emit 核准；`finish(null)` 不放進 emit 核心 try | staged 原始碼原樣搬入、未修改；NativeLightAction$Batch 的 emit 為核准 DEVIATION，`nativeSourceBatchOriginalEmit` 可接受；`access-widen` 的 `NativeLightAction$Output` 有套用 |
-| #78：ModernCaptureLog 已無呼叫者就刪除並更新 `server-source-gap.md` | 已刪除（含 `ModernCaptureLog$Connection`），並用 CI 同一段 jar tf 程式重新產生（轉成 LF） |
-| #70：`b09-shape-diffs.md` 補 `ClientSession#sourceApplicationRun()V` | 已補 |
-| #70：帳號隔離／職業傷害倍率／技能機率的呼叫點要在 src/main 原始碼裡 | 見下表，都已是原始碼呼叫 |
+#### 本輪（裁定 7）
 
-| 能力 | 正式 JAR 的做法 | B-land 後 src/main 原始碼中的呼叫點 |
+| 測試（項數） | 失敗內容 | 判斷 | 證據 | 處理 |
+|---|---|---|---|---|
+| `ClientSessionClassicWorldDeathPenaltyIntegrationTest`（16） | 經驗值不同（例如 239718 對 244276）、缺 `S_EXP`、掉落件數 0/1 等 | **測試過時（候選＝正式）**，16 項同一根因 | 舊 src/main 的 `takeClassicWorldDirectDamage` 會在死亡時呼叫 `applyClassicWorldDeathExperiencePenalty`。候選的兩個世界死亡尾端（`sourcePlayerWorldCommit`、`sourcePlayerLegacyWorldDirectDamage`）都沒有這個呼叫；兩個 JAR 的 javap 在 `publishClassicWorldPlayerKill` 之後都是 `aload_0; lload_3; pop2; pop`。`tools/resource-database/DeathPenaltyPatch.java`（hook `lito-no-death-penalties`）也寫明 LiTo 死亡不進入懲罰流程。PK／粉名／戰爭／公告 7 個方法新舊版相同 | 經驗斷言改成來源值；順序斷言保留「死亡 → 戰爭結束 → 公告」，並斷言沒有 `S_EXP`；物品、技能、死亡保護改成反向斷言（沒有地面物品、物品與技能保留、保護道具沒被扣、沒有 messageCode 166/638、重新載入後 `deathLostSkills` 為空）；13 個測試改名 |
+| `GameHubChannelTest` matchmaking（4） | 期望 0 或 3，實際是 1 或 2 | **測試過時（候選＝正式）** | 正式版 `matchRoom` 只有 8 個 filter，沒有過濾測試房；舊 src/main 第 1427 行的 `!NativeRoomRules.testRoom(...)` 是 src/main 專有的；id 1／2 是各頻道的 Local Lobby | 不指定模式時期望 Local Lobby（新 helper `localLobby`）；protected、滿房、租屋城鎮、等級、觀戰等過濾改用 `PET_RACE` 模式驗證 |
+| `GameHubChannelTest#opcodeOnlyNativeStart…`（1） | 期望 `COUNTDOWN_STARTED`，實際 `NONE` | **測試過時（候選＝正式）** | 正式版與候選的 `tryJoinRoom` 都只在 SIEGE_WAR 自動分隊（正式 javap 偏移 409）；舊 src/main 對所有 teamBased 模式分隊。死鬥兩人都在紅隊 → 拒絕開局 | 先斷言同隊時 `NONE`；`setForce(participant,1)` 之後房主開局 → `COUNTDOWN_STARTED` |
+| `ClientSessionRentalTownDirectoryTest`（2）、`NativeLitoRentalTeleportEndpointCatalogTest`（1） | Read timed out | **測試過時（候選＝正式）**。不是 timeout 或執行緒問題，是封包根本沒送出；CI 也沒有伺服器端例外 | 正式版 `quitFight`／`exitRoomBeforePolyMe`（T029）第 0–14 條指令：`phase==BATTLE → settleRequestedBattleExit; return`；正式版 `startRentalTownScene` 把場景設為 BATTLE；basediff：`quitFight` SAME_PATHS、`settleRequestedBattleExit` SAME | 先驗證 BATTLE 下不送封包、狀態不變；再把 phase 設成 ROOM，原本的交接斷言全部保留。玩家可見的退步見結論第 4 點 |
+| `ClientSessionWorldCkewEntryTest#fourNativeClassesStartQuestAndEnterOneSharedShowId`（1） | 首次對話後收到的封包不是空的 | **候選≠正式，玩家看得到 → needs:claude** | 候選 `ClientSession.java:92922` 新增 `NativeStaticNpcMotion.talk`：L1Quest NPC（80133–80136）轉向說話者並送 `S_CHANGE_DIRECTION`。`NativeStaticNpcMotion` 是正式版沒有的類別（ONLY_LEFT） | **未改**。若核准，斷言改成「只收到 changeDirection(入口 NPC, 朝向說話者)，沒有 S_HYPERTEXT」 |
+| `ClientSessionWorldRescueFollowerTest#twoEncryptedSessionsReceiveClaimAndNativeOwnerStrangerPages`（1） | 觀察者沒收到 searcher 71092 的 `S_REMOVE_OBJECT` | **候選≠正式，玩家看得到 → needs:claude** | 候選 `sendEncrypted` 會經過 `NativeStaticNpcMotion.nativeSourceWeaponFrame`，可見 L1Quest 靜態 NPC 的 `S_REMOVE_OBJECT` 會被吞掉；正式版與舊 src/main 都直接送給每個 viewer | **未改** |
+| `GameHubCharacterTest`、`GameHubChannelTest#matchmakingQueue…`、`GameHubAccountOwnershipTest`、`ClientSessionNativeRentalTownCitizenshipTest`（4） | `invalid source-qualified character identity` | 缺陷 1 | — | 已修（裁定 1），第 4 輪通過 |
+| `ClassicWorldMonsterCatalogTest#taming…`（1） | `invalid classic monster release` | 缺陷 2 | — | 已修（裁定 2），第 4 輪通過 |
+
+#### 原始碼文字稽核（裁定 4：改用行為測試）
+
+| 原測試 | 原本保護什麼 | 處理 |
 |---|---|---|
-| X6 帳號隔離（`SourceLogin`） | `PatchSourceLogin` 插入 ClientSession（建構子 configuration／repository、`run()` 的 allowed 守門、isAccountBanned／banAccount／GameHub handoff 的 account）與 GameHub（acceptAuthenticatedAccount／releaseAuthenticatedAccountForTransfer 的 account、`close`） | `ClientSession.java`：`SourceLogin.configuration` ×1、`repository` ×1、`allowed` ×1、`account` ×19；`GameHub.java`：`SourceLogin.account` ×2、`close` ×1；`Main.java`：`SourceLogin.start` ×1 |
-| B8 職業傷害倍率（`CombatClassDamage`） | `ClassDamagePatch` | `ClientSession.java:47950, 48850, 86176` 呼叫 `CombatClassDamage.hit`；另有 `CombatRules`（7）、`CombatKiringku`（2）、`CombatCompanionDamage`（1） |
-| B10 技能機率（`CombatProbability`） | patch | `ClientSession.java` 共 189 處（`bossGate` ×103、`dispatch` ×62、`counterDecision` ×8、`npcThunderDuration` ×6、`npcMortalDecision` ×3、`mortalDecision`／`confusionSucceeds`／`confusionChance` 各 ×2、`thunderSucceeds` ×1），另有 14 個 Combat*／Native* 類別 |
+| `NativeHonorRespawnSourceAuditTest#delayedPathPreservesDeathCoordinatesAndOmitsSpawnMovement` | Honor Match 死亡後等 5 秒、在死亡座標送 S_RESURRECT、不送 S_MOVE_OBJECT、只限 Honor Match | 改寫為 `NativeHonorRespawnBehaviorTest#honorDeathWaitsFiveSecondsAndResurrectsAtDeathCoordinatesWithoutSpawnMovement` 與 `#deferredRespawnIsRefusedOutsideHonorMatch`（DEATHMATCH 回 false；HONOR 回 true 當對照）。常數測試原樣搬入；舊檔刪除 |
+| `NativeTournamentMatchEndEconomySourceAuditTest#resultPublishesPrizeBeforeRemovingBoughtMatchItems` | RESULT 先記勝負，之後才做經濟重置 | 改寫為 `NativeTournamentMatchEndEconomyBehaviorTest#resultRecordsOutcomeThenResetsPerMatchEconomyKeepingSourceAndRewardItems`：驗證 RESULT、勝敗寫入、shopPoints=0、賽中購買品移除，來源武器與 Tournament 獎勵保留 |
+| 同檔 `roomExitBattleQuit…`（仍通過） | 三個重置呼叫點存在 | 保留並加註（這項不綁舊實作文字，候選下仍成立） |
+| `NativeWorldGroupHealingSourceAuditTest`（2） | WORLD 會派送 Heal All；只治療同 instance、畫面內的血盟成員；寫入冷卻 | 改寫為 `NativeWorldGroupHealingBehaviorTest#worldHealAllHealsOnlySameInstanceClanMembersAndCommitsReuseDelay`：經由真正的 `useSpell` 派送，驗證血盟成員有被治療、非血盟成員與其他 instance 不治療、MP／HP 成本與 reuse 已寫入、立刻重施無效。舊檔刪除 |
+| `PcActionRewardSqlFirstSourceAuditTest#helperCapabilityPrecedesWorldCompanionRoutingAndClaimIsSqlFirst` | 小幫手走 pc_action；SQL claim 成功後才發布 | 改寫為 `PcActionRewardBehaviorTest` 2 項：SUCCESS 之前背包看不到、重送無效；CONFLICT 時背包與 pending 都不變 |
+| 同檔 `rewardRowAndDestination…`（仍通過） | SQL 鎖群組 | 刪除，`LitoMySqlCastleIntegrationTest` 已涵蓋 |
+| 同檔 `newLitoCharacters…`、`isolatedLitoRuntime…`（仍通過） | 小幫手模板；登入器資源 | 保留（後者檢查的是資源檔，不是實作文字） |
+| `WaterDragonSqlFirstPersistenceSourceAuditTest#rentalPublishesOnlyAfterRouteQualifiedSqlCommit` | SQL 提交後才發布憑證；失敗時取消房間預約 | 改寫為 `WaterDragonSqlFirstPersistenceBehaviorTest` 2 項：SQL 呼叫進行中看不到憑證；CONFLICT 時預約歸 0、背包不變。repository 端由 `LitoMySqlWaterDragonPassIntegrationTest` 涵蓋。舊檔刪除 |
 
-### 測試逐案判斷（比照 T010；沒有停用或跳過任何測試）
+第 5 輪 CI 中，有 4 項新行為測試因為 fixture 的前置條件失敗，不是行為改變，第 6 輪已修正：
+- **開局順序**：Honor 2 項、Tournament 1 項原本由參加者 ready 觸發倒數。實際上參加者 ready 只會得到 `NONE`，要由房主 `requestOwnerStart` 開始，與已通過的 `GameHubChannelTest` 順序相同。另外 `joinRoom` 改用 `tryJoinRoom` 並斷言加入成功。
+- **accounts**（第 6 輪才發現）：Tournament fixture 建立 `ClientSession` 時 `accounts` 傳了 null，`DurableBattleSettlement.route` 反射呼叫 `selectedSourceAccounts` 時發生 NPE。正式環境的 session 一定帶有 AccountRepository，所以改成傳入 `AccountRepository.open(config)`。selftest 是 `database.mode=memory`，結算路由為 null，會略過 SQL。
+- **座標**：Heal All 原本寫死世界樹旁的座標，其中有不可通行的格子（`classic-world location is not passable`）。改成依 `ClassicMap.standingPassable` 從世界樹 3 格內動態挑 4 個可通行格。
 
-`mvn test-compile` 起初失敗 3 處：
+#### 前輪（第 2、3 輪）已處理
 
 | 測試 | 判斷 | 處理 |
 |---|---|---|
-| `TournamentPresenceTest#nativeGameHubDerivesCapacityAndReservationsFromTheInjectedCore` | **測試過時（以候選為準）**。它用的是舊 GameHub 的 4 參數建構子 `GameHub(config, state, accounts, TournamentPresence)` 和 `selectCharacter(session, sourceId, source, row)`。這兩個是 src/main 專有的測試接縫：正式程式 `Main` 只用 3 參數建構子，也從沒有讓 native 和 modern 共用同一個 presence。候選 GameHub（B09，必須與候選相同）沒有這兩個 API。 | 改寫成 `nativeGameHubCapacityIsIndependentOfAModernPresenceCoreAfterBLand`：鎖定候選的契約。modern core 坐滿 100 人不影響 native；native 自己的 `CHANNEL_CAPACITY` 仍會拒絕第 101 人，第 101 人改進頻道 1 也不影響 core。第 2 輪 CI 發現 fixture 是未登入的 session，對它呼叫 `hub.disconnect` 會碰到缺陷 1（見結論），所以拿掉了 disconnect 的步驟。 |
-| `ModernNavigationSessionTest#nativeAndModernAdaptersActuallyCompeteForTheSameCharacterAndChannelCapacity` | 同上，**測試過時**。 | 改寫成 `nativeHubAndModernAdapterKeepSeparateCapacityAfterBLand`：保留 modern TLS 的 hello／login／roster／選角／進頻道／離開大廳完整流程，驗證 native 頻道坐滿時 modern 仍能進入，且兩邊人數互不影響。 |
-| `ClientSessionLitoRoomInvitationTest`（第 108、180 行） | **測試過時**。A-land 為了配合舊 ClientSession 改成 `ModernCaptureLog`，候選 ClientSession 只接受 `CaptureLog`。 | 改回 A-land 之前的原文 `CaptureLog`，斷言完全不動。 |
-| `ModernCaptureLogTest`（2 項） | 受測類別依 #78 主控備註刪除 | 隨類別一起刪除；不是因為失敗才停用 |
+| `TournamentPresenceTest`、`ModernNavigationSessionTest`（各 1，裁定 6） | 測試過時：native 與 modern 共用 TournamentPresence 是 src/main 專有的測試接縫，Main 從沒接上，候選也沒有 | 改寫成 `nativeGameHubCapacityIsIndependentOfAModernPresenceCoreAfterBLand`、`nativeHubAndModernAdapterKeepSeparateCapacityAfterBLand` |
+| `ClientSessionLitoRoomInvitationTest` | 測試過時（`ModernCaptureLog` → `CaptureLog`） | 改回 A-land 之前的原文 |
+| `ModernCaptureLogTest`（2） | 受測類別依 #78 刪除 | 隨類別一起刪除 |
+| `NativeMagicDollTest`（2） | 測試過時（T029 採正式封包） | 期望值改成正式封包 |
+| `ProtocolBattleTest`（3） | 測試過時（正式版與候選都沒有那兩個嚴格檢查；文字形狀改變） | 改成驗證會被接受；改計數穩定的引數對 |
+| `BattleSpellCatalogTest`（1） | 測試過時（候選資料改為 0） | 期望改成 0 |
+| `ClientSessionClassicWorldMonsterAggressionIntegrationTest`（2，死鎖逾時） | 測試過時（執行緒模型） | tick 改成提交到 battle clock 執行 |
+| `NativeHotelSqlFirstPersistenceSourceAuditTest`、`NativeCastleSecuritySettlementSourceAuditTest`（各 1） | 測試過時（拆檔） | 改成讀 `Accounts.java`＋`LegacyMySqlRepository.java` |
 
-#### 第 2 輪 CI（run 42882305652，完整跑完）的 49 項逐案
+### 取鎖順序（裁定 3）
 
-CI 指令：`mvn -B test`（`.github/workflows/build.yml` 的 Server tests job）。結果：`Tests run: 6048, Failures: 38, Errors: 11, Skipped: 117`，BUILD FAILURE，耗時 12:42。
-完整日誌在 artifact `server-test-evidence`，我下載到本機 `scratch/issue-138/ci2/`，未入庫。
+battle clock 是單執行緒（`GameHub.java:1467`）。
 
-第 1 輪（run 42876069149）卡在 `ClientSessionClassicWorldMonsterAggressionIntegrationTest` 超過 24 分鐘，我手動取消。
-第 2 輪我暫時在該類別加上 `@Timeout(SEPARATE_THREAD)` 和 thread dump：逾時的測試仍判為 ERROR，不是跳過。取得 dump 之後已移除這段暫時診斷。
-
-| 類別（項數） | 失敗內容 | 判斷 | 本輪處理 |
+| 執行緒 | 路徑 | 取鎖順序 | 呼叫鏈 |
 |---|---|---|---|
-| `NativeMagicDollTest`（2） | 期望 opcode 250，實際是 123 | **測試過時**：依 T029，`Protocol.magicDollIcon／magicDollCustomIcon` 採正式版；語意比對已驗證這兩個方法與正式版 SAME | 期望值改成正式封包（`123,56,h,h(0)`；custom 為 `123,154,…`） |
-| `ProtocolBattleTest`（3） | ① summon 的 choice=0、② ALT_ATTACK 的 target=0 沒有拋 IAE；③ `sendBattleObject(2, "ArenaBot"…` 的文字出現次數是 1，期望 2 | ①② **測試過時**：javap 確認正式版與候選版都沒有這兩個檢查，屬舊 src/main 專有的嚴格驗證。③ **測試過時（文字形狀）**：候選版第 10744 行是反編譯形式 `this.sendBattleObject(2L, "ArenaBot", "ArenaBot", point.x()…`，語意仍在 | ①② 改成驗證會被接受；③ 改成計數穩定的引數對 `"ArenaBot", "ArenaBot", `（仍要求 2 次） |
-| `BattleSpellCatalogTest`（1） | Wind Shackle 的 `area` 期望 -1，實際是 0 | **測試過時**：候選把該列資料改成 0（B 以候選為準） | 期望改成 0 |
-| `ClientSessionClassicWorldMonsterAggressionIntegrationTest`（2，逾時） | 死鎖 | **測試過時（執行緒模型）**：測試從測試執行緒直接 tick，與 live battle clock 併發；正式環境的 monster tick 和 companion tick 都排在同一條 battle clock 上 | `Fixture.tick(...)` 改成提交到 hub 的 `battleClock` 執行（clock 已停止時才直接呼叫）。正式環境的潛在風險見結論第 3 點 |
-| `NativeHotelSqlFirstPersistenceSourceAuditTest`（1）、`NativeCastleSecuritySettlementSourceAuditTest`（1） | 字串找不到 | **測試過時（拆檔）**：這兩個稽核要找的 LegacyMySqlRepository 字串，已隨類別搬到獨立檔 | 改成讀 `Accounts.java`＋`LegacyMySqlRepository.java`。`audit_probe.py` 靜態確認其他字串都還在 |
-| `WaterDragonSqlFirstPersistenceSourceAuditTest`（1）、`PcActionRewardSqlFirstSourceAuditTest`（3） | 字串找不到 | 拆檔部分同上，已處理。另外綁死的 ClientSession 文字，如 `inventory = next;`、`selectedClassicServerName, passObjects`、`inventory = afterInventory`，在候選反編譯後已改名或改寫；PcActionReward 還檢查客戶端 HTML 資源雜湊 | **待分析**（結論第 4 點）。本輪只修了拆檔部分，預期仍會失敗 |
-| `NativeHonorRespawnSourceAuditTest`（1）、`NativeTournamentMatchEndEconomySourceAuditTest`（1）、`NativeWorldGroupHealingSourceAuditTest`（2） | 舊實作字串找不到，例如 `positionX = deathX;`、`phase = Phase.RESULT;`、`long spellRequestNow`、`useGroupHealingSpell(payload, worldGroupHealing)` | 原始碼文字形狀改變。候選裡有對應的呼叫（如 `this.useGroupHealingSpell(`，第 29981 行），但變數名與結構都不同，需要逐條確認順序語意 | **待分析**（結論第 4 點） |
-| `GameHubCharacterTest`（1）、`GameHubChannelTest`（1 E）、`GameHubAccountOwnershipTest`（1）、`ClientSessionNativeRentalTownCitizenshipTest`（1） | `invalid source-qualified character identity`，stack 為 `GameHub.disconnect → NativeSummonRetirement.beforeDisconnect → Binding.capture → sourceAccountIdentity` | **程式缺陷（候選），待裁定**（結論第 1 點）。正式 0.6.71 的 disconnect 沒有這段呼叫；正式流程中登入前就斷線也會走到這裡 | 未改。改測試 fixture 只會掩蓋缺陷 |
-| `ClassicWorldMonsterCatalogTest`（1） | `invalid classic monster release` | **程式缺陷（候選），待裁定**（結論第 2 點）。javap：候選 `ifeq`、正式 `ifne` | 未改 |
-| `GameHubChannelTest`（5 F） | matchmaking 結果 0/1/2/3 不符；`opcodeOnlyNativeStart` 期望 `COUNTDOWN_STARTED`，實際 `NONE` | **待分析**：候選 GameHub（B09）的配對／開局規則有變。要對照正式版判斷是測試過時（正式版同候選）還是候選缺陷 | 未改 |
-| `ClientSessionClassicWorldDeathPenaltyIntegrationTest`（16） | 封包序列缺少期望的封包；經驗值不同（例如 239718 對 244276、157572 對 161020）；掉落件數 0/1 | **待分析**：死亡懲罰、經驗值與掉落屬 B（ClientSession），要對照正式版與候選的公式 | 未改 |
-| `ClientSessionRentalTownDirectoryTest`（2）、`NativeLitoRentalTeleportEndpointCatalogTest`（1） | `SocketTimeoutException: Read timed out`（等不到期望的封包） | **待分析**：可能是候選版租屋城鎮流程的封包不同，也可能是缺陷 1 的連鎖效應 | 未改 |
-| `ClientSessionWorldCkewEntryTest`（1）、`ClientSessionWorldRescueFollowerTest`（1） | `native first talk starts quest without HTML` 等斷言失敗 | **待分析** | 未改 |
-| `TournamentPresenceTest`（1）、`ModernNavigationSessionTest`（1） | 我改寫的版本碰到缺陷 1 | 改寫測試的 fixture 是未登入的 session | 拿掉對未登入 fixture 的 disconnect（第 2 次 commit） |
+| battle clock | monster tick | population → hub | `classicWorldMonsterTick` → `population.moveToward`（synchronized）→ pathfinder 的 blocked lambda → `NativeStaticNpcMotion.occupies` → `NativeStaticCancellationReplacement.all/live` → `synchronized(hub)`。`moveAway`、`idleMove`、`itemAction`、`returnGuardHome`、`nearTeleport`、`respawn`、`spawnQuestMonsterAt` 同類 |
+| battle clock | companion tick | hub → population | `NativeStaticNpcMotion.tick`：`synchronized(hub)` → `synchronized(population)` |
+| client | C_ATTACK | hub → population | `ClientSession.java:1764` → `attack` → `attackClassicWorld` → `CombatWorldCommit.prepare` |
+| client | 魔法攻擊 | hub → population | `CombatWorldMagic.prepare`／`enqueue` |
+| client | 馴服捕捉 | hub → population | `NativeTamedCaptureLifecycle` |
+| client | 斷線 | hub → population | `run()` finally → `nativeSummonOriginalDisconnect`（synchronized）→ `clearClassicWorldTargetsForOwner` → `population.clearTargetsForPlayer` |
 
-小計：
-- 已修或預期已修：7 類 14 項，另加我自己改寫的 2 項。
-- 候選缺陷待裁定：6 項。
-- 待分析：約 33 項，含 WaterDragon／PcActionReward 中非拆檔的部分。
-- 第 3 輪 CI 已確認：49 → 37 項（28 F＋9 E）。剩下：DeathPenalty 16、GameHubChannel 6（含缺陷 1 的 1 項）、缺陷 1 其他 3 項、缺陷 2 1 項、RentalTown／Teleport timeout 3、Ckew 1、Rescue 1、原始碼稽核 6（WaterDragon 1、PcActionReward 1、HonorRespawn 1、MatchEndEconomy 1、GroupHealing 2）。
+- **死鎖情境**：client 執行緒持有 hub、等 population；同時 battle clock 在 `moveToward` 裡持有 population、等 hub。
+- **新舊對照**：client 端的 hub → population 在 0.6.71 就有（`CombatWorldCommit`、`CombatWorldMagic`、`ClassicWorldNpcPathfinder` 對正式都是 SAME）。反向的 population → hub 是候選新增的（`NativeStaticNpcMotion`、`NativeStaticCancellationReplacement`、`lambda$moveToward$32` 在正式版不存在）。
+- **另外**：client 執行緒以 population → hub 取鎖的路徑沒有找到。
+- 鎖鏈與第 2 輪 CI 的 thread dump 吻合。
 
 ## 推測
 
-- 結論第 3 點的死鎖風險：只是從 thread dump 的取鎖順序推論出來的；正式環境中有沒有 hub → population 的 client 執行緒路徑，還沒有逐一查證。
-- 「待分析」各項中，有一部分可能只是缺陷 1 的連鎖效應（例如 Read timed out），修好缺陷 1 之後要重跑才能確認。
-- 第 3 輪預期仍會失敗的：WaterDragon／PcActionReward（非拆檔部分）、待分析各項、候選缺陷 6 項。
+- 死鎖在正式環境實際發生的機率沒有量測；`groundClock`（`GameHub.java:1475`）的取鎖順序也還沒分析；`serverClassicWorldDspyFollowerTick` 應該跑在 battle clock 上，但沒追到排程點。
+- 租屋：phase 設成 ROOM 之後，候選會先做經濟重置、私人商店與交易取消。讀程式判斷這些都不會送封包，也不會動到租屋欄位。
+- Heal All 行為測試沒有涵蓋寵物（companion）來源，也沒有涵蓋取消冥想／屏障／隱身的順序；「不同 instance」是直接改目標的 `classicWorldInstanceId=7` 模擬的。
 
 ## 待驗證
 
-- `mvn -B test` 全綠：**未達成**。
-- 實機回歸：登入、大廳、技能、進房、戰鬥結算、退出，以及 `b09-shape-diffs.md` 的 184 項形狀差異，交 M2 離線回歸與 T020-close（#31 全套），由使用者或 Codex 在本機執行。
-- 未啟動伺服器、登入器、遊戲；未連任何 DB。
+- `mvn -B test` 全綠：**未達成**。Ckew、Rescue 2 項等主控裁定；第 6 輪的結果見下表。
+- 實機回歸：登入、大廳、技能、進房、戰鬥結算、退出，以及 `b09-shape-diffs.md` 的形狀差異與取鎖順序，交 M2 離線回歸與 T020-close，由使用者或 Codex 在本機執行。
+- 沒有啟動伺服器、登入器、遊戲，也沒有連任何 DB；本機只編譯。
 
 ## CI 結果
 
 | run | commit | Server tests | 備註 |
 |---|---|---|---|
-| 42876069149 | `0e957635` | 取消（卡住超過 24 分鐘） | 主分支同一個 job 約 8.5 分鐘；跑到第 1,005／1,271 個測試類別時死鎖 |
-| 42882305652 | `28247dd8` | **失敗**：6048 run，38 F，11 E，117 skipped | 含暫時診斷；thread dump 定位死鎖 |
-| 42885291818／42885667308 | `562bdb9f`／`14e958bb` | **失敗**：6048 run，**28 F，9 E**，117 skipped，7:36（不再卡住） | 本輪修正的 7 類全部通過；PcActionReward 由 3 項降為 1 項。剩下 15 類 37 項：候選缺陷 6 項，其餘待分析 |
+| 42876069149 | `0e957635` | 取消（卡住超過 24 分鐘） | 死鎖 |
+| 42882305652 | `28247dd8` | 失敗：6048 run，38 F，11 E | 含暫時診斷 |
+| 42885667308 | `14e958bb` | 失敗：6048 run，28 F，9 E | 不再卡住 |
+| 42890240229 | `ab4cf25e` | 失敗：32 項 | 修好缺陷 1、2，5 項通過；新增的 3 項單元測試通過 |
+| 42893352221 | `3ddd435b` | 失敗：6052 run，**5 F，1 E** | 死亡懲罰、配對、租屋相關 26 項全部通過；剩 Ckew、Rescue（needs:claude），以及 4 項行為測試 fixture |
+| 42896918558 | `751c7a75` | 失敗：6052 run，**2 F，1 E** | Honor 2 項、Heal All 1 項通過；剩 Ckew、Rescue（needs:claude），以及 Tournament 行為測試 1 項 E（fixture 的 accounts 是 null） |
+| （第 7 輪） | 本 commit | 見 PR #315 | Tournament fixture 改為傳入 `AccountRepository.open(config)`；預期只剩 Ckew、Rescue 2 項 |
 
-其他 job：`Server (Java 17 / Maven)`、`Launcher`、`Build-Package.ps1 zip`、`Semantic gap (non-blocking)` 兩輪都是 pass。
+其他 job（`Server (Java 17 / Maven)`、`Launcher`、`Build-Package.ps1 zip`、`Semantic gap`）每一輪都 pass。
 
 ## 產出路徑
 
-- 程式：`lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/`（303 個 B 類別、Accounts.java 拆分、刪除 ModernCaptureLog.java）
-- 測試：`TournamentPresenceTest`、`ModernNavigationSessionTest`、`ClientSessionLitoRoomInvitationTest`、`NativeMagicDollTest`、`ProtocolBattleTest`、`BattleSpellCatalogTest`、`ClientSessionClassicWorldMonsterAggressionIntegrationTest`、`NativeHotelSqlFirstPersistenceSourceAuditTest`、`NativeCastleSecuritySettlementSourceAuditTest`、`WaterDragonSqlFirstPersistenceSourceAuditTest`、`PcActionRewardSqlFirstSourceAuditTest`；刪除 `ModernCaptureLogTest`
-- 清單：`docs/combat-merge/{exceptions-exempt,extra-methods-approved}.txt`、`docs/combat-merge/b09-shape-diffs.md`、`docs/server-source-gap.md`
-- 證據：`docs/reports/issue-138/`（land.py、throws_fix.py、verify.py、shape_check.py、approvals_gap.py、mvn.ps1、semantic-summary.json、semantic-commands.json、b-approved-exceptions-exempt.txt）
+- 程式：`lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/`（303 個 B 類別；本輪改了 `NativeSummonRetirement.java`、`ClassicWorldMonsterPopulation.java`）
+- 測試：
+  - 本輪新增：`NativeSummonRetirementUnboundDisconnectTest`、`NativeHonorRespawnBehaviorTest`、`NativeTournamentMatchEndEconomyBehaviorTest`、`NativeWorldGroupHealingBehaviorTest`、`PcActionRewardBehaviorTest`、`WaterDragonSqlFirstPersistenceBehaviorTest`
+  - 本輪修改：`ClassicWorldMonsterCatalogTest`、`ClientSessionClassicWorldDeathPenaltyIntegrationTest`、`GameHubChannelTest`、`ClientSessionRentalTownDirectoryTest`、`NativeLitoRentalTeleportEndpointCatalogTest`、`NativeTournamentMatchEndEconomySourceAuditTest`、`PcActionRewardSqlFirstSourceAuditTest`
+  - 本輪刪除：`NativeHonorRespawnSourceAuditTest`、`NativeWorldGroupHealingSourceAuditTest`、`WaterDragonSqlFirstPersistenceSourceAuditTest`
+- 清單：`docs/combat-merge/deviations.txt`（新增 2 條）、`docs/combat-merge/b09-shape-diffs.md`（新增取鎖順序一節）
+- 證據：`docs/reports/issue-138/`（verify.py、shape_check.py、basediff.py、sf_failures.py、semantic-summary.json、semantic-commands.json、b-approved-deviations.txt 等）
 - 分支 `task/138`，PR #315
 
 ## 給下一棒的提示
 
-1. **主控**：先裁定結論中的 6 點。缺陷 1、2 若決定修，B 類別會偏離候選，需要 deviation／method-diff 核准。建議做法：
-   - 缺陷 1：`beforeDisconnect` 在 session 沒有選擇伺服器或帳號時直接略過。
-   - 缺陷 2：把 `ifeq` 改回正式版的 `!=` 檢查。
-2. **下一輪 code**：
-   - 依第 3 輪 CI 結果，處理「待分析」各項：先修缺陷 1，再看 Read timed out 類是否跟著消失。
-   - DeathPenalty（16 項）與 GameHubChannel（5 項）要對照正式 JAR 的行為：用 javap 比對 `ClientSession`／`GameHub` 的對應方法在正式版與候選版是否相同。相同就判為測試過時，不同就判為候選修改，再看是否符合戰鬥同源化的目標。
-3. **本機限制下的除錯方法**：CI 卡住時，可以像本輪一樣在該測試類別暫時加上 `@Timeout(threadMode = SEPARATE_THREAD)`，並在 `@AfterEach` 用 `ThreadMXBean.dumpAllThreads` 取得 dump，取得後要移除。日誌在 artifact `server-test-evidence` 的 `mvn-test.log`；`gh run view --log` 會被超長十六進位行截斷，不要用它看。
-4. **T020-close**：B 範圍對候選的比對用 `verify.py` 的 `b-approved` 模式。整顆 JAR 對正式版比對時，只能套用非 B owner 的核准條目，否則 `NativeLightAction$Batch#emit()V` 的 method-diff 會對不到，工具 exit 1。
-5. B 批次是各自對候選 JAR 編譯的，**只靠批次驗收看不出跨批次 checked exception 的不一致**。之後若再用暫存區流程，最後要整體跑一次 `javac`。
+1. **主控**：裁定結論中的 needs:claude 第 1–3 點，第 4–5 點是提醒。
+   - 若 Ckew／Rescue 判定「接受候選行為」：照上表「若核准」的說明改測試。
+   - 若判定「改回正式行為」：要在 `NativeStaticNpcMotion` 加偏離，並登記 method-diff。
+   - 死鎖的修法建議：讓 `NativeStaticNpcMotion.occupies` 在 population 鎖內不要取 hub 鎖，例如事先在 hub 鎖內做好快照。這會讓 B 偏離候選，需要核准。
+2. **下一輪 code**：第 6 輪若還有失敗，用 `py -I docs/reports/issue-138/sf_failures.py <surefire-reports>` 看明細。artifact `server-test-evidence` 裡有 surefire XML 與 `mvn-test.log`。
+3. **T020-close**：B 範圍對候選的比對用 `verify.py` 的 `b-approved` 模式；整顆 JAR 對正式版比對時，只能套用非 B owner 的核准條目。
+4. B 批次是各自對候選 JAR 編譯的，跨批次的 checked exception 不一致只有整體跑一次 `javac` 才看得出來。

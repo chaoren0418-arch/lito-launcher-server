@@ -40,6 +40,8 @@ final class NativeTournamentMatchEndEconomyBehaviorTest {
         String source = config.classicServerNames().get(0);
         GameHub hub = new GameHub(config, state);
         try (hub;
+             // Production sessions always carry the account repository; settlement routing reads it.
+             AccountRepository accounts = AccountRepository.open(config);
              ServerSocket winnerListener = listener();
              Socket winnerClient = connect(winnerListener);
              Socket winnerServer = winnerListener.accept();
@@ -48,8 +50,8 @@ final class NativeTournamentMatchEndEconomyBehaviorTest {
              Socket loserServer = loserListener.accept()) {
             winnerClient.setSoTimeout(1_000);
             loserClient.setSoTimeout(1_000);
-            ClientSession winner = session(winnerServer, config, state, hub, "winner");
-            ClientSession loser = session(loserServer, config, state, hub, "loser");
+            ClientSession winner = session(winnerServer, config, accounts, state, hub, "winner");
+            ClientSession loser = session(loserServer, config, accounts, state, hub, "loser");
 
             RuntimeInventory winnerInventory = new RuntimeInventory();
             long sourceSword = winnerInventory.addDistinctState(
@@ -132,11 +134,11 @@ final class NativeTournamentMatchEndEconomyBehaviorTest {
         return roomId;
     }
 
-    private ClientSession session(Socket socket, ServerConfig config,
+    private ClientSession session(Socket socket, ServerConfig config, AccountRepository accounts,
                                   GameStateStore state, GameHub hub, String name)
             throws Exception {
         return new ClientSession(socket, ClientSession.Endpoint.GAME, config,
-                null, state, new CaptureLog(temporary.resolve(name)), hub);
+                accounts, state, new CaptureLog(temporary.resolve(name)), hub);
     }
 
     private static void initialize(ClientSession session, CharacterSummary character,
