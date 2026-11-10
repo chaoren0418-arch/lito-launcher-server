@@ -41,11 +41,15 @@ final class DurableBattleSettlement {
   for(var player:roster)ticket(player);
   synchronized(c){
    BattleRules.Resolution effective=c.terminal!=null?c.terminal:proposed;if(effective.ended()&&c.terminal==null)c.terminal=effective;
-   List<SettlementJournal.Entry> fresh=new ArrayList<>();
+   List<SettlementJournal.Entry> fresh=new ArrayList<>();List<Identity> identities=new ArrayList<>();
+   for(var player:roster){if(c.testRoom||player.isObserver())continue;var route=route(player);if(route==null)continue;
+    var ch=(CharacterSummary)call(player,"selectedCharacterSummary",new Class[]{});if(ch!=null)identities.add(new Identity(player.playerObjectId(),route.database,ch.objectId()));}
+   requireDistinct(identities);
    for(var player:roster){if(c.testRoom||player.isObserver())continue;long id=player.playerObjectId();if(!effective.winners().contains(id)&&!effective.losers().contains(id))continue;
     Ticket t=ticket(player);if(t.entry!=null)continue;var route=route(player);if(route==null)continue;
-    var ch=(CharacterSummary)call(player,"selectedCharacterSummary",new Class[]{});if(ch==null)throw new IOException("settlement character missing");boolean won=effective.winners().contains(id);
-    t.entry=new SettlementJournal.Entry(SettlementJournal.Entry.key(c.battle,route.database,ch.objectId()),c.battle,route.database,route.name,route.controls,ch.objectId(),ch.name(),won,!won&&disconnected.contains(id));fresh.add(t.entry);
+    var ch=(CharacterSummary)call(player,"selectedCharacterSummary",new Class[]{});if(ch==null)throw new IOException("settlement character missing");
+    // Runtime id decides won/lost; the durable identity is always (source database, raw objid).
+    t.entry=entry(c.battle,id,route.database,route.name,route.controls,ch.objectId(),ch.name(),effective,disconnected);fresh.add(t.entry);
    }
    if(!fresh.isEmpty()){var all=new ArrayList<>(c.unsaved);all.addAll(fresh);c.unsaved=List.copyOf(all);}
    if(!c.unsaved.isEmpty()){
@@ -55,6 +59,18 @@ final class DurableBattleSettlement {
    }
    return effective;
   }
+ }
+ /** One combatant's in-battle runtime id and its durable source identity (T105). */
+ record Identity(long runtimeId,String database,long character){}
+ /** A runtime id shared by two different source identities would settle both players identically; refuse it. */
+ static void requireDistinct(Collection<Identity> identities)throws IOException{
+  Map<Long,Identity> seen=new HashMap<>();
+  for(var i:identities){var old=seen.putIfAbsent(i.runtimeId(),i);if(old!=null&&(!old.database().equals(i.database())||old.character()!=i.character()))throw new IOException("runtime object id collision "+i.runtimeId()+": "+old.database()+"/"+old.character()+" vs "+i.database()+"/"+i.character());}
+ }
+ /** Frozen settlement row for one combatant, or null when the resolution does not rank it. */
+ static SettlementJournal.Entry entry(String battle,long runtimeId,String database,String source,String controls,long character,String name,BattleRules.Resolution effective,Set<Long> disconnected){
+  boolean won=effective.winners().contains(runtimeId);if(!won&&!effective.losers().contains(runtimeId))return null;
+  return new SettlementJournal.Entry(SettlementJournal.Entry.key(battle,database,character),battle,database,source,controls,character,name,won,!won&&disconnected.contains(runtimeId));
  }
  static BattleRules.Resolution freezeDisconnect(GameHub hub,long room,List<ClientSession> roster,BattleRules.Resolution proposed,Set<Long> departed){
   Context c=roster.isEmpty()?context(hub,room):ticket(roster.get(0)).context;

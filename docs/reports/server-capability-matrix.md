@@ -48,7 +48,7 @@
 | 來源表 `lito_source_server` | 不使用（S1 §5） | 1～8；SQL 種子啟用 3 個，README 寫「公牛、天使」，兩份文件不一致（LC X1、X2） | **缺**：沒有權威的部署規格 | T104 |
 | 部署權限清單 | — | 逐表 SELECT 漏了 `角色_智力成長`，部署即啟動失敗（G01；#284） | **缺**：沒有從程式產生的完整權限清單 | T104 |
 | `character_lito` 引擎 | 380_ac.sql:983 為 **MyISAM** | 結算用 `GET_LOCK`＋`last_result_id` 寫回，允許 InnoDB 或 MyISAM（S1 §6） | **未驗證**：MyISAM 沒有交易，需確認寫回邏輯在 MyISAM 下仍正確，或規定改 InnoDB | T104 |
-| 跨來源角色 ID | 多服合併時 objid 可能重編（S1 §5，`CrossAccountMerge` 待驗證） | 戰鬥內直接用來源 objid，兩個來源撞號時的處理**未找到**（LC X10） | **缺**：真實風險 | T105 |
+| 跨來源角色 ID | 多服合併時 objid 可能重編（S1 §5，`CrossAccountMerge` 待驗證） | 戰鬥內直接用來源 objid，兩個來源撞號時的處理**未找到**（LC X10）→ #306 已在 src/main 加來源區隔（`SourceObjectIds`，見 `docs/design/database.md` §10） | src/main **已處理**（單元測試 CI 驗）；正式 0.6.71 JAR 未含、實機待驗證 | T105 |
 | 中文欄位對照 | weapon／armor 中文欄位對 `L1Weapon/L1Armor`（S1 §2，`ItemTable.java:413-502,548-589`） | `LegacyEquipmentMagicLoader` 讀中文欄位（LC I2）；P24Lab 的 tw-bin 結構不同（#284 `裝備_armor_魔法.id`） | **未驗證**：沒有欄位對照文件，換環境就壞 | T104 |
 
 ---
