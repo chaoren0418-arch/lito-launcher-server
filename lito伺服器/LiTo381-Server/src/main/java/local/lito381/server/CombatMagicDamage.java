@@ -17,7 +17,7 @@ final class CombatMagicDamage {
     static Attempt attempt(int damage,int mr,int hit){return new Attempt(damage,mr,hit,null);}
     static int deferMr(int damage,int mr,int hit){return CombatRules.loaded()?damage:BattleMagicResistance.damageAfterResistance(damage,mr,hit);}
     static Attempt ordinary(ClientSession caster,int skill,int attribute,int source,int elemental,int mr,int armor,String description,ClientSession target) {
-        if(CombatRules.loaded()){if(target!=null&&CombatPlayerMagic.protectedZero(target,System.nanoTime()))return new Attempt(0,-2,0,null);if(target==null)return CombatNpcMagic.ordinary(caster,skill,attribute,source,elemental,mr,armor,description,true);return (Attempt)CombatAccess.call(caster,"sourceMagicDamageBeforeResistance",PRE_MR,skill,attribute,source,elemental,mr,armor,description);}
+        if(CombatRules.loaded()){if(target!=null&&CombatPlayerMagic.protectedZero(target,System.nanoTime()))return new Attempt(0,-2,0,null);if(target==null)return CombatNpcMagic.ordinary(caster,skill,attribute,source,elemental,mr,armor,description,true);return (Attempt)CombatAccess.call(caster,"sourceMagicDamageBeforeResistance",PRE_MR,skill,attribute,source,elemental,CombatPlayerMagic.targetMr(mr,target),armor,description);}
         return attempt(CombatAccess.integerCall(caster,"ordinaryMagicDamage",ORDINARY,skill,attribute,source,elemental,mr,armor,description),-1,0);
     }
     static Attempt line(ClientSession caster,BattleSpellCatalog.DirectionalLineSpell spell,int source,int elemental,int mr,int armor,String description,ClientSession target) {
@@ -31,7 +31,7 @@ final class CombatMagicDamage {
         if(!CombatRules.loaded()||target==null)return new Attempt(result.damage(),-1,hit,result);
         int raw=source-result.armorReduction();boolean protectedZero=CombatPlayerMagic.protectedZero(target,System.nanoTime());if(protectedZero)raw=0;
         var deferred=new BattleFinalBurn.Result(result.sourceMp(),result.armorReduction(),raw,raw,result.casterHpAfter(),result.casterMpAfter());
-        return new Attempt(deferred.damage(),protectedZero?-2:mr,hit,deferred);
+        return new Attempt(deferred.damage(),protectedZero?-2:CombatPlayerMagic.targetMr(mr,target),hit,deferred);
     }
     static int beforeCritical(BattleSpellCatalog.AttackSpell spell,int damage,boolean critical,ClientSession target) {
         return CombatRules.loaded()&&target!=null?damage:spell.damageAfterSpecialCritical(damage,critical);

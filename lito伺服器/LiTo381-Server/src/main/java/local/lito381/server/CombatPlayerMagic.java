@@ -4,6 +4,11 @@ package local.lito381.server;
 final class CombatPlayerMagic {
  private static final String P="local/lito381/server/";
  static int signedPreMr(int value,int zero){return CombatRules.loaded()?value:Math.max(value,zero);}
+ /** L1MagicMode.getTargetMr: PC targets add the lawful guardian MR (Lv1..3 = +3/+6/+9). */
+ static int guardianMr(long lawful){return NativeCancellationProbability.guardianMr(lawful);}
+ static int targetMr(int mr,ClientSession target){return target==null||mr<0?mr:Math.addExact(mr,guardianMr(target.characterLawful()));}
+ /** L1MagicPc.calcMagicDiceDamage/getTargetSp: evil guardian Lv1..3 adds 1..3 to the dice sum and to item SP. */
+ static int evilGuardian(long lawful){return lawful>=-19999&&lawful<=-10000?1:lawful>=-29999&&lawful<=-20000?2:lawful>=-39999&&lawful<=-30000?3:0;}
  static boolean protectedZero(ClientSession target,long now){if(target==null)return false;var status=(BattleTimedStatus)CombatAccess.field(target,"timedStatus");return status.absoluteBarrierActive(now)||status.earthBindActive(now)||status.freezeActive(now);}
  static int protect(ClientSession target,int damage,String description){if(!CombatRules.loaded())return CombatAccess.integerCall(target,"earthBindProtectedCombatDamage","(ILjava/lang/String;)I",damage,description);return protectedZero(target,System.nanoTime())?0:damage;}
  static int reductions(ClientSession target,int damage,String description){

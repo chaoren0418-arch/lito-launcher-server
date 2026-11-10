@@ -34,8 +34,8 @@
 | AC 減傷 | `L1AttackMode.calcPcDefense`（ac=10−AC，rnd(max)+max/8）、NPC：rnd(ac/7)+ac/7（S1 §3） | `BattlePhysicalDefense`（LC B6、B7） | **未驗證** | T101 |
 | 素質補正 | `CalcStat.calcStrHit/DexHit/StrDmg/DexDmg`（查 BaseStatTable） | SQL 成長表換算（LC A4、A6） | **未驗證**；S1 的 `BaseStatTable` 欄位本身待查（S1 §1） | T101 |
 | 職業傷害倍率 | `ConfigPcDamage`（S1 §0.2） | `CombatClassDamage` 讀 `Other_To_is*`；接線是 patch（LC B8） | **未驗證**；B-land 後要確認呼叫點在原始碼裡 | T101 |
-| 魔法傷害、MR、技能機率 | `L1SkillUse` 與 `skillmode/*`（S1 §4） | `CombatMagicDamage`、`BattleMagicResistance`、`CombatProbability`（LC A8、A10、B9、B10） | **未驗證**；B10 也是 patch 接線 | T102 |
-| 生命的祝福 +100 | 待在 S1 查證 | 程式依 Source 設為 0；舊文件說缺 +100，兩邊矛盾（LC B12） | **未驗證**（矛盾） | T102 |
+| 魔法傷害、MR、技能機率 | `L1MagicPc.calcMagicDamage/calcMagicDiceDamage/calcMrDefense/calcProbabilityMagic/calcProbabilityWithConfig`（`~/model/L1MagicPc.java:139-1126`）、`L1MagicMode`、`L1AttackList.MRDMG`；入口 `L1SkillUse.java:2838-3003` | `CombatMagicDamage`、`BattleMagicResistance`、`BattleElementalResistance`、`CombatProbability`、`SourceSkillControls`、`BattleTurnUndead`（LC A8、A10、B9、B10） | **已對照**（T102，`docs/design/formulas-magic.md` 39 項）：MR 表、屬性／INT 係數、爆擊、表控機率 34 列、舊公式、原始素質表皆一致；**已修正** INT≥44 MagicBonus、正義守護 MR、邪惡守護骰值／SP；呼叫點已在 `src/main`（B10 不再是 patch）。待驗證：魔眼 SP、SKD3 清單、千分比迴避 | T102（完成）；T107～T109 |
+| 生命的祝福 +100 | `ConfigSkill._loadFromProperties` 不讀 `NATURES_BLESSING_HEAL`（`ConfigSkill.java:93-134`，只有 `_setDefaults:207` 設 0）；設定檔的 `= 100` 是無效設定 | 固定 0（`CombatRules.java:111-113`） | **已驗證：0 是對的**，「缺 +100」不成立（LC B12 結論，見 `formulas-magic.md` §4）；要 +100 屬新設計決定 | T102（完成） |
 | HP／MP | `L1Character.getMaxHp/getMaxMp`、`CalcStat.calcStatHp/Mp`（S1 §1） | 進場直接補滿，**沒讀** CurHp／CurMp（LC A3）；回復依藥水與技能 | **缺**（設計待定：進場補滿是否為規則） | T100、T103 |
 | 藥水與消耗品 | `data/item_etcitem/hp/UserAddHp` 等，參數寫在 `etcitem.classname`（S1 §2） | 回復範圍寫死在 `InventoryCatalog`（LC I7、I8） | **未驗證**；數值來源不同（S1 讀 SQL，LiTo 寫死） | T111 |
 | 積分／排名 | 無 | ranking_points（LC B17） | **缺**：公式沒有設計依據 | T103 |

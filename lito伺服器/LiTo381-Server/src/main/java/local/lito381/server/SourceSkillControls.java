@@ -149,7 +149,8 @@ final class SourceSkillControls {
     static int chance(Probability row,Caster caster,Target target,int bossModifier) {
         if(target.boss()&&bossModifier==0)return 0;
         double chance=caster.level()>target.level()?row.high():caster.level()==target.level()?row.equal():row.low();
-        chance+=caster.strength()*row.strength()+caster.dexterity()*row.dexterity()+caster.intelligence()*row.intelligence();
+        // Same double accumulation order as calcProbabilityWithConfig (STR, DEX, INT added one by one).
+        chance+=caster.strength()*row.strength();chance+=caster.dexterity()*row.dexterity();chance+=caster.intelligence()*row.intelligence();
         if(row.magicHit())chance+=caster.magicHit();
         if(row.magicLevel())chance+=caster.magicLevel();
         chance-=target.mr()*row.mr();

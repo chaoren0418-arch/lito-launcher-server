@@ -26,7 +26,10 @@ final class BattleTurnUndead {
         if (intelligence <= 33) return 12;
         if (intelligence <= 36) return 13;
         if (intelligence <= 39) return 14;
-        return 15;
+        if (intelligence <= 43) return 15;
+        // 1-server L1Character.getMagicBonus default branch (INT-28) and the
+        // 380_db 角色_智力成長 rows 44..127; the PC table key is capped at 127.
+        return Math.min(intelligence, 127) - 28;
     }
 
     static int magicLevel(int characterType, int playerLevel) {
