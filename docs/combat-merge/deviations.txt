@@ -28,3 +28,9 @@ local/lito381/server/NativeLightAction$Batch#emit()V  method-diff  # approved: h
 local/lito381/server/NativeSummonRetirement#beforeDisconnect(Llocal/lito381/server/GameHub;Llocal/lito381/server/ClientSession;)V  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6777167802
 # #138 主控裁定 2：候選缺陷：同一 actor 的兩個快照必然相等，ifeq -> throw 導致每次釋放都拋例外；改回正式版 ifne。
 local/lito381/server/ClassicWorldMonsterPopulation$TamedRelease#<init>(Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot;)V  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6777167802
+# #138 主控裁定 2：候選吞掉可見 L1Quest 靜態 NPC 的 S_REMOVE_OBJECT（改由後續 PUT 對齊）；正式版直接送出。候選未送 S_REMOVE_OBJECT，客戶端可能殘留物件；無收據支持此改動。改回送出。
+local/lito381/server/NativeStaticNpcMotion#frame(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)V  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6779200651
+local/lito381/server/NativeStaticNpcMotion#nativeSourceWeaponFrame(Llocal/lito381/server/ClientSession;[BLjava/lang/String;Ljava/lang/Object;)V  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6779200651
+# #138 主控裁定 3：monster tick 持有 population 鎖時經 occupies 取 hub 鎖（population → hub），與 0.6.71 client 執行緒的 hub → population 相反，會死鎖。改為不取 hub 鎖，讀 volatile pose 快照與 ConcurrentHashMap 的 scene actors。
+local/lito381/server/NativeStaticNpcMotion#occupies(IIILlocal/lito381/server/ClassicWorldMonsterPopulation;)Z  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6779200651
+local/lito381/server/NativeStaticNpcScene$State#<init>()V  method-diff  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/138#issuecomment-6779200651

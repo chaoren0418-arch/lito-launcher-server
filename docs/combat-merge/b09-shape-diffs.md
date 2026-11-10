@@ -3579,3 +3579,10 @@ battle clock 是 `newSingleThreadScheduledExecutor`（`GameHub.java:1467`），m
 對正式版：`CombatWorldCommit`、`CombatWorldMagic`、`ClassicWorldNpcPathfinder` 對 `base-0.6.71.jar` 為 SAME（client 的 hub → population 在 0.6.71 已存在）；`NativeStaticNpcMotion`、`NativeStaticCancellationReplacement` 與 `ClassicWorldMonsterPopulation.lambda$moveToward$32` 在 0.6.71 不存在（ONLY_LEFT）。也就是 population → hub 這個方向是候選 50635f7e 新增的，0.6.71 沒有這個反向。
 
 M2 回歸要驗：多名玩家在有 static NPC 的地圖持續近戰／施法打怪，同時怪物在追擊移動（`moveToward`），長時間（建議 ≥30 分鐘）不得卡住；卡住時取 `jstack`，確認是否為上述兩條鏈。已列 needs:claude 請主控裁定是否在 M2 之前修正（例如 population 內改用不取 hub 的 static NPC 佔位快照）。
+### 修正（#138 主控裁定 @ `d256af70` 第 3 點，已登記 method-diff）
+
+- `NativeStaticNpcMotion.occupies(map,x,y,population)` 改為**不取 hub 監視器**：直接讀 volatile 的 `State.poses`（不可變 `Map.copyOf`）與 `NativeStaticNpcScene.State.actors`（改為 `ConcurrentHashMap`，寫入端仍持 hub）判斷靜態 NPC 佔位與 Cancellation 取代（retired）狀態，結果與 hub 鎖內的 `occupies(hub,…)` 相同。
+- monster tick 因此只持 population、不再等 hub，population → hub 的反向消失；companion tick 與 client 執行緒維持 0.6.71 的 hub → population。
+- 讀到的是最近一次在 hub 鎖內發布的快照，最多落後一次 publish（與 tick 先後順序的一般競態同級；真正的落地提交仍在 hub 鎖內）。
+- 確定性測試：`NativeStaticNpcMotionLockOrderTest`（兩條執行緒以 latch 各拿一把鎖；以 `ThreadMXBean` 判斷 tick 是否 BLOCKED 在 client 持有的 hub 上，不靠逾時）。
+- M2 回歸仍建議照上段做長時間打怪，確認 `jstack` 沒有其他鎖鏈。

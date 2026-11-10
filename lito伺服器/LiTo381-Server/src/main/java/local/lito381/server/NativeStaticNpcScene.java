@@ -9,7 +9,8 @@ final class NativeStaticNpcScene {
   Integer gfx,heading;
   NativeCancellationNpcStatic.Appearance appearance;volatile boolean nativeStaticCancellationRetired;volatile Object nativeStaticRespawn;
  }
- static final class State {final Map<Key,Actor> actors=new HashMap<>();volatile Object nativeStaticMotion;}
+ /** #138 ruling 3 (method-diff): actors is concurrent so monster ticks can read it without the hub monitor; writers still hold hub. */
+ static final class State {final Map<Key,Actor> actors=new java.util.concurrent.ConcurrentHashMap<>();volatile Object nativeStaticMotion;}
  static int instance(ClientSession pc){return (int)CombatAccess.field(pc,"classicWorldInstanceId");}
  static boolean scoped(ClassicWorldNpcCatalog.StaticNpc npc,ClientSession pc){return npc!=null&&instance(pc)>0&&npc.implementation().equals("L1Quest");}
  static State state(GameHub hub,boolean create){

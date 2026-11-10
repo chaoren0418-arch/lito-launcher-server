@@ -130,7 +130,8 @@ final class NativeStaticNpcMotion {
   synchronized(pc){if(!viewer(pc,view,state,epoch))return;var pose=state.poses.get(key);if(pose==null)return;
    boolean visible=BattleSpellCatalog.isInNativeScreen((int)CombatAccess.field(pc,"positionX"),(int)CombatAccess.field(pc,"positionY"),pose.x(),pose.y());
    if(!visible){if(epoch.known.containsKey(id)){pc.nativeStaticOriginalFrame(Protocol.removeObject(id),note);epoch.known.remove(id);}return;}
-   if(op==Protocol.S_REMOVE_OBJECT)return;
+   // #138 ruling 2 (method-diff): forward a visible S_REMOVE_OBJECT like 0.6.71 instead of swallowing it.
+   if(op==Protocol.S_REMOVE_OBJECT){pc.nativeStaticOriginalFrame(packet,note);epoch.known.remove(id);return;}
    if(op==Protocol.S_POLYMORPH||op==Protocol.S_CHANGE_DESC){
     byte[] current=op==Protocol.S_POLYMORPH?Protocol.classicStaticNpcShape(id,pose.gfx(),0):Protocol.changeDescription(id,pose.name());
     if(!Arrays.equals(packet,current))return;var known=epoch.known.get(id);
@@ -237,7 +238,23 @@ final class NativeStaticNpcMotion {
  }
  static void bind(ClassicWorldMonsterPopulation population,GameHub hub,int instance){if(population!=null){CombatAccess.set(population,"nativeStaticMotionHub",new WeakReference<>(hub));CombatAccess.set(population,"nativeStaticMotionInstance",instance);}}
  static ClassicWorldMonsterPopulation bound(ClassicWorldMonsterPopulation population,GameHub hub,int map,int instance){bind(population,hub,map==ClassicWorldCkewCatalog.MAP_ID||map==ClassicWorldWaterDragonCatalog.MAP_ID?instance:-1);return population;}
- static boolean occupies(int map,int x,int y,ClassicWorldMonsterPopulation population){var ref=(WeakReference<?>)CombatAccess.field(population,"nativeStaticMotionHub");var hub=ref==null?null:(GameHub)ref.get();return hub==null?ClassicWorldNpcCatalog.occupies(map,x,y):occupies(hub,(int)CombatAccess.field(population,"nativeStaticMotionInstance"),map,x,y,0);}
+ /**
+  * #138 ruling 3 (method-diff): monster ticks call this while holding the population monitor.
+  * Taking the hub monitor here (population -> hub) inverted the 0.6.71 client order (hub -> population)
+  * and could deadlock. Read the volatile pose snapshot and the concurrent scene actor map instead;
+  * this thread never acquires the hub monitor.
+  */
+ static boolean occupies(int map,int x,int y,ClassicWorldMonsterPopulation population){var ref=(WeakReference<?>)CombatAccess.field(population,"nativeStaticMotionHub");var hub=ref==null?null:(GameHub)ref.get();if(hub==null)return ClassicWorldNpcCatalog.occupies(map,x,y);
+  int instance=(int)CombatAccess.field(population,"nativeStaticMotionInstance");
+  var state=state(hub,false);var poses=state==null?Map.<NativeStaticNpcScene.Key,Pose>of():state.poses;
+  var scene=(NativeStaticNpcScene.State)CombatAccess.field(hub,NativeStaticNpcScene.FIELD);
+  for(var npc:ClassicWorldNpcCatalog.all(map)){
+   if(npc.objectId()==0L||ClassicWorldGuardianCatalog.isGuardian(npc)||ClassicWorldGuardCatalog.isGuard(npc))continue;
+   var key=new NativeStaticNpcScene.Key(npc.mapId(),instance,npc.objectId());
+   var actor=scene==null?null:scene.actors.get(key);if(actor!=null&&(boolean)CombatAccess.field(actor,NativeStaticCancellationReplacement.FIELD))continue;
+   var pose=poses.get(new NativeStaticNpcScene.Key(map,instance,npc.objectId()));if((pose==null?npc.x():pose.x())==x&&(pose==null?npc.y():pose.y())==y)return true;
+  }return false;
+ }
  static void nativeCompanionSceneAdvance(ClientSession pc,Object location,String reason){retire(pc);try{NativeCompanionRoleIdentity.advanceScene(pc,location,reason);}finally{retire(pc);}}
  static void touch(ClassicWorldNpcCatalog.StaticNpc npc,ClientSession pc){NativeStaticCancellationReplacement.touch(npc,pc);}
  static void talk(ClientSession pc,ClassicWorldNpcCatalog.StaticNpc npc)throws IOException{NativeStaticCancellationReplacement.talk(pc,npc);}
@@ -253,7 +270,8 @@ final class NativeStaticNpcMotion {
   synchronized(pc){if(!viewer(pc,view,state,epoch))return;var pose=state.poses.get(key);if(pose==null)return;
    boolean visible=BattleSpellCatalog.isInNativeScreen((int)CombatAccess.field(pc,"positionX"),(int)CombatAccess.field(pc,"positionY"),pose.x(),pose.y());
    if(!visible){if(epoch.known.containsKey(id)){NativeSourceWeaponFinalFrame.frame(pc,Protocol.removeObject(id),note,output);epoch.known.remove(id);}return;}
-   if(op==Protocol.S_REMOVE_OBJECT)return;
+   // #138 ruling 2 (method-diff): forward a visible S_REMOVE_OBJECT like 0.6.71 instead of swallowing it.
+   if(op==Protocol.S_REMOVE_OBJECT){NativeSourceWeaponFinalFrame.frame(pc,packet,note,output);epoch.known.remove(id);return;}
    if(op==Protocol.S_POLYMORPH||op==Protocol.S_CHANGE_DESC){
     byte[] current=op==Protocol.S_POLYMORPH?Protocol.classicStaticNpcShape(id,pose.gfx(),0):Protocol.changeDescription(id,pose.name());
     if(!Arrays.equals(packet,current))return;var known=epoch.known.get(id);
