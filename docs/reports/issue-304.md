@@ -25,7 +25,7 @@
 ## 怎麼驗證
 
 ### 已驗證
-- 本機 `javac`（JDK 17，`-proc:none`，只編譯不執行）全量編譯 `src/main/java`＋`compile-stubs`＋新測試＋`BattleTurnUndeadTest`（1176 檔，classpath：junit-jupiter-api 5.10.3、HikariCP 5.1.0、mysql-connector-j 8.0.33）：**exit 0**。輸出在 `scratch/t304_classes`（不進 git）。依規定本機不執行測試。
+- 本機 `javac`（JDK 17，`-proc:none`，只編譯不執行）合併 main（含 #303）後全量編譯 `src/main/java`＋`compile-stubs`＋新測試＋`BattleTurnUndeadTest`＋`PhysicalFormulaServer1ParityTest`（1177 檔，classpath：junit-jupiter-api 5.10.3、HikariCP 5.1.0、mysql-connector-j 8.0.33）：**exit 0**。輸出在 `scratch/t304_classes`（不進 git）。依規定本機不執行測試。
 - 參考表唯讀抽取自 `D:\lineage開發\1-伺服器\db\380_db.sql`：
   - `角色_精神成長.魔防` 51 列 → LiTo 0 筆不一致；
   - `角色_智力成長.魔法加成` 127 列 → 本 PR 前 84 筆不一致（INT 44..127），本 PR 後 0 筆；
