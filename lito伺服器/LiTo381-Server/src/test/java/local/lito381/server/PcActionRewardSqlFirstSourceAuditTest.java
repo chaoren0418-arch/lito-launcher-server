@@ -26,7 +26,11 @@ final class PcActionRewardSqlFirstSourceAuditTest {
     @Test
     void rewardRowAndDestinationShareOneLockedMutationDomain() throws Exception {
         String repository = LocalResources.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
-                StandardCharsets.UTF_8);
+                StandardCharsets.UTF_8)
+                // #138 B-land: LegacyMySqlRepository now lives in its own file.
+                + LocalResources.readString(Path.of(
+                        "src/main/java/local/lito381/server/LegacyMySqlRepository.java"),
+                        StandardCharsets.UTF_8);
         int method = repository.indexOf("claimPendingReward(",
                 repository.indexOf("final class LegacyMySqlRepository"));
         int lock = repository.indexOf("LOCK TABLES characters READ", method);
@@ -43,7 +47,11 @@ final class PcActionRewardSqlFirstSourceAuditTest {
     @Test
     void newLitoCharactersReceiveOnlyTheNativeHelperTemplate() throws Exception {
         String repository = LocalResources.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
-                StandardCharsets.UTF_8);
+                StandardCharsets.UTF_8)
+                // #138 B-land: LegacyMySqlRepository now lives in its own file.
+                + LocalResources.readString(Path.of(
+                        "src/main/java/local/lito381/server/LegacyMySqlRepository.java"),
+                        StandardCharsets.UTF_8);
         int create = repository.indexOf("createLitoCharacter(",
                 repository.indexOf("final class LegacyMySqlRepository"));
         int helper = repository.indexOf("InventoryCatalog.PC_ACTION_HELPER", create);

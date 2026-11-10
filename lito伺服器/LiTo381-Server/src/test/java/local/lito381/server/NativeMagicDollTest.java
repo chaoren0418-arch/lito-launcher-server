@@ -24,7 +24,8 @@ final class NativeMagicDollTest {
                 .c(0).d(0).s("").s("測試玩家")
                 .c(0).c(0xFF).c(0).c(0).c(0).c(0xFF).c(0xFF).bytes();
         assertArrayEquals(expected, Protocol.magicDoll(doll, "測試玩家"));
-        assertArrayEquals(new byte[] {(byte) 250, 56, 44, 1},
+        // #138 B-land: T029 keeps the formal 0.6.71 icon packet (opcode 123, trailing h(0)).
+        assertArrayEquals(new byte[] {123, 56, 44, 1, 0, 0},
                 Protocol.magicDollIcon(300));
     }
 
@@ -36,10 +37,10 @@ final class NativeMagicDollTest {
         assertEquals(2, doll.remainingSeconds(1));
         assertEquals(1, doll.remainingSeconds(1_000_000_001L));
         assertEquals(0, doll.remainingSeconds(2_000_000_000L));
-        assertArrayEquals(new Protocol.Writer().c(250).c(154)
+        assertArrayEquals(new Protocol.Writer().c(123).c(154)
                         .h(300).h(2184).h(0).h(0).bytes(),
                 Protocol.magicDollCustomIcon(2184, 300, false));
-        assertArrayEquals(new Protocol.Writer().c(250).c(154)
+        assertArrayEquals(new Protocol.Writer().c(123).c(154)
                         .h(0).h(2184).h(0).h(1).bytes(),
                 Protocol.magicDollCustomIcon(2184, 0, true));
     }

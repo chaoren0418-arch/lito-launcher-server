@@ -13,7 +13,11 @@ final class NativeCastleSecuritySettlementSourceAuditTest {
             throws Exception {
         String accounts = Files.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
-                StandardCharsets.UTF_8);
+                StandardCharsets.UTF_8)
+                // #138 B-land: LegacyMySqlRepository now lives in its own file.
+                + Files.readString(Path.of(
+                        "src/main/java/local/lito381/server/LegacyMySqlRepository.java"),
+                        StandardCharsets.UTF_8);
         String state = Files.readString(Path.of(
                 "src/main/java/local/lito381/server/GameStateStore.java"),
                 StandardCharsets.UTF_8);

@@ -13,7 +13,11 @@ final class WaterDragonSqlFirstPersistenceSourceAuditTest {
         String session = Files.readString(Path.of("src", "main", "java", "local",
                 "lito381", "server", "ClientSession.java"), StandardCharsets.UTF_8);
         String repository = Files.readString(Path.of("src", "main", "java", "local",
-                "lito381", "server", "Accounts.java"), StandardCharsets.UTF_8);
+                "lito381", "server", "Accounts.java"), StandardCharsets.UTF_8)
+                // #138 B-land: LegacyMySqlRepository now lives in its own file.
+                + Files.readString(Path.of(
+                        "src/main/java/local/lito381/server/LegacyMySqlRepository.java"),
+                        StandardCharsets.UTF_8);
         int reserve = session.indexOf("hub.rentClassicWorldWaterDragonPass(");
         int sql = session.indexOf("persistSqlWorldInventory(next,", reserve);
         int publish = session.indexOf("inventory = next;", sql);

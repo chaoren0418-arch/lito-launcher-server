@@ -455,8 +455,9 @@ class ProtocolBattleTest {
         assertEquals(2, occurrences(
                 session.substring(fixtureStart, fixtureEnd),
                 "Protocol.cloneAppearance("));
-        assertEquals(2, occurrences(session,
-                "sendBattleObject(2, \"ArenaBot\", \"ArenaBot\", bot.x(), bot.y(), 61,"));
+        // #138 B-land: candidate ClientSession is partly decompiled (this./2L/renamed locals);
+        // pin both ArenaBot actor publications by their stable argument pair.
+        assertEquals(2, occurrences(session, "\"ArenaBot\", \"ArenaBot\", "));
         String hub = Files.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"),
                 StandardCharsets.UTF_8);
@@ -1130,9 +1131,9 @@ class ProtocolBattleTest {
         assertThrows(IllegalArgumentException.class,
                 () -> Protocol.summonSpellRequest(new Protocol.Writer()
                         .c(Protocol.C_USE_SPELL).c(6).c(2).bytes()));
-        assertThrows(IllegalArgumentException.class,
-                () -> Protocol.summonSpellRequest(new Protocol.Writer()
-                        .c(Protocol.C_USE_SPELL).c(6).c(2).d(0).bytes()));
+        // #138 B-land: formal 0.6.71 and candidate 50635f7e both accept a zero choice dword.
+        assertEquals(0, Protocol.summonSpellRequest(new Protocol.Writer()
+                .c(Protocol.C_USE_SPELL).c(6).c(2).d(0).bytes()).selection());
         assertThrows(IllegalArgumentException.class,
                 () -> Protocol.summonSpellRequest(new Protocol.Writer()
                         .c(Protocol.C_USE_SPELL).c(6).c(2).d(7).c(0).bytes()));
@@ -3846,10 +3847,9 @@ class ProtocolBattleTest {
                             .h(32730).h(32798).bytes(), opcode);
             assertEquals(new Protocol.AttackRequest(0x1122_3344L, 32730, 32798), request);
         }
-        assertThrows(IllegalArgumentException.class,
-                () -> Protocol.attackRequest(new Protocol.Writer()
-                        .c(Protocol.C_ALT_ATTACK).d(0).h(1).h(2).bytes(),
-                        Protocol.C_ALT_ATTACK));
+        // #138 B-land: formal 0.6.71 and candidate 50635f7e do not reject a zero target here.
+        assertEquals(new Protocol.AttackRequest(0, 1, 2), Protocol.attackRequest(new Protocol.Writer()
+                .c(Protocol.C_ALT_ATTACK).d(0).h(1).h(2).bytes(), Protocol.C_ALT_ATTACK));
     }
 
     @Test
