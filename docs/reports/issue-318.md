@@ -57,7 +57,7 @@
 ### 已驗證
 - 1-伺服器 與 LiTo 的程式位置與 DB 慣例：見上方行號與 `scratch/t318_bless_scan.txt`。
 - 本機 `javac --release 17`（JDK 17.0.17）全量編譯 `src/main/java`＋`compile-stubs`＋`src/test/java`：**通過（exit 0）**。依本機規定沒有在本機執行測試。
-- CI `mvn -B test`：結果見 PR #330 的 Server 檢查（下方「CI 結果」）。
+- CI `mvn -B test`（PR #330，run 42951668131，合併 main 後的 commit `10983a74`）：**Tests run: 7325, Failures: 0, Errors: 0, Skipped: 117，BUILD SUCCESS**；`PhysicalBalanceDecisionT113Test` 9 個全過。Launcher、Server 建置、Semantic gap、Build-Package 全部 pass。D9 加上補正後，沒有既有測試因為固定傷害值失敗。
 
 ### 推測
 - 正式／執行中的 `380_db` 與 `1-伺服器/db/380_db.sql`（2026-11-04）的 bless 慣例相同（LiTo 與 1-伺服器 共用 `380_db`；而且 LiTo 的 Modern 商店／箭程式也以 0=一般為前提）。
