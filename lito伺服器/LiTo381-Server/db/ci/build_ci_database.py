@@ -28,6 +28,8 @@ STATIC = "380_db"
 CONTROL = "380_lito"
 # Mirrors db/lito_source_server.sql seed: three enabled sources.
 SOURCES = [(1, "太陽神", "380_ac"), (2, "月亮神", "380_ac_1"), (3, "伺服器3", "380_ac_2")]
+# character_lito engine per source; everything else stays MyISAM like 1-伺服器.
+INNODB_CHARACTER_LITO = {"380_ac_2": "InnoDB"}
 
 
 def read(path: Path) -> str:
@@ -75,7 +77,10 @@ def source_schema(database: str) -> str:
     body = "".join(out)
     if re.search(r"^\s*(INSERT|REPLACE)\b", body, re.M | re.I):
         sys.exit("player rows survived schema extraction")
-    # character_lito: same definition as 1-伺服器/db/380_ac.sql:983-992.
+    # character_lito: same definition as 1-伺服器/db/380_ac.sql:983-992 (MyISAM).  The last
+    # source uses InnoDB so the T103b settlement tests cover both accepted engines
+    # (docs/design/database.md §7).
+    engine = INNODB_CHARACTER_LITO.get(database, "MyISAM")
     body += f"""
 USE `{database}`;
 CREATE TABLE IF NOT EXISTS `character_lito` (
@@ -86,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `character_lito` (
   `version` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`char_obj_id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+) ENGINE = {engine} CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 """
     fake = read(CI / "fake_source_data.sql").replace("@@SOURCE_DB@@", database)
     return body + "\n" + fake
@@ -132,6 +137,14 @@ def control_database() -> str:
     parts.append(create)
     for _, _, db in SOURCES:
         parts.append(f"SET @lito_source = '{db}';" + migration.split("-- 現場已")[0])
+
+    # T103b: ranking columns, the same upgrade an operator runs on each source.
+    ranking = read(DB / "lito_character_ranking.sql")
+    if ranking.count("SET @lito_source = '380_ac_1';") != 1:
+        sys.exit("lito_character_ranking.sql migration block changed")
+    _, _, ranking_migration = ranking.partition("SET @lito_source = '380_ac_1';")
+    for _, _, db in SOURCES:
+        parts.append(f"SET @lito_source = '{db}';" + ranking_migration)
     return "\n".join(parts)
 
 

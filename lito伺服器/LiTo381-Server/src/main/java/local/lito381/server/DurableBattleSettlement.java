@@ -80,7 +80,20 @@ final class DurableBattleSettlement {
  static void requireDurable(GameHub hub,long room){if(!cleanupAllowed(hub,room))throw new IllegalStateException("room retained: settlement journal not durable");}
  static void forget(GameHub hub,long room){synchronized(CONTEXTS){var map=CONTEXTS.get(hub);if(map!=null&&cleanupAllowed(hub,room))map.remove(room);}}
  static GameStateStore.TournamentProfileState counters(GameStateStore.TournamentProfileState old,int wins,int losses,String source)throws IOException{
-  try{var fields=old.getClass().getRecordComponents();Class<?>[] types=new Class<?>[fields.length];Object[] values=new Object[fields.length];for(int i=0;i<fields.length;i++){var f=fields[i];types[i]=f.getType();values[i]=switch(f.getName()){case "wins"->wins;case "losses"->losses;case "classicServerName"->source;default->f.getAccessor().invoke(old);};}return (GameStateStore.TournamentProfileState)old.getClass().getDeclaredConstructor(types).newInstance(values);}catch(ReflectiveOperationException e){throw new IOException(e);}
+  return with(old,Map.of("wins",wins,"losses",losses,"classicServerName",source));
+ }
+ /** Copy of {@code old} with the named record components replaced (boxed to the component type). */
+ static GameStateStore.TournamentProfileState with(GameStateStore.TournamentProfileState old,Map<String,Object> replaced)throws IOException{
+  try{var fields=old.getClass().getRecordComponents();Class<?>[] types=new Class<?>[fields.length];Object[] values=new Object[fields.length];for(int i=0;i<fields.length;i++){var f=fields[i];types[i]=f.getType();values[i]=replaced.containsKey(f.getName())?replaced.get(f.getName()):f.getAccessor().invoke(old);}return (GameStateStore.TournamentProfileState)old.getClass().getDeclaredConstructor(types).newInstance(values);}catch(InvocationTargetException e){throw new IOException(e.getCause());}catch(ReflectiveOperationException e){throw new IOException(e);}
+ }
+ /** character_lito is authoritative for every durable counter (T103b): wins, losses, points, disconnects, monthly accumulator. */
+ static GameStateStore.TournamentProfileState durable(GameStateStore.TournamentProfileState old,GameStateStore.TournamentProfileState actual,String source)throws IOException{
+  Map<String,Object> m=new HashMap<>();m.put("wins",actual.wins());m.put("losses",actual.losses());m.put("rankingPoints",actual.rankingPoints());m.put("disconnects",actual.disconnects());
+  m.put("monthlyPeriod",actual.monthlyPeriod());m.put("monthlyRankingPoints",actual.monthlyRankingPoints());m.put("monthlyWins",actual.monthlyWins());m.put("monthlyLosses",actual.monthlyLosses());m.put("classicServerName",source);
+  return with(old,m);
+ }
+ static boolean sameDurable(GameStateStore.TournamentProfileState a,GameStateStore.TournamentProfileState b){
+  return a.wins()==b.wins()&&a.losses()==b.losses()&&a.rankingPoints()==b.rankingPoints()&&a.disconnects()==b.disconnects()&&a.monthlyPeriod()==b.monthlyPeriod()&&a.monthlyRankingPoints()==b.monthlyRankingPoints()&&a.monthlyWins()==b.monthlyWins()&&a.monthlyLosses()==b.monthlyLosses();
  }
  static boolean unranked(ClientSession s){Ticket t=TICKETS.get(s);return t!=null?t.context.testRoom:NativeRoomRules.testRoom((GameHub)get(s,"hub"),(long)get(s,"currentRoomId"));}
  static boolean won(ClientSession s,boolean fallback){Ticket t=TICKETS.get(s);return t!=null&&t.entry!=null?t.entry.won():fallback;}
@@ -95,8 +108,14 @@ final class DurableBattleSettlement {
     // Use a compact detached store after disconnect; never recreate a released player profile.
     boolean detached=get(session,"phase").toString().equals("CLOSED") || ((java.net.Socket)get(session,"socket")).isClosed();
     GameStateStore target=detached?new GameStateStore(Path.of("unused-settlement-memory"),false,true):live;
-    synchronized(target){var old=target.tournamentProfileState(character);var baseline=counters(old,actual.state().wins()-(e.won()?1:0),actual.state().losses()-(e.won()?0:1),e.source());target.reconcileTournamentProfileStates(Map.of(character,baseline));
-     t.progress=target.recordResult(character,e.won(),e.disconnected(),reward,experience,null);
+    synchronized(target){var old=target.tournamentProfileState(character);var a=actual.state();
+     int baseWins=Math.max(0,a.wins()-(e.won()?1:0)),baseLosses=Math.max(0,a.losses()-(e.won()?0:1));
+     var baseline=with(old,Map.of("wins",baseWins,"losses",baseLosses,"disconnects",Math.max(0,Math.min(a.disconnects()-(e.disconnected()?1:0),baseLosses)),"classicServerName",e.source()));
+     target.reconcileTournamentProfileStates(Map.of(character,baseline));
+     var local=target.recordResult(character,e.won(),e.disconnected(),reward,experience,null);
+     // Experience/level stay in memory; the ranking counters come from the row SettlementSql.drain wrote.
+     target.reconcileTournamentProfileStates(Map.of(character,durable(target.tournamentProfileState(character),a,e.source())));
+     t.progress=new GameStateStore.Progress(local.shopPoints(),a.rankingPoints(),a.wins(),a.losses(),a.disconnects(),local.experience(),local.level());
      var updated=new RepositoryTournamentProfile(e.character(),e.name(),actual.snapshotVersion(),target.tournamentProfileState(character));
      ((Map<Long,RepositoryTournamentProfile>)get(session,"sqlTournamentProfiles")).put(e.character(),updated);var route=SettlementSql.route(e.database());synchronized(route){route.runtime.put(e.character(),updated);}
      if(detached)target.releaseSourceCharacter(character);
@@ -115,8 +134,8 @@ final class DurableBattleSettlement {
      var selected=(CharacterSummary)call(s,"selectedCharacterSummary",new Class[]{});if(selected==null||selected.objectId()!=e.character()||!selected.name().equals(e.name()))continue;
      var state=(GameStateStore)get(s,"state");String identity=(String)call(s,"stateCharacter",new Class[]{});
      synchronized(state){if(!hasProfile(state,identity))continue;var old=state.tournamentProfileState(identity);
-      if(old.wins()==actual.state().wins()&&old.losses()==actual.state().losses())continue;
-      var updated=counters(old,actual.state().wins(),actual.state().losses(),source.name);state.reconcileTournamentProfileStates(Map.of(identity,updated));
+      if(sameDurable(old,actual.state()))continue;
+      var updated=durable(old,actual.state(),source.name);state.reconcileTournamentProfileStates(Map.of(identity,updated));
       ((Map<Long,RepositoryTournamentProfile>)get(s,"sqlTournamentProfiles")).put(e.character(),new RepositoryTournamentProfile(e.character(),e.name(),actual.snapshotVersion(),updated));
      }
      try{LiveBattleStats.lobby(s);}catch(IOException ignored){/* The next lobby refresh resends the same authoritative totals. */}

@@ -50,7 +50,8 @@ final class SharedDatabase {
                 LegacyMySqlRepository repository = new LegacyMySqlRepository(config.legacySqlProperties(), name,
                         config.classicServerIds().get(i), db, config.legacySourceResourceDatabases().get(i),
                         config.legacySourceWeightRates().get(i), true, "legacy_mysql");
-                ROUTES.put(repository, new Route(name, db, controls, credentials));
+                ROUTES.put(repository, new Route(name, db, controls, credentials,
+                        config.battleWinReward(), config.battleLossReward()));
                 sources.put(name, repository);
             }
             DurableBattleSettlement.open(config);
@@ -72,6 +73,11 @@ final class SharedDatabase {
         try (Connection c = route.connection(); Statement s = c.createStatement()) {
             c.setReadOnly(true);
             try (ResultSet r = s.executeQuery("SELECT char_obj_id,char_name,wins,losses,version,updated_at FROM character_lito LIMIT 0")) {}
+            try (ResultSet r = s.executeQuery("SELECT " + SettlementSql.RANKING_COLUMNS + " FROM character_lito LIMIT 0")) {}
+            catch (SQLException missing) {
+                throw new SQLException("character_lito in " + route.database
+                        + " lacks ranking columns; run db/lito_character_ranking.sql first", missing);
+            }
             try (ResultSet r = s.executeQuery("SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='character_lito'")) {
                 if (!r.next() || !("InnoDB".equalsIgnoreCase(r.getString(1)) || "MyISAM".equalsIgnoreCase(r.getString(1))))
                     throw new SQLException("character_lito requires InnoDB or MyISAM");
@@ -85,8 +91,12 @@ final class SharedDatabase {
             List<RepositoryTournamentProfile> rows = new ArrayList<>();
             try (Connection c = route.connection(); Statement s = c.createStatement()) {
                 c.setReadOnly(true);
-                try (ResultSet r = s.executeQuery("SELECT c.objid,c.char_name,t.wins,t.losses,t.version FROM characters c LEFT JOIN character_lito t ON t.char_obj_id=c.objid WHERE c.Banned=0 ORDER BY c.objid")) {
-                    while (r.next()) rows.add(route.profile(r.getLong(1), r.getString(2), r.getInt(3), r.getInt(4), r.getLong(5)));
+                // Ranking points, disconnects and the monthly accumulator are durable (T103b);
+                // a restart loads them instead of starting every character at 0.
+                String columns = Arrays.stream(SettlementSql.COUNTER_COLUMNS.split(","))
+                        .map(column -> "IFNULL(t." + column + ",0)").reduce((a, b) -> a + "," + b).orElseThrow();
+                try (ResultSet r = s.executeQuery("SELECT c.objid,c.char_name,IFNULL(t.version,0)," + columns + " FROM characters c LEFT JOIN character_lito t ON t.char_obj_id=c.objid WHERE c.Banned=0 ORDER BY c.objid")) {
+                    while (r.next()) rows.add(route.profile(r.getLong(1), r.getString(2), SettlementSql.Counters.read(r, 4), r.getLong(3)));
                 }
             }
             Set<Long> liveIds = new HashSet<>();
@@ -100,6 +110,11 @@ final class SharedDatabase {
         Route route = ROUTES.get(repository);
         if (!Boolean.TRUE.equals(SETTLEMENT.get()))
             throw new IllegalStateException("character_lito writes require battle settlement");
+        return persist(route, id, name, expected, replacement);
+    }
+    /** Direct (non-journal) result write; callers must hold the settlement capability. */
+    static RepositoryTournamentMutation persist(Route route, long id, String name,
+            RepositoryTournamentProfile expected, GameStateStore.TournamentProfileState replacement) throws Exception {
         synchronized (route) {
             if (id <= 0 || replacement == null || !route.name.equals(replacement.classicServerName())
                     || expected != null && (expected.characterObjectId() != id || !expected.characterName().equals(name)))
@@ -114,10 +129,10 @@ final class SharedDatabase {
                     if (!Objects.equals(canonical,name)) { c.rollback(); return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.NOT_FOUND,null); }
                     RepositoryTournamentProfile current;
                     boolean exists;
-                    try (PreparedStatement p=c.prepareStatement("SELECT wins,losses,version FROM character_lito WHERE char_obj_id=?")) {
+                    try (PreparedStatement p=c.prepareStatement("SELECT version,"+SettlementSql.COUNTER_COLUMNS+" FROM character_lito WHERE char_obj_id=?")) {
                         p.setLong(1,id); try(ResultSet r=p.executeQuery()) {
                             exists=r.next();
-                            current=exists?route.profile(id,name,r.getInt(1),r.getInt(2),r.getLong(3)):route.profile(id,name,0,0,0);
+                            current=exists?route.profile(id,name,SettlementSql.Counters.read(r,2),r.getLong(1)):route.profile(id,name,SettlementSql.Counters.ZERO,0);
                         }
                     }
                     if (expected == null ? current.snapshotVersion()!=0 :
@@ -133,14 +148,21 @@ final class SharedDatabase {
                         long lossesDelta = (long) replacement.losses() - current.state().losses();
                         if (!((winsDelta == 1 && lossesDelta == 0) || (winsDelta == 0 && lossesDelta == 1)))
                             throw new SQLException("Settlement must add exactly one win or loss");
+                        long disconnectsDelta = (long) replacement.disconnects() - current.state().disconnects();
+                        if (disconnectsDelta < 0 || disconnectsDelta > lossesDelta
+                                || !GameStateStore.validRankingPeriodKey(replacement.monthlyPeriod()))
+                            throw new SQLException("Settlement ranking counters are inconsistent");
                         version=Math.addExact(version,1);
                         if(version>0xFFFF_FFFFL)throw new SQLException("Result version exhausted");
+                        // Same columns as SettlementSql.drain: the result's ranking points, disconnects and
+                        // monthly accumulator are written in the one atomic row write (T103b).
+                        SettlementSql.Counters counters=SettlementSql.Counters.of(replacement);
                         String sql=!exists
-                            ? "INSERT INTO character_lito(char_obj_id,char_name,wins,losses,version) VALUES(?,?,?,?,?)"
-                            : "UPDATE character_lito SET char_name=?,wins=?,losses=?,version=? WHERE char_obj_id=? AND version=? AND wins=? AND losses=?";
+                            ? "INSERT INTO character_lito(char_obj_id,char_name,"+SettlementSql.COUNTER_COLUMNS+",version) VALUES(?,?,?,?,?,?,?,?,?,?,?)"
+                            : "UPDATE character_lito SET char_name=?,wins=?,losses=?,ranking_points=?,disconnects=?,monthly_period=?,monthly_ranking_points=?,monthly_wins=?,monthly_losses=?,version=? WHERE char_obj_id=? AND version=? AND wins=? AND losses=?";
                         try (PreparedStatement p=c.prepareStatement(sql)) {
-                            if(!exists){p.setLong(1,id);p.setString(2,name);p.setInt(3,replacement.wins());p.setInt(4,replacement.losses());p.setLong(5,version);}
-                            else{p.setString(1,name);p.setInt(2,replacement.wins());p.setInt(3,replacement.losses());p.setLong(4,version);p.setLong(5,id);p.setLong(6,current.snapshotVersion());p.setInt(7,current.state().wins());p.setInt(8,current.state().losses());}
+                            if(!exists){p.setLong(1,id);p.setString(2,name);int i=counters.bind(p,3);p.setLong(i,version);}
+                            else{p.setString(1,name);int i=counters.bind(p,2);p.setLong(i,version);p.setLong(i+1,id);p.setLong(i+2,current.snapshotVersion());p.setInt(i+3,current.state().wins());p.setInt(i+4,current.state().losses());}
                             // Exactly one atomic write, including on MyISAM. Never depend on rollback to undo a partial result.
                             if(p.executeUpdate()!=1){c.rollback();return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT,current);}
                         } catch(SQLException race) {
@@ -159,18 +181,36 @@ final class SharedDatabase {
     static final class Route {
         final String name,database,controls,url,user,password;
         final Map<Long,RepositoryTournamentProfile> runtime=new HashMap<>();
-        Route(String name,String database,String controls,Properties p) {
+        /** battle.reward.win / battle.reward.loss used by the durable drain (#310 D1 defaults). */
+        final int winReward,lossReward;
+        Route(String name,String database,String controls,Properties p) { this(name,database,controls,p,250,50); }
+        Route(String name,String database,String controls,Properties p,int winReward,int lossReward) {
             this.name=name;this.database=database;this.controls=controls;
             url=p.getProperty("URL1_LOGIN")+database+p.getProperty("URL3_LOGIN","");
             user=p.getProperty("Login_LOGIN",p.getProperty("Login"));
             password=p.getProperty("Password_LOGIN",p.getProperty("Password",""));
+            if(winReward<0||lossReward<0)throw new IllegalArgumentException("negative battle reward");
+            this.winReward=winReward;this.lossReward=lossReward;
         }
         Connection connection() throws SQLException { return DriverManager.getConnection(url,user,password); }
-        RepositoryTournamentProfile profile(long id,String character,int wins,int losses,long version) {
+        RepositoryTournamentProfile profile(long id,String character,SettlementSql.Counters counters,long version) {
+            if(counters.wins()+counters.losses()>Integer.MAX_VALUE||counters.monthlyWins()>Integer.MAX_VALUE||counters.monthlyLosses()>Integer.MAX_VALUE)
+                throw new IllegalStateException("character_lito counters out of range: "+database+"/"+id);
+            int wins=(int)counters.wins(),losses=(int)counters.losses();
+            // Rows edited outside LiTo are clamped to what the native client can show; the
+            // next settlement writes the clamped values back in its single row update.
+            int disconnects=(int)Math.min(counters.disconnects(),losses);
+            int period=GameStateStore.validRankingPeriodKey(counters.monthlyPeriod())?counters.monthlyPeriod():0;
+            long monthlyPoints=period==0?0:counters.monthlyRankingPoints();
+            int monthlyWins=period==0?0:(int)counters.monthlyWins(),monthlyLosses=period==0?0:(int)counters.monthlyLosses();
             RepositoryTournamentProfile cached=runtime.get(id);
             if(cached!=null && cached.characterName().equals(character) && cached.snapshotVersion()==version
-                    && cached.state().wins()==wins && cached.state().losses()==losses)return cached;
-            var state=new GameStateStore.TournamentProfileState(0,wins,losses,0,0,0,0,0,
+                    && cached.state().wins()==wins && cached.state().losses()==losses
+                    && cached.state().rankingPoints()==counters.rankingPoints() && cached.state().disconnects()==disconnects
+                    && cached.state().monthlyPeriod()==period && cached.state().monthlyRankingPoints()==monthlyPoints
+                    && cached.state().monthlyWins()==monthlyWins && cached.state().monthlyLosses()==monthlyLosses)return cached;
+            var state=new GameStateStore.TournamentProfileState(counters.rankingPoints(),wins,losses,disconnects,
+                    period,monthlyPoints,monthlyWins,monthlyLosses,
                     Collections.nCopies(12,0),Collections.nCopies(5,0),false,name,-1,-1,-1,false,
                     0,0,0,"",-1,-1,-1,false,0,0,0,0,0,0,0,0,0,0,0,1,0,0);
             var result=new RepositoryTournamentProfile(id,character,version,state);

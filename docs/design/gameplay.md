@@ -288,7 +288,10 @@
 | 月計 | 另外累計本月積分、本月勝敗；月份以「台北時間每天 05:00」為日界，跨月第一次結算時歸零 | `S/GameStateStore.java:1097-1098,5599,5966-5994` |
 | 排行榜 | 總榜：積分→勝場→名字；月榜：本月積分→本月勝場→總積分→名字；榜單快照每天 05:00 更新 | `S/GameStateStore.java:5811-5854`；`:1098` |
 | 經驗與等級 | 勝 +100、敗 +25（料理可加成），LiTo 內部等級＝1＋經驗÷1000；**只在記憶體**，不寫 `characters` | `S/GameStateStore.java:5619-5624` |
-| **持久性** | 積分、斷線數、月計**不跨伺服器重啟**：從 `character_lito` 重新載入時只有勝敗，積分等欄位一律從 0 開始 | `S/SharedDatabase.java:169-175`；`S/GameStateStore.java:819-822`；`D/README.zh-TW.md:31` |
+| **持久性**（D3＝B，T103b #335） | 積分、斷線數、月計**跨伺服器重啟保留**：存在各來源庫 `character_lito` 的 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`；登入／排行榜載入時一併讀回 | `S/SharedDatabase.java:97-98,196`；`D/db/lito_character_ranking.sql` |
+| 寫回 | 結算沿用 `last_result_id` 冪等：同一場結果重放（WAL 重放、背景重試、回覆遺失）只加一次。`SettlementSql.drain` 依收據的勝／敗／斷線，用與記憶體 `recordResult` 相同的規則（`SettlementSql.next`）算出新值，和勝敗、`version`、`last_result_id` 寫在同一條 UPDATE；直接寫入路徑 `SharedDatabase.persist` 也寫同 6 欄。寫回後記憶體的積分欄位改用資料庫值 | `S/SettlementSql.java:29,84-87`；`S/SharedDatabase.java:154,162`；`S/DurableBattleSettlement.java:116` |
+| 跨月 | 資料庫存的 `monthly_period`（YYYYMM，台北 05:00 日界，`GameStateStore.rankingPeriodKeyAt`）和本場所在月份不同時，先把月積分／月勝／月敗歸零再加本場；總積分不受影響 | `S/SettlementSql.java:29-38`；`S/GameStateStore.java:5982` |
+| 升級 | 部署新版前，SQL 管理者對每個 `enabled=1` 來源執行 `db/lito_character_ranking.sql`（既有列新欄位為 0；升級前的積分只在記憶體、無從回填）；缺欄位時伺服器拒絕啟動。LiTo 執行帳號不需新權限（表級 UPDATE 已涵蓋），見 `docs/design/database.md` §2、§7 | `D/db/lito_character_ranking.sql` |
 | 設定 | 在 `config/server.properties` 加 `battle.reward.win`、`battle.reward.loss` 可改（範圍 0～1000000，修改後重啟生效）；沒寫就用程式預設 **勝 250、敗 50**，斷線敗扣 `battle.reward.loss`（預設 −50），最低 0（D1，T103）。範例設定 `.example` 目前沒有列這兩項（調度器閘門禁止改 `config/server.properties*`）。〔待驗證〕正式機實際值要看正式 `server.properties` | `S/ServerConfig.java:578-579`；`D/README.zh-TW.md` |
 | 「榮譽點數」 | 程式中沒有獨立的榮譽點數欄位（LC B17） | — |
 
@@ -348,7 +351,7 @@
 |---|---|---|---|---|---|
 | D1 | 積分公式 | A. 維持現狀：勝 +250、敗 +50、斷線 −50<br>B. 輸了不加分：勝 +N、敗 0、斷線 −N<br>C. 依對手強弱加減（Elo 類） | **A**：程式已有，且註解有 2007 年規則依據（敗場也給小額正分、只有斷線扣分）。先把預設值寫進 `server.properties.example`，讓營運看得到、改得了 | T103 #310 | A（逾時預設，2026-11-11 #310）：預設值寫進本文件 §4.3 與 `lito伺服器/LiTo381-Server/README.zh-TW.md`（T103；`.example` 受閘門禁止，未改） |
 | D2 | 進場 HP／MP | A. 每場補滿（現狀）<br>B. 讀存檔 CurHp／CurMp | **A**：競技場重視公平；而且來源庫唯讀，B 只能讀不能寫回，打完 HP 也無法保存，意義不大。決定後把 N5 定為正式規則 | T103 #310 | A（逾時預設）：維持每場補滿，N5 定為正式規則（T103，不改程式） |
-| D3 | 積分是否要持久 | A. 不持久（現狀：重啟歸零，月榜跟著歸零）<br>B. 在 `character_lito` 加欄位（ranking_points、disconnects、月計）<br>C. 另建中央表 | **B**：月榜與排行榜在重啟後歸零，玩家看得到差異。B 沿用現有 `last_result_id` 冪等機制，改動最小；需配合 T104 確認 MyISAM 下的寫法 | T103 #310、T104 #302 | B（逾時預設）：**T103 未實作**，需來源庫 schema 遷移，拆成後續任務（見 `docs/reports/issue-310.md`） |
+| D3 | 積分是否要持久 | A. 不持久（現狀：重啟歸零，月榜跟著歸零）<br>B. 在 `character_lito` 加欄位（ranking_points、disconnects、月計）<br>C. 另建中央表 | **B**：月榜與排行榜在重啟後歸零，玩家看得到差異。B 沿用現有 `last_result_id` 冪等機制，改動最小；需配合 T104 確認 MyISAM 下的寫法 | T103 #310、T104 #302 | B（逾時預設）：T103 未實作、拆出 T103b；**T103b（#335）已實作**：`db/lito_character_ranking.sql`＋兩條寫入路徑＋啟動載入（§4.3、`docs/reports/issue-335.md`） |
 | D4 | 逾時無勝者時記敗 | A. 全員記敗（現狀：寵物競賽、死鬥、Quest、Honor、Time Attack）<br>B. 逾時視為平手，不記勝敗<br>C. 依分數判勝（擊殺數、塔血量、進度） | **B**：A 會讓雙方都 +1 敗並都 +50 積分，戰績失真；C 沒有原版判勝規則可依（程式註解明寫「未取得」）。攻城維持守方勝 | T103 #310 | B（逾時預設）：已實作（T103），攻城逾時仍守方勝 |
 | D5 | PvE 範圍 | A. 只做競技場內 PvE（Quest、Time Attack 的怪物與 Boss）<br>B. 加上城鎮場景（wire 6）<br>C. 加上天堂世界（野外、副本） | **A**：產品是競技場；588 列非玩家技能只需涵蓋 Quest／Time Attack 用到的怪物。B、C 留在 Backlog | T107–T109 範圍 | A（逾時預設） |
 | D6 | 跨來源配對 | A. 不看來源（現狀）<br>B. 優先同來源<br>C. 跨來源時兩隊來源平均 | **A**：人數少時任何限制都會拉長等待；跨來源是賣點。先完成 T105 撞號再開放大量跨來源 | T105 #306 | A（逾時預設） |
@@ -363,7 +366,7 @@
 
 - **已驗證（讀程式，行號確認）**：§1～§6 未加標記的條目。
 - **推測**：
-  - 積分重啟歸零：依 `SharedDatabase.java:169-175` 載入時把積分設 0，以及 README:31 的說明推論；沒有實際重啟確認。
+  - （已由 T103b #335 改為持久化）原本「積分重啟歸零」的推論不再適用；持久化寫回邏輯由 CI MySQL 整合測試驗證，實機重啟後排行榜數值仍待驗證。
   - 自動配對最少人數 30 的攻城實務上難以成局（依 §3.9 規則推論）。
 - **待驗證（實機／DB）**：
   - ArenaBot 在 `battle.ai.enabled=false` 時的行為（§3.7）。

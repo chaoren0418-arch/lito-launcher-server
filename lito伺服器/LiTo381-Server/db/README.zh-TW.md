@@ -8,6 +8,7 @@
 | --- | --- |
 | `lito_room_policy.sql` | 0.6.61 測試房開關／ArenaBot；初次安裝由資料庫管理帳號執行，重跑保留既有設定，修改後重啟 |
 | `lito_battle_settlement.sql` | 原生 0.6.60 的 InnoDB 結算收據與來源去重標記；新增來源時也需遷移 |
+| `lito_character_ranking.sql` | T103b：`character_lito` 新增 `ranking_points`、`disconnects`、月計欄位（MyISAM／InnoDB 皆可，冪等）；每個啟用來源與新增來源都要執行，缺欄位伺服器拒絕啟動 |
 | `lito_commands.sql` | 建立 `380_lito.commands`，遷移／補入 `.item`、`.spawn`、`.de`；重跑保留既有 LiTo 設定，不改天堂指令表 |
 | `lito_gm_polyme.sql` | 新增 `.polyme 外型代號`／L1PolyMe，預設 GM 門檻 200；重跑不覆寫既有列 |
 | `lito_source_server.sql` | 來源表及八格初始設定，前三服啟用；既有安裝應先檢查內容再操作 |
