@@ -94,38 +94,38 @@ SQL skill_level 僅用於分組，尚需驗證各職業實際可學／可施放�
 | 84 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 85 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 86 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 87 | 衝擊之暈 | 騎士 | ShockStunSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 88 | 增幅防禦 | 騎士 | ReductionArmorSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 89 | 尖刺盔甲 | 騎士 | BounceAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 90 | 堅固防護 | 騎士 | SolidCarriageSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 91 | 反擊屏障 | 騎士 | CounterBarrierSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 87 | 衝擊之暈 | 騎士 | ShockStunSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 88 | 增幅防禦 | 騎士 | ReductionArmorSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 89 | 尖刺盔甲 | 騎士 | BounceAttackSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 90 | 堅固防護 | 騎士 | SolidCarriageSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 91 | 反擊屏障 | 騎士 | CounterBarrierSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
 | 92 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 93 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 94 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 95 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 96 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 97 | 暗隱術 | 黑暗妖精 | InvisibilitySpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 98 | 附加劇毒 | 黑暗妖精 | EnchantVenomSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 99 | 影之防護 | 黑暗妖精 | ShieldSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 100 | 提煉魔石 | 黑暗妖精 | BringStoneSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 101 | 行走加速 | 黑暗妖精 | MovementBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 102 | 燃燒鬥志 | 黑暗妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 103 | 暗黑盲咒 | 黑暗妖精 | BlindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 104 | 毒性抵抗 | 黑暗妖精 | PoisonResistanceSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 105 | 雙重破壞 | 黑暗妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 106 | 暗影閃避 | 黑暗妖精 | DodgeBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 107 | 暗影之牙 | 黑暗妖精 | ItemWeaponEnchantSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 108 | 會心一擊 | 黑暗妖精 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 109 | 力量提升 | 黑暗妖精 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 110 | 敏捷提升 | 黑暗妖精 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 111 | 閃避提升 | 黑暗妖精 | RangedEvasionBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 112 | 破壞盔甲 | 黑暗妖精 | ArmorBreakSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 113 | 精準目標 | 王族 | TrueTargetSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 114 | 激勵士氣 | 王族 | RoyalAuraSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 115 | 鋼鐵士氣 | 王族 | RoyalAuraSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 116 | 呼喚盟友 | 王族 | CallClanSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 117 | 衝擊士氣 | 王族 | RoyalAuraSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 118 | 援護盟友 | 王族 | RunClanSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 97 | 暗隱術 | 黑暗妖精 | InvisibilitySpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 98 | 附加劇毒 | 黑暗妖精 | EnchantVenomSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 99 | 影之防護 | 黑暗妖精 | ShieldSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 100 | 提煉魔石 | 黑暗妖精 | BringStoneSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 101 | 行走加速 | 黑暗妖精 | MovementBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 102 | 燃燒鬥志 | 黑暗妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 103 | 暗黑盲咒 | 黑暗妖精 | BlindSpell | 是 | 已定義，待行為驗證 | T109 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-others.md） |
+| 104 | 毒性抵抗 | 黑暗妖精 | PoisonResistanceSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 105 | 雙重破壞 | 黑暗妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 106 | 暗影閃避 | 黑暗妖精 | DodgeBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 107 | 暗影之牙 | 黑暗妖精 | ItemWeaponEnchantSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 108 | 會心一擊 | 黑暗妖精 | AttackSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 109 | 力量提升 | 黑暗妖精 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 110 | 敏捷提升 | 黑暗妖精 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 111 | 閃避提升 | 黑暗妖精 | RangedEvasionBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 112 | 破壞盔甲 | 黑暗妖精 | ArmorBreakSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 113 | 精準目標 | 王族 | TrueTargetSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 114 | 激勵士氣 | 王族 | RoyalAuraSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 115 | 鋼鐵士氣 | 王族 | RoyalAuraSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 116 | 呼喚盟友 | 王族 | CallClanSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 117 | 衝擊士氣 | 王族 | RoyalAuraSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 118 | 援護盟友 | 王族 | RunClanSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
 | 119 | none | 王族 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 120 | none | 王族 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 121 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
@@ -188,46 +188,46 @@ SQL skill_level 僅用於分組，尚需驗證各職業實際可學／可施放�
 | 178 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 179 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 180 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 181 | 龍之護鎧 | 龍騎士 | DragonSkinSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 182 | 燃燒擊砍 | 龍騎士 | BurningSlashSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 183 | 護衛毀滅 | 龍騎士 | GuardBrakeSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 184 | 岩漿噴吐 | 龍騎士 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 185 | 覺醒：安塔瑞斯 | 龍騎士 | AwakenSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 186 | 血之渴望 | 龍騎士 | BloodlustSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 187 | 屠宰者 | 龍騎士 | FoeSlayerSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 188 | 恐懼無助 | 龍騎士 | ResistFearSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 189 | 岩漿之箭 | 龍騎士 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 190 | 覺醒：法利昂 | 龍騎士 | AwakenSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 191 | 致命身軀 | 龍騎士 | MortalBodySpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 192 | 奪命之雷 | 龍騎士 | ThunderGrabSpell | 待查 | 已定義，待行為驗證 | 待驗證 |
-| 193 | 驚悚死神 | 幻術師 | GuardBrakeSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 194 | 暴龍之眼 | 幻術師 | FreezeAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 195 | 覺醒：巴拉卡斯 | 幻術師 | AwakenSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 181 | 龍之護鎧 | 龍騎士 | DragonSkinSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 182 | 燃燒擊砍 | 龍騎士 | BurningSlashSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 183 | 護衛毀滅 | 龍騎士 | GuardBrakeSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 184 | 岩漿噴吐 | 龍騎士 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 185 | 覺醒：安塔瑞斯 | 龍騎士 | AwakenSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 186 | 血之渴望 | 龍騎士 | BloodlustSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 187 | 屠宰者 | 龍騎士 | FoeSlayerSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 188 | 恐懼無助 | 龍騎士 | ResistFearSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 189 | 岩漿之箭 | 龍騎士 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 190 | 覺醒：法利昂 | 龍騎士 | AwakenSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 191 | 致命身軀 | 龍騎士 | MortalBodySpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 192 | 奪命之雷 | 龍騎士 | ThunderGrabSpell | 待查 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 193 | 驚悚死神 | 幻術師 | GuardBrakeSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 194 | 暴龍之眼 | 幻術師 | FreezeAttackSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 195 | 覺醒：巴拉卡斯 | 幻術師 | AwakenSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
 | 196 | none | 來源其他技能／NPC／道具 |  | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 197 | none | 來源其他技能／NPC／道具 |  | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 198 | none | 來源其他技能／NPC／道具 |  | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 199 | none | 來源其他技能／NPC／道具 |  | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 200 | none | 來源其他技能／NPC／道具 |  | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 201 | 鏡像 | 幻術師 | DodgeBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 202 | 混亂 | 幻術師 | ConfusionSpell | 待查 | 已定義，待行為驗證 | 待驗證 |
-| 203 | 粉碎能量 | 幻術師 | SmashSpell | 待查 | 已定義，待行為驗證 | 待驗證 |
-| 204 | 幻覺：歐吉 | 幻術師 | IllusionOgreSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 205 | 立方：燃燒 | 幻術師 | CubeIgnitionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 206 | 專注 | 幻術師 | RegenSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 207 | 心靈破壞 | 幻術師 | MindBreakSpell | 待查 | 已定義，待行為驗證 | 待驗證 |
-| 208 | 骷髏毀壞 | 幻術師 | BoneBreakSpell | 待查 | 已定義，待行為驗證 | 待驗證 |
-| 209 | 幻覺：巫妖 | 幻術師 | IllusionLichSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 210 | 立方：地裂 | 幻術師 | CubeQuakeSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 211 | 耐力 | 幻術師 | PatienceSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 212 | 幻想 | 幻術師 | PhantasmSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 213 | 武器破壞者 | 幻術師 | ArmBreakerSpell | 待查 | 已定義，待行為驗證 | 待驗證 |
-| 214 | 幻覺：鑽石高崙 | 幻術師 | DiamondGolemSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 215 | 立方：衝擊 | 幻術師 | CubeShockSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 216 | 洞察 | 幻術師 | InsightSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 217 | 恐慌 | 幻術師 | PanicSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 218 | 疼痛的歡愉 | 幻術師 | JoyOfPainSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 219 | 幻覺：化身 | 幻術師 | IllusionAvatarSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 220 | 立方：和諧 | 幻術師 | CubeHarmonySpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 201 | 鏡像 | 幻術師 | DodgeBuffSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 202 | 混亂 | 幻術師 | ConfusionSpell | 待查 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 203 | 粉碎能量 | 幻術師 | SmashSpell | 待查 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 204 | 幻覺：歐吉 | 幻術師 | IllusionOgreSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 205 | 立方：燃燒 | 幻術師 | CubeIgnitionSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 206 | 專注 | 幻術師 | RegenSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 207 | 心靈破壞 | 幻術師 | MindBreakSpell | 待查 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 208 | 骷髏毀壞 | 幻術師 | BoneBreakSpell | 待查 | 已定義，待行為驗證 | T109 已修正：catalog 正義值 +45 → 0（SQL lawful=0）；其餘一致；實機待驗證（skills-others.md） |
+| 209 | 幻覺：巫妖 | 幻術師 | IllusionLichSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 210 | 立方：地裂 | 幻術師 | CubeQuakeSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 211 | 耐力 | 幻術師 | PatienceSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 212 | 幻想 | 幻術師 | PhantasmSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 213 | 武器破壞者 | 幻術師 | ArmBreakerSpell | 待查 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 214 | 幻覺：鑽石高崙 | 幻術師 | DiamondGolemSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 215 | 立方：衝擊 | 幻術師 | CubeShockSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 216 | 洞察 | 幻術師 | InsightSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 217 | 恐慌 | 幻術師 | PanicSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 218 | 疼痛的歡愉 | 幻術師 | JoyOfPainSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 219 | 幻覺：化身 | 幻術師 | IllusionAvatarSpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
+| 220 | 立方：和諧 | 幻術師 | CubeHarmonySpell | 是 | 已定義，待行為驗證 | T109 消耗／數值／期限一致；實機待驗證（skills-others.md） |
 
 ## effect_skill_id 別名盤點
 
