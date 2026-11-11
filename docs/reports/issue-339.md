@@ -78,7 +78,8 @@
 ### 已驗證
 - 上面所有行號與資料分布：唯讀讀過 `D:\lineage開發\1-伺服器` 原始碼與 `db/380_db.sql`、`db/380_ac.sql`，用 `scratch/t339_drop_bless.py`、`scratch/t339_rental_bless.py` 掃描 LiTo 內建資源（輸出 `scratch/t339_rental_bless.txt`，不進 git）。
 - 本機 `mvn -B -o -q -DskipTests test-compile`（main＋test 全量編譯）：**通過（exit 0）**。依本機規定沒有在本機執行測試。
-- CI `mvn -B test`：見 PR 的 CI 結果（push 後補上）。
+- CI（PR #347，run 43051055530）：`Server tests`（`mvn -B test`）**pass，0 個失敗**，`ItemBlessConsistencyT120Test` 7 個全過；Server 建置、Launcher、Semantic gap、Build-Package 全部 pass。
+- `Server tests (CI MySQL fixture, non-blocking)` 是 fail，但失敗的 60 個測試和 main 最新一輪（run 43050807847）**完全相同**（逐一比對 `<<< FAILURE!/ERROR!` 清單，PR 沒有多也沒有少），是 main 原本就有的問題，和這次修改無關（例如 `DedicatedServerLayoutTest`、`LitoDatabaseLayoutTest`、`ClientSessionNativeTournamentEconomyTest`）。
 
 ### 推測
 - §3 的客戶端顯示語意（見上）。
