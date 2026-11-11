@@ -36,7 +36,9 @@ final class BattleRules {
         // The native S_FD receiver renders maximum/current lap as two HUD
         // values. Contemporary LiTo instructions independently pin the race
         // to four laps and a five-minute limit.
-        PET_RACE(0, "petrace", "Pet Race", false, false, false,
+        // respawn=true matches playerDefeated (a fallen racer returns to the
+        // start and keeps racing); T100 D8 aligned this table entry.
+        PET_RACE(0, "petrace", "Pet Race", false, true, false,
                 BattlePetRaceCourseCatalog.LAPS, 300,
                 List.of(565, 566, 569, 570)),
         DEATHMATCH(1, "deathmatch", "Death Match", true, false, true, 1, 180,
@@ -174,6 +176,15 @@ final class BattleRules {
 
         static Resolution continuing(boolean respawn, String reason) {
             return new Resolution(false, respawn, Set.of(), Set.of(), reason);
+        }
+
+        /** An ended match that ranks nobody: settlement writes no win or loss. */
+        static Resolution draw(String reason) {
+            return new Resolution(true, false, Set.of(), Set.of(), reason);
+        }
+
+        boolean isDraw() {
+            return ended && winners.isEmpty() && losers.isEmpty();
         }
     }
 
@@ -528,15 +539,15 @@ final class BattleRules {
                     || nowNanos < deadlineNanos) {
                 return Resolution.continuing(false, "match-still-running");
             }
-            Set<Long> winners = switch (rules.mode()) {
-                // No exact native tie-break rule has been recovered for these
-                // modes. Do not manufacture a score winner at timeout.
-                case PET_RACE, DEATHMATCH, HONOR_MATCH, QUEST_BATTLE, TIME_ATTACK -> Set.of();
-                case SIEGE_WAR -> siegeAttackerForce < 0
-                        ? Set.of() : playersInForce(1 - siegeAttackerForce);
-                case TOWN -> Set.of();
-            };
-            return finish(winners, rules.mode().key() + "-timeout");
+            String reason = rules.mode().key() + "-timeout";
+            // T100 D4 (docs/design/gameplay.md section 7): no exact native
+            // tie-break rule has been recovered, so a timeout without a
+            // winner is a draw.  Nobody is ranked: no win, no loss, no points.
+            // Siege War keeps its native contract: the defenders win.
+            if (rules.mode() == Mode.SIEGE_WAR && siegeAttackerForce >= 0) {
+                return finish(playersInForce(1 - siegeAttackerForce), reason);
+            }
+            return finishDraw(reason);
         }
 
         Snapshot snapshot(long nowNanos) {
@@ -566,6 +577,13 @@ final class BattleRules {
             phase = Phase.FINISHED;
             finishReason = reason;
             return new Resolution(true, false, normalizedWinners, losers, reason);
+        }
+
+        /** Ends the match with neither winners nor losers (T100 D4 timeout draw). */
+        private Resolution finishDraw(String reason) {
+            phase = Phase.FINISHED;
+            finishReason = reason;
+            return Resolution.draw(reason);
         }
 
         private Set<Long> playersInForce(int force) {
