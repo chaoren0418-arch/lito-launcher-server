@@ -154,7 +154,7 @@ py -3 tools/db-grants/jar_tables.py <正式 JAR>      # 交叉檢查：正式 JA
 | 380_ac | `character_items_dark` | SELECT | 是 | add_ac、add_bow_dmg、add_bow_hit、add_bow_redux、add_cha、add_con、add_def_earth、add_def_fire、add_def_water、add_def_wind、add_dex、add_dmg、add_dmg_redux、add_er、add_hit、add_hp、add_hp_regen、add_ignore_reduction、add_int、add_magic_dmg_modifier、add_magic_hit、add_melee_redux、add_mp、add_mp_regen、add_mr、add_potion_recovery、add_regist_blind、add_regist_freeze、add_regist_sleep、add_regist_stone、add_regist_stun、add_regist_sustain、add_sp、add_str、add_stun_success、add_weight_reduction、add_wis、item_objid | Accounts.java:4265、LegacyEquipmentMagicLoader.java:114 |
 | 380_ac | `character_items_time` | SELECT | 是 | itemr_obj_id | 人工：Accounts.java:4313-4314 啟動時跑 sourceInventorySql() + LIMIT 0，該 SQL 在 Accounts.java:13070-13071 JOIN 此表 |
 | 380_ac | `character_letter` | SELECT | 是 | code、content、date、isCheck、item_object_id、receiver、sender、subject、template_id | Accounts.java:4260… |
-| 380_ac | `character_lito` | SELECT/INSERT/UPDATE | 是 | char_name、char_obj_id、last_result_id、losses、updated_at、version、wins | SettlementSql.java:7、SharedDatabase.java:74… |
+| 380_ac | `character_lito` | SELECT/INSERT/UPDATE | 是 | char_name、char_obj_id、disconnects、last_result_id、losses、monthly_losses、monthly_period、monthly_ranking_points、monthly_wins、ranking_points、updated_at、version、wins | SettlementSql.java:46,84-87,98、SharedDatabase.java:74-79,97-98,162… |
 | 380_ac | `character_other` | SELECT | 是 | char_obj_id、deathCount、killCount | Accounts.java:4252、Accounts.java:4295 |
 | 380_ac | `character_pets` | SELECT | 是 | exp、hp、item_obj_id、lawful、lvl、mp、name、npcid、objid | Accounts.java:4256、Accounts.java:4308… |
 | 380_ac | `character_quests` | SELECT | 是 | quest_id、quest_step | Accounts.java:4254 |
@@ -178,7 +178,8 @@ py -3 tools/db-grants/jar_tables.py <正式 JAR>      # 交叉檢查：正式 JA
 
 - `information_schema` 查詢（`S/SharedDatabase.java:75`、`S/SettlementSql.java:7`、`S/ResourceDatabase.java:36`、`S/LegacyEquipmentMagicLoader.java:720,743`、`S/Accounts.java:4677,4691`）不需另外授權：MySQL 只回傳帳號有權限的物件，正好就是上面授權的表。
 - `GET_LOCK`／`RELEASE_LOCK`（`S/SettlementSql.java:28,45`）不需要權限。
-- **每個 `enabled=1` 的來源**都要複製一份「來源角色庫」段並換庫名；`character_lito` 必須先有 `last_result_id` 欄（`D/db/lito_battle_settlement.sql:19-27`）。
+- **每個 `enabled=1` 的來源**都要複製一份「來源角色庫」段並換庫名；`character_lito` 必須先有 `last_result_id` 欄（`D/db/lito_battle_settlement.sql:19-27`）與 T103b 的積分欄位 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`（`D/db/lito_character_ranking.sql`）。
+- 新欄位**不需要新增權限**：既有表級 `GRANT SELECT, INSERT, UPDATE ON <來源庫>.character_lito` 已涵蓋整張表所有欄位（含之後新增的欄位）；只有執行升級 SQL 的管理帳號需要 `ALTER`，LiTo 執行帳號不給 DDL。若現場改用欄位級授權，UPDATE 欄位清單必須包含上面 6 欄＋`char_name,wins,losses,version,last_result_id`。
 - 表級 GRANT 遇到不存在的表會失敗，所以 `server_紀錄_獎勵`（1-伺服器 現行 `db/380_ac.sql` 沒有）預設註解。
 
 <!-- BEGIN GENERATED:grants -->
@@ -187,7 +188,7 @@ py -3 tools/db-grants/jar_tables.py <正式 JAR>      # 交叉檢查：正式 JA
 -- 佔位：380_db＝database.static.database、380_lito＝database.lito.database、
 --       380_ac＝每個 enabled=1 來源的 character_database（每個來源各複製一份「來源角色庫」段並換庫名）。
 -- 帳號：'lito_shared'@'127.0.0.1' 只是範例；Host 依實際連線來源設定，不要用 '%'。
--- 前提：表必須已存在（MySQL 對不存在的表做表級 GRANT 會失敗）；character_lito 需已有 last_result_id 欄（db/lito_battle_settlement.sql）。
+-- 前提：表必須已存在（MySQL 對不存在的表做表級 GRANT 會失敗）；character_lito 需已有 last_result_id 欄（db/lito_battle_settlement.sql）與積分欄位（db/lito_character_ranking.sql）。
 CREATE USER IF NOT EXISTS 'lito_shared'@'127.0.0.1' IDENTIFIED BY '<由營運設定>';
 
 -- ===== 靜態庫（database.static.database，預設 380_db）：54 表 =====
@@ -360,6 +361,13 @@ GRANT SELECT ON `380_ac`.`server_盟屋_紀錄` TO 'lito_shared'@'127.0.0.1';
    - 若 `last_result_id != 本收據`：**一條** `UPDATE … SET wins,losses,version+1,last_result_id=本收據 WHERE char_obj_id=? AND version=? AND last_result_id=?`，影響列數不是 1 就丟例外（`:38`）；沒有列時一條 `INSERT`（`:39`）；
    - 再把收據標 `applied=1`（InnoDB，`:42`）。
 4. 失敗由背景每 2 秒重試（`S/DurableBattleSettlement.java:22,111-122`）；啟動時先重放 WAL 再 `drainAll`（`:21`）。
+
+**T103b（#335）後的寫入流程**：上面第 3 步的「一條 UPDATE」現在同時寫 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`（`S/SettlementSql.java:84-87`）。新值由 `SettlementSql.next` 從收據的 `won`／`disconnected` 計算（`:29`；規則見 `docs/design/gameplay.md` §4.3），和 wins／losses／version／`last_result_id` 在**同一列、同一條敘述**，所以上表每一列的結論對新欄位一樣成立：
+- MyISAM：單一敘述對單列原子；回覆遺失或標記失敗時重試讀到 `last_result_id == 本收據` 就跳過，積分不會重複加（CI 測試 `SettlementRankingMySqlIntegrationTest` 對 MyISAM 的 `380_ac_1` 驗證）。
+- InnoDB：autocommit 下同一條 UPDATE 也是原子；CI fixture 把 `380_ac_2` 的 `character_lito` 建成 InnoDB，跑同一組測試。
+- 直接寫入路徑 `SharedDatabase.persist`（`commitResult`，非 WAL）也寫同 6 欄，CAS 條件不變（`version`＋wins＋losses，`S/SharedDatabase.java:162`）；另外拒絕「斷線數增加但沒有多一敗」或月份無效的結果（`:154`）。
+- 升級：`D/db/lito_character_ranking.sql` 只 `ADD COLUMN … NOT NULL DEFAULT 0`，兩種引擎都適用、既有列為 0、可重複執行；MyISAM 的 ALTER 會複製表並持表鎖，請停機執行。缺欄位時新版伺服器啟動檢查直接拒絕（`S/SharedDatabase.java:79`、`S/SettlementSql.java:46`），不會靜默歸零。
+- 啟動／登入載入：`SharedDatabase.profiles` 讀新欄位（`S/SharedDatabase.java:97-98`），`Route.profile` 把它們放進 `TournamentProfileState`；外部改壞的值（斷線數大於敗場、月份無效）載入時夾到合法範圍（`:196`）。
 
 **逐項判斷**
 

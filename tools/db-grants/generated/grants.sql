@@ -2,7 +2,7 @@
 -- 佔位：380_db＝database.static.database、380_lito＝database.lito.database、
 --       380_ac＝每個 enabled=1 來源的 character_database（每個來源各複製一份「來源角色庫」段並換庫名）。
 -- 帳號：'lito_shared'@'127.0.0.1' 只是範例；Host 依實際連線來源設定，不要用 '%'。
--- 前提：表必須已存在（MySQL 對不存在的表做表級 GRANT 會失敗）；character_lito 需已有 last_result_id 欄（db/lito_battle_settlement.sql）。
+-- 前提：表必須已存在（MySQL 對不存在的表做表級 GRANT 會失敗）；character_lito 需已有 last_result_id 欄（db/lito_battle_settlement.sql）與積分欄位（db/lito_character_ranking.sql）。
 CREATE USER IF NOT EXISTS 'lito_shared'@'127.0.0.1' IDENTIFIED BY '<由營運設定>';
 
 -- ===== 靜態庫（database.static.database，預設 380_db）：54 表 =====
