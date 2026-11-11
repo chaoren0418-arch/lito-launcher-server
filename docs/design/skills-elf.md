@@ -30,22 +30,22 @@ SQL `attr≠0` 的 13 個技能。「位置」是 LiTo 實際做 `elfAttribute` 
 
 | ID | 名稱 | attr | LiTo 檢查位置 | 判定 |
 |---|---|---|---|---|
-| 157 | 大地屏障 | 1 地 | `CS:44377 useBindSpell`、`CS:44372 useClassicWorldBindSpell`（`BindSpell` 沒有 attribute 欄位，改用 `C` `EARTH_BIND_ATTRIBUTE`） | **已修正**（原本沒有檢查） |
-| 159 | 大地的祝福 | 1 地 | `CS:42053 useEarthBlessSpell`；catalog `attribute` 0 → `ATTRIBUTE_EARTH`（`C:936`） | **已修正** |
-| 160 | 水之防護 | 4 水 | `CS:43184 useAquaProtectSpell`；catalog `attribute` 0 → `ATTRIBUTE_WATER`（`C:1221`） | **已修正** |
-| 163 | 烈炎武器 | 2 火 | `CS:90989 nativeSourceFireWeaponOriginalBody` | 一致（既有） |
-| 164 | 生命的祝福 | 4 水 | `CS:91181 nativeSourceHealingOriginalNature` | 一致（既有） |
-| 165 | 生命呼喚 | 4 水 | `CS:70701 nativeMaterialCallNatureBody`（`requiredElfAttribute`） | 一致（既有） |
-| 167 | 風之枷鎖 | 8 風 | `CS:61768 nativeMaterialAreaWindBody` | 一致（既有） |
-| 170 | 水之元氣 | 4 水 | `CS:67803 nativeMaterialWaterLifeBody`（catalog 本來就是 4，但處理器沒用） | **已修正** |
-| 171 | 屬性之火 | 2 火 | `CS:58132 nativeMaterialPhysicalProcBuffBody` | 一致（既有） |
-| 172 | 暴風疾走 | 8 風 | `CS:37593 useOtherNoEffectSpell` | 一致（既有） |
-| 173 | 污濁之水 | 4 水 | `CS:83341 nativeMaterialTargetNegativeBody`；寵物路徑 `CombatNpcDebuffs.java:56` | 一致（既有） |
+| 157 | 大地屏障 | 1 地 | `CS:44384 useBindSpell`、`CS:44379 useClassicWorldBindSpell`（`BindSpell` 沒有 attribute 欄位，改用 `C` `EARTH_BIND_ATTRIBUTE`） | **已修正**（原本沒有檢查） |
+| 159 | 大地的祝福 | 1 地 | `CS:42060 useEarthBlessSpell`；catalog `attribute` 0 → `ATTRIBUTE_EARTH`（`C:936`） | **已修正** |
+| 160 | 水之防護 | 4 水 | `CS:43191 useAquaProtectSpell`；catalog `attribute` 0 → `ATTRIBUTE_WATER`（`C:1221`） | **已修正** |
+| 163 | 烈炎武器 | 2 火 | `CS:90996 nativeSourceFireWeaponOriginalBody` | 一致（既有） |
+| 164 | 生命的祝福 | 4 水 | `CS:91188 nativeSourceHealingOriginalNature` | 一致（既有） |
+| 165 | 生命呼喚 | 4 水 | `CS:70708 nativeMaterialCallNatureBody`（`requiredElfAttribute`） | 一致（既有） |
+| 167 | 風之枷鎖 | 8 風 | `CS:61775 nativeMaterialAreaWindBody` | 一致（既有） |
+| 170 | 水之元氣 | 4 水 | `CS:67810 nativeMaterialWaterLifeBody`（catalog 本來就是 4，但處理器沒用） | **已修正** |
+| 171 | 屬性之火 | 2 火 | `CS:58139 nativeMaterialPhysicalProcBuffBody` | 一致（既有） |
+| 172 | 暴風疾走 | 8 風 | `CS:37600 useOtherNoEffectSpell` | 一致（既有） |
+| 173 | 污濁之水 | 4 水 | `CS:83348 nativeMaterialTargetNegativeBody`；寵物路徑 `CombatNpcDebuffs.java:56` | 一致（既有） |
 | 174 | 精準射擊 | 8 風 | 同 173 | 一致（既有） |
 | 175 | 烈焰之魂 | 2 火 | 同 171 | 一致（既有） |
 
 ### 2.1 新增閘門的行為
-- 拒絕方式比照既有 Storm Shot（`CS:41954`）：只記 log、不扣 MP／材料、不送封包。S1 `isNormalSkillUsable` 回傳 false 時同樣不扣費（`U:554-556`，扣費在 `runSkill` 之後的 `U:1123-1142`）。
+- 拒絕方式比照既有 Storm Shot（`CS:41961`）：只記 log、不扣 MP／材料、不送封包。S1 `isNormalSkillUsable` 回傳 false 時同樣不扣費（`U:554-556`，扣費在 `runSkill` 之後的 `U:1123-1142`）。
 - 159／160／170 的檢查放在「階段為 BATTLE／WORLD」之後、變身／沉默／負重檢查之前，與 S1 `isNormalSkillUsable` 先做 `isAttrAgrees` 的順序相同；157 放在入口（兩個階段各一個入口）。
 - GM：`isAdministrator()` 例外，與 S1 `!_player.isGm()` 相同。
 
@@ -55,46 +55,46 @@ SQL `attr≠0` 的 13 個技能。「位置」是 LiTo 實際做 `elfAttribute` 
 
 | ID | 名稱 | S1 效果類別／行號 | LiTo 實作位置 | 判定 |
 |---|---|---|---|---|
-| 129 | 魔法防禦 | `U:3552-3559` MR+10 | `C:611` MagicResistanceSpell；`CS:38020` | 一致（MR 10、1200 秒、精靈玉×1） |
-| 130 | 心靈轉換 | `M:192` `sm/BODY_TO_MIND.java:22` MP+2 | `C:627` BodyToMindSpell；`CS:38027` | 一致（HP 8、MP+2） |
-| 131 | 世界樹的呼喚 | 預設（傳送） | `C:659` WorldTreeCallSpell；`CS:38249` | 數值一致；正式 LiTo.bin 沒有地圖 4，傳送本體被 catalog 註解列為停用（不在本文） |
-| 132 | 三重矢 | `M:194` `sm/TRIPLE_ARROW.java:46-47` 三次 `onAction` | `C:675` TripleArrowSpell；`CS:38078` | 一致（3 次、MP 11、100 ms） |
-| 133 | 弱化屬性 | `M:191` `sm/ELEMENTAL_FALL_DOWN.java:26-34` 依 ElfAttr −50 | `C:693` ElementalFallDownSpell；`CS:41444` | 一致（−50、32 秒）；機率屬 T102 |
-| 134 | 鏡反射 | `U:2393`（與魔法屏障同類） | `C:733` CounterMirrorSpell；`CS:41563` | 一致（16 秒、1000 ms、精靈玉×1）；反射機率 `ConfigSkill.MIRROR` **待驗證** |
-| 137 | 淨化精神 | `U:3561-3570`；WIS+3 | `C:749` ClearMindSpell；`CS:41567` | 一致 |
-| 138 | 屬性防禦 | `U:3572-3582` 四屬性 +10 | `C:765` ResistElementalSpell；`CS:41571` | 一致 |
-| 145 | 釋放元素 | `U:3889-3900`（召喚獸 `returnToNature`，否則訊息 79） | `C:713` ReturnToNatureSpell；`CS:41456` | 一致（精靈玉×2）；機率屬 T102 |
-| 146 | 魂體轉換 | `M:193` `sm/BLOODY_SOUL.java:23`；`config/其他控制端/4-職業_技能設定表.properties:60` `BLOODY_SOULADDMP = 20` | `C:640` BodyToMindSpell；`CS:38027` | 一致（HP 40、MP+20、1200 ms） |
-| 147 | 單屬性防禦 | `U:559-562`、`U:3584-3603` | `C:781` ElementalProtectionSpell；`CS:41575` | 一致（每個屬性位元 +50、64 秒） |
-| 148 | 火焰武器 | `U:3646`；DMG+4 | `C:799` FireWeaponSpell；`CS:41579` | 一致 |
-| 149 | 風之神射 | `U:3683`；BOW_HIT+6 | `C:825` WindShotSpell；`CS:41583` | 一致 |
-| 150 | 風之疾走 | `U:3779-3786` 勇敢速度 4 | `C:1372` MovementBuffSpell；`CS:37527` | 一致（E9） |
-| 151 | 大地防護 | `U:3615`；AC−6 | `C:328` ShieldSpell；`CS:32134` | 一致 |
-| 152 | 地面障礙 | `U:3050-3091`（與緩速同分支） | `C:2496` EntangleSpell；`CS:41448` | 一致（64 秒、精靈玉×1）；緩速互斥見 T107 §2 |
-| 153 | 魔法消除 | `U:2877-2891`、`U:4196` | `C:2517` EraseMagicSpell；`CS:41452` | 一致（32 秒、600 ms）；機率屬 T102 |
-| 154 | 召喚屬性精靈 | `M:198` `sm/LESSER_ELEMENTAL.java` | `C:2535` ElementalSummonSpell；`CS:46570` | 一致（精靈玉×2）；依 ElfAttr 選精靈（`C` `:10757-10760`）**待驗證**實機 |
-| 155 | 烈炎氣息 | `U:3658`；DMG+4（隊伍） | `C:843` FireBlessSpell；`CS:41587` | 一致 |
-| 156 | 暴風之眼 | `U:3695`；BOW_HIT+2 BOW_DMG+3（隊伍） | `C:861` StormEyeSpell；`CS:41768` | 一致 |
-| 157 | 大地屏障 | `U:3140-3153`（凍結）、`U:1493` | `C:2648` BindSpell；`CS:44377`、`CS:44372`、`CS:63719` | **已修正**：補屬性閘門（§2） |
-| 158 | 生命之泉 | `U:3025-3029`（消耗水之元氣） | `C:916` NaturesTouchSpell；`CS:43015` | 一致（320 秒） |
-| 159 | 大地的祝福 | `U:3541-3550`；AC−7 | `C:936` EarthBlessSpell；`CS:42053` | **已修正**：attribute 0 → 1，補屬性閘門 |
-| 160 | 水之防護 | `M:196` `sm/AQUA_PROTECTER.java:22` | `C:1221` AquaProtectSpell；`CS:43184` | **已修正**：attribute 0 → 4，補屬性閘門 |
-| 161 | 封印禁地 | 預設 | `C:1238` AreaSilenceSpell；`CS:43353` | 一致（9000 ms、精靈玉×8） |
-| 162 | 召喚強力屬性精靈 | `M:197` `sm/GREATER_ELEMENTAL.java` | `C:2547` ElementalSummonSpell；`CS:46570` | 一致（精靈玉×4） |
-| 163 | 烈炎武器 | `U:3670`；HIT+3 DMG+6 | `C:810` FireWeaponSpell；`CS:41579` | 一致 |
-| 164 | 生命的祝福 | TYPE_HEAL `U:2938`、`U:3026` | `C:295` NaturesBlessingSpell；`CS:46979` | 一致（治癒骰 (10+MB)d12、300 ms） |
-| 165 | 生命呼喚 | `M:190` `sm/CALL_OF_NATURE.java` | `C:2449` ResurrectionSpell；`CS:46779` | 一致（精靈玉×1、水屬性） |
-| 166 | 暴風神射 | `U:3708`；BOW_HIT−1 BOW_DMG+5 | `C:879` StormShotSpell；`CS:41954` | 一致 |
-| 167 | 風之枷鎖 | `M:199` `sm/WIND_SHACKLE.java:31,46` | `C:898` WindShackleSpell；`CS:43383` | 一致（16 秒、100 ms） |
-| 168 | 鋼鐵防護 | `U:3604-3613`；AC−10 | `C:955` IronSkinSpell；`CS:42231` | 一致 |
-| 169 | 體能激發 | 預設 | `C:1162` ExoticVitalizeSpell；`CS:39341` | 一致（960 秒、精靈玉×1） |
-| 170 | 水之元氣 | `U:2918`（治癒 ×2）、`U:3029` | `C:1201` WaterLifeSpell；`CS:43180` → `CS:67803` | **已修正**：補屬性閘門 |
-| 171 | 屬性之火 | 預設；傷害加成在 `L1AttackPc` | `C:1410` PhysicalProcBuffSpell；`CS:37586` | 一致（192 秒） |
-| 172 | 暴風疾走 | 預設（無效果） | `C:1441` OtherNoEffectSpell；`CS:37593` | 一致 |
-| 173 | 污濁之水 | `U:2924`（治癒 ×½） | `C:2325` PolluteWaterSpell；`CS:43402` | 一致（192 秒、1000 ms）；機率屬 T102 |
-| 174 | 精準射擊 | 預設；`ConfigSkill.STRIKER_DMG` | `C:2343` StrikerGaleSpell；`CS:43416` | 一致（192 秒、3000 ms、精靈玉×5） |
-| 175 | 烈焰之魂 | 預設；`ConfigSkill.SOUL_OF_FLAME_DAMAGE` | `C:1424` PhysicalProcBuffSpell；`CS:37586` | 一致（64 秒、300 ms、精靈玉×3） |
-| 176 | 能量激發 | 預設 | `C:1180` AdditionalFireSpell；`CS:39345` | 一致（960 秒） |
+| 129 | 魔法防禦 | `U:3552-3559` MR+10 | `C:611` MagicResistanceSpell；`CS:38027` | 一致（MR 10、1200 秒、精靈玉×1） |
+| 130 | 心靈轉換 | `M:192` `sm/BODY_TO_MIND.java:22` MP+2 | `C:627` BodyToMindSpell；`CS:38034` | 一致（HP 8、MP+2） |
+| 131 | 世界樹的呼喚 | 預設（傳送） | `C:659` WorldTreeCallSpell；`CS:38256` | 數值一致；正式 LiTo.bin 沒有地圖 4，傳送本體被 catalog 註解列為停用（不在本文） |
+| 132 | 三重矢 | `M:194` `sm/TRIPLE_ARROW.java:46-47` 三次 `onAction` | `C:675` TripleArrowSpell；`CS:38085` | 一致（3 次、MP 11、100 ms） |
+| 133 | 弱化屬性 | `M:191` `sm/ELEMENTAL_FALL_DOWN.java:26-34` 依 ElfAttr −50 | `C:693` ElementalFallDownSpell；`CS:41451` | 一致（−50、32 秒）；機率屬 T102 |
+| 134 | 鏡反射 | `U:2393`（與魔法屏障同類） | `C:733` CounterMirrorSpell；`CS:41570` | 一致（16 秒、1000 ms、精靈玉×1）；反射機率 `ConfigSkill.MIRROR` **待驗證** |
+| 137 | 淨化精神 | `U:3561-3570`；WIS+3 | `C:749` ClearMindSpell；`CS:41574` | 一致 |
+| 138 | 屬性防禦 | `U:3572-3582` 四屬性 +10 | `C:765` ResistElementalSpell；`CS:41578` | 一致 |
+| 145 | 釋放元素 | `U:3889-3900`（召喚獸 `returnToNature`，否則訊息 79） | `C:713` ReturnToNatureSpell；`CS:41463` | 一致（精靈玉×2）；機率屬 T102 |
+| 146 | 魂體轉換 | `M:193` `sm/BLOODY_SOUL.java:23`；`config/其他控制端/4-職業_技能設定表.properties:60` `BLOODY_SOULADDMP = 20` | `C:640` BodyToMindSpell；`CS:38034` | 一致（HP 40、MP+20、1200 ms） |
+| 147 | 單屬性防禦 | `U:559-562`、`U:3584-3603` | `C:781` ElementalProtectionSpell；`CS:41582` | 一致（每個屬性位元 +50、64 秒） |
+| 148 | 火焰武器 | `U:3646`；DMG+4 | `C:799` FireWeaponSpell；`CS:41586` | 一致 |
+| 149 | 風之神射 | `U:3683`；BOW_HIT+6 | `C:825` WindShotSpell；`CS:41590` | 一致 |
+| 150 | 風之疾走 | `U:3779-3786` 勇敢速度 4 | `C:1372` MovementBuffSpell；`CS:37534` | 一致（E9） |
+| 151 | 大地防護 | `U:3615`；AC−6 | `C:328` ShieldSpell；`CS:32141` | 一致 |
+| 152 | 地面障礙 | `U:3050-3091`（與緩速同分支） | `C:2496` EntangleSpell；`CS:41455` | 一致（64 秒、精靈玉×1）；緩速互斥見 T107 §2 |
+| 153 | 魔法消除 | `U:2877-2891`、`U:4196` | `C:2517` EraseMagicSpell；`CS:41459` | 一致（32 秒、600 ms）；機率屬 T102 |
+| 154 | 召喚屬性精靈 | `M:198` `sm/LESSER_ELEMENTAL.java` | `C:2535` ElementalSummonSpell；`CS:46577` | 一致（精靈玉×2）；依 ElfAttr 選精靈（`C` `:10757-10760`）**待驗證**實機 |
+| 155 | 烈炎氣息 | `U:3658`；DMG+4（隊伍） | `C:843` FireBlessSpell；`CS:41594` | 一致 |
+| 156 | 暴風之眼 | `U:3695`；BOW_HIT+2 BOW_DMG+3（隊伍） | `C:861` StormEyeSpell；`CS:41775` | 一致 |
+| 157 | 大地屏障 | `U:3140-3153`（凍結）、`U:1493` | `C:2648` BindSpell；`CS:44384`、`CS:44379`、`CS:63726` | **已修正**：補屬性閘門（§2） |
+| 158 | 生命之泉 | `U:3025-3029`（消耗水之元氣） | `C:916` NaturesTouchSpell；`CS:43022` | 一致（320 秒） |
+| 159 | 大地的祝福 | `U:3541-3550`；AC−7 | `C:936` EarthBlessSpell；`CS:42060` | **已修正**：attribute 0 → 1，補屬性閘門 |
+| 160 | 水之防護 | `M:196` `sm/AQUA_PROTECTER.java:22` | `C:1221` AquaProtectSpell；`CS:43191` | **已修正**：attribute 0 → 4，補屬性閘門 |
+| 161 | 封印禁地 | 預設 | `C:1238` AreaSilenceSpell；`CS:43360` | 一致（9000 ms、精靈玉×8） |
+| 162 | 召喚強力屬性精靈 | `M:197` `sm/GREATER_ELEMENTAL.java` | `C:2547` ElementalSummonSpell；`CS:46577` | 一致（精靈玉×4） |
+| 163 | 烈炎武器 | `U:3670`；HIT+3 DMG+6 | `C:810` FireWeaponSpell；`CS:41586` | 一致 |
+| 164 | 生命的祝福 | TYPE_HEAL `U:2938`、`U:3026` | `C:295` NaturesBlessingSpell；`CS:46986` | 一致（治癒骰 (10+MB)d12、300 ms） |
+| 165 | 生命呼喚 | `M:190` `sm/CALL_OF_NATURE.java` | `C:2449` ResurrectionSpell；`CS:46786` | 一致（精靈玉×1、水屬性） |
+| 166 | 暴風神射 | `U:3708`；BOW_HIT−1 BOW_DMG+5 | `C:879` StormShotSpell；`CS:41961` | 一致 |
+| 167 | 風之枷鎖 | `M:199` `sm/WIND_SHACKLE.java:31,46` | `C:898` WindShackleSpell；`CS:43390` | 一致（16 秒、100 ms） |
+| 168 | 鋼鐵防護 | `U:3604-3613`；AC−10 | `C:955` IronSkinSpell；`CS:42238` | 一致 |
+| 169 | 體能激發 | 預設 | `C:1162` ExoticVitalizeSpell；`CS:39348` | 一致（960 秒、精靈玉×1） |
+| 170 | 水之元氣 | `U:2918`（治癒 ×2）、`U:3029` | `C:1201` WaterLifeSpell；`CS:43187` → `CS:67810` | **已修正**：補屬性閘門 |
+| 171 | 屬性之火 | 預設；傷害加成在 `L1AttackPc` | `C:1410` PhysicalProcBuffSpell；`CS:37593` | 一致（192 秒） |
+| 172 | 暴風疾走 | 預設（無效果） | `C:1441` OtherNoEffectSpell；`CS:37600` | 一致 |
+| 173 | 污濁之水 | `U:2924`（治癒 ×½） | `C:2325` PolluteWaterSpell；`CS:43409` | 一致（192 秒、1000 ms）；機率屬 T102 |
+| 174 | 精準射擊 | 預設；`ConfigSkill.STRIKER_DMG` | `C:2343` StrikerGaleSpell；`CS:43423` | 一致（192 秒、3000 ms、精靈玉×5） |
+| 175 | 烈焰之魂 | 預設；`ConfigSkill.SOUL_OF_FLAME_DAMAGE` | `C:1424` PhysicalProcBuffSpell；`CS:37593` | 一致（64 秒、300 ms、精靈玉×3） |
+| 176 | 能量激發 | 預設 | `C:1180` AdditionalFireSpell；`CS:39352` | 一致（960 秒） |
 
 統計：一致 36、已修正 4（157、159、160、170）、不一致・未改 0（另有 `SkillCoexistSet=0` 情境的差異，§4.1）。「一致」只代表本文列出的面向；效果本體見 §5。
 
