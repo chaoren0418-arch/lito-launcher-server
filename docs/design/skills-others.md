@@ -17,7 +17,7 @@
 | O4 | HP 消耗 | `U:1974`：`currentHp < hpConsume+1` 拒絕（訊息 279） | 各 record `hpCost`；`CS:89366` `playerHp <= hpCost` 拒絕 | 一致；龍騎士 12 個 MP 全為 0、只扣 HP | `consumptionCooldownAndDurationMatchSource` |
 | O5 | 108 會心一擊 | `U:2036-2038`：扣費改成 HP=1、MP=0 | `AttackSpell.finalBurn`、`hpCost()`=1（`C:8394-8395`）；`CS:89386-89390` | 一致 | `finalBurnCommitsHpOneAndMpZero` |
 | O6 | 材料 | 黑暗精靈石 40321 ×1／×2；覺醒骨片 49157 ×1／×2；魔法立方 49156 ×1／×2 | `InventoryCatalog.SECOND_LEVEL_DARK_STONE`、`AWAKENING_BONE_FRAGMENT`、`49_156L` | 一致（11 個有材料的技能逐列相等） | 同上 |
-| O7 | **正義值** | `U:2047` 每次施放加 `skills.lawful`；62 列只有 103 為 −10 | 有 `lawfulDelta` 的 record 才會呼叫 `applySpellLawfulDelta`（`CS:46731`，delta=0 不送封包） | **已修正** 208（catalog +45 → 0，§3.1）；103 沒有套用（與 T107 的 20／40 同缺口，§4.1） | `damageAttributeTypeAndLawfulMatchSource`、`lawfulGapListIsExact`、`boneBreakDoesNotChangeLawfulAndKeepsModeDuration` |
+| O7 | **正義值** | `U:2047` 每次施放加 `skills.lawful`；62 列只有 103 為 −10 | 有 `lawfulDelta` 的 record 才會呼叫 `applySpellLawfulDelta`（`CS:46731`，delta=0 不送封包） | **已修正** 208（catalog +45 → 0，§3.1）；103 由 #325 補上（`BlindSpell.lawfulDelta`=−10，§4.1） | `damageAttributeTypeAndLawfulMatchSource`、`lawfulGapListIsExact`、`boneBreakDoesNotChangeLawfulAndKeepsModeDuration` |
 | O8 | 傷害骰 | `damage_value`＋`damage_dice`×`damage_dice_count` | `baseDamage`／`dieSides`／`diceCount` | 一致（87、108、184、189、192、194、203、207、208、213）；202 是 TYPE_CURSE 不算傷害，catalog 以 `dormantDatabaseDamageValue`=11 保留 | `damageAttributeTypeAndLawfulMatchSource`、`confusionKeepsDormantDatabaseDamageValue` |
 | O9 | 屬性 | `attr`；`src/com/lineage/server/model/L1MagicMode.java:188-230` 只對 1/2/4/8 算抗性 | `attribute`；108、202 用 `ATTRIBUTE_NONE`(16) | 一致（0 與 16 都是無屬性） | 同上 |
 | O10 | type | `skills.type` | 有 `type` 欄位的 record（龍騎士、幻術師大多數） | 一致 | 同上 |
@@ -91,7 +91,7 @@
 | 100 | 提煉魔石 | `U:504`、`U:3268` | `C:2747` BringStoneSpell | 一致（MP5）；產出機率**待驗證** |
 | 101 | 行走加速 | `U:3779-3786` | `C:1360` MovementBuffSpell | 一致 |
 | 102 | 燃燒鬥志 | `AP:1344-1345` | `C:1385` PhysicalProcBuffSpell | 一致（2990 ms、320 秒） |
-| 103 | 暗黑盲咒 | `M:203`（CURSE_BLIND）；`U:2047` lawful−10 | `C:2238` BlindSpell | 消耗／期限一致；**正義值未套用**（§4.1） |
+| 103 | 暗黑盲咒 | `M:203`（CURSE_BLIND）；`U:2047` lawful−10 | `C:2238` BlindSpell | 消耗／期限一致；正義值 **已修正（#325）**（§4.1） |
 | 104 | 毒性抵抗 | 預設 | `C:1453` PoisonResistanceSpell | 一致（320 秒） |
 | 105 | 雙重破壞 | `AP:812-813` | `C:1396` PhysicalProcBuffSpell | 一致（石×1、192 秒） |
 | 106 | 暗影閃避 | `M:202` `sm/UNCANNY_DODGE.java:26` | `C:1467` DodgeBuffSpell | 一致 |
@@ -143,15 +143,15 @@
 | 219 | 幻覺：化身 | `M:221` `sm/ILLUSION_AVATAR.java:31`；`PI:3390-3391` | `C:1815` IllusionAvatarSpell | 一致 |
 | 220 | 立方：和諧 | `U:2753` | `C:1888` CubeHarmonySpell | 消耗一致（立方×2）；立方效果**待驗證** |
 
-統計：一致 60（其中多列附「待驗證」的效果本體）、已修正 1（208）、不一致・未改 1（103 正義值；另 107 遠程後備值見 §4.2）。
+統計：一致 60（其中多列附「待驗證」的效果本體）、已修正 2（208；#325 補 103 正義值）、不一致・未改 0（107 遠程後備值見 §4.2）。
 
 ### 3.1 208 正義值的根因
 LiTo catalog 註解寫「adds lawful45」，`BoneBreakSpell` 建構子也把 `lawfulDelta != 45` 當成不合法；處理器在 `CS:89405`（競技場）與 `CS:81542`（經典世界）每次施放都 `applySpellLawfulDelta(+45)`。但 `db` 第 208 列 `lawful=0`，45 是同一列的 `probability_value`；`NativeBoneBreakSourceAuditTest` 引用的主要／次要兩份 SQL 也都是 `lawful=0`。S1 `U:2047` 加的是 `skills.lawful`，所以 S1 施放不改正義值。本 PR 把 `lawfulDelta` 改成 0（`C:1766`），建構子檢查同步改為 0；`applySpellLawfulDelta` 在 delta=0 時直接返回、不送 `S_CHANGE_ALIGNMENT`（`CS:46732`）。
 
 ## 4. 不一致與未改的理由
 
-### 4.1 103 暗黑盲咒正義值 −10 未套用
-與 T107 §4.1 相同：`BlindSpell` 沒有 `lawfulDelta` 欄位（20 闇盲咒術、40 黑闇之影共用），處理器不呼叫 `applySpellLawfulDelta`。修法相同（record 加欄位＋各處理器加呼叫），建議與 T107 的 8 個技能一起另開 code 任務；`lawfulGapListIsExact` 釘住清單 {103}。
+### 4.1 103 暗黑盲咒正義值 −10——#325 已補上
+#325 與 T107 的 8 個技能一起處理：`BlindSpell` 加 `lawfulDelta`（20／40／103 皆 −10），盲咒的戰鬥／世界／寵物目標處理器扣 MP 後呼叫 `applySpellLawfulDelta`（見 `skills-wizard.md` §4.1）。`lawfulGapListIsExact` 的清單改為空集合。
 
 ### 4.2 107 暗影之牙遠程傷害後備值
 S1 `ab` 只有 `(107,DMG,5)`，DMG 只算近戰（`src/com/lineage/server/model/Instance/L1PcBuffAbilityCalc.java:294-295`）。LiTo 正式環境（DB 載入）走 `CombatBuffLeases` 讀同一張表（`CombatWeaponBuffs.java:13-15`），結果相同；只有沒載入 DB 時 catalog 後備值 `rangedDamage=5` 會讓遠程也 +5。與 T107 §4.3 同類，只影響離線測試，未改。

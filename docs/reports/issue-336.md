@@ -10,12 +10,12 @@
 
 | 項目 | 結果 | 1-伺服器 | LiTo |
 |---|---|---|---|
-| 10／28 吸血 | 一致 | `src/com/lineage/server/model/skill/L1SkillUse.java:3034-3035`、`:781-782`、`:898-899` | `BattleSpellCatalog.java:8389`、`ClientSession.java:46444`、`:89827` |
-| 39 吸魔量 | 一致 | `L1SkillUse.java:3168-3174`、`src/com/lineage/server/model/combat/MagicHitCommitPlan.java:41-56` | `BattleManaDrain.java:27`、`ClientSession.java:92623`、`:92664` |
-| 58 火牢每跳 | **已修正**（擲骰用的 INT） | `src/com/lineage/server/timecontroller/skill/EffectFirewallTimer.java:197`、`:244`、`:293-304`；`src/com/lineage/server/model/L1AttackList.java:256-294` | `ClientSession.java:56307`（改）、`BattleElementalResistance.java:13`、`NativeSourceGroundPlayer.java:6-39` |
-| 44 相消清單 | 法師技能一致；「加速道具速度歸 0」待使用者裁定 | `src/com/lineage/server/model/skill/skillmode/CANCELLATION.java:51-86`、`L1SkillMode.java:144-155`、`db/380_db.sql:48847-48858` | `SourceSkillControls.java:82`、`ClientSession.java:66966`、`NativeCancellationSpeedImmunity.java:10` |
-| 29／76 緩速免疫 | **已修正**（76 BATTLE 漏擋） | `L1SkillUse.java:3053-3061` | `ClientSession.java:61311`（新增）、`:60883`、`:63183` |
-| 66 自施 | 不一致，**待使用者裁定** | `L1SkillUse.java:4079-4083`、`:2779`、`:2833` | `ClientSession.java:60083`、`:59697` |
+| 10／28 吸血 | 一致 | `src/com/lineage/server/model/skill/L1SkillUse.java:3034-3035`、`:781-782`、`:898-899` | `BattleSpellCatalog.java:8403`、`ClientSession.java:46444`、`:89837` |
+| 39 吸魔量 | 一致 | `L1SkillUse.java:3168-3174`、`src/com/lineage/server/model/combat/MagicHitCommitPlan.java:41-56` | `BattleManaDrain.java:27`、`ClientSession.java:92633`、`:92674` |
+| 58 火牢每跳 | **已修正**（擲骰用的 INT） | `src/com/lineage/server/timecontroller/skill/EffectFirewallTimer.java:197`、`:244`、`:293-304`；`src/com/lineage/server/model/L1AttackList.java:256-294` | `ClientSession.java:56308`（改）、`BattleElementalResistance.java:13`、`NativeSourceGroundPlayer.java:6-39` |
+| 44 相消清單 | 法師技能一致；「加速道具速度歸 0」待使用者裁定 | `src/com/lineage/server/model/skill/skillmode/CANCELLATION.java:51-86`、`L1SkillMode.java:144-155`、`db/380_db.sql:48847-48858` | `SourceSkillControls.java:82`、`ClientSession.java:66972`、`NativeCancellationSpeedImmunity.java:10` |
+| 29／76 緩速免疫 | **已修正**（76 BATTLE 漏擋） | `L1SkillUse.java:3053-3061` | `ClientSession.java:61314`（新增）、`:60886`、`:63186` |
+| 66 自施 | 不一致，**待使用者裁定** | `L1SkillUse.java:4079-4083`、`:2779`、`:2833` | `ClientSession.java:60085`、`:59698` |
 
 ### 程式變更
 1. **58 火牢**：`ClientSession.fireWallDamage()` 原本用 `CharacterSummary.intelligence()`（資料庫存的基礎 INT），1-伺服器 `EffectFirewallTimer` 用 `user.getInt()`（含裝備、增益）。改成用 `nativeSkillConsumptionIntelligence()`（和 Source 火牢路徑、MP 消耗同一個有效 INT）；裝備快照還沒載入時退回原本的基礎 INT。影響 BATTLE 非 Source 路徑、WORLD 玩家與怪物目標。
@@ -59,6 +59,6 @@
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/WizardSkillEffectServer1ParityTest.java`
 
 ## 給下一棒的提示
-- 10、28、20、27、40、41、66、77 的正義值缺口（§4.1）仍未處理，建議和 66 自施一起開 code 任務。
+- 10、20、27、28、40、41、66、77 的正義值缺口已由 #325 補上（本分支已合併 main）；66 自施若裁定對齊 1-伺服器，要把 `nativeAreaBattleSleepBody`／`nativeAreaWorldSleepBody` 的扣費（含 #325 的 `applySpellLawfulDelta`）移到主目標判定之前，並改 `fogOfSleepingSelfPrimaryIsRejectedBeforeCostAndSelfIsNeverATarget`。
 - 火牢有兩條路徑：`NativeSourceGroundPlayer.pulse`（Source、只有 BATTLE PC）與 `ClientSession.serverGroundPulse`／`serverClassicWorldGroundPlayerPulse`／`serverClassicWorldGroundMonsterPulse`（舊）。之後要再對齊 SKD3／SKM0，建議讓舊路徑也呼叫 `NativeSourceGroundPlayer.resolve`。
-- 緩速免疫判斷目前散在 3 個本體（`ClientSession.java:60883`、`:61311`、`:63183`），若要抽成共用方法請一起改 `WizardSkillEffectServer1ParityTest.slowSpellsSkipHasteItemAndStrengthenedBraveTargets`。
+- 緩速免疫判斷目前散在 3 個本體（`ClientSession.java:60886`、`:61314`、`:63186`），若要抽成共用方法請一起改 `WizardSkillEffectServer1ParityTest.slowSpellsSkipHasteItemAndStrengthenedBraveTargets`。

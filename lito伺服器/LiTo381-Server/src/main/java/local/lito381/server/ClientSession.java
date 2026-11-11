@@ -46728,7 +46728,8 @@ final class ClientSession implements Runnable {
         }
     }
 
-    private void applySpellLawfulDelta(int delta, String source) throws IOException {
+    /** S1 L1SkillUse.useConsume:2047 addLawful(skills.lawful)；只改記憶體／LiTo 狀態檔，不寫回來源角色庫。 */
+    void applySpellLawfulDelta(int delta, String source) throws IOException {
         if (delta == 0) return;
         CharacterSummary character = selectedCharacterSummary();
         int sourceLawful = character == null ? 0 : nativeLawful(character.lawful());
@@ -59953,6 +59954,7 @@ final class ClientSession implements Runnable {
                                  );
                               }
 
+                              this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                               this.sendEncrypted(
                                  Protocol.manaPoint(var31, this.playerMaxMp), "S_MANA_POINT classic-world sleep=" + var31 + "/" + this.playerMaxMp
                               );
@@ -60565,6 +60567,7 @@ final class ClientSession implements Runnable {
                         this.sendEncrypted(Protocol.messageCode(var2.casterFailureMessage()), "S_MESSAGE_CODE sleep-failure=" + var2.casterFailureMessage());
                      }
 
+                     this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                      this.sendEncrypted(Protocol.manaPoint(var32, this.playerMaxMp), "S_MANA_POINT sleep=" + var32 + "/" + this.playerMaxMp);
                      if (var3.x() != var15 || var3.y() != var16) {
                         System.out
@@ -64743,6 +64746,7 @@ final class ClientSession implements Runnable {
                         }
                      }
 
+                     this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                      this.sendEncrypted(Protocol.manaPoint(var30, this.playerMaxMp), "S_MANA_POINT create-zombie=" + var30 + "/" + this.playerMaxMp);
                      this.sendEncrypted(
                         new Protocol.Writer().c(13).h(var31).h(this.playerMaxHp).bytes(), "S_HIT_POINT create-zombie-hp-cost=" + var31 + "/" + this.playerMaxHp
@@ -65034,6 +65038,7 @@ final class ClientSession implements Runnable {
                            }
                         }
 
+                        this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                         this.sendEncrypted(Protocol.manaPoint(var35, this.playerMaxMp), "S_MANA_POINT Weapon Break=" + var35 + "/" + this.playerMaxMp);
                         if (!var58) {
                            this.sendEncrypted(Protocol.messageCode(var2.failureMessage()), "S_MESSAGE_CODE Weapon-Break-failure=" + var2.failureMessage());
@@ -65386,6 +65391,7 @@ final class ClientSession implements Runnable {
                               }
                            }
 
+                           this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                            this.sendEncrypted(
                               Protocol.manaPoint(var39, this.playerMaxMp), "S_MANA_POINT classic-world Weapon Break=" + var39 + "/" + this.playerMaxMp
                            );
@@ -71265,6 +71271,7 @@ final class ClientSession implements Runnable {
                            }
                         }
 
+                        this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                         this.sendEncrypted(Protocol.manaPoint(var39, this.playerMaxMp), "S_MANA_POINT blind=" + var39 + "/" + this.playerMaxMp);
                         if (!var59) {
                            this.sendEncrypted(Protocol.messageCode(var2.failureMessage()), "S_MESSAGE_CODE blind-failure=" + var2.failureMessage());
@@ -71561,6 +71568,7 @@ final class ClientSession implements Runnable {
                         }
                      }
 
+                     this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
                      this.sendEncrypted(Protocol.manaPoint(var43, this.playerMaxMp), "S_MANA_POINT classic-world Blind=" + var43 + "/" + this.playerMaxMp);
                      if (!var65) {
                         this.sendEncrypted(Protocol.messageCode(var2.failureMessage()), "S_MESSAGE_CODE classic-world-Blind-failure=" + var2.failureMessage());
@@ -81587,6 +81595,7 @@ final class ClientSession implements Runnable {
                         if (var6 != null) {
                            this.applySpellLawfulDelta(var6.lawfulDelta(), var6.key());
                         }
+                        this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
 
                         boolean var54 = (var13 != null || var16 != null)
                            && (var32.isSafetyZone(this.positionX, this.positionY) || var32.isSafetyZone(var30, var31));
@@ -89453,6 +89462,7 @@ final class ClientSession implements Runnable {
                                  if (var10 != null) {
                                     this.applySpellLawfulDelta(var10.lawfulDelta(), var10.key());
                                  }
+                                 this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());
 
                                  if (var8 != null) {
                                     this.consumeEraseMagicAfterProbability(var13, var15, var16, var43, var2.skillId());

@@ -1608,7 +1608,7 @@ final class BattleSpellCatalog {
             // heals the caster by the final positive magic damage only after
             // the target damage commit is accepted.
             Map.entry(CHILL_TOUCH, new AttackSpell(CHILL_TOUCH, 1, 1, 18, 252,
-                    8, 10, 3, 8, 2, 10, ATTRIBUTE_WATER, "chill-touch")),
+                    8, 10, 3, 8, 2, 10, ATTRIBUTE_WATER, -2, "chill-touch")),
             // Exact selected row28 and LiTo.bin zero-based case27:
             // loc_4CB938 fixes native acquisition radius3, then sub_4CA6E0
             // emits cccdhh row3/column3 plus target object and X/Y.  The
@@ -1617,7 +1617,7 @@ final class BattleSpellCatalog {
             // cast clock is100ms.  Retained L1SkillUse applies the same
             // accepted-damage life drain used by Chill Touch.
             Map.entry(VAMPIRIC_TOUCH, new AttackSpell(VAMPIRIC_TOUCH, 3, 3, 18, 236,
-                    12, 50, 4, 12, 3, 10, ATTRIBUTE_WATER, "vampiric-touch")),
+                    12, 50, 4, 12, 3, 10, ATTRIBUTE_WATER, -5, "vampiric-touch")),
             // Exact selected 3.80 rows 15/16.  Their attr values are kept as
             // source data (1/2) even though the localized names suggest the
             // opposite earth/fire pairing; do not silently rewrite the DB.
@@ -1663,7 +1663,7 @@ final class BattleSpellCatalog {
             // ordinary casts use the database gfx11746.
             Map.entry(DISINTEGRATE, new AttackSpell(DISINTEGRATE, 9, 4, 18, 11746,
                     70, 5_000, 10, 190, 8, 15, ATTRIBUTE_NONE,
-                    500, 40, 11748, "disintegrate"))
+                    500, 40, 11748, 1, "disintegrate"))
     );
 
     private static final Map<Integer, AttackSpell> FINAL_BURN_ATTACK_SPELLS = Map.of(
@@ -1674,7 +1674,7 @@ final class BattleSpellCatalog {
             // source damage, then commits the exceptional HP=1/MP=0 state.
             FINAL_BURN, new AttackSpell(FINAL_BURN, 13, 3, 18, 2952,
                     1, 0, 1, 0, 0, 0, ATTRIBUTE_NONE,
-                    Short.MIN_VALUE, 0, 0, true, "final-burn")
+                    Short.MIN_VALUE, 0, 0, true, 0, "final-burn")
     );
 
     private static final Map<Integer, ThunderGrabSpell> THUNDER_GRAB_SPELLS = Map.of(
@@ -2218,7 +2218,7 @@ final class BattleSpellCatalog {
             CURSE_BLIND, new BlindSpell(CURSE_BLIND, 2, 3, 19, 746,
                     20, 500, 1, 16, 280,
                     55, 45, 35, 0.35D, 0.05D,
-                    false, true, 0, 0, 0, "curse-blind"),
+                    false, true, 0, 0, 0, -10, "curse-blind"),
             // Exact selected row 40 and LiTo.bin zero-based case 39:
             // row4/column7, cccdhh, native/server range3, MP15,
             // one Magic Gem, 500 ms reuse, 32 seconds, action19/gfx2175
@@ -2228,7 +2228,7 @@ final class BattleSpellCatalog {
             DARKNESS, new BlindSpell(DARKNESS, 4, 7, 19, 2175,
                     15, 500, 3, 32, 280,
                     55, 45, 35, 0.35D, 0.05D,
-                    false, true, 0, InventoryCatalog.MAGIC_GEM, 1, "darkness"),
+                    false, true, 0, InventoryCatalog.MAGIC_GEM, 1, -10, "darkness"),
             // Exact selected row 103 and LiTo.bin zero-based case 102:
             // row12/column6, cccdhh target/coordinates, native range3,
             // MP20, one second-level dark stone, selected reuse990ms,
@@ -2239,7 +2239,7 @@ final class BattleSpellCatalog {
                     20, 990, 3, 64, 280,
                     55, 45, 35, 0.35D, 0.05D,
                     false, true, 0,
-                    InventoryCatalog.SECOND_LEVEL_DARK_STONE, 1, "dark-blind")
+                    InventoryCatalog.SECOND_LEVEL_DARK_STONE, 1, -10, "dark-blind")
     );
 
     private static final Map<Integer, WeaponBreakSpell> WEAPON_BREAK_SPELLS = Map.of(
@@ -2254,7 +2254,7 @@ final class BattleSpellCatalog {
                     3, 2, 19, 172, 32, 3_000, 4, 280,
                     55, 45, 35, 0.30D, 0.05D,
                     false, true, 3,
-                    InventoryCatalog.MAGIC_GEM, 1, "weapon-break")
+                    InventoryCatalog.MAGIC_GEM, 1, -10, "weapon-break")
     );
 
     private static final Map<Integer, WeaknessSpell> WEAKNESS_SPELLS = Map.of(
@@ -2417,7 +2417,7 @@ final class BattleSpellCatalog {
             // monster and consumes six charisma points for the created summon.
             CREATE_ZOMBIE, new CreateZombieSpell(CREATE_ZOMBIE, 5, 0, 19, 226,
                     5, 80, 10, -1, 280,
-                    InventoryCatalog.MAGIC_GEM, 1, 6, "create-zombie")
+                    InventoryCatalog.MAGIC_GEM, 1, 6, -10, "create-zombie")
     );
 
     private static final Map<Integer, ResurrectionSpell> RESURRECTION_SPELLS = Map.of(
@@ -2620,7 +2620,7 @@ final class BattleSpellCatalog {
             FOG_OF_SLEEPING, new SleepSpell(FOG_OF_SLEEPING, 8, 1, 19, 760,
                     50, 1_500, 10, 3, 32, 297, 280,
                     50, 42, 34, 0.35D, 0.05D,
-                    false, true, InventoryCatalog.MAGIC_GEM, 1,
+                    false, true, InventoryCatalog.MAGIC_GEM, 1, -50,
                     "fog-of-sleeping")
     );
 
@@ -8258,7 +8258,7 @@ final class BattleSpellCatalog {
                        int maximumRange, int baseDamage, int diceCount,
                        int dieSides, int attribute, int minimumLawful,
                        int specialCriticalChancePercent, int specialCriticalGfx,
-                       boolean finalBurn, String key) {
+                       boolean finalBurn, int lawfulDelta, String key) {
         public int actionId() {
             return ResourceDatabase.value(this.actionId, this.skillId, "AttackSpell", "actionId");
         }
@@ -8301,7 +8301,18 @@ final class BattleSpellCatalog {
                     int dieSides, int attribute, String key) {
             this(skillId, row, column, actionId, effectGfx, mpCost,
                     reuseDelayMillis, maximumRange, baseDamage, diceCount,
-                    dieSides, attribute, Short.MIN_VALUE, 0, 0, false, key);
+                    dieSides, attribute, 0, key);
+        }
+
+        /** {@code lawfulDelta}: 380_db.sql skills.lawful，S1 L1SkillUse.useConsume:2047 每次施放套用。 */
+        AttackSpell(int skillId, int row, int column, int actionId,
+                    int effectGfx, int mpCost, int reuseDelayMillis,
+                    int maximumRange, int baseDamage, int diceCount,
+                    int dieSides, int attribute, int lawfulDelta, String key) {
+            this(skillId, row, column, actionId, effectGfx, mpCost,
+                    reuseDelayMillis, maximumRange, baseDamage, diceCount,
+                    dieSides, attribute, Short.MIN_VALUE, 0, 0, false,
+                    lawfulDelta, key);
         }
 
         AttackSpell(int skillId, int row, int column, int actionId,
@@ -8309,11 +8320,12 @@ final class BattleSpellCatalog {
                     int maximumRange, int baseDamage, int diceCount,
                     int dieSides, int attribute, int minimumLawful,
                     int specialCriticalChancePercent, int specialCriticalGfx,
-                    String key) {
+                    int lawfulDelta, String key) {
             this(skillId, row, column, actionId, effectGfx, mpCost,
                     reuseDelayMillis, maximumRange, baseDamage, diceCount,
                     dieSides, attribute, minimumLawful,
-                    specialCriticalChancePercent, specialCriticalGfx, false, key);
+                    specialCriticalChancePercent, specialCriticalGfx, false,
+                    lawfulDelta, key);
         }
 
         AttackSpell {
@@ -8349,6 +8361,8 @@ final class BattleSpellCatalog {
                     || specialCriticalChancePercent > 100
                     || (specialCriticalChancePercent == 0) != (specialCriticalGfx == 0)
                     || specialCriticalGfx < 0 || specialCriticalGfx > 0xFFFF
+                    || lawfulDelta < Short.MIN_VALUE || lawfulDelta > Short.MAX_VALUE
+                    || (finalBurn && lawfulDelta != 0)
                     || key == null || key.isBlank()) {
                 throw new IllegalArgumentException("invalid native attack spell metadata");
             }
@@ -10100,7 +10114,7 @@ final class BattleSpellCatalog {
                       double intelligenceMultiplier, double magicResistanceMultiplier,
                       boolean includeMagicLevel, boolean includeMagicHit,
                       int bossModifier, long itemConsumeId, int itemConsumeCount,
-                      String key) {
+                      int lawfulDelta, String key) {
         public long itemConsumeId() {
             return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
         }
@@ -10146,6 +10160,7 @@ final class BattleSpellCatalog {
                     || bossModifier < 0 || itemConsumeId < 0
                     || itemConsumeId > 0xFFFF_FFFFL || itemConsumeCount < 0
                     || (itemConsumeId == 0) != (itemConsumeCount == 0)
+                    || lawfulDelta < Short.MIN_VALUE || lawfulDelta > Short.MAX_VALUE
                     || key == null || key.isBlank()) {
                 throw new IllegalArgumentException("invalid native blind-spell metadata");
             }
@@ -10207,7 +10222,7 @@ final class BattleSpellCatalog {
                             double magicResistanceMultiplier,
                             boolean includeMagicLevel, boolean includeMagicHit,
                             int bossModifier, long itemConsumeId,
-                            int itemConsumeCount, String key) {
+                            int itemConsumeCount, int lawfulDelta, String key) {
         public long itemConsumeId() {
             return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
         }
@@ -10246,6 +10261,7 @@ final class BattleSpellCatalog {
                     || bossModifier != 3
                     || itemConsumeId != InventoryCatalog.MAGIC_GEM
                     || itemConsumeCount != 1
+                    || lawfulDelta != -10 // 380_db.sql skills row27 lawful=-10
                     || key == null || key.isBlank()) {
                 throw new IllegalArgumentException(
                         "invalid native Weapon Break metadata");
@@ -11474,7 +11490,8 @@ final class BattleSpellCatalog {
                              int effectGfx, int mpCost, int hpCost,
                              int reuseDelayMillis, int maximumRange,
                              int failureMessage, long itemConsumeId,
-                             int itemConsumeCount, int petCost, String key) {
+                             int itemConsumeCount, int petCost, int lawfulDelta,
+                             String key) {
         public long itemConsumeId() {
             return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
         }
@@ -11511,6 +11528,7 @@ final class BattleSpellCatalog {
                     || failureMessage <= 0 || failureMessage > 0xFFFF
                     || itemConsumeId <= 0 || itemConsumeId > 0xFFFF_FFFFL
                     || itemConsumeCount <= 0 || petCost <= 0
+                    || lawfulDelta < Short.MIN_VALUE || lawfulDelta > Short.MAX_VALUE
                     || key == null || key.isBlank()) {
                 throw new IllegalArgumentException("invalid native create-zombie metadata");
             }
@@ -11743,7 +11761,8 @@ final class BattleSpellCatalog {
                       int probabilityHigh, int probabilityEqual, int probabilityLow,
                       double intelligenceMultiplier, double magicResistanceMultiplier,
                       boolean includeMagicLevel, boolean includeMagicHit,
-                      long itemConsumeId, int itemConsumeCount, String key) {
+                      long itemConsumeId, int itemConsumeCount, int lawfulDelta,
+                      String key) {
         public long itemConsumeId() {
             return CombatDatabase.longValue(this.itemConsumeId, this.skillId, "itemConsumeId");
         }
@@ -11788,7 +11807,9 @@ final class BattleSpellCatalog {
                     || !Double.isFinite(magicResistanceMultiplier)
                     || magicResistanceMultiplier < 0.0D
                     || itemConsumeId <= 0 || itemConsumeId > 0xFFFF_FFFFL
-                    || itemConsumeCount <= 0 || key == null || key.isBlank()) {
+                    || itemConsumeCount <= 0
+                    || lawfulDelta < Short.MIN_VALUE || lawfulDelta > Short.MAX_VALUE
+                    || key == null || key.isBlank()) {
                 throw new IllegalArgumentException("invalid native sleep-spell metadata");
             }
         }
