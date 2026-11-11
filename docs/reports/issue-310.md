@@ -53,7 +53,7 @@ D3 要改的不只是程式：
 - **已驗證**
   - 本機 `mvn -B -o -DskipTests test-compile`（JDK 17）通過：main 與 test 都能編譯。依本機規定，本機不跑測試。
   - 讀程式確認：平手結果不會產生結算列、結果畫面顯示平手（見上節行號）；`Mode.respawn` 沒有其他讀取點。
-  - CI 結果：見下方「CI」一節（push 後補）。
+  - CI（PR #327）全綠，新測試 11/11 通過，見下方「CI」一節。
 - **推測**
   - 單人測試房（ArenaBot）死鬥逾時：以前真人記敗、畫面顯示藍隊勝；現在顯示平手。測試房本來就不記戰績，只影響畫面文字。
   - Modern* 系列（`ModernBattleEngine` 等）的逾時結算沒有改；它們沒有正式工廠（`ModernMatchSettlementJdbc.java:30`），不在正式路徑上。
@@ -65,7 +65,7 @@ D3 要改的不只是程式：
 
 ## CI
 
-（push 後補上 PR 與結果）
+PR #327，run 42940941983／42940941988 全部通過：Server (Java 17 / Maven)、**Server tests**（`mvn -B test`，MySQL 與本機資源測試依設計跳過）、Launcher、Build-Package、Semantic gap（non-blocking）。`GameplayDecisionRulesTest`：Tests run: 11, Failures: 0, Errors: 0, Skipped: 0。Server tests job 成功＝全體 0 Failures 0 Errors。
 
 ## 產出路徑
 
