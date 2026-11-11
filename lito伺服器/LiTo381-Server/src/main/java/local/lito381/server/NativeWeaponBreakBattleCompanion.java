@@ -38,6 +38,7 @@ final class NativeWeaponBreakBattleCompanion {
   for(var member:recipients)if(!(boolean)CombatAccess.field(caster,"invisible")||member==caster)send(member,Protocol.objectAction(caster.playerObjectId(),spell.actionId()),"S_ACTION Weapon Break companion caster="+caster.playerObjectId());
   int stacks=success?NativeSourceWeaponCounterMagic.stack(companion,caster,recipients,actor.objectId()):-1;boolean applied=stacks>=0;
   if(applied)for(var member:recipients)send(member,Protocol.effectObject(actor.objectId(),spell.effectGfx()),"S_EFFECT Weapon Break target="+actor.objectId());
+  caster.applySpellLawfulDelta(spell.lawfulDelta(),spell.key());
   send(caster,Protocol.manaPoint(mp,integer(caster,"playerMaxMp")),"S_MANA_POINT Weapon Break="+mp);if(!applied)send(caster,Protocol.messageCode(spell.failureMessage()),"S_MESSAGE_CODE Weapon-Break-failure="+spell.failureMessage());
   System.out.println("[LiTo] BATTLE companion Weapon Break target="+actor.objectId()+" probability="+probability+" roll="+roll+" stacks="+stacks+" earth="+earth+" mp="+mp);
  }

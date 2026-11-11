@@ -15,6 +15,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.RecordComponent;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,11 +48,10 @@ final class WizardSkillServer1ParityTest {
 
     /**
      * S1 {@code L1SkillUse.useConsume}（:2047）每次施放都 {@code addLawful(skills.lawful)}；
-     * 下列技能 SQL lawful≠0，但 LiTo 對應的 catalog 紀錄沒有正義值欄位、處理器也不呼叫
-     * {@code applySpellLawfulDelta}——已知不一致，未在本 PR 修改（見 skills-wizard.md §4）。
-     * 清單必須正好等於目前的差距，修好就要移除。
+     * SQL lawful≠0 但 LiTo catalog 紀錄沒有正義值欄位的技能。#307 時是
+     * {10, 20, 27, 28, 40, 41, 66, 77}，#325 補上後必須為空（新增缺口就會失敗）。
      */
-    private static final Set<Integer> LAWFUL_NOT_APPLIED = Set.of(10, 20, 27, 28, 40, 41, 66, 77);
+    private static final Set<Integer> LAWFUL_NOT_APPLIED = Set.of();
 
     private static List<Row> rows;
 
@@ -207,6 +208,83 @@ final class WizardSkillServer1ParityTest {
             if (!applied) missing.add(r.skillId());
         }
         assertEquals(new TreeSet<>(LAWFUL_NOT_APPLIED), missing);
+    }
+
+    /** #325：補上的 9 個技能（含 103）catalog 正義值逐一等於 380_db.sql skills.lawful。 */
+    @Test void issue325LawfulDeltasMatchSource() {
+        assertEquals(-2, BattleSpellCatalog.attackSpell(10).lawfulDelta());
+        assertEquals(-5, BattleSpellCatalog.attackSpell(28).lawfulDelta());
+        assertEquals(1, BattleSpellCatalog.attackSpell(77).lawfulDelta());
+        assertEquals(-10, BattleSpellCatalog.blindSpell(20).lawfulDelta());
+        assertEquals(-10, BattleSpellCatalog.blindSpell(40).lawfulDelta());
+        assertEquals(-10, BattleSpellCatalog.blindSpell(103).lawfulDelta());
+        assertEquals(-10, BattleSpellCatalog.weaponBreakSpell(27).lawfulDelta());
+        assertEquals(-10, BattleSpellCatalog.createZombieSpell(41).lawfulDelta());
+        assertEquals(-50, BattleSpellCatalog.sleepSpell(66).lawfulDelta());
+        for (int id : new int[] {10, 20, 27, 28, 40, 41, 66, 77}) {
+            final int skill = id;
+            Row r = row(skill);
+            assertTrue(catalogRecords(skill).stream().anyMatch(record -> {
+                Long lawful = component(record, "lawfulDelta");
+                return lawful != null && lawful == r.lawful();
+            }), r.toString());
+        }
+        // 其他攻擊魔法（SQL lawful=0）維持 0，不會多送 S_CHANGE_ALIGNMENT。
+        for (int id : new int[] {4, 6, 7, 15, 16, 34, 38, 45, 46}) {
+            assertEquals(0, BattleSpellCatalog.attackSpell(id).lawfulDelta(), "skill" + id);
+        }
+        assertEquals(0, BattleSpellCatalog.attackSpell(108).lawfulDelta());
+    }
+
+    /**
+     * #325：每個會扣 MP 的處理器在扣費之後、送 S_MANA_POINT 之前呼叫 applySpellLawfulDelta
+     * （S1 U:1196-1201 runSkill 之後無條件 useConsume，命中與否都改正義值）。
+     */
+    @Test void issue325EveryCastHandlerAppliesLawful() throws IOException {
+        String session = Files.readString(
+                Path.of("src/main/java/local/lito381/server/ClientSession.java"), StandardCharsets.UTF_8);
+        String call = "this.applySpellLawfulDelta(var2.lawfulDelta(), var2.key());";
+        // 攻擊魔法：緊接在包裝技能（骷髏毀壞等）既有的正義值呼叫之後。
+        String[][] attackHandlers = {
+                {"void nativeSourceControlledOriginal_useAttackSpell(", "this.applySpellLawfulDelta(var10.lawfulDelta(), var10.key());"},
+                {"private void nativeCompanionTargetuseClassicWorldAttackSpell(", "this.applySpellLawfulDelta(var6.lawfulDelta(), var6.key());"},
+        };
+        for (String[] h : attackHandlers) {
+            int start = session.indexOf(h[0]);
+            assertTrue(start >= 0, h[0]);
+            int mp = session.indexOf("NativeSkillConsumption.boundMp(this, this.playerMp - ", start);
+            int wrapper = session.indexOf(h[1], start);
+            int lawful = session.indexOf(call, start);
+            assertTrue(mp > start && wrapper > mp, h[0] + " markers");
+            assertTrue(lawful > wrapper && lawful - wrapper < 200, h[0] + " must apply AttackSpell lawful after MP commit");
+        }
+        String[][] handlers = {
+                {"void nativeMaterialBlindBody(", "\"S_MANA_POINT blind=\""},
+                {"void nativeMaterialWorldBlindBody(", "\"S_MANA_POINT classic-world Blind=\""},
+                {"void nativeMaterialWeaponBreakBody(", "\"S_MANA_POINT Weapon Break=\""},
+                {"void nativeMaterialWorldWeaponBreakBody(", "\"S_MANA_POINT classic-world Weapon Break=\""},
+                {"void nativeMaterialZombieBody(", "\"S_MANA_POINT create-zombie=\""},
+                {"void nativeAreaWorldSleepBody(", "\"S_MANA_POINT classic-world sleep=\""},
+                {"void nativeAreaBattleSleepBody(", "\"S_MANA_POINT sleep=\""},
+        };
+        for (String[] h : handlers) {
+            int start = session.indexOf(h[0]);
+            assertTrue(start >= 0, h[0]);
+            int mp = session.indexOf("NativeSkillConsumption.boundMp(this, this.playerMp - ", start);
+            int end = session.indexOf(h[1], start);
+            int lawful = session.indexOf(call, start);
+            assertTrue(mp > start && end > mp, h[0] + " markers");
+            assertTrue(lawful > mp && lawful < end, h[0] + " must apply lawful after MP commit and before " + h[1]);
+        }
+        for (String[] f : new String[][] {
+                {"NativeBlindSceneAction.java", "pc.applySpellLawfulDelta(spell.lawfulDelta(),spell.key());", "\"S_MANA_POINT Blind=\""},
+                {"NativeWeaponBreakBattleCompanion.java", "caster.applySpellLawfulDelta(spell.lawfulDelta(),spell.key());", "\"S_MANA_POINT Weapon Break=\""}}) {
+            String source = Files.readString(Path.of("src/main/java/local/lito381/server", f[0]), StandardCharsets.UTF_8);
+            int mp = source.indexOf("NativeSkillConsumption.boundMp(");
+            int lawful = source.indexOf(f[1]);
+            int end = source.indexOf(f[2]);
+            assertTrue(mp >= 0 && lawful > mp && end > lawful, f[0]);
+        }
     }
 
     /** 77 究極光裂術：S1 checkUseSkill（L1SkillUse.java:565）正義值 < 500 不能施放。 */

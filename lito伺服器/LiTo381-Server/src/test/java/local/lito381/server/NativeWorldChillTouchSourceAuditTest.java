@@ -69,7 +69,7 @@ final class NativeWorldChillTouchSourceAuditTest {
         assertTrue(catalog.contains(
                 "Map.entry(CHILL_TOUCH, new AttackSpell(CHILL_TOUCH, 1, 1, 18, 252,"));
         assertTrue(catalog.contains(
-                "8, 10, 3, 8, 2, 10, ATTRIBUTE_WATER, \"chill-touch\"))"));
+                "8, 10, 3, 8, 2, 10, ATTRIBUTE_WATER, -2, \"chill-touch\"))"));
         assertTrue(catalog.contains(
                 "return skillId == CHILL_TOUCH || skillId == VAMPIRIC_TOUCH;"));
 

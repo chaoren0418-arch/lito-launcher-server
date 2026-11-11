@@ -18,7 +18,7 @@
 | F5 | 材料 | `U:1997-2015` 檢查、`U:2570-2641` 施放前先扣 | `CombatDatabase.consumeMaterial`（`:157-`） | 材料 ID／數量一致（40318 魔法寶石 × 1／2／3／10） | 同上 |
 | F6 | 冷卻 | `skills.reuseDelay`；`U:2570` 起的動作鎖與冷卻並行（取較大者） | `spellReadyNanos.put(skillId, now + reuseDelayMillis)`（各處理器） | 數值一致；並行語意未驗 | 同上 |
 | F7 | 期限 | `U:2060-2161 addMagicList`：`buffDuration×1000`；例外：11 交給 `L1DamagePoison`、33 交給 `L1CurseParalysis`、8／12／21／48 武器防具、50／80 凍結失敗不設、67 變形 | 各 `Battle*Status.activate*(now, durationSeconds)`，`now >= 到期` 即解除 | 一致（數值）；11、33 特例另測 | `consumptionCooldownAndDurationMatchSource`、`paralysisAndPoisonTimingMatchSourceExecutors`、`hasteExpiresExactlyAtSqlDuration` |
-| F8 | 正義值 | `U:2047` 每次施放 `addLawful(skills.lawful)`（`U:1196-1201` 在 `runSkill` 之後無條件執行） | `ClientSession.applySpellLawfulDelta`（`CS:46698`），只有 catalog 有 `lawfulDelta` 欄位的處理器會呼叫 | **部分**：11、33、47（本 PR 修正）、51、56、59、80 一致；10、20、27、28、40、41、66、77 未套用（§4.1） | `lawfulGapListIsExact` |
+| F8 | 正義值 | `U:2047` 每次施放 `addLawful(skills.lawful)`（`U:1196-1201` 在 `runSkill` 之後無條件執行） | `ClientSession.applySpellLawfulDelta`（`CS:46732`），各處理器扣 MP 之後、送 `S_MANA_POINT` 之前呼叫；delta=0 直接返回不送封包 | **一致**：11、33、47（#307 修正）、51、56、59、80；10、20、27、28、40、41、66、77 由 #325 補上（§4.1） | `lawfulGapListIsExact` |
 | F9 | 扣費時序 | `U:1123-1142`：`runSkill()` 之後一定呼叫 `applySideEffectsAfterNormalCast()` 扣 MP／正義值；`runSkill` 在 `:2779`（`isTargetCalc` 失敗）提早返回時仍扣費 | — | 回答 T106 的 G05 疑問：S1 對 76 自施「扣 MP、播動作、不生效」（§4.2） | — |
 | F10 | BUFF 互斥（必定） | `U:2512-2517` `ALWAYS_REPEATED_SKILLS`：{52,101,150,勇水×3,186}、{43,54,STATUS_HASTE} | 速度單一欄位 `BattleTimedStatus.activateHaste/activateSlow`（`:97-144`）；勇敢單一欄位 `activateBrave`（`:195-213`） | 一致 | `hasteAndSlowCancelEachOtherLikeSource`、`holyWalkReplacesBravePotionWithBraveMode4` |
 | F11 | BUFF 互斥（原廠覆蓋） | `U:2520-2527` `ORIGINAL_REPEATED_SKILLS`，只有 `SkillCoexistSet=0` 時生效；`db` `server_event` 116 `eventstart=1`（共存），所以預設不生效 | `CombatBuffLeases.java:11-13` `GROUPS`，`:59` 只在 `!skillCoexist()` 時清同組 | 一致（同組 ⇔ S1 同組）；159／168（妖精）在 LiTo 是獨立狀態，不在 `GROUPS`（交 T108） | `buffReplacementGroupsMatchOriginalRepeatedSkills` |
@@ -52,7 +52,7 @@
 | 7 | 風刃 | TYPE_ATTACK | `C:1598` | 一致 |
 | 8 | 神聖武器 | `U:3488`（玩家 BUFF）；DMG1 HIT1 | `C:1532` WeaponBuffSpell；`CS:36413` | 一致 |
 | 9 | 解毒術 | `M:168` `sm/CURE_POISON.java` | `C:2691` CurseRemovalSpell；`CS:46532`、`CS:46520` | 一致 |
-| 10 | 寒冷戰慄 | TYPE_ATTACK＋`U:3034-3035`（傷害轉為施法者回血） | `C:1606` AttackSpell | **不一致・未改**：lawful −2 未套用（§4.1）；吸血是否實作**待驗證** |
+| 10 | 寒冷戰慄 | TYPE_ATTACK＋`U:3034-3035`（傷害轉為施法者回血） | `C:1606` AttackSpell | **已修正（#325）**：lawful −2 施放時套用（§4.1）；吸血是否實作**待驗證** |
 | 11 | 毒咒 | `U:3104-3105` `L1DamagePoison.doInfection(3000ms, 5)`；`L1DamagePoison.java:147` 30 秒 | `C:2650` PoisonSpell；`CS:65667`、`CS:65956` | 一致（3000ms／5／30 秒／lawful −10） |
 | 12 | 擬似魔法武器 | `U:3471`；DMG2；力量頭盔 20015 減半 | `C:1490` ItemWeaponEnchantSpell；`CS:68650`、`CS:43462` | 一致（DB 路徑）；後備值多一個弓傷害 +2（§4.3） |
 | 13 | 無所遁形術 | `U:2992-2999`、`U:3946` | `C:2369` DetectionSpell；`CS:43734` | 一致 |
@@ -62,14 +62,14 @@
 | 17 | 極光雷電 | TYPE_ATTACK（範圍 3，T106 G07） | `C:2178` LineAttackSpell；`CS:44389`、`CS:44865` | 一致 |
 | 18 | 起死回生術 | `U:3162-3166`（不死系 1／3 → 傷害＝目前 HP） | `C:2190` TurnUndeadSpell；`CS:40790`、`CS:40794` | **已修正**：catalog `probabilityValue` 1 → 0（`db` 為 0；正式環境本來就讀 DB，後備值修正） |
 | 19 | 中級治癒術 | TYPE_HEAL；頭盔 20014 | `C:256` | 一致 |
-| 20 | 闇盲咒術 | `M:176` `sm/CURSE_BLIND.java` | `C:2211` BlindSpell；`CS:41416`、`CS:70975` | **不一致・未改**：lawful −10 未套用 |
+| 20 | 闇盲咒術 | `M:176` `sm/CURSE_BLIND.java` | `C:2211` BlindSpell；`CS:41416`、`CS:70975` | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
 | 21 | 鎧甲護持 | `U:3524`；AC−3 | `C:1520` ItemArmorEnchantSpell；`CS:43469` | 一致 |
 | 22 | 寒冰氣息 | TYPE_ATTACK 範圍 | `C:2069` AreaAttackSpell；`CS:44734` | 一致 |
 | 23 | 能量感測 | `U:3871-3888` | `C:2384` RevealWeaknessSpell；`CS:43550` | 一致 |
 | 25 | 燃燒的火球 | TYPE_ATTACK 範圍 | `C:2075` | 一致 |
 | 26 | 通暢氣脈術 | `U:3636`；DEX+5；敏捷頭盔 20013 減半 | `C:1247` AbilityBuffSpell；`CS:36166` | 一致 |
-| 27 | 壞物術 | `U:3176-3195`（PC 武器耐久、NPC 疊層） | `C:2246` WeaponBreakSpell；`CS:44332`、`CS:64778` | **不一致・未改**：lawful −10 未套用 |
-| 28 | 吸血鬼之吻 | TYPE_ATTACK＋`U:3034-3035` | `C:1615` | **不一致・未改**：lawful −5 未套用；吸血**待驗證** |
+| 27 | 壞物術 | `U:3176-3195`（PC 武器耐久、NPC 疊層） | `C:2246` WeaponBreakSpell；`CS:44332`、`CS:64778` | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
+| 28 | 吸血鬼之吻 | TYPE_ATTACK＋`U:3034-3035` | `C:1615` | **已修正（#325）**：lawful −5 施放時套用（§4.1）；吸血**待驗證** |
 | 29 | 緩速術 | `U:3050-3091` | `C:2474` EntangleSpell；`CS:41432`、`CS:62757` | 一致（§2） |
 | 30 | 巖牢 | TYPE_ATTACK 範圍 | `C:2086` | 一致 |
 | 31 | 魔法屏障 | 預設 `U:2141`；抵銷 `U:4243-4256` | `C:339` CounterMagicSpell；`CS:32122`、`CS:57986` | 一致（執行期 MP 走 F2；catalog `effectiveMpCost` 少了 INT 減免，但沒被使用，§4.4） |
@@ -81,8 +81,8 @@
 | 37 | 聖潔之光 | `M:169` `sm/REMOVE_CURSE.java` | `C:2698` CurseRemovalSpell | 一致 |
 | 38 | 冰錐 | TYPE_ATTACK | `C:1637` | 一致 |
 | 39 | 魔力奪取 | `U:3168-3174`（5..14 + INT/2） | `C:2201` ManaDrainSpell；`CS:41408`、`CS:41058` | 一致（數值欄位）；吸取量公式**待驗證** |
-| 40 | 黑闇之影 | `M:177`（CURSE_BLIND） | `C:2221` BlindSpell | **不一致・未改**：lawful −10 未套用 |
-| 41 | 造屍術 | `U:3861-3870` | `C:2411` CreateZombieSpell；`CS:46725`、`CS:64501` | **不一致・未改**：lawful −10 未套用 |
+| 40 | 黑闇之影 | `M:177`（CURSE_BLIND） | `C:2221` BlindSpell | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
+| 41 | 造屍術 | `U:3861-3870` | `C:2411` CreateZombieSpell；`CS:46725`、`CS:64501` | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
 | 42 | 體魄強健術 | `U:3626`；STR+5；力量頭盔 20015 | `C:1251` AbilityBuffSpell | 一致 |
 | 43 | 加速術 | `M:166` `sm/HASTE.java`；頭盔 20013／20008 | `C:1295` HasteSpell；`CS:36788` | 一致（§2） |
 | 44 | 魔法相消術 | `M:167` `sm/CANCELLATION.java` | `C:1549` CancellationSpell；`CS:38644` | 一致（數值欄位）；相消清單屬 T106 提示的反制魔法／相消免疫表比對，**待驗證** |
@@ -107,7 +107,7 @@
 | 63 | 治癒能量風暴 | `U:2729-2733` spawnEffect 81169 | `C:1587` GroundSpell | 一致（數值欄位） |
 | 64 | 魔法封印 | 預設 `U:2141`；`src/com/lineage/server/clientpackets/C_UseSkill.java:142` | `C:2289` SilenceSpell；`CS:41424` | 一致 |
 | 65 | 雷霆風暴 | TYPE_ATTACK 範圍 | `C:2132` | 一致 |
-| 66 | 沉睡之霧 | `U:3197-3202`、`U:2905-2909` | `C:2613` SleepSpell；`CS:44385` | **不一致・未改**：lawful −50 未套用 |
+| 66 | 沉睡之霧 | `U:3197-3202`、`U:2905-2909` | `C:2613` SleepSpell；`CS:44385` | **已修正（#325）**：lawful −50 施放時套用（§4.1） |
 | 67 | 變形術 | `U:3733-3751` | `C:2626` PolymorphSpell；`CS:32098` | 一致 |
 | 68 | 聖結界 | 預設 `U:2141`；`src/com/lineage/server/model/L1AttackPc.java:1183` 等 | `C:1323` DamageProtectionSpell；`CS:37391` | 一致 |
 | 69 | 集體傳送術 | `M:165` `sm/MASS_TELEPORT.java` | `C:1334` MassTeleportSpell；`CS:37395` | 一致 |
@@ -118,17 +118,17 @@
 | 74 | 流星雨 | TYPE_ATTACK 範圍 | `C:2141` | 一致 |
 | 75 | 終極返生術 | `M:172` `sm/GREATER_RESURRECTION.java` | `C:2433` ResurrectionSpell | 一致 |
 | 76 | 集體緩速術 | `U:3050-3091`；自施 `U:2779` 不生效但仍扣費（F9） | `C:2460` MassSlowSpell；`CS:44377` → `NativeSourceMassSlowTargets` | **不一致・未改**：自施語意（§4.2） |
-| 77 | 究極光裂術 | TYPE_ATTACK；`U:565` 正義值 ≥500；`U:2876` 爆擊 | `C:1660` AttackSpell（`minimumLawful=500`） | **不一致・未改**：lawful +1 未套用 |
+| 77 | 究極光裂術 | TYPE_ATTACK；`U:565` 正義值 ≥500；`U:2876` 爆擊 | `C:1660` AttackSpell（`minimumLawful=500`） | **已修正（#325）**：lawful +1 施放時套用（§4.1） |
 | 78 | 絕對屏障 | `U:3360-3368` | `C:349` AbsoluteBarrierSpell；`CS:32126` | 一致 |
 | 79 | 靈魂昇華 | `M:173` `sm/ADVANCE_SPIRIT.java` | `C:361` AdvanceSpiritSpell；`CS:32133` | 一致 |
 | 80 | 冰雪颶風 | `U:3133-3138` | `C:2030` FreezeAttackSpell | 一致（lawful −10） |
 
-統計：一致 68、已修正 2（18、47）、不一致・未改 9（10、20、27、28、40、41、66、76、77）。「一致」只代表本文列出的面向；效果本體（封包、傷害實際入帳、狀態圖示）見 §5。
+統計：一致 68、已修正 10（18、47；#325 補正義值 10、20、27、28、40、41、66、77）、不一致・未改 1（76）。「一致」只代表本文列出的面向；效果本體（封包、傷害實際入帳、狀態圖示）見 §5。
 
 ## 4. 不一致與未改的理由
 
-### 4.1 正義值未套用（10、20、27、28、40、41、66、77）
-S1 `U:2047` 每次 TYPE_NORMAL 施放都加 `skills.lawful`；LiTo 只有 catalog 有 `lawfulDelta` 欄位的處理器（Poison、Paralysis、Weakness、Summon、AreaAttack、FreezeAttack）會呼叫 `applySpellLawfulDelta`。這 8 個技能的 record（AttackSpell、BlindSpell、WeaponBreakSpell、CreateZombieSpell、SleepSpell）沒有這個欄位。要修需要在 5 個 record 加欄位，並在約 15 個 BATTLE／WORLD 處理器（`CS` 內反編譯的大方法）加呼叫，每個呼叫都會多送一個 `S_CHANGE_ALIGNMENT`，可能改變既有封包順序測試；本機不能跑測試，所以本 PR 只以 `lawfulGapListIsExact` 釘住清單，建議另開 code 任務一次處理（或由 T100 裁定競技場是否需要正義值變動）。
+### 4.1 正義值（10、20、27、28、40、41、66、77）——#325 已補上
+S1 `U:2047` 每次 TYPE_NORMAL 施放都加 `skills.lawful`（`U:1196-1201` 在 `runSkill` 之後無條件執行，命中與否都改）。#307 時這 8 個技能的 record 沒有 `lawfulDelta`。#325：`AttackSpell`、`BlindSpell`、`WeaponBreakSpell`、`CreateZombieSpell`、`SleepSpell` 加 `lawfulDelta` 欄位（10＝−2、28＝−5、77＝+1、20／40＝−10、27＝−10、41＝−10、66＝−50；其他攻擊魔法 0），並在 11 個處理器扣 MP 之後呼叫 `applySpellLawfulDelta`：攻擊魔法戰鬥／世界（`nativeSourceControlledOriginal_useAttackSpell`、`nativeCompanionTargetuseClassicWorldAttackSpell`）、盲咒戰鬥／世界／寵物目標（`nativeMaterialBlindBody`、`nativeMaterialWorldBlindBody`、`NativeBlindSceneAction.companion`）、壞物術戰鬥／世界／寵物目標（`nativeMaterialWeaponBreakBody`、`nativeMaterialWorldWeaponBreakBody`、`NativeWeaponBreakBattleCompanion.cast`）、沉睡之霧戰鬥／世界（`nativeAreaBattleSleepBody`、`nativeAreaWorldSleepBody`）、造屍術（`nativeMaterialZombieBody`）。正義值只改 `GameStateStore`（LiTo 自己的狀態檔）與記憶體，不寫回來源角色庫；變動時送 `S_CHANGE_ALIGNMENT`（0x59 `cdh`，`docs/reference/client-protocol-needs.md` §1.2）。`lawfulGapListIsExact` 的清單改為空集合，`issue325EveryCastHandlerAppliesLawful` 釘住呼叫位置。
 
 ### 4.2 76 集體緩速術自施
 S1：`U:2779` 對自己（或自己的寵物）為主目標時整個 `runSkill` 返回，但 `U:1140` 仍扣 MP、正義值並播動作 → 「扣費、不生效」。LiTo：`NativeSourceMassSelfTarget`（T106 G05）保留「自施仍作用於範圍內其他人」。T106 已列為使用者決定項；本 PR 補上 S1 的扣費時序，未改程式。
