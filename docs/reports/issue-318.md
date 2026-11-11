@@ -29,7 +29,7 @@
 - 1-伺服器：`L1AttackPc.pcDmgMode`（`src/com/lineage/server/model/L1AttackPc.java:860`）在 `weaponDamage2` 乘完倍率**之後**、減傷之前，對所有武器加 `getClassFeature().getAttackLevel(level)`；PvP、PvE 都會經過。
 - 新增 `BattlePhysicalDamage.withClassAttackLevel(multiplied, hit, kiringku, type, level)`（`BattlePhysicalDamage.java:83`），除數沿用已測過的 `BattleKiringkuDamage.classAttackLevel`。
 - 接在三條物理路徑，都放在倍率之後、燃燒擊砍與減傷之前：
-  - 競技場（PvP／打怪）：`ClientSession.java:86139`（`var147`）
+  - 競技場（PvP／打怪）：`ClientSession.java:86164`（`var147`）
   - WORLD 打怪：`ClientSession.java:47940`（`var79`）
   - WORLD PvP：`ClientSession.java:48871`（`n35`）
 - 奇古獸（type 17）不加：`CombatKiringku.finish` 本來就有加這一項，而且它不用一般路徑的傷害。沒命中也不加。
