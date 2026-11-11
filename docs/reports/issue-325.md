@@ -37,7 +37,7 @@
 - 本機 `mvn -B -q -o -DskipTests test-compile`（只編譯 `src/main` 與 `src/test`，**沒有執行任何測試**，依本機規定）：exit 0，無錯誤輸出。
 - 靜態確認扣 MP 的入口完整：`*_effectiveMpCost_III` 對這 5 種 record 的全部呼叫點只有上面 11 個處理器（ClientSession 9 個＋`NativeBlindSceneAction`、`NativeWeaponBreakBattleCompanion`）；其他 `AttackSpell_effectiveMpCost_III` 呼叫點都是 Freeze／Area／Line／Bounce 等其他 record 的處理器。
 - 測試 fixture 中 SQL lawful≠0 的技能：法師 10、11、20、27、28、33、40、41、47、51、56、59、66、77、80；其他職業只有 103；妖精 0 個——新欄位不會讓妖精／其他職業的平行比對失敗。
-- CI 結果：見 PR（push 後補在 PR 留言）。
+- **PR #332 CI（run 43029953599）全部通過**：Server（Maven 建置）、Server tests、Launcher、Build-Package、Semantic gap。`server-test-evidence` 的 1284 個 TEST-*.xml 加總 **Tests run 7327、Failures 0、Errors 0、Skipped 117**；`WizardSkillServer1ParityTest` 250 個、`OtherClassSkillServer1ParityTest` 197 個全過且未略過，其中 `issue325LawfulDeltasMatchSource`、`issue325EveryCastHandlerAppliesLawful`、兩個 `lawfulGapListIsExact` 都有實際執行。既有封包整合測試沒有因多送 `S_CHANGE_ALIGNMENT` 而失敗。
 
 ### 推測
 - 既有封包整合測試（`ClientSessionNativeTournamentEconomyTest` 寒冷戰慄／究極光裂術、`ClientSessionClassicCastleTowerMagicTest`、`ClientSessionClassicWorldMonsterAggressionIntegrationTest` 壞物術）都用「找到某 opcode」或「包含某封包」的方式判斷，多一個 `S_CHANGE_ALIGNMENT` 應不影響；以 CI 為準。
