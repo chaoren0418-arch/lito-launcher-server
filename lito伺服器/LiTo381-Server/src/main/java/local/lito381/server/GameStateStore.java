@@ -5974,6 +5974,22 @@ final class GameStateStore {
         return rankingPeriodKey(currentRankingBoundary());
     }
 
+    /**
+     * Ranking month (YYYYMM) in effect at {@code epochMillis}: the month of the latest
+     * 05:00 Asia/Taipei boundary, the same key {@link #recordResult} uses for the
+     * monthly accumulator.  Shared with the durable character_lito settlement (T103b).
+     */
+    static int rankingPeriodKeyAt(long epochMillis) {
+        ZonedDateTime now = Instant.ofEpochMilli(epochMillis).atZone(RANKING_ZONE);
+        ZonedDateTime boundary = now.toLocalDate().atTime(RANKING_REFRESH_TIME)
+                .atZone(RANKING_ZONE);
+        return rankingPeriodKey(now.isBefore(boundary) ? boundary.minusDays(1) : boundary);
+    }
+
+    static boolean validRankingPeriodKey(int period) {
+        return validRankingPeriod(period);
+    }
+
     private static int rankingPeriodKey(ZonedDateTime boundary) {
         return Math.addExact(Math.multiplyExact(boundary.getYear(), 100),
                 boundary.getMonthValue());
