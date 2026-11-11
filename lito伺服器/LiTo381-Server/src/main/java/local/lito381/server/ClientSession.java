@@ -11018,7 +11018,7 @@ final class ClientSession implements Runnable {
                             strength, dexterity, constitution, wisdom,
                             charisma, intelligence,
                             NumericBreakthrough.clampMagicModifier(
-                                    spellPowerModifier(nowNanos)),
+                                    displaySpellPowerModifier(nowNanos)),
                             NumericBreakthrough.clampMagicModifier(
                                     magicResistanceModifier(nowNanos)),
                             fireResistance, waterResistance,
@@ -56163,8 +56163,18 @@ final class ClientSession implements Runnable {
                         BattleSpellCatalog.ATTRIBUTE_EARTH, nowNanos));
     }
 
+    /**
+     * 1-伺服器 S_SPMR writes {@code getSp() - getTrueSp()}; the Dragon Eye +1
+     * exists only in L1MagicMode.getTargetSp (magic damage), so the panel
+     * value excludes it.
+     */
+    private int displaySpellPowerModifier(long nowNanos) {
+        return Math.subtractExact(spellPowerModifier(nowNanos),
+                CombatSpecialBuffs.eyeMagicSpellPower(this, nowNanos));
+    }
+
     private void sendMagicStatus(long nowNanos, String reason) throws IOException {
-        int spellPower = spellPowerModifier(nowNanos);
+        int spellPower = displaySpellPowerModifier(nowNanos);
         int magicResistance = magicResistanceModifier(nowNanos);
         int wireSpellPower = NumericBreakthrough.clampMagicModifier(spellPower);
         int wireMagicResistance = NumericBreakthrough.clampMagicModifier(

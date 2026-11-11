@@ -88,3 +88,4 @@
 - 2026-11-11 — #334 T119: CI 加 MySQL 服務與測試設定，讓目前被略過的整合測試在 CI 執行（code，claude-local，PR 已合併）→ [報告](reports/issue-334.md)
 - 2026-11-11 — #337 T117: 其他職業技能效果數值補驗（立方、呼喚／援護盟友、覺醒、112、181／206／211）（code，claude-local，PR 已合併）→ [報告](reports/issue-337.md)
 - 2026-11-12 — #339 T120: 道具 bless 一致性與幻象武器例外（#318 範圍外發現）（code，claude-local，PR 已合併）→ [報告](reports/issue-339.md)
+- 2026-11-12 — #338 T118: 魔法計算補驗（魔眼 +1 SP、SKD3 技能減免清單、傷害為 0 狀態清單）（code，claude-local，PR 已合併）→ [報告](reports/issue-338.md)

@@ -88,8 +88,15 @@ final class CombatSpecialBuffs {
     static int addScalar(int old,ClientSession caster,long now,String type) {
         if(!CombatBuffLeases.loaded())return old;
         int value=type.equals("DMG_REDUX")?storyAbility(caster,type,now):ability(caster,type,now);
-        if(type.equals("SP")){var eye=eye(caster,now);if(eye.active()&&List.of(6686,6687,6689).contains(eye.eye().buffId()))value=Math.addExact(value,1);}
+        if(type.equals("SP"))value=Math.addExact(value,eyeMagicSpellPower(caster,now));
         return Math.addExact(old,value);
+    }
+    /** 1-伺服器 L1MagicMode.getTargetSp:103-116: wind/life/image Dragon Eye (6686/6687/6689) add +1 item SP to magic damage only. */
+    static final java.util.Set<Integer> EYE_MAGIC_SP_BUFFS=java.util.Set.of(6686,6687,6689);
+    static int eyeMagicSpellPower(int buffId){return EYE_MAGIC_SP_BUFFS.contains(buffId)?1:0;}
+    /** The hard-coded getTargetSp eye bonus; not part of getSp(), so S_SPMR (panel SP) never shows it. */
+    static int eyeMagicSpellPower(ClientSession caster,long now){
+        if(!CombatBuffLeases.loaded())return 0;var eye=eye(caster,now);return eye.active()?eyeMagicSpellPower(eye.eye().buffId()):0;
     }
     static int legacy(int old){return CombatBuffLeases.loaded()?0:old;}
     static BattleWeaponBuffStatus.Modifier weapon(BattleWeaponBuffStatus.Modifier old,ClientSession caster,long now) {
