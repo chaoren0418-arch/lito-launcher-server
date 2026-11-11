@@ -2182,11 +2182,13 @@ final class BattleSpellCatalog {
     private static final Map<Integer, TurnUndeadSpell> TURN_UNDEAD_SPELLS = Map.of(
             // Exact selected 3.80 row 18: probability/attack, selector row
             // 2/column 1, range 10, action 19, gfx 754, MP 20, 500 ms reuse,
-            // 7-sided probability dice with value 1 and failure message 280.
+            // 7-sided probability dice with value 0 and failure message 280
+            // (issue #307: 380_db.sql row 18 probability_value=0; the former
+            // 1 was the attr column).
             // Retained L1SkillUse accepts only monsters with IsTU=true and
             // undead type 1 or 3, then replaces damage with current HP.
             TURN_UNDEAD, new TurnUndeadSpell(TURN_UNDEAD, 2, 1, 19, 754,
-                    20, 500, 10, 7, 1, 280, "turn-undead")
+                    20, 500, 10, 7, 0, 280, "turn-undead")
     );
 
     private static final Map<Integer, ManaDrainSpell> MANA_DRAIN_SPELLS = Map.of(
@@ -2256,9 +2258,12 @@ final class BattleSpellCatalog {
             // so retained default d12 probability applies; selected boss row
             // divides the capped probability by five. skills_buff_ability
             // applies melee DMG-5/HIT-1 to player targets only.
+            // Issue #307: 1-伺服器 db/380_db.sql row 47 has lawful=-10 and
+            // L1SkillUse.useConsume (:2047) adds it on every accepted cast,
+            // the same as skill 56 below; the former 0 skipped that delta.
             WEAKNESS, new WeaknessSpell(WEAKNESS, 5, 6, 19, 2228,
                     10, 500, 3, 64, 12, 5,
-                    -5, -1, 0, 0, 692, 280,
+                    -5, -1, 0, -10, 692, 280,
                     InventoryCatalog.MAGIC_GEM, 1, "weakness"),
             // Exact selected row 56 and LiTo.bin zero-based case 55:
             // zero-based row6/column7, cccdhh target/coordinates, range3, MP10,
