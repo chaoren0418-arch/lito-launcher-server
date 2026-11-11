@@ -90,3 +90,4 @@
 - 2026-11-12 — #339 T120: 道具 bless 一致性與幻象武器例外（#318 範圍外發現）（code，claude-local，PR 已合併）→ [報告](reports/issue-339.md)
 - 2026-11-12 — #338 T118: 魔法計算補驗（魔眼 +1 SP、SKD3 技能減免清單、傷害為 0 狀態清單）（code，claude-local，PR 已合併）→ [報告](reports/issue-338.md)
 - 2026-11-12 — #335 T103b: 積分持久化——character_lito 加 ranking_points／disconnects／月計（#310 D3）（code，claude-local，PR 已合併）→ [報告](reports/issue-335.md)
+- 2026-11-12 — #340 T121: NPC 打 NPC／寵物／召喚物的公式（#317 N2／N3，依使用者決定）（code，claude-local，PR 已合併）→ [報告](reports/issue-340.md)
