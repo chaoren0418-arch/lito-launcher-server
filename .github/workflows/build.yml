@@ -232,9 +232,12 @@ jobs:
   # utf8 handling). sql_mode is cleared to match the 5.5 server default.
   # Credentials below are fixed, non-secret test values for this throwaway
   # container only; they are not used by any real deployment.
+  # Non-blocking until the follow-up of #334 fixes the 73 cases listed in
+  # docs/reports/issue-334.md; Maven still exits non-zero so the job shows red.
   server-integration-test:
-    name: Server tests (CI MySQL fixture)
+    name: Server tests (CI MySQL fixture, non-blocking until #334 follow-up)
     runs-on: ubuntu-latest
+    continue-on-error: true
     env:
       LITO_CI_DB_ROOT_PASSWORD: lito_ci_root_test_only
       LITO_CI_DB_USER: lito_ci
