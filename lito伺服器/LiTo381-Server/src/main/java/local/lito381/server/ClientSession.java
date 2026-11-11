@@ -56298,10 +56298,22 @@ final class ClientSession implements Runnable {
         CombatPoisonLifecycle.broadcast(this, n, string);
     }
 
+    /**
+     * T116 (Issue #336): 1-伺服器 {@code EffectFirewallTimer.topc/tonpc} rolls
+     * {@code 19 + nextInt(max(user.getInt() / 2, 1))}, where {@code getInt()} is the
+     * effective INT (base + equipment + buffs). Use the same effective INT reader as the
+     * Source firewall path ({@link NativeSourceGroundPlayer}); keep the stored base INT
+     * only when no equipment snapshot is qualified yet.
+     */
     private int fireWallDamage() {
-        CharacterSummary character = selectedCharacterSummary();
-        int intelligence = character == null ? 8 : Math.max(1, character.intelligence());
-        return 19 + ThreadLocalRandom.current().nextInt(Math.max(intelligence / 2, 1));
+        int intelligence;
+        if (sourceEquipmentMagicStats != null) {
+            intelligence = nativeSkillConsumptionIntelligence();
+        } else {
+            CharacterSummary character = selectedCharacterSummary();
+            intelligence = character == null ? 8 : Math.max(1, character.intelligence());
+        }
+        return 19 + ThreadLocalRandom.current().nextInt(NativeSourceGroundNpc.bound(intelligence));
     }
 
     private int effectiveFireResistance() {
@@ -61299,6 +61311,11 @@ final class ClientSession implements Runnable {
                      } else if (var38.timedStatus.consumeCounterMagic(var63)) {
                         this.publishCounterMagicConsumption(var38, var2.skillId());
                         var67++;
+                     } else if (var38.inventory.hasEquippedHasteArmor() || var38.timedStatus.brave(var63).mode() == 5) {
+                        // T116 (Issue #336): 1-伺服器 L1SkillUse:3053-3061 — haste item equipped or
+                        // strengthened brave (braveSpeed 5) makes Slow/Mass Slow/Entangle a no-op.
+                        var36++;
+                        System.out.println("[LiTo] Mass Slow target player=" + var38.playerName() + " speed-immune=true applied=false");
                      } else {
                         BattleTimedStatus.SpeedChange var41 = var38.timedStatus.activateSlow(var63, var2.durationSeconds(), var2.skillId());
                         if (var41.stoppedSkillId() != 0) {
