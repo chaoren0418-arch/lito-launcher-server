@@ -59,6 +59,65 @@ final class ClassicWorldCompanionNpcPhysicalAttack {
                 normalizedHitRate >= percentileRoll);
     }
 
+    /**
+     * Issue #340: the {@code calcNpcHit} 15/100 rate for callers that roll
+     * their own d100 (WORLD monster to companion / Dspy, arena summon to NPC).
+     */
+    static int hitRate(int level, int hitUp, boolean boss,
+                       int targetArmorClass, int d20Roll, int negativeAcRoll) {
+        return hit(level, hitUp, 0, boss, targetArmorClass, d20Roll,
+                negativeAcRoll, 1).normalizedHitRate();
+    }
+
+    /** {@code L1AttackNpc.isUndeadDamage}: undead types 1, 3, 4 at night. */
+    static boolean undeadNight(int undead, long systemTimeMillis) {
+        return switch (undead) {
+            case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(systemTimeMillis);
+            default -> false;
+        };
+    }
+
+    /**
+     * Issue #340: {@code L1AttackNpc.calcNpcDamage:409-415} for a non-pet NPC
+     * attacker (WORLD monster, summon, arena summon):
+     * {@code nextInt(Lv) + STR/2 + STRD}, then {@code npcDmgMode}.  Returns
+     * the value before {@code calcNpcDamageReduction}.
+     */
+    static double nonPetBeforeReduction(
+            int level, int strength, int strengthDamage,
+            int sourceRoll, int criticalRoll, int damageUp,
+            boolean undeadNight, boolean boss, int leverage,
+            int weaponBreakStacks) {
+        if (level <= 0 || strength < 0 || strengthDamage < -6
+                || sourceRoll < 0 || sourceRoll >= level
+                || criticalRoll < 0 || criticalRoll >= 100
+                || leverage <= 0 || weaponBreakStacks < 0
+                || weaponBreakStacks > BattleWeaponBreak.MAX_STACKS) {
+            throw new IllegalArgumentException("invalid NPC-to-NPC damage input");
+        }
+        return npcDmgMode(sourceRoll + strength / 2 + strengthDamage,
+                criticalRoll, damageUp, undeadNight, boss, leverage,
+                weaponBreakStacks);
+    }
+
+    private static double npcDmgMode(double amount, int criticalRoll,
+                                     int damageUp, boolean undeadNight,
+                                     boolean boss, int leverage,
+                                     int weaponBreakStacks) {
+        if (criticalRoll < 15) amount *= 1.80D;
+        amount += damageUp;
+        if (undeadNight) amount *= 1.20D;
+        amount = (int) (amount * (leverage / 10D));
+        if (boss) amount *= 1.80D;
+        if (weaponBreakStacks > 0) {
+            amount = amount
+                    * (100 - weaponBreakStacks * BattleWeaponBreak.PERCENT_PER_STACK)
+                    / 100.0D;
+            if (amount < 1) amount = 1;
+        }
+        return amount;
+    }
+
     static DamageOutcome damage(
             BattleCompanion.Kind kind,
             int runtimeLevel, int sourceTemplateLevel,
@@ -97,21 +156,9 @@ final class ClassicWorldCompanionNpcPhysicalAttack {
                     + runtimeLevel / 14 + petWeaponDamage
                 : sourceRoll + strength / 2 + summonStrengthDamage;
         boolean critical = criticalRoll < 15;
-        if (critical) amount *= 1.80D;
-        amount += damageUp;
-        boolean undeadNightBonus = switch (undead) {
-            case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(systemTimeMillis);
-            default -> false;
-        };
-        if (undeadNightBonus) amount *= 1.20D;
-        amount = (int) (amount * (leverage / 10D));
-        if (boss) amount *= 1.80D;
-        if (weaponBreakStacks > 0) {
-            amount = amount
-                    * (100 - weaponBreakStacks * BattleWeaponBreak.PERCENT_PER_STACK)
-                    / 100.0D;
-            if (amount < 1) amount = 1;
-        }
+        boolean undeadNightBonus = undeadNight(undead, systemTimeMillis);
+        amount = npcDmgMode(amount, criticalRoll, damageUp, undeadNightBonus,
+                boss, leverage, weaponBreakStacks);
         double beforeTargetReduction = amount;
         int targetReduction = Math.addExact(target.damageReduction(),
                 targetAcMaximum == 0 ? 0 : targetAcMaximum + targetAcRoll);

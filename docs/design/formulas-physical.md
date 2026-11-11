@@ -103,11 +103,11 @@
 |---|---|---|---|---|
 | P1 | WORLD 怪物 → 玩家（普攻） | `CS:77326`（`NPA.hitChance`）、ER `CS:77332-77337` | `CS:77355-77374`（`NWB.sourceExact` → AC 減傷 → 防具） | `calcPcHit`／`calcPcDamage` |
 | P2 | WORLD 怪物 → 玩家／寵物（物理技能） | `CS:28418` | `CS:28438-28484` | 同上；目標是寵物時應走 `calcNpcHit`／`calcNpcDamage` |
-| P3 | WORLD 怪物 → 自己的寵物／召喚物 | `CS:77178` | `CS:77190-77216` | `calcNpcHit`／`calcNpcDamage` |
-| P4 | WORLD 怪物 → 護送 NPC（Dspy） | `CS:77246` | `CS:77252-77268` | `calcNpcHit`／`calcNpcDamage` |
+| P3 | WORLD 怪物 → 自己的寵物／召喚物 | `CS:77276`（`CNA.hitRate`，#340） | `CS:77296`（`CNA.nonPetBeforeReduction`）→ `NWB.afterStacks` → `BattlePhysicalDefense.againstNpc` | `calcNpcHit`／`calcNpcDamage` |
+| P4 | WORLD 怪物 → 護送 NPC（Dspy） | `CS:77343`（`CNA.hitRate`，#340） | `CS:77357`（同 P3） | `calcNpcHit`／`calcNpcDamage` |
 | P5 | WORLD 寵物／召喚物 → 玩家 | `CS:51923`、ER `CS:51926-51928` | `CS:51942` → `NPD.prepare:16-26`、`NPD.finish:28-35` | `calcPcHit`／`calcPcDamage` |
 | P6 | WORLD 寵物／召喚物 → 怪物 | `CS:51992`（`CNA.hit`） | `CS:52001`（`CNA.damage`） | `calcNpcHit`／`calcNpcDamage` |
-| P7 | 競技場召喚物 → 玩家／NPC | `CS:52317`、`CS:79194`、`CS:79390` | 玩家：`NPD.prepare`（`CS:52335`、`79210`、`79406`）；NPC：`companionNpcPhysicalDamage`（`CS:52324`、`79201`、`79397`） | 玩家：`calcPcHit`／`calcPcDamage`；NPC：`calcNpcHit`／`calcNpcDamage` |
+| P7 | 競技場召喚物 → 玩家／NPC | `CS:52324-52326`、`CS:79289`、`CS:79485`（打 NPC 走 `companionNpcTargetHitChance`，#340） | 玩家：`NPD.prepare`；NPC：`companionNpcTargetDamage`（`CS:52333`、`79296`、`79492`，#340） | 玩家：`calcPcHit`／`calcPcDamage`；NPC：`calcNpcHit`／`calcNpcDamage` |
 | P8 | 競技場 NPC（Tournament／Time Attack）→ 玩家 | `CS:53588`、`53868`、`54129` | `BattleTournamentNpcPhysicalDamage.java:15-33`（`CS:53640`、`53917`；`BattleTimeAttackPhysicalDamage.java:38`） | `calcPcHit`／`calcPcDamage` |
 
 ### 8.1 命中
@@ -125,7 +125,7 @@
 | N-H9 | 千分比迴避 `calcEvasion` | `L1AttackNpc.java:121`；`L1AttackMode.java:234-244` | 沒有 | 不適用（同 §1 H13） | — |
 | N-H10 | 物理傷害為 0 狀態、視線、和平區 | `L1AttackNpc.java:88-97,116` | 冰凍／絕對屏障／大地屏障 `CS:77338` 等 | 推測一致（狀態清單屬 T102） | — |
 | N-H11 | NPC → NPC 命中 = Lv + **3** + 寵物武器命中 + hitup；BOSS +30 **在防禦骰之前**（有效） | `L1AttackNpc.java:200-250` | P6 `CNA:47-59` | 一致 | `npcToNpcHitEnvelopeMatchesCalcNpcHitIncludingBossBeforeDefense` |
-| N-H12 | NPC → NPC 的其他路徑 | 同 N-H11 | P3 `CS:77178`、P4 `CS:77246`、P7 打 NPC（`CS:52317`、`79194`、`79390`）都用 NPC → PC 的 Lv + 5 包絡，BOSS 不加 30 | **不一致・待裁定**（見 §8.4 N2） | — |
+| N-H12 | NPC → NPC 的其他路徑 | 同 N-H11 | P3 `CS:77276`、P4 `CS:77343`、P7 打 NPC（`CS:52325`、`79289`、`79485`）改呼叫 `CNA.hitRate`（`CNA:66-70`，內部即 `CNA.hit`）：Lv + 3、BOSS +30 在防禦骰之前 | **已對齊**（#340，使用者裁定 A）。競技場打機器人（`var8`，AC 10）仍用 NPC → PC 包絡（機器人是假玩家） | `NpcToNpcFormulaIssue340Test.npcToNpcHitRateMatchesCalcNpcHitForEveryFace` |
 
 ### 8.2 傷害
 
@@ -145,7 +145,7 @@
 | N-D12 | `dmg <= 0` → 未命中；回傳 `(int)` | `L1AttackNpc.java:365-382` | `Math.max(0, (int)…)`，`NPD.commit:10-15` 以 `value > 0` 判定命中 | 一致 | — |
 | N-D13 | NPC 毒攻擊 15% | `L1AttackNpc.java:468-492` | `ClassicWorldMonsterPoisonAttack`、`CombatNpcPoison` | 不在本表（狀態異常屬 T102） | — |
 | N-D14 | NPC → NPC：召喚 `nextInt(Lv) + STR/2 + STRD`；寵物 `nextInt(模板Lv) + STR/2 + 1 + Lv/14 + 武器`；`npcDmgMode`；`− calcNpcDamageReduction`；`/ IMMUNE_TO_HARM` | `L1AttackNpc.java:400-440`；`L1AttackMode.java:275-293` | P6 `CNA.damage:62-126` | 一致。**已修正**：STR 0..10 的 STRD 是負數，`CNA` 原本 `summonStrengthDamage < 0` 直接丟 `IllegalArgumentException`（寵物公式根本不用這個值也會丟）；`380_db` 有 162 隻 STR 1..10、102 隻 STR 0 的怪物，被迷魅或召喚後打怪就會例外。改成只拒絕 < −6（STRD 最小值） | `companionToNpcDamageMatchesCalcNpcDamageIncludingNegativeStrd` |
-| N-D15 | NPC → NPC 的其他路徑 | 同 N-D14 | P3 `CS:77190-77216`、P4 `CS:77252-77268` 用 NPC → PC 的 `STR×0.8`；P7 打 NPC 用 `CS:52558-52568 companionNpcPhysicalDamage`（`STR×0.8`，且沒有 `(int)` 截斷、BOSS、不死夜間、武器破壞） | **不一致・待裁定**（見 §8.4 N3） | — |
+| N-D15 | NPC → NPC 的其他路徑 | 同 N-D14 | P3 `CS:77296`、P4 `CS:77357` 改用 `CNA.nonPetBeforeReduction`（`CNA:86-101`，`nextInt(Lv) + STR/2 + STRD` → `npcDmgMode`），再 `NWB.afterStacks` → `againstNpc`；P7 打 NPC 改用 `CS:52587-52606 companionNpcTargetDamage`（同一公式，補上截斷、BOSS、不死夜間、武器破壞）；舊的 `companionNpcPhysicalDamage` 已刪除 | **已對齊**（#340，使用者裁定 A） | `nonPetDamagePrefixMatchesCalcNpcDamageSummonBranchForEveryFace`、`worldMonsterToNpcPipelineMatchesCalcNpcDamageEndToEnd`、`companionDamageSummonBranchEqualsNonPetPrefixMinusReduction` |
 | N-D16 | 競技場 NPC → 玩家（P8） | 同 N-D2–N-D6 | `BattleTournamentNpcPhysicalDamage.java:19-32`：STR 先 `max(1, …)` 再查 `角色_力量成長` | 一致（STR ≥ 1 時與 STRD 相同，見 N-D1）；未改 | — |
 
 ### 8.3 本節的 Java 變更（task/317）
@@ -155,12 +155,19 @@
 3. `ClientSession.companionPhysicalDamage`（7 參數）：改用 `CombatNpcPhysicalSource.base/mode`，補上暴擊後截斷與完整 STRD（N-D4）。既有 `BattleCompanionTest` 的 3 個期望值（4、5、7）計算後不變。
 4. `ClientSession.companionHitChanceAgainst`／`companionPlayerHitChance`（新增）：寵物／召喚物打玩家時扣目標閃避，與怪物路徑同一套 LiTo 規則（N-H3）；四個呼叫點 `CS:51923`、`52317`、`79194`、`79390`，打 NPC／機器人時行為不變。
 
-### 8.4 待使用者裁定（本節新增）
+### 8.4 裁定結果
 
-| 代號 | 差異 | 若要對齊 1-伺服器 要改哪裡 | 影響 |
+| 代號 | 差異 | 裁定 | 處理 |
 |---|---|---|---|
-| N1 | NPC 打玩家的閃避：LiTo 直接扣，1-伺服器 /8 | 同 §7 H7（`NPA.hitChance` 的 dodge 項） | 與 H7 一起決定 |
-| N2 | 怪物打寵物／護送 NPC、競技場召喚物打 NPC 的命中用 Lv + 5（NPC → PC 包絡），1-伺服器 是 Lv + 3、BOSS +30 有效 | P3 `CS:77178`、P4 `CS:77246`、P7 三處改呼叫 `CNA.hit` | 寵物被怪打中的機率略降；BOSS 打寵物幾乎必中 |
-| N3 | 同上路徑的傷害用 `STR×0.8 + STRD`，1-伺服器 是 `STR/2 + STRD`（寵物攻擊者另有公式），競技場召喚物打 NPC 還少了 `npcDmgMode` 的截斷／BOSS／不死／武器破壞 | P3、P4 改用 `CNA.damage` 的召喚公式；P7 打 NPC 改呼叫 `CNA.damage` | 怪物打寵物每下約少 0.3×STR（STR 20 少 6）；競技場召喚物（Lv 5、STR 15）打 NPC 從約 12 降到約 7，需重新平衡 |
+| N1 | NPC 打玩家的閃避：LiTo 直接扣，1-伺服器 /8 | 維持 LiTo（與 §7 H7 同一條規則，#318） | 刻意規則，不改 |
+| N2 | 怪物打寵物／護送 NPC、競技場召喚物打 NPC 的命中原用 Lv + 5（NPC → PC 包絡），1-伺服器 是 Lv + 3、BOSS +30 有效 | **A：對齊 1-伺服器**（Issue #340，使用者逾時預設） | 已改，見 N-H12、§8.5 |
+| N3 | 同上路徑的傷害原用 `STR×0.8 + STRD`，1-伺服器 是 `STR/2 + STRD`；競技場召喚物打 NPC 原本還少了 `npcDmgMode` 的截斷／BOSS／不死／武器破壞 | **A：對齊 1-伺服器**（Issue #340） | 已改，見 N-D15、§8.5 |
 
-判斷為「待裁定」而非直接改的原因：N2／N3 會明顯改變寵物存活與競技場召喚物輸出，而 LiTo 在這幾條路徑一致地把「受控 NPC」當成玩家目標處理（P3 甚至明確傳 dodge 0），看起來是刻意簡化；P6（寵物打怪）則已經是逐行移植，所以 1-伺服器 的 NPC → NPC 公式在 LiTo 裡現成可用（`CNA`），裁定後改呼叫點即可。
+影響（讀碼推算，未實機量測）：怪物打寵物／護送 NPC 每下約少 0.3×STR（STR 20 少 6）；命中骰的必中線從 Lv+5+19 變 Lv+3+19，BOSS 打寵物／護送 NPC 加 30 後幾乎必中。競技場召喚物（Lv 5、STR 15）打 NPC 不暴擊 9..13（原 14..18），暴擊 16..23（原 25..32）。
+
+### 8.5 本節的 Java 變更（task/340）
+
+1. `ClassicWorldCompanionNpcPhysicalAttack`：新增 `hitRate`（`calcNpcHit` 的 15/100，由呼叫端自擲 d100）、`undeadNight`、`nonPetBeforeReduction`（`calcNpcDamage:409-415` 非寵物分支 + `npcDmgMode`）；`npcDmgMode` 抽成共用私有方法，`damage()`（P6）改呼叫它，數值不變（`companionDamageSummonBranchEqualsNonPetPrefixMinusReduction`）。
+2. `ClientSession.nativeNpcWeaponCompanionBody`（P3）、`nativeNpcWeaponDspyBody`（P4）：命中改 `CNA.hitRate`（傳入怪物 BOSS 旗標），傷害前段改 `CNA.nonPetBeforeReduction`；武器破壞、破壞者之臂、`againstNpc` 減傷順序不變。`uncannyDodgeHitFixture*` 與 `battlePhysicalHitEnabled` 照舊作用。
+3. `ClientSession` P7 三處：目標是 NPC（任務怪／時間競技演員）時改走 `companionNpcTargetHitChance`／`companionNpcTargetDamage`；召喚物沒有 NPC 來源資料（`npcDefenseQualified() == false`）時 BOSS／不死視為否。打玩家、打機器人不變。刪除 `companionNpcPhysicalDamage`。
+4. 不在本張：P2（怪物物理技能打寵物，`CS:28440`）仍用 `NWB.sourceExact`（NPC → PC 公式），見報告「給下一棒的提示」。
