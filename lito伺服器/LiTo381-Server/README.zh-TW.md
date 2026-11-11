@@ -10,6 +10,7 @@
 - BAT 與登入器內建伺服器使用同一組埠，擇一啟動。BAT 不會終止占用埠的其他程序。
 - 唯一操作設定是 [`config/server.properties`](config/server.properties)，22 項均有中文註解。[各項用途與範圍](docs/maintenance/configuration-audit-0.6.42.md)。修改後重啟生效。
 - 伺服器來源在 `380_lito.lito_source_server` 管理。固定 ID 1～8；初始種子（[`db/lito_source_server.sql`](db/lito_source_server.sql)）啟用 1 太陽神→`380_ac`、2 月亮神→`380_ac_1`、3 伺服器3→`380_ac_2`，4～8 停用。種子不覆寫已有列，**實際部署值由營運在現場表設定**，以現場表為準。新增來源需準備角色庫、`character_lito`（含 `last_result_id`）與資料庫權限；欄位規則、啟用步驟與完整權限清單見 [`docs/design/database.md`](../../docs/design/database.md)。
+- 積分（T100 D1，[`docs/design/gameplay.md`](../../docs/design/gameplay.md) §4.3）：`battle.reward.win`（預設 `250`）、`battle.reward.loss`（預設 `50`），範圍 0～1000000，範例設定未列出、沒寫就用預設。勝場 +win；一般敗場 +loss（輸了也給小額正分）；強制斷線敗 −loss，最低 0。逾時無勝者視為平手，不記勝敗、不加減分（D4；攻城逾時仍為守方勝）。
 - `weight.rate=100.0` 代表 100 倍負重上限，所有來源共用。JVM 記憶體與 CPU 設定同時適用 BAT／登入器。
 
 管理權限只取所選來源動態庫 `accounts.access_level`：正數為管理員；`.item`／`.spawn`／`.de` 仍須符合 `commands.access_level`，最低要求為正數。權限於登入後首次需要時讀取，隨帳號／來源變更及斷線清除；修改資料庫權限後重新登入生效。已移除 `administration.accounts`，舊鍵會被拒絕。

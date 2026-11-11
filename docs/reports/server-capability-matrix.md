@@ -21,7 +21,7 @@
 |---|---|---|---|---|
 | 戰鬥模式與勝負 | S1 沒有競技場模式（S1 §3「LiTo 不需要」：PK／粉名／地獄等 WORLD 規則） | 寵物競賽、死鬥、Quest、攻城、Time Attack、Honor Match 都寫在 `BattleRules`；勝負規則在程式裡（LC B14、B21） | **缺**：沒有寫成設計文件；規則只存在程式中，改規則要讀程式 | T100 |
 | 房間與對戰流程 | 無 | 建房、準備、開戰、結算、測試房與 ArenaBot（`lito_room_policy`、README「房間規則」） | **缺**：流程沒有規格 | T100 |
-| 結算與排名 | S1 只知道 `character_lito`、不寫勝敗（S1 §5） | 寫 `character_lito` 勝敗；排名用勝負、月計、斷線、ranking_points；一般敗場仍加分、斷線才扣分（LC B15–B17） | **缺**：積分規則沒有設計依據；「榮譽點數」欄位未找到 | T100、T103 |
+| 結算與排名 | S1 只知道 `character_lito`、不寫勝敗（S1 §5） | 寫 `character_lito` 勝敗；排名用勝負、月計、斷線、ranking_points；一般敗場仍加分、斷線才扣分（LC B15–B17） | **部分**：公式依 T100 D1 定案（勝 +250、敗 +50、斷線 −50，預設值寫進範例設定）；逾時無勝者改為平手不記（D4）；積分持久化（D3）尚未實作；「榮譽點數」不另設欄位 | T103（#310）、D3 後續任務 |
 | 跨界對戰規則 | S1 有移民與多服合併，沒有跨服同場（S1 §5） | 同一個 LiTo 程式接最多 8 個來源，跨來源同房有後端測試（LC X11–X13） | **缺**：跨來源配對、平衡、顯示來源的規則沒有設計 | T100 |
 | 死亡懲罰、經驗 | S1 有經驗與死亡懲罰（`ExpTable`、`L1PcInstance.deathPenalty`） | 沒有懲罰、經驗只在記憶體（LC A12、B22） | **不需要**（設計上刻意）；寫進 T100 作為明文規則 | T100 |
 
@@ -37,9 +37,9 @@
 | NPC／寵物／召喚物攻擊 | `L1AttackNpc.calcPcHit`／`calcNpcHit`／`npcDmgMode`／`calcPcDamage`／`calcNpcDamage`（S1 §3） | `BattleNpcPhysicalAttack`、`CombatNpcPhysicalSource`、`CombatNpcPlayerDamage`、`ClassicWorldCompanionNpcPhysicalAttack`（8 條路徑） | **已對照**（#317，`formulas-physical.md` §8）：STRD 夾限、召喚物 STR ≤ 10 例外、後備公式截斷、召喚物打玩家不扣閃避已修正；閃避 /8（N1）、受控 NPC 被打／競技場召喚物打 NPC 的 NPC→NPC 公式（N2、N3）待裁定 | T112 |
 | 魔法傷害、MR、技能機率 | `L1MagicPc.calcMagicDamage/calcMagicDiceDamage/calcMrDefense/calcProbabilityMagic/calcProbabilityWithConfig`（`~/model/L1MagicPc.java:139-1126`）、`L1MagicMode`、`L1AttackList.MRDMG`；入口 `L1SkillUse.java:2838-3003` | `CombatMagicDamage`、`BattleMagicResistance`、`BattleElementalResistance`、`CombatProbability`、`SourceSkillControls`、`BattleTurnUndead`（LC A8、A10、B9、B10） | **已對照**（T102，`docs/design/formulas-magic.md` 39 項）：MR 表、屬性／INT 係數、爆擊、表控機率 34 列、舊公式、原始素質表皆一致；**已修正** INT≥44 MagicBonus、正義守護 MR、邪惡守護骰值／SP；呼叫點已在 `src/main`（B10 不再是 patch）。待驗證：魔眼 SP、SKD3 清單、千分比迴避 | T102（完成）；T107～T109 |
 | 生命的祝福 +100 | `ConfigSkill._loadFromProperties` 不讀 `NATURES_BLESSING_HEAL`（`ConfigSkill.java:93-134`，只有 `_setDefaults:207` 設 0）；設定檔的 `= 100` 是無效設定 | 固定 0（`CombatRules.java:111-113`） | **已驗證：0 是對的**，「缺 +100」不成立（LC B12 結論，見 `formulas-magic.md` §4）；要 +100 屬新設計決定 | T102（完成） |
-| HP／MP | `L1Character.getMaxHp/getMaxMp`、`CalcStat.calcStatHp/Mp`（S1 §1） | 進場直接補滿，**沒讀** CurHp／CurMp（LC A3）；回復依藥水與技能 | **缺**（設計待定：進場補滿是否為規則） | T100、T103 |
+| HP／MP | `L1Character.getMaxHp/getMaxMp`、`CalcStat.calcStatHp/Mp`（S1 §1） | 進場直接補滿，**沒讀** CurHp／CurMp（LC A3）；回復依藥水與技能 | **刻意不做**：T100 D2 定案「每場補滿」為正式規則（gameplay.md N5） | T100、T103（#310） |
 | 藥水與消耗品 | `data/item_etcitem/hp/UserAddHp` 等，參數寫在 `etcitem.classname`（S1 §2） | 回復範圍寫死在 `InventoryCatalog`（LC I7、I8） | **未驗證**；數值來源不同（S1 讀 SQL，LiTo 寫死） | T111 |
-| 積分／排名 | 無 | ranking_points（LC B17） | **缺**：公式沒有設計依據 | T103 |
+| 積分／排名 | 無 | ranking_points（LC B17） | **部分**：公式已定案（D1）；重啟後歸零，持久化（D3）待後續任務 | T103（#310）、D3 後續任務 |
 
 ## 區塊三：資料庫
 

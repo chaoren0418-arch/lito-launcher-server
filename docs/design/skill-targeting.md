@@ -55,7 +55,7 @@ PK 旗標：主目標不是怪物、`target == "attack"`、主目標不是自己
 
 ## 4. 效果計算前的再過濾
 
-- `isTargetCalc`（`:4049-4113`）：先用在主目標（`:2779`，不通過就**整個技能不發動**），再用在清單每個人（`:2833`）。
+- `isTargetCalc`（`:4049-4113`）：先用在主目標（`:2779`，不通過就在逐目標計算前返回：**MP、動作已在 `:1121-1140`／`:1196-1199` 照常處理，只是不對任何人生效**），再用在清單每個人（`:2833`）。
   - `target == "attack"`（18 除外）：施法者或目標在安全區（怪物、稻草人除外）、或 Non-PvP 設定 → 否。
   - 66 沉睡之霧：不含自己。76 集體緩速術：不含自己、不含自己的寵物／召喚獸。69 集體傳送術：只含自己。
 - `isTargetFailure`（`:4151-4206`）：機率／詛咒型對守護塔、門必定失敗；18／29／39／76／152／153／167 對不可消魔的怪物必定失敗等（屬機率範圍，T102）。
@@ -92,8 +92,8 @@ PK 旗標：主目標不是怪物、`target == "attack"`、主目標不是自己
 | 單體／不可達的直線分支 | 194：`NativeSourceFreezeTarget.java:6`（有 metadata 時 `line()` 回傳 false）；17：`NativeSourceLightningArea.java:5-10`（area3 共 49 格） | 一致（G04、G07） |
 | 視線（g） | `NativeSourceTargetLos.java:7`；`NativeBlindSceneAction.java:21`（`through && 非攻擊` 才略過） | 與 g 一致，但 LiTo 沒有 type 2／32 的豁免（只影響 buff／復活，181 列中 through=0 的 buff 走各自 handler，**未逐一驗證**） |
 | 自施（d） | `NativeSourceNegativeSelf.java:4-10`（29／152／153）；`NativeSelectedPlayerIntent.java:8` | 一致（G06） |
-| 76 排除自己與寵物 | `NativeSourceMassSelfTarget.java:5`、`NativeSourceMassSlowTargets.java:78,326-350`、`NativeSourceAreaCasterTargets.java:13` | 一致（G05） |
+| 76 排除自己與寵物；以自己／自己的寵物為主目標 | `NativeSourceMassSelfTarget.java:5,14-15`（`selfPrimaryEffects` 回傳空清單）、`NativeSourceAreaCasterTargets.java:25`、`NativeSourceSlowFailureMetadata.java:9`、`NativeSourceMassSlowTargets.java:78,326-350` | 一致（G05；自施部分 T114 #321 改成扣 MP、播動作、不生效） |
 | 148／149 只對 PC、畫面距離 | `NativeSourceWeaponBuffTargets.java:9,19-21` | 一致（G07，僅 BATTLE） |
-| 40／103 距離與目標 | `NativeBlindSceneAction.java:21`（`selected`） | 一致（G08） |
-| 範圍攻擊打誰（e、f、j、k） | 競技場：`ClientSession.java:90022-90027`（`hub.canAttack`） | **刻意不同**：LiTo 依房間敵我判定，見報告「需要使用者決定」 |
+| 40／103 距離與目標 | `NativeBlindSceneAction.java:21`（`selected`） | 一致（G08）。103 對 1～3 格（玩家或寵物）：LiTo 准入、扣 MP、不生效、送失敗訊息；S1 射程外清單為空，`TYPE_NORMAL` 仍扣費並送失敗訊息（`:1121-1140,1196-1199,1829-1837`），兩邊相同（#321 S3 查證） |
+| 範圍攻擊打誰（e、f、j、k） | 競技場：`GameHub.java:9695-9698`（`hub.canAttack`）→ `BattleRules.java:337-343` | **刻意不同**（使用者決定 #321 S1：維持 LiTo），規則見 `docs/design/gameplay.md` §2.9 |
 | 反制魔法例外表 | `ClientSession` 欄位 `sourceCounterMagicBypassSkills`（DB 載入）；目錄 `counterMagicBypass` 欄 | 未在本任務比對（T107–T109） |
