@@ -34,7 +34,7 @@
 結算只處理「在勝者或敗者集合裡」的人，兩個都空時自然不寫：
 - `DurableBattleSettlement.java:37`（`prepare` 只對 winners／losers 呼叫 `serverRecordBattleResult`）
 - `DurableBattleSettlement.java:48`、`:72`（不在兩集合內就不產生日誌列）
-- `ClientSession.java:75006-75012`（結果畫面時只對 winners／losers 記錄）
+- `ClientSession.java:75036-75042`（結果畫面時只對 winners／losers 記錄）
 - 結果畫面：`GameHub.winningForce`（`GameHub.java:9672-9692`）兩集合都空時回 −1，`ClientSession.sendBattleResultWarning`（`ClientSession.java:10631-10641`）在 −1 時本來就送「此場對決雙方交戰平手」。
 
 這和既有的「全員斷線＝無效場」（`TeamDisconnectSettlement.java:7`）走同一條路。
