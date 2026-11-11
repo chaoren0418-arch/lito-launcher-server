@@ -25,8 +25,9 @@
 - `PET_TO_PC_DAMAGE_MULTIPLIER`：1-伺服器 程式預設 0.125，但實際設定檔 `config/其他控制端/5-職業傷害設定表.properties:90` 是 0.3，與 LiTo 預設相同。
 - 既有測試相容性推論：`BattleCompanionTest:670-672` 的期望值 4、5、7 用新公式手算不變（14→4.2、18→5.4、25.2→截斷 25→7.5）。測試目錄搜尋過 `companionHitChance`、`requiredPhysicalGrowthStats`、`floorDiv(n2 - 11`、`summonStrengthDamage`，沒有來源稽核測試比對被改到的字串；`NativeClassicWorldCompanionPlayerSourceAuditTest` 只檢查 `CNA` 檔含 `level + 3`、`runtimeLevel / 14` 等字串與 `ClassicWorldCompanionNpcPhysicalAttack.damage(` 的順序，都還在。
 
-### 待驗證（交給 CI／Codex／使用者）
-- **CI**：`mvn -B test` 結果要看 PR 的 GitHub Actions（push 後才有）。本報告寫成時尚未有結果。
+- **PR #329 CI（run 42948495683，提交 `411b0350`）**：`Server tests` 通過，`mvn -B test` → **Tests run: 7316, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`；`NpcAttackFormulaServer1ParityTest` 13 項全過（0.265 s）。Server（Maven 建置）、Launcher、Build-Package、Semantic gap 也都通過。召喚物打玩家改扣閃避後，沒有任何既有測試失敗。
+
+### 待驗證（交給 Codex／使用者）
 - 實機：寵物／召喚物打開了迴避的玩家的命中手感；STR 0 怪物、STR ≤ 10 的迷魅寵物打怪不再出錯（伺服器 log 不再出現 `invalid companion NPC damage input`）。
 - N-D7、N-D9：防具減免與 buff 減免在 NPC→PC 路徑的逐值對照（buff 清單屬 T102）。
 
@@ -58,7 +59,7 @@
 
 ## 給下一棒的提示
 
-- 先看 PR CI。若 `NpcAttackFormulaServer1ParityTest` 失敗，訊息會印出失敗的骰面組合；請以 1-伺服器 行號為準修正 LiTo，不要改參考函式。
+- PR #329 CI 已綠，可以審查合併。日後若 `NpcAttackFormulaServer1ParityTest` 失敗，訊息會印出失敗的骰面組合；請以 1-伺服器 行號為準修正 LiTo，不要改參考函式。
 - 若有整合測試因為「召喚物打玩家現在會扣閃避」失敗，那是預期中的行為改變，應更新期望值。
 - N1／N2／N3 請使用者裁定。若決定對齊，`ClassicWorldCompanionNpcPhysicalAttack.hit/damage` 已是逐行移植，P3（`CS:77178`、`77190-77216`）、P4（`CS:77246`、`77252-77268`）、P7 打 NPC（`CS:52317/52324`、`79194/79201`、`79390/79397`）改呼叫它即可，建議每條路徑一個 code 任務。
 - 本節的 `CS` 行號是 task/317 分支修改後的行號；`ClientSession.java` 很常被改，合併後如有偏移請以方法名（`nativeNpcWeaponMonsterBody`、`nativeNpcWeaponCompanionBody`、`nativeNpcWeaponDspyBody`、`companionHitChanceAgainst`）搜尋。
