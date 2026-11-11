@@ -6916,7 +6916,7 @@ final class ClientSession implements Runnable {
                               return;
                            }
 
-                           var20 = this.selectedSourceAccounts().persistHouseBid(this.playerObjectId(), var22, var2.value(), var10, var11, var21);
+                           var20 = this.selectedSourceAccounts().persistHouseBid(this.sourceCharacterObjectId(),var22, var2.value(), var10, var11, var21);
                         } catch (Exception var25) {
                            throw new IOException("cannot persist SQL house-auction bid", var25);
                         }
@@ -57091,7 +57091,22 @@ final class ClientSession implements Runnable {
                 ? Math.max(itemRange, light.lightRange()) : itemRange;
     }
 
+    /**
+     * Runtime (in-hub) object ID used by rooms, battle, targets and packets.
+     * Equal to the source objid unless another source already uses that objid
+     * in this hub; then a {@link SourceObjectIds} alias is returned (T105).
+     * Database lookups/writes must use {@link #sourceCharacterObjectId()}.
+     */
     long playerObjectId() {
+        long raw = sourceCharacterObjectId();
+        if (characters.isEmpty() || raw <= 0 || raw > 0x7FFF_FFFFL || config == null
+                || config.classicServerNames() == null
+                || config.classicServerNames().size() <= 1) return raw;
+        return SourceObjectIds.of(hub).claim(this, selectedClassicServerName, raw);
+    }
+
+    /** The selected character's {@code characters.objid} in its own source database. */
+    long sourceCharacterObjectId() {
         if (characters.isEmpty()) return 1;
         return characters.stream().filter(character -> character.name().equalsIgnoreCase(selectedCharacter))
                 .findFirst().orElse(characters.get(0)).objectId();

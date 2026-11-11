@@ -575,3 +575,38 @@ LiTo 的 `S/NativeDeItemTable.java` 與 1-伺服器 `ItemTable.java` 是同一�
 - 在實驗庫以 §4 範本建帳號，`SELECT … LIMIT 0` 全表通過，並用正式 JAR 啟動到 `[LiTo] ready`（交給 Codex／本機測試任務）。
 - 現場 `lito_source_server` 實際啟用哪些來源。
 - 現場部署的 380_db 是英文欄位版還是中文欄位版。
+
+## 10. 跨來源角色 ID 撞號（T105／Issue #306）
+
+**問題**：每個來源角色庫各自編 `characters.objid`，兩個來源的不同角色可能有相同 objid（LC X10）。戰鬥裡所有「玩家是誰」都靠 `ClientSession.playerObjectId()`（全 src/main 約 1,545 處：房間名單、目標查找、`S_ATTACK_MANY` 等封包、`BattleRules.Resolution.winners/losers`、斷線結算的 `departed`），撞號時兩位玩家在伺服器眼中是同一個物件：互打的目標解析錯、勝負集合同時含兩人 → 兩人都記勝（或都記敗）。
+
+### 以 objid 當 key 的地方（盤點）
+
+| 類別 | 位置 | 用哪個 ID | T105 後 |
+|---|---|---|---|
+| 房間／戰鬥名單、目標、封包 objectId | `S/ClientSession.java`（1,348 處）、`S/GameHub.java`（69 處）、`Combat*`／`Native*` 輔助類 | `playerObjectId()` | 改回傳**執行期 ID**（見下） |
+| 勝負判定 | `S/BattleRules.java` `Resolution(winners, losers)`；`S/DurableBattleSettlement.java:37,45-52` | `playerObjectId()` | 執行期 ID，不撞號 |
+| 結算收據與回寫 | `S/DurableBattleSettlement.java:71-74`（`entry`）、`S/SettlementSql.java`、`S/SharedDatabase.java:98-158` | `(route.database, ch.objectId())` 原 objid | 不變：一直是「來源庫＋原 objid」 |
+| 戰績／排名 | `S/ClientSession.java:7778-7812`（`sqlTournamentProfiles` 每個 session 各自一份、以原 objid 為 key）；`GameStateStore.sourceCharacter(來源名, 角色名)`（`S/ClientSession.java:56793-56795`） | 原 objid／來源＋角色名 | 不變：本來就有來源區隔 |
+| 角色庫讀取（背包、buff、信件、寵物…） | `S/ClientSession.java:7932-8100` 等 `var5.xxx(var1.objectId())` | `CharacterSummary.objectId()` 原 objid | 不變 |
+| 盟屋競標寫入 | `S/ClientSession.java:6919` `persistHouseBid` | 原本誤用 `playerObjectId()` | 改用 `sourceCharacterObjectId()`（原 objid） |
+
+### 設計
+
+- 新類別 `S/SourceObjectIds.java`：每個 `GameHub` 一張登記表（`SourceObjectIds.of(hub)`，`S/SourceObjectIds.java:63`），key 是 `(來源名小寫, 原 objid)`，owner 是 session（弱參照）。
+  - 第一個佔用某 objid 的來源**保留原值**；同來源同 objid（同角色重連）共用同一個值；其他來源撞到時（或原 objid 剛好落在別名區）配發別名（`S/SourceObjectIds.java:77-94`）。
+  - 別名區 `0x7800_0000..0x78FF_FFFF`（`S/SourceObjectIds.java:43-44`）：盤點所有執行期配號區段（`0x4000_0000` 假人、`0x5000_0000..0x5FFF_FFFF` 地面物品、`0x6000_0000..0x76FF_FFFF` NPC／效果／門／塔等、`0x7A10_0000` 魔法娃娃、`0x8000_0000` 料理火、`0x9000_0000` 寵物）後挑的空段；值 ≤ `0x7FFF_FFFF`，送給客戶端仍是合法的有號 32 位元 objectId。
+  - 別名在 owner 存活期間不重配（不依 socket 狀態回收），斷線結算時拿到的 ID 與戰鬥中一致；owner 被 GC 或改選別的角色時才釋放。
+- `ClientSession.playerObjectId()`（`S/ClientSession.java:57100-57106`）改為查登記表；只有一個來源（`login.classic.server.names` 只有一個）、或原 objid 不在 1..0x7FFF_FFFF 時直接回原值，所以**單來源部署行為完全不變**。新增 `sourceCharacterObjectId()`（`S/ClientSession.java:57109`）給資料庫用。
+- 結算：`DurableBattleSettlement.freeze` 先做 `requireDistinct`（`S/DurableBattleSettlement.java:47,64-69`）——同一個執行期 ID 對到兩個不同的（來源庫, 原 objid）就拒絕凍結（寧可不結算也不寫錯）；勝負用執行期 ID 判，收據與 `character_lito` 回寫仍用 `(route.database, 原 objid)`（`entry`，`S/DurableBattleSettlement.java:71-74`）。收據 key `SettlementJournal.Entry.key(battle, database, objid)` 與 drain 鎖名 `controls_database + objid` 本來就含來源庫，不需改。
+
+### 不處理（範圍外）
+
+- 原 objid 落在 LiTo 內部配號區（例如 `0x4000_0000` 以上）與 NPC／假人撞號：這是單來源也會有的既有問題，不屬於跨來源；只有落在別名區時會被改配。
+- 不同 LiTo 程式之間的互連（LC X15）。
+
+### 已驗證／推測／待驗證
+
+- **已驗證**：本機 `mvn -o -DskipTests test-compile` 編譯通過；盤點表的行號逐一讀過。單元測試 `SourceObjectIdsTest`（兩來源同 objid 同房 DEATHMATCH、勝負各自、結算身分各自）CI 6 個全過（PR #322，Failures 0、Errors 0，詳見 `docs/reports/issue-306.md`）。
+- **推測**：所有送給客戶端的玩家 objectId 都經過 `playerObjectId()`（grep `Protocol.*(…).objectId()` 未找到直接用角色原 objid 的封包）。
+- **待驗證**：真機兩個來源同 objid 角色同房對戰的畫面與結算；正式 JAR（0.6.71）尚未包含本修改。
