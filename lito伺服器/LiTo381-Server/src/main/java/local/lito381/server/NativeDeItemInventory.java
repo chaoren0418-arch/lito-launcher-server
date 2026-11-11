@@ -231,26 +231,13 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
          if (var3 != null && var3.definition().catalogId() != var4.definition().catalogId()) {
             var5.remove(var1);
          } else {
+            // T120 (#339): the blessed-weapon d4 follows the weapon template's
+            // bless like 1-伺服器 L1AttackPc.java:113
+            // (`_weapon.getItem().getBless()`). The combat traits already hold
+            // the converted template bless from LegacyEquipmentMagicLoader, so
+            // the instance bless (e.g. after a blessing scroll) no longer
+            // overwrites it here.
             var6 = var6.withEnchantLevel(var4.enchantLevel()).withDurability(var4.durability());
-            if (var4.blessing() <= 2) {
-               SourceWeaponCombatTraits var7 = var6.combatTraits();
-               var6 = var6.withCombatTraits(
-                  new SourceWeaponCombatTraits(
-                     var7.material(),
-                     var4.blessing(),
-                     var7.attributeKind(),
-                     var7.attributeLevel(),
-                     var7.attributeDamage(),
-                     var7.doubleDamageChance(),
-                     var7.doubleDamageMultiplier(),
-                     var7.maximumDamageChance(),
-                     var7.doubleDamageEffect(),
-                     var7.maximumDamageEffect(),
-                     var7.inventoryGfx()
-                  )
-               );
-            }
-
             var5.put(var1, var6);
          }
       }

@@ -777,7 +777,7 @@ final class LegacyEquipmentPhysicalIntegrationTest {
                             "equipped legacy weapon lost its native name_id");
                     assertTrue(weapon.damageSmall() >= 0);
                     assertTrue(weapon.combatTraits().material() >= 0);
-                    assertTrue(weapon.combatTraits().blessing() <= 2);
+                    assertTrue(weapon.combatTraits().blessing() <= 3);
                     System.out.printf(
                             "[LiTo-test] source=%s character=%d weapon=%d material=%d"
                                     + " blessing=%d attribute=%d/%d/%d pierce=%d"
