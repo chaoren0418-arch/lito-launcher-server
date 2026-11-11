@@ -70,7 +70,9 @@ final class ClassicWorldCompanionNpcPhysicalAttack {
             int immuneDivisor, long systemTimeMillis) {
         if (kind == null || kind == BattleCompanion.Kind.ARENA
                 || runtimeLevel <= 0 || sourceTemplateLevel <= 0
-                || strength < 0 || summonStrengthDamage < 0
+                // Issue #317: STRD is negative for STR 0..10 (minimum -6);
+                // source L1AttackNpc.calcNpcDamage:410-411 accepts it.
+                || strength < 0 || summonStrengthDamage < -6
                 || petWeaponDamage < 0 || undead < 0
                 || criticalRoll < 0 || criticalRoll >= 100
                 || leverage <= 0 || weaponBreakStacks < 0
