@@ -39,12 +39,33 @@ final class BattlePhysicalOffense {
         };
     }
 
+    /**
+     * T113 D12: the shared 380_db weapon/etcitem {@code bless} column uses the
+     * 1-伺服器 internal convention (0=normal, 1=blessed, 2=cursed, 3=illusion;
+     * {@code L1Item.java:246-264}).  LiTo combat traits keep the native 3.81
+     * item convention (0=blessed, 1=normal), the same value the client packet
+     * and {@link RuntimeInventory#BLESSING_BLESSED} use, so database rows must
+     * be swapped once at load.  Other values pass through unchanged.
+     */
+    static int nativeBlessingFromSource(int sourceBless) {
+        if (sourceBless < 0) {
+            throw new IllegalArgumentException("negative source bless value");
+        }
+        return switch (sourceBless) {
+            case 0 -> RuntimeInventory.BLESSING_NORMAL;
+            case 1 -> RuntimeInventory.BLESSING_BLESSED;
+            default -> sourceBless;
+        };
+    }
+
     static int blessingMaximum(
             SourceWeaponPhysicalStats weapon, SourceNpcPhysicalStats target) {
         if (weapon == null || target == null) {
             throw new IllegalArgumentException("missing blessing damage input");
         }
-        // Original 3.81 item convention is 0=blessed, 1=normal, 2=cursed.
+        // Native 3.81 item convention is 0=blessed, 1=normal, 2=cursed.  Rows
+        // read from 380_db are converted by nativeBlessingFromSource (T113 D12),
+        // so this matches 1-伺服器 `_weaponBless == 1` (internal 1=blessed).
         return weapon.present() && weapon.attackBlessing() == 0
                 && (target.undead() == 1 || target.undead() == 2 || target.undead() == 3)
                 ? 4 : 0;

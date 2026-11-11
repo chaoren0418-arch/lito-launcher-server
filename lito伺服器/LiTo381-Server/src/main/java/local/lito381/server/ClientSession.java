@@ -47936,7 +47936,9 @@ final class ClientSession implements Runnable {
                                  this.classicWorldMembers(this.classicWorldMapId),
                                  "classic-world-monster-physical"
                               );
-                              int var79 = var78 ? Math.addExact(var75.damage(), BattleSpellCatalog.burningSlashSpell(182).nextMeleeDamage()) : var75.damage();
+                              // T113 D9: L1AttackPc.pcDmgMode class attack-level term after the multiplier.
+                              int var75d = BattlePhysicalDamage.withClassAttackLevel(var75.damage(), var54, var77, var45, var46);
+                              int var79 = var78 ? Math.addExact(var75d, BattleSpellCatalog.burningSlashSpell(182).nextMeleeDamage()) : var75d;
                               int var80 = BattlePhysicalDefense.npcAcMaximum(var63);
                               int var81 = var80 == 0
                                  ? 0
@@ -48865,7 +48867,9 @@ final class ClientSession implements Runnable {
         BattleWeaponCritical.DamageOutcome damageOutcome = CombatTripleArrow.apply(sourceWeaponPhysicalStats2, n33, criticalRoll, CombatDragon.multiplier(physicalMultiplier, strike), this);
         boolean bl15 = sourceWeaponPhysicalStats2.present() && sourceWeaponPhysicalStats2.weaponType() == 17;
         boolean bl16 = this.consumeBurningSlash(bl12 && !bl2 && !bl15, l3, clientSession.playerObjectId(), clientSession.positionX, clientSession.positionY, this.classicWorldMembers(this.classicWorldMapId), "classic-world-player-physical");
-        int n35 = bl16 ? Math.addExact(damageOutcome.damage(), BattleSpellCatalog.burningSlashSpell(182).nextMeleeDamage()) : damageOutcome.damage();
+        // T113 D9: L1AttackPc.pcDmgMode class attack-level term after the multiplier.
+        int n35base = BattlePhysicalDamage.withClassAttackLevel(damageOutcome.damage(), bl12, bl15, n11, n12);
+        int n35 = bl16 ? Math.addExact(n35base, BattleSpellCatalog.burningSlashSpell(182).nextMeleeDamage()) : n35base;
         int n36 = BattlePhysicalDefense.playerAcMaximum(clientSession.battleCharacterType(), n15);
         int n37 = n36 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n36);
         int n38 = clientSession.effectiveArmorMagicReductionBase();
@@ -86155,7 +86159,10 @@ final class ClientSession implements Runnable {
                                     }
 
                                     int var212 = (int)(var145.damage() * var144.multiplier());
-                                    int var147 = Math.addExact(var144.damage(), var212);
+                                    // T113 D9: L1AttackPc.pcDmgMode class attack-level term after the multiplier.
+                                    int var147 = Math.addExact(
+                                       BattlePhysicalDamage.withClassAttackLevel(var144.damage(), var101, var191, var90, var92), var212
+                                    );
                                     boolean var148 = this.consumeBurningSlash(var101 && !var22 && !var191, var209, var6, var19, var20, var26, "battle-physical");
                                     if (var148) {
                                        var147 = Math.addExact(var147, BattleSpellCatalog.burningSlashSpell(182).nextMeleeDamage());

@@ -796,8 +796,11 @@ final class LegacyEquipmentMagicLoader {
             }
         }
         try {
+            // T113 D12: 380_db bless is 1-伺服器 internal (1=blessed); combat
+            // traits use the native convention (0=blessed).
             return new SourceWeaponCombatTraits(
-                    template.material, template.blessing,
+                    template.material,
+                    BattlePhysicalOffense.nativeBlessingFromSource(template.blessing),
                     item.attributeKind, item.attributeLevel, attributeDamage,
                     template.doubleDamageChance, template.doubleDamageMultiplier,
                     template.maximumDamageChance,
@@ -839,7 +842,8 @@ final class LegacyEquipmentMagicLoader {
                         row.getLong("object_id"), row.getInt("item_id"),
                         weapon.weaponType() == 10 ? -3 : -2,
                         row.getInt("dmg_small"), row.getInt("dmg_large"),
-                        material, row.getInt("bless"),
+                        material,
+                        BattlePhysicalOffense.nativeBlessingFromSource(row.getInt("bless")),
                         row.getInt("arrow_spr"), row.getInt("consume_on_attack") == 1,
                         row.getLong("count"));
             }
