@@ -11645,6 +11645,14 @@ final class GameHub implements AutoCloseable {
             BattleCubeIgnitionEffects.Alliance alliance = (casterId, targetId) -> {
                 ClientSession caster = sessions.get(casterId);
                 ClientSession target = sessions.get(targetId);
+                // T117: EffectCubeExecutor.java:72-98 resolves self/clan/party
+                // allies before the safety-zone test; only enemies are skipped.
+                boolean ally = caster != null && target != null
+                        && (sameClan(caster.sourceCharacterIdentity(),
+                                    target.sourceCharacterIdentity())
+                            || sameClassicParty(caster.sourceCharacterIdentity(),
+                                    target.sourceCharacterIdentity()));
+                if (ally) return BattleCubeIgnitionEffects.Relation.ALLY;
                 ClassicWorldLocation targetLocation =
                         classicWorldMembership.get(target);
                 if (targetLocation != null
@@ -11653,13 +11661,7 @@ final class GameHub implements AutoCloseable {
                                 targetLocation.x(), targetLocation.y())) {
                     return BattleCubeIgnitionEffects.Relation.IGNORE;
                 }
-                return caster != null && target != null
-                        && (sameClan(caster.sourceCharacterIdentity(),
-                                    target.sourceCharacterIdentity())
-                            || sameClassicParty(caster.sourceCharacterIdentity(),
-                                    target.sourceCharacterIdentity()))
-                        ? BattleCubeIgnitionEffects.Relation.ALLY
-                        : BattleCubeIgnitionEffects.Relation.ENEMY;
+                return BattleCubeIgnitionEffects.Relation.ENEMY;
             };
             for (BattleCubeIgnitionEffects.Event event
                     : NativeSourceCubeOrigin.advance(effects, nowNanos, actors, alliance, this)) {
@@ -11793,6 +11795,14 @@ final class GameHub implements AutoCloseable {
             BattleCubeQuakeEffects.Alliance alliance = (casterId, targetId) -> {
                 ClientSession caster = sessions.get(casterId);
                 ClientSession target = sessions.get(targetId);
+                // T117: EffectCubeExecutor.java:72-98 resolves self/clan/party
+                // allies before the safety-zone test; only enemies are skipped.
+                boolean ally = caster != null && target != null
+                        && (sameClan(caster.sourceCharacterIdentity(),
+                                    target.sourceCharacterIdentity())
+                            || sameClassicParty(caster.sourceCharacterIdentity(),
+                                    target.sourceCharacterIdentity()));
+                if (ally) return BattleCubeQuakeEffects.Relation.ALLY;
                 ClassicWorldLocation targetLocation =
                         classicWorldMembership.get(target);
                 if (targetLocation != null
@@ -11800,13 +11810,7 @@ final class GameHub implements AutoCloseable {
                             .isSafetyZone(targetLocation.x(), targetLocation.y())) {
                     return BattleCubeQuakeEffects.Relation.IGNORE;
                 }
-                return caster != null && target != null
-                        && (sameClan(caster.sourceCharacterIdentity(),
-                                    target.sourceCharacterIdentity())
-                            || sameClassicParty(caster.sourceCharacterIdentity(),
-                                    target.sourceCharacterIdentity()))
-                        ? BattleCubeQuakeEffects.Relation.ALLY
-                        : BattleCubeQuakeEffects.Relation.ENEMY;
+                return BattleCubeQuakeEffects.Relation.ENEMY;
             };
             BattleCubeQuakeEffects.BindProtection protection =
                     (targetId, kind, callbackNanos) -> {
