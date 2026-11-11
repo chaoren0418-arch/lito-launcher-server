@@ -28192,6 +28192,7 @@ final class ClientSession implements Runnable {
                               if (var24.remainingSeconds() != 0) {
                                  var23 = Math.addExact(var23, BattleSpellCatalog.reductionArmorSpell(88).reduction(var15.owner().battleLevel(), false));
                               }
+                              var23 = Math.addExact(var23, var15.owner().sourceNpcMagicSkillReduction(var8));
 
                               int var25 = var15.owner().effectiveBaseMagicResistance();
                               int var26 = ClassicWorldMonsterMagicDamage.afterArmorAndResistance(var20, var23, var25, var10);
@@ -40659,10 +40660,11 @@ final class ClientSession implements Runnable {
                     && target.classicWorldMapId != 4
                     && target.classicWorldMapId != 304)) return false;
         if (target.classicWorldMapId != 4) return true;
-        int castleId = callClanClassicWorldCastleId(
-                target.positionX, target.positionY);
-        return castleId == 0 || target.hub.classicCastleWarActive(
-                target.selectedClassicServerName, castleId);
+        // T117: 1-伺服器 RUN_CLAN.java:31-46 rejects any flag area through
+        // L1CastleLocation.checkInAllWarArea, with no war-time exception (that
+        // exception belongs to skill116's answer path, C_Attr.java:1316-1329).
+        return callClanClassicWorldCastleId(
+                target.positionX, target.positionY) == 0;
     }
 
     private void useInvisibilitySpell(byte[] byArray, BattleSpellCatalog.InvisibilitySpell invisibilitySpell) throws IOException {
@@ -54419,6 +54421,7 @@ final class ClientSession implements Runnable {
                   if (var21.remainingSeconds() != 0) {
                      var20 = Math.addExact(var20, BattleSpellCatalog.reductionArmorSpell(88).reduction(var14.battleLevel(), false));
                   }
+                  var20 = Math.addExact(var20, var14.sourceNpcMagicSkillReduction(var30));
 
                   int var22 = var14.effectiveBaseMagicResistance();
                   int var23 = ClassicWorldMonsterMagicDamage.afterArmorAndResistance(var17, var20, var22, var8);
@@ -54674,6 +54677,7 @@ final class ClientSession implements Runnable {
                   if (var20.remainingSeconds() != 0) {
                      var19 = Math.addExact(var19, BattleSpellCatalog.reductionArmorSpell(88).reduction(var13.battleLevel(), false));
                   }
+                  var19 = Math.addExact(var19, var13.sourceNpcMagicSkillReduction(var30));
 
                   int var21 = var13.effectiveBaseMagicResistance();
                   int var22 = ClassicWorldMonsterMagicDamage.afterArmorAndResistance(var16, var19, var21, var8);
@@ -55211,6 +55215,11 @@ final class ClientSession implements Runnable {
                     currentRoomId, playerObjectId(), nowNanos);
         }
         if (phase == Phase.WORLD) {
+            // T117: 1-伺服器 L1Cube.java:303-304 only stores STATUS_MR_REDUCTION;
+            // nothing reads it, so MR is unchanged.  The source-loaded BATTLE
+            // path already returns 0 (NativeSourceCubeStatus.read query 3);
+            // the WORLD engine has no source scene, so gate it here.
+            if (CombatRules.loaded()) return 0;
             return hub.classicWorldCubeShockMagicResistanceModifier(
                     classicWorldMapId, classicWorldInstanceId,
                     playerObjectId(), nowNanos);
@@ -55368,6 +55377,25 @@ final class ClientSession implements Runnable {
                     this, nowNanos);
         }
         return 0;
+    }
+
+    /**
+     * T117: 1-伺服器 L1MagicNpc.calcPcMagicDamage (L1MagicNpc.java:554-586)
+     * subtracts the L1AttackList.SKD3 skill literals (Dragon Skin -10,
+     * Patience -15; L1AttackList.java:284-285) together with armor and
+     * Reduction Armor, before calcMrDefense (L1MagicNpc.java:526).  Only the
+     * source-loaded server follows that table; the offline fallback keeps the
+     * retained physical-only behaviour.
+     */
+    int sourceNpcMagicSkillReduction(long nowNanos) {
+        if (!CombatRules.loaded()) return 0;
+        int reduction = dragonSkinStatus.snapshot(nowNanos).active()
+                ? CombatSourceReductions.dragonSkin(10) : 0;
+        if (effectivePatiencePhysicalReduction(nowNanos) != 0) {
+            reduction = Math.addExact(reduction, CombatSourceReductions.patience(
+                    BattlePatienceStatus.PHYSICAL_REDUCTION));
+        }
+        return reduction;
     }
 
     void serverCookingFireExpired(long roomId, BattleCookingFires.Fire fire)
@@ -56195,18 +56223,7 @@ final class ClientSession implements Runnable {
             int attackerWeaponType, boolean applyReductionArmor,
             boolean physicalDamage) {
         long now = System.nanoTime();
-        BattleCookingStatus.Snapshot cooking = cookingStatus.active(now);
-        int reduction = cooking.damageReduction();
         int applied = damage;
-        if (reduction != 0) {
-            applied = BattleCookingCatalog.damageAfterReduction(damage, reduction);
-            System.out.println("[LiTo] cooking damage reduction player=" + playerName()
-                    + " statuses=" + cooking.recipes().stream()
-                        .map(recipe -> Integer.toString(recipe.statusId())).toList()
-                    + " source=" + source
-                    + " raw=" + damage + " reduction=" + reduction
-                    + " applied=" + applied);
-        }
         BattleAbilityStatus.ReductionArmor reductionArmor =
                 abilityStatus.reductionArmor(now);
         if (applyReductionArmor && reductionArmor.remainingSeconds() != 0) {
@@ -56239,6 +56256,23 @@ final class ClientSession implements Runnable {
                     + " percent=" + BattleArmorBreak.DAMAGE_PERCENT
                     + " applied=" + brokenDamage);
             applied = brokenDamage;
+        }
+        // T117: 1-伺服器 L1AttackPc.java:1021-1033 is REDUCTION_ARMOR, then the
+        // Armor Break x1.58, then the whole L1AttackList.SKD3 sum (cooking -5/-2,
+        // Dragon Skin, Patience), then the IMMUNE_TO_HARM halving.  Cooking is
+        // part of SKD3, so it must follow the multiplier (other paths have no
+        // multiplier and plain subtraction commutes).
+        BattleCookingStatus.Snapshot cooking = cookingStatus.active(now);
+        int reduction = cooking.damageReduction();
+        if (reduction != 0) {
+            int cooked = BattleCookingCatalog.damageAfterReduction(applied, reduction);
+            System.out.println("[LiTo] cooking damage reduction player=" + playerName()
+                    + " statuses=" + cooking.recipes().stream()
+                        .map(recipe -> Integer.toString(recipe.statusId())).toList()
+                    + " source=" + source
+                    + " raw=" + applied + " reduction=" + reduction
+                    + " applied=" + cooked);
+            applied = cooked;
         }
         BattleDragonSkinStatus.Snapshot dragonSkin =
                 dragonSkinStatus.snapshot(now);
