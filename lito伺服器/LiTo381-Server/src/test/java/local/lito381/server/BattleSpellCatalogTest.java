@@ -664,7 +664,8 @@ final class BattleSpellCatalogTest {
         assertEquals(500, spell.reuseDelayMillis());
         assertEquals(10, spell.maximumRange());
         assertEquals(7, spell.probabilityDice());
-        assertEquals(1, spell.probabilityValue());
+        // Issue #307: 380_db.sql row 18 probability_value=0 (1 is the attr column).
+        assertEquals(0, spell.probabilityValue());
         assertEquals(280, spell.failureMessage());
         assertNull(BattleSpellCatalog.turnUndeadSpell(19));
     }
@@ -1300,7 +1301,8 @@ final class BattleSpellCatalogTest {
         assertEquals(-5, spell.meleeDamageModifier());
         assertEquals(-1, spell.meleeHitModifier());
         assertEquals(0, spell.armorClassModifier());
-        assertEquals(0, spell.lawfulDelta());
+        // Issue #307: 380_db.sql row 47 lawful=-10, applied by L1SkillUse.useConsume.
+        assertEquals(-10, spell.lawfulDelta());
         assertEquals(692, spell.happenMessage());
         assertEquals(280, spell.failureMessage());
         assertEquals(InventoryCatalog.MAGIC_GEM, spell.itemConsumeId());
