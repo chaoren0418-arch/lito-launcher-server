@@ -49,6 +49,12 @@ battle.physical.hit.enabled=true
 # 戰鬥自然回魔開關。
 battle.natural.mp.regen.enabled=true
 
+# 積分規則（T100 D1，docs/design/gameplay.md §4.3）：0~1000000。
+# 勝場 +win；一般敗場 +loss（輸了也給小額正分）；強制斷線敗 -loss，最低 0。
+# 逾時無勝者視為平手，不記勝敗、不加減分（T100 D4；攻城逾時仍為守方勝）。
+battle.reward.win=250
+battle.reward.loss=50
+
 # 原生攻城模式名單規則開關，只在攻城模式生效。
 native.siege.roster.enforced=true
 
