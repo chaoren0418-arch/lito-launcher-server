@@ -29,7 +29,7 @@
 ### 已驗證
 - 本機靜態比對（`scratch/t307/compare.py`，未進 git）：78 個有 catalog 紀錄的技能，建構子參數的 mpCost／hpCost／reuse／duration／item 與 SQL 0 筆不一致（33 沒有 durationSeconds 欄位，另測）；傷害骰、治癒骰、機率骰全部一致；不一致只有 18 probabilityValue、47 lawfulDelta（已修正）與 8 個正義值缺口。
 - 本機 `javac -proc:none --release 17` 編譯 `src/main`＋`compile-stubs`，以及 `WizardSkillServer1ParityTest`、`BattleSpellCatalogTest`：exit 0。**本機沒有執行任何測試**（依規定）。
-- CI 結果：見下方「CI」段（push 後補上）。
+- **PR #323 CI（run 42931119524，commit `fa9a6fc1`）全部通過**：`Server tests` 的 surefire 報告（artifact `server-test-evidence`，1279 個 TEST-*.xml 加總）**Tests run: 6894, Failures: 0, Errors: 0, Skipped: 117**；其中 `WizardSkillServer1ParityTest` 248 個、`BattleSpellCatalogTest` 103 個全過。Server（Maven 建置）、Launcher、Build-Package、Semantic gap 也都通過。之後只再加這份報告的 CI 段（不含程式變更）。
 
 ### 推測
 - 正式 `380_db.skills` 與 `1-伺服器 db/380_db.sql` 這 16 欄相同（T106 已驗 6 欄一致；本 PR 未連正式 DB）。
