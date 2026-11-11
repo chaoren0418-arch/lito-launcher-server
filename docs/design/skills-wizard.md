@@ -6,6 +6,7 @@
 - 目標判定（target_to／area／ranged）已由 T106 完成，見 `docs/design/skill-targeting.md`，本文不重複。
 - 測試：`lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/WizardSkillServer1ParityTest.java`；輸入表 `src/test/resources/server1/skills-wizard-79.tsv`（由 `tools/skill-targeting/extract_wizard.py` 從 `db` 唯讀擷取 16 欄）。
 - 判定：**一致**＝本文列出的面向逐值相等（有單元測試）；**已修正**＝本 PR 改 LiTo；**不一致・未改**＝有差異，本 PR 不改（理由寫在 §4）；效果本體的封包與實機行為一律是**待驗證**。
+- 效果數值補驗（T116，Issue #336）：10／28 吸血、39 吸魔、58 火牢每跳、44 相消清單、29／76 緩速免疫、66 自施，見 §6；測試 `src/test/java/local/lito381/server/WizardSkillEffectServer1ParityTest.java`。
 
 ## 1. 共通流程（所有 79 個技能）
 
@@ -34,7 +35,7 @@
 | 加速中放 29／76 | `U:3072-3089`：移除加速與緩速，速度 0 | `activateSlow` 回傳 `NORMAL`，兩者皆清空 | 一致 |
 | 正常時 29／76 | `U:3063-3070`：速度 2 | `SLOW` | 一致 |
 | 緩速中再放 29／76 | `U:3062` 無 case 2，直接 `addMagicList` 刷新；兩個技能效果可並存 | 單一欄位刷新為新技能 | 數值一致；S1 允許 29 與 76 兩個效果同時存在、各自到期，LiTo 只記一個——**推測**影響極小（同為速度 2） |
-| 目標裝備加速道具／強化勇水 | `U:3053-3061`：緩速完全不生效 | 未查 | **待驗證** |
+| 目標裝備加速道具／強化勇水 | `U:3053-3061`：緩速完全不生效 | 29 `nativeMaterialEntangleBody`、76 WORLD `nativeAreaWorldSlowBody` 原本就擋；76 BATTLE `nativeAreaBattleSlowBody` 沒擋 | **已修正**（T116，§6.5） |
 | 52 神聖疾走 | `U:3779-3786`：勇敢速度 4；與勇水同組互刪 | catalog `braveMode=4`（`C:1348`），`activateBrave` 覆蓋單一欄位 | 一致 |
 
 ## 3. 逐技能對照
@@ -52,7 +53,7 @@
 | 7 | 風刃 | TYPE_ATTACK | `C:1598` | 一致 |
 | 8 | 神聖武器 | `U:3488`（玩家 BUFF）；DMG1 HIT1 | `C:1532` WeaponBuffSpell；`CS:36413` | 一致 |
 | 9 | 解毒術 | `M:168` `sm/CURE_POISON.java` | `C:2691` CurseRemovalSpell；`CS:46532`、`CS:46520` | 一致 |
-| 10 | 寒冷戰慄 | TYPE_ATTACK＋`U:3034-3035`（傷害轉為施法者回血） | `C:1606` AttackSpell | **已修正（#325）**：lawful −2 施放時套用（§4.1）；吸血是否實作**待驗證** |
+| 10 | 寒冷戰慄 | TYPE_ATTACK＋`U:3034-3035`（傷害轉為施法者回血） | `C:1606` AttackSpell | **已修正（#325）**：lawful −2 施放時套用（§4.1）；吸血量一致（§6.1） |
 | 11 | 毒咒 | `U:3104-3105` `L1DamagePoison.doInfection(3000ms, 5)`；`L1DamagePoison.java:147` 30 秒 | `C:2650` PoisonSpell；`CS:65667`、`CS:65956` | 一致（3000ms／5／30 秒／lawful −10） |
 | 12 | 擬似魔法武器 | `U:3471`；DMG2；力量頭盔 20015 減半 | `C:1490` ItemWeaponEnchantSpell；`CS:68650`、`CS:43462` | 一致（DB 路徑）；後備值多一個弓傷害 +2（§4.3） |
 | 13 | 無所遁形術 | `U:2992-2999`、`U:3946` | `C:2369` DetectionSpell；`CS:43734` | 一致 |
@@ -69,7 +70,7 @@
 | 25 | 燃燒的火球 | TYPE_ATTACK 範圍 | `C:2075` | 一致 |
 | 26 | 通暢氣脈術 | `U:3636`；DEX+5；敏捷頭盔 20013 減半 | `C:1247` AbilityBuffSpell；`CS:36166` | 一致 |
 | 27 | 壞物術 | `U:3176-3195`（PC 武器耐久、NPC 疊層） | `C:2246` WeaponBreakSpell；`CS:44332`、`CS:64778` | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
-| 28 | 吸血鬼之吻 | TYPE_ATTACK＋`U:3034-3035` | `C:1615` | **已修正（#325）**：lawful −5 施放時套用（§4.1）；吸血**待驗證** |
+| 28 | 吸血鬼之吻 | TYPE_ATTACK＋`U:3034-3035` | `C:1615` | **已修正（#325）**：lawful −5 施放時套用（§4.1）；吸血量一致（§6.1） |
 | 29 | 緩速術 | `U:3050-3091` | `C:2474` EntangleSpell；`CS:41432`、`CS:62757` | 一致（§2） |
 | 30 | 巖牢 | TYPE_ATTACK 範圍 | `C:2086` | 一致 |
 | 31 | 魔法屏障 | 預設 `U:2141`；抵銷 `U:4243-4256` | `C:339` CounterMagicSpell；`CS:32122`、`CS:57986` | 一致（執行期 MP 走 F2；catalog `effectiveMpCost` 少了 INT 減免，但沒被使用，§4.4） |
@@ -80,12 +81,12 @@
 | 36 | 迷魅術 | `U:3851-3860` | `C:2679` TamingSpell；`CS:46782`、`CS:64206` | 一致 |
 | 37 | 聖潔之光 | `M:169` `sm/REMOVE_CURSE.java` | `C:2698` CurseRemovalSpell | 一致 |
 | 38 | 冰錐 | TYPE_ATTACK | `C:1637` | 一致 |
-| 39 | 魔力奪取 | `U:3168-3174`（5..14 + INT/2） | `C:2201` ManaDrainSpell；`CS:41408`、`CS:41058` | 一致（數值欄位）；吸取量公式**待驗證** |
+| 39 | 魔力奪取 | `U:3168-3174`（5..14 + INT/2） | `C:2201` ManaDrainSpell；`CS:41408`、`CS:41058` | 一致（數值欄位、吸取量公式，§6.2） |
 | 40 | 黑闇之影 | `M:177`（CURSE_BLIND） | `C:2221` BlindSpell | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
 | 41 | 造屍術 | `U:3861-3870` | `C:2411` CreateZombieSpell；`CS:46725`、`CS:64501` | **已修正（#325）**：lawful −10 施放時套用（§4.1） |
 | 42 | 體魄強健術 | `U:3626`；STR+5；力量頭盔 20015 | `C:1251` AbilityBuffSpell | 一致 |
 | 43 | 加速術 | `M:166` `sm/HASTE.java`；頭盔 20013／20008 | `C:1295` HasteSpell；`CS:36788` | 一致（§2） |
-| 44 | 魔法相消術 | `M:167` `sm/CANCELLATION.java` | `C:1549` CancellationSpell；`CS:38644` | 一致（數值欄位）；相消清單屬 T106 提示的反制魔法／相消免疫表比對，**待驗證** |
+| 44 | 魔法相消術 | `M:167` `sm/CANCELLATION.java` | `C:1549` CancellationSpell；`CS:38644` | 一致（數值欄位；免疫清單來源同表，法師技能存活／清除一致，§6.4）；「裝備加速道具的速度被相消」**待使用者裁定**（§6.4） |
 | 45 | 地裂術 | TYPE_ATTACK | `C:1644` | 一致 |
 | 46 | 烈炎術 | TYPE_ATTACK | `C:1651` | 一致 |
 | 47 | 弱化術 | `U:3121-3125`；DMG−5 HIT−1 | `C:2264` WeaknessSpell；`CS:44344`、`CS:68972`（`applySpellLawfulDelta` 在 `CS:69291`） | **已修正**：`lawfulDelta` 0 → −10（`db` lawful −10，`U:2047`） |
@@ -99,7 +100,7 @@
 | 55 | 狂暴術 | `U:3721-3731`；AC+10 DMG+5 HIT+2 | `C:1313` CombatBuffSpell；`CS:37221` | 一致 |
 | 56 | 疾病術 | `U:3127-3131`；AC+12 DMG−6 | `C:2276` WeaknessSpell | 一致 |
 | 57 | 全部治癒術 | TYPE_HEAL | `C:269` | 一致 |
-| 58 | 火牢 | `U:2759-2762` `doSpawnFireWall` | `C:1585` GroundSpell；`CS:46900`、`CS:69728` | 一致（數值欄位）；地面火焰傷害**待驗證** |
+| 58 | 火牢 | `U:2759-2762` `doSpawnFireWall` | `C:1585` GroundSpell；`CS:46900`、`CS:69728` | **已修正**（T116）：每跳擲骰改用有效 INT（§6.3）；減傷算式、SKD3 修正一致 |
 | 59 | 冰雪暴 | TYPE_ATTACK 範圍 | `C:2104` | 一致（lawful −10） |
 | 60 | 隱身術 | `U:3967-3990`、`U:2064-2066` | `C:2706` InvisibilitySpell；`CS:40645` | 一致 |
 | 61 | 返生術 | `M:171` `sm/RESURRECTION.java` | `C:2423` ResurrectionSpell；`CS:46757` | 一致 |
@@ -107,7 +108,7 @@
 | 63 | 治癒能量風暴 | `U:2729-2733` spawnEffect 81169 | `C:1587` GroundSpell | 一致（數值欄位） |
 | 64 | 魔法封印 | 預設 `U:2141`；`src/com/lineage/server/clientpackets/C_UseSkill.java:142` | `C:2289` SilenceSpell；`CS:41424` | 一致 |
 | 65 | 雷霆風暴 | TYPE_ATTACK 範圍 | `C:2132` | 一致 |
-| 66 | 沉睡之霧 | `U:3197-3202`、`U:2905-2909` | `C:2613` SleepSpell；`CS:44385` | **已修正（#325）**：lawful −50 施放時套用（§4.1） |
+| 66 | 沉睡之霧 | `U:3197-3202`、`U:2905-2909` | `C:2613` SleepSpell；`CS:44385` | **已修正（#325）**：lawful −50 施放時套用（§4.1）；自施主目標 LiTo 不扣 MP、1-伺服器 扣 MP（**待使用者裁定**，§6.6） |
 | 67 | 變形術 | `U:3733-3751` | `C:2626` PolymorphSpell；`CS:32098` | 一致 |
 | 68 | 聖結界 | 預設 `U:2141`；`src/com/lineage/server/model/L1AttackPc.java:1183` 等 | `C:1323` DamageProtectionSpell；`CS:37391` | 一致 |
 | 69 | 集體傳送術 | `M:165` `sm/MASS_TELEPORT.java` | `C:1334` MassTeleportSpell；`CS:37395` | 一致 |
@@ -117,13 +118,14 @@
 | 73 | 創造魔法武器 | `U:3225-` | `C:2399` MagicalWeaponSpell；`CS:43546` | 一致（10 個魔法寶石） |
 | 74 | 流星雨 | TYPE_ATTACK 範圍 | `C:2141` | 一致 |
 | 75 | 終極返生術 | `M:172` `sm/GREATER_RESURRECTION.java` | `C:2433` ResurrectionSpell | 一致 |
-| 76 | 集體緩速術 | `U:3050-3091`；自施 `U:2779` 不生效但仍扣費（F9） | `C:2460` MassSlowSpell；`CS:44377` → `NativeSourceMassSlowTargets` | **不一致・未改**：自施語意（§4.2） |
+| 76 | 集體緩速術 | `U:3050-3091`；自施 `U:2779` 不生效但仍扣費（F9） | `C:2460` MassSlowSpell；`CS:44377` → `NativeSourceMassSlowTargets` | 自施：T114（#321）已對齊（扣費、不生效，§4.2）；BATTLE 緩速免疫 **已修正**（T116，§6.5） |
 | 77 | 究極光裂術 | TYPE_ATTACK；`U:565` 正義值 ≥500；`U:2876` 爆擊 | `C:1660` AttackSpell（`minimumLawful=500`） | **已修正（#325）**：lawful +1 施放時套用（§4.1） |
 | 78 | 絕對屏障 | `U:3360-3368` | `C:349` AbsoluteBarrierSpell；`CS:32126` | 一致 |
 | 79 | 靈魂昇華 | `M:173` `sm/ADVANCE_SPIRIT.java` | `C:361` AdvanceSpiritSpell；`CS:32133` | 一致 |
 | 80 | 冰雪颶風 | `U:3133-3138` | `C:2030` FreezeAttackSpell | 一致（lawful −10） |
 
-統計：一致 68、已修正 10（18、47；#325 補正義值 10、20、27、28、40、41、66、77）、不一致・未改 1（76）。「一致」只代表本文列出的面向；效果本體（封包、傷害實際入帳、狀態圖示）見 §5。
+統計（T107＋#325）：一致 68、已修正 10（18、47；#325 補正義值 10、20、27、28、40、41、66、77）、不一致・未改 1（76）。「一致」只代表本文列出的面向；效果本體（封包、傷害實際入帳、狀態圖示）見 §5。
+T116 之後：76 自施已由 T114（#321）對齊；58、76（BATTLE 緩速免疫）在 T116 修正；66 自施、44 加速道具速度列待使用者裁定（§6）。
 
 ## 4. 不一致與未改的理由
 
@@ -131,7 +133,7 @@
 S1 `U:2047` 每次 TYPE_NORMAL 施放都加 `skills.lawful`（`U:1196-1201` 在 `runSkill` 之後無條件執行，命中與否都改）。#307 時這 8 個技能的 record 沒有 `lawfulDelta`。#325：`AttackSpell`、`BlindSpell`、`WeaponBreakSpell`、`CreateZombieSpell`、`SleepSpell` 加 `lawfulDelta` 欄位（10＝−2、28＝−5、77＝+1、20／40＝−10、27＝−10、41＝−10、66＝−50；其他攻擊魔法 0），並在 11 個處理器扣 MP 之後呼叫 `applySpellLawfulDelta`：攻擊魔法戰鬥／世界（`nativeSourceControlledOriginal_useAttackSpell`、`nativeCompanionTargetuseClassicWorldAttackSpell`）、盲咒戰鬥／世界／寵物目標（`nativeMaterialBlindBody`、`nativeMaterialWorldBlindBody`、`NativeBlindSceneAction.companion`）、壞物術戰鬥／世界／寵物目標（`nativeMaterialWeaponBreakBody`、`nativeMaterialWorldWeaponBreakBody`、`NativeWeaponBreakBattleCompanion.cast`）、沉睡之霧戰鬥／世界（`nativeAreaBattleSleepBody`、`nativeAreaWorldSleepBody`）、造屍術（`nativeMaterialZombieBody`）。正義值只改 `GameStateStore`（LiTo 自己的狀態檔）與記憶體，不寫回來源角色庫；變動時送 `S_CHANGE_ALIGNMENT`（0x59 `cdh`，`docs/reference/client-protocol-needs.md` §1.2）。`lawfulGapListIsExact` 的清單改為空集合，`issue325EveryCastHandlerAppliesLawful` 釘住呼叫位置。
 
 ### 4.2 76 集體緩速術自施
-S1：`U:2779` 對自己（或自己的寵物）為主目標時整個 `runSkill` 返回，但 `U:1140` 仍扣 MP、正義值並播動作 → 「扣費、不生效」。LiTo：`NativeSourceMassSelfTarget`（T106 G05）保留「自施仍作用於範圍內其他人」。T106 已列為使用者決定項；本 PR 補上 S1 的扣費時序，未改程式。
+S1：`U:2779` 對自己（或自己的寵物）為主目標時整個 `runSkill` 返回，但 `U:1140` 仍扣 MP、正義值並播動作 → 「扣費、不生效」。LiTo：`NativeSourceMassSelfTarget`（T106 G05）保留「自施仍作用於範圍內其他人」。T106 已列為使用者決定項；本 PR 補上 S1 的扣費時序，未改程式。（後續：T114／#321 已改為對齊 1-伺服器「扣費、不生效」；66 的同類問題見 §6.6。）
 
 ### 4.3 12 擬似魔法武器的後備值
 `db` `skills_buff_ability` 只有 `(12,'DMG',2)`；S1 `L1PcBuffAbilityCalc.java:294-295` 把 DMG 與 BOW_DMG 分開。LiTo 正式環境（DB 載入）走 `CombatBuffLeases` 讀同一張表，結果相同；只有沒載入 DB 時 catalog 後備值 `rangedDamage=2` 會讓弓也 +2。只影響離線測試，未改。
@@ -142,5 +144,30 @@ S1：`U:2779` 對自己（或自己的寵物）為主目標時整個 `runSkill` 
 ## 5. 未驗證（交給實機／後續任務）
 
 - 各處理器的封包順序、狀態圖示、實際 HP／MP 入帳（需要實機或整合測試）。
-- 10／28 吸血、39 吸魔量（`U:3168-3174`）、58 火牢每跳傷害、44 相消清單、29／76 對「加速道具」「強化勇水」目標免疫（`U:3053-3061`）。
+- ~~10／28 吸血、39 吸魔量、58 火牢每跳傷害、44 相消清單、29／76 對「加速道具」「強化勇水」目標免疫~~：T116 已比對，見 §6；實機入帳仍待驗證（§6.7）。
 - 機率類（20、29、33、36、40、44、47、56、64、66、71、76）的機率公式屬 T102（`docs/design/formulas-magic.md`），本文只比對 `probability_dice`／`probability_value` 欄位。
+
+## 6. 效果數值補驗（T116，Issue #336）
+
+另加縮寫：`EFT` = `src/com/lineage/server/timecontroller/skill/EffectFirewallTimer.java`，`AL` = `src/com/lineage/server/model/L1AttackList.java`，`MHC` = `src/com/lineage/server/model/combat/MagicHitCommitPlan.java`，`SU` = `src/com/lineage/server/utils/L1SpawnUtil.java`。LiTo 行號為本分支修改後。測試名稱都在 `WizardSkillEffectServer1ParityTest`。
+
+| # | 項目 | 1-伺服器 | LiTo | 判定 | 測試 |
+|---|---|---|---|---|---|
+| 6.1 | 10／28 吸血 | `U:3034-3035` `heal = this._dmg`（整筆計算傷害）；傷害被接受後 `U:781-782`、`U:898-899` `adjustCurrentHpIfAlive(heal)` | `C:8403` `drainsLife()` 只認 10、28；`CS:46444` `applyAcceptedLifeDrain`：施法者死亡不回、`min(maxHp, hp+damage)`；BATTLE 玩家 `CS:89837` 只在目標 HP 下降時回；NPC 走 `CS:73948`、`NativeSourceSingleNpc.java:54` | 一致 | `lifeDrainSkillsAreExactlyChillTouchAndVampiricTouch`、`lifeDrainHealsTheFullCalculatedDamageCappedAtMaximumHp` |
+| 6.2 | 39 吸魔量 | `U:3168-3174`：`nextInt(10)+5 + getInt()/2`，夾到目標目前 MP；`MHC:41-56` 施法者只加實際吸到的量 | `BattleManaDrain.java:27` `d10+4+INT/2`（INT＝有效 INT，與 MP 消耗同一值）；`CS:92633` 夾目標 MP、`CS:92674` 施法者加實際量 | 一致（INT 0..127 × 10 種骰 × 5 種目標 MP） | `manaDrainAmountMatchesL1SkillUseForEveryRollAndIntelligence`、`manaDrainTransfersOnlyTheClampedAmount` |
+| 6.3 | 58 火牢每跳 | `StartTimer_Skill.java:70` 每 1000 ms；`EFT:244`（PC）／`:197`（NPC）`19 + nextInt(max(getInt()/2,1))`；火屬性 >0 才減 `floor(0.32×fire)/32`（`EFT:293-304`）；PC 再套 `AL:256-286` SKD3（料理 −5／−2、181 −10、211 −15、68 最後減半）；`AL:289-294` SKM0（凍結、50、80、194、78、157）傷害 0；同血盟、安全區不傷（`EFT:223-231`）；`SU:883-945` 8 格、最多 24 格、期限 `buffDuration` | 減傷：`BattleElementalResistance.java:13`、Source PC 路徑 `NativeSourceGroundPlayer.java:11`（SKD3 `:6`，免疫 `:17`）；擲骰：Source 路徑 `NativeSourceGroundPlayer.java:39` 用有效 INT；**舊路徑** `CS:56308` `fireWallDamage()`（BATTLE 非 Source、WORLD 玩家 `CS:55483`、WORLD 怪物 `CS:55537`）原本用資料庫基礎 INT | **已修正**：`fireWallDamage()` 改用有效 INT（`nativeSkillConsumptionIntelligence`，`CS:73201`；裝備快照未就緒時退回基礎 INT）；減傷與 SKD3 一致 | `fireWallResistanceArithmeticMatchesEffectFirewallTimer`、`fireWallPlayerModifiersMatchSkd3`、`fireWallTicksUseEffectiveIntelligence` |
+| 6.4 | 44 相消清單 | `CANCELLATION.java:51-77`：SKILLS／STATUS／COOKING 全清，跳過 `L1SkillMode.isNotCancelable`（`L1SkillMode.java:144-155`：禁言等 5 個寫死＋`skills_相消免疫技能`，`SkillNotCancelableTable.java:51`）；`db:48847-48858` 12 筆：12、21、78、79、87、88、90、91、107、185、190、195；PC 有加速道具 → 速度歸 0（`CANCELLATION.java:83-86`） | 正式環境讀同一張表（`SourceSkillControls.java:82`，同樣 INNER JOIN `skills`）；BATTLE `CS:66972` `nativeMaterialCancellationBody`：加速／緩速／47／56／71／173／174 依表保留（`NativeCancellationSpeedImmunity.java:10`），武器 BUFF 8／48、能力 BUFF（3、26、42…）清除；12／107（道具武器附魔）、21（道具防具附魔）、78、79 是獨立狀態不在清除清單 | 法師技能一致（存活：12、21、78、79；清除：其餘）；12／21／78／79 在 LiTo 是**結構上**不清，不會跟著 DB 清單變動（推測影響：只有改 DB 清單時才會不同）；**加速道具速度歸 0：LiTo 沒有做（待使用者裁定）** | `cancellationImmuneListComesFromTheSameTable`、`wizardCancellationSurvivorsMatchTheSourceTable` |
+| 6.5 | 29／76 緩速免疫 | `U:3053-3061`：目標 `getHasteItemEquipped()>0` 或 `braveSpeed==5`（強化勇水）→ `continue`（不緩速、不刪加速）；順序在成功判定、反制魔法之後 | 29：`CS:62839` `nativeMaterialEntangleBody`（`CS:63186` 擋）；76 WORLD：`CS:60615`（`CS:60886` 擋）；76 BATTLE：`CS:61095` `nativeAreaBattleSlowBody` **原本沒擋** | **已修正**：BATTLE 76 在反制魔法之後、`activateSlow` 之前加 `hasEquippedHasteArmor() \|\| brave.mode()==5`（`CS:61314`），算失敗、不改速度 | `slowSpellsSkipHasteItemAndStrengthenedBraveTargets`、`slowSkillsRouteThroughTheGatedBodies` |
+| 6.6 | 66 沉睡之霧自施 | `U:4079-4083` 主目標是自己 → `isTargetCalc` 失敗 → `U:2779` 返回：**扣 MP、播動作、無人生效**；逐目標時自己也排除（`U:2833`） | BATTLE `CS:60066`：`CS:60085` `var13.player() != this` 不通過 → 扣費前拒絕；WORLD `CS:59650`：主目標不在候選（自己被排除）→ `CS:59698` 扣費前拒絕；逐目標兩邊都排除自己 | **不一致・待使用者裁定**：無人生效相同；差在 1-伺服器 扣 MP／冷卻／播動作，LiTo 不扣 | `fogOfSleepingSelfPrimaryIsRejectedBeforeCostAndSelfIsNeverATarget`（鎖住 LiTo 現況） |
+
+### 6.6 為什麼 66 自施不直接改
+T114（#321 S2）對 76 採「對齊 1-伺服器（扣費、不生效）」；但同一 Issue 的 S3（103 射程外）使用者原意是「扣了 MP 卻沒效果屬於缺陷」，最後維持 LiTo 不扣。66 自施兩種方向都有前例，且改成扣費要把扣費搬到目標判定前（BATTLE／WORLD 兩個反編譯大方法），屬於刻意的設計選擇，所以列給使用者決定。建議：比照 76（T114）對齊 1-伺服器，以保持兩個範圍緩控技能一致；若選維持 LiTo，則不用改。
+
+### 6.4 補充：相消對「裝備加速道具」
+1-伺服器 相消會把裝備加速道具玩家的移動速度歸 0（送 `S_SkillHaste(0)`），要重新穿脫才恢復；LiTo 的加速道具速度不是存在 `BattleTimedStatus` 的租約，相消後不變。這會影響 PvP 平衡（相消是常用的拆加速手段），而且 LiTo 沒有對應的「道具速度暫停」狀態，需要新設計，列「待使用者裁定」。
+
+### 6.7 推測與待驗證
+- 推測：火牢舊路徑（BATTLE 非 Source、WORLD 玩家）只套料理減傷、凍結、大地屏障；1-伺服器 SKD3 的 181／211／68 與 SKM0 的 78 在這兩條路徑可能由後續的傷害提交（`NativePlayerCommit.worldPlayer` 等）處理，本次未逐行追到，未改。
+- 推測：1-伺服器 `getHasteItemEquipped` 也算武器；LiTo `RuntimeInventory.java:1256` 只看防具（`sourceArmorStatus().haste()`）。3.81 的加速武器極少，未改。
+- 推測：NPC 目標的 `braveSpeed==5` 在 LiTo 不存在（NPC 沒有強化勇水），所以 NPC 路徑不需要這個判斷。
+- 待驗證（實機）：10／28 回血封包與數值、39 雙方 MP 封包、58 每秒一跳且數值隨裝備 INT 變化、76 BATTLE 打穿戴加速防具或強化勇水的玩家不會被緩速、44 相消後 12／21／78／79 仍在。
