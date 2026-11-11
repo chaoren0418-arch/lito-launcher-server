@@ -31,7 +31,8 @@
 ### 已驗證
 - 靜態比對：40 個技能的 catalog 建構參數與 SQL 逐欄比對，不一致只有 159／160 attribute（已修正）。
 - 本機 `javac -proc:none --release 17` 編譯 `src/main`＋`compile-stubs`（1177 檔），以及 `ElfSkillServer1ParityTest`、`ClientSessionNativeTournamentEconomyTest`、`WizardSkillServer1ParityTest`、`BattleSpellCatalogTest`：exit 0。**本機沒有執行任何測試**（依規定）。
-- CI 結果見 PR（推送後補）。
+- **PR #326 CI（run 42937923823，commit 為合併 main 後的行號更新）全部通過**：`Server tests` 的 surefire 報告（artifact `server-test-evidence`）加總 **Tests run: 7106, Failures: 0, Errors: 0, Skipped: 117**；其中 `ElfSkillServer1ParityTest` 210 個、`WizardSkillServer1ParityTest` 248 個全過。Server（Maven 建置）、Launcher、Build-Package、Semantic gap 也都通過。之後只再加這份報告的 CI 段（不含程式變更）。
+- 注意：`ClientSessionNativeTournamentEconomyTest` 在 CI 執行 0 個（缺 `config/server.properties` 而整類跳過），所以本 PR 對它的兩處修改**沒有在 CI 驗證到**。
 
 ### 推測
 - 正式 `380_db.skills` 的 `attr` 欄與 `1-伺服器 db/380_db.sql` 相同（本 PR 未連正式 DB；`attr` 不在 `CombatDatabase` 覆蓋清單，正式環境也是用 catalog 常數）。
