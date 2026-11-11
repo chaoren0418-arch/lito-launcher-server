@@ -1750,7 +1750,10 @@ final class BattleSpellCatalog {
             // post-175 generic producer emits selector-only 14 19 07 and its
             // PE cast clock is 0ms. The retained TYPE_ATTACK mode ignores the
             // probability/boss-control tables: every admitted PC cast pays
-            // MP20, adds lawful45 and calculates neutral base10 magic damage.
+            // MP20 and calculates neutral base10 magic damage. Issue #309:
+            // 1-伺服器 db/380_db.sql row208 has lawful=0 (the 45 is its
+            // probability_value column), and L1SkillUse.useConsume adds
+            // skills.lawful, so a cast no longer changes lawful.
             // Only when skill208 is absent does its private 1..1000 roll run;
             // values 801..1000 install a non-refreshing two-second stun and
             // temporary NPC86123/GFX6552. Counter Magic executes before the
@@ -1760,7 +1763,7 @@ final class BattleSpellCatalog {
                     new AttackSpell(BONE_BREAK, 25, 7, 18, 7_020,
                             20, 2_000, 3, 10, 0, 0,
                             ATTRIBUTE_UNSPECIFIED, "bone-break"),
-                    0, 3, 64, 128, 45,
+                    0, 3, 64, 128, 0,
                     2, 1, 1_000, 800,
                     86_123, 6_552, 49_124L,
                     "$5688", "$5942",
@@ -8654,7 +8657,7 @@ final class BattleSpellCatalog {
                     || attackSpell.attribute() != ATTRIBUTE_UNSPECIFIED
                     || clientCastClockMillis != 0 || targetTo != 3
                     || type != 64 || nativeSkillId != 128
-                    || lawfulDelta != 45 || durationSeconds != 2
+                    || lawfulDelta != 0 || durationSeconds != 2
                     || minimumRoll != 1 || maximumRoll != 1_000
                     || failureThreshold != 800
                     || effectNpcId != 86_123 || effectNpcGfx != 6_552
