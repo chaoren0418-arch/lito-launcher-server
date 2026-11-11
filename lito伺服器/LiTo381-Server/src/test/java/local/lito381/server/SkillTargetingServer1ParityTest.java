@@ -267,7 +267,7 @@ final class SkillTargetingServer1ParityTest {
                 SourceSkillTargeting.effects(194, r, SourceSkillTargeting.Kind.ENEMY));
     }
 
-    /** G05：76 集體緩速術對自己或自己的寵物為主目標時 Source 整個技能不發動；其餘範圍內不含自己與自己的寵物。 */
+    /** G05：76 集體緩速術對自己或自己的寵物為主目標時 Source 扣 MP、播動作但不對任何人生效；其餘範圍內不含自己與自己的寵物。 */
     @Test void g05MassSlowSelfPrimaryAndExclusions() {
         var r = row(76);
         assertEquals(EnumSet.noneOf(SourceSkillTargeting.Kind.class),

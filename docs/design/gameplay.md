@@ -138,6 +138,22 @@
 | Honor Match | 5 秒後原地復活、HP 補滿 | `S/ClientSession.java:26734-26767` |
 | 死鬥、Time Attack | 不復活 | `S/BattleRules.java:360,368-372` |
 
+### 2.9 範圍攻擊
+
+使用者決定（#321 S1，2026-11-11 逾時預設）：**競技場的範圍攻擊維持 LiTo 規則，不照 `1-伺服器` 的 PK 規則**。理由：競技場本來就是玩家對打；照 `1-伺服器` 會讓 `target=none` 的範圍技能在對戰中打不到玩家，`target=attack` 的範圍技能會誤傷隊友。
+
+| 項目 | LiTo 規則（競技場 BATTLE） | `1-伺服器`（參考，不採用） | 出處 |
+|---|---|---|---|
+| 範圍內的玩家誰會中 | 只有「可攻擊」的玩家：PvP 模式、不是自己、隊伍模式時不同隊（死鬥、攻城、Honor；寵物競賽、Quest、Time Attack 都不打玩家） | 依 PK 旗標與 target_to，見下兩列 | `S/BattleRules.java:337-343`；`S/GameHub.java:9695-9698` |
+| `target=none` 的攻擊技能（53 龍捲風、59 暴風雪、62 地裂術、70 火風暴、72、80 冰雪颶風、189） | 依上一列打敵方玩家，不打隊友與自己 | 永遠不是 PK，非攻城戰時**不打玩家**、不打自己的寵物 | S1：`L1SkillUse:514-518,1397-1460`（`docs/design/skill-targeting.md` §3 e、f） |
+| `target=attack` 的範圍技能以玩家為主目標（17、22、25、30、65、74、184） | 依第一列，只打敵方，隊友不中 | 是 PK，範圍內所有玩家**連隊友**都中 | S1：`L1SkillUse:1571-1604`（同上 §3 j） |
+| Ctrl 強制攻擊 | 只放寬「被選取的那個目標」（及其寵物）的敵我判定；範圍內其他隊友仍不中。寵物競賽一律不放寬 | — | `S/ForcedCombat.java:68-81` |
+| 射程、範圍、視線 | 照 `1-伺服器` 的 `skills` 欄位（ranged、area、through），不在本節改變 | 同左 | `docs/design/skill-targeting.md` §1、§6 |
+
+程式例（施法者中心的範圍凍結、直線技能的玩家過濾都用 `hub.canAttack`）：`S/ClientSession.java:86805-86817`、`S/ClientSession.java:87922-87934`。〔推測〕其他範圍攻擊 handler 也都以 `hub.canAttack`／`ForcedCombat.canAttackTarget` 過濾玩家（T106 #305 的對照結論，沒有逐一列出每個 handler）。〔待驗證〕雙人／三人實機：死鬥中龍捲風打得到敵方、打不到隊友。
+
+天堂世界場景（WORLD 相位）不屬本節；世界規則見 §6 N8。
+
 ---
 
 ## 3. 房間與對戰流程
@@ -318,6 +334,7 @@
 | N6 | 購買與消耗持久化 | 商店購買、藥水消耗、本場金幣都只在本場（記憶體） | LC I13；`S/ClientSession.java:20455-20470` |
 | N7 | 正式房假人 | 正式房不放 ArenaBot | `S/BattleRules.java:107-110` |
 | N8 | 天堂世界規則 | PK、粉名、安全區、地獄等世界規則不套到競技場 | `M/combat-parity-0.6.68.md:26`；`docs/reports/server-capability-matrix.md:22` |
+| N9 | 範圍攻擊的 PK 規則 | `1-伺服器` 的「`target=none` 不打玩家」「`target=attack` 連隊友一起打」不套到競技場；依房間敵我判定（§2.9） | 使用者決定 #321 S1 |
 
 注意：N5 已依 D2 決定 A 定為正式規則（#310）。
 
