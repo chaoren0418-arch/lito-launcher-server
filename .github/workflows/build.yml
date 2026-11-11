@@ -206,6 +206,12 @@ jobs:
           mkdir -p target
           git rev-parse HEAD | tee target/test-revision.txt
           mvn -B test 2>&1 | tee target/mvn-test.log
+      - name: Summarise skips (baseline without MySQL)
+        if: always()
+        run: |
+          python3 .github/workflows/scripts/surefire_summary.py \
+            lito伺服器/LiTo381-Server/target/surefire-reports \
+            lito伺服器/LiTo381-Server/target/surefire-summary.json no-mysql
       - name: Upload complete test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -214,6 +220,100 @@ jobs:
           path: |
             lito伺服器/LiTo381-Server/target/test-revision.txt
             lito伺服器/LiTo381-Server/target/mvn-test.log
+            lito伺服器/LiTo381-Server/target/surefire-summary.json
+            lito伺服器/LiTo381-Server/target/surefire-reports/
+
+  # Issue #334 / T119: same `mvn -B test`, but with a disposable MySQL and a
+  # CI-only config/server.properties, so tests guarded by
+  # LocalResources.assumeServerProperties() actually run.
+  # MySQL 5.7: every dump in db/ and 1-伺服器/db/*.sql is "Source Server
+  # Version 50522 (5.5.22)" with MyISAM tables and 5.5-era defaults; 5.7 is the
+  # closest maintained image (8.0 changes default auth, reserved words and
+  # utf8 handling). sql_mode is cleared to match the 5.5 server default.
+  # Credentials below are fixed, non-secret test values for this throwaway
+  # container only; they are not used by any real deployment.
+  server-integration-test:
+    name: Server tests (CI MySQL fixture)
+    runs-on: ubuntu-latest
+    env:
+      LITO_CI_DB_ROOT_PASSWORD: lito_ci_root_test_only
+      LITO_CI_DB_USER: lito_ci
+      LITO_CI_DB_PASSWORD: lito_ci_test_only
+      LITO_CI_DB_PORT: '33306'
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: lito_ci_root_test_only
+        ports:
+          - 33306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -uroot -plito_ci_root_test_only"
+          --health-interval 5s --health-timeout 5s --health-retries 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Build CI database fixture (schema + fake rows, runner temp only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 lito伺服器/LiTo381-Server/db/ci/build_ci_database.py \
+            --out "$RUNNER_TEMP/lito-ci/sql" \
+            --user "$LITO_CI_DB_USER" --password "$LITO_CI_DB_PASSWORD"
+      - name: Load fixture into MySQL
+        shell: bash
+        run: |
+          set -euo pipefail
+          container='${{ job.services.mysql.id }}'
+          sql() { docker exec -i "$container" mysql --default-character-set=utf8mb4 -uroot -p"$LITO_CI_DB_ROOT_PASSWORD" "$@"; }
+          sql -e "SET GLOBAL sql_mode=''; SELECT VERSION(), @@GLOBAL.sql_mode;"
+          for file in "$RUNNER_TEMP"/lito-ci/sql/*.sql; do
+            echo "::group::load $(basename "$file")"
+            start=$(date +%s)
+            sql < "$file"
+            echo "loaded in $(( $(date +%s) - start ))s"
+            echo "::endgroup::"
+          done
+          sql -e "SELECT table_schema, COUNT(*) AS tables FROM information_schema.TABLES WHERE table_schema IN ('380_db','380_lito','380_ac','380_ac_1','380_ac_2') GROUP BY table_schema; SELECT * FROM \`380_lito\`.lito_source_server; SELECT COUNT(*) AS fake_characters FROM \`380_ac\`.characters;"
+      - name: Generate CI-only config/server.properties (runner temp, symlinked)
+        working-directory: lito伺服器/LiTo381-Server
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 db/ci/make_ci_server_properties.py \
+            --out "$RUNNER_TEMP/lito-ci/config/server.properties" \
+            --jdbc-base-url "jdbc:mysql://127.0.0.1:${LITO_CI_DB_PORT}/" \
+            --user "$LITO_CI_DB_USER" --password "$LITO_CI_DB_PASSWORD"
+          test ! -e config/server.properties
+          ln -s "$RUNNER_TEMP/lito-ci/config/server.properties" config/server.properties
+          git check-ignore -q config/server.properties
+      - name: Test with CI MySQL fixture
+        working-directory: lito伺服器/LiTo381-Server
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p target
+          git rev-parse HEAD | tee target/test-revision.txt
+          mvn -B test 2>&1 | tee target/mvn-test.log
+      - name: Summarise skips (with CI MySQL)
+        if: always()
+        run: |
+          python3 .github/workflows/scripts/surefire_summary.py \
+            lito伺服器/LiTo381-Server/target/surefire-reports \
+            lito伺服器/LiTo381-Server/target/surefire-summary.json ci-mysql
+      - name: Upload complete test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-integration-test-evidence
+          path: |
+            lito伺服器/LiTo381-Server/target/test-revision.txt
+            lito伺服器/LiTo381-Server/target/mvn-test.log
+            lito伺服器/LiTo381-Server/target/surefire-summary.json
             lito伺服器/LiTo381-Server/target/surefire-reports/
 
   semantic-gap:
