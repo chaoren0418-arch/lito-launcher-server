@@ -31,7 +31,8 @@
 - 1-伺服器 原始碼逐行閱讀（上表行號）。
 - 本機 `mvn -B -q -DskipTests test-compile`（只編譯 main 與 test，不執行）：exit 0。
 - 本機用 Python 靜態讀檔（`scratch/t336/check_strings.py`，不進 git）確認測試裡每一段原始碼字串都在對應方法範圍內、順序正確：全部 OK。
-- **本機沒有執行任何測試**（依規定）；`mvn -B test` 交給 PR 的 GitHub Actions CI，結果見 PR。
+- **本機沒有執行任何測試**（依規定）；`mvn -B test` 交給 PR 的 GitHub Actions CI。
+- **PR #344 CI（run 43041423057，commit `9c2e6b2b`）全部通過**：`Server tests` surefire 報告（artifact `server-test-evidence` 加總）**Tests run: 7354, Failures: 0, Errors: 0, Skipped: 117**；其中 `WizardSkillEffectServer1ParityTest` 12 個全過。Server（Maven）、Launcher、Build-Package、Semantic gap 也都通過。
 
 ### 推測
 - 76 BATTLE 免疫目標計為「失敗」：若範圍內全部目標都免疫，LiTo 會送失敗訊息；1-伺服器 免疫目標 `continue` 但仍留在清單，可能不送失敗訊息。只影響訊息，未改。
