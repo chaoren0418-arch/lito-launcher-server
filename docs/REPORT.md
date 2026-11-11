@@ -82,3 +82,4 @@
 - 2026-11-11 — #318 T113: 物理平衡 5 項依使用者決定處理（含 D12 祝福旗標正確性）（code，claude-local，PR 已合併）→ [報告](reports/issue-318.md)
 - 2026-11-11 — #310 T103: HP／MP 與積分規則實作（依 T100 的決定）（code，claude-local，PR 已合併）→ [報告](reports/issue-310.md)
 - 2026-11-11 — #321 T114: 技能目標判定 3 項依使用者決定處理（競技場範圍攻擊、G05 自施 76、103 寵物）（code，claude-local，PR 已合併）→ [報告](reports/issue-321.md)
+- 2026-11-11 — #333 主控：本機佇列已空——請更新 TASKS 狀態並開下一批（M3 後續／M2 收尾）（plan，claude-chat，PR #342 已合併）→ [報告](reports/issue-333.md)
