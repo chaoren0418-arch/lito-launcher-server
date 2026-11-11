@@ -53,8 +53,8 @@
 | 8 | 神聖武器 | `U:3488`（玩家 BUFF）；DMG1 HIT1 | `C:1532` WeaponBuffSpell；`CS:36413` | 一致 |
 | 9 | 解毒術 | `M:168` `sm/CURE_POISON.java` | `C:2691` CurseRemovalSpell；`CS:46532`、`CS:46520` | 一致 |
 | 10 | 寒冷戰慄 | TYPE_ATTACK＋`U:3034-3035`（傷害轉為施法者回血） | `C:1606` AttackSpell | **不一致・未改**：lawful −2 未套用（§4.1）；吸血是否實作**待驗證** |
-| 11 | 毒咒 | `U:3104-3105` `L1DamagePoison.doInfection(3000ms, 5)`；`L1DamagePoison.java:147` 30 秒 | `C:2650` PoisonSpell；`CS:65652`、`CS:65941` | 一致（3000ms／5／30 秒／lawful −10） |
-| 12 | 擬似魔法武器 | `U:3471`；DMG2；力量頭盔 20015 減半 | `C:1490` ItemWeaponEnchantSpell；`CS:68635`、`CS:43462` | 一致（DB 路徑）；後備值多一個弓傷害 +2（§4.3） |
+| 11 | 毒咒 | `U:3104-3105` `L1DamagePoison.doInfection(3000ms, 5)`；`L1DamagePoison.java:147` 30 秒 | `C:2650` PoisonSpell；`CS:65667`、`CS:65956` | 一致（3000ms／5／30 秒／lawful −10） |
+| 12 | 擬似魔法武器 | `U:3471`；DMG2；力量頭盔 20015 減半 | `C:1490` ItemWeaponEnchantSpell；`CS:68650`、`CS:43462` | 一致（DB 路徑）；後備值多一個弓傷害 +2（§4.3） |
 | 13 | 無所遁形術 | `U:2992-2999`、`U:3946` | `C:2369` DetectionSpell；`CS:43734` | 一致 |
 | 14 | 負重強化 | 預設 `U:2141`；`src/com/lineage/server/model/Instance/L1PcInstance.java:6892` | `C:1579` WeightSpell；`CS:39333` | 一致（HP 50、1800 秒） |
 | 15 | 火箭 | TYPE_ATTACK | `C:1620` | 一致 |
@@ -62,44 +62,44 @@
 | 17 | 極光雷電 | TYPE_ATTACK（範圍 3，T106 G07） | `C:2178` LineAttackSpell；`CS:44389`、`CS:44865` | 一致 |
 | 18 | 起死回生術 | `U:3162-3166`（不死系 1／3 → 傷害＝目前 HP） | `C:2190` TurnUndeadSpell；`CS:40790`、`CS:40794` | **已修正**：catalog `probabilityValue` 1 → 0（`db` 為 0；正式環境本來就讀 DB，後備值修正） |
 | 19 | 中級治癒術 | TYPE_HEAL；頭盔 20014 | `C:256` | 一致 |
-| 20 | 闇盲咒術 | `M:176` `sm/CURSE_BLIND.java` | `C:2211` BlindSpell；`CS:41416`、`CS:70960` | **不一致・未改**：lawful −10 未套用 |
+| 20 | 闇盲咒術 | `M:176` `sm/CURSE_BLIND.java` | `C:2211` BlindSpell；`CS:41416`、`CS:70975` | **不一致・未改**：lawful −10 未套用 |
 | 21 | 鎧甲護持 | `U:3524`；AC−3 | `C:1520` ItemArmorEnchantSpell；`CS:43469` | 一致 |
 | 22 | 寒冰氣息 | TYPE_ATTACK 範圍 | `C:2069` AreaAttackSpell；`CS:44734` | 一致 |
 | 23 | 能量感測 | `U:3871-3888` | `C:2384` RevealWeaknessSpell；`CS:43550` | 一致 |
 | 25 | 燃燒的火球 | TYPE_ATTACK 範圍 | `C:2075` | 一致 |
 | 26 | 通暢氣脈術 | `U:3636`；DEX+5；敏捷頭盔 20013 減半 | `C:1247` AbilityBuffSpell；`CS:36166` | 一致 |
-| 27 | 壞物術 | `U:3176-3195`（PC 武器耐久、NPC 疊層） | `C:2246` WeaponBreakSpell；`CS:44332`、`CS:64763` | **不一致・未改**：lawful −10 未套用 |
+| 27 | 壞物術 | `U:3176-3195`（PC 武器耐久、NPC 疊層） | `C:2246` WeaponBreakSpell；`CS:44332`、`CS:64778` | **不一致・未改**：lawful −10 未套用 |
 | 28 | 吸血鬼之吻 | TYPE_ATTACK＋`U:3034-3035` | `C:1615` | **不一致・未改**：lawful −5 未套用；吸血**待驗證** |
-| 29 | 緩速術 | `U:3050-3091` | `C:2474` EntangleSpell；`CS:41432`、`CS:62742` | 一致（§2） |
+| 29 | 緩速術 | `U:3050-3091` | `C:2474` EntangleSpell；`CS:41432`、`CS:62757` | 一致（§2） |
 | 30 | 巖牢 | TYPE_ATTACK 範圍 | `C:2086` | 一致 |
-| 31 | 魔法屏障 | 預設 `U:2141`；抵銷 `U:4243-4256` | `C:339` CounterMagicSpell；`CS:32122`、`CS:57971` | 一致（執行期 MP 走 F2；catalog `effectiveMpCost` 少了 INT 減免，但沒被使用，§4.4） |
+| 31 | 魔法屏障 | 預設 `U:2141`；抵銷 `U:4243-4256` | `C:339` CounterMagicSpell；`CS:32122`、`CS:57986` | 一致（執行期 MP 走 F2；catalog `effectiveMpCost` 少了 INT 減免，但沒被使用，§4.4） |
 | 32 | 冥想術 | 預設 `U:2141` | `C:1559` RegenSpell；`CS:39394` | 一致（HP 30、640 秒） |
-| 33 | 木乃伊的詛咒 | `M:174` `sm/CURSE_PARALYZE.java:38-44`（`ConfigSkill` CURSE_READY_TIME 5、CURSE_TIME 10；`config/4-職業_技能設定表.properties:29,32`） | `C:2666` ParalysisSpell；`CS:66269`、`CS:66556` | 一致（5000／10000 ms、lawful −500；SQL buffDuration 20 S1 不用） |
+| 33 | 木乃伊的詛咒 | `M:174` `sm/CURSE_PARALYZE.java:38-44`（`ConfigSkill` CURSE_READY_TIME 5、CURSE_TIME 10；`config/4-職業_技能設定表.properties:29,32`） | `C:2666` ParalysisSpell；`CS:66284`、`CS:66571` | 一致（5000／10000 ms、lawful −500；SQL buffDuration 20 S1 不用） |
 | 34 | 極道落雷 | TYPE_ATTACK | `C:1630` | 一致 |
 | 35 | 高級治癒術 | TYPE_HEAL | `C:262` | 一致 |
-| 36 | 迷魅術 | `U:3851-3860` | `C:2679` TamingSpell；`CS:46782`、`CS:64191` | 一致 |
+| 36 | 迷魅術 | `U:3851-3860` | `C:2679` TamingSpell；`CS:46782`、`CS:64206` | 一致 |
 | 37 | 聖潔之光 | `M:169` `sm/REMOVE_CURSE.java` | `C:2698` CurseRemovalSpell | 一致 |
 | 38 | 冰錐 | TYPE_ATTACK | `C:1637` | 一致 |
 | 39 | 魔力奪取 | `U:3168-3174`（5..14 + INT/2） | `C:2201` ManaDrainSpell；`CS:41408`、`CS:41058` | 一致（數值欄位）；吸取量公式**待驗證** |
 | 40 | 黑闇之影 | `M:177`（CURSE_BLIND） | `C:2221` BlindSpell | **不一致・未改**：lawful −10 未套用 |
-| 41 | 造屍術 | `U:3861-3870` | `C:2411` CreateZombieSpell；`CS:46725`、`CS:64486` | **不一致・未改**：lawful −10 未套用 |
+| 41 | 造屍術 | `U:3861-3870` | `C:2411` CreateZombieSpell；`CS:46725`、`CS:64501` | **不一致・未改**：lawful −10 未套用 |
 | 42 | 體魄強健術 | `U:3626`；STR+5；力量頭盔 20015 | `C:1251` AbilityBuffSpell | 一致 |
 | 43 | 加速術 | `M:166` `sm/HASTE.java`；頭盔 20013／20008 | `C:1295` HasteSpell；`CS:36788` | 一致（§2） |
 | 44 | 魔法相消術 | `M:167` `sm/CANCELLATION.java` | `C:1549` CancellationSpell；`CS:38644` | 一致（數值欄位）；相消清單屬 T106 提示的反制魔法／相消免疫表比對，**待驗證** |
 | 45 | 地裂術 | TYPE_ATTACK | `C:1644` | 一致 |
 | 46 | 烈炎術 | TYPE_ATTACK | `C:1651` | 一致 |
-| 47 | 弱化術 | `U:3121-3125`；DMG−5 HIT−1 | `C:2264` WeaknessSpell；`CS:44344`、`CS:68957`（`applySpellLawfulDelta` 在 `CS:69276`） | **已修正**：`lawfulDelta` 0 → −10（`db` lawful −10，`U:2047`） |
+| 47 | 弱化術 | `U:3121-3125`；DMG−5 HIT−1 | `C:2264` WeaknessSpell；`CS:44344`、`CS:68972`（`applySpellLawfulDelta` 在 `CS:69291`） | **已修正**：`lawfulDelta` 0 → −10（`db` lawful −10，`U:2047`） |
 | 48 | 祝福魔法武器 | `U:3506` | `C:1540` WeaponBuffSpell | 一致 |
 | 49 | 體力回復術 | TYPE_HEAL | `C:281` GroupHealingSpell；`CS:46961` | 一致 |
 | 50 | 冰矛圍籬 | `U:3133-3138`＋`U:2101-2107` | `C:2019` FreezeAttackSpell；`CS:44754` | 一致 |
-| 51 | 召喚術 | `M:170` `sm/SUMMON_MONSTER.java` | `C:2558` SummonSpell；`CS:46548`、`CS:62448` | 一致（lawful −10） |
+| 51 | 召喚術 | `M:170` `sm/SUMMON_MONSTER.java` | `C:2558` SummonSpell；`CS:46548`、`CS:62463` | 一致（lawful −10） |
 | 52 | 神聖疾走 | `U:3779-3786` | `C:1348` MovementBuffSpell；`CS:37511` | 一致（§2） |
 | 53 | 龍捲風 | TYPE_ATTACK 範圍 | `C:2095` | 一致 |
 | 54 | 強力加速術 | `U:3753-3777`；風之頭盔 20023 | `C:1304` SelfHasteSpell；`CS:37163` | 一致 |
 | 55 | 狂暴術 | `U:3721-3731`；AC+10 DMG+5 HIT+2 | `C:1313` CombatBuffSpell；`CS:37221` | 一致 |
 | 56 | 疾病術 | `U:3127-3131`；AC+12 DMG−6 | `C:2276` WeaknessSpell | 一致 |
 | 57 | 全部治癒術 | TYPE_HEAL | `C:269` | 一致 |
-| 58 | 火牢 | `U:2759-2762` `doSpawnFireWall` | `C:1585` GroundSpell；`CS:46900`、`CS:69713` | 一致（數值欄位）；地面火焰傷害**待驗證** |
+| 58 | 火牢 | `U:2759-2762` `doSpawnFireWall` | `C:1585` GroundSpell；`CS:46900`、`CS:69728` | 一致（數值欄位）；地面火焰傷害**待驗證** |
 | 59 | 冰雪暴 | TYPE_ATTACK 範圍 | `C:2104` | 一致（lawful −10） |
 | 60 | 隱身術 | `U:3967-3990`、`U:2064-2066` | `C:2706` InvisibilitySpell；`CS:40645` | 一致 |
 | 61 | 返生術 | `M:171` `sm/RESURRECTION.java` | `C:2423` ResurrectionSpell；`CS:46757` | 一致 |

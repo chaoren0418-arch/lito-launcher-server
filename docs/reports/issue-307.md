@@ -20,7 +20,7 @@
    - BUFF 互斥：加速／緩速互相抵銷（`skillmode/HASTE.java:31-61`、`L1SkillUse.java:3050-3091`、`:3753-3777`）、43／54 互蓋、52 與勇水互蓋、`CombatBuffLeases.GROUPS` 與 `ORIGINAL_REPEATED_SKILLS`（`:2520-2527`）同組 ⇔ 同組。
    - `lawfulGapListIsExact`：釘住「SQL lawful≠0 但 LiTo 沒套用」的 8 個技能，清單過期或新增缺口都會失敗。
 5. **改 Java（不一致處）**：
-   - **47 弱化術**：`BattleSpellCatalog` `lawfulDelta` 0 → −10。S1 `useConsume`（`L1SkillUse.java:2047`）每次施放加 `skills.lawful`（−10）；LiTo 處理器 `nativeMaterialWeaknessBody` 本來就會呼叫 `applySpellLawfulDelta`（`ClientSession.java:69276`），只是值是 0。56 疾病術原本就是 −10。
+   - **47 弱化術**：`BattleSpellCatalog` `lawfulDelta` 0 → −10。S1 `useConsume`（`L1SkillUse.java:2047`）每次施放加 `skills.lawful`（−10）；LiTo 處理器 `nativeMaterialWeaknessBody` 本來就會呼叫 `applySpellLawfulDelta`（`ClientSession.java:69291`），只是值是 0。56 疾病術原本就是 −10。
    - **18 起死回生術**：catalog `probabilityValue` 1 → 0（SQL 為 0，1 是 attr 欄）。正式環境本來就由 DB 覆蓋，這是後備值修正。
    - 同步改 `BattleSpellCatalogTest` 兩個斷言（`:667`、`:1303`）。
 
