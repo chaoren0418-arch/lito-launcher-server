@@ -43,7 +43,10 @@
   - 本機 `mvn -B -o -q -DskipTests test-compile` 通過（依規定本機不跑測試）。
   - 本機執行 `db/ci/build_ci_database.py --out scratch/ci-sql`：三個來源都套用了升級段（`30-control.sql` 出現 6 次欄位檢查）；`380_ac`、`380_ac_1` 是 MyISAM，`380_ac_2` 是 InnoDB。
   - 讀程式確認兩條寫入路徑的新欄位，都和 `last_result_id`／CAS 寫在同一條敘述。
-- **待驗證（交給 CI）**：PR 最新 commit 的 `server-test`（含 `SettlementRankingTest`）與 `server-integration-test`（含 `SettlementRankingMySqlIntegrationTest`）。後者是 T119 設成 non-blocking 的 job，原本就有 73 個失敗或錯誤；要看的是本任務新增的兩個測試類通過，而且失敗數沒有增加。
+- **已驗證（CI，PR #348，run 43054484101，head `92c03186`）**
+  - `Server tests`（必過）：pass。
+  - `Server tests (CI MySQL fixture)`（non-blocking）：`SettlementRankingMySqlIntegrationTest` 4/4 通過（MyISAM `380_ac_1`、InnoDB `380_ac_2` 各 2 案）、`SettlementRankingTest` 7/7 通過。全體 `Tests run: 7617, Failures: 39, Errors: 34`，和 T119 的基準（39／34）相同，沒有新增失敗。job 仍是紅燈，原因是 T119 時就存在的失敗。
+  - fixture 加上升級 SQL 與 InnoDB 表之後，載入成功，其他測試也沒有因此改變結果。
 - **推測**
   - MySQL 5.5 正式庫上執行 `ADD COLUMN` 的行為和 CI 的 5.7 相同（語法都是 5.5 就支援的），但沒有在 5.5 上實測。
   - drain 在結算當下才算月份，所以台北 05:00 跨月前後幾秒的結果可能算到新的月份。WAL 重放延遲時也一樣，以實際寫回的時間為準。
