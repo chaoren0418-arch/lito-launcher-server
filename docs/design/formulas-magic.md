@@ -27,7 +27,7 @@
 | M14 | 究極光裂術 `DISINTEGRATE_CRITICAL_RND`（預設 40）×2 | `L1MagicPc.java:926-930` | `L:CombatMagicDamage.java:42`；機率鍵 `L:CombatRules.java:225-229` | 一致 | `naturesBlessingHealIsZeroEvenWhenTheSkillFileSaysOneHundred`（同時驗 40） |
 | M15 | `max(dmg, 0)` 後才做 MR 減傷 | `L1MagicPc.java:932,838` | `L:CombatMagicDamage.java:43` | 一致 | — |
 | M16 | PvE：無防具減免；寵物／召喚物 ×`PC_TO_PET_DAMAGE_MULTIPLIER`；聖結界 ÷`IMMUNE_TO_HARM`；光裂 ×2 | `L1MagicPc.java:940-1001` | NPC 呼叫點防具參數一律傳 0（例：`CS:86921-86930`）；`L:CombatNpcMagic.java:23`；寵物倍率 `L:CombatCompanionDamage.java` | 一致（推測：寵物／聖結界未逐值測） | — |
-| M17 | `dmg0`（`isSkillEffectPhysicalDamageZero`）→ 0 | `L1MagicPc.java:857,945`；`~/model/L1MagicMode.java:50-60` | `L:CombatPlayerMagic.java:12`（絕對屏障、大地屏障、冰凍） | 一致（T118 逐筆比對 6 項，見 §9.3；`STATUS_FREEZE` 來源屬推測） | `damageZeroStatusesMapOntoLiToFreezeEarthBindAndAbsoluteBarrier` |
+| M17 | `dmg0`（`isSkillEffectPhysicalDamageZero`）→ 0 | `L1MagicPc.java:857,945`；`~/model/L1MagicMode.java:50-60` | `L:CombatPlayerMagic.java:12`（絕對屏障、大地屏障、冰凍） | 6 項清單一致（T118 逐筆比對，見 §9.3）；Quest／限時挑戰怪物凍結中仍受傷害，疑似不一致（§9.3 Z7） | `damageZeroStatusesMapOntoLiToFreezeEarthBindAndAbsoluteBarrier` |
 | M18 | 魔力奪取之焰（FINAL_BURN）傷害 = 施法者現 MP | `L1MagicPc.java:862-863,965-966` | `L:CombatMagicDamage.java:29-35`、`L:BattleFinalBurn.java` | 一致（MR 的正義守護本 PR 一併補上） | — |
 
 ## 2. MR 減傷與 MR 來源
@@ -93,6 +93,7 @@
 | 代號 | 內容 | 下一步 |
 |---|---|---|
 | M3／M11／M17 | 已由 T118（Issue #338）結案，見 §9 | — |
+| M17-Z7 | Quest／限時挑戰怪物凍結中仍受魔法／物理傷害（1-伺服器 為 0） | 另開 code 任務：先確認凍結技能「先算傷害、再寫凍結」的順序，再在 `Monster.damage()` 或 `npcEarthBindProtectedCombatDamage` 加凍結判斷 |
 | P1 | 千分比迴避（`get_evasion`）在競技場是否有來源 | 與 T101 H13 一起裁定 |
 | 實機 | 正義值 ≥ 10000 的角色被魔法打的傷害／被控機率略降；正義值 ≤ −10000 的角色魔法傷害略升；INT ≥ 44 的法師舊公式技能成功率上升 | 交 Codex 實機觀察 |
 
@@ -146,8 +147,9 @@
 | Z1 | `ABSOLUTE_BARRIER`（78） | `BattleTimedStatus.absoluteBarrierActive`（`L:BattleTimedStatus.java:898`） | 一致 |
 | Z2 | `EARTH_BIND`（157） | `earthBindActive`（`:861`） | 一致 |
 | Z3 | `ICE_LANCE`（50）、`FREEZING_BLIZZARD`（80）、`FREEZING_BREATH`（194） | 三者都是 `BattleSpellCatalog.FreezeAttackSpell`（`L:BattleSpellCatalog.java:2018-2060`），命中後寫同一個凍結租約 `activateFreeze`（`:839`），由 `freezeActive`（`:835`）判定 | 一致 |
-| Z4 | `STATUS_FREEZE`（4000，怪物凍結技能 `~/model/skill/skillmode/STATUS_FREEZE.java:27,49`、`~/model/L1Cube.java:298`） | 同一個 `freezeActive` | 推測一致（LiTo 怪物凍結玩家的來源沒有逐條追） |
-| Z5 | 打玩家的檢查點 | `L:CombatPlayerMagic.java:12`（`protectedZero` = Z1‖Z2‖Z3）；`L:CombatMagicDamage.java:20`（一般）、`:32`（魔力奪取之焰）、`L:CombatPlayerMagic.java:13,16`（減免前再檢一次） | 一致 |
-| Z6 | 打 NPC 的檢查點 | 世界怪物 `L:CombatWorldMagic.java:20`（大地屏障‖凍結‖絕對屏障）；房間召喚物 `L:CombatLineSpells.java:47` 等 | 推測一致（逐個 NPC 呼叫點未全數列舉） |
+| Z4 | `STATUS_FREEZE`（4000「束縛」，`db:48316` `skills` 列；`~/model/skill/skillmode/STATUS_FREEZE.java:27,49`） | 1-伺服器 的來源只有兩種：(a) 怪物技能 `mobskill.SkillId=4000`，共 5 列：`db:34333`（45416 地之牙）、`:34384`（45508 地靈之主）、`:34459`（45592 深淵地靈）、`:34503`（45614 巨蟻女皇）、`:34650`（45721 船舶之墓殭屍）；(b) 方塊對 **NPC** 施加 `~/model/L1Cube.java:298`。LiTo 怪物技能目錄沒有收這 5 隻怪：`L:ClassicWorldMonsterStatusSkillCatalog.java` 的狀態技能只有詛咒麻痺（33），`L:BattleTimeAttackMagicSkillCatalog.java` 沒有 4000，全原始碼找不到這 5 個 npcId 的技能列。玩家身上的凍結只有 Z3 三個技能會寫入（`activateFreeze` 全部呼叫點：`CS:45263,73256,73267,73357,73367,88521`、`L:NativeAcceptedFreezeMutation.java:29`）。 | **沒有差異**（LiTo 沒有怪物施放 4000 的路徑；之後若加入，要寫進同一個 `timedStatus.activateFreeze`，`protectedZero` 才會生效） |
+| Z5 | 打玩家的檢查點 | `L:CombatPlayerMagic.java:12`（`protectedZero` = Z1‖Z2‖Z3）；`L:CombatMagicDamage.java:20`（一般）、`:32`（魔力奪取之焰）、`L:CombatPlayerMagic.java:13,16`（減免前再檢一次）；NPC 打玩家 `L:CombatNpcPlayerDamage.java:30`；反擊屏障 `L:CombatCounterDetection.java:8` | 一致 |
+| Z6 | 打 NPC（世界怪物、召喚物／寵物） | 世界怪物：魔法 `L:CombatWorldMagic.java:20`（大地屏障‖凍結‖絕對屏障），物理 `L:CombatWorldPhysical.java:45`，方塊 `CS:55018`（`classicWorldMonsterFreezeActive`）；召喚物／寵物：`L:CombatLineSpells.java:47`、`L:CombatCompanionSpells.java:32,44`、`CS:28426-28427` | 一致 |
+| Z7 | 打 NPC（房間 Quest／限時挑戰怪物） | HP 扣除點 `L:BattleQuestEncounter.java:2141-2143`、`L:BattleTimeAttackEncounter.java:2101-2103` 只擋**大地屏障**；NPC 魔法傷害保護 `CS:51359-51367` `npcEarthBindProtectedCombatDamage` 也只看大地屏障；`L:CombatNpcMagic.java` 沒有凍結判斷。只有方塊點燃（`CS:55009,55015`）同時看凍結與大地屏障。Quest／限時怪物可被 Z3 凍結（`GameHub.java:8590-8593`、`:9198-9201`）。 | **疑似不一致**：1-伺服器 `L1MagicPc.java:945` 對凍結中的 NPC 傷害為 0，LiTo 這兩種怪物凍結中仍會扣血。本任務**沒改**：凍結技能本身的傷害與凍結寫入的先後順序沒確認，直接在 `damage()` 加凍結判斷，可能把冰矛自己的傷害也變成 0。交後續任務處理（見報告） |
 
 測試：`damageZeroStatusesMapOntoLiToFreezeEarthBindAndAbsoluteBarrier`。
