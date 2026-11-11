@@ -13,7 +13,7 @@
 |---|---|---|---|---|---|
 | M1 | 骰值 = Σ(`nextInt(dice)+1`)×count + value | `L1MagicPc.java:1009-1019`（`skills.damage_dice/damage_dice_count/damage_value`） | 正式環境直接讀同一張 `skills` 表：`L:CombatDatabase.java:62-75`（SQL）、`:143-152`（`value()` 覆蓋 `BattleSpellCatalog` 的常數） | 一致（同一張表；catalog 常數只是沒載入 DB 時的後備值） | — |
 | M2 | 施法者「邪惡的守護」Lv1～3（正義值 −10000～−39999）骰值 +1～+3 | `L1MagicPc.java:1021-1033`；`~/model/Instance/L1PcInstance.java:1126-1147` | 本 PR 新增：`CS:74039-74041`（打玩家）、`CS:74061-74062`（打 NPC），`L:CombatPlayerMagic.java:11` | **已修正**（原本沒有） | `lawfulGuardianMrAndEvilGuardianBonusMatchGuardianEncounter` |
-| M3 | INT 項 `max(INT + 道具SP − 12, 1)`；道具SP = `getSp − getTrueSp` + 邪惡守護 +1～3 + 風／生命／形象魔眼各 +1 | `L1MagicPc.java:1035-1036`；`~/model/L1MagicMode.java:82-126` | `CS:74037-74038`（`magicIntelligenceTerm` + 料理 SP），邪惡守護本 PR 加在 `CS:74041`；`L:BattleElementalResistance.java:50` | 一致（邪惡守護已補）；魔眼 SP **待驗證**（LiTo 的 `dragonEyeStatus` 有魔命、耐性，SP 是否已算進 `spellPowerModifier` 沒查） | `attributeAndIntelligenceCoefficientMatchesCalcMagicDiceDamage` |
+| M3 | INT 項 `max(INT + 道具SP − 12, 1)`；道具SP = `getSp − getTrueSp` + 邪惡守護 +1～3 + 風／生命／形象魔眼各 +1 | `L1MagicPc.java:1035-1036`；`~/model/L1MagicMode.java:82-126` | `CS:74037-74038`（`magicIntelligenceTerm` + 料理 SP），邪惡守護本 PR 加在 `CS:74041`；`L:BattleElementalResistance.java:50` | 一致（邪惡守護已補）；魔眼 +1 SP **已驗證一致**（T118：`L:CombatSpecialBuffs.java:91,95-100` 在 `spellPowerModifier`（`CS:56094-56098`）加 +1；面板 SP 外溢 **已修正**，見 §9） | `attributeAndIntelligenceCoefficientMatchesCalcMagicDiceDamage`、`MagicReductionServer1ParityTest.dragonEye*` |
 | M4 | 屬性抗性：`floor = (int)(0.32×|r|)`（負抗性取負），`attrDef = floor/32`；只看地 1／火 2／水 4／風 8 | `~/model/L1MagicMode.java:188-251` | `L:BattleElementalResistance.java:35-54`；屬性只取 1/2/4/8：`CS:56257-56271` | 一致（−128..127 全測） | 同上 |
 | M5 | 係數 `max(1 − attrDef + INT項×3/32, 0)`，`magicDamage *= 係數`（int 截斷） | `L1MagicPc.java:1042-1049` | `L:BattleElementalResistance.java:51-53` | 一致 | 同上 |
 | M6 | 魔法爆擊：`skill_level ≤ 6` 且 `rnd(1..100) ≤ 10 + 原始魔爆` → ×1.5（截斷） | `L1MagicPc.java:1051-1057` | `L:BattleMagicResistance.java:138-154`；`skill_level` 由 `L:BattleMagicResistance.java:132-135` 計算（本 PR 從 `CS` 三處行內算式抽出） | 一致；`((id−1)>>3)+1` 與 `db` 的 181 筆非佔位 `skills.skill_level` 全部相等（36 筆不符都是名稱 `none` 的空列） | `criticalGateAndOriginalAdditionsMatchCalcMagicDiceDamage`、`skillLevelMatchesEveryNonPlaceholderSkillsRow` |
@@ -21,13 +21,13 @@
 | M8 | 天賦魔傷 `TalentDamageCalculator` | `L1MagicPc.java:1065` | 沒有 | 不適用（1-伺服器 自訂天賦系統，3.81C 沒有） | — |
 | M9 | `leverage/10` 倍率 | `L1MagicPc.java:867`、`:970`；`~/model/L1MagicMode.java:41,74` | 沒有 | 一致：玩家施法 leverage 恆為 10（`setLeverage` 只在怪物技能 `~/model/L1MobSkillUse.java:500,656`） | `defaultProbabilityBranchMatchesCalcProbabilityDefault`（機率端同一倍率） |
 | M10 | PvP 防具減免：`base ≤ 10 → base`，否則 `10 + nextInt(base−10) + 1` | `L1MagicPc.java:870`；`~/model/Instance/L1PcInstance.java:7784-7795` | `L:BattleMagicResistance.java:157-164`；擲骰 `CS:74048-74049`；base `CS:56344-56346` | 一致 | `armorReductionMatchesGetDamageReductionByArmor` |
-| M11 | 增幅防禦 `−((max(Lv,50)−50)/5+1)`；`SKD3` 技能減免（相加或減半） | `L1MagicPc.java:874-907` | `L:CombatPlayerMagic.java:14-26`（料理、增幅防禦、龍之護鎧、堅忍、聖結界減半） | 一致（推測：`SKD3` 清單內容未逐筆比對，屬 T107～T109） | — |
+| M11 | 增幅防禦 `−((max(Lv,50)−50)/5+1)`；`SKD3` 技能減免（相加或減半） | `L1MagicPc.java:874-907` | `L:CombatPlayerMagic.java:14-26`（料理、增幅防禦、龍之護鎧、堅忍、聖結界減半） | 一致（T118 逐筆比對 31 列，見 §9.2） | `MagicReductionServer1ParityTest`（`cooking*`、`mainCourse*`、`dragonSkin*`、`skd3*`） |
 | M12 | 魔法反射 `COUNTER_MIRROR`：`WIS ≥ nextInt(100)` 時反彈並歸零 | `L1MagicPc.java:910-920` | `L:CombatPlayerMirror.java:10-16` | 一致 | — |
 | M13 | 職業倍率 `Other_ADD_is{職業}_MagicPC`，`(int)(dmg×倍率)` | `L1MagicPc.java:923`；`~/../config/ConfigPcDamage.java:113-119,191` | `L:CombatMagicDamage.java:9-10`（鍵）、`:39-44`（套用） | 一致 | `magicClassMultiplierKeysMatchConfigPcDamage` |
 | M14 | 究極光裂術 `DISINTEGRATE_CRITICAL_RND`（預設 40）×2 | `L1MagicPc.java:926-930` | `L:CombatMagicDamage.java:42`；機率鍵 `L:CombatRules.java:225-229` | 一致 | `naturesBlessingHealIsZeroEvenWhenTheSkillFileSaysOneHundred`（同時驗 40） |
 | M15 | `max(dmg, 0)` 後才做 MR 減傷 | `L1MagicPc.java:932,838` | `L:CombatMagicDamage.java:43` | 一致 | — |
 | M16 | PvE：無防具減免；寵物／召喚物 ×`PC_TO_PET_DAMAGE_MULTIPLIER`；聖結界 ÷`IMMUNE_TO_HARM`；光裂 ×2 | `L1MagicPc.java:940-1001` | NPC 呼叫點防具參數一律傳 0（例：`CS:86921-86930`）；`L:CombatNpcMagic.java:23`；寵物倍率 `L:CombatCompanionDamage.java` | 一致（推測：寵物／聖結界未逐值測） | — |
-| M17 | `dmg0`（`isSkillEffectPhysicalDamageZero`）→ 0 | `L1MagicPc.java:857,945`；`~/model/L1MagicMode.java:50-60` | `L:CombatPlayerMagic.java:12`（絕對屏障、大地屏障、冰凍） | 推測一致；1-伺服器 的「傷害為 0」狀態清單**待驗證** | — |
+| M17 | `dmg0`（`isSkillEffectPhysicalDamageZero`）→ 0 | `L1MagicPc.java:857,945`；`~/model/L1MagicMode.java:50-60` | `L:CombatPlayerMagic.java:12`（絕對屏障、大地屏障、冰凍） | 6 項清單一致（T118 逐筆比對，見 §9.3）；Quest／限時挑戰怪物凍結中仍受傷害，疑似不一致（§9.3 Z7） | `damageZeroStatusesMapOntoLiToFreezeEarthBindAndAbsoluteBarrier` |
 | M18 | 魔力奪取之焰（FINAL_BURN）傷害 = 施法者現 MP | `L1MagicPc.java:862-863,965-966` | `L:CombatMagicDamage.java:29-35`、`L:BattleFinalBurn.java` | 一致（MR 的正義守護本 PR 一併補上） | — |
 
 ## 2. MR 減傷與 MR 來源
@@ -92,9 +92,8 @@
 
 | 代號 | 內容 | 下一步 |
 |---|---|---|
-| M3 | 風／生命／形象魔眼的 +1 SP 是否已算在 LiTo 的 `spellPowerModifier` | 讀 `BattleDragonEyeStatus` 與 `spellPowerModifier`，T107 一併確認 |
-| M11 | `L1AttackList.SKD3` 清單與 `CombatPlayerMagic.reductions` 的逐筆對照 | T107～T109 |
-| M17 | `isSkillEffectPhysicalDamageZero` 的狀態清單 | T107～T109 |
+| M3／M11／M17 | 已由 T118（Issue #338）結案，見 §9 | — |
+| M17-Z7 | Quest／限時挑戰怪物凍結中仍受魔法／物理傷害（1-伺服器 為 0） | 另開 code 任務：先確認凍結技能「先算傷害、再寫凍結」的順序，再在 `Monster.damage()` 或 `npcEarthBindProtectedCombatDamage` 加凍結判斷 |
 | P1 | 千分比迴避（`get_evasion`）在競技場是否有來源 | 與 T101 H13 一起裁定 |
 | 實機 | 正義值 ≥ 10000 的角色被魔法打的傷害／被控機率略降；正義值 ≤ −10000 的角色魔法傷害略升；INT ≥ 44 的法師舊公式技能成功率上升 | 交 Codex 實機觀察 |
 
@@ -105,3 +104,52 @@
 - `角色_智力成長.魔法加成`：127 列；INT 1..43 與 LiTo 舊表相同，44..127 = INT−28，LiTo 本 PR 前 84 筆不一致（INT 44..127），本 PR 後 0 筆。
 - `skills.skill_level`：219 筆 id < 1000，181 筆非佔位列全部等於 `((id−1)>>3)+1`；36 筆不符都是名稱 `none` 的空列（例：24、81～86、177～180、196～200）。
 - `skills_負面技能控制` 34 列、`skills_負面boss免疫` 40 列：全數抄入測試。
+
+## 9. T118（Issue #338）補驗：魔眼 +1 SP、`SKD3`、「傷害為 0」
+
+測試：`lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/MagicReductionServer1ParityTest.java`。1-伺服器 技能編號取自 `S1:~/model/skill/L1SkillId.java`（例：`:252` ICE_LANCE=50、`:342` IMMUNE_TO_HARM=68、`:392` ABSOLUTE_BARRIER=78、`:402` FREEZING_BLIZZARD=80、`:417` REDUCTION_ARMOR=88、`:668` EARTH_BIND=157、`:773` DRAGON_SKIN=181、`:838` FREEZING_BREATH=194、`:902` PATIENCE=211、`:1146-1393` COOKING 3000～3051、`:1405` STATUS_FREEZE=4000）。
+
+### 9.1 魔眼 +1 SP（M3）
+
+| # | 項目 | 1-伺服器 | LiTo | 判定 | 測試 |
+|---|---|---|---|---|---|
+| E1 | 風（6686）／生命（6687）／形象（6689）之魔眼 → `getTargetSp` +1；地 6684、水 6685、火 6683、誕生 6688 不加 | `~/model/L1MagicMode.java:103-116` | `L:CombatSpecialBuffs.java:91`（`addScalar(...,"SP")`）、`:95-100`（`EYE_MAGIC_SP_BUFFS`、`eyeMagicSpellPower`）；`CS:56094-56098` `spellPowerModifier` 最後一步呼叫 `addScalar` | **一致**（#304 時已存在，只是沒查） | `dragonEyeMagicSpMatchesGetTargetSp` |
+| E2 | +1 只進魔法傷害：`getTargetSp` 只被 `calcMagicDiceDamage` 呼叫 | `~/model/L1MagicPc.java:1035-1036`；`~/model/L1MagicNpc.java:705`（NPC 版沒有魔眼） | 魔法傷害 4 處都用 `spellPowerModifier`：`CS:74143`（打玩家）、`:74165`（打 NPC）、`:73735`／`:73769`（娃娃魔法） | 一致 | `dragonEyeSpRaisesTheIntelligenceTermByOne` |
+| E3 | 魔眼的資料表 SP 欄都是 0（+1 是寫死在程式裡的） | `db:31222-31226`（`etcitem_buff藥水能力`，`sp` 為第 15 個數值欄；例：風 42520 的 `magic_hit`=3、`regist_sleep`=3、`sp`=0） | `L:BattleDragonEyeCatalog.java` 的 `Ability` 沒有 SP 欄；`addScalar` 另加的 `ability(caster,"SP")` 讀到表值 0 | 一致 | 同 E1 |
+| E4 | 面板 SP：`S_SPMR` 寫 `getSp() − getTrueSp()`，**不含**魔眼 +1 | `~/serverpackets/S_SPMR.java:37` | 本 PR 前 `sendMagicStatus` 與 `ExtendedCharacterStatsBridge` 用 `spellPowerModifier`，魔眼期間面板 SP 多 1。本 PR 新增 `CS:56143-56146` `displaySpellPowerModifier`（扣掉 `eyeMagicSpellPower`），用在 `CS:56149`（`S_MAGIC_STATUS`）與 `CS:11021`（延伸角色資訊） | **已修正**（只影響顯示，不影響傷害） | — （需 `ClientSession` 實例；交實機看面板） |
+| E5 | 生效條件 | 有技能效果即生效 | 只在載入 1-伺服器 規則表（`CombatBuffLeases.loaded()`，`L:CombatBuffLeases.java:15`）時加；未載入表的隔離舊核心不加 | 一致（正式環境一律載入） | — |
+
+### 9.2 `SKD3` 技能減免（M11）
+
+1-伺服器 `~/model/L1AttackList.java:256-286` 共 31 列；`L1MagicPc.calcPcMagicDamage` `:879-907` 逐一相加，值等於技能編號者（只有 `IMMUNE_TO_HARM`）改為最後 `>> 1`。只用在 PvP 魔法；PvE 用 `ConfigSkill.IMMUNE_TO_HARM` 除法（M16）。
+
+| # | SKD3 列 | 1-伺服器 值 | LiTo | 判定 |
+|---|---|---|---|---|
+| D1 | `COOKING_1_0_S`～`COOKING_1_6_S`（3008～3014）、`COOKING_1_7_S`（3015） | −5（`:256-262`、`:277`） | `L:BattleCookingCatalog.java:272-305`：特製料理 `damageReduction=5`，一般料理 0；`L:CombatPlayerMagic.java:19` 扣 `cooking.damageReduction()` | 一致（8 列） |
+| D2 | `COOKING_2_0_S`～`2_6_S`（3024～3030）、`2_7_S`（3031） | −5（`:263-269`、`:278`） | 同上（`:155-179`） | 一致（8 列） |
+| D3 | `COOKING_3_0_S`～`3_6_S`（3040～3046）、`3_7_S`（3047） | −5（`:270-276`、`:279`） | 同上（`:184-209`） | 一致（8 列） |
+| D4 | `COOKING_4_0_N`～`4_3_N`（3048～3051） | −2（`:280-283`） | `L:BattleCookingCatalog.java:214-229` `damageReduction=2` | 一致（4 列） |
+| D5 | 一般料理 3000～3007、3016～3023、3032～3039 | 不在 SKD3（0） | `damageReduction=0` | 一致（24 列） |
+| D6 | 主菜＋甜點同時生效時相加（SKD3 迴圈逐個效果加） | `:883-894` | `L:BattleCookingStatus.java:54-72` 主菜＋甜點兩格 `sum` | 一致（全部 主菜×甜點 組合） |
+| D7 | `DRAGON_SKIN`（181） | −10（`:284`） | `L:CombatPlayerMagic.java:22`；`L:CombatSourceReductions.java:8,10`（`SOURCE_DRAGON_SKIN=10`） | 一致 |
+| D8 | `PATIENCE`（211） | −15（`:285`） | `L:CombatPlayerMagic.java:23`；`L:CombatSourceReductions.java:6,9`（`SOURCE_PATIENCE=15`，未載入規則時保留舊值 2） | 一致 |
+| D9 | `IMMUNE_TO_HARM`（68） | 值 = 鍵 → 減半 `dmg >> 1`（`:286`、`:905-907`） | `L:CombatPlayerMagic.java:24` `result >>= 1`，在所有加減之後 | 一致（含負數的算術右移） |
+| D10 | `REDUCTION_ARMOR`（88）不在 SKD3，另算 `−((max(Lv,50)−50)/5+1)` | `~/model/L1MagicPc.java:874-877` | `L:CombatPlayerMagic.java:20` | 一致（#304 已驗） |
+
+測試：`cookingReductionMatchesEverySkd3CookingRowAndNoOtherStatus`（52 個料理狀態逐一）、`mainCourseAndDessertReductionsAddLikeTheSkd3Loop`、`dragonSkinPatienceAndImmuneToHarmMatchSkd3Literals`（−40..200 全測）、`skd3HasExactlyTheRowsCoveredByLiTo`。
+
+### 9.3 「傷害為 0」狀態（M17，`SKM0`）
+
+1-伺服器 `~/model/L1AttackList.java:289-294` 與 `~/model/L1Character.java:1797-1808`（`isSkillEffectPhysicalDamageZero`）同一份 6 項清單；魔法在 `~/model/L1MagicMode.java:50-60` → `L1MagicPc.java:857`（打玩家）、`:945`（打 NPC）最先檢查。
+
+| # | 狀態 | LiTo | 判定 |
+|---|---|---|---|
+| Z1 | `ABSOLUTE_BARRIER`（78） | `BattleTimedStatus.absoluteBarrierActive`（`L:BattleTimedStatus.java:898`） | 一致 |
+| Z2 | `EARTH_BIND`（157） | `earthBindActive`（`:861`） | 一致 |
+| Z3 | `ICE_LANCE`（50）、`FREEZING_BLIZZARD`（80）、`FREEZING_BREATH`（194） | 三者都是 `BattleSpellCatalog.FreezeAttackSpell`（`L:BattleSpellCatalog.java:2018-2060`），命中後寫同一個凍結租約 `activateFreeze`（`:839`），由 `freezeActive`（`:835`）判定 | 一致 |
+| Z4 | `STATUS_FREEZE`（4000「束縛」，`db:48316` `skills` 列；`~/model/skill/skillmode/STATUS_FREEZE.java:27,49`） | 1-伺服器 的來源只有兩種：(a) 怪物技能 `mobskill.SkillId=4000`，共 5 列：`db:34333`（45416 地之牙）、`:34384`（45508 地靈之主）、`:34459`（45592 深淵地靈）、`:34503`（45614 巨蟻女皇）、`:34650`（45721 船舶之墓殭屍）；(b) 方塊對 **NPC** 施加 `~/model/L1Cube.java:298`。LiTo 怪物技能目錄沒有收這 5 隻怪：`L:ClassicWorldMonsterStatusSkillCatalog.java` 的狀態技能只有詛咒麻痺（33），`L:BattleTimeAttackMagicSkillCatalog.java` 沒有 4000，全原始碼找不到這 5 個 npcId 的技能列。玩家身上的凍結只有 Z3 三個技能會寫入（`activateFreeze` 全部呼叫點：`CS:45263,73256,73267,73357,73367,88521`、`L:NativeAcceptedFreezeMutation.java:29`）。 | **沒有差異**（LiTo 沒有怪物施放 4000 的路徑；之後若加入，要寫進同一個 `timedStatus.activateFreeze`，`protectedZero` 才會生效） |
+| Z5 | 打玩家的檢查點 | `L:CombatPlayerMagic.java:12`（`protectedZero` = Z1‖Z2‖Z3）；`L:CombatMagicDamage.java:20`（一般）、`:32`（魔力奪取之焰）、`L:CombatPlayerMagic.java:13,16`（減免前再檢一次）；NPC 打玩家 `L:CombatNpcPlayerDamage.java:30`；反擊屏障 `L:CombatCounterDetection.java:8` | 一致 |
+| Z6 | 打 NPC（世界怪物、召喚物／寵物） | 世界怪物：魔法 `L:CombatWorldMagic.java:20`（大地屏障‖凍結‖絕對屏障），物理 `L:CombatWorldPhysical.java:45`，方塊 `CS:55018`（`classicWorldMonsterFreezeActive`）；召喚物／寵物：`L:CombatLineSpells.java:47`、`L:CombatCompanionSpells.java:32,44`、`CS:28426-28427` | 一致 |
+| Z7 | 打 NPC（房間 Quest／限時挑戰怪物） | HP 扣除點 `L:BattleQuestEncounter.java:2141-2143`、`L:BattleTimeAttackEncounter.java:2101-2103` 只擋**大地屏障**；NPC 魔法傷害保護 `CS:51359-51367` `npcEarthBindProtectedCombatDamage` 也只看大地屏障；`L:CombatNpcMagic.java` 沒有凍結判斷。只有方塊點燃（`CS:55009,55015`）同時看凍結與大地屏障。Quest／限時怪物可被 Z3 凍結（`GameHub.java:8590-8593`、`:9198-9201`）。 | **疑似不一致**：1-伺服器 `L1MagicPc.java:945` 對凍結中的 NPC 傷害為 0，LiTo 這兩種怪物凍結中仍會扣血。本任務**沒改**：凍結技能本身的傷害與凍結寫入的先後順序沒確認，直接在 `damage()` 加凍結判斷，可能把冰矛自己的傷害也變成 0。交後續任務處理（見報告） |
+
+測試：`damageZeroStatusesMapOntoLiToFreezeEarthBindAndAbsoluteBarrier`。
