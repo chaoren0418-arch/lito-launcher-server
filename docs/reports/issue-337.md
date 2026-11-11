@@ -35,6 +35,7 @@
 - 本機 `mvn -B -q -DskipTests test-compile`（只編譯）：合併 main 前後皆 exit 0。
 - 本機用 Python 靜態讀檔（`scratch/t337/check.py`，不進 git）確認測試裡的多行原始碼字串都存在、順序正確：全部 OK。
 - **本機沒有執行任何測試**（依規定）；`mvn -B test` 交給 PR 的 GitHub Actions CI。
+- **PR #345 CI（run 43047140389，commit `c19db494`）全部通過**：`Server tests` 的 surefire 報告（artifact `server-test-evidence` 加總）為 **Tests run: 7367, Failures: 0, Errors: 0, Skipped: 117**，其中 `OtherClassSkillEffectServer1ParityTest` 13 個全過、無跳過。Server（Maven）、Launcher、Build-Package、Semantic gap 也都通過。
 
 ### 推測
 - S1 `L1AttackPc` 的 `dmg` 是 double，×1.58 前可能已有小數；LiTo 此處輸入是 int。只差截斷，屬 T113。
