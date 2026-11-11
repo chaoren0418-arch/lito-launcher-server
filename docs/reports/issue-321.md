@@ -42,7 +42,8 @@
 ### 已驗證
 - 本機 `mvn -B -q -DskipTests test-compile`（只編譯 main 與 test，不執行）：exit 0。
 - 1-伺服器 原始碼逐行閱讀（上列行號），以及 LiTo `ClientSession` 扣費／動作／迭代器的順序（行號如上）。
-- **本機沒有執行任何測試**（依規定）；`mvn -B test` 交給 PR 的 GitHub Actions CI，結果見 PR。
+- **本機沒有執行任何測試**（依規定）；`mvn -B test` 交給 PR 的 GitHub Actions CI。
+- **PR #331 CI（run 43028214522）全部通過**：`Server tests` 的 surefire 報告（artifact `server-test-evidence` 加總）**Tests run: 7330, Failures: 0, Errors: 0, Skipped: 117**；其中 `SkillTargetingDecisionsTest` 5 個、`SkillTargetingServer1ParityTest` 553 個全過。Server（Maven）、Launcher、Build-Package、Semantic gap 也都通過。
 
 ### 推測
 - 76 自施時 LiTo 仍會送 `S_EFFECT Mass Slow primary=`（`visualCount` 對 76 固定回 1）。1-伺服器 `sendGrfx(true)` 也在 `runSkill` 返回後照常送施法圖示；未逐行比對 `sendGrfx` 的範圍技能分支，判斷兩邊都有圖示。
