@@ -273,7 +273,7 @@
 | 排行榜 | 總榜：積分→勝場→名字；月榜：本月積分→本月勝場→總積分→名字；榜單快照每天 05:00 更新 | `S/GameStateStore.java:5811-5854`；`:1098` |
 | 經驗與等級 | 勝 +100、敗 +25（料理可加成），LiTo 內部等級＝1＋經驗÷1000；**只在記憶體**，不寫 `characters` | `S/GameStateStore.java:5619-5624` |
 | **持久性** | 積分、斷線數、月計**不跨伺服器重啟**：從 `character_lito` 重新載入時只有勝敗，積分等欄位一律從 0 開始 | `S/SharedDatabase.java:169-175`；`S/GameStateStore.java:819-822`；`D/README.zh-TW.md:31` |
-| 設定 | 範例設定已列出 `battle.reward.win=250`、`battle.reward.loss=50`（D1，T103）；〔待驗證〕正式機實際值要看正式 `server.properties` | `D/config/server.properties.example` |
+| 設定 | 在 `config/server.properties` 加 `battle.reward.win`、`battle.reward.loss` 可改（範圍 0～1000000，修改後重啟生效）；沒寫就用程式預設 **勝 250、敗 50**，斷線敗扣 `battle.reward.loss`（預設 −50），最低 0（D1，T103）。範例設定 `.example` 目前沒有列這兩項（調度器閘門禁止改 `config/server.properties*`）。〔待驗證〕正式機實際值要看正式 `server.properties` | `S/ServerConfig.java:578-579`；`D/README.zh-TW.md` |
 | 「榮譽點數」 | 程式中沒有獨立的榮譽點數欄位（LC B17） | — |
 
 ### 4.4 Tournament 商店
@@ -329,7 +329,7 @@
 
 | # | 問題 | 選項 | 建議 | 實作任務 | 決定 |
 |---|---|---|---|---|---|
-| D1 | 積分公式 | A. 維持現狀：勝 +250、敗 +50、斷線 −50<br>B. 輸了不加分：勝 +N、敗 0、斷線 −N<br>C. 依對手強弱加減（Elo 類） | **A**：程式已有，且註解有 2007 年規則依據（敗場也給小額正分、只有斷線扣分）。先把預設值寫進 `server.properties.example`，讓營運看得到、改得了 | T103 #310 | A（逾時預設，2026-11-11 #310）：預設值已寫進 `server.properties.example`（T103） |
+| D1 | 積分公式 | A. 維持現狀：勝 +250、敗 +50、斷線 −50<br>B. 輸了不加分：勝 +N、敗 0、斷線 −N<br>C. 依對手強弱加減（Elo 類） | **A**：程式已有，且註解有 2007 年規則依據（敗場也給小額正分、只有斷線扣分）。先把預設值寫進 `server.properties.example`，讓營運看得到、改得了 | T103 #310 | A（逾時預設，2026-11-11 #310）：預設值寫進本文件 §4.3 與 `lito伺服器/LiTo381-Server/README.zh-TW.md`（T103；`.example` 受閘門禁止，未改） |
 | D2 | 進場 HP／MP | A. 每場補滿（現狀）<br>B. 讀存檔 CurHp／CurMp | **A**：競技場重視公平；而且來源庫唯讀，B 只能讀不能寫回，打完 HP 也無法保存，意義不大。決定後把 N5 定為正式規則 | T103 #310 | A（逾時預設）：維持每場補滿，N5 定為正式規則（T103，不改程式） |
 | D3 | 積分是否要持久 | A. 不持久（現狀：重啟歸零，月榜跟著歸零）<br>B. 在 `character_lito` 加欄位（ranking_points、disconnects、月計）<br>C. 另建中央表 | **B**：月榜與排行榜在重啟後歸零，玩家看得到差異。B 沿用現有 `last_result_id` 冪等機制，改動最小；需配合 T104 確認 MyISAM 下的寫法 | T103 #310、T104 #302 | B（逾時預設）：**T103 未實作**，需來源庫 schema 遷移，拆成後續任務（見 `docs/reports/issue-310.md`） |
 | D4 | 逾時無勝者時記敗 | A. 全員記敗（現狀：寵物競賽、死鬥、Quest、Honor、Time Attack）<br>B. 逾時視為平手，不記勝敗<br>C. 依分數判勝（擊殺數、塔血量、進度） | **B**：A 會讓雙方都 +1 敗並都 +50 積分，戰績失真；C 沒有原版判勝規則可依（程式註解明寫「未取得」）。攻城維持守方勝 | T103 #310 | B（逾時預設）：已實作（T103），攻城逾時仍守方勝 |

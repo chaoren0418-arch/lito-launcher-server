@@ -6,12 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
@@ -116,16 +113,7 @@ final class GameplayDecisionRulesTest {
         }
     }
 
-    // ---- D1: score formula defaults are visible to operators ----
-
-    @Test void exampleConfigurationDocumentsTheDefaultScoreRewards() throws Exception {
-        Properties example = new Properties();
-        try (InputStream in = Files.newInputStream(Path.of("config/server.properties.example"))) {
-            example.load(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8));
-        }
-        assertEquals("250", example.getProperty("battle.reward.win"));
-        assertEquals("50", example.getProperty("battle.reward.loss"));
-    }
+    // ---- D1: score formula (defaults documented in docs/design/gameplay.md section 4.3) ----
 
     @Test void scoreFormulaWinLossAndDisconnectFloorAtZero() throws Exception {
         GameStateStore state = new GameStateStore(temporary.resolve("d1.properties"), false);

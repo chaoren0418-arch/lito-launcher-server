@@ -8,7 +8,7 @@
 
 | # | 決定 | 本任務處理 |
 |---|---|---|
-| D1 積分公式 | A：勝 +250、敗 +50、斷線 −50（下限 0） | 程式不變；預設值寫進 `config/server.properties.example`；補測試 |
+| D1 積分公式 | A：勝 +250、敗 +50、斷線 −50（下限 0） | 程式不變；預設值寫進 `docs/design/gameplay.md` §4.3 與伺服器 `README.zh-TW.md`；補測試 |
 | D2 進場 HP／MP | A：每場補滿 | 程式不變；N5 定為正式規則（文件） |
 | D3 積分持久 | B：在 `character_lito` 加欄位 | **未實作**，拆成後續任務（見下方原因） |
 | D4 逾時無勝者 | B：平手，不記勝敗；攻城仍守方勝 | **已實作** |
@@ -21,12 +21,13 @@
    - `MatchState.timeout`：寵物競賽、死鬥、Honor、Quest、Time Attack 逾時改呼叫新的 `finishDraw`，回傳**勝者、敗者都空**的結束結果（reason 不變，例如 `deathmatch-timeout`）。攻城有攻方時維持守方勝；攻城還沒指定攻方就逾時（邊界情況）也是平手。
    - `Resolution.draw(reason)`、`Resolution.isDraw()`：新增。
    - `Mode.PET_RACE` 的 respawn 欄 `false` → `true`（D8）。全專案只有 `BattleRules.decode`／`BattleControlCatalog.apply` 把它複製進 `RuleSet`，沒有其他讀取點，行為不變。
-2. `lito伺服器/LiTo381-Server/config/server.properties.example`：新增 `battle.reward.win=250`、`battle.reward.loss=50` 與中文說明（D1）。值與 `ServerConfig.java:578-579` 的預設一致。
-3. 測試 `src/test/java/local/lito381/server/GameplayDecisionRulesTest.java`（11 個，不需本機資源）：
+2. D1 預設值說明（勝 250、敗 50、斷線 −50、最低 0，範圍 0～1000000）寫進 `docs/design/gameplay.md` §4.3 與 `lito伺服器/LiTo381-Server/README.zh-TW.md`「啟動與設定」。值與 `ServerConfig.java:578-579` 的預設一致。
+   - 第 2 次嘗試：第 1 次曾改 `config/server.properties.example`，被合併閘門（禁止路徑 `config/server.properties*`）退回；依主控裁定已**撤回該檔修改**（與 main 相同），並刪掉讀 `.example` 的測試。
+3. 測試 `src/test/java/local/lito381/server/GameplayDecisionRulesTest.java`（10 個，不需本機資源）：
    - D4：死鬥／Honor／Quest、寵物競賽、Time Attack（含有隊員陣亡）逾時都是平手；攻城逾時守方勝、敗者是攻方；攻城未指定攻方逾時是平手；決定性結果不是平手；平手時 `DurableBattleSettlement.entry` 回傳 null（不產生結算列）。
    - D8：`Mode.PET_RACE.respawn()` 為 true，且所有戰鬥模式的 respawn 欄都與 `playerDefeated` 的回傳一致。
-   - D1：範例設定的兩個值是 250／50；積分公式（勝 +250、敗 +50、斷線 −50、從 0 斷線仍為 0）。
-4. 文件：`docs/design/gameplay.md`（§2.1 共通規則、§2.2～§2.7 逾時列、§4.1、§4.3、N5、§7 決定欄）、`docs/reports/server-capability-matrix.md`（結算與排名、HP／MP、積分／排名三列）。
+   - D1：積分公式（勝 +250、敗 +50、斷線 −50、從 0 斷線仍為 0）。
+4. 文件：`docs/design/gameplay.md`（§2.1 共通規則、§2.2～§2.7 逾時列、§4.1、§4.3、N5、§7 決定欄）、`lito伺服器/LiTo381-Server/README.zh-TW.md`（積分設定說明）、`docs/reports/server-capability-matrix.md`（結算與排名、HP／MP、積分／排名三列）。
 5. `docs/plans/issue-310.json`：拆出 D3 後續任務 T103b。
 
 ## 為什麼平手不需要改結算程式（已驗證・讀程式）
@@ -53,7 +54,7 @@ D3 要改的不只是程式：
 - **已驗證**
   - 本機 `mvn -B -o -DskipTests test-compile`（JDK 17）通過：main 與 test 都能編譯。依本機規定，本機不跑測試。
   - 讀程式確認：平手結果不會產生結算列、結果畫面顯示平手（見上節行號）；`Mode.respawn` 沒有其他讀取點。
-  - CI（PR #327）全綠，新測試 11/11 通過，見下方「CI」一節。
+  - 第 1 次嘗試的 CI（PR #327）全綠，新測試 11/11 通過，見下方「CI」一節。第 2 次嘗試只刪了 1 個讀 `.example` 的測試（剩 10 個）並改文件，本機 `test-compile` 通過；結果以 PR #327 最新 commit 的 CI 為準。
 - **推測**
   - 單人測試房（ArenaBot）死鬥逾時：以前真人記敗、畫面顯示藍隊勝；現在顯示平手。測試房本來就不記戰績，只影響畫面文字。
   - Modern* 系列（`ModernBattleEngine` 等）的逾時結算沒有改；它們沒有正式工廠（`ModernMatchSettlementJdbc.java:30`），不在正式路徑上。
@@ -71,11 +72,13 @@ PR #327，run 42940941983／42940941988 全部通過：Server (Java 17 / Maven)�
 
 - `lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleRules.java`
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/GameplayDecisionRulesTest.java`
-- `lito伺服器/LiTo381-Server/config/server.properties.example`
+- `lito伺服器/LiTo381-Server/README.zh-TW.md`
 - `docs/design/gameplay.md`、`docs/reports/server-capability-matrix.md`
 - `docs/plans/issue-310.json`、`docs/reports/issue-310.md`
 
 ## 給下一棒的提示
+
+- 給調度器：`config/server.properties.example` 不含密碼，本來就該進 git。若之後要讓營運在範例檔看到 `battle.reward.*`，請先把 `.example` 從閘門禁止清單排除（`server.properties` 本身仍禁止），再另開小任務加上這兩行。
 
 - **T103b（D3 持久化）**：照 `docs/plans/issue-310.json` 的範圍做。關鍵是積分增量必須和 `last_result_id` 寫在**同一個** `character_lito` UPDATE（MyISAM 沒有交易），重送才不會重複加；先決定收據要不要凍結 `point_delta`（避免營運改設定後重送算出不同分數）。
 - 若使用者推翻 D4（想回到全員記敗），只要把 `BattleRules.MatchState.timeout` 改回 `finish(Set.of(), reason)`，並刪掉 `GameplayDecisionRulesTest` 的 D4 測試。
