@@ -22,7 +22,7 @@ final class NativeSourceAreaCasterTargets {
   boolean enabled=NativeSourcePlayerFactories.scoped(c)&&a!=null&&a.c==c&&!a.closed&&a.owner==c.pc&&row.type()==1&&row.area()==3&&row.targetTo()==3&&!row.through();
   if(enabled){if(a.pet==null)enabled=a.player==c.pc&&a.target==null;else{var n=a.target;enabled=a.player==null&&n!=null&&n.kind()==3&&n.actor()==a.pet&&n.owner()==c.pc&&c.npcs.get(n.id())==n;}}
   // This port consumes an ASM-verified PC-only list. The original NPC failure filter has no PC veto.
-  if(enabled)return carry(NativeSourceMassSelfTarget.ordered(original).iterator(),original);
+  if(enabled)return carry(NativeSourceMassSelfTarget.selfPrimaryEffects(original),original);
   if(a!=null&&a.owner==a.c.pc)return carry(Collections.emptyIterator(),original);
   return carry(original.iterator(),original);
  }
