@@ -34,6 +34,11 @@
 範例（iconId=0、剩 300 秒）：改動前第 5 步明文 `7B 38 2C 01 00 00`（與 `NativeMagicDollTest` 釘住的位元組相同）。
 
 ## 已驗證
+- **CI（PR #324，run 42933732915）**：`ClientSessionMagicDollIconSuppressionTest` 實際執行 2 案（Tests run: 2, Failures: 0, Errors: 0, Skipped: 0）；全體 `Tests run: 6896, Failures: 0, Errors: 0, Skipped: 117`。Server／Launcher／Package／Semantic gap 全綠。
+- CI 實測的改動後 server_to_client opcode 序列（iconId 0 與 2184 兩案相同）：
+  - 召喚：`[1A, 18, 0C, 0B, 37, 0D, 0C, 4D, 50, 52, 56]`：沒有 `FA`，也沒有 `7B`。
+  - 收回：`[37, 15, 0D, 0C, 4D, 50, 52, 56]`：沒有 `FA`，也沒有 `7B`。
+  - 改動前，依程式碼路徑推算，召喚序列在狀態刷新之前會多一個 `7B` 幀，收回序列也會多一個 `7B` 幀（見上表）。改動前的序列沒有在 CI 實測。
 - `mvn -B -o -DskipTests test-compile`（JDK 17.0.17、Maven 3.9.16）本機編譯通過：main 與新測試都能編譯。
 - 程式碼靜態確認：`sendNativeMagicDollIcon` 是 production 唯一呼叫 `magicDollIcon`／`magicDollCustomIcon` 的地方（grep `src/main`），改動後 production 已沒有任何呼叫。
 - 現行 opcode 是 0x7B 而不是 0xFA：`Protocol.java:15041`、`:15050`，以及 `NativeMagicDollTest.java:27-29` 的註解「T029 keeps the formal 0.6.71 icon packet (opcode 123…)」。
@@ -43,7 +48,6 @@
 - 原 R1 描述的「血盟資訊錯亂」在現行程式碼上不會發生（因為送的不是 0xFA）；只有 #138 之前的舊程式碼才可能發生。
 
 ## 待驗證
-- **CI**：`mvn -B test` 結果（含新測試 2 案）要等 PR 的 GitHub Actions；依本機規定不在本機執行測試。
 - **實機（交給 Codex／使用者）**：在 WORLD 或戰鬥房召喚魔法娃娃，確認 (1) 娃娃 actor 與召喚特效正常顯示；(2) 血盟 UI 沒有變化；(3) 計時到期或再次使用時娃娃會被收回；(4) 伺服器 log 出現 `magic-doll-icon suppressed`。
 - semantic-diff（non-blocking）會多出一個 `sendNativeMagicDollIcon` 與正式 0.6.71 的差異，這是刻意的。
 
