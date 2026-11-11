@@ -30,7 +30,8 @@
 ### 已驗證
 - 靜態比對：62 個技能都有 catalog 紀錄，建構參數與 SQL 逐欄比對，不一致只有上述 4 處（1 處已修正、1 處 S1 本身固定值、1 處既有缺口、1 處等價）。
 - 本機 `javac -proc:none --release 17` 編譯 `src/main`＋`compile-stubs`（1177 檔），以及 `OtherClassSkillServer1ParityTest`、`BattleBoneBreakCatalogTest`、`ClientSessionBoneBreakIntegrationTest`：exit 0。**本機沒有執行任何測試**（依規定）。
-- CI 結果見 PR（push 後補在下方「CI」段）。
+- **PR #328 CI（run 42945256024，commit 831c5f97）全部通過**：`Server tests` 的 surefire 報告（artifact `server-test-evidence`）加總 **Tests run: 7303, Failures: 0, Errors: 0, Skipped: 117**；其中 `OtherClassSkillServer1ParityTest` 197 個、`BattleBoneBreakCatalogTest` 2 個、`ElfSkillServer1ParityTest` 210 個、`WizardSkillServer1ParityTest` 248 個全過。Server（Maven 建置）、Launcher、Build-Package、Semantic gap 也都通過。
+- 注意：`ClientSessionBoneBreakIntegrationTest` 與 `NativeBoneBreakSourceAuditTest` 在 CI 執行 0 個（缺本機設定檔／1-伺服器 原始碼而整類跳過）。
 
 ### 推測
 - 正式 `380_db.skills` 第 208 列與 `1-伺服器 db/380_db.sql` 相同（lawful=0）；本 PR 未連正式 DB。`NativeBoneBreakSourceAuditTest` 引用的兩份 SQL 也都是 0，所以 45 應是欄位看錯。
