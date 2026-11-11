@@ -116,7 +116,7 @@
 | 0x2B／0x2C | S_BUY_LIST／S_SELL_LIST | `cdhhdsc`／`cdhd` | 已處理 | P:12885、P:12943 | COV present | B |
 | 0x0B | S_PUT_OBJECT（地面物品） | 同 §1.2 S_PUT_OBJECT；ground gfx 的 sprite class 9 才能被 C_GET 撿起 | 已處理 | P:15989 | sub_4A3990、sub_4E89F0 | B |
 | 0x76 | S_CHANGE_ITEM_TYPE | — | 客戶端不收 | — | COV | B |
-| 0xFA | S_PACKET_BOX（魔法娃娃圖示，`cch`／`cchhhh`） | 見 §5 風險 R1 | **opcode 衝突**：3.81C 的 0xFA 是 S_LITO_CLAN | P:15055、P:15071；CS:21959 `sendNativeMagicDollIcon` | S_LITO_CLAN receiver sub_4AC1C0（P:17411） | B |
+| 0xFA | S_PACKET_BOX（魔法娃娃圖示，`cch`／`cchhhh`；實際寫成 0x7B，#311 已改為不送） | 見 §5 風險 R1 | **opcode 衝突**：3.81C 的 0xFA 是 S_LITO_CLAN | P:15055、P:15071；CS:21959 `sendNativeMagicDollIcon` | S_LITO_CLAN receiver sub_4AC1C0（P:17411） | B |
 
 ---
 
@@ -209,7 +209,7 @@
 
 ## 5. 協定風險（推測，待實機驗證）
 
-- **R1：S_PACKET_BOX 與 S_LITO_CLAN 共用 0xFA。** `Protocol.java:501` 的 `S_PACKET_BOX = 0xFA` 和 `Protocol.java:1547` 的 `S_LITO_CLAN = 0xFA` 數值相同。`ClientSession.java:86378` 的註解自己寫明「Selected LiTo opcode 0xFA is S_LITO_CLAN, not the legacy PacketBox icon carrier」，Counter Magic／Absolute Barrier 的圖示也因此刻意不送；但 `ClientSession.java:21959 sendNativeMagicDollIcon` 仍會送 `S_PACKET_BOX(56|154, …)`。3.81C 客戶端會用 sub_4AC1C0（`P:17411` 的 S_LITO_CLAN `cddsd` 格式）解讀這個封包，結果可能是血盟資訊錯亂，或者被忽略。**待驗證**：召喚魔法娃娃時，觀察血盟 UI 與 log。建議開 code 任務改成靜默（比照 Counter Magic）。
+- **R1：S_PACKET_BOX 與 S_LITO_CLAN 共用 0xFA。** `Protocol.java:501` 的 `S_PACKET_BOX = 0xFA` 和 `Protocol.java:1547` 的 `S_LITO_CLAN = 0xFA` 數值相同。`ClientSession.java:86378` 的註解自己寫明「Selected LiTo opcode 0xFA is S_LITO_CLAN, not the legacy PacketBox icon carrier」，Counter Magic／Absolute Barrier 的圖示也因此刻意不送；但 `ClientSession.java:21959 sendNativeMagicDollIcon` 仍會送 `S_PACKET_BOX(56|154, …)`。3.81C 客戶端會用 sub_4AC1C0（`P:17411` 的 S_LITO_CLAN `cddsd` 格式）解讀這個封包，結果可能是血盟資訊錯亂，或者被忽略。**待驗證**：召喚魔法娃娃時，觀察血盟 UI 與 log。建議開 code 任務改成靜默（比照 Counter Magic）。**#311 更正與處理**：#138 之後的 `Protocol.magicDollIcon／magicDollCustomIcon` 實際寫的是 opcode `123`（0x7B，S_EVENT），不是 0xFA；但 S_EVENT 接收端 sub_4B07C0 只處理 0..40，子型別 56／154 一樣沒有對應的接收端。`sendNativeMagicDollIcon` 已改為不送任何封包，只寫 log；伺服器內部的娃娃狀態維持不變（詳見 `docs/reports/issue-311.md`）。
 - **R2：C_ENTER_WORLD（0x05）、C_LITO_CHANGE_OPTION（0xD8）、C_LITO_SERVER_LIST（0xF9）、C_LITO_LOGIN_NO_OTP（0xFA）** 伺服器有 handler，但 `COV` 的 `nativeProducer` 是 `not_found`。客戶端可能根本不送，屬於死碼或保留路徑；不影響功能。
 - **R3：欄位格式等級 B 占大多數。** 本表格式取自伺服器 parser／writer 與註解所記的客戶端位址，本輪沒有逐一反組譯重新驗證。只有 S_STATUS、S_MANA_POINT、S50/51/52/56、S_ADD_SPELL、C_C9、S_CB、C_D2、C_D1、D5 系列有 `lito脫殼資源` 的獨立 raw-byte 契約（等級 A）。
 

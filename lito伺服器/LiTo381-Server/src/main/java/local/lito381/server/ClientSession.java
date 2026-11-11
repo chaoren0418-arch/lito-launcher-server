@@ -20228,14 +20228,21 @@ final class ClientSession implements Runnable {
     }
 
     private void sendNativeMagicDollIcon(
-            NativeMagicDoll doll, long nowNanos, boolean remove) throws IOException {
+            NativeMagicDoll doll, long nowNanos, boolean remove) {
+        // #311 (T110): the retained same-family doll timer icon is legacy
+        // S_PacketBox subtype 56 (DOLL) / 154 (custom icon).  In the selected
+        // LiTo.bin opcode FA is S_LITO_CLAN (cddsd, sub_4AC1C0), and the
+        // formal 0.6.71 substitute opcode 7B is S_EVENT whose receiver
+        // sub_4B07C0 only switches 0..40, so neither carrier has a native
+        // doll-icon receiver.  Like Counter Magic / Absolute Barrier, send no
+        // guessed icon.  The doll actor, timer, powers and recall stay fully
+        // server-side (activeMagicDoll / serverMagicDollTick).
         SourceMagicDollType type = doll.type();
         int seconds = remove ? 0 : doll.remainingSeconds(nowNanos);
-        byte[] icon = type.iconId() > 0
-                ? Protocol.magicDollCustomIcon(type.iconId(), seconds, remove)
-                : Protocol.magicDollIcon(seconds);
-        sendEncrypted(icon, "S_PACKET_BOX magic-doll-icon=" + type.iconId()
-                + " remaining=" + seconds + " remove=" + remove);
+        System.out.println("[LiTo] magic-doll-icon suppressed object="
+                + doll.objectId() + " icon=" + type.iconId()
+                + " remaining=" + seconds + " remove=" + remove
+                + " reason=no-native-receiver(FA=S_LITO_CLAN,7B=S_EVENT 0..40)");
     }
 
     /** Retained L1EquipmentSlot STATUS_UNDERWATER_BREATH lifecycle. */
