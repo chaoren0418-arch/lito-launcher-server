@@ -18,6 +18,7 @@
 - `etcitem_buff藥水能力` 欄位表（`sp` 是第 15 個數值欄）：7 個魔眼的 `sp` 都是 0，LiTo `BattleDragonEyeCatalog` 其他能力值與表一致；+1 SP 是寫死在程式裡，不是表值。
 - 本機 `mvn -B -o -DskipTests test-compile` 通過（main＋test 都編得過）。
 - 依本機執行限制，測試**沒有在本機跑**，交給 PR 的 GitHub Actions CI（`mvn -B test`）。
+- PR #346 CI（commit 1）全部通過：Server tests（6m53s）、Server (Java 17 / Maven)、Semantic gap、Launcher、Build-Package.ps1 zip。
 
 ### 推測
 - `STATUS_FREEZE`（4000，怪物凍結技能／方塊）在 LiTo 也寫進同一個 `freezeActive` 租約：怪物對玩家的凍結來源沒有逐條追。
@@ -25,7 +26,6 @@
 - `effectivePatiencePhysicalReduction` 不為 0 ⇔ 堅忍生效（只讀了 `ClientSession` 分派到 `GameHub`，沒讀 `GameHub` 細節）。
 
 ### 待驗證
-- CI 結果（push 後看 PR）。
 - 實機：使用風／生命／形象之魔眼時，SP 面板**不再**多 1，但魔法傷害仍含 +1（交 Codex）。
 
 ## 產出路徑
