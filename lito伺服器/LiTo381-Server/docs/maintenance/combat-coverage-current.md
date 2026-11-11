@@ -8,86 +8,86 @@ SQL skill_level 僅用於分組，尚需驗證各職業實際可學／可施放�
 
 | ID | 名稱 | SQL 分組 | catalog 類型 | 處理器存在 | 分類 | 完整行為 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 初級治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 2 | 日光術 | 共通魔法／法師 | LightSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 3 | 保護罩 | 共通魔法／法師 | ShieldSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 4 | 光箭 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 5 | 指定傳送 | 共通魔法／法師 |  | 是 | 獨立處理器，待行為驗證 | 待驗證 |
-| 6 | 冰箭 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 7 | 風刃 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 8 | 神聖武器 | 共通魔法／法師 | WeaponBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 9 | 解毒術 | 共通魔法／法師 | CurseRemovalSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 10 | 寒冷戰慄 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 11 | 毒咒 | 共通魔法／法師 | PoisonSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 12 | 擬似魔法武器 | 共通魔法／法師 | ItemWeaponEnchantSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 13 | 無所遁形術 | 共通魔法／法師 | DetectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 14 | 負重強化 | 共通魔法／法師 | WeightSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 15 | 火箭 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 16 | 地獄之牙 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 17 | 極光雷電 | 共通魔法／法師 | LineAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 18 | 起死回生術 | 共通魔法／法師 | TurnUndeadSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 19 | 中級治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 20 | 闇盲咒術 | 共通魔法／法師 | BlindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 21 | 鎧甲護持 | 共通魔法／法師 | ItemArmorEnchantSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 22 | 寒冰氣息 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 23 | 能量感測 | 共通魔法／法師 | RevealWeaknessSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 1 | 初級治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 2 | 日光術 | 共通魔法／法師 | LightSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 3 | 保護罩 | 共通魔法／法師 | ShieldSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 4 | 光箭 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 5 | 指定傳送 | 共通魔法／法師 |  | 是 | 獨立處理器，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 6 | 冰箭 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 7 | 風刃 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 8 | 神聖武器 | 共通魔法／法師 | WeaponBuffSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 9 | 解毒術 | 共通魔法／法師 | CurseRemovalSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 10 | 寒冷戰慄 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 11 | 毒咒 | 共通魔法／法師 | PoisonSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 12 | 擬似魔法武器 | 共通魔法／法師 | ItemWeaponEnchantSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 13 | 無所遁形術 | 共通魔法／法師 | DetectionSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 14 | 負重強化 | 共通魔法／法師 | WeightSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 15 | 火箭 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 16 | 地獄之牙 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 17 | 極光雷電 | 共通魔法／法師 | LineAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 18 | 起死回生術 | 共通魔法／法師 | TurnUndeadSpell | 是 | 已定義，待行為驗證 | T107 已修正 probability_value；消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 19 | 中級治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 20 | 闇盲咒術 | 共通魔法／法師 | BlindSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 21 | 鎧甲護持 | 共通魔法／法師 | ItemArmorEnchantSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 22 | 寒冰氣息 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 23 | 能量感測 | 共通魔法／法師 | RevealWeaknessSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
 | 24 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 25 | 燃燒的火球 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 26 | 通暢氣脈術 | 共通魔法／法師 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 27 | 壞物術 | 共通魔法／法師 | WeaponBreakSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 28 | 吸血鬼之吻 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 29 | 緩速術 | 共通魔法／法師 | EntangleSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 30 | 巖牢 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 31 | 魔法屏障 | 共通魔法／法師 | CounterMagicSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 32 | 冥想術 | 共通魔法／法師 | RegenSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 33 | 木乃伊的詛咒 | 共通魔法／法師 | ParalysisSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 34 | 極道落雷 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 35 | 高級治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 36 | 迷魅術 | 共通魔法／法師 | TamingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 37 | 聖潔之光 | 共通魔法／法師 | CurseRemovalSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 38 | 冰錐 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 39 | 魔力奪取 | 共通魔法／法師 | ManaDrainSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 40 | 黑闇之影 | 共通魔法／法師 | BlindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 41 | 造屍術 | 共通魔法／法師 | CreateZombieSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 42 | 體魄強健術 | 共通魔法／法師 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 43 | 加速術 | 共通魔法／法師 | HasteSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 44 | 魔法相消術 | 共通魔法／法師 | CancellationSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 45 | 地裂術 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 46 | 烈炎術 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 47 | 弱化術 | 共通魔法／法師 | WeaknessSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 48 | 祝福魔法武器 | 共通魔法／法師 | WeaponBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 49 | 體力回復術 | 共通魔法／法師 | GroupHealingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 50 | 冰矛圍籬 | 共通魔法／法師 | FreezeAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 51 | 召喚術 | 共通魔法／法師 | SummonSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 52 | 神聖疾走 | 共通魔法／法師 | MovementBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 53 | 龍捲風 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 54 | 強力加速術 | 共通魔法／法師 | SelfHasteSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 55 | 狂暴術 | 共通魔法／法師 | CombatBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 56 | 疾病術 | 共通魔法／法師 | WeaknessSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 57 | 全部治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 58 | 火牢 | 共通魔法／法師 | GroundSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 59 | 冰雪暴 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 60 | 隱身術 | 共通魔法／法師 | InvisibilitySpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 61 | 返生術 | 共通魔法／法師 | ResurrectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 62 | 震裂術 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 63 | 治癒能量風暴 | 共通魔法／法師 | GroundSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 64 | 魔法封印 | 共通魔法／法師 | SilenceSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 65 | 雷霆風暴 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 66 | 沉睡之霧 | 共通魔法／法師 | SleepSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 67 | 變形術 | 共通魔法／法師 | PolymorphSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 68 | 聖結界 | 共通魔法／法師 | DamageProtectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 69 | 集體傳送術 | 共通魔法／法師 | MassTeleportSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 70 | 火風暴 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 71 | 藥水霜化術 | 共通魔法／法師 | DecayPotionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 72 | 強力無所遁形術 | 共通魔法／法師 | CounterDetectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 73 | 創造魔法武器 | 共通魔法／法師 | MagicalWeaponSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 74 | 流星雨 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 75 | 終極返生術 | 共通魔法／法師 | ResurrectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 76 | 集體緩速術 | 共通魔法／法師 | MassSlowSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 77 | 究極光裂術 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 78 | 絕對屏障 | 共通魔法／法師 | AbsoluteBarrierSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 79 | 靈魂昇華 | 共通魔法／法師 | AdvanceSpiritSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 80 | 冰雪颶風 | 共通魔法／法師 | FreezeAttackSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 25 | 燃燒的火球 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 26 | 通暢氣脈術 | 共通魔法／法師 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 27 | 壞物術 | 共通魔法／法師 | WeaponBreakSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 28 | 吸血鬼之吻 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 29 | 緩速術 | 共通魔法／法師 | EntangleSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 30 | 巖牢 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 31 | 魔法屏障 | 共通魔法／法師 | CounterMagicSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 32 | 冥想術 | 共通魔法／法師 | RegenSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 33 | 木乃伊的詛咒 | 共通魔法／法師 | ParalysisSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 34 | 極道落雷 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 35 | 高級治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 36 | 迷魅術 | 共通魔法／法師 | TamingSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 37 | 聖潔之光 | 共通魔法／法師 | CurseRemovalSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 38 | 冰錐 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 39 | 魔力奪取 | 共通魔法／法師 | ManaDrainSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 40 | 黑闇之影 | 共通魔法／法師 | BlindSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 41 | 造屍術 | 共通魔法／法師 | CreateZombieSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 42 | 體魄強健術 | 共通魔法／法師 | AbilityBuffSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 43 | 加速術 | 共通魔法／法師 | HasteSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 44 | 魔法相消術 | 共通魔法／法師 | CancellationSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 45 | 地裂術 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 46 | 烈炎術 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 47 | 弱化術 | 共通魔法／法師 | WeaknessSpell | 是 | 已定義，待行為驗證 | T107 已修正 lawful −10；消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 48 | 祝福魔法武器 | 共通魔法／法師 | WeaponBuffSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 49 | 體力回復術 | 共通魔法／法師 | GroupHealingSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 50 | 冰矛圍籬 | 共通魔法／法師 | FreezeAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 51 | 召喚術 | 共通魔法／法師 | SummonSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 52 | 神聖疾走 | 共通魔法／法師 | MovementBuffSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 53 | 龍捲風 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 54 | 強力加速術 | 共通魔法／法師 | SelfHasteSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 55 | 狂暴術 | 共通魔法／法師 | CombatBuffSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 56 | 疾病術 | 共通魔法／法師 | WeaknessSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 57 | 全部治癒術 | 共通魔法／法師 | HealingSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 58 | 火牢 | 共通魔法／法師 | GroundSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 59 | 冰雪暴 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 60 | 隱身術 | 共通魔法／法師 | InvisibilitySpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 61 | 返生術 | 共通魔法／法師 | ResurrectionSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 62 | 震裂術 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 63 | 治癒能量風暴 | 共通魔法／法師 | GroundSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 64 | 魔法封印 | 共通魔法／法師 | SilenceSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 65 | 雷霆風暴 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 66 | 沉睡之霧 | 共通魔法／法師 | SleepSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 67 | 變形術 | 共通魔法／法師 | PolymorphSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 68 | 聖結界 | 共通魔法／法師 | DamageProtectionSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 69 | 集體傳送術 | 共通魔法／法師 | MassTeleportSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 70 | 火風暴 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 71 | 藥水霜化術 | 共通魔法／法師 | DecayPotionSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 72 | 強力無所遁形術 | 共通魔法／法師 | CounterDetectionSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 73 | 創造魔法武器 | 共通魔法／法師 | MagicalWeaponSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 74 | 流星雨 | 共通魔法／法師 | AreaAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 75 | 終極返生術 | 共通魔法／法師 | ResurrectionSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 76 | 集體緩速術 | 共通魔法／法師 | MassSlowSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，自施語意不同；實機待驗證（skills-wizard.md） |
+| 77 | 究極光裂術 | 共通魔法／法師 | AttackSpell | 是 | 已定義，待行為驗證 | T107 部分：消耗／數值／期限一致，lawful 未套用；實機待驗證（skills-wizard.md） |
+| 78 | 絕對屏障 | 共通魔法／法師 | AbsoluteBarrierSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 79 | 靈魂昇華 | 共通魔法／法師 | AdvanceSpiritSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
+| 80 | 冰雪颶風 | 共通魔法／法師 | FreezeAttackSpell | 是 | 已定義，待行為驗證 | T107 消耗／數值／期限一致；實機待驗證（skills-wizard.md） |
 | 81 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 82 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 83 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
