@@ -48,9 +48,9 @@ final class OtherClassSkillServer1ParityTest {
 
     /**
      * S1 {@code L1SkillUse.useConsume}（:2047）每次施放都 {@code addLawful(skills.lawful)}；SQL lawful≠0 但 LiTo
-     * 沒有套用的技能。103 與 T107 的 20／40 同一個 BlindSpell 缺口（skills-wizard.md §4.1），未在本 PR 修改。
+     * 沒有套用的技能。#309 時是 {103}（BlindSpell 缺口），#325 補上 BlindSpell.lawfulDelta 後必須為空。
      */
-    private static final Set<Integer> LAWFUL_NOT_APPLIED = Set.of(103);
+    private static final Set<Integer> LAWFUL_NOT_APPLIED = Set.of();
 
     private static List<Row> rows;
 
