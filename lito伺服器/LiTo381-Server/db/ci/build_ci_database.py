@@ -31,7 +31,7 @@ SOURCES = [(1, "太陽神", "380_ac"), (2, "月亮神", "380_ac_1"), (3, "伺服
 
 
 def read(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
+    return path.read_text(encoding="utf-8-sig")
 
 
 def create_statement(text: str, table: str) -> str:
@@ -132,7 +132,7 @@ def control_database() -> str:
     parts.append(create)
     for _, _, db in SOURCES:
         parts.append(f"SET @lito_source = '{db}';" + migration.split("-- 現場已")[0])
-    return "".join(parts)
+    return "\n".join(parts)
 
 
 def grants(user: str, password: str) -> str:
