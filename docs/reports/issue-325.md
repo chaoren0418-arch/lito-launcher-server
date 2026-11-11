@@ -38,6 +38,7 @@
 - 靜態確認扣 MP 的入口完整：`*_effectiveMpCost_III` 對這 5 種 record 的全部呼叫點只有上面 11 個處理器（ClientSession 9 個＋`NativeBlindSceneAction`、`NativeWeaponBreakBattleCompanion`）；其他 `AttackSpell_effectiveMpCost_III` 呼叫點都是 Freeze／Area／Line／Bounce 等其他 record 的處理器。
 - 測試 fixture 中 SQL lawful≠0 的技能：法師 10、11、20、27、28、33、40、41、47、51、56、59、66、77、80；其他職業只有 103；妖精 0 個——新欄位不會讓妖精／其他職業的平行比對失敗。
 - **PR #332 CI（run 43029953599）全部通過**：Server（Maven 建置）、Server tests、Launcher、Build-Package、Semantic gap。`server-test-evidence` 的 1284 個 TEST-*.xml 加總 **Tests run 7327、Failures 0、Errors 0、Skipped 117**；`WizardSkillServer1ParityTest` 250 個、`OtherClassSkillServer1ParityTest` 197 個全過且未略過，其中 `issue325LawfulDeltasMatchSource`、`issue325EveryCastHandlerAppliesLawful`、兩個 `lawfulGapListIsExact` 都有實際執行。既有封包整合測試沒有因多送 `S_CHANGE_ALIGNMENT` 而失敗。
+- 合併 main 後的 head `3d65347e`：build run 43033208207 第 1 次嘗試 `ClientSessionWorldRescueFollowerTest.restoredSearcherStartCreatesFollowerAndDefersRewardUntilArrival`（`:53`，比對 NPC 封包含當下朝向）失敗 1 個；同一 commit 只重跑失敗 job（第 2 次嘗試）**全部通過**。該測試走 NPC 對話／救援隨從路徑，本任務的 11 個呼叫點都不在這條路上，main 同期 CI 也通過——判定為與本任務無關的偶發失敗。
 
 ### 推測
 - 既有封包整合測試（`ClientSessionNativeTournamentEconomyTest` 寒冷戰慄／究極光裂術、`ClientSessionClassicCastleTowerMagicTest`、`ClientSessionClassicWorldMonsterAggressionIntegrationTest` 壞物術）都用「找到某 opcode」或「包含某封包」的方式判斷，多一個 `S_CHANGE_ALIGNMENT` 應不影響；以 CI 為準。
@@ -55,6 +56,7 @@
 - 文件：`docs/design/skills-wizard.md`、`docs/design/skills-others.md`、本報告
 
 ## 給下一棒的提示
+- `ClientSessionWorldRescueFollowerTest:53` 有偶發失敗（推測：斷言用 `classicWorldNpcHeading` 的當下值重建封包，NPC 朝向若在送封包後被改動就對不上）；再遇到可先重跑，若頻繁出現建議另開任務把斷言改成不依賴朝向。
 - 以後新增「施放會改正義值」的技能：record 加 `lawfulDelta`，在扣 MP 後、`S_MANA_POINT` 前呼叫 `applySpellLawfulDelta`，並把處理器加進 `issue325EveryCastHandlerAppliesLawful` 的清單。
 - 找處理器最快的方法：搜尋 `<Record>_effectiveMpCost_III` 的呼叫點（每個扣 MP 的入口都會經過 `NativeSkillConsumptionBridges`）。
 - 若使用者之後決定競技場「維持」不改正義值，只要把 9 個 catalog 值改回 0、兩個 `LAWFUL_NOT_APPLIED` 清單改回原值即可；處理器呼叫在 delta=0 時是 no-op。
