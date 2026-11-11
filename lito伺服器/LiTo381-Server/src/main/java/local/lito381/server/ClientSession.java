@@ -52321,16 +52321,16 @@ final class ClientSession implements Runnable {
 
                            int var40 = var8 ? 10 : (var10 ? var9.battleArmorClass() : var20.armorClass());
                            int var22 = var40 < 0 ? ThreadLocalRandom.current().nextInt(1, -var40 + 1) : 0;
-                           int var23 = companionHitChanceAgainst(var6.level(), var10 ? var9 : null, var40, ThreadLocalRandom.current().nextInt(1, 21), var22, var4);
+                           int var23 = var20 != null
+                              ? companionNpcTargetHitChance(var1, var6.level(), var40, ThreadLocalRandom.current().nextInt(1, 21), var22)
+                              : companionHitChanceAgainst(var6.level(), var10 ? var9 : null, var40, ThreadLocalRandom.current().nextInt(1, 21), var22, var4);
                            boolean var24 = ThreadLocalRandom.current().nextInt(1, 101) <= var23;
                            int var25 = 0;
                            if (var24) {
                               int var26 = ThreadLocalRandom.current().nextInt(var6.level());
                               int var27 = ThreadLocalRandom.current().nextInt(100);
                               if (var20 != null) {
-                                 int var28 = companionNpcPhysicalDamage(
-                                    var6.level(), var6.strength(), var26, var27, this.requiredPhysicalGrowthStats().damage(false, var6.strength())
-                                 );
+                                 int var28 = companionNpcTargetDamage(var1, var6.level(), var6.strength(), var26, var27);
                                  var28 = Math.max(0, Math.addExact(var28, var1.armBreakerMeleeDamageModifier(System.nanoTime())));
                                  int var29 = BattlePhysicalDefense.npcAcMaximum(var20);
                                  int var30 = var29 == 0 ? 0 : ThreadLocalRandom.current().nextInt(var29);
@@ -52562,16 +52562,50 @@ final class ClientSession implements Runnable {
         return Math.max(0, (int)(d *= CombatRules.replace(0.3, "PET_TO_PC_DAMAGE_MULTIPLIER")));
     }
 
-    private static int companionNpcPhysicalDamage(int level, int strength,
-                                                  int levelRoll, int criticalRoll,
-                                                  int strengthDamage) {
-        if (level <= 0 || strength <= 0 || levelRoll < 0 || levelRoll >= level
-                || criticalRoll < 0 || criticalRoll >= 100) {
-            throw new IllegalArgumentException("invalid companion NPC damage roll");
-        }
-        double damage = levelRoll + strength * 0.8 + strengthDamage;
-        if (criticalRoll < 15) damage *= 1.8;
-        return Math.max(0, (int) damage);
+    /**
+     * Issue #340: an arena summon striking an NPC is L1AttackNpc NPC_NPC
+     * (calcNpcHit:200-250, Lv + 3, BOSS +30), not the NPC -> PC envelope.
+     */
+    private static int companionNpcTargetHitChance(BattleCompanion companion, int level,
+                                                   int targetArmorClass, int d20,
+                                                   int negativeAcRoll) {
+        return companionNpcTargetHitChance(level, companionSourceBoss(companion),
+                targetArmorClass, d20, negativeAcRoll);
+    }
+
+    static int companionNpcTargetHitChance(int level, boolean boss, int targetArmorClass,
+                                           int d20, int negativeAcRoll) {
+        return ClassicWorldCompanionNpcPhysicalAttack.hitRate(level, 0, boss,
+                targetArmorClass, d20, targetArmorClass < 0 ? negativeAcRoll : 0);
+    }
+
+    /**
+     * Issue #340: summon branch of L1AttackNpc.calcNpcDamage:409-415
+     * ({@code nextInt(Lv) + STR/2 + STRD}, then npcDmgMode) before
+     * calcNpcDamageReduction, which callers apply via BattlePhysicalDefense.
+     */
+    private static int companionNpcTargetDamage(BattleCompanion companion, int level,
+                                                int strength, int levelRoll,
+                                                int criticalRoll) {
+        boolean qualified = companion.npcDefenseQualified();
+        return companionNpcTargetDamage(level, strength, levelRoll, criticalRoll,
+                qualified && ClassicWorldCompanionNpcPhysicalAttack.undeadNight(
+                        companion.undead(), System.currentTimeMillis()),
+                qualified && companion.boss(), companion.weaponBreakStacks());
+    }
+
+    static int companionNpcTargetDamage(int level, int strength, int levelRoll,
+                                        int criticalRoll, boolean undeadNight,
+                                        boolean boss, int weaponBreakStacks) {
+        int clampedStrength = Math.max(0, strength);
+        return Math.max(0, (int) ClassicWorldCompanionNpcPhysicalAttack.nonPetBeforeReduction(
+                level, clampedStrength,
+                CombatNpcPhysicalSource.npcStrengthDamage(clampedStrength),
+                levelRoll, criticalRoll, 0, undeadNight, boss, 10, weaponBreakStacks));
+    }
+
+    private static boolean companionSourceBoss(BattleCompanion companion) {
+        return companion.npcDefenseQualified() && companion.boss();
     }
 
     private static int companionDefenseMaximum(int targetType, int targetArmorClass) {
@@ -77248,7 +77282,8 @@ final class ClientSession implements Runnable {
         int n = Math.max(Math.abs(snapshot2.x() - snapshot.x()), Math.abs(snapshot2.y() - snapshot.y()));
         int n2 = this.config.uncannyDodgeHitFixtureD20() > 0 ? this.config.uncannyDodgeHitFixtureD20() : ThreadLocalRandom.current().nextInt(1, 21);
         int n3 = snapshot.armorClass() < 0 ? ThreadLocalRandom.current().nextInt(1, BattleNpcPhysicalAttack.negativeAcRollMaximum(snapshot.armorClass()) + 1) : 0;
-        int n4 = BattleNpcPhysicalAttack.hitChance(snapshot2.template().level(), 0, snapshot.armorClass(), 0, n2, n3);
+        // Issue #340: monster -> pet/summon is NPC_NPC (L1AttackNpc.calcNpcHit:200-250, Lv + 3, BOSS +30).
+        int n4 = ClassicWorldCompanionNpcPhysicalAttack.hitRate(snapshot2.template().level(), 0, snapshot2.template().boss(), snapshot.armorClass(), n2, n3);
         int n5 = this.config.uncannyDodgeHitFixtureD100() > 0 ? this.config.uncannyDodgeHitFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
         boolean bl2 = !this.config.battlePhysicalHitEnabled() || BattleNpcPhysicalAttack.hits(n4, n5);
         long l2 = System.nanoTime();
@@ -77267,10 +77302,8 @@ final class ClientSession implements Runnable {
             int n11 = CombatNpcPhysicalSource.npcStrengthDamage(n9);
             int n12 = ThreadLocalRandom.current().nextInt(snapshot2.template().level());
             int n13 = ThreadLocalRandom.current().nextInt(100);
-            double d = NativeNpcWeaponBreakDamage.sourceExact(n10, n9, n11, n12, n13, switch (snapshot2.template().undead()) {
-                case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(System.currentTimeMillis());
-                default -> false;
-            }, snapshot2.template().boss());
+            // Issue #340: L1AttackNpc.calcNpcDamage:409-415 (STR/2 + STRD), not calcPcDamage's STR*0.8.
+            double d = ClassicWorldCompanionNpcPhysicalAttack.nonPetBeforeReduction(n10, n9, n11, n12, n13, 0, ClassicWorldCompanionNpcPhysicalAttack.undeadNight(snapshot2.template().undead(), System.currentTimeMillis()), snapshot2.template().boss(), 10, 0);
             n7 = Math.max((int)d, 0);
             int n14 = NativeNpcWeaponBreakDamage.afterStacks(d, n8);
             bl4 = n <= 1 || snapshot2.template().bowActionId() <= 0;
@@ -77316,7 +77349,8 @@ final class ClientSession implements Runnable {
         int n = Math.max(Math.abs(snapshot2.x() - snapshot.x()), Math.abs(snapshot2.y() - snapshot.y()));
         int n2 = this.config.uncannyDodgeHitFixtureD20() > 0 ? this.config.uncannyDodgeHitFixtureD20() : ThreadLocalRandom.current().nextInt(1, 21);
         int n3 = ThreadLocalRandom.current().nextInt(1, BattleNpcPhysicalAttack.negativeAcRollMaximum(-15) + 1);
-        int n4 = BattleNpcPhysicalAttack.hitChance(snapshot2.template().level(), 0, -15, 0, n2, n3);
+        // Issue #340: monster -> Dspy escort is NPC_NPC (L1AttackNpc.calcNpcHit:200-250).
+        int n4 = ClassicWorldCompanionNpcPhysicalAttack.hitRate(snapshot2.template().level(), 0, snapshot2.template().boss(), -15, n2, n3);
         int n5 = this.config.uncannyDodgeHitFixtureD100() > 0 ? this.config.uncannyDodgeHitFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
         boolean bl = !this.config.battlePhysicalHitEnabled() || BattleNpcPhysicalAttack.hits(n4, n5);
         int n6 = 0;
@@ -77329,10 +77363,8 @@ final class ClientSession implements Runnable {
             int n11 = CombatNpcPhysicalSource.npcStrengthDamage(n9);
             int n12 = ThreadLocalRandom.current().nextInt(snapshot2.template().level());
             int n13 = ThreadLocalRandom.current().nextInt(100);
-            double d = NativeNpcWeaponBreakDamage.sourceExact(n10, n9, n11, n12, n13, switch (snapshot2.template().undead()) {
-                case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(System.currentTimeMillis());
-                default -> false;
-            }, snapshot2.template().boss());
+            // Issue #340: L1AttackNpc.calcNpcDamage:409-415 (STR/2 + STRD).
+            double d = ClassicWorldCompanionNpcPhysicalAttack.nonPetBeforeReduction(n10, n9, n11, n12, n13, 0, ClassicWorldCompanionNpcPhysicalAttack.undeadNight(snapshot2.template().undead(), System.currentTimeMillis()), snapshot2.template().boss(), 10, 0);
             n7 = Math.max((int)d, 0);
             int n14 = NativeNpcWeaponBreakDamage.afterStacks(d, n8);
             SourceNpcPhysicalStats object = ClassicWorldDspyCatalog.DSPY_PHYSICAL;
@@ -79264,14 +79296,14 @@ final class ClientSession implements Runnable {
             }
             n3 = bl3 ? 10 : (bl2 ? clientSession2.battleArmorClass() : sourceNpcPhysicalStats.armorClass());
             int n8 = n3 < 0 ? ThreadLocalRandom.current().nextInt(1, -n3 + 1) : 0;
-            int n9 = ClientSession.companionHitChanceAgainst(snapshot.level(), bl2 ? clientSession2 : null, n3, ThreadLocalRandom.current().nextInt(1, 21), n8, l2);
+            int n9 = sourceNpcPhysicalStats != null ? ClientSession.companionNpcTargetHitChance(battleCompanion, snapshot.level(), n3, ThreadLocalRandom.current().nextInt(1, 21), n8) : ClientSession.companionHitChanceAgainst(snapshot.level(), bl2 ? clientSession2 : null, n3, ThreadLocalRandom.current().nextInt(1, 21), n8, l2);
             boolean bl7 = ThreadLocalRandom.current().nextInt(1, 101) <= n9;
             int n10 = 0;
             if (bl7) {
                 int n11 = ThreadLocalRandom.current().nextInt(snapshot.level());
                 int n12 = ThreadLocalRandom.current().nextInt(100);
                 if (sourceNpcPhysicalStats != null) {
-                    var29_39 = ClientSession.companionNpcPhysicalDamage(snapshot.level(), snapshot.strength(), n11, n12, this.requiredPhysicalGrowthStats().damage(false, snapshot.strength()));
+                    var29_39 = ClientSession.companionNpcTargetDamage(battleCompanion, snapshot.level(), snapshot.strength(), n11, n12);
                     var29_39 = Math.max(0, Math.addExact(var29_39, battleCompanion.armBreakerMeleeDamageModifier(System.nanoTime())));
                     n2 = BattlePhysicalDefense.npcAcMaximum(sourceNpcPhysicalStats);
                     var31_45 = n2 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n2);
@@ -79460,14 +79492,14 @@ final class ClientSession implements Runnable {
             }
             n3 = bl3 ? 10 : (bl2 ? clientSession2.battleArmorClass() : sourceNpcPhysicalStats.armorClass());
             int n8 = n3 < 0 ? ThreadLocalRandom.current().nextInt(1, -n3 + 1) : 0;
-            int n9 = ClientSession.companionHitChanceAgainst(snapshot.level(), bl2 ? clientSession2 : null, n3, ThreadLocalRandom.current().nextInt(1, 21), n8, l2);
+            int n9 = sourceNpcPhysicalStats != null ? ClientSession.companionNpcTargetHitChance(battleCompanion, snapshot.level(), n3, ThreadLocalRandom.current().nextInt(1, 21), n8) : ClientSession.companionHitChanceAgainst(snapshot.level(), bl2 ? clientSession2 : null, n3, ThreadLocalRandom.current().nextInt(1, 21), n8, l2);
             boolean bl7 = ThreadLocalRandom.current().nextInt(1, 101) <= n9;
             int n10 = 0;
             if (bl7) {
                 int n11 = ThreadLocalRandom.current().nextInt(snapshot.level());
                 int n12 = ThreadLocalRandom.current().nextInt(100);
                 if (sourceNpcPhysicalStats != null) {
-                    var30_40 = ClientSession.companionNpcPhysicalDamage(snapshot.level(), snapshot.strength(), n11, n12, this.requiredPhysicalGrowthStats().damage(false, snapshot.strength()));
+                    var30_40 = ClientSession.companionNpcTargetDamage(battleCompanion, snapshot.level(), snapshot.strength(), n11, n12);
                     var30_40 = Math.max(0, Math.addExact(var30_40, battleCompanion.armBreakerMeleeDamageModifier(System.nanoTime())));
                     n2 = BattlePhysicalDefense.npcAcMaximum(sourceNpcPhysicalStats);
                     var32_46 = n2 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n2);
