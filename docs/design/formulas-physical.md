@@ -88,6 +88,7 @@
 | D9 | 一般武器少了職業攻擊等級補正 | **對齊 1-伺服器** | `L:BattlePhysicalDamage.withClassAttackLevel`：倍率之後、減傷之前加 `getAttackLevel`（同 S1:`~/model/L1AttackPc.java:860` `pcDmgMode`）；接在競技場、WORLD 打怪、WORLD PvP 三條物理路徑；沒命中、奇古獸不加 | `d9ClassAttackLevelMatchesGetAttackLevelForEveryClass`、`d9TermIsAddedAfterTheMultiplierLikePcDmgMode`、`d9SkipsMissesAndKiringkuWhichAlreadyAddsItsOwnTerm` | 全職業物理每下 +Lv/6～Lv/20（52 級騎士 +8） |
 | D11 | PvE 屬性抗性用弱點 ±50 代替 NPC 四屬性抗性 | **維持 LiTo** | `L:BattlePhysicalOffense.attributeResistance` | `d11NpcElementalResistanceStaysTheWeakAttributePlusMinusFifty` | 不變 |
 | D12 | 祝福旗標 0／1 慣例 | **正確性修正**（不需裁定） | `L:BattlePhysicalOffense.nativeBlessingFromSource`；`L:LegacyEquipmentMagicLoader` 的武器樣板 `bless` 與箭／飛刀 `etcitem.bless` 在載入時換算 | `d12SourceBlessIsSwappedFromInternalToNativeConvention`、`d12OnlyADatabaseBlessedWeaponRollsTheD4AgainstUndeadLikeCalcMaterialBlessDmg`、`d12ProjectileBlessFromEtcitemUsesTheSameConversion` | 一般武器打不死系不再多 d4；祝福武器才有 |
+| D12 補（T120／#339） | 祝福來源：樣板 vs. 物品實例；幻象 bless=3 | **對齊 1-伺服器（看樣板）**；幻象可載入 | `L:NativeDeItemInventory.updatePhysical` 不再用物品實例 bless 覆寫戰鬥祝福；`L:RuntimeInventory` 租借武器改用 `rental-item-definitions-380.tsv` 樣板 `bless` 經 `nativeBlessingFromSource` 換算；`SourceWeaponCombatTraits`／`SourceProjectilePhysicalStats` 接受 0..3 | `ItemBlessConsistencyT120Test` | 幻象之劍／弓裝備後不再丟例外、也不擲祝福 d4；13 把租借武器（樣板 bless=0）不再被當成祝福武器 |
 
 §8.4 N1（NPC 打玩家的閃避）與 H7 是同一條規則：H7 維持，N1 也跟著維持 LiTo 直接扣。
 

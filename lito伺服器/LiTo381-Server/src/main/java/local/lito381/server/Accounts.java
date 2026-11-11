@@ -2997,7 +2997,9 @@ record SourceWeaponCombatTraits(
     }
 
     SourceWeaponCombatTraits {
-        if (material < 0 || material > 22 || blessing < 0 || blessing > 2
+        // T120 (#339): native blessing 0..3; 3 is the illusion state that
+        // 380_db weapon rows 幻象之劍/幻象之弓 carry (1-伺服器 BLESS_ILLUSION).
+        if (material < 0 || material > 22 || blessing < 0 || blessing > 3
                 || !switch (attributeKind) {
                     case 0, 1, 2, 4, 8, 16, 32, 64, 128 -> true;
                     default -> false;
@@ -3044,7 +3046,7 @@ record SourceProjectilePhysicalStats(
         if (objectId < 0 || objectId > 0xFFFF_FFFFL || itemId < 0
                 || (useType != 0 && useType != -2 && useType != -3)
                 || damageSmall < 0 || damageLarge < 0
-                || material < 0 || material > 22 || blessing < 0 || blessing > 2
+                || material < 0 || material > 22 || blessing < 0 || blessing > 3
                 || arrowGfx < -1 || arrowGfx > 0xFFFF || count < 0) {
             throw new IllegalArgumentException("invalid source projectile snapshot");
         }

@@ -1461,7 +1461,11 @@ final class RuntimeInventory {
             result = result.withCombatTraits(new SourceWeaponCombatTraits(
                     ClassicWorldDropCatalog.materialCode(
                             rentalSource.fields().get("material")),
-                    item.blessing(), 0, 0, 0,
+                    // T120 (#339): template bless (1-伺服器 L1AttackPc.java:113),
+                    // stored in the 1-伺服器 internal convention like 380_db.
+                    BattlePhysicalOffense.nativeBlessingFromSource(
+                            rentalSource.integer("bless")),
+                    0, 0, 0,
                     rentalSource.integer("dmg_cri_chance"),
                     rentalSource.decimal("dmg_cri"),
                     rentalSource.integer("dmg_max_chance"),
