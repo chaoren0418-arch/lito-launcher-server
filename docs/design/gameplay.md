@@ -57,7 +57,8 @@
 - 最少人數 = `max(模式最少人數, 隊伍模式 ? 2 : 1)`；觀戰者與假人不計（`S/NativeRoomRules.java:82-86`）。
 - 只有 PvP 模式能打玩家；隊伍模式不能打同隊、任何模式不能打自己（`S/BattleRules.java:337-343`）。
 - 同一個玩家的死亡只算第一次（重複死亡封包不重複計分）；擊殺者 +1 擊殺數（`S/BattleRules.java:345-357`）。
-- 進場時 HP／MP 一律補滿（見 §5.5）。
+- 進場時 HP／MP 一律補滿（D2 決定 A，正式規則 N5；`S/ClientSession.java` `resetBattleVitals`）。
+- 逾時沒有勝者＝**平手**：不記勝敗、不加減積分；攻城逾時仍為守方勝（D4 決定 B，T103 #310；`S/BattleRules.java` `MatchState.timeout`／`finishDraw`）。
 
 ### 2.2 寵物競賽（wire 0）
 
@@ -70,9 +71,9 @@
 | 勝者人數 | 2～4 人：第 1 名；5～7 人：前 2 名；8～10 人：前 3 名；必須在窗口內跑完 4 圈 | `S/BattlePetRaceCourseCatalog.java:228-249` |
 | 敗者 | 其餘參戰者全部記敗 | `S/BattleRules.java:561-569` |
 | 死亡 | 不出局，回到出生點繼續（`playerDefeated` 回傳復活） | `S/BattleRules.java:359` |
-| 逾時 | 沒有人跑完 → 無勝者，**全員記敗** | `S/BattleRules.java:525-540,561-569`；`S/GameHub.java:10266-10268` |
+| 逾時 | 沒有人跑完 → **平手，不記勝敗**（D4；T103 前為全員記敗） | `S/BattleRules.java` `timeout`／`finishDraw`；`S/GameHub.java:10098-10101` |
 | 斷線 | 跑者斷線不中止比賽；斷線者若是第一名跑完者記勝，否則記斷線敗 | `S/BattleRules.java:452-460`；`S/GameHub.java:13070-13093` |
-| 〔不一致〕 | `Mode` 表的 respawn 欄是 `false`，但死亡處理回傳「復活」；實際行為以死亡處理為準 | `S/BattleRules.java:39` 對 `:359` |
+| respawn 欄 | `Mode` 表的 respawn 欄已改為 `true`，與死亡處理（回傳「復活」）一致；行為不變（D8，T103 #310） | `S/BattleRules.java` `PET_RACE(...)` 對 `playerDefeated` |
 
 ### 2.3 死鬥（wire 1）
 
@@ -82,7 +83,7 @@
 | 死亡 | **不復活**；死亡即出局 | `S/BattleRules.java:42,360` |
 | 勝利 | 開場有 ≥2 隊、只剩 1 隊有人活著 → 該隊全員勝（含已陣亡的隊友） | `S/BattleRules.java:579-590,571-577` |
 | 全滅 | 所有人都死 → 無勝者，全員記敗 | `S/BattleRules.java:580` |
-| 逾時 180 秒 | 不比較擊殺數，無勝者，**全員記敗** | `S/BattleRules.java:531-534` |
+| 逾時 180 秒 | 不比較擊殺數，**平手，不記勝敗**（D4） | `S/BattleRules.java` `timeout` |
 | 測試房 | 頻道預設房（Local Lobby）的單人死鬥會加入 ArenaBot（§3.7） | `S/NativeRoomRules.java:51-53` |
 
 ### 2.4 Quest Battle（wire 2）
@@ -94,7 +95,7 @@
 | 進度 | 清一波怪只記隊伍進度，**不會**直接結束比賽 | `S/BattleRules.java:403-411` |
 | 勝利 | 先打掉最終守護塔／最後象徵物的那一隊全員勝 | `S/BattleRules.java:379-401` |
 | 死亡 | 會復活，死亡不影響勝負 | `S/BattleRules.java:362-367` |
-| 逾時 600 秒 | 無勝者，全員記敗 | `S/BattleRules.java:531-534` |
+| 逾時 600 秒 | **平手，不記勝敗**（D4） | `S/BattleRules.java` `timeout` |
 
 ### 2.5 攻城（wire 3）
 
@@ -117,7 +118,7 @@
 | 目標 | 依序清完各波怪物與最終 Boss（有機率出現龍） | `S/BattleRules.java:224`；`S/GameHub.java:10213-10222` |
 | 勝利 | 打倒最終 Boss／龍 → **當時活著的成員**勝；已陣亡的成員記敗 | `S/BattleRules.java:417-425` |
 | 失敗 | 隊長陣亡、或全隊陣亡 → 全員記敗；隊員陣亡不復活但比賽繼續 | `S/BattleRules.java:368-372` |
-| 逾時 | 無勝者，全員記敗 | `S/BattleRules.java:531-534` |
+| 逾時 | **平手，不記勝敗**（D4；已陣亡、未斷線的成員也不記敗） | `S/BattleRules.java` `timeout` |
 | 斷線 | 斷線者記斷線敗，其餘人繼續；隊長斷線時交給第一位在場隊員 | `S/BattleRules.java:435-450,462-467`；`S/GameHub.java:13041-13068` |
 
 ### 2.7 Honor Match（wire 5）
@@ -127,7 +128,7 @@
 | 目標 | 打掉對方守護塔 | `S/BattleRules.java:220` |
 | 勝利 | 打掉守護塔的一方全員勝 | `S/BattleRules.java:379-389` |
 | 死亡 | **5 秒後在死亡位置復活**（不回出生點） | `S/GameHub.java:23-24,9932-9944`；`S/ClientSession.java:26734-26767` |
-| 逾時 600 秒 | 無勝者，全員記敗 | `S/BattleRules.java:531-534` |
+| 逾時 600 秒 | **平手，不記勝敗**（D4） | `S/BattleRules.java` `timeout` |
 
 ### 2.8 復活規則一覽
 
@@ -245,7 +246,8 @@
 | 情況 | 記錄 | 出處 |
 |---|---|---|
 | 勝者 | 勝 +1 | `S/BattleRules.java:561-569`；`S/SettlementSql.java:38-39` |
-| 參戰但不是勝者（含逾時無勝者、陣亡、Time Attack 已陣亡者） | 敗 +1 | `S/BattleRules.java:564-565` |
+| 參戰但不是勝者（含陣亡、Time Attack 打倒 Boss 時已陣亡者） | 敗 +1 |
+| 逾時無勝者（平手，D4；攻城除外） | 不記 | `S/BattleRules.java` `finishDraw`；`S/DurableBattleSettlement.java` `entry` 回傳 null | `S/BattleRules.java:564-565` |
 | 斷線 | 敗 +1，並標記「斷線」 | `S/DurableBattleSettlement.java:48`；`S/GameStateStore.java:5603-5608` |
 | 全員斷線（無效場） | 不記 | `S/TeamDisconnectSettlement.java:7` |
 | 觀戰者、測試房、GM 假人、ArenaBot | 不記 | `S/DurableBattleSettlement.java:45`；`S/ClientSession.java:87743-87746` |
@@ -271,7 +273,7 @@
 | 排行榜 | 總榜：積分→勝場→名字；月榜：本月積分→本月勝場→總積分→名字；榜單快照每天 05:00 更新 | `S/GameStateStore.java:5811-5854`；`:1098` |
 | 經驗與等級 | 勝 +100、敗 +25（料理可加成），LiTo 內部等級＝1＋經驗÷1000；**只在記憶體**，不寫 `characters` | `S/GameStateStore.java:5619-5624` |
 | **持久性** | 積分、斷線數、月計**不跨伺服器重啟**：從 `character_lito` 重新載入時只有勝敗，積分等欄位一律從 0 開始 | `S/SharedDatabase.java:169-175`；`S/GameStateStore.java:819-822`；`D/README.zh-TW.md:31` |
-| 〔待驗證〕 | 範例設定沒有列出 `battle.reward.*`；營運是否能改、正式機實際值為何，要看正式 `server.properties` | `D/config/server.properties.example` |
+| 設定 | 在 `config/server.properties` 加 `battle.reward.win`、`battle.reward.loss` 可改（範圍 0～1000000，修改後重啟生效）；沒寫就用程式預設 **勝 250、敗 50**，斷線敗扣 `battle.reward.loss`（預設 −50），最低 0（D1，T103）。範例設定 `.example` 目前沒有列這兩項（調度器閘門禁止改 `config/server.properties*`）。〔待驗證〕正式機實際值要看正式 `server.properties` | `S/ServerConfig.java:578-579`；`D/README.zh-TW.md` |
 | 「榮譽點數」 | 程式中沒有獨立的榮譽點數欄位（LC B17） | — |
 
 ### 4.4 Tournament 商店
@@ -317,7 +319,7 @@
 | N7 | 正式房假人 | 正式房不放 ArenaBot | `S/BattleRules.java:107-110` |
 | N8 | 天堂世界規則 | PK、粉名、安全區、地獄等世界規則不套到競技場 | `M/combat-parity-0.6.68.md:26`；`docs/reports/server-capability-matrix.md:22` |
 
-注意：N5 目前是「程式就是這樣」，是否正式定為規則列在 D2 待決定。
+注意：N5 已依 D2 決定 A 定為正式規則（#310）。
 
 ---
 
@@ -327,16 +329,16 @@
 
 | # | 問題 | 選項 | 建議 | 實作任務 | 決定 |
 |---|---|---|---|---|---|
-| D1 | 積分公式 | A. 維持現狀：勝 +250、敗 +50、斷線 −50<br>B. 輸了不加分：勝 +N、敗 0、斷線 −N<br>C. 依對手強弱加減（Elo 類） | **A**：程式已有，且註解有 2007 年規則依據（敗場也給小額正分、只有斷線扣分）。先把預設值寫進 `server.properties.example`，讓營運看得到、改得了 | T103 #310 | |
-| D2 | 進場 HP／MP | A. 每場補滿（現狀）<br>B. 讀存檔 CurHp／CurMp | **A**：競技場重視公平；而且來源庫唯讀，B 只能讀不能寫回，打完 HP 也無法保存，意義不大。決定後把 N5 定為正式規則 | T103 #310 | |
-| D3 | 積分是否要持久 | A. 不持久（現狀：重啟歸零，月榜跟著歸零）<br>B. 在 `character_lito` 加欄位（ranking_points、disconnects、月計）<br>C. 另建中央表 | **B**：月榜與排行榜在重啟後歸零，玩家看得到差異。B 沿用現有 `last_result_id` 冪等機制，改動最小；需配合 T104 確認 MyISAM 下的寫法 | T103 #310、T104 #302 | |
-| D4 | 逾時無勝者時記敗 | A. 全員記敗（現狀：寵物競賽、死鬥、Quest、Honor、Time Attack）<br>B. 逾時視為平手，不記勝敗<br>C. 依分數判勝（擊殺數、塔血量、進度） | **B**：A 會讓雙方都 +1 敗並都 +50 積分，戰績失真；C 沒有原版判勝規則可依（程式註解明寫「未取得」）。攻城維持守方勝 | T103 #310 | |
-| D5 | PvE 範圍 | A. 只做競技場內 PvE（Quest、Time Attack 的怪物與 Boss）<br>B. 加上城鎮場景（wire 6）<br>C. 加上天堂世界（野外、副本） | **A**：產品是競技場；588 列非玩家技能只需涵蓋 Quest／Time Attack 用到的怪物。B、C 留在 Backlog | T107–T109 範圍 | |
-| D6 | 跨來源配對 | A. 不看來源（現狀）<br>B. 優先同來源<br>C. 跨來源時兩隊來源平均 | **A**：人數少時任何限制都會拉長等待；跨來源是賣點。先完成 T105 撞號再開放大量跨來源 | T105 #306 | |
-| D7 | 攻城人數下限 | A. 每隊 15 人（現狀，依 2005 年資料）<br>B. 降低（例如每隊 5 人）方便測試與小規模營運 | 依營運實際人數決定；15v15 需要 30 人同時在線。若人數不足，**建議 B** 並保留開關 `native.siege.roster.enforced` | 新任務 | |
-| D8 | 寵物競賽 respawn 欄位不一致 | A. 修正 `Mode` 表為 `true`（與實際行為一致）<br>B. 維持 | **A**：只是資料一致，不改行為 | T103 或 B-land 後小修 | |
-| D9 | ArenaBot 戰鬥 AI | A. 預設開（`battle.ai.enabled=true`）<br>B. 預設關（現狀範例） | 先實機看 B 的行為（§3.7 待驗證）；若 ArenaBot 不會還手，**建議 A**，否則單人測試意義不大 | 新任務（測試） | |
-| D10 | Tournament 商店價目 | A. 維持 2003 同系列價目<br>B. 改由營運在 DB 自訂 | **A**；需要時用 DB 覆寫（程式已支援），沒有 3.81C 原服價目可依 | — | |
+| D1 | 積分公式 | A. 維持現狀：勝 +250、敗 +50、斷線 −50<br>B. 輸了不加分：勝 +N、敗 0、斷線 −N<br>C. 依對手強弱加減（Elo 類） | **A**：程式已有，且註解有 2007 年規則依據（敗場也給小額正分、只有斷線扣分）。先把預設值寫進 `server.properties.example`，讓營運看得到、改得了 | T103 #310 | A（逾時預設，2026-11-11 #310）：預設值寫進本文件 §4.3 與 `lito伺服器/LiTo381-Server/README.zh-TW.md`（T103；`.example` 受閘門禁止，未改） |
+| D2 | 進場 HP／MP | A. 每場補滿（現狀）<br>B. 讀存檔 CurHp／CurMp | **A**：競技場重視公平；而且來源庫唯讀，B 只能讀不能寫回，打完 HP 也無法保存，意義不大。決定後把 N5 定為正式規則 | T103 #310 | A（逾時預設）：維持每場補滿，N5 定為正式規則（T103，不改程式） |
+| D3 | 積分是否要持久 | A. 不持久（現狀：重啟歸零，月榜跟著歸零）<br>B. 在 `character_lito` 加欄位（ranking_points、disconnects、月計）<br>C. 另建中央表 | **B**：月榜與排行榜在重啟後歸零，玩家看得到差異。B 沿用現有 `last_result_id` 冪等機制，改動最小；需配合 T104 確認 MyISAM 下的寫法 | T103 #310、T104 #302 | B（逾時預設）：**T103 未實作**，需來源庫 schema 遷移，拆成後續任務（見 `docs/reports/issue-310.md`） |
+| D4 | 逾時無勝者時記敗 | A. 全員記敗（現狀：寵物競賽、死鬥、Quest、Honor、Time Attack）<br>B. 逾時視為平手，不記勝敗<br>C. 依分數判勝（擊殺數、塔血量、進度） | **B**：A 會讓雙方都 +1 敗並都 +50 積分，戰績失真；C 沒有原版判勝規則可依（程式註解明寫「未取得」）。攻城維持守方勝 | T103 #310 | B（逾時預設）：已實作（T103），攻城逾時仍守方勝 |
+| D5 | PvE 範圍 | A. 只做競技場內 PvE（Quest、Time Attack 的怪物與 Boss）<br>B. 加上城鎮場景（wire 6）<br>C. 加上天堂世界（野外、副本） | **A**：產品是競技場；588 列非玩家技能只需涵蓋 Quest／Time Attack 用到的怪物。B、C 留在 Backlog | T107–T109 範圍 | A（逾時預設） |
+| D6 | 跨來源配對 | A. 不看來源（現狀）<br>B. 優先同來源<br>C. 跨來源時兩隊來源平均 | **A**：人數少時任何限制都會拉長等待；跨來源是賣點。先完成 T105 撞號再開放大量跨來源 | T105 #306 | A（逾時預設） |
+| D7 | 攻城人數下限 | A. 每隊 15 人（現狀，依 2005 年資料）<br>B. 降低（例如每隊 5 人）方便測試與小規模營運 | 依營運實際人數決定；15v15 需要 30 人同時在線。若人數不足，**建議 B** 並保留開關 `native.siege.roster.enforced` | 新任務 | A（逾時預設）：維持每隊 15 人 |
+| D8 | 寵物競賽 respawn 欄位不一致 | A. 修正 `Mode` 表為 `true`（與實際行為一致）<br>B. 維持 | **A**：只是資料一致，不改行為 | T103 或 B-land 後小修 | A（逾時預設）：已實作（T103），只改資料、不改行為 |
+| D9 | ArenaBot 戰鬥 AI | A. 預設開（`battle.ai.enabled=true`）<br>B. 預設關（現狀範例） | 先實機看 B 的行為（§3.7 待驗證）；若 ArenaBot 不會還手，**建議 A**，否則單人測試意義不大 | 新任務（測試） | 暫維持現狀，待實機觀察後決定 |
+| D10 | Tournament 商店價目 | A. 維持 2003 同系列價目<br>B. 改由營運在 DB 自訂 | **A**；需要時用 DB 覆寫（程式已支援），沒有 3.81C 原服價目可依 | — | A（逾時預設） |
 
 ---
 
