@@ -19,8 +19,8 @@
 - 本機 `mvn -B -o -DskipTests test-compile` 通過（main＋test 都編得過）。
 - 依本機執行限制，測試**沒有在本機跑**，交給 PR 的 GitHub Actions CI（`mvn -B test`）。
 - PR #346 CI（commit 1）全部通過：Server tests（6m53s）、Server (Java 17 / Maven)、Semantic gap、Launcher、Build-Package.ps1 zip。
-- 合併 main（含 #337）後 CI 的 Server tests 失敗 1 項：`OtherClassSkillEffectServer1ParityTest.dragonSkinAndPatienceUseL1AttackListSkd3Literals` 用原始碼字串找 `CombatRules.loaded()?15:legacy`，被本 PR 的常數化改寫打斷。已把兩行還原成字面值（常數仍保留，`MagicReductionServer1ParityTest` 驗兩者一致），本機 `test-compile` 通過，等 CI 重跑。
-- 同一輪的「CI MySQL fixture」job（non-blocking）失敗是 #334 新增的整合測試 job 本身的既有狀況，與本 PR 無關。
+- 合併 main（含 #337）後 CI 的 Server tests 失敗 1 項：`OtherClassSkillEffectServer1ParityTest.dragonSkinAndPatienceUseL1AttackListSkd3Literals` 用原始碼字串找 `CombatRules.loaded()?15:legacy`，被本 PR 的常數化改寫打斷。已把兩行還原成字面值（常數仍保留，`MagicReductionServer1ParityTest` 驗兩者一致），本機 `test-compile` 通過；PR #346 CI（commit `c2c70ed5`，run 43058498613）Server tests、Server (Java 17 / Maven)、Launcher、Semantic gap、Build-Package.ps1 zip 全部通過。
+- 同一輪的「CI MySQL fixture」job（non-blocking）失敗是 #334 新增的整合測試 job 本身的既有狀況，與本 PR 無關（main `3897f029` 的 run 43053159670 同一 job 也失敗）。
 
 ### 推測
 - `STATUS_FREEZE`（4000，怪物凍結技能／方塊）在 LiTo 也寫進同一個 `freezeActive` 租約：怪物對玩家的凍結來源沒有逐條追。
