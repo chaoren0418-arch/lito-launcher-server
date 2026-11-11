@@ -136,54 +136,54 @@ SQL skill_level 僅用於分組，尚需驗證各職業實際可學／可施放�
 | 126 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 127 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 128 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 129 | 魔法防禦 | 妖精 | MagicResistanceSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 130 | 心靈轉換 | 妖精 | BodyToMindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 131 | 世界樹的呼喚 | 妖精 | WorldTreeCallSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 132 | 三重矢 | 妖精 | TripleArrowSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 133 | 弱化屬性 | 妖精 | ElementalFallDownSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 134 | 鏡反射 | 妖精 | CounterMirrorSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 129 | 魔法防禦 | 妖精 | MagicResistanceSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 130 | 心靈轉換 | 妖精 | BodyToMindSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 131 | 世界樹的呼喚 | 妖精 | WorldTreeCallSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 132 | 三重矢 | 妖精 | TripleArrowSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 133 | 弱化屬性 | 妖精 | ElementalFallDownSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 134 | 鏡反射 | 妖精 | CounterMirrorSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
 | 135 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 136 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 137 | 淨化精神 | 妖精 | ClearMindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 138 | 屬性防禦 | 妖精 | ResistElementalSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 137 | 淨化精神 | 妖精 | ClearMindSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 138 | 屬性防禦 | 妖精 | ResistElementalSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
 | 139 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 140 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 141 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 142 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 143 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 144 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
-| 145 | 釋放元素 | 妖精 | ReturnToNatureSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 146 | 魂體轉換 | 妖精 | BodyToMindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 147 | 單屬性防禦 | 妖精 | ElementalProtectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 148 | 火焰武器 | 妖精 | FireWeaponSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 149 | 風之神射 | 妖精 | WindShotSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 150 | 風之疾走 | 妖精 | MovementBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 151 | 大地防護 | 妖精 | ShieldSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 152 | 地面障礙 | 妖精 | EntangleSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 153 | 魔法消除 | 妖精 | EraseMagicSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 154 | 召喚屬性精靈 | 妖精 | ElementalSummonSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 155 | 烈炎氣息 | 妖精 | FireBlessSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 156 | 暴風之眼 | 妖精 | StormEyeSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 157 | 大地屏障 | 妖精 | BindSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 158 | 生命之泉 | 妖精 | NaturesTouchSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 159 | 大地的祝福 | 妖精 | EarthBlessSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 160 | 水之防護 | 妖精 | AquaProtectSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 161 | 封印禁地 | 妖精 | AreaSilenceSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 162 | 召喚強力屬性精靈 | 妖精 | ElementalSummonSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 163 | 烈炎武器 | 妖精 | FireWeaponSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 164 | 生命的祝福 | 妖精 | NaturesBlessingSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 165 | 生命呼喚 | 妖精 | ResurrectionSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 166 | 暴風神射 | 妖精 | StormShotSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 167 | 風之枷鎖 | 妖精 | WindShackleSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 168 | 鋼鐵防護 | 妖精 | IronSkinSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 169 | 體能激發 | 妖精 | ExoticVitalizeSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 170 | 水之元氣 | 妖精 | WaterLifeSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 171 | 屬性之火 | 妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 172 | 暴風疾走 | 妖精 | OtherNoEffectSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 173 | 污濁之水 | 妖精 | PolluteWaterSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 174 | 精準射擊 | 妖精 | StrikerGaleSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 175 | 烈焰之魂 | 妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | 待驗證 |
-| 176 | 能量激發 | 妖精 | AdditionalFireSpell | 是 | 已定義，待行為驗證 | 待驗證 |
+| 145 | 釋放元素 | 妖精 | ReturnToNatureSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 146 | 魂體轉換 | 妖精 | BodyToMindSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 147 | 單屬性防禦 | 妖精 | ElementalProtectionSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 148 | 火焰武器 | 妖精 | FireWeaponSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 149 | 風之神射 | 妖精 | WindShotSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 150 | 風之疾走 | 妖精 | MovementBuffSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 151 | 大地防護 | 妖精 | ShieldSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 152 | 地面障礙 | 妖精 | EntangleSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 153 | 魔法消除 | 妖精 | EraseMagicSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 154 | 召喚屬性精靈 | 妖精 | ElementalSummonSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 155 | 烈炎氣息 | 妖精 | FireBlessSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 156 | 暴風之眼 | 妖精 | StormEyeSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 157 | 大地屏障 | 妖精 | BindSpell | 是 | 已定義，待行為驗證 | T108 已補屬性檢查；消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 158 | 生命之泉 | 妖精 | NaturesTouchSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 159 | 大地的祝福 | 妖精 | EarthBlessSpell | 是 | 已定義，待行為驗證 | T108 已修正 attr、補屬性檢查；消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 160 | 水之防護 | 妖精 | AquaProtectSpell | 是 | 已定義，待行為驗證 | T108 已修正 attr、補屬性檢查；消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 161 | 封印禁地 | 妖精 | AreaSilenceSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 162 | 召喚強力屬性精靈 | 妖精 | ElementalSummonSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 163 | 烈炎武器 | 妖精 | FireWeaponSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 164 | 生命的祝福 | 妖精 | NaturesBlessingSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 165 | 生命呼喚 | 妖精 | ResurrectionSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 166 | 暴風神射 | 妖精 | StormShotSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 167 | 風之枷鎖 | 妖精 | WindShackleSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 168 | 鋼鐵防護 | 妖精 | IronSkinSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 169 | 體能激發 | 妖精 | ExoticVitalizeSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 170 | 水之元氣 | 妖精 | WaterLifeSpell | 是 | 已定義，待行為驗證 | T108 已補屬性檢查；消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 171 | 屬性之火 | 妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 172 | 暴風疾走 | 妖精 | OtherNoEffectSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 173 | 污濁之水 | 妖精 | PolluteWaterSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 174 | 精準射擊 | 妖精 | StrikerGaleSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 175 | 烈焰之魂 | 妖精 | PhysicalProcBuffSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
+| 176 | 能量激發 | 妖精 | AdditionalFireSpell | 是 | 已定義，待行為驗證 | T108 消耗／數值／期限／屬性一致；實機待驗證（skills-elf.md） |
 | 177 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 178 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
 | 179 | none | 來源其他技能／NPC／道具 | ReservedSkillSlot | 待查 | SQL 保留槽（name=none，無來源技能常量／執行器） | 待驗證 |
