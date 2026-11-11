@@ -74,3 +74,4 @@
 - 2026-11-11 — #304 T102: 魔法傷害／MR／技能機率對照 1-伺服器（規格＋單元測試）（code，claude-local，PR 已合併）→ [報告](reports/issue-304.md)
 - 2026-11-11 — #305 T106: 技能目標與範圍判定對照 1-伺服器（含 customer-gaps G03–G08）（code，claude-local，PR 已合併）→ [報告](reports/issue-305.md)
 - 2026-11-11 — #306 T105: 跨來源角色 ID 撞號處理（code，claude-local，PR 已合併）→ [報告](reports/issue-306.md)
+- 2026-11-11 — #307 T107: 技能行為驗證——共通魔法／法師（79 個）（code，claude-local，PR 已合併）→ [報告](reports/issue-307.md)
