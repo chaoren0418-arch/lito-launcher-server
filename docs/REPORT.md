@@ -77,3 +77,6 @@
 - 2026-11-11 — #307 T107: 技能行為驗證——共通魔法／法師（79 個）（code，claude-local，PR 已合併）→ [報告](reports/issue-307.md)
 - 2026-11-11 — #311 T110: 協定修正——魔法娃娃圖示不再送 0xFA（S_LITO_CLAN 衝突）（code，claude-local，PR 已合併）→ [報告](reports/issue-311.md)
 - 2026-11-11 — #308 T108: 技能行為驗證——妖精（40 個）（code，claude-local，PR 已合併）→ [報告](reports/issue-308.md)
+- 2026-11-11 — #309 T109: 技能行為驗證——騎士／黑暗妖精／王族／龍騎士／幻術師（62 個）（code，claude-local，PR 已合併）→ [報告](reports/issue-309.md)
+- 2026-11-11 — #317 T112: NPC／召喚物攻擊公式對照 1-伺服器（L1AttackNpc）（code，claude-local，PR 已合併）→ [報告](reports/issue-317.md)
+- 2026-11-11 — #318 T113: 物理平衡 5 項依使用者決定處理（含 D12 祝福旗標正確性）（code，claude-local，PR 已合併）→ [報告](reports/issue-318.md)

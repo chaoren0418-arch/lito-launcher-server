@@ -25,7 +25,7 @@ final class ClientSessionBoneBreakIntegrationTest {
 
     @TempDir Path temporary;
 
-    @Test void nativeSuccessDamagesAddsLawfulAndInstallsTwoSecondActorLock()
+    @Test void nativeSuccessDamagesKeepsLawfulAndInstallsTwoSecondActorLock()
             throws Exception {
         Fixture fixture = fixture("success", 0x3810_2080L, 0x3810_2081L);
         try (fixture) {
@@ -35,7 +35,8 @@ final class ClientSessionBoneBreakIntegrationTest {
             assertTrue((int) field(fixture.target, "playerHp") < 500);
             assertEquals(82, field(fixture.caster, "playerMp"),
                     "raw MP20 is reduced by the selected INT18 origin bonus");
-            assertEquals(45, field(fixture.caster, "playerLawful"));
+            assertEquals(0, field(fixture.caster, "playerLawful"),
+                    "issue #309: 380_db.sql row208 lawful=0");
             assertTrue(targetStatus.boneBreakActive(System.nanoTime()));
             assertTrue(targetStatus.actionLocked(System.nanoTime()));
             List<BattleBoneBreakEffects.Effect> effects = fixture.hub
@@ -57,7 +58,8 @@ final class ClientSessionBoneBreakIntegrationTest {
             assertFalse(targetStatus.boneBreakActive(System.nanoTime()));
             assertTrue(fixture.hub.boneBreakEffects(
                     fixture.roomId, System.nanoTime()).isEmpty());
-            assertEquals(45, field(fixture.caster, "playerLawful"));
+            assertEquals(0, field(fixture.caster, "playerLawful"),
+                    "issue #309: 380_db.sql row208 lawful=0");
         }
     }
 
@@ -72,7 +74,8 @@ final class ClientSessionBoneBreakIntegrationTest {
             assertEquals(500, field(fixture.target, "playerHp"));
             assertEquals(82, field(fixture.caster, "playerMp"),
                     "Counter Magic does not refund the admitted cast");
-            assertEquals(45, field(fixture.caster, "playerLawful"));
+            assertEquals(0, field(fixture.caster, "playerLawful"),
+                    "issue #309: 380_db.sql row208 lawful=0");
             assertFalse(targetStatus.counterMagicActive(System.nanoTime()));
             assertFalse(targetStatus.boneBreakActive(System.nanoTime()));
             assertTrue(fixture.hub.boneBreakEffects(
@@ -152,7 +155,8 @@ final class ClientSessionBoneBreakIntegrationTest {
                     (BattleTimedStatus) field(target, "timedStatus");
             assertTrue((int) field(target, "playerHp") < 500);
             assertEquals(82, field(caster, "playerMp"));
-            assertEquals(45, field(caster, "playerLawful"));
+            assertEquals(0, field(caster, "playerLawful"),
+                    "issue #309: 380_db.sql row208 lawful=0");
             assertTrue(status.boneBreakActive(System.nanoTime()));
             List<BattleBoneBreakEffects.Effect> effects =
                     hub.boneBreakEffects(mapId, -1, System.nanoTime());

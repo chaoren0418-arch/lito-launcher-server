@@ -20,6 +20,15 @@ final class CombatNpcPhysicalSource {
         if(strength>=35)damage+=(strength-33)/4;
         return damage;
     }
+    /**
+     * Issue #317: L1AttackList.STRD for an NPC attacker.  The PC growth table
+     * (角色_力量成長) is equal for STR 1..127 but has no STR 0 row (it clamps
+     * to row 1 = -5, STRD(0) = -6); 102 `380_db` monsters have STR 0.  Values
+     * outside STRD's 0..254 keys (source would NPE) are clamped.
+     */
+    static int npcStrengthDamage(int strength) {
+        return strengthDamage(Math.max(0, Math.min(254, strength)));
+    }
     static double base(int level,int strength,int levelRoll,boolean pet,int petWeaponDamage) {
         if(level<=0||levelRoll<0||levelRoll>=level)
             throw new IllegalArgumentException("invalid source NPC level roll");
