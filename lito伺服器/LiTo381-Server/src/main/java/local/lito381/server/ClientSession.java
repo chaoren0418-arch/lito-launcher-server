@@ -15258,6 +15258,22 @@ final class ClientSession implements Runnable {
         return SourceAdministration.administrator(this.selectedSourceAccounts(), this.account, this);
     }
 
+    /**
+     * Issue #308：S1 L1SkillUse.isAttrAgrees（:1850-1863）。屬性不符時拒絕施放（不扣費、不送封包），
+     * 與既有 Storm Shot／Other No Effect 的拒絕方式相同。回傳 true 表示已拒絕。
+     */
+    private boolean elfAttributeRejects(int skillId, int skillAttribute, String label) {
+        if (skillAttribute == 0
+                || SourceElfAttributeGate.agrees(skillId, skillAttribute, this.elfAttribute, false)
+                || this.isAdministrator()) {
+            return false;
+        }
+        System.out.println("[LiTo] C_USE_SPELL " + label + " rejected attribute player=" + this.playerName()
+                + " skill=" + skillId + " required=" + skillAttribute + " elf-attr=" + this.elfAttribute
+                + " phase=" + String.valueOf((Object)this.phase));
+        return true;
+    }
+
     private boolean requireAdministrator(int opcode) {
         if (isAdministrator()) return true;
         System.out.printf("[LiTo] rejected privileged C opcode=0x%02X account=%s phase=%s%n",
@@ -42036,6 +42052,10 @@ final class ClientSession implements Runnable {
 
     private void useEarthBlessSpell(byte[] var1, BattleSpellCatalog.EarthBlessSpell var2) throws IOException {
       Protocol.SpellSelector var3 = Protocol.selectorOnlySpellRequest(var1);
+      if (var3.skillId() == var2.skillId() && (this.phase == ClientSession.Phase.BATTLE || this.phase == ClientSession.Phase.WORLD)
+            && this.elfAttributeRejects(var2.skillId(), var2.attribute(), "Earth Bless")) {
+         return;
+      }
       if (var3.skillId() == var2.skillId()) {
          long var4 = System.nanoTime();
          if (this.phase == ClientSession.Phase.BATTLE || this.phase == ClientSession.Phase.WORLD) {
@@ -43167,6 +43187,10 @@ final class ClientSession implements Runnable {
          if (var3.skillId() == var2.skillId()) {
             long var4 = System.nanoTime();
             ClientSession.Phase var6 = this.phase;
+            if ((var6 == ClientSession.Phase.BATTLE || var6 == ClientSession.Phase.WORLD)
+                  && this.elfAttributeRejects(var2.skillId(), var2.attribute(), "Aqua Protecter")) {
+               return;
+            }
             if (var6 == ClientSession.Phase.BATTLE || var6 == ClientSession.Phase.WORLD) {
                BattlePolymorphCatalog.Form var7 = this.polymorphStatus.active(var4);
                if (var7 != null && !var7.skillUsable()) {
@@ -44346,10 +44370,12 @@ final class ClientSession implements Runnable {
     }
 
     private void useClassicWorldBindSpell(byte[] byArray, BattleSpellCatalog.BindSpell bindSpell) throws IOException {
+        if (this.elfAttributeRejects(bindSpell.skillId(), BattleSpellCatalog.EARTH_BIND_ATTRIBUTE, "Earth Bind")) return;
         NativeEarthBindMaterialAction.world(this, byArray, bindSpell);
     }
 
     private void useBindSpell(byte[] byArray, BattleSpellCatalog.BindSpell bindSpell) throws IOException {
+        if (this.elfAttributeRejects(bindSpell.skillId(), BattleSpellCatalog.EARTH_BIND_ATTRIBUTE, "Earth Bind")) return;
         NativeEarthBindMaterialAction.battle(this, byArray, bindSpell);
     }
 
@@ -67780,6 +67806,10 @@ final class ClientSession implements Runnable {
          if (var3.skillId() == var2.skillId()) {
             long var4 = System.nanoTime();
             ClientSession.Phase var6 = this.phase;
+            if ((var6 == ClientSession.Phase.BATTLE || var6 == ClientSession.Phase.WORLD)
+                  && this.elfAttributeRejects(var2.skillId(), var2.attribute(), "Water Life")) {
+               return;
+            }
             if (var6 == ClientSession.Phase.BATTLE || var6 == ClientSession.Phase.WORLD) {
                BattlePolymorphCatalog.Form var7 = this.polymorphStatus.active(var4);
                if (var7 != null && !var7.skillUsable()) {

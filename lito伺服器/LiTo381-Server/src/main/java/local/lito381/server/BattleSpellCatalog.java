@@ -931,10 +931,12 @@ final class BattleSpellCatalog {
             // lease to remain independent from Shield/Earth Skin. CharBuffTable
             // persists it. In selected coexist mode the retained server uses
             // custom S_IconConfig graphic527; legacy mode uses shield type7.
+            // Issue #308: 380_db row159 attr=1 (earth); L1SkillUse.isAttrAgrees
+            // (:1850-1863) rejects casters whose ElfAttr lacks the earth bit.
             EARTH_BLESS, new EarthBlessSpell(
                     EARTH_BLESS, 19, 6, 20, 6, 19, 2_287,
                     40, 0, 0, 960, 0, -1, 8,
-                    ATTRIBUTE_UNSPECIFIED, 2, 64,
+                    ATTRIBUTE_EARTH, 2, 64,
                     -7, 7, 527, 0, 725, 0,
                     true, "earth-bless")
     );
@@ -1214,10 +1216,12 @@ final class BattleSpellCatalog {
             // MP30, duration960, action19 and gfx5829 are exact. The retained
             // ranged attack table pins ER+5. This lease is absent from
             // CharBuffTable, so it is intentionally transient.
+            // Issue #308: 380_db row160 attr=4 (water); L1SkillUse.isAttrAgrees
+            // (:1850-1863) rejects casters whose ElfAttr lacks the water bit.
             AQUA_PROTECTER, new AquaProtectSpell(
                     AQUA_PROTECTER, 19, 7, 20, 7, 19, 5_829,
                     30, 0, 0, 960, -1, 0, 1,
-                    ATTRIBUTE_UNSPECIFIED, 2, 128,
+                    ATTRIBUTE_WATER, 2, 128,
                     BattleAquaProtectStatus.NATIVE_ER_BONUS,
                     true, "aqua-protecter")
     );
@@ -2627,6 +2631,12 @@ final class BattleSpellCatalog {
                     80, 0, 10, 7_200, -1,
                     InventoryCatalog.MAGIC_GEM, 1, 280, "shape-change")
     );
+
+    /**
+     * 380_db skills row157 attr=1（地）。BindSpell 沒有 attribute 欄位，施放時由
+     * ClientSession.elfAttributeRejects 依此值套用 S1 L1SkillUse.isAttrAgrees（Issue #308）。
+     */
+    static final int EARTH_BIND_ATTRIBUTE = ATTRIBUTE_EARTH;
 
     private static final Map<Integer, BindSpell> BIND_SPELLS = Map.of(
             // Exact selected row 157 and LiTo.bin zero-based case 156:
@@ -5885,7 +5895,7 @@ final class BattleSpellCatalog {
                     || reuseDelayMillis != 0 || secondaryReuseDelayMillis != 0
                     || durationSeconds != 960 || maximumRange != 0
                     || area != -1 || targetTo != 8
-                    || attribute != ATTRIBUTE_UNSPECIFIED || type != 2
+                    || attribute != ATTRIBUTE_EARTH || type != 2
                     || nativeId != 64 || armorClassModifier != -7
                     || legacyIconType != 7 || coexistGraphic != 527
                     || happenMessage != 0 || stopMessage != 725
@@ -6840,7 +6850,7 @@ final class BattleSpellCatalog {
                     || reuseDelayMillis != 0 || secondaryReuseDelayMillis != 0
                     || durationSeconds != 960 || maximumRange != -1
                     || area != 0 || targetTo != 1
-                    || attribute != ATTRIBUTE_UNSPECIFIED || type != 2
+                    || attribute != ATTRIBUTE_WATER || type != 2
                     || nativeId != 128
                     || evasionRateModifier != BattleAquaProtectStatus.NATIVE_ER_BONUS
                     || !counterMagicBypass || key == null || key.isBlank()) {
