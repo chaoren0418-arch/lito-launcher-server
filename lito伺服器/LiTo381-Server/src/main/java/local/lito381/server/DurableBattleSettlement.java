@@ -149,7 +149,11 @@ final class DurableBattleSettlement {
    for(Context c:contexts){boolean notify=false;synchronized(c){if(!c.unsaved.isEmpty()){journal.save(c.unsaved);c.unsaved=List.of();notify=c.retryNotification;c.retryNotification=false;}}
     if(notify){GameHub hub=c.hub.get();if(hub!=null){for(ClientSession s:hub.battleResultCombatants(c.room))try{s.serverEndBattle(c.terminal);}catch(IOException ignored){}hub.endBattle(c.room);synchronized(hub){Object room=((Map<?,?>)get(hub,"rooms")).get(c.room);if(room!=null&&hub.roomMembers(c.room).isEmpty())call(hub,"resetOrRemove",new Class[]{room.getClass()},room);}}}
    }
-   for(Context c:contexts){GameHub h=c.hub.get();if(h==null)continue;boolean absent;synchronized(h){absent=!((Map<?,?>)get(h,"rooms")).containsKey(c.room);}if(absent&&c.unsaved.isEmpty())forget(h,c.room);}
+   for(Context c:contexts){GameHub h=c.hub.get();if(h==null)continue;boolean absent;synchronized(h){var rooms=(Map<?,?>)get(h,"rooms");Object room=rooms.get(c.room);
+     // A room emptied while its settlement was not durable is removed once it is (T124: hub.disconnect no longer sweeps other rooms).
+     if(room!=null&&c.unsaved.isEmpty()&&h.roomMembers(c.room).isEmpty()&&!(boolean)get(room,"disconnectResolutionPending"))call(h,"resetOrRemove",new Class[]{room.getClass()},room);
+     absent=!rooms.containsKey(c.room);}
+    if(absent&&c.unsaved.isEmpty())forget(h,c.room);}
    // One permanently failing result (e.g. renamed character) must not stall drainAll and the pending tickets (T124).
    Exception failure=null;
    try{journal.replay(entries->{SettlementSql.apply(entries);reconcileRecovered(entries);});}catch(Exception e){failure=e;}
