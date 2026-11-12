@@ -61357,9 +61357,10 @@ final class ClientSession implements Runnable {
                int var65 = 0;
                int var67 = 0;
                int var36 = 0;
-               Iterator var37 = NativeSourceAreaClassSelection.iterator(
+               // T123 (Issue #354, G14): drop secondary PCs whose timed status was replaced while waiting.
+               Iterator var37 = NativeSourceAreaPairFirst.secondaryIterator(NativeSourceAreaClassSelection.iterator(
                   NativeSourceAreaCasterTargets.slowIterator(var12), var2.skillId(), var3.targetObjectId()
-               );
+               ));
 
                while (var37.hasNext()) {
                   ClientSession var38 = (ClientSession)var37.next();

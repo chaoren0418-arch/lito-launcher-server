@@ -2,6 +2,7 @@ package local.lito381.server;
 /** Only the original area roster predicate and pre-body source checks consume this helper. */
 final class NativeSourceAreaPlayerProof {
  static boolean player(NativeAreaMaterialAction.Context c,ClientSession pc){
+  if(!NativeSourceAreaPairFirst.secondaryPlayer(c,pc))return false;// T123 (#354, G14)
   if(!c.player(pc))return false;
   if(!NativeSourcePlayerFactories.scoped(c))return true;
   var binding=c.bindings.get(pc);var m=NativeSourcePlayerFactories.retained(pc,binding,c);
