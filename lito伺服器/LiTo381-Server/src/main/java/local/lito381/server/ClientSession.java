@@ -13149,10 +13149,13 @@ final class ClientSession implements Runnable {
     private void exitRoomBeforePolyMe(boolean bl) throws IOException {
         boolean bl2;
         GameHub.ReadyTransition readyTransition;
-        if (this.phase == Phase.BATTLE) {
+        if (this.phase == Phase.BATTLE && !this.battleObserverMayLeaveAlone()) {
             this.settleRequestedBattleExit();
             return;
         }
+        // Issue #366: a BATTLE observer falls through to the ordinary room
+        // departure below.  It never calls serverEndBattle/endBattle, so the
+        // combatants' match, countdown, battleRoster and results are untouched.
         this.pendingWarehousePassword = null;
         this.pendingShapeChange = null;
         this.pendingSlaveTarget = null;
@@ -13404,6 +13407,24 @@ final class ClientSession implements Runnable {
         inventory.qualifySourceWeapon(item.objectId(), weapon);
     }
 
+    /**
+     * Issue #366: observers never belong to the authoritative battle roster
+     * (compare GameHub.registerBattleDisconnect).  Their voluntary C_D0/C_D9
+     * therefore removes only the observer instead of settling the match.
+     */
+    private boolean battleObserverMayLeaveAlone() {
+        return phase == Phase.BATTLE && observer && !rentalTownRoomState
+                && currentRoomId != 0L
+                && !hub.battleResultCombatants(currentRoomId).contains(this);
+    }
+
+    private void leaveBattleAsObserver(String trigger) throws IOException {
+        long roomId = currentRoomId;
+        System.out.println("[LiTo] battle observer leaving alone room=" + roomId
+                + " player=" + playerName() + " trigger=" + trigger);
+        exitRoom(true);
+    }
+
     private void settleRequestedBattleExit() throws IOException {
         int remaining = battleExitRemainingSeconds();
         if (remaining > 0) {
@@ -13436,7 +13457,13 @@ final class ClientSession implements Runnable {
     }
 
     private void quitFight() throws IOException {
-      if (this.phase == ClientSession.Phase.BATTLE) {
+      if (this.phase == ClientSession.Phase.BATTLE && this.battleObserverMayLeaveAlone()) {
+         // Issue #366 contract: S_F0(0) acknowledges the native in-battle Exit,
+         // then the same S_D0 self row / S_CC room list as an observer C_D0.
+         this.sendEncrypted(new Protocol.Writer().c(Protocol.S_LITO_QUIT_FIGHT).c(0).bytes(),
+               "S_LITO_QUIT_FIGHT battle-observer leaves alone");
+         this.leaveBattleAsObserver("C_LITO_QUIT_FIGHT");
+      } else if (this.phase == ClientSession.Phase.BATTLE) {
          this.settleRequestedBattleExit();
       } else {
          this.pendingWarehousePassword = null;
