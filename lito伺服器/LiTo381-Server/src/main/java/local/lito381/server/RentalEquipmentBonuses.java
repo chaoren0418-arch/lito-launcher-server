@@ -4,7 +4,9 @@ import java.util.List;
 
 /**
  * Exact direct effects contributed by equipped LiTo rental objects whose
- * selected-3.80 templates are pinned by {@link RentalItemDefinitionCatalog}.
+ * selected-3.80 templates are pinned by {@link RentalItemDefinitionCatalog},
+ * or, for ids that catalog does not pin, by the retained rental-town
+ * merchant rows in {@link NativeLitoRentalMerchantCatalog}.
  *
  * <p>Source-bound legacy equipment is deliberately excluded: its effects are
  * already present in {@link SourceEquipmentMagicStats}.  This record therefore
@@ -68,7 +70,58 @@ record RentalEquipmentBonuses(
             RentalItemDefinitionCatalog.SourceTemplate source =
                     RentalItemDefinitionCatalog.source(
                             Math.toIntExact(item.definition().catalogId()));
-            if (source == null) continue;
+            if (source == null) {
+                // Selected-3.80 templates keep precedence; only ids they do
+                // not pin fall back to the retained rental-merchant catalog.
+                NativeLitoRentalMerchantCatalog.Item merchant =
+                        NativeLitoRentalMerchantCatalog.findBySourceItemId(
+                                item.definition().catalogId());
+                if (merchant == null) continue;
+                matchedItems = Math.addExact(matchedItems, 1);
+                InventoryCatalog.NativeArmorStatus armor =
+                        merchant.definition().sourceArmorStatus();
+                if (armor == null) {
+                    // The retained weapon rows carry only native damage/hit
+                    // fields, which stay in the equipped-weapon evaluator.
+                    matchedWeapons++;
+                    continue;
+                }
+                matchedArmors++;
+                // The retained merchant schema has no regeneration, magic
+                // damage, reduction, weight or armor hit/damage columns, so
+                // those totals are left untouched.  Native AC stays in
+                // RuntimeInventory.equippedNativeArmorBonuses().
+                strength = Math.addExact(strength, armor.strength());
+                constitution = Math.addExact(constitution, armor.constitution());
+                dexterity = Math.addExact(dexterity, armor.dexterity());
+                intelligence = Math.addExact(intelligence, armor.intelligence());
+                wisdom = Math.addExact(wisdom, armor.wisdom());
+                charisma = Math.addExact(charisma, armor.charisma());
+                maximumHp = Math.addExact(maximumHp, armor.hitPoints());
+                maximumMp = Math.addExact(maximumMp, armor.manaPoints());
+                spellPower = Math.addExact(spellPower, armor.spellPower());
+                magicResistance = Math.addExact(
+                        magicResistance, armor.magicResistance());
+                haste |= armor.haste();
+                waterResistance = Math.addExact(
+                        waterResistance, armor.waterResistance());
+                windResistance = Math.addExact(windResistance, armor.windResistance());
+                fireResistance = Math.addExact(fireResistance, armor.fireResistance());
+                earthResistance = Math.addExact(
+                        earthResistance, armor.earthResistance());
+                stunResistance = Math.addExact(stunResistance, armor.stunResistance());
+                stoneResistance = Math.addExact(
+                        stoneResistance, armor.stoneResistance());
+                sleepResistance = Math.addExact(
+                        sleepResistance, armor.sleepResistance());
+                freezeResistance = Math.addExact(
+                        freezeResistance, armor.freezeResistance());
+                sustainResistance = Math.addExact(
+                        sustainResistance, armor.sustainResistance());
+                blindResistance = Math.addExact(
+                        blindResistance, armor.blindResistance());
+                continue;
+            }
             matchedItems = Math.addExact(matchedItems, 1);
             if ("weapon".equals(source.kind())) matchedWeapons++;
             else matchedArmors++;
