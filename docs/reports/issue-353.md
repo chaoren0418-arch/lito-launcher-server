@@ -21,6 +21,7 @@
 - 總數以 PowerShell 計數：`skills` 807 列，其中 >220 有 588 列；`mobskill` 972 列；範圍內 33 列（`scratch/t122/mobskill.txt`、`skills.txt`、`npc.py`）。
 - 本機 `mvn -B -o -q -DskipTests test-compile` 通過（main＋test）。
 - 依本機執行限制，**測試沒有在本機跑**，交給 PR 的 GitHub Actions CI（`mvn -B test`）。
+- PR #361 CI（run 43137706332）：Server tests（6m48s）、Server (Java 17 / Maven)、Launcher、Semantic gap、Build-Package.ps1 zip 全部通過。唯一失敗的是 non-blocking 的「CI MySQL fixture」job；main `c7d45249` 的 run 43137284897 同一個 job 也失敗，是既有狀況，與本 PR 無關。
 
 ### 推測
 - 30004 火牢在 1-伺服器 只有特效：整個原始碼搜不到 30004 特例，但沒有實際執行確認。
@@ -29,7 +30,6 @@
 
 ### 待驗證
 - 實機（交 Codex）：Quest 歐吉放技能時播 action 30；貼身時 Boss／龍放技能的頻率約為原本一半；死亡騎士放完 10056 後 3 秒內不再放吸血鬼之吻。
-- 若有整合測試依賴「貼身時隨機路徑一定放技能」，CI 會失敗（本機無法跑），需看 CI 結果。
 
 ## 產出路徑
 - `docs/design/skills-npc.md`（新建）
