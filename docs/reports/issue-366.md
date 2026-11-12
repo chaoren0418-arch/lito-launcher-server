@@ -15,6 +15,7 @@
 
 ### 已驗證
 - `mvn -B -q -DskipTests test-compile`：main 與 test 編譯通過（本機）。
+- PR #367 CI（run 43159867954，commit 03e4cba7）：`Server tests` 通過，其中 `ClientSessionBattleObserverExitTest` 2/2 通過；`Server (Java 17 / Maven)`、可重現 JAR、Launcher、Build-Package 全綠。`Server tests (CI MySQL fixture, non-blocking)` 失敗，但新測試在該 job 也 2/2 通過；失敗的是既有類別（如 `ClientSessionNativeTournamentEconomyTest`、`ClientSessionBattleResultStatisticsTest`），main（run 43158328003）同一 job 也是 failure，與本 PR 無關。
 - 靜態核對：一般離房流程在 BATTLE 下的副作用——`setReady` 只在 ROOM 執行；房主廣播只在 ROOM／RESULT；`NativeRoomRules.restoreBot` 在 `battleStarted` 時直接返回；`GameHub.leaveRoom` 的 `cancelCountdownIfNotReady` 只在 COUNTDOWN 生效、`resetOrRemove` 在房內仍有成員時不動作；均不碰 `battleRoster`／`battleForces`／match。
 
 ### 推測
@@ -22,7 +23,6 @@
 - 觀戰者若剛好是房主，`hub.leaveRoom` 會轉移房主，但 BATTLE 中不廣播 `S_LITO_GAME_INFO` 房主變更（沿用一般離房在 BATTLE 不廣播的既有規則）；結算後房主列是否需要補送，未驗證。
 
 ### 待驗證
-- 單元測試本機未執行（本機規定不得執行測試），以 PR 的 GitHub Actions CI 結果為準。
 - 原版 3.81C 客戶端／lito-modern 客戶端在戰鬥場景收到自己的 `S_D0`（與 `C_D9` 時先 `S_F0(0)`）後是否正確拆場景回大廳：需實機驗收（交 Codex／使用者）。
 - 重新加入觀戰時走真正的 `C_CF` → late-observer `startBattle` bootstrap，本測試只以 `hub.tryJoinRoom` 驗證伺服器准入與 roster 不變，未驗證完整 bootstrap 封包。
 
