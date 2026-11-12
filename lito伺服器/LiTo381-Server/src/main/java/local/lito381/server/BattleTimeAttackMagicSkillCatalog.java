@@ -411,9 +411,10 @@ final class BattleTimeAttackMagicSkillCatalog {
     private static final List<PhysicalDefinition> PHYSICAL = List.of(
             // Quest Battle Ogre mobskill(45278,0): Type1/TriRnd30,
             // TriRange-2, Range2, AreaWidth1, AreaHeight2, leverage20 and
-            // ActId0.  The retained directional box and ordinary attack
-            // action are therefore both executable without event-server data.
-            new PhysicalDefinition(45278, 0, 30, -2, 2, 20, 0, 1, 2),
+            // ActId30 (1-伺服器 db/380_db.sql:34296).  L1MobSkillUse:660-661
+            // calls attack.setActId(30) because ActId > 0; gfx1020 carries
+            // spr_action 30, matching ClassicWorldMonsterPhysicalSkillCatalog.
+            new PhysicalDefinition(45278, 0, 30, -2, 2, 20, 30, 1, 2),
             // Exact selected mobskill act1 rows, both Type1/TriRnd100,
             // leverage30 and ActId0. Their Range fields are 1/2; retained
             // L1MobSkillUse leaves the ordinary attack action unchanged when
@@ -477,6 +478,30 @@ final class BattleTimeAttackMagicSkillCatalog {
             new InertDefinition(45684, 7, 100, 8, 31000, 0,
                     "selected-skill-template-absent"
                             + "+retained-L1SkillUse-checkUseSkill-false"));
+
+    /**
+     * Single caster-wide reuse key. Retained L1SkillUse reserves
+     * {@code skills.reuseDelay} through {@code L1SkillDelay.tryReserveSkillUse(_user, ...)}
+     * (L1SkillUse.java:2675-2676) and rejects every later cast while
+     * {@code _user.isSkillDelay()} (:2642, :2658). The delay is therefore owned
+     * by the NPC, not by the mobskill actNo: Death Knight skill10056
+     * (reuseDelay 3000) also blocks its skill28 row for three seconds.
+     */
+    static final int CASTER_SKILL_DELAY_KEY = -1;
+
+    /**
+     * Retained L1NpcInstance.attack (L1NpcInstance.java:894-907): at an
+     * attack position a coin {@code nextInt(2) >= 1} chooses the ordinary
+     * attack before any mobskill TriRnd roll. The arena AI only owns an
+     * ordinary-attack branch for adjacent targets, so the coin applies there.
+     */
+    static boolean ordinaryAttackBranch(int distance, int coin) {
+        if (distance < 0) throw new IllegalArgumentException("negative target distance");
+        if (coin < 0 || coin > 1) {
+            throw new IllegalArgumentException("ordinary attack coin outside nextInt(2)");
+        }
+        return distance <= 1 && coin >= 1;
+    }
 
     private BattleTimeAttackMagicSkillCatalog() {}
 

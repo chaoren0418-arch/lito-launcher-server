@@ -3,6 +3,7 @@ package local.lito381.server;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -50,6 +51,29 @@ final class BattleTimeAttackMagicSkillCatalogTest {
     }
 
     @Test
+    void attackPositionCoinMatchesRetainedL1NpcInstanceAttack() {
+        // 1-伺服器 L1NpcInstance.java:894-897: nextInt(2) >= 1 -> ordinary attack.
+        assertTrue(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(1, 1));
+        assertTrue(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(0, 1));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(1, 0));
+        // Not an adjacent attack position: the mobskill roll always runs.
+        assertFalse(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(2, 1));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(8, 1));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(1, 2));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(-1, 0));
+        // Roll 100 used by the coin never passes any strict TriRnd row.
+        for (int npcId : new int[] {45278, 45584, 45601, 45610, 45650,
+                45682, 45683, 45684, 45812}) {
+            for (BattleTimeAttackMagicSkillCatalog.MobskillRow row
+                    : BattleTimeAttackMagicSkillCatalog.rowsForNpc(npcId)) {
+                assertFalse(row.triggerRoll(100), npcId + "/" + row.actNo());
+            }
+        }
+    }
+
+    @Test
     void selectedPhysicalRowsAndStrictTriRndBoundaryRemainExact() {
         BattleTimeAttackMagicSkillCatalog.PhysicalDefinition ogre =
                 BattleTimeAttackMagicSkillCatalog.physicalForNpc(45278);
@@ -62,7 +86,9 @@ final class BattleTimeAttackMagicSkillCatalogTest {
         assertEquals(-2, ogre.triggerRange());
         assertEquals(2, ogre.attackRange());
         assertEquals(20, ogre.leverage());
-        assertEquals(0, ogre.actionOverride());
+        // 1-伺服器 db/380_db.sql:34296 ActId=30; L1MobSkillUse.java:660-661.
+        assertEquals(30, ogre.actionOverride());
+        assertEquals(30, ogre.effectiveActionId());
         assertEquals(1, ogre.areaWidth());
         assertEquals(2, ogre.areaHeight());
         assertTrue(ogre.areaAttack());
