@@ -1461,6 +1461,22 @@ final class BattleQuestEncounter {
         return monster.snapshot();
     }
 
+    /**
+     * Retained L1NpcInstance.attack:894-897 ordinary-attack coin. Roll 100
+     * never passes the strict {@code roll < TriRnd} test, so the row-fixture
+     * path falls through to its ordinary adjacent attack.
+     */
+    private static void applyOrdinaryAttackCoin(Monster monster, int targetX, int targetY,
+                                                int[] triggerRolls,
+                                                ThreadLocalRandom random) {
+        int distance = NativeSourceNpcMotion.onTarget(
+                Math.max(Math.abs(monster.x - targetX), Math.abs(monster.y - targetY)), monster);
+        if (BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(
+                distance, random.nextInt(2))) {
+            java.util.Arrays.fill(triggerRolls, 100);
+        }
+    }
+
     synchronized AiAttack aiAttackFor(long objectId, int targetX, int targetY, long nowNanos) {
         ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
         Monster monster = this.monster(objectId);
@@ -1472,6 +1488,7 @@ final class BattleQuestEncounter {
         for (int i = 0; i < nArray.length; ++i) {
             nArray[i] = threadLocalRandom.nextInt(1, 101);
         }
+        applyOrdinaryAttackCoin(monster, targetX, targetY, nArray, threadLocalRandom);
         BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
         int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
         return this.aiAttackFor(objectId, targetX, targetY, nowNanos, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
@@ -1886,6 +1903,7 @@ final class BattleQuestEncounter {
         for (int i = 0; i < nArray.length; ++i) {
             nArray[i] = threadLocalRandom.nextInt(1, 101);
         }
+        applyOrdinaryAttackCoin(monster, n, n2, nArray, threadLocalRandom);
         BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
         int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
         return this.aiAttackFor(l, n, n2, l2, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
@@ -1961,6 +1979,7 @@ final class BattleQuestEncounter {
         for (int i = 0; i < nArray.length; ++i) {
             nArray[i] = threadLocalRandom.nextInt(1, 101);
         }
+        applyOrdinaryAttackCoin(monster, n, n2, nArray, threadLocalRandom);
         BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition = BattleTimeAttackMagicSkillCatalog.summonForNpc(monster.template.npcId());
         int n3 = summonDefinition == null ? 0 : threadLocalRandom.nextInt(summonDefinition.summonRandomBound());
         return this.aiAttackFor(l, n, n2, l2, nArray, threadLocalRandom.nextInt(Integer.MAX_VALUE), n3);
@@ -2682,7 +2701,7 @@ final class BattleQuestEncounter {
                            long nowNanos) {
             return skill != null && skill.npcId() == template.npcId()
                     && mp >= skill.mpCost()
-                    && nowNanos >= skillReadyNanos.getOrDefault(skill.actNo(), 0L);
+                    && nowNanos >= skillReadyNanos.getOrDefault(BattleTimeAttackMagicSkillCatalog.CASTER_SKILL_DELAY_KEY, 0L);
         }
 
         void scheduleMagic(long nowNanos, BattleTimeAttackMagicSkillCatalog.Definition skill) {
@@ -2702,7 +2721,7 @@ final class BattleQuestEncounter {
                 n = (int)((double)n * 1.25);
             }
             this.nextActionNanos = Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(Math.max(1, n)));
-            this.skillReadyNanos.put(skill.actNo(), Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
+            this.skillReadyNanos.put(BattleTimeAttackMagicSkillCatalog.CASTER_SKILL_DELAY_KEY, Math.addExact(nowNanos, TimeUnit.MILLISECONDS.toNanos(skill.reuseDelayMillis())));
         }
 
         boolean summonReady(
