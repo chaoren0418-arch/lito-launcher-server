@@ -69,4 +69,9 @@
 - 78 項商人商品沒有 HP／MP 回復、減傷、負重等欄位，是保留的 2010 來源本身沒有（`HISTORICAL_OFFICIAL_EXACT = false`），不是漏算。
 
 ## CI
-（待 PR CI 完成後補上）
+PR #375，run 43266261768（commit 2bce60d2，CI 合併提交 e9fc874a）：
+
+- `Server tests`：通過。整體 `Tests run: 7440, Failures: 0, Errors: 0, Skipped: 117`、`BUILD SUCCESS`；`RentalEquipmentBonusesMerchantTest` 5/5、`ClientSessionRentalMerchantBonusTest` 1/1（取自 artifact `server-test-evidence` 的 `mvn-test.log`）。
+- `Server (Java 17 / Maven)`、可重現 JAR、`Semantic gap (non-blocking)`、Launcher、`Build-Package.ps1 zip`：通過。
+- `Server tests (CI MySQL fixture, non-blocking)`：失敗。`ClientSessionRentalMerchantBonusTest` 在該 job 也通過；失敗的是既有類別（`ClientSessionNativeTournamentEconomyTest`、`ClientSessionBattleResultStatisticsTest`、`DedicatedServerLayoutTest` 等），與 #366 報告記載的 main 既有失敗同一批，本 PR 沒有碰這些類別。沒有逐一比對該 job 與 main 的失敗清單。
+- 本報告補 CI 結果的這個 commit 只改文件，會再觸發一次 CI，結果以 PR 頁面為準。
