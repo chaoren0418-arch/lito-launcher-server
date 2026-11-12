@@ -116,6 +116,53 @@ final class ClientSessionBattleObserverExitTest {
         }
     }
 
+    /**
+     * Issue #368: the staged-transition exemption is limited to the rental
+     * town.  A restart requested inside an ordinary battle never bypasses the
+     * player-withdrawal settlement on C_D9.
+     */
+    @Test
+    void combatantQuitFightWithPendingRestartStillSettlesWithdrawal() throws Exception {
+        try (Fixture f = new Fixture(temporary, "restart-d9")) {
+            long roomId = f.enterBattleWithObserver();
+            f.resetCiphers();
+
+            invokeHandle(f.b, bytes(Protocol.C_RESTART));
+            assertEquals("RESTART_AWAIT_QUIT_FIGHT",
+                    field(f.b, "pendingTransition").toString());
+            assertTrue(f.hub.battleStarted(roomId));
+
+            invokeHandle(f.b, bytes(Protocol.C_LITO_QUIT_FIGHT));
+            f.assertWithdrawalSettled(roomId);
+            assertEquals("RESTART_AWAIT_QUIT_FIGHT",
+                    field(f.b, "pendingTransition").toString(),
+                    "the withdrawal must not consume the restart acknowledgement");
+        }
+    }
+
+    /** Issue #368: likewise C_D0 with RESTART_AWAIT_RETURN outside the rental town. */
+    @Test
+    void combatantExitRoomWithPendingRestartReturnStillSettlesWithdrawal() throws Exception {
+        try (Fixture f = new Fixture(temporary, "restart-d0")) {
+            long roomId = f.enterBattleWithObserver();
+            f.resetCiphers();
+            Class<?> pending = Class.forName(
+                    ClientSession.class.getName() + "$PendingTransition");
+            for (Object constant : pending.getEnumConstants()) {
+                if (constant.toString().equals("RESTART_AWAIT_RETURN")) {
+                    setField(f.b, "pendingTransition", constant);
+                }
+            }
+            assertEquals("RESTART_AWAIT_RETURN",
+                    field(f.b, "pendingTransition").toString());
+
+            invokeHandle(f.b, bytes(Protocol.C_LITO_EXIT_ROOM));
+            f.assertWithdrawalSettled(roomId);
+            assertEquals(roomId, field(f.b, "currentRoomId"),
+                    "membership is kept until the normal RESULT confirm");
+        }
+    }
+
     private static final class Fixture implements AutoCloseable {
         final ServerConfig config;
         final GameStateStore state;
@@ -219,6 +266,17 @@ final class ClientSessionBattleObserverExitTest {
             assertEquals(roomId, field(b, "currentRoomId"));
             assertEquals(0, state.tournamentStatistics(a.sourceCharacterIdentity()).wins());
             assertEquals(0, state.tournamentStatistics(b.sourceCharacterIdentity()).losses());
+        }
+
+        /** Combatant B withdrew: both combatants got S_D3 and wait in RESULT. */
+        void assertWithdrawalSettled(long roomId) throws Exception {
+            assertEquals("RESULT", field(a, "phase").toString());
+            assertEquals("RESULT", field(b, "phase").toString());
+            assertFalse(hub.battleStarted(roomId));
+            assertEquals(Protocol.S_LITO_END_GAME,
+                    receiveUntilOpcode(clientA, receiverA, Protocol.S_LITO_END_GAME, 16)[0] & 0xFF);
+            assertEquals(Protocol.S_LITO_END_GAME,
+                    receiveUntilOpcode(clientB, receiverB, Protocol.S_LITO_END_GAME, 16)[0] & 0xFF);
         }
 
         /** Drains whatever the observer received and rejects any result controller. */
