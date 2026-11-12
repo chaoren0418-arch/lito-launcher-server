@@ -13,8 +13,8 @@
 | 問題 | 答案 | 等級 |
 |---|---|---|
 | 1. 75DA69B0 有沒有 `hasRentalBattleHandoff` 守衛？ | 有，而且 6928A147（最早記錄缺口的版本）、75DA69B0、E1498871 三個 JAR 的 `rentalItemSelectionContext()` 邏輯完全相同，都在 offset 59 呼叫它。這個守衛從一開始就在，不是後來補的替代方案。 | 已驗證（javap） |
-| 2. E149 與當版 src/main 在 same-endpoint 下 `C_CA` 是否正常進頻道？ | 不會。修改前的 src/main 與 E149 都會把它當成租裝選擇（靜態推導；E149 未實跑）。修改後的 src/main 由新測試驗證。 | src/main：已驗證（PR #370 CI）；E149：推測（靜態） |
-| 3. 擋不住就補上 `rentalBattleLoadoutActive` 並加測試 | 已補，見下。 | 已驗證（PR #370 CI） |
+| 2. E149 與當版 src/main 在 same-endpoint 下 `C_CA` 是否正常進頻道？ | 不會。修改前的 src/main 與 E149 都會把它當成租裝選擇（靜態推導；E149 未實跑）。修改後的 src/main 由新測試驗證。 | src/main：已驗證（PR #373 CI）；E149：推測（靜態） |
+| 3. 擋不住就補上 `rentalBattleLoadoutActive` 並加測試 | 已補，見下。 | 已驗證（PR #373 CI） |
 
 ## 兩個守衛為什麼不等價（handoff 紀錄的寫入與消耗時機）
 
@@ -50,7 +50,7 @@
   - 75DA69B0 與 E149 的 `characterSelect` 都呼叫 `activatePendingRentalBattleHandoff("character-select")`，消耗時機與 src/main 相同。
 - 75DA69B0 當版失敗紀錄的 `server.log`（`lito重建版/驗證紀錄/current/native-teleport-handoff/20261018-171205-138/`）順序吻合上述推導：L89／L126「continuing rental battle handoff」→ L100／L137「activated rental battle handoff … trigger=character-select」→ L140／L141「selected rental item set … selection=0 phase=LOBBY」。`boundary.json` 的 wire 也顯示兩次 `CA 00` 都只收到標註 `rental-item-set accepted` 的 `C9`。
 - 本機 `mvn -B -q -DskipTests test-compile` 通過（只編譯，未執行）。
-- PR #370 CI：見文末「CI 結果」。
+- PR #373 CI：見文末「CI 結果」。
 
 ### 推測
 - E149 正式 JAR 在同端點下有同一缺口：依位元碼相同推導，沒有實跑。
@@ -65,7 +65,7 @@
 - `lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ClientSession.java`
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/ClientSessionSameEndpointRentalHandoffChannelEntryTest.java`
 - `docs/reports/issue-369.md`
-- 分支：`task/369`（PR #370）
+- 分支：`task/369`（PR #373）
 - 本機暫存（不進 git）：`scratch/t369-javap-*.txt`、`scratch/t369-proposal-readme.md`
 
 ## 給下一棒的提示
@@ -74,4 +74,23 @@
 - 實機核對清單：租裝角色在租賃村用傳送石 → 同位址重連 → 選頻道 → 應看到頻道人數並進大廳，背包仍是傳送前選的那套租裝；離開頻道後回到選角畫面，租裝選擇按鈕應恢復可用。
 
 ## CI 結果
-（push 後補）
+
+PR #373，commit `b988f9a0`（已合併 `origin/main` `b42e01d1`），run 43325978473，整體結論 **success**。
+
+| Job | 結果 |
+|---|---|
+| Server tests（阻擋） | 通過：tests=7448、failures=0、errors=0、skipped=117 |
+| Server (Java 17 / Maven)、Server reproducible JAR、Launcher、Build-Package.ps1 zip、Semantic gap | 全部通過 |
+| Server tests (CI MySQL fixture，非阻擋，`continue-on-error`) | 失敗：tests=7715、failures=39、errors=34、skipped=119 |
+
+- 新測試 `ClientSessionSameEndpointRentalHandoffChannelEntryTest` 在兩個測試 job 都是 3 個全過（surefire 報告：Tests run: 3, Failures: 0, Errors: 0, Skipped: 0）。
+- CI MySQL fixture job 的失敗與本張無關：同一時間 `main`（`a31336a0`）的同一個 job 也是 failures=39、errors=34，失敗的 22 個測試類別清單完全相同；PR 只多出本張新增的 3 個測試，且都通過。這個 job 是 #334 後續項目，尚未轉綠。
+
+### 第 1 次嘗試的 CI 為什麼被判失敗（已驗證）
+
+- commit `0064441d` 的 run 43264755522：阻擋性的 job 全部通過，但非阻擋的 CI MySQL fixture job 在 `ModernSiegeWireOracleTest` 開始後就沒有任何輸出，卡到 GitHub 的 6 小時上限被取消，整個 run 的結論變成 cancelled，閘門因此判失敗。當時還沒輪到本張的新測試。
+- 同一分鐘開跑的 task/368（run 43264993090）也卡在同一個測試被取消，task/370（run 43264734337）的同一個 job 也被取消；之後 17:08 起的各次 run（含 main）都沒有再卡住。所以這是既有的偶發卡死，不是本張改動造成的。
+- 本輪沒有改任何程式碼，只合併 `origin/main` 重新觸發 CI。
+
+### 待驗證（CI 基礎設施，不在本張範圍）
+- `ModernSiegeWireOracleTest` 在 CI MySQL fixture job 偶發卡死的原因未查。這個 job 沒有設 `timeout-minutes`，一旦卡死會拖 6 小時並讓整個 run 變成 cancelled，擋住合併閘門。建議另開一張：替該 job 加 `timeout-minutes`（正常約 10 分鐘跑完），並查卡死原因。
