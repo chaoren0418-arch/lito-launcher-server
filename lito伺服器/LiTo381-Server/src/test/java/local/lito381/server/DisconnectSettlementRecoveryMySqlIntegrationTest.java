@@ -37,6 +37,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -299,6 +300,7 @@ final class DisconnectSettlementRecoveryMySqlIntegrationTest {
     }
 
     @Test
+    @Timeout(value = 300, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     void manyRoomsWithRepeatedDisconnectsAndDuplicateConcurrentDeliverySettleEachResultOnce() throws Exception {
         int now = period();
         List<Identity> identities = new ArrayList<>();

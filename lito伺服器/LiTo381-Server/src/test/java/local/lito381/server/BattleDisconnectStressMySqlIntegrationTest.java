@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -103,6 +104,7 @@ final class BattleDisconnectStressMySqlIntegrationTest {
     private final List<Throwable> roundFailures = Collections.synchronizedList(new ArrayList<>());
 
     @Test
+    @Timeout(value = 240, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     void roomsWithRepeatedDisconnectsAndReconnectsSettleOnceAndLeaveNothingBehind() throws Exception {
         config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         assertEquals(WIN_REWARD, config.battleWinReward());
@@ -158,7 +160,13 @@ final class BattleDisconnectStressMySqlIntegrationTest {
                         }
                     }));
                 }
-                for (Future<?> job : jobs) job.get(300, TimeUnit.SECONDS);
+                for (Future<?> job : jobs) {
+                    try {
+                        job.get(150, TimeUnit.SECONDS);
+                    } catch (java.util.concurrent.TimeoutException stuck) {
+                        throw new AssertionError("room scripts did not finish (deadlock?)\n" + threadDump(), stuck);
+                    }
+                }
             } finally {
                 pool.shutdownNow();
             }
@@ -194,6 +202,25 @@ final class BattleDisconnectStressMySqlIntegrationTest {
             journal.close();
             fixture.close();
         }
+    }
+
+    /** Full JVM thread dump with monitor owners, so a CI hang shows the lock cycle. */
+    static String threadDump() {
+        var mx = java.lang.management.ManagementFactory.getThreadMXBean();
+        StringBuilder out = new StringBuilder();
+        long[] deadlocked = mx.findDeadlockedThreads();
+        out.append("deadlocked=").append(deadlocked == null ? "none" : java.util.Arrays.toString(deadlocked)).append('\n');
+        for (var info : mx.dumpAllThreads(true, true)) {
+            out.append('"').append(info.getThreadName()).append("\" id=").append(info.getThreadId())
+                    .append(' ').append(info.getThreadState());
+            if (info.getLockName() != null) out.append(" on ").append(info.getLockName());
+            if (info.getLockOwnerName() != null) out.append(" owned by \"").append(info.getLockOwnerName()).append('"');
+            out.append('\n');
+            for (StackTraceElement e : info.getStackTrace()) out.append("    at ").append(e).append('\n');
+        }
+        String dump = out.toString();
+        System.out.println("[T124] thread dump\n" + dump);
+        return dump;
     }
 
     private void assertDatabaseMatchesModel(List<Identity> identities, SettlementSql.Counters base, int now,
