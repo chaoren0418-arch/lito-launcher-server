@@ -16,11 +16,13 @@
 - **已驗證**
   - `mvn -B -q -DskipTests test-compile` 本機編譯成功（exit 0）。
   - 1-伺服器與 repo 的 `db/lito_static.sql` 中這 11 列的 classname 字串逐字相同（用 Select-String 直接比對兩份傾印）。
+  - PR #360 CI（build run 43137309109、package run 43137309208）：`Server (Java 17 / Maven)`、**`Server tests`（`mvn -B test`）綠燈**、Launcher、Semantic gap、Build-Package 都通過。
+  - CI MySQL job（非阻擋）：`ConsumableItemParametersMySqlIntegrationTest` **有執行且通過**（Tests run: 1, Failures: 0）。這個 job 整體是紅的，但失敗的是既有的 16 個類別（`ClientSessionNativeTournamentEconomyTest`、`ClientSessionNativeDropIntegrationTest` 等，錯誤多為 `this.accounts is null`／`selectedSourceAccounts`），main 的 base commit c57546b7（run 43095066705）同一個 job 也是紅的、有 17 個失敗類別；兩邊差異只有 3 個類別互換（PR 多 `ClientSessionClassicWorldMonsterGiveIntegrationTest`，main 多 `ClientSessionClassicWorldGroundIntegrationTest`、`ClientSessionHorrorOfDeathIntegrationTest`），錯誤同型，看起來跟測試執行順序有關，跟藥水無關（推測，未逐一追）。
   - 1-伺服器回復量公式 `min + random*(max-min+1)`（`UserAddHp.java:96-100`）與 LiTo `nextInt(min,max+1)`（`ClientSession.java:21852-21853`）分布一樣。
 - **推測**
   - 正式 380_db 的這幾列和 1-伺服器傾印一樣（沒連正式 DB）；如果不一樣，現在 LiTo 會照正式表走，log 會印出「differing-from-built-in=N」與每一項的差異。
 - **待驗證**
-  - `mvn -B test` 的結果：依本機執行限制，測試沒在本機跑，交給 PR 的 GitHub Actions（含 CI MySQL job）。
+  - 本機沒跑測試（本機執行限制），結果全部來自 CI。
   - 實機：用正式設定啟動伺服器，確認 log 有 `[LiTo] consumable parameters loaded from 380_db.etcitem: items=11 differing-from-built-in=0 fallbacks=0`；遊戲內喝紅水、綠水、勇水、藍水，回復量／時間不變。交給 Codex／使用者。
 
 ## 未處理（列給主控）
