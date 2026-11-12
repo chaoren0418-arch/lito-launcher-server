@@ -56,6 +56,8 @@ final class NativeAreaMaterialAction {
         volatile transient Object nativeSourceTargetNegativeProof;
         volatile transient Object nativeSourceWeaponFirstLife;
         transient Object nativeSourceControlledNegativeFinal;
+        // T123 (Issue #354, G14, candidate 3ccbb6f5…): bounded first primary + secondary-status snapshot.
+        transient Object nativeSourceAreaPairFirst;
 
   Context(ClientSession pc){
    bindings=new IdentityHashMap<>();npcs=new HashMap<>();
@@ -392,7 +394,7 @@ final class NativeAreaMaterialAction {
             while (n2 > 0) {
                 list.get(--n2).unlock();
             }
-            if (Thread.currentThread().isInterrupted() || !NativeSourceNegativePairFirst.retry(context.caster, clientSession, context)) {
+            if (Thread.currentThread().isInterrupted() || !NativeSourceAreaPairFirst.retry(context.caster, clientSession, context)) {
                 return;
             }
             LockSupport.parkNanos(1000000L);
@@ -402,7 +404,7 @@ final class NativeAreaMaterialAction {
         }
         NativePlayerActionScope.Ticket ticket = NativePlayerActionScope.enter((ClientSession[])context.players.toArray(ClientSession[]::new));
         try {
-            if (!NativeSourceNegativePairFirst.scene(context)) {
+            if (!NativeSourceAreaPairFirst.scene(context)) {
                 return;
             }
             NativeLightAction.commitPair(clientSession, clientSession, () -> NativeWorldMaterialPolicy.run(clientSession, context.phase.equals("WORLD"), n, () -> {
