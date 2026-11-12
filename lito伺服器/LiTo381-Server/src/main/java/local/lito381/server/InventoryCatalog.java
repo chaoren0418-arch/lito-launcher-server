@@ -1470,34 +1470,81 @@ final class InventoryCatalog {
         return BUY_ITEMS;
     }
 
-    /** Exact selected 380_db potion HP ranges; the development item stays fixed. */
+    /**
+     * Potion HP ranges from 380_db {@code etcitem.classname} ({@code hp.UserAddHp}),
+     * via {@link ConsumableItemParameters} (built-in fallback); the development item stays fixed.
+     */
     static int[] healingRange(long catalogId) {
         if (catalogId == HEALING_POTION) return new int[] {25, 25};
-        if (catalogId == NATIVE_HEALING_POTION) return new int[] {10, 20};
-        if (catalogId == EXTRA_HEALING_POTION) return new int[] {30, 50};
-        if (catalogId == GREATER_HEALING_POTION) return new int[] {60, 80};
-        if (catalogId == ENT_FRUIT) return new int[] {30, 50};
-        throw new IllegalArgumentException("catalog id is not a healing potion");
+        ConsumableItemParameters.Value value = consumable(catalogId,
+                ConsumableItemParameters.Executor.USER_ADD_HP, "healing potion");
+        return new int[] {value.min(), value.max()};
     }
 
-    /** Exact retained {@code hp.UserAddHp} drink-effect gfx for native potions. */
+    /** {@code hp.UserAddHp} drink-effect gfx for native potions (0 = none). */
     static int healingEffectGfx(long catalogId) {
         if (catalogId == HEALING_POTION) return 0;
-        if (catalogId == NATIVE_HEALING_POTION) return 189;
-        if (catalogId == EXTRA_HEALING_POTION) return 194;
-        if (catalogId == GREATER_HEALING_POTION) return 197;
-        if (catalogId == ENT_FRUIT) return 197;
-        throw new IllegalArgumentException("catalog id is not a healing potion");
+        return consumable(catalogId, ConsumableItemParameters.Executor.USER_ADD_HP,
+                "healing potion").gfx();
     }
 
     static int bluePotionDurationSeconds(long catalogId) {
-        if (catalogId == BLUE_POTION || catalogId == WISDOM_COIN) {
-            return BLUE_POTION_DURATION_SECONDS;
+        return consumable(catalogId, ConsumableItemParameters.Executor.USER_MPR_BLUE,
+                "blue-potion source").seconds();
+    }
+
+    static int bluePotionEffectGfx(long catalogId) {
+        return consumable(catalogId, ConsumableItemParameters.Executor.USER_MPR_BLUE,
+                "blue-potion source").gfx();
+    }
+
+    static int selfHasteDurationSeconds() {
+        return consumable(SELF_HASTE_POTION, ConsumableItemParameters.Executor.STATUS_HASTE,
+                "haste potion").seconds();
+    }
+
+    static int selfHasteEffectGfx() {
+        return consumable(SELF_HASTE_POTION, ConsumableItemParameters.Executor.STATUS_HASTE,
+                "haste potion").gfx();
+    }
+
+    static int braveDurationSeconds() {
+        return consumable(BRAVE_POTION, ConsumableItemParameters.Executor.STATUS_BRAVE,
+                "brave potion").seconds();
+    }
+
+    static int braveEffectGfx() {
+        return consumable(BRAVE_POTION, ConsumableItemParameters.Executor.STATUS_BRAVE,
+                "brave potion").gfx();
+    }
+
+    static int wisdomPotionDurationSeconds() {
+        return consumable(WISDOM_POTION, ConsumableItemParameters.Executor.STATUS_WISDOM_POTION,
+                "wisdom potion").seconds();
+    }
+
+    static int wisdomPotionEffectGfx() {
+        return consumable(WISDOM_POTION, ConsumableItemParameters.Executor.STATUS_WISDOM_POTION,
+                "wisdom potion").gfx();
+    }
+
+    static int elvenWaferDurationSeconds() {
+        return consumable(ELVEN_WAFER, ConsumableItemParameters.Executor.STATUS_ELF_BRAVE,
+                "elven wafer").seconds();
+    }
+
+    static int elvenWaferEffectGfx() {
+        return consumable(ELVEN_WAFER, ConsumableItemParameters.Executor.STATUS_ELF_BRAVE,
+                "elven wafer").gfx();
+    }
+
+    private static ConsumableItemParameters.Value consumable(
+            long catalogId, ConsumableItemParameters.Executor executor, String kind) {
+        ConsumableItemParameters.Value value = ConsumableItemParameters.value(catalogId);
+        if (value == null || value.executor() != executor) {
+            throw new IllegalArgumentException("catalog id is not a " + kind);
         }
-        if (catalogId == BLESSED_BLUE_POTION) {
-            return BLESSED_BLUE_POTION_DURATION_SECONDS;
-        }
-        throw new IllegalArgumentException("catalog id is not a blue-potion source");
+        return value;
     }
 
     /**
