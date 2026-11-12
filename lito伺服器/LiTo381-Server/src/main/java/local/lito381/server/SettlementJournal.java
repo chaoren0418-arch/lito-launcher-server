@@ -38,8 +38,10 @@ final class SettlementJournal implements AutoCloseable {
  void replay(Sink sink)throws Exception{
   Exception first=null;
   for(Path p:files()){
-   try{sink.apply(read(p));}catch(Exception e){if(first==null)first=e;else first.addSuppressed(e);continue;}
-   Files.delete(p);
+   // Another replayer already applied and deleted this file; the result ids make a repeat harmless.
+   List<Entry> entries;try{entries=read(p);}catch(NoSuchFileException gone){continue;}catch(Exception e){if(first==null)first=e;else first.addSuppressed(e);continue;}
+   try{sink.apply(entries);}catch(Exception e){if(first==null)first=e;else first.addSuppressed(e);continue;}
+   Files.deleteIfExists(p);
   }
   if(first!=null)throw first;
  }

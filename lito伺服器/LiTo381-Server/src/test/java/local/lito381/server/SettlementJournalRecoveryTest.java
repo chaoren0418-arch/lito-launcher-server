@@ -108,6 +108,25 @@ final class SettlementJournalRecoveryTest {
     }
 
     @Test
+    void aFileAlreadyConsumedByAnotherReplayerIsSkipped() throws Exception {
+        Path dir = temporary.resolve("journal");
+        try (SettlementJournal journal = new SettlementJournal(dir)) {
+            journal.save(List.of(entry(11, "First", true, false)));
+            journal.save(List.of(entry(12, "Second", false, true)));
+            List<SettlementJournal.Entry> delivered = new ArrayList<>();
+            journal.replay(entries -> {
+                delivered.addAll(entries);
+                // A concurrent replayer (the retry worker) applies and deletes every file meanwhile.
+                try (var files = Files.list(dir)) {
+                    for (Path p : files.filter(f -> f.toString().endsWith(".pending")).toList()) Files.delete(p);
+                }
+            });
+            assertEquals(1, delivered.size(), "the vanished second file is neither re-read nor reported");
+            assertEquals(0, journal.pending());
+        }
+    }
+
+    @Test
     void crashDuringSaveLeavesOnlyAnIgnoredTemporaryFile() throws Exception {
         Path dir = temporary.resolve("journal");
         try (SettlementJournal journal = new SettlementJournal(dir)) {

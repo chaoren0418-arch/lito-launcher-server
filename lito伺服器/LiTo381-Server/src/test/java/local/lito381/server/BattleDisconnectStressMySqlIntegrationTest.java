@@ -178,9 +178,11 @@ final class BattleDisconnectStressMySqlIntegrationTest {
             // Stale 300 ms resolver tasks of earlier generations must all be no-ops.
             Thread.sleep(2 * GameHub.BATTLE_DISCONNECT_GRACE_MS + 400);
 
-            // character_lito already holds every result once, without any WAL replay.
+            // character_lito already holds every result once from the live record() path. (When an
+            // earlier test in this JVM opened DurableBattleSettlement, its 2 s retry worker also
+            // replays this WAL concurrently, as in production.)
             assertDatabaseMatchesModel(identities, base, now, "live path");
-            // Background replay of every WAL file (DurableBattleSettlement.retry) adds nothing.
+            // One more replay of every WAL file (what DurableBattleSettlement.retry does) adds nothing.
             journal.replay(SettlementSql::apply);
             SettlementSql.drainAll();
             assertEquals(0, journal.pending());
