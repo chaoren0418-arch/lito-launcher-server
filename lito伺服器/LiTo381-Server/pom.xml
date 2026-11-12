@@ -12,6 +12,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
+        <!-- T126 / Issue #357：可重現封裝。固定 JAR 內所有 entry 的時間戳，
+             maven-jar-plugin 3.3.0（>= 3.2.0）會據此正規化 entry 順序與時間，
+             同一 commit 重複建置的 JAR SHA-256 相同。改版時可一併更新此值。 -->
+        <project.build.outputTimestamp>2026-11-04T00:00:00Z</project.build.outputTimestamp>
     </properties>
 
     <dependencies>
