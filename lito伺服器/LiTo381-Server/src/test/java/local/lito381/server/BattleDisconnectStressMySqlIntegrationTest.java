@@ -113,7 +113,9 @@ final class BattleDisconnectStressMySqlIntegrationTest {
         journalField.setAccessible(true);
         Object previousJournal = journalField.get(null);
         fixture = new DurableSettlementCiFixture(ci, temporary.resolve("fixture"));
-        state = new GameStateStore(temporary.resolve("stress-state.properties"), false);
+        // Shared-SQL deployments run with ephemeral source profiles (Main: config.ephemeralSourceProfiles()),
+        // so hub.disconnect releases the in-memory character and a late result must not recreate it.
+        state = new GameStateStore(temporary.resolve("stress-state.properties"), false, true);
         int now = GameStateStore.rankingPeriodKeyAt(System.currentTimeMillis());
         SettlementSql.Counters base = new SettlementSql.Counters(50, 50, 100_000, 5, now, 50_000, 5, 5);
         List<Identity> identities = new ArrayList<>();
