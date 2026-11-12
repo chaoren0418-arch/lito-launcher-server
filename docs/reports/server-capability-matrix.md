@@ -38,7 +38,7 @@
 | 魔法傷害、MR、技能機率 | `L1MagicPc.calcMagicDamage/calcMagicDiceDamage/calcMrDefense/calcProbabilityMagic/calcProbabilityWithConfig`（`~/model/L1MagicPc.java:139-1126`）、`L1MagicMode`、`L1AttackList.MRDMG`；入口 `L1SkillUse.java:2838-3003` | `CombatMagicDamage`、`BattleMagicResistance`、`BattleElementalResistance`、`CombatProbability`、`SourceSkillControls`、`BattleTurnUndead`（LC A8、A10、B9、B10） | **已對照**（T102，`docs/design/formulas-magic.md` 39 項）：MR 表、屬性／INT 係數、爆擊、表控機率 34 列、舊公式、原始素質表皆一致；**已修正** INT≥44 MagicBonus、正義守護 MR、邪惡守護骰值／SP；呼叫點已在 `src/main`（B10 不再是 patch）。待驗證：魔眼 SP、SKD3 清單、千分比迴避 | T102（完成）；T107～T109 |
 | 生命的祝福 +100 | `ConfigSkill._loadFromProperties` 不讀 `NATURES_BLESSING_HEAL`（`ConfigSkill.java:93-134`，只有 `_setDefaults:207` 設 0）；設定檔的 `= 100` 是無效設定 | 固定 0（`CombatRules.java:111-113`） | **已驗證：0 是對的**，「缺 +100」不成立（LC B12 結論，見 `formulas-magic.md` §4）；要 +100 屬新設計決定 | T102（完成） |
 | HP／MP | `L1Character.getMaxHp/getMaxMp`、`CalcStat.calcStatHp/Mp`（S1 §1） | 進場直接補滿，**沒讀** CurHp／CurMp（LC A3）；回復依藥水與技能 | **刻意不做**：T100 D2 定案「每場補滿」為正式規則（gameplay.md N5） | T100、T103（#310） |
-| 藥水與消耗品 | `data/item_etcitem/hp/UserAddHp` 等，參數寫在 `etcitem.classname`（S1 §2） | 回復範圍寫死在 `InventoryCatalog`（LC I7、I8） | **未驗證**；數值來源不同（S1 讀 SQL，LiTo 寫死） | T111 |
+| 藥水與消耗品 | `data/item_etcitem/hp/UserAddHp` 等，參數寫在 `etcitem.classname`（S1 §2） | 11 項藥水啟動時讀 `380_db.etcitem.classname`（`ConsumableItemParameters`），讀不到退回內建值 | **一致**（T111，#352）：11 項數值與 S1 相同；勇敢藥水 `limit_class` 兩份傾印不一致待查（`docs/design/items-consumables.md`） | T111 |
 | 積分／排名 | 無 | ranking_points（LC B17） | **部分**：公式已定案（D1）；重啟後歸零，持久化（D3）待後續任務 | T103（#310）、D3 後續任務 |
 
 ## 區塊三：資料庫

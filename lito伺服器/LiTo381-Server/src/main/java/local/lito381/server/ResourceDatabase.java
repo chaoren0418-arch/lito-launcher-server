@@ -72,6 +72,7 @@ final class ResourceDatabase {
   }
   GmTravel.load(config);
   CombatDatabase.load(config);
+  ConsumableItemParameters.load(config); // T111: never throws; falls back to built-in values.
   NativeDeSprites.load(config);
   NativeDeFactoryControls.load(config);
   NativeDeNpcTemplateResources.load(config);
