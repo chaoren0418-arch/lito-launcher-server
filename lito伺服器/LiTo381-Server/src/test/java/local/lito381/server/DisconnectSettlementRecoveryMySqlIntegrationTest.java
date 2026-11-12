@@ -65,7 +65,7 @@ final class DisconnectSettlementRecoveryMySqlIntegrationTest {
 
     @AfterEach
     void close() throws Exception {
-        fixture.close();
+        if (fixture != null) fixture.close();
     }
 
     private static int period() {

@@ -81,6 +81,9 @@ final class DurableSettlementCiFixture implements AutoCloseable {
         legacy.setProperty("URL3_LOGIN", config.getProperty("database.jdbc.options", ""));
         legacy.setProperty("Login_LOGIN", config.getProperty("database.user"));
         legacy.setProperty("Password_LOGIN", config.getProperty("database.password", ""));
+        // LegacyMySqlRepository evaluates required("Login") eagerly as the Login_LOGIN fallback.
+        legacy.setProperty("Login", config.getProperty("database.user"));
+        legacy.setProperty("Password", config.getProperty("database.password", ""));
         try (Writer out = Files.newBufferedWriter(credentials, StandardCharsets.UTF_8)) {
             legacy.store(out, "T124 CI fixture credentials (runner temp only)");
         }
