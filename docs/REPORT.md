@@ -97,3 +97,4 @@
 - 2026-11-12 — #353 T122: 競技場 PvE 怪物技能盤點與對照（588 列非玩家技能中 Quest／Time Attack 用到的部分）（code，claude-local，PR 已合併）→ [報告](reports/issue-353.md)
 - 2026-11-12 — #354 T123: 受控 NPC（寵物、召喚物）完整語意——候選差異盤點與移植（LC B23、G13、G14、G15、G18）（code，claude-local，PR 已合併）→ [報告](reports/issue-354.md)
 - 2026-11-12 — #357 T126: 可重現封裝——固定 project.build.outputTimestamp（code，claude-local，PR 已合併）→ [報告](reports/issue-357.md)
+- 2026-11-12 — #356 T125: 技能時序與射程收尾（G09–G12、G16）——確認 src/main 現況並補齊（code，claude-local，PR 已合併）→ [報告](reports/issue-356.md)
