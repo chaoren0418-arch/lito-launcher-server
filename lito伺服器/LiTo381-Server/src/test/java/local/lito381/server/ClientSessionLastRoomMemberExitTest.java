@@ -14,15 +14,22 @@ import java.net.SocketTimeoutException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Issue #370 (lito-modern#299, T040 3/4): the last member's room exit must
  * finish with the S_CC room list even when the room's directory row is
  * already gone, and an emptied default room must still publish its reset row.
+ *
+ * <p>The class-level timeout covers the fixture's {@code GameHub.close()} as
+ * well: CI run 43264734337 (MySQL fixture job) showed that a hub close stuck
+ * behind an earlier test's hang otherwise blocks the whole job for six hours.
  */
+@Timeout(value = 120, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
 final class ClientSessionLastRoomMemberExitTest {
     @TempDir Path temporary;
 

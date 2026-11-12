@@ -13314,6 +13314,15 @@ final class ClientSession implements Runnable {
     }
 
     private void broadcastDefaultRoomReset(long roomId) throws IOException {
+        // Issue #370: the last member's return can be processed after the
+        // empty room was already removed.  Its directory row no longer
+        // exists, so there is nothing to reset; the caller continues through
+        // CHANNEL and the complete room-list publication.
+        if (!hub.roomExists(currentChannelId, roomId)) {
+            System.out.println("[LiTo] default room reset skipped; room row already removed room="
+                    + roomId + " channel=" + currentChannelId + " player=" + playerName());
+            return;
+        }
         GameHub.RoomSnapshot reset = hub.roomSnapshots(currentChannelId).stream()
                 .filter(room -> room.id() == roomId)
                 .findFirst()
