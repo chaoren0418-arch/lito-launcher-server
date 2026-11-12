@@ -93,3 +93,4 @@
 - 2026-11-12 — #340 T121: NPC 打 NPC／寵物／召喚物的公式（#317 N2／N3，依使用者決定）（code，claude-local，PR 已合併）→ [報告](reports/issue-340.md)
 - 2026-11-12 — #350 主控：本機佇列又快空了——請開 M3 下一批並更新 TASKS 狀態（plan，claude-chat，PR #351 已合併）→ [報告](reports/issue-350.md)
 - 2026-11-12 — #358 主控：M3c 追加一批（使用者 2026-11-12 同意從 Backlog 拉）——TASKS 記錄（plan，claude-chat，PR #359 已合併）→ [報告](reports/issue-358.md)
+- 2026-11-12 — #352 T111: 藥水與消耗品數值改讀 SQL（對齊 1-伺服器 etcitem.classname）（code，claude-local，PR 已合併）→ [報告](reports/issue-352.md)
