@@ -19,7 +19,16 @@
 ## 怎麼驗證
 
 - **已驗證**（靜態）：`pom.xml` 的 jar 外掛版本是 3.3.0，≥ 3.2.0；AsRecord 的檔案走訪有排序。
-- **待驗證（交 CI）**：`server-reproducible` job 兩次建置 SHA-256 相同；`server`、`server-test` 維持綠燈。依本機執行限制，沒有在本機跑 `mvn`（建置途中會執行自己編譯的 AsRecord 工具），結果以本 PR 的 CI 為準，CI 結果會補到 PR 留言。
+- **已驗證（CI，PR #364，commit `e0f3c478`，run 43142236019）**：`server-reproducible` job 通過，兩輪 `clean package` 的 3 個 JAR SHA-256 完全相同：
+
+  | JAR | SHA-256 |
+  |---|---|
+  | `LiTo381-Server.jar` | `006c2d1ce61be98563eb7fd91a55ceb0f849ce5a263b72e08415146409d6bdb4` |
+  | `LiTo381-Server-modern.jar` | `bf4ad74dd351062f1e2bb4cd7290d4fb5b1b9e3924daabfeadc048eacea9938d` |
+  | `LiTo381-Server-as-record-tests.jar` | `82bff9c74f24a8d60486ea08e8828cacd5cef7f14607b26721709235c7f7343d` |
+
+  同一個 run 裡的 `Server (Java 17 / Maven)`、`Server tests`（`mvn -B test`）、`Semantic gap`、`Launcher`、`Build-Package.ps1 zip` 都通過。上表雜湊是 `e0f3c478` 的值；之後的 commit 只改報告、沒改程式碼，雜湊應該不變，但仍以最新 commit 的 artifact 為準。
+- 依本機執行限制，沒有在本機跑 `mvn`（建置途中會執行自己編譯的 AsRecord 工具）。
 
 ## 推測
 
