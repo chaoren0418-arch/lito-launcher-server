@@ -240,9 +240,9 @@
 | 還能打 | PvP：還有 ≥2 隊（隊伍模式）或 ≥2 人（個人）留下；PvE：還有人留下 → 比賽繼續，斷線者記斷線敗 | `S/TeamDisconnectSettlement.java:9-12,16-23` |
 | 打不下去 | 留下的人全部記勝，斷線者記斷線敗，比賽結束 | `S/TeamDisconnectSettlement.java:12` |
 | 寵物競賽、Time Attack | 有專用規則（§2.2、§2.6） | `S/GameHub.java:13041-13093` |
-| 重試 | 判定失敗時 2 秒後重試；日誌背景每 2 秒重送 | `S/TeamDisconnectSettlement.java:28-32`；`S/DurableBattleSettlement.java:22,146-161` |
-| 斷線時機（T124 #355） | 開戰前（房間內）與結果畫面上斷線**不算**戰鬥斷線（`registerBattleDisconnect` 只收開戰中的參戰者），不記任何勝敗；戰鬥中斷線記斷線敗；結果已凍結後才斷線，維持凍結時的判定（一般敗不會變成斷線敗，勝也不會被推翻）；斷線後在判定前重新登入，新連線不會帶走舊場次的結果 | `S/GameHub.java:12794-12807`；`S/DurableBattleSettlement.java:43`；測試 `BattleDisconnectStressMySqlIntegrationTest` |
-| 清理（T124） | 每場結束後房間會移除、斷線的 session 會離開 hub；斷線者的記憶體角色資料在結算後不會被重建（結算時改用暫存 store） | `S/GameHub.java:1878-1891`；`S/DurableBattleSettlement.java:109-121` |
+| 重試 | 判定失敗時 2 秒後重試；日誌背景每 2 秒重送 | `S/TeamDisconnectSettlement.java:28-32`；`S/DurableBattleSettlement.java:22,146-165` |
+| 斷線時機（T124 #355） | 開戰前（房間內）與結果畫面上斷線**不算**戰鬥斷線（`registerBattleDisconnect` 只收開戰中的參戰者），不記任何勝敗；戰鬥中斷線記斷線敗；結果已凍結後才斷線，維持凍結時的判定（一般敗不會變成斷線敗，勝也不會被推翻）；斷線後在判定前重新登入，新連線不會帶走舊場次的結果 | `S/GameHub.java:12799-12812`；`S/DurableBattleSettlement.java:43`；測試 `BattleDisconnectStressMySqlIntegrationTest` |
+| 清理（T124） | 每場結束後房間會移除、斷線的 session 會離開 hub；斷線者的記憶體角色資料在結算後不會被重建（結算時改用暫存 store）。斷線**只清理自己所在的房間**（T124 修正：之前會掃掉所有空房，包括別人剛 `createRoom`、還沒加入的房間）；結算未落盤時被清空的房間，由結算 worker 在落盤後移除 | `S/GameHub.java:1878-1896`；`S/DurableBattleSettlement.java:109-121,152-156`；測試 `GameHubDisconnectRoomSweepTest` |
 
 ### 3.9 自動配對（Match Making）
 
@@ -278,11 +278,11 @@
 | 欄位 | `wins`、`losses`、`version`、`last_result_id`、`char_name`，以及 T103b（#335）起的積分、斷線數、月計（§4.3） | `S/SettlementSql.java:6-7,97` |
 | 冪等 | 結果 ID＝SHA-256(場次｜資料庫｜角色)；先寫收據表 `lito_battle_settlement`（必須 InnoDB），再用 `GET_LOCK`＋`last_result_id` 更新計數；重送不會重複加 | `S/SettlementJournal.java:7`；`S/SettlementSql.java:59-68,80-106` |
 | 身分保護 | 角色名與 objid 對不上（角色被改名／刪除）就拒絕寫入 | `S/SettlementSql.java:88` |
-| 寫入順序 | ①結果凍結（送出任何結果封包之前）→ ②WAL 檔：先寫 `.tmp`、`fsync`、再原子改名為 `.pending` → ③收據（InnoDB 交易）→ ④`character_lito` 單一 UPDATE／INSERT（勝敗、積分、斷線數、月計、`version`、`last_result_id` 同一列同一敘述）→ ⑤收據 `applied=1` → ⑥刪 WAL 檔。啟動時先重放全部 WAL 檔，再處理所有 `applied=0` 收據 | `S/DurableBattleSettlement.java:21,40-62`；`S/SettlementJournal.java:18-26,38-46`；`S/SettlementSql.java:48-106` |
+| 寫入順序 | ①結果凍結（送出任何結果封包之前）→ ②WAL 檔：先寫 `.tmp`、`fsync`、再原子改名為 `.pending` → ③收據（InnoDB 交易）→ ④`character_lito` 單一 UPDATE／INSERT（勝敗、積分、斷線數、月計、`version`、`last_result_id` 同一列同一敘述）→ ⑤收據 `applied=1` → ⑥刪 WAL 檔。啟動時先重放全部 WAL 檔，再處理所有 `applied=0` 收據 | `S/DurableBattleSettlement.java:21,40-62`；`S/SettlementJournal.java:18-26,38-47`；`S/SettlementSql.java:48-106` |
 | 重啟復原（T124 #355） | 在 ②～⑥ 任一步中止再啟動，每筆結果剛好寫一次：②之後中止→重放 WAL；③交易中止→收據回滾、重放重寫；④已寫但沒收到回覆或沒做⑤→`last_result_id` 已是本結果，只補⑤；⑤之後、⑥之前中止→重放時收據已存在、計數不動；WAL 目錄遺失但③已提交→啟動時的收據掃描仍會補寫；復原途中再中止一次也一樣 | 測試 `DisconnectSettlementRecoveryMySqlIntegrationTest`（MyISAM `380_ac_1`、InnoDB `380_ac_2` 各跑一次） |
 | 「寫入中」中止（現行行為） | ④是單列單一敘述：MyISAM 的單列 UPDATE 不會只寫一半欄位，InnoDB 為 autocommit 交易，所以結果只有「整列已寫」或「完全沒寫」兩種，兩種都由上一列處理；不會出現勝場加了、積分沒加的情況。〔推測〕MyISAM 在 mysqld 本身當機（非 LiTo 中止）時可能損壞資料表，需 `REPAIR TABLE`，此情況不在測試範圍 | `S/SettlementSql.java:97-98` |
 | 凍結前中止（取捨） | ①完成前（WAL 尚未寫入）伺服器中止，這場**不計**：沒有人加勝敗或積分。因為結果封包一律在 WAL 寫入之後才送，玩家不會看到結果畫面卻沒記錄。代價：快結束時當機的那場算白打（原 evidence 的已知限制「未結束的戰鬥不重建」） | `S/DurableBattleSettlement.java:3,55-58` |
-| 單筆永久失敗（T124 修正） | 某筆結果因角色改名／刪除被拒時，只留下那個 WAL 檔與收據，**不再擋住其他結果**（修正前 WAL 依隨機檔名排序，排在它後面的結果全部卡住）。啟動時仍會因這筆失敗拒絕啟動，log 會出現 `identity changed`，需要營運確認角色後處理；拒寫的那筆不會寫進任何計數 | `S/SettlementJournal.java:34-46`；`S/SettlementSql.java:51-55,70-79`；`S/DurableBattleSettlement.java:153-158` |
+| 單筆永久失敗（T124 修正） | 某筆結果因角色改名／刪除被拒時，只留下那個 WAL 檔與收據，**不再擋住其他結果**（修正前 WAL 依隨機檔名排序，排在它後面的結果全部卡住）。啟動時仍會因這筆失敗拒絕啟動，log 會出現 `identity changed`，需要營運確認角色後處理；拒寫的那筆不會寫進任何計數 | `S/SettlementJournal.java:34-47`；`S/SettlementSql.java:51-55,70-79`；`S/DurableBattleSettlement.java:157-163` |
 | WAL 檔損毀 | 已提交的 `.pending` 檔格式錯誤時拒絕啟動（不丟結果，檔案留著）；改名前中止留下的 `.tmp` 殘檔不視為結果，會被忽略，但目前不會自動清掉 | `S/SettlementJournal.java:16,24-27` |
 | 同時兩個程序 | WAL 目錄有 `owner.lock`，第二個程序開同一目錄會被拒絕 | `S/SettlementJournal.java:13-14` |
 

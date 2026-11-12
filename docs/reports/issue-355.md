@@ -65,16 +65,16 @@ CI run 編號與 commit 見「怎麼驗證」。
 
 | 情境 | 預期 | 結果 |
 |---|---|---|
-| 開戰前在房間內斷線 | 不是戰鬥斷線，不記錄 | 見下方 |
-| 戰鬥中一方斷線（加重複的 resolver 與矛盾的回呼） | 斷線者斷線敗 −50、對方勝 +250，各一次 | 見下方 |
-| 300 ms 內雙方斷線 | 無效場，不記錄 | 見下方 |
-| 結算中（勝方已送結果、敗方送結果前）斷線 | 維持一般敗（不是斷線敗），勝方不變 | 見下方 |
-| 結果畫面上斷線、再送一個「勝」的回呼 | 不是戰鬥斷線，不會推翻結果 | 見下方 |
-| 斷線後在判定前重新登入 | 舊連線記斷線敗；新連線收到的回呼被拒，不計 | 見下方 |
+| 開戰前在房間內斷線 | 不是戰鬥斷線，不記錄 | ✔ |
+| 戰鬥中一方斷線（加重複的 resolver 與矛盾的回呼） | 斷線者斷線敗 −50、對方勝 +250，各一次 | ✔ |
+| 300 ms 內雙方斷線 | 無效場，不記錄 | ✔ |
+| 結算中（勝方已送結果、敗方送結果前）斷線 | 維持一般敗（不是斷線敗），勝方不變 | ✔ |
+| 結果畫面上斷線、再送一個「勝」的回呼 | 不是戰鬥斷線，不會推翻結果 | ✔ |
+| 斷線後在判定前重新登入 | 舊連線記斷線敗；新連線收到的回呼被拒，不計 | ✔ |
 
 每回合都檢查：房間已移除、`cleanupAllowed`（沒有未落盤的結算）、斷線的 session 已離開 hub。結束時檢查：只透過即時路徑，6 個身分的 `character_lito` 已等於模型；再重放一次 WAL 後數值仍不變、WAL 清空；全部登出後 hub 沒有 session，只剩頻道預設房，沒有任何被釋放的角色記憶體資料被重建。
 
-（結果欄由最後一輪 CI 填寫，見「怎麼驗證」。）
+共 36 回合、48 個 session（每次重連都是新 session）、48 筆結果；全部檢查通過。✔
 
 ### WAL（`SettlementJournalRecoveryTest`）
 失敗的檔案不會擋住其他檔案；多個失敗時回報第一個；sink 完成後、刪檔前中止，重啟後會再送一次同樣的凍結結果（由結果 ID 去重）；已被其他重放者處理的檔案會略過；存檔中途中止留下的 `.tmp` 會被忽略；已提交的檔案損毀時拒絕啟動，檔案保留；同一目錄不能有兩個擁有者。
@@ -85,7 +85,9 @@ CI run 編號與 commit 見「怎麼驗證」。
   - 本機 `mvn -B -o -q -DskipTests test-compile` 通過（依規定本機不執行測試）。
   - CI（PR #363）：
     - run 43147660301（head `1c75a416`）：`Server tests`（必過）通過。CI MySQL job：`DisconnectSettlementRecoveryMySqlIntegrationTest` 22/22、`SettlementJournalRecoveryTest` 6/6、`GameHubDisconnectRoomSweepTest` 1/1、`SettlementRankingMySqlIntegrationTest` 4/4 通過。`BattleDisconnectStressMySqlIntegrationTest` 的 36 個回合與「即時路徑 DB＝模型」都通過，但之後的 WAL 重放和背景 worker 同時刪同一個檔而失敗，已在 `a9332366` 修正（缺陷 A 的第二點）。全體 39 failures／35 errors：failures 和 T119 基準相同，errors 多出的 1 個就是這一案。
-    - 最後一輪：見下方「最後一輪 CI」。
+    - run 43150137478（head `a9332366`）：hub 壓力測試的 DB、房間、session 檢查全部通過，最後的「角色記憶體資料未被重建」失敗。原因是測試夾具的 `GameStateStore` 沒有開正式共用 SQL 模式使用的暫時性來源角色資料（`Main` 依 `config.ephemeralSourceProfiles()` 開啟），所以 `releaseSourceCharacter` 一律不釋放。這是夾具問題，不是程式缺陷，已在 `e7c4644d` 修正。
+    - **最後一輪** run 43151965482（head `e7c4644d`）：`Server tests`（必過）通過。CI MySQL job 中，本任務 4 個類別 31 案（`SettlementJournalRecoveryTest` 7、`GameHubDisconnectRoomSweepTest` 1、`DisconnectSettlementRecoveryMySqlIntegrationTest` 22、`BattleDisconnectStressMySqlIntegrationTest` 1）與 `SettlementRankingMySqlIntegrationTest` 4 案全部通過。全體 `Tests run: 7699, Failures: 39, Errors: 34`，和 T119 基準相同，沒有新增失敗；job 仍是紅燈，原因是既有的失敗。
+    - 過程中另有一輪（run 43144899123）卡在既有的 `ModernSiegeWireOracleTest`（不使用 GameHub，前後各輪都在約 1.5 秒內通過），已取消重跑。之後兩個壓力測試都加了逾時（獨立執行緒）與逾時時的 thread dump。
   - 設計文件引用的行號已重新讀過程式確認。
 - **推測**
   - MyISAM 在 mysqld 本身當機（不是 LiTo 中止）時可能讓資料表損壞、需要 `REPAIR TABLE`。這和 LiTo 的寫入順序無關，沒有測試。
