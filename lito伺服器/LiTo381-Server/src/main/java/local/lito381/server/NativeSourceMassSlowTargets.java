@@ -52,15 +52,18 @@ final class NativeSourceMassSlowTargets {
       pose = placement == null ? null : placement.pose;
       scene = placement == null ? null : placement.scene;
       master = placement == null ? null : placement.master;
+      NativeSourceAreaPairFirst.capture(this); // T123 (Issue #354, G14)
     }
 
     void close() {
+      NativeSourceAreaPairFirst.close(this); // T123 (Issue #354, G14)
       closed = true;
       outbound = null;
       if (c.nativeSourceMassSlowAim == this) c.nativeSourceMassSlowAim = null;
     }
 
     boolean valid() {
+      if (!NativeSourceAreaPairFirst.current(this)) return false; // T123 (Issue #354, G14)
       if (!NativeSourceMaterialFirstLife.valid(this)) return false;
       if (lifetime.mode == NativePlayerLifetime.Mode.STOPPED
           || (boolean) CombatAccess.field(c.hub, "nativeStaticMotionClosed")
