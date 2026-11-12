@@ -315,6 +315,8 @@ final class ClientSessionRentalTownDirectoryTest {
             // phase == BATTLE first (T029 method, SAME_EFFECTS vs 0.6.71), so C_D0 inside the
             // BATTLE-phase rental-town scene is an ordinary battle withdrawal. With no GameHub
             // room behind the synthetic town room id nothing is sent and the scene stays.
+            // Issue #368 only admits a staged restart return (RESTART_AWAIT_RETURN); see
+            // ClientSessionRentalTownReturnTest. Without one this stays unchanged.
             invoke(session, "exitRoom", new Class<?>[0]);
             assertThrows(SocketTimeoutException.class,
                     () -> receive(client, receiver));
