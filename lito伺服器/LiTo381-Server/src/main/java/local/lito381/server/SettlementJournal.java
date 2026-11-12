@@ -30,7 +30,21 @@ final class SettlementJournal implements AutoCloseable {
    for(int i=0;i<count;i++){String k=i+".";String won=p.getProperty(k+"won"),dc=p.getProperty(k+"disconnected");if(!Set.of("true","false").contains(won)||!Set.of("true","false").contains(dc))throw new IOException("invalid result boolean");Entry e=new Entry(p.getProperty(k+"id"),p.getProperty(k+"battle"),p.getProperty(k+"database"),p.getProperty(k+"source"),p.getProperty(k+"controls"),Long.parseLong(p.getProperty(k+"character")),p.getProperty(k+"name"),Boolean.parseBoolean(won),Boolean.parseBoolean(dc));if(!e.id().equals(Entry.key(e.battle(),e.database(),e.character())))throw new IOException("result identity mismatch");out.add(e);}return List.copyOf(out);
   }catch(RuntimeException e){throw new IOException("invalid settlement journal: "+file.getFileName(),e);}
  }
- void replay(Sink sink)throws Exception{for(Path p:files()){sink.apply(read(p));Files.delete(p);}}
+ /**
+  * Applies every committed file; a file is deleted only after its sink call succeeded. A failing file
+  * (e.g. a renamed source character) stays pending and no longer blocks the files after it (T124);
+  * the first failure is rethrown after all files were attempted, later ones are suppressed onto it.
+  */
+ void replay(Sink sink)throws Exception{
+  Exception first=null;
+  for(Path p:files()){
+   // Another replayer already applied and deleted this file; the result ids make a repeat harmless.
+   List<Entry> entries;try{entries=read(p);}catch(NoSuchFileException gone){continue;}catch(Exception e){if(first==null)first=e;else first.addSuppressed(e);continue;}
+   try{sink.apply(entries);}catch(Exception e){if(first==null)first=e;else first.addSuppressed(e);continue;}
+   Files.deleteIfExists(p);
+  }
+  if(first!=null)throw first;
+ }
  synchronized int pending()throws IOException{return files().size();}
  public void close()throws IOException{lock.release();lockChannel.close();}
 }

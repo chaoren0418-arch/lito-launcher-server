@@ -49,8 +49,12 @@ final class SettlementSql {
   if(entries.isEmpty())return;SharedDatabase.Route first=route(entries.get(0).database());
   for(var e:entries)if(!e.controls().equals(first.controls))throw new SQLException("mixed settlement controls database");
   receipts(first,entries);
-  for(var e:entries)drain(route(e.database()),e.character());
+  // Every receipt is frozen above; one character that cannot be drained must not leave the others of the same battle pending (T124).
+  Exception failure=null;
+  for(var e:entries)try{drain(route(e.database()),e.character());}catch(Exception ex){failure=collect(failure,ex);}
+  if(failure!=null)throw failure;
  }
+ static Exception collect(Exception first,Exception next){if(first==null)return next;if(first!=next)first.addSuppressed(next);return first;}
  /** Freezes receipts in the InnoDB control database; replaying the same result id is a no-op. */
  static void receipts(SharedDatabase.Route first,List<SettlementJournal.Entry> entries)throws Exception{
   try(var c=first.connection()){
@@ -62,9 +66,16 @@ final class SettlementSql {
    }c.commit();}catch(Exception ex){c.rollback();throw ex;}
   }
  }
+ /** Drains every pending receipt; a failing source or character is reported after the others were attempted (T124). */
  static void drainAll()throws Exception{
   List<SharedDatabase.Route> routes;synchronized(SharedDatabase.ROUTES){routes=List.copyOf(SharedDatabase.ROUTES.values());}
-  for(var route:routes){List<Long> ids=new ArrayList<>();try(var c=route.connection();var p=c.prepareStatement("SELECT DISTINCT char_obj_id FROM "+table(route)+" WHERE source_database=? AND applied=0")){p.setString(1,route.database);try(var r=p.executeQuery()){while(r.next())ids.add(r.getLong(1));}}for(long id:ids)drain(route,id);}
+  Exception failure=null;
+  for(var route:routes){List<Long> ids=new ArrayList<>();
+   try(var c=route.connection();var p=c.prepareStatement("SELECT DISTINCT char_obj_id FROM "+table(route)+" WHERE source_database=? AND applied=0")){p.setString(1,route.database);try(var r=p.executeQuery()){while(r.next())ids.add(r.getLong(1));}}
+   catch(Exception e){failure=collect(failure,e);continue;}
+   for(long id:ids)try{drain(route,id);}catch(Exception e){failure=collect(failure,e);}
+  }
+  if(failure!=null)throw failure;
  }
  static void drain(SharedDatabase.Route route,long id)throws Exception{
   String lockName=SettlementJournal.Entry.key("00000000-0000-0000-0000-000000000000",route.controls+"_"+route.database,id);

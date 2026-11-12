@@ -1877,9 +1877,14 @@ final class GameHub implements AutoCloseable {
         if (staleTrade != null) clearPlayerTrade(staleTrade);
         List<Long> deletedRooms = new ArrayList<>();
         for (Room room : new ArrayList<>(rooms.values())) {
-            room.members.remove(session);
-            room.ready.remove(session);
-            room.forces.remove(session);
+            boolean member = room.members.remove(session);
+            boolean wasReady = room.ready.remove(session);
+            boolean hadForce = room.forces.remove(session) != null;
+            // T124 (#355): only rooms the departing session was in. Sweeping every empty room
+            // removed a room another player had just created (createRoom, then joinRoom).
+            // Rooms left empty while their settlement was not durable are removed by
+            // DurableBattleSettlement.retry once it is.
+            if (!member && !wasReady && !hadForce && room.owner != session) continue;
             cancelCountdownIfNotReady(room);
             transferOwner(room, session);
             if (room.id != requiredChannel(room.channelId).defaultRoomId
