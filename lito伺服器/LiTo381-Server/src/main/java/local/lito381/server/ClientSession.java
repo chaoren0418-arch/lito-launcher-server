@@ -13156,13 +13156,16 @@ final class ClientSession implements Runnable {
     private void exitRoomBeforePolyMe(boolean bl) throws IOException {
         boolean bl2;
         GameHub.ReadyTransition readyTransition;
-        if (this.phase == Phase.BATTLE && !this.battleObserverMayLeaveAlone()) {
+        if (this.phase == Phase.BATTLE && !this.battleObserverMayLeaveAlone()
+                && !this.stagedRentalTownReturn()) {
             this.settleRequestedBattleExit();
             return;
         }
         // Issue #366: a BATTLE observer falls through to the ordinary room
         // departure below.  It never calls serverEndBattle/endBattle, so the
         // combatants' match, countdown, battleRoster and results are untouched.
+        // Issue #368: a rental-town scene whose restart was already acknowledged
+        // (C_RESTART -> C_D9 -> S_F0) falls through to completeRestartReturn.
         this.pendingWarehousePassword = null;
         this.pendingShapeChange = null;
         this.pendingSlaveTarget = null;
@@ -13425,6 +13428,26 @@ final class ClientSession implements Runnable {
                 && !hub.battleResultCombatants(currentRoomId).contains(this);
     }
 
+    /**
+     * Issue #368: the rental-town scene runs in Phase.BATTLE without a GameHub
+     * room, so an ordinary withdrawal settlement has nothing to settle and
+     * would swallow the native return chain.  C_D9 is admitted past the BATTLE
+     * guard only while the town session has a transition that the server
+     * itself staged: a transfer-stone / teleporter destination, or a C_RESTART
+     * that still awaits its quit-fight acknowledgement.
+     */
+    private boolean stagedRentalTownQuitFight() {
+        return rentalTownRoomState
+                && (rentalTownTransferPending
+                    || pendingTransition == PendingTransition.RESTART_AWAIT_QUIT_FIGHT);
+    }
+
+    /** Issue #368: C_D0 is admitted only after the restart's C_D9 was acknowledged. */
+    private boolean stagedRentalTownReturn() {
+        return rentalTownRoomState
+                && pendingTransition == PendingTransition.RESTART_AWAIT_RETURN;
+    }
+
     private void leaveBattleAsObserver(String trigger) throws IOException {
         long roomId = currentRoomId;
         System.out.println("[LiTo] battle observer leaving alone room=" + roomId
@@ -13470,9 +13493,11 @@ final class ClientSession implements Runnable {
          this.sendEncrypted(new Protocol.Writer().c(Protocol.S_LITO_QUIT_FIGHT).c(0).bytes(),
                "S_LITO_QUIT_FIGHT battle-observer leaves alone");
          this.leaveBattleAsObserver("C_LITO_QUIT_FIGHT");
-      } else if (this.phase == ClientSession.Phase.BATTLE) {
+      } else if (this.phase == ClientSession.Phase.BATTLE && !this.stagedRentalTownQuitFight()) {
          this.settleRequestedBattleExit();
       } else {
+         // Outside BATTLE, or (Issue #368) a rental-town scene with a staged
+         // transfer / restart transition.
          this.pendingWarehousePassword = null;
          this.pendingSlaveTarget = null;
          this.pendingPetRename = null;
