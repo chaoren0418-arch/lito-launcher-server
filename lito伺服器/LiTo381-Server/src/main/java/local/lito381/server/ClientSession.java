@@ -21919,12 +21919,12 @@ final class ClientSession implements Runnable {
             // S_SPEED receiver also cancels its local drunken input handler.
             timedStatus.clearDrunken();
             BattleTimedStatus.SpeedChange speedChange = timedStatus.activateHaste(
-                    System.nanoTime(), InventoryCatalog.SELF_HASTE_DURATION_SECONDS);
+                    System.nanoTime(), InventoryCatalog.selfHasteDurationSeconds());
             sendInventoryDelta(previous, inventory);
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
             byte[] effect = Protocol.effectObject(
-                    playerObjectId(), InventoryCatalog.SELF_HASTE_EFFECT_GFX);
+                    playerObjectId(), InventoryCatalog.selfHasteEffectGfx());
             List<ClientSession> recipients = phase == Phase.WORLD
                     ? classicWorldMembers(classicWorldMapId)
                     : hub.roomMembers(currentRoomId);
@@ -21934,12 +21934,12 @@ final class ClientSession implements Runnable {
                                 member.positionX, member.positionY,
                                 positionX, positionY))) continue;
                 member.sendEncrypted(effect, "S_EFFECT self-haste object=" + playerObjectId()
-                        + " gfx=" + InventoryCatalog.SELF_HASTE_EFFECT_GFX);
+                        + " gfx=" + InventoryCatalog.selfHasteEffectGfx());
             }
             broadcastMovementSpeed(speedChange.type(), speedChange.durationSeconds(),
                     "self-haste-potion");
             System.out.println("[LiTo] C_USE_ITEM self-haste object=" + item.objectId()
-                    + " duration=" + InventoryCatalog.SELF_HASTE_DURATION_SECONDS
+                    + " duration=" + InventoryCatalog.selfHasteDurationSeconds()
                     + " resulting-speed=" + speedChange.type());
             return;
         }
@@ -21954,21 +21954,21 @@ final class ClientSession implements Runnable {
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-brave");
             timedStatus.activateBrave(System.nanoTime(),
-                    InventoryCatalog.BRAVE_DURATION_SECONDS);
+                    InventoryCatalog.braveDurationSeconds());
             clearDurableMovementBuff("brave-potion-replacement");
             sendInventoryDelta(previous, inventory);
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
             byte[] effect = Protocol.effectObject(
-                    playerObjectId(), InventoryCatalog.BRAVE_EFFECT_GFX);
+                    playerObjectId(), InventoryCatalog.braveEffectGfx());
             for (ClientSession member : hub.roomMembers(currentRoomId)) {
                 member.sendEncrypted(effect, "S_EFFECT brave object=" + playerObjectId()
-                        + " gfx=" + InventoryCatalog.BRAVE_EFFECT_GFX);
+                        + " gfx=" + InventoryCatalog.braveEffectGfx());
             }
             broadcastBraveSpeed(Protocol.BraveMode.FIRST_STAGE,
-                    InventoryCatalog.BRAVE_DURATION_SECONDS, "brave-potion");
+                    InventoryCatalog.braveDurationSeconds(), "brave-potion");
             System.out.println("[LiTo] C_USE_ITEM brave object=" + item.objectId()
-                    + " duration=" + InventoryCatalog.BRAVE_DURATION_SECONDS);
+                    + " duration=" + InventoryCatalog.braveDurationSeconds());
             return;
         }
 
@@ -21989,20 +21989,20 @@ final class ClientSession implements Runnable {
             cancelAbsoluteBarrier("item-wisdom-potion");
             long nowNanos = System.nanoTime();
             timedStatus.activateWisdomPotion(nowNanos,
-                    InventoryCatalog.WISDOM_POTION_DURATION_SECONDS);
+                    InventoryCatalog.wisdomPotionDurationSeconds());
             sendInventoryDelta(previous, inventory);
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
             byte[] effect = Protocol.effectObject(
-                    playerObjectId(), InventoryCatalog.WISDOM_POTION_EFFECT_GFX);
+                    playerObjectId(), InventoryCatalog.wisdomPotionEffectGfx());
             for (ClientSession member : hub.roomMembers(currentRoomId)) {
                 member.sendEncrypted(effect, "S_EFFECT wisdom-potion object="
                         + playerObjectId() + " gfx="
-                        + InventoryCatalog.WISDOM_POTION_EFFECT_GFX);
+                        + InventoryCatalog.wisdomPotionEffectGfx());
             }
             sendMagicStatus(nowNanos, "wisdom-potion");
             System.out.println("[LiTo] C_USE_ITEM wisdom-potion object=" + item.objectId()
-                    + " duration=" + InventoryCatalog.WISDOM_POTION_DURATION_SECONDS
+                    + " duration=" + InventoryCatalog.wisdomPotionDurationSeconds()
                     + " sp=" + InventoryCatalog.WISDOM_POTION_SPELL_POWER);
             return;
         }
@@ -22023,23 +22023,23 @@ final class ClientSession implements Runnable {
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-elven-wafer");
             timedStatus.activateBrave(System.nanoTime(),
-                    InventoryCatalog.ELVEN_WAFER_DURATION_SECONDS,
+                    InventoryCatalog.elvenWaferDurationSeconds(),
                     BattleTimedStatus.BRAVE_ELF);
             clearDurableMovementBuff("elven-wafer-replacement");
             sendInventoryDelta(previous, inventory);
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
             byte[] effect = Protocol.effectObject(
-                    playerObjectId(), InventoryCatalog.ELVEN_WAFER_EFFECT_GFX);
+                    playerObjectId(), InventoryCatalog.elvenWaferEffectGfx());
             for (ClientSession member : hub.roomMembers(currentRoomId)) {
                 member.sendEncrypted(effect, "S_EFFECT elven-wafer object="
                         + playerObjectId() + " gfx="
-                        + InventoryCatalog.ELVEN_WAFER_EFFECT_GFX);
+                        + InventoryCatalog.elvenWaferEffectGfx());
             }
             broadcastBraveSpeed(Protocol.BraveMode.ELVEN_WAFER,
-                    InventoryCatalog.ELVEN_WAFER_DURATION_SECONDS, "elven-wafer");
+                    InventoryCatalog.elvenWaferDurationSeconds(), "elven-wafer");
             System.out.println("[LiTo] C_USE_ITEM elven-wafer object=" + item.objectId()
-                    + " duration=" + InventoryCatalog.ELVEN_WAFER_DURATION_SECONDS
+                    + " duration=" + InventoryCatalog.elvenWaferDurationSeconds()
                     + " mode=" + BattleTimedStatus.BRAVE_ELF);
             return;
         }
@@ -22064,7 +22064,7 @@ final class ClientSession implements Runnable {
             state.saveEconomyState(stateCharacter(), shopPoints,
                     inventory.catalogCounts(), inventory.catalogItemStates());
             byte[] effect = Protocol.effectObject(
-                    playerObjectId(), InventoryCatalog.BLUE_POTION_EFFECT_GFX);
+                    playerObjectId(), InventoryCatalog.bluePotionEffectGfx(definition.catalogId()));
             for (ClientSession member : hub.roomMembers(currentRoomId)) {
                 if (member != this && Math.max(Math.abs(positionX - member.positionX),
                         Math.abs(positionY - member.positionY)) > 8) {
@@ -22072,7 +22072,7 @@ final class ClientSession implements Runnable {
                 }
                 member.sendEncrypted(effect, "S_EFFECT blue-potion object="
                         + playerObjectId() + " gfx="
-                        + InventoryCatalog.BLUE_POTION_EFFECT_GFX);
+                        + InventoryCatalog.bluePotionEffectGfx(definition.catalogId()));
             }
             // In this LiTo build S_FA is S_LITO_CLAN (ddsd), not legacy
             // S_PacketBox. Never send the incompatible blue-icon packet body.
@@ -61357,9 +61357,10 @@ final class ClientSession implements Runnable {
                int var65 = 0;
                int var67 = 0;
                int var36 = 0;
-               Iterator var37 = NativeSourceAreaClassSelection.iterator(
+               // T123 (Issue #354, G14): drop secondary PCs whose timed status was replaced while waiting.
+               Iterator var37 = NativeSourceAreaPairFirst.secondaryIterator(NativeSourceAreaClassSelection.iterator(
                   NativeSourceAreaCasterTargets.slowIterator(var12), var2.skillId(), var3.targetObjectId()
-               );
+               ));
 
                while (var37.hasNext()) {
                   ClientSession var38 = (ClientSession)var37.next();
