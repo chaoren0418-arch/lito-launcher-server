@@ -110,6 +110,23 @@ copy lito伺服器\LiTo381-Server\config\server.properties.example
 - 包內**沒有** `common_catalog.bin`、pak／map／sprite、`LiTo.bin`。客戶端仍用 `D:\lineage開發\0-客戶端`。
 - 不要設 `JAVA_TOOL_OPTIONS`／`JDK_JAVA_OPTIONS`／`_JAVA_OPTIONS`／`CLASSPATH`。
 
+#### 可重現封裝（T126 / Issue #357）
+
+Maven 產物（`LiTo381-Server.jar`、`-modern.jar`、`-as-record-tests.jar`）是可重現的：同一個 commit、同一版 JDK 17 與 Maven 重複建置，JAR 的 SHA-256 相同，可直接用來核對打包收據。
+
+- 做法：`lito伺服器/LiTo381-Server/pom.xml` 設 `project.build.outputTimestamp`（固定 ISO-8601 時間），`maven-jar-plugin` 3.3.0（≥ 3.2.0 才支援）會把所有 entry 的時間戳固定、順序正規化。AsRecord 後處理以排序後的檔案順序改寫 class，不引入時間或雜湊順序。
+- CI：`build.yml` 的 `server-reproducible` job 連續跑兩次 `mvn -B -DskipTests clean package`，比對所有 `target/*.jar` 的 SHA-256，不同即失敗；雜湊清單以 artifact `server-reproducible-jars` 上傳。
+- 本機自行核對：
+
+  ```text
+  cd lito伺服器/LiTo381-Server
+  mvn -B -DskipTests clean package
+  certutil -hashfile target\LiTo381-Server.jar SHA256
+  ```
+
+  結果應與同 commit 的 CI artifact `server-reproducible-jars` 一致；不同的 JDK 主版本（`Build-Jdk-Spec`）或外掛版本會改變 MANIFEST，雜湊就會不同。
+- 發新版時可以順手把 `project.build.outputTimestamp` 更新成發版日期；不更新也不影響可重現性。
+
 ### 4.2 官方 BAT 鏈（正式 candidate JAR）
 
 包內已依相對路徑放好官方檔，避免缺檔：

@@ -102,7 +102,7 @@ M3 已達 PLAN U3-1 的估計上限（15 張），本段是依 #333（調度器�
 | T123 | #354 | 受控 NPC 完整語意：候選差異盤點與移植（G13、G14、G15、G18） | todo |
 | T124 | #355 | 斷線結算的壓力與重啟復原測試 | todo |
 | T125 | #356 | 技能時序與射程收尾（G09–G12、G16） | todo |
-| T126 | #357 | 可重現封裝（固定 `project.build.outputTimestamp`） | todo |
+| T126 | #357 | 可重現封裝（固定 `project.build.outputTimestamp`） | review |
 
 ## M4 實機驗收與交付（Codex 恢復後；M3 完成後封頂；已完成 4）
 
