@@ -150,9 +150,13 @@ final class DurableBattleSettlement {
     if(notify){GameHub hub=c.hub.get();if(hub!=null){for(ClientSession s:hub.battleResultCombatants(c.room))try{s.serverEndBattle(c.terminal);}catch(IOException ignored){}hub.endBattle(c.room);synchronized(hub){Object room=((Map<?,?>)get(hub,"rooms")).get(c.room);if(room!=null&&hub.roomMembers(c.room).isEmpty())call(hub,"resetOrRemove",new Class[]{room.getClass()},room);}}}
    }
    for(Context c:contexts){GameHub h=c.hub.get();if(h==null)continue;boolean absent;synchronized(h){absent=!((Map<?,?>)get(h,"rooms")).containsKey(c.room);}if(absent&&c.unsaved.isEmpty())forget(h,c.room);}
-   journal.replay(entries->{SettlementSql.apply(entries);reconcileRecovered(entries);});SettlementSql.drainAll();
+   // One permanently failing result (e.g. renamed character) must not stall drainAll and the pending tickets (T124).
+   Exception failure=null;
+   try{journal.replay(entries->{SettlementSql.apply(entries);reconcileRecovered(entries);});}catch(Exception e){failure=e;}
+   try{SettlementSql.drainAll();}catch(Exception e){failure=SettlementSql.collect(failure,e);}
    List<Ticket> tickets;synchronized(TICKETS){tickets=List.copyOf(TICKETS.values());}
    for(Ticket t:tickets){ClientSession s=t.session.get();if(s!=null)synchronized(s){if(TICKETS.get(s)==t&&t.entry!=null&&t.progress==null&&matches(s,t.entry)&&cleanupAllowed((GameHub)get(s,"hub"),t.context.room)){s.serverRecordBattleResult(t.entry.won());if(!((java.net.Socket)get(s,"socket")).isClosed())LiveBattleStats.lobby(s);}}}
+   if(failure!=null)throw failure;
   }catch(Exception e){long now=System.nanoTime();if(now-lastError>30_000_000_000L){lastError=now;System.err.println("[LiTo] settlement recovery pending: "+e.getClass().getSimpleName()+" "+e.getMessage());}}
  }
 }
