@@ -8958,6 +8958,13 @@ final class ClientSession implements Runnable {
      * Lifted jumps to return sites
      */
     private boolean rentalItemSelectionContext() {
+        // A continued TeleportMe handoff already owns this session's rental
+        // loadout.  The one-shot handoff record is consumed by the automatic
+        // character continuation, so hasRentalBattleHandoff() below is false
+        // by the time the client sends C_CA on a same-endpoint server (rental
+        // directory still enabled).  Without this guard that C_CA is read as
+        // an LTItemSet re-selection and never receives S_CA channel counters.
+        if (this.rentalBattleLoadoutActive) return false;
         if (!this.config.rentalTownDirectoryEnabled()) return false;
         if (!this.rentalTownDirectoryAdvertised) return false;
         if (this.phase != Phase.LOBBY) return false;
