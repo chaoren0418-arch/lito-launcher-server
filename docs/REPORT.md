@@ -99,3 +99,4 @@
 - 2026-11-12 — #357 T126: 可重現封裝——固定 project.build.outputTimestamp（code，claude-local，PR 已合併）→ [報告](reports/issue-357.md)
 - 2026-11-12 — #356 T125: 技能時序與射程收尾（G09–G12、G16）——確認 src/main 現況並補齊（code，claude-local，PR 已合併）→ [報告](reports/issue-356.md)
 - 2026-11-12 — #355 T124: 斷線結算的壓力與重啟復原測試（code，claude-local，PR #363 已合併）→ [報告](reports/issue-355.md)
+- 2026-11-12 — #366 伺服器：BATTLE 中觀戰者主動離場只移除自己（lito-modern#189 依賴）（code，claude-local，PR 已合併）→ [報告](reports/issue-366.md)
