@@ -162,7 +162,8 @@ final class BattleQuestEncounterTest {
         assertEquals(0, physical.actNo());
         assertEquals(2, physical.attackRange());
         assertEquals(20, physical.leverage());
-        assertEquals(BattleActionCodes.ATTACK, physical.effectiveActionId());
+        // 1-伺服器 mobskill ActId=30 is passed to L1AttackNpc.setActId.
+        assertEquals(30, physical.effectiveActionId());
         assertEquals(1, physical.areaWidth());
         assertEquals(2, physical.areaHeight());
         assertTrue(physical.areaContains(
@@ -202,6 +203,40 @@ final class BattleQuestEncounterTest {
         assertEquals(BattleTimeAttackMagicSkillCatalog.Targeting.CASTER_RADIUS,
                 earthquake.magicSkill().targeting());
         assertEquals(245, earthquake.actor().currentMp());
+    }
+
+    @Test
+    void questDeathKnightEarthquakeReuseDelayIsCasterWideLikeRetainedL1SkillDelay() {
+        // 1-伺服器 skills(10056).reuseDelay=3000 (db/380_db.sql:48301) is
+        // reserved on the caster (L1SkillUse.java:2675-2676) and rejects every
+        // later L1SkillUse cast by that NPC (:2642/:2658), including skill28.
+        BattleQuestEncounter encounter = encounterAtRoom(4);
+        BattleQuestEncounter.Snapshot deathKnight = actor(encounter, 45601);
+
+        BattleQuestEncounter.AiAttack earthquake = encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 6,
+                deathKnight.y(), 0, 1, 0);
+        assertNotNull(earthquake);
+        assertEquals(10056, earthquake.magicSkill().skillId());
+
+        long blocked = TimeUnit.MILLISECONDS.toNanos(2_000);
+        assertNull(encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 3,
+                deathKnight.y(), blocked, 0, 0));
+        // The actor itself is ready again: a non-L1SkillUse summon row fires.
+        BattleQuestEncounter.AiAttack summon = encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 3,
+                deathKnight.y(), blocked, 2, 0);
+        assertNotNull(summon);
+        assertTrue(summon.summon());
+
+        long released = TimeUnit.MILLISECONDS.toNanos(3_500);
+        BattleQuestEncounter.AiAttack vampire = encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 3,
+                deathKnight.y(), released, 0, 0);
+        assertNotNull(vampire);
+        assertTrue(vampire.magic());
+        assertEquals(28, vampire.magicSkill().skillId());
     }
 
     @Test
