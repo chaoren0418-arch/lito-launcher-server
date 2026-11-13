@@ -17,11 +17,48 @@ final class DurableBattleSettlement {
    for(var route:List.copyOf(SharedDatabase.ROUTES.values()))SettlementSql.check(route);
    Path configBase=Path.of(SharedDatabase.properties(config.source()).getProperty("configuration.base.file",config.source().toAbsolutePath().toString()));
    Path path=configBase.getParent().getParent().resolve("runtime/battle-settlements");
-   SettlementJournal opened=new SettlementJournal(path);
-   try{opened.replay(SettlementSql::apply);SettlementSql.drainAll();journal=opened;}catch(Exception e){opened.close();throw e;}
+   journal=recover(path);
    WORKER.scheduleWithFixedDelay(DurableBattleSettlement::retry,2,2,TimeUnit.SECONDS);
    Runtime.getRuntime().addShutdownHook(new Thread(()->{try{journal.close();}catch(IOException ignored){}},"settlement-journal-close"));
   }
+ }
+ /**
+  * Startup recovery (gameplay.md §4.2): take the WAL directory, drop stale .tmp leftovers, apply the operator void
+  * list (T136), replay every committed file, then drain every pending receipt. Any failure refuses startup.
+  */
+ static SettlementJournal recover(Path path)throws Exception{
+  SettlementJournal opened=new SettlementJournal(path);
+  try{
+   System.out.println("[LiTo] settlement journal="+opened.directory());
+   for(Path p:opened.removedTemporaryFiles())System.out.println("[LiTo] settlement journal: removed stale "+p.getFileName());
+   for(Path p:opened.keptTemporaryFiles())System.out.println("[LiTo] settlement journal: kept unrecognised "+p.getFileName());
+   voidRequested(opened);
+   opened.replay(SettlementSql::apply);SettlementSql.drainAll();return opened;
+  }catch(Exception e){opened.close();throw e;}
+ }
+ /**
+  * T136 (#387): processes {@code void-requests.txt} in the WAL directory while this process owns it and before any
+  * replay. Order: validate the list → void each receipt ({@link SettlementSql#voidResult}) → audit-copy the WAL
+  * files holding the voided results → append {@code void-audit.log} → move the list into {@code voided/}.
+  * A refused request keeps the list in place and refuses startup; requests voided before it stay voided, and
+  * a rerun treats them as already voided.
+  */
+ static List<SettlementSql.Voided> voidRequested(SettlementJournal opened)throws Exception{
+  Path requests=opened.directory().resolve(SettlementJournal.VOID_REQUESTS);
+  if(!Files.isRegularFile(requests))return List.of();
+  Map<String,String> wanted=SettlementJournal.voidRequests(requests);
+  List<SharedDatabase.Route> routes;synchronized(SharedDatabase.ROUTES){routes=List.copyOf(SharedDatabase.ROUTES.values());}
+  for(var route:routes)SettlementSql.requireVoidColumns(route);
+  List<SettlementSql.Voided> done=new ArrayList<>();Exception failure=null;
+  for(var request:wanted.entrySet())try{done.add(SettlementSql.voidResult(request.getKey(),request.getValue()));}catch(Exception e){failure=SettlementSql.collect(failure,e);}
+  opened.archive(done.stream().map(SettlementSql.Voided::resultId).collect(java.util.stream.Collectors.toSet())); // before any replay deletes them; a crash earlier re-archives on the next start (already-voided)
+  StringBuilder audit=new StringBuilder();String now=java.time.OffsetDateTime.now().toString();
+  for(var v:done){String line=now+"\t"+(v.alreadyVoided()?"already-voided":"voided")+"\t"+v.resultId()+"\t"+v.database()+"/"+v.character()+"\tfrozen="+v.frozenName()+"\tnow="+(v.observedName()==null?"<deleted>":v.observedName())+"\treason="+wanted.get(v.resultId());audit.append(line).append(System.lineSeparator());System.out.println("[LiTo] settlement "+line.replace('\t',' '));}
+  if(audit.length()>0)try(var f=java.nio.channels.FileChannel.open(opened.directory().resolve(SettlementJournal.VOID_AUDIT),StandardOpenOption.CREATE,StandardOpenOption.WRITE,StandardOpenOption.APPEND)){var b=java.nio.ByteBuffer.wrap(audit.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));while(b.hasRemaining())f.write(b);f.force(true);}
+  if(failure!=null)throw failure;
+  Path voided=opened.directory().resolve(SettlementJournal.VOIDED_DIRECTORY);Files.createDirectories(voided);
+  Files.move(requests,voided.resolve("void-requests-"+java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss-SSS"))+".txt"));
+  return List.copyOf(done);
  }
  static Context context(GameHub hub,long room){ // T131 (#382) lock order, gameplay.md §4.2: GameHub before CONTEXTS; nothing is acquired while CONTEXTS is held. The hub calls cleanupAllowed with its monitor held, so the test-room flag is read in the hub block, never inside the CONTEXTS block (that deadlocked "battle start vs. disconnect" for the whole JVM).
   Object raw;long generation=0;boolean testRoom;synchronized(hub){raw=((Map<?,?>)get(hub,"rooms")).get(room);if(raw!=null)generation=(long)get(raw,"battleGeneration");testRoom=NativeRoomRules.testRoom(hub,room);}

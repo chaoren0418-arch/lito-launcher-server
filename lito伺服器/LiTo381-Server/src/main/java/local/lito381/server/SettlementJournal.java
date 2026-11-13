@@ -8,12 +8,59 @@ final class SettlementJournal implements AutoCloseable {
  }
  interface Sink {void apply(List<Entry> entries)throws Exception;}
  private final Path directory;private final FileChannel lockChannel;private final FileLock lock;
+ /** Exactly the names {@link #save} gives its temporary files. */
+ private static final java.util.regex.Pattern TEMPORARY=java.util.regex.Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.tmp");
+ /** Operator void list (T136): one result id per line, optional reason after whitespace, '#' comments. */
+ static final String VOID_REQUESTS="void-requests.txt",VOIDED_DIRECTORY="voided",VOID_AUDIT="void-audit.log";
+ private final List<Path> removedTemporary,keptTemporary;
  SettlementJournal(Path directory)throws IOException{
   this.directory=directory.toAbsolutePath().normalize();Files.createDirectories(this.directory);
   lockChannel=FileChannel.open(this.directory.resolve("owner.lock"),StandardOpenOption.CREATE,StandardOpenOption.WRITE);
   try{lock=lockChannel.tryLock();if(lock==null)throw new IOException("settlement journal already owned");}catch(RuntimeException|IOException e){lockChannel.close();throw e;}
-  // Refuse malformed committed files instead of silently dropping results.
-  try{for(Path p:files())read(p);}catch(IOException|RuntimeException e){close();throw e;}
+  long ownedSince=System.currentTimeMillis();
+  try{
+   List<Path> removed=new ArrayList<>(),kept=new ArrayList<>();cleanTemporary(ownedSince,removed,kept);removedTemporary=List.copyOf(removed);keptTemporary=List.copyOf(kept);
+   // Refuse malformed committed files instead of silently dropping results.
+   for(Path p:files())read(p);
+  }catch(IOException|RuntimeException e){close();throw e;}
+ }
+ /**
+  * T136: removes leftovers of a save() that died between the .tmp write and the rename. A .tmp file is deleted only if
+  * (1) this process holds owner.lock, so no other process can be writing into the directory, (2) the name is exactly
+  * save()'s {@code <UUID>.tmp}, (3) it is a regular file (not a link or directory) and (4) it was last modified no later
+  * than the moment the lock was taken, so it predates every save() of this process. Anything else is kept and reported.
+  */
+ private void cleanTemporary(long ownedSince,List<Path> removed,List<Path> kept)throws IOException{
+  List<Path> candidates;try(var s=Files.list(directory)){candidates=s.filter(p->p.getFileName().toString().endsWith(".tmp")).sorted().toList();}
+  for(Path p:candidates){
+   var a=Files.readAttributes(p,java.nio.file.attribute.BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS);
+   if(!TEMPORARY.matcher(p.getFileName().toString()).matches()||!a.isRegularFile()||a.lastModifiedTime().toMillis()>ownedSince){kept.add(p);continue;}
+   Files.deleteIfExists(p);removed.add(p);
+  }
+ }
+ List<Path> removedTemporaryFiles(){return removedTemporary;}
+ List<Path> keptTemporaryFiles(){return keptTemporary;}
+ Path directory(){return directory;}
+ /** Parses the operator void list; result id → reason. A malformed line refuses startup rather than being skipped. */
+ static Map<String,String> voidRequests(Path file)throws IOException{
+  Map<String,String> out=new LinkedHashMap<>();int number=0;
+  for(String raw:Files.readAllLines(file,StandardCharsets.UTF_8)){number++;
+   String line=(number==1&&raw.startsWith("\uFEFF")?raw.substring(1):raw).strip();if(line.isEmpty()||line.startsWith("#"))continue;
+   String[] parts=line.split("\\s+",2);String id=parts[0].toLowerCase(Locale.ROOT),reason=parts.length>1?parts[1].strip():"identity changed in source database";
+   if(!id.matches("[a-f0-9]{64}"))throw new IOException(file.getFileName()+" line "+number+": not a 64-hex result id");
+   if(reason.length()>200||reason.chars().anyMatch(Character::isISOControl))throw new IOException(file.getFileName()+" line "+number+": reason must be one line of at most 200 characters");
+   out.putIfAbsent(id,reason);
+  }
+  return out;
+ }
+ /** Copies (never moves) every committed file holding one of these results into {@code voided/} as the audit copy. */
+ synchronized List<Path> archive(Set<String> resultIds)throws IOException{
+  List<Path> copied=new ArrayList<>();if(resultIds.isEmpty())return copied;Path target=directory.resolve(VOIDED_DIRECTORY);
+  for(Path p:files()){List<Entry> entries;try{entries=read(p);}catch(NoSuchFileException gone){continue;}
+   if(entries.stream().noneMatch(e->resultIds.contains(e.id())))continue;
+   Files.createDirectories(target);Path copy=target.resolve(p.getFileName());if(!Files.exists(copy))Files.copy(p,copy,StandardCopyOption.COPY_ATTRIBUTES);copied.add(copy);
+  }
+  return copied;
  }
  synchronized void save(List<Entry> entries)throws IOException{
   if(!lock.isValid())throw new IOException("settlement journal closed");

@@ -137,6 +137,12 @@ def control_database() -> str:
     parts.append(create)
     for _, _, db in SOURCES:
         parts.append(f"SET @lito_source = '{db}';" + migration.split("-- 現場已")[0])
+    # T136: void audit columns on the receipt table (control database only).
+    void = read(DB / "lito_battle_settlement_void.sql")
+    if void.count("SET @lito_controls = '380_lito';") != 1:
+        sys.exit("lito_battle_settlement_void.sql controls block changed")
+    # CONTROL may be overridden (tools/acceptance/ci/build_m4_fixture.py); the name here is a string literal.
+    parts.append(void.replace("SET @lito_controls = '380_lito';", f"SET @lito_controls = '{CONTROL}';"))
 
     # T103b: ranking columns, the same upgrade an operator runs on each source.
     ranking = read(DB / "lito_character_ranking.sql")
