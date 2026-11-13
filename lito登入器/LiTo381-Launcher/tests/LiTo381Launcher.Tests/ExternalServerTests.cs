@@ -152,6 +152,90 @@ public sealed class ExternalServerStartupTests
             "--source-id", "1", "--external-profile", @"D:\x\p24-experiment-42083.json"
         }, arguments);
     }
+
+    [Fact]
+    public void HelperArgumentsCarryRunRootWhenSet()
+    {
+        var preferences = new LauncherMenuPreferences(@"D:\lineage開發\0-客戶端", GameDisplayMode.Windowed, 200, NativeServiceMode.StandardArena);
+        var arguments = ExternalServerStartup.HelperArguments(preferences, 1, @"D:\x\p.json", @"D:\x\runs");
+        Assert.Equal(new[] { "--run-root", @"D:\x\runs" }, arguments.TakeLast(2));
+    }
+}
+
+// T139 / Issue #412: LITO_LAUNCHER_RUN_ROOT moves gui-runs/runs; temp directories stand in for 0-客戶端.
+public sealed class ExternalRunRootTests : IDisposable
+{
+    private readonly string temp = Path.Combine(Path.GetTempPath(), "lito-t139-" + Guid.NewGuid().ToString("N"));
+    private readonly string client;
+
+    public ExternalRunRootTests()
+    {
+        client = Path.Combine(temp, "client");
+        Directory.CreateDirectory(client);
+    }
+
+    public void Dispose()
+    {
+        // Only directories created by this test; no reparse points are ever created here.
+        try { Directory.Delete(temp, recursive: true); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+    }
+
+    private static bool NoReparse(string _) => false;
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void UnsetKeepsAppDirectory(string? value)
+    {
+        Assert.Null(ExternalServerStartup.ResolveRunRoot(value, client, NoReparse));
+        Assert.Equal(Path.Combine(DevelopmentStartup.Root, "gui-runs", "external-1"), ExternalServerStartup.ReceiptDirectory(null, "external-1"));
+    }
+
+    [Fact]
+    public void ExistingDirectoryMovesReceipts()
+    {
+        var root = Path.Combine(temp, "launcher-runs");
+        Directory.CreateDirectory(root);
+        var resolved = ExternalServerStartup.ResolveRunRoot(root + Path.DirectorySeparatorChar, client, NoReparse);
+        Assert.Equal(Path.GetFullPath(root), resolved);
+        Assert.Equal(Path.Combine(root, "gui-runs", "external-1"), ExternalServerStartup.ReceiptDirectory(resolved, "external-1"));
+    }
+
+    [Fact]
+    public void RelativeOrMissingRefused()
+    {
+        Assert.Throws<ArgumentException>(() => ExternalServerStartup.ResolveRunRoot("relative\\runs", client, NoReparse));
+        Assert.Throws<ArgumentException>(() => ExternalServerStartup.ResolveRunRoot(Path.Combine(temp, "missing"), client, NoReparse));
+    }
+
+    [Fact]
+    public void InsideClientRefused()
+    {
+        var inside = Path.Combine(client, "runs");
+        Directory.CreateDirectory(inside);
+        Assert.Throws<ArgumentException>(() => ExternalServerStartup.ResolveRunRoot(inside, client, NoReparse));
+        Assert.Throws<ArgumentException>(() => ExternalServerStartup.ResolveRunRoot(client, client, NoReparse));
+    }
+
+    [Fact]
+    public void SiblingWithClientPrefixAccepted()
+    {
+        var sibling = client + "-runs";
+        Directory.CreateDirectory(sibling);
+        Assert.Equal(Path.GetFullPath(sibling), ExternalServerStartup.ResolveRunRoot(sibling, client, NoReparse));
+    }
+
+    [Fact]
+    public void JunctionOnPathRefused()
+    {
+        var linked = Path.Combine(temp, "linked");
+        var root = Path.Combine(linked, "runs");
+        Directory.CreateDirectory(root);
+        var error = Assert.Throws<ArgumentException>(() => ExternalServerStartup.ResolveRunRoot(root, client,
+            node => string.Equals(node, linked, StringComparison.OrdinalIgnoreCase)));
+        Assert.Contains("junction", error.Message);
+    }
 }
 
 public sealed class ExternalServerOptionTests

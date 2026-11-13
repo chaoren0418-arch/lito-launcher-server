@@ -11,16 +11,59 @@ internal sealed class ExternalServerStartup(ExternalServerProfile profile, strin
     Action<ExtendedCharacterStatsSnapshot>? extendedStats = null)
 {
     internal const string HelperFileName = "external_server_startup.py";
-    private const string HelperSha = "D0FE39EB6E379875F04E28FBF12B532E8F6AA2EB54347161E905DD3C86191D32";
+    private const string HelperSha = "3CAE67C05697510CA3B35C8354D7C14E362D4F19A145750A472FD665139428B9";
     private OwnedMemoryStartupProcess? helper;
     internal ExternalServerProfile Profile => profile;
     internal bool CanAddClient { get; private set; }
     internal bool OwnershipRetained => helper?.OwnershipRetained == true || OwnedMemoryStartupProcess.HasRetainedCaptureFailure;
     internal bool CleanupQualified { get; private set; } = true;
 
+    // T139 / Issue #412: optional absolute directory for gui-runs/external-* receipts and the helper's
+    // runs/external-* directory.  Unset keeps the original app directory.
+    internal const string RunRootVariable = "LITO_LAUNCHER_RUN_ROOT";
+
     internal static string Describe(ExternalServerProfile profile) =>
         $"外部伺服器驗收模式：{profile.DisplayName}（{string.Join("、", profile.ExpectedEndpoints().Select(e => $"{e.Host}:{e.Port}"))}）；"
-        + "不啟動內建伺服器、不覆寫埠。";
+        + "不啟動內建伺服器、不覆寫埠；0-客戶端只讀取核對、不寫入。";
+
+    private static bool IsReparsePoint(string path)
+    {
+        try { return (File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0; }
+        catch (FileNotFoundException) { return false; }
+        catch (DirectoryNotFoundException) { return false; }
+    }
+
+    private static bool IsInside(string child, string parent)
+    {
+        var trimmedParent = Path.TrimEndingDirectorySeparator(Path.GetFullPath(parent));
+        var trimmedChild = Path.TrimEndingDirectorySeparator(Path.GetFullPath(child));
+        return trimmedChild.Equals(trimmedParent, StringComparison.OrdinalIgnoreCase)
+            || trimmedChild.StartsWith(trimmedParent + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Validates the run root (value of <see cref="RunRootVariable"/>); null/blank means "not set".
+    /// Same rules as resolve_run_root in external_server_startup.py.
+    /// </summary>
+    internal static string? ResolveRunRoot(string? value, string clientDirectory, Func<string, bool>? isReparsePoint = null)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return null;
+        if (!Path.IsPathFullyQualified(value)) throw new ArgumentException($"{RunRootVariable} 必須是絕對路徑：{value}");
+        var full = Path.TrimEndingDirectorySeparator(Path.GetFullPath(value));
+        var reparse = isReparsePoint ?? IsReparsePoint;
+        for (var node = full; !string.IsNullOrEmpty(node); node = Path.GetDirectoryName(node))
+            if (reparse(node)) throw new ArgumentException($"{RunRootVariable} 路徑含 junction／重新解析點，拒絕：{node}");
+        if (!Directory.Exists(full)) throw new ArgumentException($"{RunRootVariable} 目錄不存在：{full}");
+        if (IsInside(full, clientDirectory)) throw new ArgumentException($"{RunRootVariable} 不得位於客戶端目錄底下：{full}");
+        return full;
+    }
+
+    internal static string? CurrentRunRoot(string clientDirectory) =>
+        ResolveRunRoot(Environment.GetEnvironmentVariable(RunRootVariable), clientDirectory);
+
+    /// <summary>Receipt directory for one run: &lt;run root or app&gt;\gui-runs\&lt;run id&gt;.</summary>
+    internal static string ReceiptDirectory(string? runRoot, string runId) =>
+        Path.Combine(runRoot ?? DevelopmentStartup.Root, "gui-runs", runId);
 
     private static MemorySourcePin Helper()
     {
@@ -50,20 +93,28 @@ internal sealed class ExternalServerStartup(ExternalServerProfile profile, strin
             if (selected.Sha256 != LauncherService.ExpectedProtectedSha256)
                 throw new InvalidDataException("指定客戶端的 LiTo.bin 指紋不符。");
             selected.Verify(); Helper().Verify(); FormalHelper().Verify(); FormalStandardSources.Reviewed.Python.Verify();
-            return new(MemoryStartupAvailabilityKind.Available, Describe(profile), null);
+            var runRoot = CurrentRunRoot(preferences.ClientDirectory);
+            return new(MemoryStartupAvailabilityKind.Available,
+                Describe(profile) + (runRoot is null ? "" : $"收據寫到 {runRoot}。"), null);
         }
         catch (Exception error) { return new(MemoryStartupAvailabilityKind.SourceValidationFailed, error.Message, error); }
     }
 
     /// <summary>Helper arguments after "--serve --run-id &lt;id&gt;"; pure for tests.</summary>
-    internal static IReadOnlyList<string> HelperArguments(LauncherMenuPreferences preferences, int sourceId, string profilePath) =>
-    [
-        "--client-directory", preferences.ClientDirectory,
-        "--scale", preferences.WindowScalePercent.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        "--service", preferences.NativeService.ToString(),
-        "--source-id", sourceId.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        "--external-profile", Path.GetFullPath(profilePath)
-    ];
+    internal static IReadOnlyList<string> HelperArguments(LauncherMenuPreferences preferences, int sourceId, string profilePath,
+        string? runRoot = null)
+    {
+        List<string> arguments =
+        [
+            "--client-directory", preferences.ClientDirectory,
+            "--scale", preferences.WindowScalePercent.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            "--service", preferences.NativeService.ToString(),
+            "--source-id", sourceId.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            "--external-profile", Path.GetFullPath(profilePath)
+        ];
+        if (runRoot is not null) arguments.AddRange(["--run-root", runRoot]);
+        return arguments;
+    }
 
     /// <summary>Validates the helper READY event against the profile: every expected endpoint connected, no Server owned.</summary>
     internal static void ValidateReady(JsonElement ready, ExternalServerProfile profile, int sourceId)
@@ -109,20 +160,21 @@ internal sealed class ExternalServerStartup(ExternalServerProfile profile, strin
         var available = CheckAvailability(preferences, profile);
         if (!available.CanStart) throw available.Error!;
         var runId = "external-" + Guid.NewGuid().ToString("N");
-        var receipt = Path.Combine(DevelopmentStartup.Root, "gui-runs", runId);
+        var runRoot = CurrentRunRoot(preferences.ClientDirectory);
+        var receipt = ReceiptDirectory(runRoot, runId);
         Directory.CreateDirectory(receipt);
         using var current = Process.GetCurrentProcess();
         MemoryStartupJson.WriteExclusive(Path.Combine(receipt, "request.json"), new
         {
             run_id = runId, launcher_identity = MemoryProcessIdentity.Capture(current), selected_preferences = preferences, selected_source_id = sourceId,
             created_at_utc = DateTimeOffset.UtcNow, source_entry = Helper(), external_profile_path = Path.GetFullPath(profilePath), external_profile = profile,
-            server_owned = false
+            server_owned = false, run_root = runRoot, client_writes_by_launcher = 0
         });
         Exception? failure = null;
         try
         {
             var command = OwnedMemoryStartupProcess.ServerCommand(FormalStandardSources.Reviewed.Python, Helper(), runId);
-            foreach (var value in HelperArguments(preferences, sourceId, profilePath)) command.ArgumentList.Add(value);
+            foreach (var value in HelperArguments(preferences, sourceId, profilePath, runRoot)) command.ArgumentList.Add(value);
             CleanupQualified = false;
             helper = new(command, line =>
             {
