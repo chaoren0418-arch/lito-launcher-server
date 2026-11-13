@@ -62,8 +62,12 @@ class Pool:
         return u2(len(self.entries) + 1) + b''.join(self.entries)
 
 
-def make_class(text='hello', hook=False, debug=False, shuffle=False, wide=False, extra=False, value=1, this=NAME):
-    """A class with run()V: ldc text; pop; [hook]; goto L; L: return  and get()I: iconst_<value>; ireturn."""
+def make_class(text='hello', hook=False, debug=False, shuffle=False, wide=False, extra=False, value=1, this=NAME,
+               inner=()):
+    """A class with run()V: ldc text; pop; [hook]; goto L; L: return  and get()I: iconst_<value>; ireturn.
+
+    ``inner`` rows (inner, outer, simple name, flags) form an InnerClasses attribute, in the given order.
+    """
     pool = Pool()
     if shuffle:  # different constant-pool order / padding, same program
         for padding in ('zzz', 'Code', '()I', 'get', text, 'padding'):
@@ -95,10 +99,13 @@ def make_class(text='hello', hook=False, debug=False, shuffle=False, wide=False,
     if extra:
         methods.append(method('extra', '()I', b'\x04\xac', 1))
     tail = u2(0x0021) + u2(this_index) + u2(super_index) + u2(0) + u2(0) + u2(len(methods)) + b''.join(methods)
+    attributes = []
     if debug:
-        tail += u2(1) + u2(source) + u4(2) + u2(source_value)
-    else:
-        tail += u2(0)
+        attributes.append(u2(source) + u4(2) + u2(source_value))
+    if inner:
+        table = u2(len(inner)) + b''.join(u2(pool.cls(i)) + u2(pool.cls(o)) + u2(pool.utf8(s)) + u2(f) for i, o, s, f in inner)
+        attributes.append(u2(pool.utf8('InnerClasses')) + u4(len(table)) + table)
+    tail += u2(len(attributes)) + b''.join(attributes)
     return b'\xca\xfe\xba\xbe' + u2(0) + u2(61) + pool.bytes() + tail
 
 
@@ -129,6 +136,95 @@ class ClassNormalizationTests(unittest.TestCase):
         other = ci.compare_overlay(NAME, make_class(hook=True), make_class(extra=True), (HOOK,))
         self.assertEqual(other['result'], 'overlay-differs-beyond-probe-hooks')
         self.assertIn('method extra()I only in reference class', other['differences'])
+
+
+KERNEL = 'local/lito381/server/NativeDeInitializerKernel'
+KNAME = KERNEL + '$Name'
+ACTOR = KERNEL + '$Actor'
+SERVICES = 'local/lito381/server/NativeDeCachedFactoryServices.class'
+
+
+class Jar(dict):
+    """Minimal runtime stand-in: read() raises KeyError for a missing entry, like ZipFile."""
+    read = dict.__getitem__
+
+
+def services(name_flags, actor_flags=0x0009, reverse=False, extra_row=False, **kwargs):
+    rows = [(KNAME, KERNEL, 'Name', name_flags), (ACTOR, KERNEL, 'Actor', actor_flags)]
+    if extra_row:
+        rows.append((KERNEL + '$Extra', KERNEL, 'Extra', 0x0008))
+    return make_class(this=SERVICES, inner=rows[::-1] if reverse else rows, **kwargs)
+
+
+def name_class(flags):
+    """The inner class itself; its own InnerClasses row carries its declared flags."""
+    return make_class(this=KNAME + '.class', inner=[(KNAME, KERNEL, 'Name', flags)])
+
+
+class InnerClassFlagTests(unittest.TestCase):
+    """#428 D2: historical 0x18 (static final) vs Maven 0x08 (static) for NativeDeInitializerKernel$Name."""
+    HISTORICAL = services(0x0018)
+
+    def compare(self, compared, runtime_name_flags=0x0008, runtime=True, reference=None):
+        jar = Jar({SERVICES: compared})
+        if runtime_name_flags is not None:
+            jar[KNAME + '.class'] = name_class(runtime_name_flags)
+        return ci.compare(SERVICES, reference or self.HISTORICAL, compared, ci.MAVEN, runtime=jar if runtime else None)
+
+    def test_final_bit_of_another_class_matching_the_runtime_passes(self):
+        entry = self.compare(services(0x0008, reverse=True, debug=True, shuffle=True))
+        self.assertTrue(entry['identical'], entry)
+        self.assertEqual(entry['result'], 'normalized-identical-inner-class-flags')
+        self.assertEqual(entry['inner_class_flag_evidence'], [dict(
+            inner_class='class:' + KNAME, outer_class='class:' + KERNEL, simple_name='utf8:Name',
+            reference_flags=0x0018, compared_flags=0x0008, runtime_declared_flags=0x0008)])
+        self.assertNotEqual(entry['reference_normalized_sha256'], entry['compared_normalized_sha256'])
+
+    def test_table_order_alone_stays_plain_normalized_identity(self):
+        entry = self.compare(services(0x0018, reverse=True), runtime=False)
+        self.assertEqual(entry['result'], 'normalized-identical')
+        self.assertNotIn('inner_class_flag_evidence', entry)
+
+    def test_exact_mode_is_unaffected(self):
+        entry = ci.compare(SERVICES, self.HISTORICAL, services(0x0008), ci.EXACT, runtime=Jar())
+        self.assertEqual((entry['identical'], entry['result']), (False, 'bytes-differ'))
+
+    def assert_rejected(self, entry, reason):
+        self.assertFalse(entry['identical'], entry)
+        self.assertEqual(entry['result'], 'normalized-differ')
+        self.assertIn('class attribute InnerClasses', entry['differences'])
+        self.assertIn(reason, entry.get('inner_class_flag_check', ''))
+
+    def test_without_runtime_evidence_fails(self):
+        self.assert_rejected(self.compare(services(0x0008), runtime=False), 'no runtime')
+
+    def test_runtime_inner_class_missing_fails(self):
+        self.assert_rejected(self.compare(services(0x0008), runtime_name_flags=None), 'declares nothing')
+
+    def test_row_not_matching_the_runtime_declaration_fails(self):
+        # The compared row claims non-final but the shipped Name class is still final.
+        self.assert_rejected(self.compare(services(0x0008), runtime_name_flags=0x0018), 'declares 0x0018')
+
+    def test_visibility_change_fails(self):
+        self.assert_rejected(self.compare(services(0x0018, actor_flags=0x0008), runtime_name_flags=0x0018),
+                             'beyond ACC_FINAL')
+        self.assert_rejected(self.compare(services(0x0009), runtime_name_flags=0x0009), 'beyond ACC_FINAL')
+        self.assert_rejected(self.compare(services(0x0002 | 0x0008), runtime_name_flags=0x000a), 'beyond ACC_FINAL')
+
+    def test_different_inner_class_set_fails(self):
+        self.assert_rejected(self.compare(services(0x0018, extra_row=True)), 'inner class set differs')
+
+    def test_own_row_flags_never_tolerated(self):
+        # NativeDeInitializerKernel$Name itself: its own declaration really changed.
+        own_old, own_new = name_class(0x0018), name_class(0x0008)
+        entry = ci.compare(KNAME + '.class', own_old, own_new, ci.MAVEN, runtime=Jar({KNAME + '.class': own_new}))
+        self.assert_rejected(entry, 'own InnerClasses flags differ')
+
+    def test_inner_flag_change_plus_code_change_fails(self):
+        entry = self.compare(services(0x0008, value=2))
+        self.assertFalse(entry['identical'])
+        self.assertEqual(entry['differences'], ['class attribute InnerClasses', 'method get()I differs'])
+        self.assertNotIn('inner_class_flag_check', entry)
 
 
 class GuardTests(unittest.TestCase):
@@ -256,6 +352,18 @@ class ComponentGuardTests(unittest.TestCase):
         allowed = self.ALLOW[0]
         seen, _ = self.run_loop(ci.MAVEN, {allowed: make_class(this=allowed)}, {allowed: make_class(this=allowed, value=3)})
         self.assertEqual(seen, [(allowed, True)])
+
+    def test_maven_mode_inner_final_flag_checked_against_packaged_inner_class(self):
+        # #428 D2: the guard copy passes the runtime ZipFile, so the flag-only row is verified there.
+        historical = {SERVICES: services(0x0018)}
+        seen, receipt = self.run_loop(ci.MAVEN, historical, {SERVICES: services(0x0008), KNAME + '.class': name_class(0x0008)})
+        self.assertEqual(seen, [(SERVICES, False)])
+        entry = json.loads(receipt.read_text('utf-8'))['entries'][0]
+        self.assertEqual(entry['result'], 'normalized-identical-inner-class-flags')
+        with self.assertRaises(AssertionError):  # shipped Name still final: the row is not its representation
+            self.run_loop(ci.MAVEN, historical, {SERVICES: services(0x0008), KNAME + '.class': name_class(0x0018)})
+        with self.assertRaises(AssertionError):
+            self.run_loop(ci.EXACT, historical, {SERVICES: services(0x0008), KNAME + '.class': name_class(0x0008)})
 
 
 class AdaptationTests(unittest.TestCase):
