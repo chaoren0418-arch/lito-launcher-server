@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "profileId": "t014-p24",
+  "displayName": "T014 P24 Experiment",
+  "host": "127.0.0.1",
+  "port": 42083,
+  "originSourceId": "lito-shared",
+  "originSourceName": "P24LiToExp",
+  "localServerConfig": "experiment.properties"
+}

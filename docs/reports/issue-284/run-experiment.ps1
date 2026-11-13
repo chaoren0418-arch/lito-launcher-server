@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$CandidateDirectory,[switch]$PrepareOnly)
+﻿param([Parameter(Mandatory=$true)][string]$CandidateDirectory,[string]$CombatSourceRoot='D:\lineage開發\1-伺服器',[switch]$PrepareOnly)
 $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=[Text.Encoding]::UTF8
 $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..\..'))
@@ -11,7 +11,7 @@ if(Test-Path -LiteralPath $run){throw 'Run already exists'}
 $java='C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe'
 $source=(Resolve-Path -LiteralPath $CandidateDirectory).Path
 $jar='LiTo381-Server.jar'
-if((Get-FileHash -LiteralPath "$source\$jar").Hash -ne 'FF4EAD8B222E7682A09C1C55979753A943B10402320E36C3F27B8B0E383F7064'){throw 'Verified main JAR SHA mismatch'}
+if((Get-FileHash -LiteralPath "$source\$jar").Hash -ne '0F3762CE8C8E94F3B91D5404CC03B2BF815B4E329D0CBDCBC20F24F6B8686205'){throw 'Verified main JAR SHA mismatch'}
 New-Item -ItemType Directory -Path $run | Out-Null
 $lease|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\lease.json"
 foreach($d in @('config','runtime','captures','logs','lib','target','tmp')){New-Item -ItemType Directory -Path "$run\$d"|Out-Null}
@@ -32,6 +32,23 @@ foreach($name in @('config/experiment.properties','config-public.properties')){
  $content=[IO.File]::ReadAllText($path).Replace('database.static.database=p24_world_lito_exp','database.static.database=p24_380db_lito_exp')
  [IO.File]::WriteAllText($path,$content,[Text.UTF8Encoding]::new($false))
 }
+# Deployment input only: preserve the tracked six-key template; all Source inputs remain read-only.
+$combatRoot=(Resolve-Path -LiteralPath $CombatSourceRoot).Path.Replace('\','/').TrimEnd('/')
+$combat=[IO.File]::ReadAllText("$root\lito伺服器\LiTo381-Server\config\combat.properties",[Text.Encoding]::UTF8)
+$combat=$combat.Replace('../../../../1-伺服器/',$combatRoot+'/')
+$combatInputs=@()
+foreach($line in ($combat -split "`r?`n")){
+ if($line -match '^source\.[^=]+=(.+)$'){
+  $inputPath=$Matches[1]
+  if(-not [IO.Path]::IsPathRooted($inputPath) -or -not(Test-Path -LiteralPath $inputPath)){throw "Missing absolute combat input: $inputPath"}
+  if(Test-Path -LiteralPath $inputPath -PathType Leaf){$combatInputs+=@{File=$inputPath;SHA256=(Get-FileHash -LiteralPath $inputPath).Hash}}
+ }
+}
+$other=Join-Path $combatRoot 'config/other.properties'
+if(-not(Test-Path -LiteralPath $other -PathType Leaf)){throw 'Missing combat dependency: config/other.properties'}
+$combatInputs+=@{File=$other;SHA256=(Get-FileHash -LiteralPath $other).Hash}
+[IO.File]::WriteAllText("$run\config\combat.properties",$combat,[Text.UTF8Encoding]::new($false))
+$combatInputs|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\combat-source-hashes.json"
 @{Run=$run;Utc=[DateTime]::UtcNow.ToString('o');RuntimeEntries=@(Get-ChildItem -LiteralPath "$run\runtime" -Force).Count;Java=$java}|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\preparation.json"
 Write-Output "Run=$run"
 if($PrepareOnly){return}

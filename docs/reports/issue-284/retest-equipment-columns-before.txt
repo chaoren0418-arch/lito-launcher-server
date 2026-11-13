@@ -1,0 +1,804 @@
+裝備_weapon_屬性
+id	int unsigned
+name	varchar(50)
+stage	tinyint unsigned
+type_dmg_passive	int
+chance	int unsigned
+probability	int unsigned
+type_gfx_id	int
+type_add_dmg_min	int
+type_add_dmg_max	int
+type_drain_hp_min	int
+type_drain_hp_max	int
+type_drain_mp_min	int
+type_drain_mp_max	int
+type_dmgup	double
+type_range	int unsigned
+type_range_dmg	int unsigned
+
+裝備_weapon_bless_類型
+bless_id	int
+weapon_type	int
+note	varchar(255)
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_hitup	int
+add_dmgup	int
+add_bow_hitup	int
+add_bow_dmgup	int
+add_magic_hit	int
+add_magic_dmg	int
+add_ac	int
+add_reduction	int
+add_dodge	int
+add_er	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+add_pierce	int
+add_stun_success	int
+add_ignore_reduction	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_dmg_small	int
+add_dmg_large	int
+
+裝備_armor_bless_類型
+bless_id	int
+armor_type	int
+note	varchar(255)
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_ac	int
+add_reduction	int
+add_melee_redux	int
+add_bow_redux	int
+add_dodge	int
+add_er	int
+def_fire	int
+def_water	int
+def_wind	int
+def_earth	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+regist_freeze	int
+regist_stone	int
+regist_sleep	int
+regist_blind	int
+regist_stun	int
+regist_sustain	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_ignore_reduction	int
+add_hit	int
+add_dmg	int
+add_bow_hit	int
+add_bow_dmg	int
+add_magic_hit	int
+add_magic_dmg	int
+add_pierce	int
+add_stun_success	int
+
+裝備_weapon_enchant_類型
+over_enchant	int
+weapon_type	int
+note	varchar(255)
+add_dmg_small	int
+add_dmg_large	int
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_hitup	int
+add_dmgup	int
+add_bow_hitup	int
+add_bow_dmgup	int
+add_magic_hit	int
+add_magic_dmg	int
+add_ac	int
+add_reduction	int
+add_dodge	int
+add_er	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+add_pierce	int
+add_stun_success	int
+add_ignore_reduction	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+
+裝備_armor_enchant_類型
+over_enchant	int
+armor_type	int
+note	varchar(255)
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_ac	int
+add_reduction	int
+add_melee_redux	int
+add_bow_redux	int
+add_dodge	int
+add_er	int
+def_fire	int
+def_water	int
+def_wind	int
+def_earth	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+regist_freeze	int
+regist_stone	int
+regist_sleep	int
+regist_blind	int
+regist_stun	int
+regist_sustain	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_ignore_reduction	int
+add_hit	int
+add_dmg	int
+add_bow_hit	int
+add_bow_dmg	int
+add_magic_hit	int
+add_magic_dmg	int
+add_pierce	int
+add_stun_success	int
+
+裝備_weapon_enchant_指定
+item_id	int
+note	varchar(255)
+enchant_level	int
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_hitup	int
+add_dmgup	int
+add_bow_hitup	int
+add_bow_dmgup	int
+add_magic_hit	int
+add_magic_dmg	int
+add_dmg_small	int
+add_dmg_large	int
+add_ac	int
+add_reduction	int
+add_dodge	int
+add_er	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+add_pierce	int
+add_stun_success	int
+add_ignore_reduction	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+
+裝備_armor_enchant_指定
+item_id	int
+note	varchar(255)
+enchant_level	int
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_ac	int
+add_reduction	int
+add_melee_redux	int
+add_bow_redux	int
+add_dodge	int
+add_er	int
+def_fire	int
+def_water	int
+def_wind	int
+def_earth	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+regist_freeze	int
+regist_stone	int
+regist_sleep	int
+regist_blind	int
+regist_stun	int
+regist_sustain	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_ignore_reduction	int
+add_hit	int
+add_dmg	int
+add_bow_hit	int
+add_bow_dmg	int
+add_magic_hit	int
+add_magic_dmg	int
+add_pierce	int
+add_stun_success	int
+
+裝備_weapon_greater_類型
+tier_id	int
+weapon_type	int
+裝備說明	varchar(50)
+chance	int
+note	varchar(50)
+add_dmg_small	int
+add_dmg_large	int
+add_hit	int
+add_dmg	int
+add_bow_hit	int
+add_bow_dmg	int
+add_magic_hit	int
+add_magic_dmg	int
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_reduction	int
+add_ignore_reduction	int
+add_fire	int
+add_water	int
+add_wind	int
+add_earth	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+add_stun_success	int
+add_potion_recovery	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_pierce	int
+
+裝備_armor_greater_類型
+tier_id	int
+armor_type	int
+裝備說明	varchar(50)
+chance	int
+note	varchar(50)
+add_ac	int
+add_melee_redux	int
+add_bow_redux	int
+add_reduction	int
+add_hit	int
+add_dmg	int
+add_bow_hit	int
+add_bow_dmg	int
+add_magic_hit	int
+add_magic_dmg	int
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_mr	int
+add_sp	int
+add_fire	int
+add_water	int
+add_wind	int
+add_earth	int
+regist_stun	int
+regist_stone	int
+regist_sleep	int
+regist_blind	int
+regist_freeze	int
+regist_sustain	int
+add_ignore_reduction	int
+add_dodge	int
+add_er	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_stun_success	int
+add_pierce	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+
+裝備_weapon_bless_指定
+item_id	int
+note	varchar(255)
+bless_id	tinyint
+add_str	tinyint
+add_dex	tinyint
+add_con	tinyint
+add_int	tinyint
+add_wis	tinyint
+add_cha	tinyint
+add_hp	smallint
+add_mp	smallint
+add_hpr	tinyint
+add_mpr	tinyint
+add_mr	tinyint
+add_sp	tinyint
+add_hit	tinyint
+add_dmg	tinyint
+add_bow_hit	tinyint
+add_bow_dmg	tinyint
+add_magic_hit	tinyint
+add_magic_dmg	tinyint
+add_dmg_small	tinyint
+add_dmg_large	tinyint
+add_pierce	tinyint
+add_stun_success	tinyint
+add_ignore_reduction	tinyint
+add_reduction	tinyint
+add_dodge	tinyint
+add_er	tinyint
+add_fire	tinyint
+add_water	tinyint
+add_wind	tinyint
+add_earth	tinyint
+add_pvp_dmg	tinyint
+add_pvp_redux	tinyint
+add_boss_dmg	int
+add_boss_redux	int
+add_potion_recovery	tinyint
+add_poison_resist	tinyint
+add_exp_rate	tinyint
+add_drop_rate	tinyint
+add_adena_rate	tinyint
+
+裝備_armor_bless_指定
+item_id	int
+note	varchar(255)
+bless_id	tinyint
+add_str	tinyint
+add_dex	tinyint
+add_con	tinyint
+add_int	tinyint
+add_wis	tinyint
+add_cha	tinyint
+add_hp	smallint
+add_mp	smallint
+add_hpr	tinyint
+add_mpr	tinyint
+add_mr	tinyint
+add_sp	tinyint
+add_hit	tinyint
+add_dmg	tinyint
+add_bow_hit	tinyint
+add_bow_dmg	tinyint
+add_magic_hit	tinyint
+add_magic_dmg	tinyint
+add_ac	tinyint
+add_melee_redux	tinyint
+add_bow_redux	tinyint
+add_reduction	tinyint
+add_dodge	tinyint
+add_er	tinyint
+add_fire	tinyint
+add_water	tinyint
+add_wind	tinyint
+add_earth	tinyint
+add_pvp_dmg	tinyint
+add_pvp_redux	tinyint
+add_boss_dmg	int
+add_boss_redux	int
+regist_freeze	tinyint
+regist_stone	tinyint
+regist_sleep	tinyint
+regist_blind	tinyint
+regist_sustain	tinyint
+regist_stun	tinyint
+add_pierce	tinyint
+add_stun_success	tinyint
+add_ignore_reduction	tinyint
+add_potion_recovery	tinyint
+add_poison_resist	tinyint
+add_exp_rate	tinyint
+add_drop_rate	tinyint
+add_adena_rate	tinyint
+
+裝備_特殊_魔石_魔法
+item_id	int
+tier	int
+name_suffix	varchar(64)
+prob_success	int
+prob_fail_mode	int
+duration	int
+proc_chance	int
+dmg_type	int
+dmg_fix	int
+dmg_rnd	int
+dmg_attr	int
+area_size	int
+gfx_id	int
+skill_id	int
+hp_drain	int
+mp_drain	int
+add_str	int
+add_dex	int
+add_int	int
+add_wis	int
+add_con	int
+add_hp	int
+add_mp	int
+add_mr	int
+add_sp	int
+
+裝備_特殊_卡片_能力
+id	int
+item_id	int
+card_name	varchar(255)
+item_type	int
+limit_count	int
+note	varchar(255)
+add_str	int
+add_dex	int
+add_con	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_sp	int
+add_mr	int
+add_hit	int
+add_dmg	int
+add_bow_hit	int
+add_bow_dmg	int
+add_magic_hit	int
+add_magic_dmg	int
+add_ac	int
+add_reduction	int
+add_melee_redux	int
+add_bow_redux	int
+add_ignore_reduction	int
+add_pvp_dmg	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+add_pierce	int
+add_stun_success	int
+add_weight_reduction	int
+add_fire	int
+add_water	int
+add_wind	int
+add_earth	int
+regist_stun	int
+regist_stone	int
+regist_sleep	int
+regist_freeze	int
+regist_blind	int
+regist_sustain	int
+add_potion_recovery	int
+add_poison_resist	int
+add_exp_rate	int
+add_drop_rate	int
+add_adena_rate	int
+add_dodge	int
+add_er	int
+add_magic_dmg_redux	int
+enchant_level	int
+proc_group	int
+on_attack_chance	int
+on_hurt_chance	int
+flat_damage	int
+rand_damage	int
+heal_hp	int
+heal_hp_rand	int
+heal_mp	int
+heal_mp_rand	int
+heal_mode	int
+trigger_skill	int
+skill_time_sec	int
+skill_target	int
+gfx_id	int
+gfx_mode	int
+
+裝備_weapon_魔法
+id	int
+weapon_id	int
+note	varchar(255)
+prob_base	int
+min_enchant	int
+enchant_step	int
+prob_enchant	int
+dmg_type	tinyint(1) unsigned zerofill
+dmg_fix	int
+dmg_rnd	int
+dmg_scaling	decimal(5,2)
+dmg_attr	tinyint(1)
+gfx_id	int
+gfx_target	tinyint(1)
+area_size	int
+hp_drain_fix	int
+hp_drain_rnd	int
+mp_drain_fix	int
+mp_drain_rnd	int
+skill_id	int
+skill_time_sec	int
+skill_target	tinyint
+description	varchar(255)
+
+裝備_armor_魔法
+id	int
+item_id	int
+note	varchar(255)
+enchant_level	int
+proc_group	int
+on_attack_chance	int
+on_hurt_chance	int
+flat_damage	int
+rand_damage	int
+heal_hp	int
+heal_hp_rand	int
+heal_mp	int
+heal_mp_rand	int
+heal_mode	tinyint
+trigger_skill	int
+skill_time_sec	int
+skill_target	tinyint
+gfx_id	int
+gfx_mode	int
+編號	int
+道具編號	int
+強化值	int
+觸發效果群組	int
+攻擊觸發機率	int
+受傷觸發機率	int
+固定額外傷害	int
+隨機額外傷害	int
+固定體力回復	int
+隨機體力回復	int
+固定魔力量	int
+隨機魔力量	int
+魔力回復模式	tinyint
+觸發技能編號	int
+技能持續秒數	int
+技能目標	tinyint
+特效編號	int
+特效模式	int
+
+weapon
+item_id	int unsigned
+set_id	varchar(50)
+name	varchar(45)
+classname	varchar(45)
+name_id	varchar(45)
+type	varchar(45)
+material	varchar(45)
+weight	int unsigned
+invgfx	int unsigned
+grdgfx	int unsigned
+itemdesc_id	int unsigned
+dmg_small	int unsigned
+dmg_large	int unsigned
+range	int
+safenchant	int
+use_royal	int unsigned
+use_knight	int unsigned
+use_mage	int unsigned
+use_elf	int unsigned
+use_darkelf	int unsigned
+use_dragonknight	int unsigned
+use_illusionist	int unsigned
+hitmodifier	int
+dmgmodifier	int
+add_melee_redux	int
+add_bow_redux	int
+add_str	int
+add_con	int
+add_dex	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_sp	int
+m_def	int
+haste_item	int unsigned
+magicdmgmodifier	int
+canbedmg	int unsigned
+min_lvl	int unsigned
+max_lvl	int unsigned
+bless	int unsigned
+trade	int unsigned
+cant_delete	int unsigned
+max_use_time	int unsigned
+add_pvp_dmg	int
+add_ignore_reduction	int
+add_pvp_redux	int
+add_boss_dmg	int
+add_boss_redux	int
+add_dodge	int
+add_er	int
+add_hitup	int
+add_dmgup	int
+add_bow_hitup	int
+add_bow_dmgup	int
+add_stun_success	int
+add_potion_recovery	int
+add_poison_resist	int
+add_drop_rate	int
+add_adena_rate	int
+add_exp_rate	int
+add_magic_hit	int
+add_pierce	tinyint(1)
+magic_bow	tinyint(1)
+arrow_spr	int
+greater_tier	int
+dmg_cri_chance	int unsigned
+dmg_cri	decimal(4,1)
+dmg_max_chance	int unsigned
+dmg_cri_effect	tinyint unsigned
+dmg_max_effect	tinyint unsigned
+
+armor
+note	varchar(45)
+item_id	int
+set_id	varchar(50)
+name	varchar(70)
+classname	varchar(45)
+name_id	varchar(45)
+type	varchar(15)
+material	varchar(45)
+weight	int unsigned
+invgfx	int unsigned
+grdgfx	int unsigned
+itemdesc_id	int
+ac	int
+safenchant	int
+use_royal	int unsigned
+use_knight	int unsigned
+use_mage	int unsigned
+use_elf	int unsigned
+use_darkelf	int unsigned
+use_dragonknight	int unsigned
+use_illusionist	int unsigned
+add_str	int
+add_con	int
+add_dex	int
+add_int	int
+add_wis	int
+add_cha	int
+add_hp	int
+add_mp	int
+add_hpr	int
+add_mpr	int
+add_sp	int
+min_lvl	int unsigned
+max_lvl	int unsigned
+m_def	int
+haste_item	int unsigned
+damage_reduction	int
+magicdmgmodifier	int
+add_melee_redux	int
+add_bow_redux	int
+weight_reduction	int unsigned
+hit_modifier	int
+dmg_modifier	int
+bow_hit_modifier	int
+bow_dmg_modifier	int
+bless	int unsigned
+trade	int unsigned
+cant_delete	int unsigned
+max_use_time	int unsigned
+defense_water	int
+defense_wind	int
+defense_fire	int
+defense_earth	int
+regist_stun	int
+regist_stone	int
+regist_sleep	int
+regist_freeze	int
+regist_sustain	int
+regist_blind	int
+is_activity	int
+add_pvp_redux	int
+add_ignore_reduction	int
+add_pvp_dmg	int
+add_boss_dmg	int
+add_boss_redux	int
+add_dodge	int
+add_er	int
+add_hitup	int
+add_dmgup	int
+add_bow_hitup	int
+add_bow_dmgup	int
+add_stun_success	int
+add_potion_recovery	int
+add_poison_resist	int
+add_adena_rate	int
+add_drop_rate	int
+add_exp_rate	int
+add_magic_hit	int
+greater_tier	int

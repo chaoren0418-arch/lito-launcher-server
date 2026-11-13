@@ -1,0 +1,18 @@
+[
+  {
+    "file": "D:\\lineage開發\\1-伺服器\\config\\其他控制端\\4-職業_技能設定表.properties",
+    "sha256": "877b506211b46b0f616dd660fec1b683f1f5c15fed3aa6502702598044913e95"
+  },
+  {
+    "file": "D:\\lineage開發\\1-伺服器\\config\\其他控制端\\5-職業傷害設定表.properties",
+    "sha256": "0eaf0b81d65222a8d9f779e7884d5c16aad8e7b36977a2787b54e9fd96b14e8c"
+  },
+  {
+    "file": "D:\\lineage開發\\1-伺服器\\config\\charsettings.properties",
+    "sha256": "013e18ee1b0fad21562a88078744406bae16d81903e0a4bbe63ae4cd451348fb"
+  },
+  {
+    "file": "D:\\lineage開發\\1-伺服器\\config\\other.properties",
+    "sha256": "0b8140627253eec8e03b771c51b508ae651acc374ee19145bc0ef006206ce3e5"
+  }
+]

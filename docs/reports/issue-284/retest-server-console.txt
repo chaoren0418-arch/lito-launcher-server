@@ -1,0 +1,76 @@
+[LiTo] resource-profile=lito-legacy
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+[LiTo development] shared static armor Proc rows=54; per-hit SQL=0
+[LiTo] Storm_Walk item cores loaded: [42501]
+[LiTo] source combat controls loaded: 69; coverage is limited to installed consumers (see combat coverage audit)
+[LiTo] source loader defaults used: [MORTAL_BODY_ROM, NATURES_BLESSING_HEAL]
+[LiTo] common combat skills loaded: 807; columns=consumption,cooldown,duration,damage,dice,materials; skill208 time=2 source executor
+[LiTo] source control snapshots: probabilities=34 bosses=48 ability-skills=45 npc-attributes=4138 source-coexist=true cancellation-immune=12 source-eyes=7; probability actor bindings partial; configured primary/special BUFF fields installed; other types/producers/paths pending
+[LiTo] consumable parameters loaded from p24_380db_lito_exp.etcitem: cooldowns=14 cooldown-differing=0 cooldown-fallbacks=0; items=11 differing-from-built-in=0 fallbacks=0
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeNpcTemplateResources lambda$load$4
+資訊: 載入MOB技能資料數量: 480(135ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeNpcTemplateResources load
+資訊: Source NPC templates=4138 mobSkills=480 required constructor kinds=28 unresolved executor classes=56; source name UPDATE suppressed; full NPC factory remains unqualified
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeTerrainResources lambda$load$3
+資訊: 載入 mapids ok: 731 (15ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeShopResources lambda$load$2
+資訊: 載入 mapids_shop ok: {} maps, {} ranges ({}ms) [7, 9, 3]
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeChatResources lambda$load$4
+資訊: 載入 npcchat ok: 26 (3ms) []
+[LiTo] SQL resources loaded: skill-fields=364 buffs=11 maps=47 town-portals=56 npc-identities=13; unresolved fields remain disabled
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemTemplatesResources$Owner lambda$reload$1
+資訊: 載入 etcitem ok: 3321 (197ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemTemplatesResources$Owner lambda$reload$1
+資訊: 載入 weapon ok: 364 (198ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemTemplatesResources$Owner lambda$reload$1
+資訊: 載入 armor ok: 1422 (198ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_屬性 ok: 40 (1ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_bless_類型 ok: 2 (21ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_bless_類型 ok: 2 (22ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_enchant_類型 ok: 320 (75ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_enchant_類型 ok: 91 (76ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_enchant_指定 ok: 1 (12ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_enchant_指定 ok: 49 (13ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_greater_類型 ok: 11 (43ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_greater_類型 ok: 11 (43ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_bless_指定 ok: 0 (2ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_bless_指定 ok: 0 (2ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_bless_指定 總計 ok: 0 (4ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 {} ok: {} ({}ms) [裝備_特殊_魔石_魔法, 324, 10]
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_特殊_卡片_能力 ok: 117 (7ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_魔法 ok: 50 (3ms) []
+11月 14, 2026 12:22:36 上午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_魔法 ok: 54 (3ms) []
+[LiTo] shared-source=p24_accounts_lito_exp controls=p24_lito_lito_exp source-read-only=true write-table=character_lito
+LiTo381 Server 0.6.71
+[LiTo] login-listen=127.0.0.1:42083
+[LiTo] game-listen=127.0.0.2:[42083] shared-channel-endpoint
+[LiTo] database=legacy_mysql(dynamic-database=p24_accounts_lito_exp, resource-database=p24_380db_lito_exp, read-only=true)
+[LiTo] maps=native-litmap-embedded(active=47, resource-directories=62)
+[LiTo] origin-source=lito-shared name=LiTo T014 P24 Experiment
+[LiTo] state=memory(non-persistent) source-profiles=ephemeral
+[LiTo] rental-handoff=process-local
+[LiTo] battle-ai=false tick=900ms damage=5
+[LiTo] battle-control=lito_static(rules=40, objects=26, npc-spawn-rows=25, player-spawn-rows=380)
+[LiTo] battle-animations=/battle/spr-action-380.csv sprites=6423 actions=30812
+[LiTo] capture=D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T162233Z\captures\20261113-162234-p6124-1\frames.jsonl
+[LiTo] source-login id=1 name=P24LiToExp port=42084 auth=selected-source-only
+[LiTo] ready
+Exception in thread "main"

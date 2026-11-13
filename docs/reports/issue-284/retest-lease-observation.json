@@ -1,0 +1,12 @@
+{
+  "utc": "2026-11-13T16:19:36.464857+00:00",
+  "leases": [
+    {
+      "name": "p24lab",
+      "holder": "chaoren0418-arch/lito-launcher-server#284",
+      "since": 1794586537.948934,
+      "exp": 1794589237.948934
+    }
+  ],
+  "note": "Initial state query returned no lease rows; this pre-start snapshot confirms the assigned holder and expiry 2026-11-13T17:00:37Z. No concurrent experimental listeners or P24 processes existed before startup."
+}

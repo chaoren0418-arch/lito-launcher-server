@@ -3,9 +3,12 @@ $ErrorActionPreference='Stop'
 $run=(Resolve-Path -LiteralPath $RunDirectory).Path
 $lease=@((Invoke-RestMethod 'http://localhost:8787/api/state').leases | Where-Object name -eq 'p24lab')
 if($lease.Count -ne 1 -or $lease[0].holder -ne 'chaoren0418-arch/lito-launcher-server#284' -or $lease[0].exp -le ([DateTimeOffset]::UtcNow.ToUnixTimeSeconds()+120)){throw 'Issue 284 requires a valid p24lab lease covering the next 120 seconds'}
-if((Get-FileHash -LiteralPath "$run/LiTo381-Server.jar" -Algorithm SHA256).Hash -ne 'FF4EAD8B222E7682A09C1C55979753A943B10402320E36C3F27B8B0E383F7064'){throw 'Formal JAR hash mismatch'}
-foreach($item in @('config/experiment.properties','lib/mysql-connector-j-8.0.33.jar','runtime','tmp','logs')){
+if((Get-FileHash -LiteralPath "$run/LiTo381-Server.jar" -Algorithm SHA256).Hash -ne '0F3762CE8C8E94F3B91D5404CC03B2BF815B4E329D0CBDCBC20F24F6B8686205'){throw 'Formal JAR hash mismatch'}
+foreach($item in @('config/experiment.properties','config/combat.properties','combat-source-hashes.json','lib/mysql-connector-j-8.0.33.jar','runtime','tmp','logs')){
   if(-not (Test-Path -LiteralPath (Join-Path $run $item))){throw "Missing required path: $item"}
+}
+foreach($inputFile in (Get-Content -LiteralPath "$run/combat-source-hashes.json" -Raw -Encoding UTF8|ConvertFrom-Json)){
+ if((Get-FileHash -LiteralPath $inputFile.File).Hash -ne $inputFile.SHA256){throw 'Combat source changed after preparation'}
 }
 if(@(Get-ChildItem -LiteralPath "$run/runtime" -Force).Count){throw 'Runtime must be newly created and empty'}
 if(Test-Path -LiteralPath "$run/logs/server-console.log"){throw 'Existing attempt; prepare a fresh run directory'}
