@@ -154,3 +154,12 @@
 - **Codex 跑 seed 時**：C 部需要帳號 C（V15、V17、V18），私密檔要填 `@m4_c_login`；V28 另要帳號 D。跑完看 S3 輸出每個角色的 `skills`／`item_rows` 數。
 - 伺服器整個卡住時先 `jstack` 再處理：`issue-370.md:40-44` 記的死結（開戰與斷線同時發生）還沒修，V19–V21 最容易碰到。
 - C 部的行號基準是 `9be54257`；`ClientSession.java` 常被改，位移時以字串或方法名為準。
+
+## CI
+
+PR #394，head `87b5d839`：
+
+- `acceptance-tools`（run 43374286508）兩個 job 都通過：「SQL scripts on MySQL 8.0 port 43324 (guards, prepare, verify, seed, snapshot diff)」與「PowerShell 5.1 scripts」。seed 在拋棄式 MySQL 上跑兩次，結果等於新的預期值 `5:11:33:18:6:8`（技能 33 列、道具 18 列），也就是加的 26 個技能列與 5 列道具都對得到靜態庫樣板。
+- `build`（run 43374286659）：Server (Java 17 / Maven)、Server reproducible JAR、Launcher 通過；寫本節時 Server tests、CI MySQL fixture（non-blocking）、Semantic gap（non-blocking）還在跑。本 PR 沒有改任何 Java 或測試。
+- `package`：Build-Package.ps1 zip 通過。
+- 本節之後只多一個補報告的 commit；最終結果以 PR 最新 commit 的 CI 為準。
