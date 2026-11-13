@@ -910,6 +910,65 @@ final class BattleQuestEncounterTest {
         assertFalse(encounter.damage(monster.objectId(), 0, 1).damage().diedNow());
     }
 
+    /**
+     * Issue #384（#338 Z7）：1-伺服器 L1AttackPc.java:421,1096 與 L1MagicPc.java:945 的
+     * dmg0(_targetNpc) 對凍結中的 NPC 物理／魔法傷害為 0。LiTo 的物理與魔法都經
+     * encounter.damage 扣血；造成冰凍的那一擊在 ClientSession 是先扣血、再寫凍結。
+     */
+    @Test
+    void frozenQuestMonsterTakesNoDamageUntilThawAndTheFreezingHitStillCounts() {
+        BattleQuestEncounter encounter = new BattleQuestEncounter();
+        encounter.reset(rules(), ArenaMapCatalog.forMap(554));
+        BattleQuestEncounter.Snapshot monster = encounter.snapshots(0).get(0);
+        long start = System.nanoTime();
+        long expiry = start + TimeUnit.SECONDS.toNanos(16);
+
+        BattleQuestEncounter.Hit freezingHit =
+                encounter.damage(monster.objectId(), 0, 3);
+        assertEquals(monster.maxHp() - 3, freezingHit.damage().after().hp());
+        assertTrue(encounter.freeze(monster.objectId(), 0, start, 16));
+
+        assertNull(encounter.damage(monster.objectId(), 0, 1).damage());
+        assertNull(encounter.damage(
+                monster.objectId(), 0, monster.maxHp()).damage());
+        assertEquals(monster.maxHp() - 3,
+                encounter.find(monster.objectId()).hp());
+        assertTrue(encounter.freezeActive(monster.objectId(), start + 1));
+
+        assertEquals(List.of(monster.objectId()), encounter.expireFreezes(expiry)
+                .stream().map(BattleQuestEncounter.Snapshot::objectId).toList());
+        assertEquals(monster.maxHp() - 4, encounter.damage(
+                monster.objectId(), 0, 1).damage().after().hp());
+
+        assertTrue(encounter.freeze(
+                monster.objectId(), 0, System.nanoTime(), 16));
+        assertNull(encounter.damage(monster.objectId(), 0, 1).damage());
+        assertTrue(encounter.cancelFreeze(monster.objectId()));
+        assertEquals(monster.maxHp() - 5, encounter.damage(
+                monster.objectId(), 0, 1).damage().after().hp());
+    }
+
+    /** 1-伺服器 L1DamagePoison.poisonTickCurrent 直接 receiveDamage，不經 dmg0。 */
+    @Test
+    void damagePoisonStillTicksOnFrozenQuestMonster() {
+        BattleQuestEncounter encounter = new BattleQuestEncounter();
+        encounter.reset(rules(), ArenaMapCatalog.forMap(554));
+        BattleQuestEncounter.Snapshot monster = encounter.snapshots(0).get(0);
+        long start = System.nanoTime();
+
+        assertTrue(encounter.poison(monster.objectId(), 0, 15L,
+                start, 30, 3_000));
+        assertTrue(encounter.freeze(monster.objectId(), 0, start + 1, 16));
+        assertNull(encounter.damage(monster.objectId(), 0, 1).damage());
+
+        List<BattleQuestEncounter.PoisonUpdate> tick = encounter.pollPoisons(
+                start + TimeUnit.SECONDS.toNanos(3), 3_000, 5);
+        assertEquals(1, tick.size());
+        assertEquals(1, tick.get(0).hits().size());
+        assertEquals(monster.maxHp() - 5,
+                tick.get(0).hits().get(0).damage().after().hp());
+    }
+
     @Test
     void shockStunIsForceScopedBlocksQuestAiSurvivesDamageAndCancellation() {
         BattleQuestEncounter encounter = new BattleQuestEncounter();

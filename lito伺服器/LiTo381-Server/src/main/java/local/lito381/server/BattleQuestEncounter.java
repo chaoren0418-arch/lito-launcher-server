@@ -2157,8 +2157,17 @@ final class BattleQuestEncounter {
             return damage(amount, false);
         }
 
+        /**
+         * 1-伺服器 SKM0（L1Character.isSkillEffectPhysicalDamageZero）：大地屏障與冰凍
+         * （冰矛／冰雪颶風／冰凍氣息共用同一凍結租約）期間，物理與魔法傷害為 0。
+         * 毒傷（L1DamagePoison.poisonTickCurrent 直接 receiveDamage）不經過這個判斷。
+         */
+        boolean damageZeroActive(long nowNanos) {
+            return this.earthBindActive(nowNanos) || this.freezeActive(nowNanos);
+        }
+
         private Damage damage(int amount, boolean earthBindBlocks) {
-            if (this.hp <= 0 || amount <= 0 || NativeCombatAttacker.earth(earthBindBlocks, this) && this.earthBindActive(System.nanoTime())) {
+            if (this.hp <= 0 || amount <= 0 || NativeCombatAttacker.earth(earthBindBlocks, this) && this.damageZeroActive(System.nanoTime())) {
                 return null;
             }
             Snapshot snapshot = this.snapshot();

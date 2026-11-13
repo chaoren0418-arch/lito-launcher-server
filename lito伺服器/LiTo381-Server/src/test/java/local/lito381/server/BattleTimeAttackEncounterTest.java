@@ -1343,6 +1343,63 @@ final class BattleTimeAttackEncounterTest {
         assertFalse(encounter.earthBindActive(boss.objectId(), expiry + 1));
     }
 
+    /**
+     * Issue #384（#338 Z7）：1-伺服器 L1AttackPc.java:421,1096 與 L1MagicPc.java:945 的
+     * dmg0(_targetNpc) 對凍結中的 NPC 物理／魔法傷害為 0。LiTo 的物理與魔法都經
+     * encounter.damage 扣血；造成冰凍的那一擊在 ClientSession 是先扣血、再寫凍結。
+     */
+    @Test
+    void frozenTimeAttackActorTakesNoDamageUntilThawAndTheFreezingHitStillCounts() {
+        BattleTimeAttackEncounter encounter = new BattleTimeAttackEncounter();
+        encounter.reset(rules(), ArenaMapCatalog.forMap(540));
+        BattleTimeAttackEncounter.Snapshot actor =
+                encounter.startAfterTowerDestroyed().get(0);
+        long start = System.nanoTime();
+        long expiry = start + TimeUnit.SECONDS.toNanos(16);
+
+        BattleTimeAttackEncounter.Hit freezingHit =
+                encounter.damage(actor.objectId(), 3);
+        assertEquals(actor.maxHp() - 3, freezingHit.damage().after().hp());
+        assertTrue(encounter.freeze(actor.objectId(), start, 16));
+
+        assertNull(encounter.damage(actor.objectId(), 1).damage());
+        assertNull(encounter.damage(actor.objectId(), actor.maxHp()).damage());
+        assertEquals(actor.maxHp() - 3, encounter.find(actor.objectId()).hp());
+        assertTrue(encounter.freezeActive(actor.objectId(), start + 1));
+
+        assertEquals(List.of(actor.objectId()), encounter.expireFreezes(expiry)
+                .stream().map(BattleTimeAttackEncounter.Snapshot::objectId).toList());
+        assertEquals(actor.maxHp() - 4,
+                encounter.damage(actor.objectId(), 1).damage().after().hp());
+
+        assertTrue(encounter.freeze(actor.objectId(), System.nanoTime(), 16));
+        assertNull(encounter.damage(actor.objectId(), 1).damage());
+        assertTrue(encounter.cancelFreeze(actor.objectId()));
+        assertEquals(actor.maxHp() - 5,
+                encounter.damage(actor.objectId(), 1).damage().after().hp());
+    }
+
+    /** 1-伺服器 L1DamagePoison.poisonTickCurrent 直接 receiveDamage，不經 dmg0。 */
+    @Test
+    void damagePoisonStillTicksOnFrozenTimeAttackActor() {
+        BattleTimeAttackEncounter encounter = new BattleTimeAttackEncounter();
+        encounter.reset(rules(), ArenaMapCatalog.forMap(540));
+        BattleTimeAttackEncounter.Snapshot actor =
+                encounter.startAfterTowerDestroyed().get(0);
+        long start = System.nanoTime();
+
+        assertTrue(encounter.poison(actor.objectId(), 15L,
+                start, 30, 3_000));
+        assertTrue(encounter.freeze(actor.objectId(), start + 1, 16));
+        assertNull(encounter.damage(actor.objectId(), 1).damage());
+
+        List<BattleTimeAttackEncounter.PoisonUpdate> tick = encounter.pollPoisons(
+                start + TimeUnit.SECONDS.toNanos(3), 3_000, 5);
+        assertEquals(1, tick.size());
+        assertEquals(actor.maxHp() - 5,
+                tick.get(0).hits().get(0).damage().after().hp());
+    }
+
     @Test
     void shockStunBlocksTimeAttackAiSurvivesCancellationAndAllowsFinalBosses() {
         BattleTimeAttackEncounter encounter = new BattleTimeAttackEncounter();
