@@ -21907,6 +21907,8 @@ final class ClientSession implements Runnable {
             return;
         }
 
+        if (rejectItemUseDelay(item, definition)) return;
+
         if (definition.effect() == InventoryCatalog.Effect.HEAL) {
             if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM heal rejected phase=" + phase
@@ -21916,6 +21918,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-heal");
+            startItemUseDelay(definition);
             int[] range = InventoryCatalog.healingRange(definition.catalogId());
             int baseRestored = range[0] == range[1] ? range[0]
                     : ThreadLocalRandom.current().nextInt(range[0], range[1] + 1);
@@ -21983,6 +21986,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-haste");
+            startItemUseDelay(definition);
             // Classic StatusHaste clears the server drink flag. The exact
             // S_SPEED receiver also cancels its local drunken input handler.
             timedStatus.clearDrunken();
@@ -22021,6 +22025,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-brave");
+            startItemUseDelay(definition);
             timedStatus.activateBrave(System.nanoTime(),
                     InventoryCatalog.braveDurationSeconds());
             clearDurableMovementBuff("brave-potion-replacement");
@@ -22055,6 +22060,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-wisdom-potion");
+            startItemUseDelay(definition);
             long nowNanos = System.nanoTime();
             timedStatus.activateWisdomPotion(nowNanos,
                     InventoryCatalog.wisdomPotionDurationSeconds());
@@ -22090,6 +22096,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-elven-wafer");
+            startItemUseDelay(definition);
             timedStatus.activateBrave(System.nanoTime(),
                     InventoryCatalog.elvenWaferDurationSeconds(),
                     BattleTimedStatus.BRAVE_ELF);
@@ -22121,6 +22128,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-blue-potion");
+            startItemUseDelay(definition);
             int duration = InventoryCatalog.bluePotionDurationSeconds(
                     definition.catalogId());
             long nowNanos = System.nanoTime();
@@ -22198,6 +22206,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-antidote");
+            startItemUseDelay(definition);
             boolean damageCured = CombatPoisonLifecycle.cure(timedStatus, this, scope);
             boolean silenceCured = CombatPoisonLifecycle.silence(timedStatus, this, scope);
             BattleTimedStatus.ParalysisCancellation paralysisCured =
@@ -22250,6 +22259,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-blindness");
+            startItemUseDelay(definition);
             timedStatus.activateBlind(System.nanoTime(),
                     InventoryCatalog.BLINDNESS_DURATION_SECONDS);
             sendInventoryDelta(previous, inventory);
@@ -22270,6 +22280,7 @@ final class ClientSession implements Runnable {
             RuntimeInventory previous = inventory.copy();
             if (!inventory.remove(item.objectId(), 1)) return;
             cancelAbsoluteBarrier("item-underwater-breath");
+            startItemUseDelay(definition);
             BattleTimedStatus.Breath breath = timedStatus.addBreath(
                     System.nanoTime(), InventoryCatalog.BLESS_OF_EVA_DURATION_SECONDS,
                     InventoryCatalog.UNDERWATER_BREATH_MAX_SECONDS);
@@ -26045,6 +26056,46 @@ final class ClientSession implements Runnable {
     private void sendTeleportCursorUnlock(String reason) throws IOException {
         sendEncrypted(Protocol.paralysis(Protocol.ParalysisMode.TELEPORT_UNLOCK),
                 "S_PARALYSE mode=7 reason=" + reason);
+    }
+
+    // T134 (#385): per-character etcitem.delay_id cooldowns (1-伺服器 L1ItemDelay).
+    private ItemUseDelays itemUseDelays;
+
+    private ItemUseDelays itemUseDelays() {
+        ItemUseDelays delays = itemUseDelays;
+        if (delays == null) {
+            delays = new ItemUseDelays();
+            itemUseDelays = delays;
+        }
+        return delays;
+    }
+
+    /**
+     * 1-伺服器 C_ItemUSe.java:352-374: a living character whose item's delay group
+     * is still running is refused before any other item check; the only reply is
+     * the idle request unlock (S_Paralysis TYPE_TELEPORT_UNLOCK, sent unless a
+     * teleport is in flight, L1PcInstance.java:2212-2228). No message, no effect,
+     * the item is kept.
+     */
+    private boolean rejectItemUseDelay(RuntimeInventory.Item item,
+            InventoryCatalog.Definition definition) throws IOException {
+        ConsumableItemParameters.Delay delay =
+                ConsumableItemParameters.delay(definition.catalogId());
+        if (delay == null || !delay.active() || playerHp <= 0) return false;
+        if (!itemUseDelays().blocked(delay.id(), System.nanoTime())) return false;
+        boolean unlock = pendingPortal == null && !pendingPortalReady
+                && pendingClassicWorldPortal == null;
+        if (unlock) sendTeleportCursorUnlock("item-delay-" + delay.id());
+        System.out.println("[LiTo] C_USE_ITEM rejected item-delay object=" + item.objectId()
+                + " catalog=" + definition.catalogId() + " delay-id=" + delay.id()
+                + " delay-time=" + delay.millis() + " unlock=" + unlock);
+        return true;
+    }
+
+    /** 1-伺服器 C_ItemUSe.java:933-936: the group lease starts after the item was used. */
+    private void startItemUseDelay(InventoryCatalog.Definition definition) {
+        itemUseDelays().start(ConsumableItemParameters.delay(definition.catalogId()),
+                System.nanoTime());
     }
 
     private void requestTeleportUser(byte[] payload) throws IOException {
