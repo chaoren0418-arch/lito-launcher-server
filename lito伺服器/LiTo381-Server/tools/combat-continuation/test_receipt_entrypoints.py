@@ -136,7 +136,8 @@ class EntryReceiptTests(unittest.TestCase):
             self.assertIn('all behavioral assertions preserved', row['change'])
 
     def test_targeted_success_writes_passed_receipt(self):
-        self.check_success(TARGETED, 'targeted', 29)
+        # 25 stage drivers + replacement/fault (test.py, test_boundaries.py) under --out.
+        self.check_success(TARGETED, 'targeted', 27)
 
     def test_player_success_writes_passed_receipt(self):
         self.check_success(PLAYER, 'player-cancellation', 3)
