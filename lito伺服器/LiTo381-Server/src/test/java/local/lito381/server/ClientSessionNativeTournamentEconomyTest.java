@@ -758,6 +758,21 @@ final class ClientSessionNativeTournamentEconomyTest {
                 setField(session, "playerHp", beforeHp);
                 byte[] use = new Protocol.Writer().c(Protocol.C_USE_ITEM)
                         .d(potion.objectId()).s("").bytes();
+                if (index > 0) {
+                    // T134 (#385): the previous healing potion started group 2
+                    // (500/1000 ms). 1-伺服器 C_ItemUSe.java:365-373 refuses this
+                    // one with only S_Paralysis TYPE_TELEPORT_UNLOCK; nothing is
+                    // consumed and HP is unchanged.
+                    invoke(session, "useInventoryItem", new Class<?>[] {byte[].class}, use);
+                    byte[] unlock = receive(client, receiver);
+                    assertEquals(Protocol.S_PARALYSE, unlock[0] & 0xFF);
+                    assertEquals(Protocol.ParalysisMode.TELEPORT_UNLOCK.wireValue(),
+                            unlock[1] & 0xFF);
+                    assertTrue(inventory(session).item(potion.objectId()) != null);
+                    assertEquals(beforeHp, (int) field(session, "playerHp"));
+                    // Expire the cooldown (fresh per-character lease table).
+                    setField(session, "itemUseDelays", null);
+                }
                 invoke(session, "useInventoryItem", new Class<?>[] {byte[].class}, use);
 
                 assertEquals(Protocol.S_REMOVE_INVENTORY,

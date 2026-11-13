@@ -441,6 +441,60 @@ jobs:
             scratch/semantic-diff-fallback.*/*.err
           if-no-files-found: warn
 
+  # Issue #398 / T139: offline checks for the #31 combat regression entry
+  # points (tools/combat-continuation). No JAR execution, no SQL, no fixtures:
+  # syntax, CLI parameters, JDK lookup via PATH, and test_formal_protection.py.
+  combat-regression-tools:
+    name: Combat regression tools (offline, no DB)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+        working-directory: lito伺服器/LiTo381-Server/tools/combat-continuation
+    env:
+      ENTRIES: >-
+        full_regression.py candidate_regression.py affected_regressions.py
+        replay_composed_materials.py reconcile_replay.py
+        cancellation-battle-runtime/replay_targeted.py
+        cancellation-battle-runtime/replay_player_cancellation.py
+        cancellation-battle-runtime/test_curse_clock_boundary.py
+        cancellation-battle-runtime/seal_validation.py
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax check
+        run: python -B -m py_compile regression_support.py test_formal_protection.py $ENTRIES
+      - name: Entry points expose --jar / --out / --config / --resources
+        run: |
+          set -euo pipefail
+          for entry in $ENTRIES; do
+            help=$(python -B -X utf8 "$entry" --help)
+            for flag in --jar --out --config --resources; do
+              grep -q -- "$flag" <<<"$help" || { echo "::error::$entry --help lacks $flag"; exit 1; }
+            done
+            echo "ok $entry"
+          done
+          python -B -X utf8 reconcile_replay.py --help | grep -q -- --manifest
+      - name: JDK resolved from PATH when JAVA_HOME is unset
+        run: |
+          set -euo pipefail
+          env -u JAVA_HOME python -B - <<'PY'
+          import shutil, subprocess
+          import regression_support as s
+          java = s.java_tool('java')
+          assert java == shutil.which('java'), java
+          subprocess.run([java, '-version'], check=True)
+          legacy = "x = Path(r'C:/Program Files/Eclipse Adoptium/jdk-17.0.17.10-hotspot/bin/java.exe')\n"
+          adapted = s.adapt_driver(legacy, '/tmp/isolated.properties')
+          assert "java_tool('java')" in adapted and 'jdk-17' not in adapted, adapted
+          print('java_tool ->', java)
+          PY
+      - name: Offline formal-protection tests
+        run: python -B -X utf8 -m unittest -v test_formal_protection
+
   launcher:
     name: Launcher (.NET 10 / WinForms)
     runs-on: windows-latest

@@ -126,8 +126,8 @@ T127–T130 是 M4 的準備，優先做（Codex 2026-11-13 18:11 恢復）。�
 | T131 | 待建 | A 開發 | 開戰與斷線同時發生的鎖順序死結（`DurableBattleSettlement.context`）＋CI MySQL job 逾時（#369、#370 移交） | todo |
 | T132 | #383 | A 開發 | PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話（`S_SAY_CODE 0x2D`，客戶端有對應封包）、多人 Time Attack 換目標（#353 剩餘 1–3）；設計 `docs/design/skills-npc.md` §6，實機待驗證 RUNBOOK V39（`docs/reports/issue-383.md`） | review |
 | T133 | 待建 | A 開發 | 凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7） | todo |
-| T134 | 待建 | A 開發 | 藥水共用冷卻 `delay_id`／`delay_time`（#352 剩餘） | todo |
-| T135 | 待建 | A 開發 | 受控 NPC 恢復節奏與自身技能：G15 前兩組移植並補測試（#354 剩餘優先 1、2） | todo |
+| T134 | #385 | A 開發 | 藥水共用冷卻 `delay_id`／`delay_time`（#352 剩餘）：14 項藥水啟動時同一條 SELECT 讀兩欄（讀不到退回內建值），治癒類群組 2 共用 500／1000 毫秒冷卻，冷卻中拒絕只回 `S_PARALYSE` 模式 7；實機連喝間隔待驗證（`docs/reports/issue-385.md`） | review |
+| T135 | #386 | A 開發 | 受控 NPC 恢復節奏與自身技能：G15 前兩組移植並補測試（#354 剩餘優先 1、2）。恢復與主人 HP 條已接上；技能只到選列與使用狀態，實際施放的入口候選沒有，列為剩餘（`docs/reports/issue-386.md`） | review |
 | T136 | #387 | A 開發 | 結算待寫入結果的作廢（啟動時讀 `runtime/battle-settlements/void-requests.txt`，收據 `applied=2`＋稽核欄位 `db/lito_battle_settlement_void.sql`）與 `.tmp` 殘檔清理；設計 `docs/design/gameplay.md` §4.2，營運步驟 `docs/INSTALL.md` §6.1（`docs/reports/issue-387.md`） | review |
 
 實機任務 T137、T138（`codex-local`）列在 M4。
