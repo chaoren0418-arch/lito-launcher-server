@@ -42,11 +42,12 @@
 - `python -m py_compile` 檢查 helper 與測試檔語法通過。
 - `src/development_startup.py` 的 SHA 仍是 `ADFF1EDC…C9CD`（等於 `DevelopmentStartup.EntrySha`）；`external_server_startup.py` 的 SHA `D0FE39EB…1D32` 已寫進 `ExternalServerStartup.HelperSha`。
 - 靜態對照：#284 公開設定 `port=42083`、`bind=127.0.0.1`，`UnifiedConfiguration` 的來源埠規則是 `port + id`，與 #284 實測監聽（42083／42084）一致；新入口的端點預期同為 `127.0.0.1:42083`、`127.0.0.1:42084`。
+- PR #405 的 CI（commit `bef5b5d4`，job `Launcher (.NET 10 / WinForms)`）：Release 建置通過；`dotnet test` 共 43 個、43 個通過；Python unittest 5 個、全部 OK。其他工作（Server 建置、Server tests、reproducible JAR、Semantic gap、Combat regression tools、Build-Package）也都通過；非阻擋的 MySQL fixture 工作在撰寫時仍在執行。
 - 正式路徑：沒給 `--external-server-profile` 時 `ExternalServerMode=false`，`MainForm` 走原本的 `DevelopmentStartup`／`DefaultMemoryStartupRelease` 分支；`development_startup.py`、`Start-Shared-World.py`、`FormalStandardReady`、`FormalStandardSources`、`LauncherService` 都沒改。
 
 ### 待驗證（交 CI／Codex）
 
-- 單元測試（`dotnet test` 與 Python unittest）依本機執行限制**沒有在本機執行**，交給 PR 的 GitHub Actions。
+- 單元測試依本機執行限制**沒有在本機執行**，只在 GitHub Actions 跑過（結果見上）。
 - 實機：在實驗服 ready 的狀態下用新入口連 42083 → 選服 → 登入 → 大廳 PNG（#284 項目 08）。
 - 正式交付檔 PINS（`app\…`、`0-客戶端\TW13081901.txt`）在 Codex 環境是否仍一致：helper 會在啟動前檢查，不符會直接報 `Startup file changed`。
 
