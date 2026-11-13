@@ -1,0 +1,68 @@
+-- 僅供經授權還原本輪遷移；本輪未執行。
+-- 先停所有實驗客戶端、另備份目前資料；只能連 127.0.0.1:43324。
+-- 只適用尚未進行戰鬥、各新增欄位仍為零的本輪狀態；已有新成果時不可執行 DROP。
+SET @ok = (@@port=43324 AND @@server_uuid='e3443e40-d090-11f1-8040-4cedfb679789');
+SET @guard = IF(@ok,'DO 0','SELECT * FROM rollback_wrong_instance.guard');
+PREPARE check_instance FROM @guard; EXECUTE check_instance; DEALLOCATE PREPARE check_instance;
+-- mysql 不可使用 --force。
+ALTER TABLE `p24_accounts_lito_exp`.`character_lito` DROP COLUMN `disconnects`,DROP COLUMN `monthly_losses`,DROP COLUMN `monthly_period`,DROP COLUMN `monthly_ranking_points`,DROP COLUMN `monthly_wins`,DROP COLUMN `ranking_points`;
+ALTER TABLE `p24_380db_lito_exp`.`裝備_armor_魔法` DROP COLUMN `編號`,DROP COLUMN `道具編號`,DROP COLUMN `強化值`,DROP COLUMN `觸發效果群組`,DROP COLUMN `攻擊觸發機率`,DROP COLUMN `受傷觸發機率`,DROP COLUMN `固定額外傷害`,DROP COLUMN `隨機額外傷害`,DROP COLUMN `固定體力回復`,DROP COLUMN `隨機體力回復`,DROP COLUMN `固定魔力量`,DROP COLUMN `隨機魔力量`,DROP COLUMN `魔力回復模式`,DROP COLUMN `觸發技能編號`,DROP COLUMN `技能持續秒數`,DROP COLUMN `技能目標`,DROP COLUMN `特效編號`,DROP COLUMN `特效模式`;
+
+REVOKE SELECT ON `p24_380db_lito_exp`.`armor` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`etcitem_arrow` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`etcitem_buff藥水能力` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`etcitem_buff藥水設置` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`etcitem_doll_power_new` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`etcitem_doll_type` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`etcitem` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`mapids_shop` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`mapids` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`mobskill` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`npc` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`npcchat` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`pettypes` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`polymorphs` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`server_event` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills_buff_ability` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills_相消免疫技能` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills_相消怪物轉換` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills_負面boss免疫` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills_負面技能控制` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills_魔屏無效技能` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`skills` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`spawnlist_npc` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`spawnlist_time` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`spr_action` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`weapon` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`假人_人物清單` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`假人_能力設置` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`假人_設置狀態` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`系統_劇情任務` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`系統_受擊無動作gfx` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_armor_bless_指定` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_armor_bless_類型` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_armor_enchant_指定` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_armor_enchant_類型` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_armor_greater_類型` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_armor_魔法` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_bless_指定` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_bless_類型` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_enchant_指定` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_enchant_類型` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_greater_類型` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_屬性` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_weapon_魔法` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_特殊_卡片_組合` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_特殊_卡片_能力` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_特殊_套裝_能力` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`裝備_特殊_魔石_魔法` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`角色_力量成長` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`角色_敏捷成長` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`角色_智力成長` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`角色_精神成長` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`角色_體質成長` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`道具_物品詳細說明` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`道具_自訂穿脫能力` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_380db_lito_exp`.`道具_變形控制魔杖` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_accounts_lito_exp`.`clan_emblem` FROM 'lito83_exp'@'127.0.0.1';
+REVOKE SELECT ON `p24_accounts_lito_exp`.`server_盟屋_紀錄` FROM 'lito83_exp'@'127.0.0.1';

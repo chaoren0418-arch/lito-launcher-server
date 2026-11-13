@@ -1,0 +1,80 @@
+[00:24:35] 驗證模式：ProtectedClient
+[OK] 一般權限控制介面: 一般權限可用；LiTo.bin 由隔離的 RunAsInvoker 工作流程啟動
+[OK] 相容啟動工具: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\launcher-project\tools\lito_runtime_probe.py
+[OK] 文字索引: D:\lineage開發\0-客戶端\Text.idx
+[OK] 文字資料: D:\lineage開發\0-客戶端\Text.pak
+[OK] 遊戲客戶端: D:\lineage開發\0-客戶端\LiTo.bin
+[OK] 啟動腳本: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\launcher-project\tools\Start-LiTo381.ps1
+[OK] Python runtime: C:\Users\CHAOREN\AppData\Local\Programs\Python\Python312\python.exe
+[OK] LiTo.bin 原版雜湊: CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292
+[OK] LITO 專用 LT 資源: 5 組 LT IDX/PAK、LTmap 與 LTsound 完整
+[OK] TW/LITO 共用封包配對: Sprite、Text、Tile 與 Sprite00-15 共 19 組 IDX/PAK 均成對存在；只檢測、不替換
+[OK] TW13081901 共存保護: 已偵測 3,113,320 bytes，SHA-256 1FE1D8F9529A0982；LITO 流程不修改此檔
+[OK] 相容層還原狀態: 沒有上次異常中斷留下的原檔備份
+[OK] 共享資源版本指紋: 90FF83FE15C9CDE0（記錄現況，不與官方版本比對、不自動降版）
+[OK] 執行時間設定: 限時 120 秒；不視為自然退出
+[OK] 選定客戶端資源世代檢測: 偵測到 40 個新版或缺少資源；LiTo 將使用隔離相容副本，不改寫此目錄
+[X] 天堂小幫手領獎 UI: LiTo\LTtext 領獎覆蓋層缺少或指紋不符，禁止啟動以免開啟空白介面
+[X] LiTo 隔離相容資源: Mss32.dll 大小 373,136 != 372,736；缺少 litolauncher-c.pak；Text.idx 大小 1,049,948 != 1,044,152；Text.pak 大小 26,267,704 != 25,991,498；Tile.idx 大小 152,492 != 114,860；Tile.pak 大小 593,320,968 != 457,175,695；Sprite00.idx 大小 285,800 != 119,508；Sprite00.pak 大小 450,577,933 != 190,151,795；其他 47 項
+[OK] 客戶端相容邊界: 僅支援指定 LiTo.bin：登入／戰鬥 opcode 狀態機、32-bit x86 記憶體位址、Numeric Schema 4 與 LT 資源編號皆為成套契約；更換 bin/exe 或資源世代會被拒絕，不會冒險啟動。
+[X] TW/LiTo 執行隔離: TW 監測目錄：D:\lineage開發\0-客戶端；LiTo 執行目錄：D:\lineage開發\0-客戶端
+[OK] 顯示模式: 視窗化（DDSCL_NORMAL；預設）
+[OK] LiTo 32-bit 數值契約: schema 4：相容層與本機 Server 同步啟用 HP／MP／AC／等級／六素質／SP／MR／四屬性抗性 dword
+[OK] 原生服務入口: 一般無界擂台；LiTo.bin 引數：（無）（預設）
+[X] LiTo DirectDraw proxy: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Compat\publish\ddraw.dll
+[X] LiTo window compatibility config: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Compat\publish\lito381-compat.ini
+[OK] 視窗縮放: 100%（虛擬座標固定 640×480）
+[OK] Server profile: LiTo — 太陽神 / 月亮神: source=lito-shared/LiTo 共用資料架構, endpoint=127.0.0.1:32000
+[X] LiTo local server: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Server\LiTo381-Server.jar
+[OK] 完整素質橋接解析器: LiTo-Extended-Stats schema v2
+[X] LiTo server config (server.properties): D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Server\config\server.properties
+[OK] Java 17 runtime: C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe
+[X] 一般擂台伺服器契約: 找不到 LiTo 本機伺服器。
+
+Window: "LiTo 3.81C 正式流程啟動器 0.6.71", App: LiTo381Launcher.exe.
+	0 視窗 LiTo 3.81C 正式流程啟動器 0.6.71 Secondary Actions: Raise
+		1 窗格
+			2 文字 LiTo 3.81C 專屬啟動器
+			3 窗格 LiTo 3.81C 專屬啟動器
+				4 文字 LiTo 客戶端：
+				5 編輯 (settable, string) LiTo 客戶端： Value: D:\lineage開發\0-客戶端
+				6 按鈕 瀏覽…
+				7 文字 顯示模式：
+				8 下拉式方塊 (settable, string) 顯示模式： Value: 視窗化（建議）
+					9 文字 顯示模式：
+					10 按鈕 開啟
+				11 文字 視窗縮放：
+				12 下拉式方塊 (settable, string) 視窗縮放： Value: 100%（640×480）
+					13 文字 視窗縮放：
+					14 按鈕 開啟
+				15 文字 遊戲模式：
+				16 下拉式方塊 (settable, string) 遊戲模式： Value: 一般無界擂台（預設；無額外參數）
+					17 文字 遊戲模式：
+					18 按鈕 開啟
+				19 文字 來源伺服器：
+				20 文字 啟動後於原生伺服器選單選擇
+				21 文字 啟動後先選伺服器，再輸入該服帳密，進入角色選單。 角色選單：「返回」登出至帳密頁；「伺服器」登出至選服頁。
+			22 窗格 啟動後先選伺服器，再輸入該服帳密，進入角色選單。 角色選單：「返回」登出至帳密頁；「伺服器」登出至選服頁。
+				23 按鈕 重新檢查
+				24 按鈕 (disabled) 啟動 LiTo.bin
+			25 群組 Server 完整素質（不受 LiTo.bin 原生欄寬限制）
+				26 文字 完整素質：尚未收到 Server 角色資料
+			27 文件 LiTo 3.81C 專屬啟動器 Value: [00:24:35] 驗證模式：ProtectedClient [OK] 一般權限控制介面: 一般權限可用；LiTo.bin 由隔離的 RunAsInvoker 工作流程啟動 [OK] 相容啟動工具: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\launcher-project\tools\lito_runtime_probe.py [OK] 文字索引: D:\lineage開發\0-客戶端\Text.idx [OK] 文字資料: D:\lineage開發\0-客戶端\Text.pak [OK] 遊戲客戶端: D:\lineage開發\0-客戶端\LiTo.bin [OK] 啟動腳本: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\launcher-project\tools\Start-LiTo381.ps1 [OK] Python runtime: C:\Users\CHAOREN\AppData\Local\Programs\Python\Python312\python.exe [OK] LiTo.bin 原版雜湊: CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292 [OK] LITO 專用 LT 資源: 5 組 LT IDX/PAK、LTmap 與 LTsound 完整 [OK] TW/LITO 共用封包配對: Sprite、Text、Tile 與 Sprite00-15 共 19 組 IDX/PAK 均成對存在；只檢測、不替換 [OK] TW13081901 共存保護: 已偵測 3,113,320 bytes，SHA-256 1FE1D8F9529A0982；LITO 流程不修改此檔 [OK] 相容層還原狀態: 沒有上次異常中斷留下的原檔備份 [OK] 共享資源版本指紋: 90FF83FE15C9CDE0（記錄現況，不與官方版本比對、不自動降版） [OK] 執行時間設定: 限時 120 秒；不視為自然退出 [OK] 選定客戶端資源世代檢測: 偵測到 40 個新版或缺少資源；LiTo 將使用隔離相容副本，不改寫此目錄 [X] 天堂小幫手領獎 UI: LiTo\LTtext 領獎覆蓋層缺少或指紋不符，禁止啟動以免開啟空白介面 [X] LiTo 隔離相容資源: Mss32.dll 大小 373,136 != 372,736；缺少 litolauncher-c.pak；Text.idx 大小 1,049,948 != 1,044,152；Text.pak 大小 26,267,704 != 25,991,498；Tile.idx 大小 152,492 != 114,860；Tile.pak 大小 593,320,968 != 457,175,695；Sprite00.idx 大小 285,800 != 119,508；Sprite00.pak 大小 450,577,933 != 190,151,795；其他 47 項 [OK] 客戶端相容邊界: 僅支援指定 LiTo.bin：登入／戰鬥 opcode 狀態機、32-bit x86 記憶體位址、Numeric Schema 4 與 LT 資源編號皆為成套契約；更換 bin/exe 或資源世代會被拒絕，不會冒險啟動。 [X] TW/LiTo 執行隔離: TW 監測目錄：D:\lineage開發\0-客戶端；LiTo 執行目錄：D:\lineage開發\0-客戶端 [OK] 顯示模式: 視窗化（DDSCL_NORMAL；預設） [OK] LiTo 32-bit 數值契約: schema 4：相容層與本機 Server 同步啟用 HP／MP／AC／等級／六素質／SP／MR／四屬性抗性 dword [OK] 原生服務入口: 一般無界擂台；LiTo.bin 引數：（無）（預設） [X] LiTo DirectDraw proxy: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Compat\publish\ddraw.dll [X] LiTo window compatibility config: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Compat\publish\lito381-compat.ini [OK] 視窗縮放: 100%（虛擬座標固定 640×480） [OK] Server profile: LiTo — 太陽神 / 月亮神: source=lito-shared/LiTo 共用資料架構, endpoint=127.0.0.1:32000 [X] LiTo local server: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Server\LiTo381-Server.jar [OK] 完整素質橋接解析器: LiTo-Extended-Stats schema v2 [X] LiTo server config (server.properties): D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z\LiTo381-Server\config\server.properties [OK] Java 17 runtime: C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe [X] 一般擂台伺服器契約: 找不到 LiTo 本機伺服器。 ID: 12126332
+				28 捲軸 (settable, float) 垂直 Value: 100 ID: NonClientVerticalScrollBar
+					29 按鈕 上移一行 ID: UpButton
+					30 按鈕 向上翻頁 ID: UpPageButton
+					31 捲動方塊 位置 ID: ScrollbarThumb
+					32 按鈕 下移一行 ID: DownButton
+			33 文字 驗證未通過，請查看日誌。
+		34 標題列 (settable, string) Value: LiTo 3.81C 正式流程啟動器 0.6.71
+			35 功能表列 系統 ID: MenuBar
+				36 功能表項目 系統
+			37 按鈕 最小化
+			38 按鈕 最大化
+			39 按鈕 關閉
+
+Selected text: ```
+D:\lineage開發\0-客戶端
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

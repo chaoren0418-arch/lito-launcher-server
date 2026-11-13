@@ -1,4 +1,4 @@
-﻿param([switch]$PrepareOnly)
+﻿param([Parameter(Mandatory=$true)][string]$CandidateDirectory,[string]$CombatSourceRoot='D:\lineage開發\1-伺服器',[switch]$PrepareOnly)
 $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=[Text.Encoding]::UTF8
 $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..\..'))
@@ -9,9 +9,9 @@ if(@(netstat -ano -p TCP|Select-String ':(42083|42084)\s+.*LISTENING').Count){th
 $run=Join-Path $root ('scratch\t014\run-'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ'))
 if(Test-Path -LiteralPath $run){throw 'Run already exists'}
 $java='C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe'
-$source='D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\server'
-$jar='LiTo381-SharedResources-candidate.jar'
-if((Get-FileHash -LiteralPath "$source\$jar").Hash -ne 'E1498871C7BE6B287821C57EF5D95933DB1740D9B4D4A80F6C3465F21D99D498'){throw 'Formal SHA mismatch'}
+$source=(Resolve-Path -LiteralPath $CandidateDirectory).Path
+$jar='LiTo381-Server.jar'
+if((Get-FileHash -LiteralPath "$source\$jar").Hash -ne '0F3762CE8C8E94F3B91D5404CC03B2BF815B4E329D0CBDCBC20F24F6B8686205'){throw 'Verified main JAR SHA mismatch'}
 New-Item -ItemType Directory -Path $run | Out-Null
 $lease|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\lease.json"
 foreach($d in @('config','runtime','captures','logs','lib','target','tmp')){New-Item -ItemType Directory -Path "$run\$d"|Out-Null}
@@ -25,18 +25,40 @@ foreach($f in @((Get-Item "$source\$jar")) + @(Get-ChildItem "$source\lib" -File
  $receipts+=@{File=$relative;Bytes=$f.Length;SHA256=$hash;CopyVerified=$true}
 }
 $receipts|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\artifact-hashes.json"
-& $java -cp "$run\$jar;$run\lib\*" "$PSScriptRoot\Prepare.java" $run 'D:\lineage開發\3-lito開發\scratch\wt\task-83\scratch\t020c\isolated-test.properties' "$root\lito伺服器\LiTo381-Server\config\server.properties.example"
+& $java "-Djava.io.tmpdir=$run\tmp" -cp "$run\$jar;$run\lib\*" "$PSScriptRoot\Prepare.java" $run 'D:\lineage開發\3-lito開發\scratch\wt\task-83\scratch\t020c\isolated-test.properties' "$root\lito伺服器\LiTo381-Server\config\server.properties.example"
 if($LASTEXITCODE -ne 0){throw 'Configuration preparation failed'}
+foreach($name in @('config/experiment.properties','config-public.properties')){
+ $path=Join-Path $run $name
+ $content=[IO.File]::ReadAllText($path).Replace('database.static.database=p24_world_lito_exp','database.static.database=p24_380db_lito_exp')
+ [IO.File]::WriteAllText($path,$content,[Text.UTF8Encoding]::new($false))
+}
+# Deployment input only: preserve the tracked six-key template; all Source inputs remain read-only.
+$combatRoot=(Resolve-Path -LiteralPath $CombatSourceRoot).Path.Replace('\','/').TrimEnd('/')
+$combat=[IO.File]::ReadAllText("$root\lito伺服器\LiTo381-Server\config\combat.properties",[Text.Encoding]::UTF8)
+$combat=$combat.Replace('../../../../1-伺服器/',$combatRoot+'/')
+$combatInputs=@()
+foreach($line in ($combat -split "`r?`n")){
+ if($line -match '^source\.[^=]+=(.+)$'){
+  $inputPath=$Matches[1]
+  if(-not [IO.Path]::IsPathRooted($inputPath) -or -not(Test-Path -LiteralPath $inputPath)){throw "Missing absolute combat input: $inputPath"}
+  if(Test-Path -LiteralPath $inputPath -PathType Leaf){$combatInputs+=@{File=$inputPath;SHA256=(Get-FileHash -LiteralPath $inputPath).Hash}}
+ }
+}
+$other=Join-Path $combatRoot 'config/other.properties'
+if(-not(Test-Path -LiteralPath $other -PathType Leaf)){throw 'Missing combat dependency: config/other.properties'}
+$combatInputs+=@{File=$other;SHA256=(Get-FileHash -LiteralPath $other).Hash}
+[IO.File]::WriteAllText("$run\config\combat.properties",$combat,[Text.UTF8Encoding]::new($false))
+$combatInputs|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\combat-source-hashes.json"
 @{Run=$run;Utc=[DateTime]::UtcNow.ToString('o');RuntimeEntries=@(Get-ChildItem -LiteralPath "$run\runtime" -Force).Count;Java=$java}|ConvertTo-Json|Set-Content -Encoding UTF8 "$run\preparation.json"
 Write-Output "Run=$run"
 if($PrepareOnly){return}
 # P24Lab must already have been cold-backed-up and started by its authorized owner.
 # This entry point never starts/stops MySQL or changes grants/data.
-& $java -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\before.txt"
+& $java "-Djava.io.tmpdir=$run\tmp" -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\before.txt"
 if($LASTEXITCODE -ne 0){throw 'Read-only preflight failed; do not start server'}
 & "$PSScriptRoot\verify-run.ps1" -RunDirectory $run
 if(@(Get-ChildItem -LiteralPath "$run\runtime" -Force).Count){throw 'Runtime must still be empty'}
-@('@echo off','"'+$java+'" -Xms512m -Xmx2048m -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8 "-Djava.io.tmpdir=%CD%\tmp" -jar LiTo381-SharedResources-candidate.jar config/experiment.properties 2>&1','exit /b %errorlevel%') | Set-Content -Encoding ASCII "$run\start-java.cmd"
+@('@echo off',('"'+$java+'" -Xms512m -Xmx2048m -XX:ActiveProcessorCount=4 "-Dfile.encoding=UTF-8" "-Djava.io.tmpdir=%CD%\tmp" -jar LiTo381-Server.jar config/experiment.properties 2>&1'),'exit /b %errorlevel%') | Set-Content -Encoding ASCII "$run\start-java.cmd"
 Write-Host 'Observe startup for at most 120 seconds. On timeout use Ctrl+C in this console; do not retry.'
 Write-Host 'After [LiTo] ready, complete only the authorized login check, then Ctrl+C for normal shutdown.'
 Push-Location -LiteralPath $run
@@ -46,6 +68,6 @@ try {
  $code=$LASTEXITCODE
  @{ExitCode=$code;EndUtc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content -Encoding UTF8 logs/server-exit.json
 } finally {Pop-Location}
-& $java -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\after.txt"
+& $java "-Djava.io.tmpdir=$run\tmp" -cp "$run\lib\*" "$PSScriptRoot\Probe.java" "$run\config\experiment.properties" 2>&1 | Tee-Object -FilePath "$run\after.txt"
 if($LASTEXITCODE -ne 0){throw 'Post-run read-only verification failed'}
 exit $code

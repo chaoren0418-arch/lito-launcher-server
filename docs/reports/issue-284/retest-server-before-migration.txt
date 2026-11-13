@@ -1,0 +1,65 @@
+[LiTo] resource-profile=lito-legacy
+java.exe : SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+位於 線路:2 字元:268
++ ... lPath $run; & 'C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (SLF4J: Failed t...cLoggerBinder".
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detai
+ls.
+[LiTo development] shared static armor Proc rows=54; per-hit SQL=0
+[LiTo] Storm_Walk item cores loaded: [42501]
+[LiTo] source combat controls loaded: 69; coverage is limited to installed consumers (see combat coverage audit)
+[LiTo] source loader defaults used: [NATURES_BLESSING_HEAL, MORTAL_BODY_ROM]
+[LiTo] common combat skills loaded: 807; columns=consumption,cooldown,duration,damage,dice,materials; skill208 time=2 source executor
+[LiTo] source control snapshots: probabilities=34 bosses=48 ability-skills=45 npc-attributes=4138 source-coexist=true cancellation-immune=12 source-eyes=7; probability actor bindings partial; configured primary/special BUFF fields installed; other types/producers/paths pending
+[LiTo] consumable parameters loaded from p24_380db_lito_exp.etcitem: cooldowns=14 cooldown-differing=0 cooldown-fallbacks=0; items=11 differing-from-built-in=0 fallbacks=0
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeNpcTemplateResources lamb
+da$load$4
+資訊: 載入MOB技能資料數量: 480(139ms) []
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeNpcTemplateResources load
+資訊: Source NPC templates=4138 mobSkills=480 required constructor kinds=28 unres
+olved executor classes=56; source name UPDATE suppressed; full NPC factory rema
+ins unqualified
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeTerrainResources lambda$l
+oad$3
+資訊: 載入 mapids ok: 731 (14ms) []
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeShopResources lambda$load
+$2
+資訊: 載入 mapids_shop ok: {} maps, {} ranges ({}ms) [7, 9, 14]
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeChatResources lambda$load
+$4
+資訊: 載入 npcchat ok: 26 (8ms) []
+[LiTo] SQL resources loaded: skill-fields=364 buffs=11 maps=47 town-portals=56 npc-identities=13; unresolved fields remain disabled
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeItemTemplatesResources$Ow
+ner lambda$reload$1
+嚴重: 載入 weapon 失敗! 請檢查資料表! [java.sql.SQLSyntaxErrorException: Unknown column '套裝
+編號' in 'field list']
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeItemTemplatesResources$Ow
+ner lambda$reload$1
+嚴重: 載入 armor 失敗! 請檢查資料表! [java.sql.SQLSyntaxErrorException: Unknown column '備註'
+ in 'field list']
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeItemTemplatesResources$Ow
+ner lambda$reload$1
+資訊: 載入 etcitem ok: 3321 (187ms) []
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeItemTemplatesResources$Ow
+ner lambda$reload$1
+資訊: 載入 weapon ok: 0 (188ms) []
+11月 14, 2026 12:20:45 上午 local.lito381.server.NativeDeItemTemplatesResources$Ow
+ner lambda$reload$1
+資訊: 載入 armor ok: 0 (188ms) []
+Exception in thread "main" java.sql.SQLException: source item template errors;
+publication refused: 2
+	at local.lito381.server.NativeDeItemTemplatesResources.read(NativeDeItemTempla
+tesResources.java:35)
+	at local.lito381.server.NativeDeItemTemplatesResources$Owner.reload(NativeDeIt
+emTemplatesResources.java:158)
+	at local.lito381.server.NativeDeItemTemplatesResources$Owner.reload(NativeDeIt
+emTemplatesResources.java:166)
+	at local.lito381.server.NativeDeItemApplication.bootstrap(NativeDeItemApplicat
+ion.java:89)
+	at local.lito381.server.Main.main(Main.java:52)
+	at local.lito381.server.SharedResourceMain.main(SharedResourceMain.java:13)

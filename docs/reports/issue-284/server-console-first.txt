@@ -1,0 +1,28 @@
+[LiTo] resource-profile=lito-legacy
+java.exe : SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+位於 線路:2 字元:232
++ ... lPath $run; & 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin/ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (SLF4J: Failed t...cLoggerBinder".
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detai
+ls.
+Exception in thread "main" java.lang.IllegalStateException: Cannot load LiTo ro
+om policy or qualified resource tables; inspect the nested database error
+	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:35)
+	at local.lito381.server.GameHub.<init>(GameHub.java:1467)
+	at local.lito381.server.Main.main(Main.java:49)
+	at local.lito381.server.SharedResourceMain.main(SharedResourceMain.java:13)
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column '編號' in 'field list
+'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExc
+eptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at local.lito381.server.NativeArmorProc.load(NativeArmorProc.java:40)
+	at local.lito381.server.ResourceDatabase.load(ResourceDatabase.java:18)
+	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:33)
+	... 3 more

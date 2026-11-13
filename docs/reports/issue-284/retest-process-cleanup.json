@@ -1,0 +1,19 @@
+﻿{
+    "OwnedPids":  [
+                      1160,
+                      13048,
+                      6124,
+                      9676
+                  ],
+    "LauncherClose":  "Alt+F4",
+    "OriginalChecksumsEqual":  true,
+    "MysqlClose":  "SQL SHUTDOWN",
+    "Utc":  "2026-11-13T16:29:28.9505323Z",
+    "RemainingOwnedProcesses":  [
+
+                                ],
+    "ExperimentalListeners":  [
+
+                              ],
+    "JavaClose":  "Ctrl+C"
+}

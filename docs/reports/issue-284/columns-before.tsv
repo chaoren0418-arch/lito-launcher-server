@@ -1,0 +1,7 @@
+char_obj_id	int unsigned	NULL
+char_name	varchar(45)
+wins	bigint unsigned	0
+losses	bigint unsigned	0
+version	bigint unsigned	0
+updated_at	timestamp	CURRENT_TIMESTAMP
+last_result_id	char(64)

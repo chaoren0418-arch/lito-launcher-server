@@ -1,0 +1,13 @@
+{
+    "leases":  [
+                   {
+                       "name":  "p24lab",
+                       "holder":  "chaoren0418-arch/lito-launcher-server#284",
+                       "since":  1794600148.469895,
+                       "exp":  1794602848.469895
+                   }
+               ],
+    "expectedHolder":  "chaoren0418-arch/lito-launcher-server#284",
+    "expectedExpiry":  "2026-11-13T20:47:28Z",
+    "observedUtc":  "2026-11-13T20:04:48.4389750Z"
+}

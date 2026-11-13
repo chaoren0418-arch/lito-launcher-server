@@ -1,0 +1,5 @@
+2026-11-14 00:24–00:25 UTC+8
+Computer Use screenshot attempt 1: FrameArrived timed out: timed out waiting on channel
+Recovery with fresh window selection and activation: window capture timed out: timed out waiting on channel
+Accessibility-only capture succeeded; full text saved in launcher-validation-retest.txt.
+No PNG was produced. No lobby or game window was reached.

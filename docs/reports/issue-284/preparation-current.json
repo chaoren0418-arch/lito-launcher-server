@@ -1,0 +1,11 @@
+{
+  "run": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-284\\scratch\\t014\\run-20261113T153818Z",
+  "initial_run": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-284\\scratch\\t014\\run-20261113T153406Z",
+  "jar_sha256": "ff4ead8b222e7682a09c1c55979753a943b10402320e36c3f27b8b0e383f7064",
+  "config_keys": 22,
+  "runtime_entries_before_start": 0,
+  "credential_source": "issue-83 private handoff; values omitted",
+  "java": "Microsoft OpenJDK 17.0.17",
+  "maven_exit": 0,
+  "launcher_build_exit": 0
+}

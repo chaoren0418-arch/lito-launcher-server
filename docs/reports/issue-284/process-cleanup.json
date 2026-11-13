@@ -1,0 +1,16 @@
+{
+    "OwnedMysqlPids":  [
+                           9520,
+                           19532
+                       ],
+    "LauncherStarted":  false,
+    "RemainingOwnedProcesses":  [
+
+                                ],
+    "JavaAttemptsExited":  2,
+    "GameStarted":  false,
+    "LabListeners":  [
+
+                     ],
+    "Utc":  "2026-11-13T15:42:47.7247655Z"
+}

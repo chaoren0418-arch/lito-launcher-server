@@ -1,0 +1,3 @@
+character_lito	2
+lito_battle_settlement	0
+1	p24_accounts_lito_exp	1
