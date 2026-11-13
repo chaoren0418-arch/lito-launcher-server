@@ -1,27 +1,27 @@
 [
   {
-    "File": "LiTo381-Server.jar",
-    "SHA256": "FF4EAD8B222E7682A09C1C55979753A943B10402320E36C3F27B8B0E383F7064",
-    "Bytes": 15086958
+    "file": "LiTo381-Server.jar",
+    "sha256": "ff4ead8b222e7682a09c1c55979753a943b10402320e36c3f27b8b0e383f7064",
+    "bytes": 15086958
   },
   {
-    "File": "lib\\HikariCP-5.1.0.jar",
-    "SHA256": "A47A6EE62379694EE52C30036F0931B72F9AEE2A801D590341ED82BD839E2134",
-    "Bytes": 161840
+    "file": "lib\\HikariCP-5.1.0.jar",
+    "sha256": "a47a6ee62379694ee52c30036f0931b72f9aee2a801d590341ed82bd839e2134",
+    "bytes": 161840
   },
   {
-    "File": "lib\\mysql-connector-j-8.0.33.jar",
-    "SHA256": "E2A3B2FC726A1AC64E998585DB86B30FA8BF3F706195B78BB77C5F99BF877BD9",
-    "Bytes": 2481560
+    "file": "lib\\mysql-connector-j-8.0.33.jar",
+    "sha256": "e2a3b2fc726a1ac64e998585db86b30fa8bf3f706195b78bb77c5f99bf877bd9",
+    "bytes": 2481560
   },
   {
-    "File": "lib\\protobuf-java-3.21.9.jar",
-    "SHA256": "1B78B4A76A71512DEBFDFF8F8FC5AEF6BFD459F65758FECF7AFF245E6E6301E4",
-    "Bytes": 1671409
+    "file": "lib\\protobuf-java-3.21.9.jar",
+    "sha256": "1b78b4a76a71512debfdff8f8fc5aef6bfd459f65758fecf7aff245e6e6301e4",
+    "bytes": 1671409
   },
   {
-    "File": "lib\\slf4j-api-1.7.36.jar",
-    "SHA256": "D3EF575E3E4979678DC01BF1DCCE51021493B4D11FB7F1BE8AD982877C16A1C0",
-    "Bytes": 41125
+    "file": "lib\\slf4j-api-1.7.36.jar",
+    "sha256": "d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0",
+    "bytes": 41125
   }
 ]

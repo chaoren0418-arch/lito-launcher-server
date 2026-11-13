@@ -2,16 +2,26 @@
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-Exception in thread "main" java.sql.SQLException: character_lito in p24_accounts_lito_exp lacks ranking columns; run db/lito_character_ranking.sql first
-	at local.lito381.server.SettlementSql.check(SettlementSql.java:46)
-	at local.lito381.server.DurableBattleSettlement.open(DurableBattleSettlement.java:17)
-	at local.lito381.server.SharedDatabase.open(SharedDatabase.java:57)
-	at local.lito381.server.AccountRepository.openLegacy(AccountRepository.java:522)
-	at local.lito381.server.AccountRepository.open(AccountRepository.java:467)
-	at local.lito381.server.Main.main(Main.java:43)
+[LiTo development] shared static armor Proc rows=54; per-hit SQL=0
+[LiTo] Storm_Walk item cores loaded: [42501]
+Exception in thread "main" java.lang.IllegalStateException: Cannot load LiTo room policy or qualified resource tables; inspect the nested database error
+	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:35)
+	at local.lito381.server.GameHub.<init>(GameHub.java:1467)
+	at local.lito381.server.Main.main(Main.java:49)
 	at local.lito381.server.SharedResourceMain.main(SharedResourceMain.java:13)
-Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'ranking_points' in 'field list'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
-	... 7 more
+Caused by: java.nio.file.NoSuchFileException: D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T153818Z\config\combat.properties
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:236)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:380)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:432)
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:422)
+	at java.base/java.nio.file.Files.newInputStream(Files.java:160)
+	at java.base/java.nio.file.Files.newBufferedReader(Files.java:2922)
+	at local.lito381.server.CombatRules.read(CombatRules.java:180)
+	at local.lito381.server.CombatRules.load(CombatRules.java:32)
+	at local.lito381.server.CombatDatabase.load(CombatDatabase.java:53)
+	at local.lito381.server.ResourceDatabase.load(ResourceDatabase.java:74)
+	at local.lito381.server.NativeRoomRules.install(NativeRoomRules.java:33)
+	... 3 more

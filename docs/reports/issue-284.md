@@ -1,91 +1,65 @@
-# Issue #284：T014 當版 JAR 建置與實驗交接
+# Issue #284：T014 新 JAR 實機實驗
 
-## 結論
+**結論：部分通過（✅ 7／❌ 1／⚠️ 2）。** 2026-11-13 23:31–23:39（UTC+8）完成建置、備份、實驗 schema 遷移及兩次啟動；最後因缺少 `config/combat.properties` 退出，未到大廳，**不得放行 #285**。依派工規則停止非 DB 錯誤重試，交 `needs:claude`；未改產品程式。
 
-**部分完成，T014 尚未驗收，不得放行 #285。** 2026-11-13 本輪同步 main、建置成功，準備全新 run 目錄、JAR／lib、22 鍵無帳密範本及空 runtime。未連資料庫、未補結構、未啟動 JAR／P24Lab／登入器／遊戲，沒有本輪大廳 PNG。
+## 已驗證
 
-本輪派工末段明列「不得在本機執行任何編譯出來的程式」「不開 GUI 視窗」「不可碰機密設定」，因此僅完成編譯、檔案與靜態檢查。已讀取[主控實驗授權留言](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6855355943)，但它與目前對話的明文限制不一致；沒有以外部留言覆蓋目前指示。這次不是沙盒或工具核准失敗，也不是缺資源。
+沿用 `task/284`，同步 main `1cc1f7d3549ac3271811f1e92ac24846775baf46` 後建置 HEAD 為 `fcd2bbe74e856a8414d71dd33241954dca8cabdf`。`docs/REPORT.md` 僅由 merge 帶入，與 main 一致。
 
-## 已驗證：本輪建置與準備
+以下 `E = docs/reports/issue-284/`；本機原始／私密證據在 `R = scratch/t014/run-20261113T153406Z/`，第二次啟動在 `R2 = scratch/t014/run-20261113T153818Z/`。兩次各用全新空 runtime，沒有清空或刪除舊目錄。
 
-- 工作樹：`D:\lineage開發\3-lito開發\scratch\wt\task-284`；沿用 `task/284`，沒有 checkout、建分支或移除 worktree。
-- 開始 HEAD：`5cdebed6813e95730eeca05f5487181873e2b386`。執行 `git fetch origin`、`git merge origin/main`，無衝突；同步後 HEAD：`d423632fd9acd7227e8ae5c6ed23e0dfe7def136`。
-- main：`ad12ee9cf63922aaba455272bc5fe3a7bc3b9556`。伺服器目錄與 main 無差異；沒有修改產品程式。`docs/REPORT.md` 僅隨 merge 帶入 main 版本，未人工修改，相對 main 無差異。
-- `/api/state` 核對 `p24lab` holder=`chaoren0418-arch/lito-launcher-server#284`、exp=`1794584424.3461888`，對應派工到期時間 **2026-11-13T15:40:24Z**。14:59:05Z 準備時仍有效。只查詢租約，未續租、未用它操作 DB。
-- 指定建置命令：`mvn -f lito伺服器/LiTo381-Server/pom.xml -B -DskipTests package`。**22:58:24 +08:00 BUILD SUCCESS，exit 0，耗時 1:36**。有編譯測試來源，沒有執行測試；Maven 的 AsRecord 是既有建置轉換步驟。
-- JVM 暫存導向本次 run 的 `tmp/`；完整建置輸出在 `R/maven-package.log`。PowerShell 保存的原始輸出部分中文路徑編碼失真，未改寫為偽造原始輸出。
+| 編號 | 結果 | 實際觀察 | 重現步驟 | 證據路徑 |
+|---|---|---|---|---|
+| 01 | ✅ 通過 | Maven package 成功，JAR／四個 lib 複製雜湊一致；登入器亦從本工作樹建置成功。 | 執行下方建置命令並比對 SHA。 | E/maven-package.log、artifact-sha256.json、launcher-build.log |
+| 02 | ✅ 通過 | 22 鍵經 JAR 的 KEYS／validate 核對；憑證只讀 #83 私密檔，兩次啟動前 runtime 均為 0 項。 | Prepare.java 產生設定，靜態庫依裁定改為快照庫。 | E/config-public.properties、preparation-current.json |
+| 03 | ✅ 通過 | lease holder／到期符合派工；P24 全 datadir 冷備份 1,722 檔、278,877,657 bytes，逐檔 SHA 相同。 | 停機時備份至 R/private-cold-backup，再啟動核對實例身分。 | E/lease-before-start.json、p24-backup.json |
+| 04 | ✅ 通過 | 預檢 8 個阻塞補齊後為 PASS／0；另補防具表中文欄位，54 筆原值對照 0 差異，第二次確實載入 54 筆。 | 備份後跑 m4-db-prepare.sql，再跑 E/armor-migration.sql。 | E/db-verify-summary.tsv、columns-before.tsv、columns-after.tsv、armor-data-after.tsv、server-console.txt |
+| 05 | ✅ 通過 | 路由前後都是 source_id=1、p24_accounts_lito_exp、enabled=1，無資料列變更。 | SELECT lito_source_server。 | E/before.txt、after.txt |
+| 06 | ❌ 失敗 | 第二次 java -jar 約 4 秒內 exit 1：缺 config/combat.properties，無 [LiTo] ready。 | 用下方 run-experiment.cmd 重跑。 | E/server-console-first.txt、server-console.txt、server-exit.json |
+| 07 | ⚠️ 無法判定 | ready 前退出，無存活 Java PID 可做 T128 四端點驗收。 | 修正 06 後對存活 PID 跑 m4-listen-check.ps1。 | E/server-exit.json、p24-shutdown-verification.json |
+| 08 | ⚠️ 跳過 | 伺服器未就緒，未開 GUI／遊戲、未登入測試帳號，沒有大廳 PNG。 | 06、07 通過後，登入器連 127.0.0.1:42083 到大廳截圖。 | E/server-console.txt |
+| 09 | ✅ 通過 | character_lito 2→2、lito_battle_settlement 0→0；原三庫 270 表 checksum 全部相同。 | 前後 COUNT(*) 與原庫 CHECKSUM TABLE EXTENDED。 | E/before.txt、after.txt、original-checksum-before.tsv、original-checksum-after.tsv |
+| 10 | ✅ 通過 | 兩次 Java 自行退出；P24 正常 SHUTDOWN，PID 9520／19532 結束，實驗埠無監聽。 | 核對自有 PID／建立時間／實例身分，確認無其他連線後 SHUTDOWN。 | E/p24-shutdown-verification.json、process-cleanup.json |
 
-本輪 R：`scratch/t014/run-20261113T145646Z/`。
+### 成品與設定
 
-**JAR SHA-256：`FF4EAD8B222E7682A09C1C55979753A943B10402320E36C3F27B8B0E383F7064`**，15,086,958 bytes，與前次同一 main 建置一致。
-
-| 成品 | 本輪檢查 |
-|---|---|
-| `R/LiTo381-Server.jar` | 從本工作樹 target 複製，來源／副本 SHA 相同 |
-| `R/lib/` | HikariCP 5.1.0、mysql-connector-j 8.0.33、protobuf-java 3.21.9、slf4j-api 1.7.36，逐檔大小／SHA 相符 |
-| JAR manifest | Main-Class 為 `local.lito381.server.SharedResourceMain`；Class-Path 四個 lib 全在；未打包 compile-only `com/lineage/` 或 AsRecord 工具類 |
-| `R/config/experiment.properties.template` | 22 鍵與 `src/main` 的 `UnifiedConfiguration.KEYS` 完全一致；帳密僅佔位符，**不可直接啟動** |
-| `R/runtime/` | 全新且 0 項目，沒有執行可寫 journal 的程式 |
-
-收據：[preparation-current.json](issue-284/preparation-current.json)、[jar-manifest.txt](issue-284/jar-manifest.txt)。靜態檢查透過 `scratch/t014/prepare_current.py` 讀來源／ZIP／公開設定，未執行 JAR。原本 dot-source `m4-common.ps1` 被本機 PowerShell 執行原則拒絕，改以 Python 讀檔比對；未改執行原則或系統設定。
-
-## 設定（不含帳密）
-
-完整 22 鍵見 [config-public.properties](issue-284/config-public.properties)。本輪範本與之相同，帳密欄改為明確待填佔位符。
-
-- `bind=127.0.0.1`、`game.bind=127.0.0.2`、`port=42083`。
-- `database.jdbc.base.url=jdbc:mysql://127.0.0.1:43324/`。
-- `database.static.database=p24_380db_lito_exp`：沿用[主控 2026-11-07 裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6701189885)，不是原始派工中結構不相容的 `p24_world_lito_exp`。
-- `database.lito.database=p24_lito_lito_exp`；預期路由 `p24_accounts_lito_exp`，本輪未連 DB 驗證。
-- `capture.directory=../captures`、`logs.directory=../logs`，相對 `R/config/` 解析到 R 下全新目錄；啟動逾時 120 秒。
-- 本輪未讀 #83 私密設定、未建立含帳密的 `experiment.properties`，也未碰正式 `config/server.properties`。
-
-## 前次實機證據（本輪未重測）
-
-以下檔案承接自開始 HEAD `5cdebed6`，對應前次 `scratch/t014/run-20261113T133857Z/`，**不代表本輪執行**。
-
-| 項目 | 前次紀錄 | 本輪 |
-|---|---|---|
-| `p24_accounts_lito_exp.character_lito` | 啟動前 2／後 2 | 未查詢，不能填成本輪筆數 |
-| `p24_lito_lito_exp.lito_battle_settlement` | 啟動前 0／後 0 | 未查詢 |
-| `lito_source_server` | source_id=1、enabled=1、路由 `p24_accounts_lito_exp`，前後相同 | 未查詢／修改 |
-| 新靜態實驗庫 | 已匯入 `380_db.sql`，181 表，新增 SELECT 授權 | 未再匯入／授權 |
-| 原 P24 三庫 | 270 表 checksum 前後一致 | 本輪未連線 |
-| 啟動 | exit 1，`ranking_points` 缺欄位，沒有 ready | 未啟動 |
-| 關閉 | 前次 MySQL 已正常關閉；收據見下方 | 本輪沒有啟動任何實驗程序，無需關閉 |
-
-原始證據：[before.txt](issue-284/before.txt)、[after.txt](issue-284/after.txt)、[verification.json](issue-284/verification.json)、[完整主控台](issue-284/server-console.txt)、[關閉收據](issue-284/p24-shutdown-verification.json)、[冷備份收據](issue-284/p24-backup.json)。前次完整冷備份位於前次 R 的 `private-cold-backup/db-data/`，1,407 檔／255,481,289 bytes；本輪未讀寫該備份。
-
-前次錯誤摘要：
-
-```text
-java.sql.SQLException: character_lito in p24_accounts_lito_exp lacks ranking columns; run db/lito_character_ranking.sql first
-Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'ranking_points' in 'field list'
+```powershell
+mvn -f lito伺服器/LiTo381-Server/pom.xml -B -DskipTests package
 ```
 
-## 已驗證：遷移方案的靜態核對
+JAR SHA-256：**`FF4EAD8B222E7682A09C1C55979753A943B10402320E36C3F27B8B0E383F7064`**（15,086,958 bytes）；Main-Class 為 `local.lito381.server.SharedResourceMain`。lib：HikariCP 5.1.0、mysql-connector-j 8.0.33、protobuf-java 3.21.9、slf4j-api 1.7.36。依指定參數未跑單元測試。
 
-[主控已裁定補實驗結構](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6855340338)，不再是「等待主控提供修復方案」。`tools/acceptance/m4-db-prepare.sql` 的 P1c 已包含 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses` 六欄，按欄檢查是否存在，並有 43324／UUID／`_lito_exp` 守門。
+完整遮蔽設定見 [config-public.properties](issue-284/config-public.properties)：`bind=127.0.0.1`、`game.bind=127.0.0.2`、`port=42083`、JDBC `127.0.0.1:43324`、靜態庫 `p24_380db_lito_exp`、控制庫 `p24_lito_lito_exp`。capture／logs 相對設定檔指向本次 run。沒有讀寫正式 `config/server.properties`。
 
-`lito伺服器/LiTo381-Server/db/lito_character_ranking.sql` 原檔把 `@lito_source` 設為 **`380_ac_1`**；不能原樣執行，也不能只在同連線先 SET 實驗庫，因原檔會覆寫它。P1c 已實作等價六欄遷移，優先沿用此實驗版；若另需排名 SQL，必須在 scratch 複本改成實驗庫並加入相同守門。本輪沒有執行任何 SQL 或產生虛構還原收據。
+### 資料庫變更與還原
+
+依[快照裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6701189885)及[補結構裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6855340338)執行，未重匯快照、未 seed 帳號或改原庫：
+
+- `p24_accounts_lito_exp.character_lito` 新增六個排名／月計欄位，定義與預設值見 columns 前後檔。
+- `m4-db-prepare.sql` 新增 58 個表級 SELECT 授權目標：56 個靜態表（原已有該庫整庫 SELECT）及 `clan_emblem`、`server_盟屋_紀錄`；其他既有權限保留，完整 grants 前後存證。
+- `p24_380db_lito_exp.裝備_armor_魔法` 按 `NativeArmorProc.java:40` 的 SQL 別名，新增 18 個同型別中文欄位，由英文欄位複製真實值；原欄位保留，54 筆零差異，未填假資料。
+- 路由、兩張結算相關表筆數、原三庫及 tw-bin 資料均未變。
+
+[rollback.sql](issue-284/rollback.sql) 提供本輪欄位與增量授權還原，**未執行**；只適用尚未產生新排名資料的狀態，還原前先備份現況。完整冷備份及逐檔 manifest 留在 R 私密目錄，不提交。後續繼承本輪已完成的實驗遷移。
+
+### 失敗與重跑入口
+
+[完整主控台](issue-284/server-console.txt) 最後為 `NoSuchFileException: ...\config\combat.properties`，呼叫鏈 `CombatRules.read:180 → CombatRules.load:32 → CombatDatabase.load:53`。第一次錯誤是防具欄位 `編號` 不存在，見 [第一次主控台](issue-284/server-console-first.txt)，已解決。PowerShell 原始輸出部分中文路徑編碼失真，公開副本僅轉 UTF-8。
+
+無帳密重跑入口（需當次有效 lease、已備份且正常啟動的 P24Lab，以及本機 #83 私密檔）：
+
+```bat
+docs\reports\issue-284\run-experiment.cmd -CandidateDirectory "D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T153818Z"
+```
+
+入口另建 run、複製 JAR／lib、讀 #83 憑證、檢查空 runtime／實驗身分，不啟停 MySQL、不改 DB。目前會重現缺 combat 設定，並非可到大廳的交付。120 秒是操作時限，既有入口沒有自動終止；就緒後須正常關閉本次程序。
 
 ## 推測
 
-六欄遷移應能解決前次排名欄位錯誤，但尚未對線上實驗庫驗證；不能推論後續載入、監聽或大廳登入會成功。
+T128 預檢漏列防具中文欄位及 combat 來源鏈，因此 SQL 預檢 PASS 不代表 ready；補入口後是否還有資源缺口尚未知。
 
 ## 待驗證／給下一棒的提示
 
-由**調度器／主控**處理派工內容與末段執行禁令的衝突，再交具明確實機執行授權的 Codex 接手。不是要求使用者自行整理檔案或修 DB；一般自動測試交 GitHub Actions。
+由 **Claude 主控**裁定並交 resource 任務補實驗 combat 配置。`CombatRules.java:31–48` 要求 `source.skill.file`、`source.damage.file`、`source.character.file`、`source.map.directory`、`arena.bot.con`、`arena.bot.wis` 六鍵；須核對真實來源及實驗邊界，不得用空設定假通過或引用正式連線。驗收工具維護者另補 T128 漏檢。
 
-1. 重核當次有效 lease，依既有 P24Lab 流程取得當次完整備份，確認實驗實例身分。不要拿本輪收據當未來有效租約，不動正式 2000／3306、原 P24 庫或 tw-bin。
-2. 依 `tools/acceptance/README.md` 先跑 `m4-db-verify.sql`，按 `generated/m4-required-columns.tsv` 列出全部缺口；套用有守門的 `m4-db-prepare.sql` 後重跑 verify。保存前後表結構、筆數、權限與還原方案；不要直接跑未改寫的排名 SQL。T014 不需要先執行 M4 全套 seed。
-3. 靜態庫已匯入的前次證據完整；先查現況，不刪除重建。只在驗證需要時依原裁定處理實驗庫。角色路由維持 `p24_accounts_lito_exp`。
-4. [run-experiment.cmd](issue-284/run-experiment.cmd) 與既有 PowerShell 入口仍含此 JAR 的正確固定 SHA，無帳密。它會新建另一個空 runtime、從 #83 私密檔讀憑證，**連 `-PrepareOnly` 都會執行 Java**，本輪沒有執行。僅供獲准後的 T014 初始狀態重跑；它的舊 Probe 要求收據 0 筆，若已有收據，不可刪表湊零，改用 T128 快照流程。M4 全套驗收不要沿用此舊 Probe。
-
-   ```bat
-   docs\reports\issue-284\run-experiment.cmd -CandidateDirectory "D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T145646Z"
-   ```
-
-5. 憑證及 DB 前置就緒後，保存本次完整 Java 主控台，120 秒內判定啟動；用 T128 監聽檢查（該腳本要求 `scratch/m4/run-*`，不能直接傳本輪 t014 目錄）。登入到大廳，PNG 存 `docs/reports/issue-284/`，取得啟動前後兩張表筆數，正常關閉本次啟動的程序。既有入口的 120 秒是操作要求，沒有自動逾時終止功能。
-
-尚缺：含憑證的實驗設定、當次 DB 核對／遷移及還原證據、server ready／監聽、登入大廳 PNG、當次筆數對照與關閉證據。JAR／lib／暫存檔均不入 git；未改正式設定、封存、硬連結，未進行遞迴刪除。
+後續 **Codex 僅重測 06–08**；01–05、09–10 結果沿用，新啟動程序仍須做必要清理及資料保護核對。未做戰鬥、沒有大廳截圖；未動正式 2000／3306、原 BIN、封存、硬連結或 worktree 結構。

@@ -1,0 +1,67 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< local.lito381:lito381-server >--------------------
+[INFO] Building LiTo 3.81C local arena server 0.6.71
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- build-helper:3.5.0:add-source (compile-only-legacy-stubs) @ lito381-server ---
+[INFO] Source directory: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-284\lito���A��\LiTo381-Server\compile-stubs added.
+[INFO]
+[INFO] --- resources:3.4.0:resources (default-resources) @ lito381-server ---
+[INFO] Copying 1366 resources from src\main\resources to target\classes
+[INFO]
+[INFO] --- compiler:3.11.0:compile (default-compile) @ lito381-server ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 1184 source files with javac [debug release 17] to target\classes
+[INFO] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/main/java/local/lito381/server/NativePlayerCommit.java: Some input files use unchecked or unsafe operations.
+[INFO] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/main/java/local/lito381/server/NativePlayerCommit.java: Recompile with -Xlint:unchecked for details.
+[INFO]
+[INFO] --- antrun:3.1.0:run (as-record-main) @ lito381-server ---
+[INFO] Executing tasks
+[INFO]      [java] as-record: scanned=4469 converted=54
+[INFO] Executed tasks
+[INFO]
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ lito381-server ---
+[INFO] Copying 505 resources from src\test\resources to target\test-classes
+[INFO]
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ lito381-server ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1462 source files with javac [debug release 17] to target\test-classes
+[WARNING] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/NativeSourceAreaPairFirstTest.java:[28,29] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/NativeSourceAreaPairFirstTest.java:[30,34] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/ALandInstanceStateTest.java:[16,35] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/ALandInstanceStateTest.java:[18,40] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/ALandLifecycleTest.java:[79,25] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/ALandLifecycleTest.java:[80,29] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[INFO] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/BattleDisconnectStressMySqlIntegrationTest.java: Some input files use unchecked or unsafe operations.
+[INFO] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-284/lito���A��/LiTo381-Server/src/test/java/local/lito381/server/BattleDisconnectStressMySqlIntegrationTest.java: Recompile with -Xlint:unchecked for details.
+[INFO]
+[INFO] --- antrun:3.1.0:run (as-record-test) @ lito381-server ---
+[INFO] Executing tasks
+[INFO]      [java] as-record: scanned=2117 converted=1
+[INFO] Executed tasks
+[INFO]
+[INFO] --- surefire:3.2.5:test (default-test) @ lito381-server ---
+[INFO] Tests are skipped.
+[INFO]
+[INFO] --- jar:3.3.0:jar (default-jar) @ lito381-server ---
+[INFO] Building jar: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-284\lito���A��\LiTo381-Server\target\LiTo381-Server.jar
+[INFO]
+[INFO] --- jar:3.3.0:test-jar (as-record-test-fixture) @ lito381-server ---
+[INFO] Building jar: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-284\lito���A��\LiTo381-Server\target\LiTo381-Server-as-record-tests.jar
+[INFO]
+[INFO] --- jar:3.3.0:jar (modern-server) @ lito381-server ---
+[INFO] Building jar: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-284\lito���A��\LiTo381-Server\target\LiTo381-Server-modern.jar
+[INFO]
+[INFO] --- dependency:3.6.0:copy-dependencies (copy-runtime) @ lito381-server ---
+[INFO] com.mysql:mysql-connector-j:jar:8.0.33 already exists in destination.
+[INFO] com.google.protobuf:protobuf-java:jar:3.21.9 already exists in destination.
+[INFO] com.zaxxer:HikariCP:jar:5.1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-api:jar:1.7.36 already exists in destination.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:21 min
+[INFO] Finished at: 2026-11-13T23:34:25+08:00
+[INFO] ------------------------------------------------------------------------

@@ -2,6 +2,7 @@ GRANT USAGE ON *.* TO `lito83_exp`@`127.0.0.1`
 GRANT SELECT ON `p24\_accounts\_lito\_exp`.* TO `lito83_exp`@`127.0.0.1`
 GRANT SELECT ON `p24\_lito\_lito\_exp`.* TO `lito83_exp`@`127.0.0.1`
 GRANT SELECT ON `p24\_world\_lito\_exp`.* TO `lito83_exp`@`127.0.0.1`
+GRANT SELECT ON `p24_380db_lito_exp`.* TO `lito83_exp`@`127.0.0.1`
 GRANT SELECT ON `p24_accounts_lito_exp`.`accounts` TO `lito83_exp`@`127.0.0.1`
 GRANT SELECT ON `p24_accounts_lito_exp`.`character_buddys` TO `lito83_exp`@`127.0.0.1`
 GRANT SELECT ON `p24_accounts_lito_exp`.`character_buff` TO `lito83_exp`@`127.0.0.1`

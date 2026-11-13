@@ -1,0 +1,24 @@
+before
+V2	缺欄位	character	p24_accounts_lito_exp	character_buff	snapshot_version	SELECT	Y	Y	WARN
+V2	缺欄位	character	p24_accounts_lito_exp	character_lito	disconnects	SELECT/INSERT/UPDATE	Y	N	FAIL
+V2	缺欄位	character	p24_accounts_lito_exp	character_lito	monthly_losses	SELECT/INSERT/UPDATE	Y	N	FAIL
+V2	缺欄位	character	p24_accounts_lito_exp	character_lito	monthly_period	SELECT/INSERT/UPDATE	Y	N	FAIL
+V2	缺欄位	character	p24_accounts_lito_exp	character_lito	monthly_ranking_points	SELECT/INSERT/UPDATE	Y	N	FAIL
+V2	缺欄位	character	p24_accounts_lito_exp	character_lito	monthly_wins	SELECT/INSERT/UPDATE	Y	N	FAIL
+V2	缺欄位	character	p24_accounts_lito_exp	character_lito	ranking_points	SELECT/INSERT/UPDATE	Y	N	FAIL
+V2	缺表	character	p24_accounts_lito_exp	server_紀錄_獎勵		SELECT	N	Y	WARN
+V2	表與欄位檢查完成：缺口已列在上方（沒有 V2 的列＝齊全）	6	2
+V3	p24_lito_lito_exp	lito_battle_settlement	InnoDB	PASS
+V3	p24_accounts_lito_exp	character_lito	MyISAM	PASS
+V7	character	p24_accounts_lito_exp	clan_emblem	SELECT	N	N	FAIL
+V7	character	p24_accounts_lito_exp	server_盟屋_紀錄	SELECT	N	N	FAIL
+V7	character	p24_accounts_lito_exp	server_紀錄_獎勵	SELECT	N	Y	WARN
+M4-VERIFY: FAIL	8	10	p24_380db_lito_exp	p24_lito_lito_exp	p24_accounts_lito_exp	'lito83_exp'@'127.0.0.1'
+after
+V2	缺欄位	character	p24_accounts_lito_exp	character_buff	snapshot_version	SELECT	Y	Y	WARN
+V2	缺表	character	p24_accounts_lito_exp	server_紀錄_獎勵		SELECT	N	Y	WARN
+V2	表與欄位檢查完成：缺口已列在上方（沒有 V2 的列＝齊全）	0	2
+V3	p24_lito_lito_exp	lito_battle_settlement	InnoDB	PASS
+V3	p24_accounts_lito_exp	character_lito	MyISAM	PASS
+V7	character	p24_accounts_lito_exp	server_紀錄_獎勵	SELECT	N	Y	WARN
+M4-VERIFY: PASS	0	10	p24_380db_lito_exp	p24_lito_lito_exp	p24_accounts_lito_exp	'lito83_exp'@'127.0.0.1'
