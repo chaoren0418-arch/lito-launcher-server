@@ -1,0 +1,53 @@
+[
+  {
+    "id": "T142",
+    "title": "回歸工具的歷史 class 位元組守門改成 Maven 相容（#341 D1 GameStateStore、D2 NativeDeCorpseClock$1）",
+    "stage": "code",
+    "priority": "P1",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#341（T083）第 2 輪 05、08 的 Maven 側都不是戰鬥行為失敗，而是兩道「class 位元組必須與歷史 base 完全相同」的守門擋住重新編譯的 Maven 產物（同一根因，合成一張）。分流 #416。\n\n**證據**（`task/341` 分支 `docs/reports/issue-341.md`「差異、首個失敗案例」D1／D2 與 class guard SHA 表；原始 log 在本機 `scratch/wt/task-341/scratch/issue-341/retest/results/`，不在 git）：\n- **D1**：`lito伺服器/LiTo381-Server/tools/combat-continuation/cancellation-battle-runtime/test_boundaries.py:29` `assert a.read('local/lito381/server/GameStateStore.class')==z.read(...)`。歷史 base `f8e1ac47…a366`／候選的 GameStateStore `5dea2cee…b633`，Maven `17e501ce…9f99` → AssertionError，12 案 CancellationBattleFault 未執行（`R/maven-targeted.log`）。候選該 12 案通過。\n- **D2**：`candidate_regression.py` 第 4 組（corpse overlay）由**未入 git** 的 `tools/resource-database/build/replay-native-de-item-state-components.py`（只在原始專案目錄）以歷史位元組 allowlist 檢查，第一個不在清單的 class 是 `NativeDeCorpseClock$1.class`（歷史 `6bb3feac…c5d0`／Maven `a25fb98b…91ac`），Maven 停在第 4 組，affected 18 組未進入（`R/maven/regression/qualification-runs/*/manifest.json`）。\n\n**重現**（不需執行）：比對上述 assert 與 allowlist 的判斷式，及 `git show origin/task/341:docs/reports/issue-341.md` 的 SHA 表。\n\n**做**（範圍：`tools/combat-continuation/regression_support.py`、`cancellation-battle-runtime/test_boundaries.py`、`candidate_regression.py`／`full_regression.py` 中呼叫 D2 的位置、必要的新離線測試、`.github/workflows/build.yml` 的 `combat-regression-tools` job、`docs/reports/issue-<本號>.md`；**不改 `src/main`、不改任何 probe 的戰鬥斷言**）：\n1. 先裁定 Maven 產物的身分驗證方式並寫進報告：守門的原意是「probe 只替換預期的 class、其餘與 base 相同」。候選（`--jar` SHA 等於 build.json 收據）維持**原本位元組完全相同**的檢查不變；Maven 產物改走明確的相容模式（例如 `regression_support` 偵測到 JAR 非歷史收據時，改比對「去除 debug／SourceFile／LineNumberTable 後的 `javap -c -p` 正規化輸出」或以 Maven JAR 自身為 base 驗證 overlay 只換了預期 class）。擇一並說明為何仍能抓到「probe 意外替換了非預期 class」。\n2. 相容模式必須**明確記錄**在收據（例如 `class_identity_mode: maven-normalized`，列出每個比對 class 的雙方 SHA 與正規化結果），不得靜默放行；正規化後仍不同就照樣失敗並列出差異方法。\n3. D2 的 allowlist 檢查在未入 git 的腳本裡：不要改 `--resources` 下的原始檔。改法限於 git 內的包裝層（`candidate_regression.py`／`regression_support.adapt_driver` 這類已在改寫子驅動的位置），或把該腳本的守門邏輯複製進 git 由包裝層呼叫；報告寫明採用哪種、為何不影響候選。\n4. 離線單元測試（CI 可跑、不需 JAR／DB）：用合成的小 zip 覆蓋「候選位元組相同→過」「候選位元組不同→失敗」「Maven 正規化相同→過且收據標記模式」「Maven 正規化不同→失敗」「overlay 換了非預期 class→失敗」。\n\n**本機限制**：不得執行 probe、回歸入口、JVM；只做靜態修改與 `py_compile`，測試交給 CI。\n\n**驗收**：CI 綠燈（含新測試）；`grep` 確認沒有刪除既有 assert／故障注入；報告列出 D1／D2 兩個 class 在新模式下的預期判定（靜態推論即可，實際結果由 T145 驗證），分已驗證／推測／待驗證，並給 T145 的完整指令差異（若入口參數有變）。",
+    "depends_on": []
+  },
+  {
+    "id": "T143",
+    "title": "#341 共同戰鬥斷言失敗（F1–F5）的環境與 fixture 取證：P24 實驗 profile／技能資源列／未入 git 的 build fixture",
+    "stage": "resource",
+    "priority": "P1",
+    "runner": "codex-local",
+    "runner_lock": true,
+    "real_machine": true,
+    "text": "runner: codex-local\nrunner_lock: true\nreal_machine: true\nlock: p24lab\nlease_min: 45\n\n**背景**：#341 第 2 輪，候選 `50635f7e…`（歷史資格已通過的 JAR）與 Maven 在**同一批首案**一起失敗，表示問題多半在現行測試環境／fixture，而不是兩顆 JAR 的差異；分流 #416 判定先取證、再由 T144 定位修正。不改工具、不改資料、不重跑整套回歸。\n\n**失敗點**（`task/341` 分支 `docs/reports/issue-341.md` F1–F5；log 在本機 `scratch/wt/task-341/scratch/issue-341/retest/results/`）：\n- F1 候選 targeted `call-nature-material`：`resurrection Source MP actual=1000 expectedCost=50 mode=0 skill=165 world=false`。\n- F2 雙邊 player `CancellationProbabilityProbe`（skill 44, mode 0）：`one actual probability evaluation after material admission`（log 找不到 `Source Cancellation probability ...` 行）。\n- F3 雙邊 composed `WaterLifeMaterialProbe`（skill 170, mode 0）：`Source resources and no HP change`；log 顯示 `mp-cost=1 mp=999/1000`。\n- F4 雙邊 `CurseClockBoundaryProbe`（skill 33, mode 0）：`actual first socket write delayed`。\n- F5 候選 existing 第 7 組 `NativeDeActorStateRegression normal`：`child encounter value event is queued before HP`（`WeaponBuffRegression.java:9`），輸入用 `-Dlito.resourceProfile=tw13081901-v1` 與 2026-10-16 的 `source-vectors.tsv`／`profile-vectors.tsv`。\n- 所有 probe 的來源角色都是 `P24LiToExp/SignedHp1`（ephemeral source profile）。\n\n**做**（全部唯讀；輸出寫 `docs/reports/issue-<本號>/` 下的 tsv／json，私密設定不提交）：\n1. 取得 `p24lab` lease，用 P24Lab 既有啟停腳本（照 #284／#341 作法）啟動實驗 MySQL 127.0.0.1:43324，以 #83 帳號 `lito83_exp` **只做 SELECT**：(a) `SignedHp1` 來源角色的等級、職業、INT／WIS、HP／MP 上限與目前值、背包內與技能 165／44／170／33 相關的材料；(b) 技能 165、44、170、33 在實驗 schema 技能表的完整列（MP／HP 消耗、材料 id／數量、reuse、機率欄位）；(c) 補 #341 03 缺的**測後**筆數：`character_lito`、`lito_battle_settlement`（#341 因 PowerShell 引數問題沒取到）。存 `profile.tsv`、`skills.tsv`、`counts.tsv`。結束後正常關閉 P24，只關自有 PID。不碰正式 2000／3306。\n2. 找出歷史資格（候選 `50635f7e` 當初通過時）使用的環境：讀 `--resources` 下 `tools/combat-continuation/cancellation-battle-runtime/build/build.json`、`qualification-current.json`、各 stage 的歷史 `receipt.json`／observations，記錄當時的設定檔路徑、DB／schema、source profile 名稱、MP 起始值、resourceProfile。存 `historical-env.json`；找不到就寫「找不到」及查過的檔案清單。\n3. 未入 git 的 classpath fixture 是否與 git 內原始碼同版：對 #341 log 的 classpath 中位於原始專案目錄的 `tools/combat-continuation/**/build/**/classes`、`tools/resource-database/build/*`（signed-probe-fixtures、pc-native-accept-development/fixtures、baseline-PC-ingress-efd4-v2、fixture-support.zip），列出每個目錄／檔的修改時間與 SHA-256，並對 `CancellationProbabilityProbe`、`WaterLifeMaterialProbe`、`CallNatureMaterialProbe`、`CurseClockBoundaryProbe`、`NativeLightCastProbe`、`WeaponBuffRegression` 標示 .class 修改時間與對應 git `.java` 最後 commit 時間。存 `fixtures.tsv`。只讀，不重編。\n\n**驗收**：上述 5 個檔案存在；報告分已驗證／推測／待驗證，逐一寫出 F1–F5 各自可疑的環境差異（例：歷史用的 source profile MP 起始值與現在 1000/1000 不同、技能 170 的 MP 消耗在實驗 schema 為 1）；沒有任何 DML／DDL、沒有改工具或資料、P24 已關閉。",
+    "depends_on": [],
+    "lock": "p24lab",
+    "lease_min": 45
+  },
+  {
+    "id": "T144",
+    "title": "#341 F1–F5 根因定位與修正（依 T143 取證；禁止放寬斷言）",
+    "stage": "code",
+    "priority": "P1",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#341 第 2 輪的 F1–F5（見 T143 內文的清單與 `task/341` 的 `docs/reports/issue-341.md`）讓 06、07、09 全部在首案停下、05 候選與 08 候選在 call-nature／第 7 組停下，7,312 案因此沒有雙邊結果。T143 已取得 P24 實驗 profile、技能列、歷史資格環境與 fixture 版本證據。\n\n**做**：\n1. 對 F1–F5 逐一靜態定位根因，每項歸入其一並附證據（檔案:行號、T143 的 tsv 列）：(A) 測試環境／資料與歷史資格不同（例如 `SignedHp1` 的 MP／INT、技能列消耗、resourceProfile、2026-10-16 vectors）；(B) 未入 git 的 build fixture 過期，與 git 原始碼不符；(C) probe／driver 的預期值寫死了歷史環境；(D) `src/main` 的 B09 方法（`nativeMaterialCallNatureBody`、`nativeMaterialCancellationBody`、`nativeMaterialWaterLifeBody`、`nativeMaterialParalysisScopeBody` 等，對照 `docs/combat-merge/b09-shape-diffs.md`）真的有缺陷。候選與 Maven 同樣失敗的項目，若歸 (D) 要說明為何歷史資格當時能通過。\n2. 修正範圍依根因：(A) → 在 git 內的工具層提供**明確**的環境對齊（例如 `regression_support` 讓 probe 使用與歷史資格相同的 source profile／設定，或把需要的環境前提寫成啟動前檢查，不符就以清楚訊息拒絕而不是跑到斷言才失敗），並在報告寫出 T145 需要的設定步驟；若必須改實驗 DB 資料，**不要自己改**，在報告與本 Issue 留言列出需要的資料變更，標 `needs:local`。(B) → 在 git 內補可重現的 fixture 編譯步驟（或讓入口從 git 原始碼編譯），不手動覆寫 `--resources` 下的檔案。(C) → 只能把預期值改成「從實際載入的資源列計算」，不得刪除斷言或放寬比較；每處改動在報告列出前後對照。(D) → 修 `src/main` 並補 `mvn test` 可跑的單元測試，對應 B09 方法與 #138 偏離清單。\n3. 若 T142 已合併，不要與其改動衝突；兩張都改到 `regression_support.py` 時以 main 為準合併。\n\n**本機限制**：不得執行 probe、回歸入口、JVM、伺服器；只可 `mvn -B -DskipTests compile`／`py_compile`，測試交給 CI。\n\n**驗收**：CI 綠燈；報告逐項列 F1–F5 根因分類、證據、修正位置與「預期 T145 會看到什麼」；沒有刪除或放寬任何 probe 斷言（`git diff` 中 `need(` 呼叫只允許改預期值來源，不允許刪除）；分已驗證／推測／待驗證。",
+    "depends_on": [
+      "T143"
+    ]
+  },
+  {
+    "id": "T145",
+    "title": "#341 T083 重測：只重測 05–10、12（Maven 對候選 50635f7e），附帶回歸 01／02／11／13／14",
+    "stage": "test",
+    "priority": "P1",
+    "runner": "codex-local",
+    "runner_lock": true,
+    "real_machine": true,
+    "milestone_smoke": true,
+    "text": "runner: codex-local\nrunner_lock: true\nreal_machine: true\nmilestone_smoke: true\nlock: p24lab\nlease_min: 90\n\n**背景**：#341（T083）第 2 輪結果 ✅ 7／❌ 5／⚠️ 2。分流 #416 開出 T142（Maven class 守門相容）、T143（環境取證）、T144（F1–F5 根因修正）。三張完成、合併後只做本張。驗收規格沿用 #341 內文（步驟 1–4）與 `task/341` 的 `docs/reports/issue-341.md` 編號 01–14。\n\n**只重測這些編號**：\n- **05** targeted（❌：D1＋F1）、**06** player（❌：F2）、**07** composed（❌：F3）、**08** existing 20＋affected 18（❌：D2＋F5）、**09** curse-clock 24 案（❌：F4）、**10** seal（⚠️：前面失敗的連帶）、**12** 7,588 案雙邊對照表（⚠️：連帶）。兩顆 JAR 都跑六套入口，指令照 #341 報告「實際命令」A–F，加上 T142／T144 報告列出的參數或設定差異；**輸出用全新目錄**（例如 `scratch/issue-<本號>/results/`），不得覆寫或借用 #341 的收據。\n- **01、02**（回歸，原因：T144 若改到 `src/main`，Maven JAR SHA 會變，必須用最新 main 重建並記新 SHA；候選 SHA 照舊核對）。\n- **11**（回歸，原因：T142 改到 `regression_support.py`／`candidate_regression.py` 的收據與包裝層，需再確認失敗路徑收據仍寫成 failed、無 TypeError）。\n- **13**（回歸，原因：工具改動後 `formal_protection` 仍須前後 SHA 相同且等於 `e1498871…`）。\n- **14**（回歸，原因：本張會自啟 P24Lab 與 JVM；結束後只關自有 PID、確認 43324 等埠無 listener）。\n- 附帶：補 #341 03 未取到的**測後** `character_lito`／`lito_battle_settlement` 筆數（Java 指令的 `-Dfile.encoding=UTF-8` 要用陣列引數傳入），與測前比對；不改變 03 的沿用判定。\n\n**沿用、不重測**：03、04 照 #341 第 2 輪結果（設定靜態查核、lease 查核，本輪只做執行必須的 lease 核實）。前 3 組既有回歸 13 份 observations 與 276 案雙邊一致的結果可作對照，但本輪仍須完整重跑並以新收據為準。\n\n**判定規則**：12 的對照表要列兩顆 JAR 逐案相同／不同；不同的案例逐一對應 `docs/combat-merge/b09-shape-diffs.md` 的方法或 #138 偏離。T142 的 Maven 相容模式必須在收據看得到（`class_identity_mode`），不得以候選 overlay 冒充 Maven。若仍有首案失敗，記錄 F 編號是否與 #341 相同，不要自行改工具或資料繞過。\n\n**停止條件**：`formal_protection` 前後 SHA 不同、或需要寫實驗 DB／動到正式 2000／3306 時立即停止回報。\n\n**驗收**：報告逐項列 01–14 結果並標示「重測／回歸／沿用」；05–10 各有新 log 與 receipt 路徑；12 有新的 `comparison.json`；P24 已關閉、無自有程序殘留。",
+    "depends_on": [
+      "T142",
+      "T143",
+      "T144"
+    ],
+    "lock": "p24lab",
+    "lease_min": 90
+  }
+]
