@@ -1,7 +1,7 @@
 -- M4 實驗庫核對（T128／Issue #379）。**只有 SELECT**（含 information_schema），不建表、不改資料、不改權限。
 -- 執行者：Codex，持有 p24lab lease 後，以 P24Lab 管理身分（或實驗帳號 lito83_exp 本身）執行：
 --   cmd /c "mysql --defaults-extra-file=<私密 cnf> --protocol=TCP --host=127.0.0.1 --port=43324 --default-character-set=utf8mb4 --table < tools\acceptance\m4-db-verify.sql > <run>\evidence\db-verify.txt"
--- 不要加 --force：守門失敗時要讓用戶端在第一個錯誤就停（錯誤訊息是 Table 'm4_guard_failed.<原因>' doesn't exist，退出碼非 0）。
+-- 不要加 --force：守門失敗時要讓用戶端在第一個錯誤就停（錯誤訊息是 Unknown database 'm4_guard__<原因>'，退出碼非 0）。
 -- 判讀：最後一列 verdict＝`M4-VERIFY: PASS` 才可以啟動伺服器；FAIL 時看前面 status=FAIL 的列。
 -- 需求清單（GENERATED 區塊）由 tools/acceptance/m4-schema-precheck.py --update-sql 產生。
 SET NAMES utf8mb4;
@@ -16,14 +16,14 @@ SET @m4_expected_uuid = IFNULL(@m4_expected_uuid, 'e3443e40-d090-11f1-8040-4cedf
 -- ===== 守門：埠必須是 43324、三個 schema 名稱都必須以 _lito_exp 結尾，否則中止 =====
 SELECT 'V0' AS check_id, @@port AS port, @@server_uuid AS server_uuid, @@bind_address AS bind_address,
        @@datadir AS datadir, VERSION() AS version, CURRENT_USER() AS connected_as;
-SET @m4_sql = IF(@@port = 43324, 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`port_is_not_43324__this_is_not_P24Lab`');
+SET @m4_sql = IF(@@port = 43324, 'DO 0', 'SELECT * FROM `m4_guard__port_is_not_43324_not_p24lab`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_static REGEXP '^[A-Za-z0-9_]+_lito_exp$' AND @m4_lito REGEXP '^[A-Za-z0-9_]+_lito_exp$'
                  AND @m4_ac REGEXP '^[A-Za-z0-9_]+_lito_exp$' AND @m4_static <> @m4_lito AND @m4_static <> @m4_ac AND @m4_lito <> @m4_ac,
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`schema_names_must_be_distinct_and_end_with__lito_exp`');
+                 'DO 0', 'SELECT * FROM `m4_guard__schemas_must_be_distinct_and_end_with_lito_exp`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_expected_uuid = '' OR @@server_uuid = @m4_expected_uuid,
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`server_uuid_differs_from_the_recorded_P24Lab_instance`');
+                 'DO 0', 'SELECT * FROM `m4_guard__server_uuid_is_not_the_recorded_p24lab`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_guard = 'PASS';
 SET @m4_fail = 0;

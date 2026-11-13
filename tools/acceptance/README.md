@@ -41,7 +41,7 @@
 - schema 名稱不以 **`_lito_exp`** 結尾；三個 SQL 檔另外用 `SELECT @@port` 斷言 43324、核對 `@@server_uuid`（#83／#284 記錄的 `e3443e40-d090-11f1-8040-4cedfb679789`）。
 - run 目錄不是 `…\scratch\m4\run-<UTC>`。
 
-SQL 檔守門失敗時，mysql 用戶端會停在 `ERROR 1146 … Table 'm4_guard_failed.<原因>' doesn't exist`（原因就是資料表名稱，例如 `port_is_not_43324__this_is_not_p24lab`）。**不要加 `--force`**；即使加了，後面每一句寫入也各自檢查 `@m4_guard`，不會執行。
+SQL 檔守門失敗時，mysql 用戶端會停在 `ERROR 1049 … Unknown database 'm4_guard__<原因>'`（原因寫在這個不存在的庫名裡，例如 `m4_guard__port_is_not_43324_not_p24lab`、`m4_guard__schemas_must_be_distinct_and_end_with_lito_exp`）。**不要加 `--force`**；即使加了，後面每一句寫入也各自檢查 `@m4_guard`，不會執行。
 
 ## Codex 的執行順序（一行一條命令）
 

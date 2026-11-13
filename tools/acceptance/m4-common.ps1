@@ -108,11 +108,11 @@ function Read-M4Properties {
     $settings = @{}
     foreach ($line in [System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8)) {
         if ($line -match '^\s*(#|!|$)') { continue }
-        $parts = $line.Split(@('='), 2)
-        if ($parts.Count -ne 2) { throw "設定檔有無法解析的行：$line" }
-        $key = $parts[0].Trim()
+        $index = $line.IndexOf('=')
+        if ($index -lt 1) { throw "設定檔有無法解析的行：$line" }
+        $key = $line.Substring(0, $index).Trim()
         if ($settings.ContainsKey($key)) { throw "設定檔有重複的鍵：$key" }
-        $settings[$key] = $parts[1].Replace('\:', ':').Replace('\=', '=')
+        $settings[$key] = $line.Substring($index + 1).Replace('\:', ':').Replace('\=', '=')
     }
     return $settings
 }
@@ -236,7 +236,7 @@ function Get-M4SnapshotSql {
     Assert-M4Label $Label
     $lines = @(
         'SET NAMES utf8mb4',
-        "SET @m4_sql = IF(@@port = $($script:M4DatabasePort), 'SELECT 1 AS m4_port_ok', 'SELECT * FROM ``M4_GUARD_FAILED``.``port_is_not_43324__this_is_not_P24Lab``')",
+        "SET @m4_sql = IF(@@port = $($script:M4DatabasePort), 'SELECT 1 AS m4_port_ok', 'SELECT * FROM ``m4_guard__port_is_not_43324_not_p24lab``.``guard``')",
         'PREPARE m4_stmt FROM @m4_sql',
         'EXECUTE m4_stmt',
         'DEALLOCATE PREPARE m4_stmt',

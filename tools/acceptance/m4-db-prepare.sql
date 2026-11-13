@@ -2,7 +2,7 @@
 -- **只作用在名稱以 _lito_exp 結尾的實驗 schema**；埠不是 43324 或 schema 名稱不符就中止，之後每一句也各自檢查 @m4_guard。
 -- 執行者：Codex，持有 p24lab lease、完成冷備份後，以 P24Lab 管理身分執行（本檔在 #379 沒有對 P24Lab 執行過，只在 CI 的拋棄式 MySQL 8.0 跑過）：
 --   cmd /c "mysql --defaults-extra-file=<私密 cnf> --protocol=TCP --host=127.0.0.1 --port=43324 --default-character-set=utf8mb4 --table < tools\acceptance\m4-db-prepare.sql > <run>\evidence\db-prepare.txt"
--- 不要加 --force（守門失敗的錯誤訊息是 Table 'm4_guard_failed.<原因>' doesn't exist，退出碼非 0）。可重複執行（每一步先查 information_schema，已完成就略過）。
+-- 不要加 --force（守門失敗的錯誤訊息是 Unknown database 'm4_guard__<原因>'，退出碼非 0）。可重複執行（每一步先查 information_schema，已完成就略過）。
 -- 前置：p24_380db_lito_exp 已由 380_db.sql 快照匯入（命令見 tools/acceptance/README.md）；本檔不匯入快照、不建立 schema、不建立帳號。
 -- 不做：不刪資料、不改 P24Lab 原有的庫（p24_world／p24_accounts／p24_lito）、不碰 3306／2000。
 -- GRANT 清單（GENERATED 區塊）由 tools/acceptance/m4-schema-precheck.py --update-sql 依 tools/db-grants 產生。
@@ -20,23 +20,23 @@ SET @m4_expected_uuid = IFNULL(@m4_expected_uuid, 'e3443e40-d090-11f1-8040-4cedf
 SET @m4_guard = 'FAIL';
 SELECT 'P0' AS step, @@port AS port, @@server_uuid AS server_uuid, @@bind_address AS bind_address,
        @@datadir AS datadir, VERSION() AS version, CURRENT_USER() AS connected_as;
-SET @m4_sql = IF(@@port = 43324, 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`port_is_not_43324__this_is_not_P24Lab`');
+SET @m4_sql = IF(@@port = 43324, 'DO 0', 'SELECT * FROM `m4_guard__port_is_not_43324_not_p24lab`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_static REGEXP '^[A-Za-z0-9_]+_lito_exp$' AND @m4_lito REGEXP '^[A-Za-z0-9_]+_lito_exp$'
                  AND @m4_ac REGEXP '^[A-Za-z0-9_]+_lito_exp$' AND @m4_static <> @m4_lito AND @m4_static <> @m4_ac AND @m4_lito <> @m4_ac,
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`schema_names_must_be_distinct_and_end_with__lito_exp`');
+                 'DO 0', 'SELECT * FROM `m4_guard__schemas_must_be_distinct_and_end_with_lito_exp`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_expected_uuid = '' OR @@server_uuid = @m4_expected_uuid,
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`server_uuid_differs_from_the_recorded_P24Lab_instance`');
+                 'DO 0', 'SELECT * FROM `m4_guard__server_uuid_is_not_the_recorded_p24lab`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_grant_mode IN ('table', 'schema') AND @m4_grantee REGEXP '^''[A-Za-z0-9_]+''@''(127\\.0\\.0\\.1|localhost)''$',
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`grantee_must_be_a_loopback_account_and_grant_mode_table_or_schema`');
+                 'DO 0', 'SELECT * FROM `m4_guard__grantee_must_be_loopback_and_mode_table_or_schema`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_schemas = (SELECT COUNT(*) FROM information_schema.SCHEMATA
                    WHERE SCHEMA_NAME = CONVERT(@m4_static USING utf8) COLLATE utf8_general_ci
                       OR SCHEMA_NAME = CONVERT(@m4_lito USING utf8) COLLATE utf8_general_ci
                       OR SCHEMA_NAME = CONVERT(@m4_ac USING utf8) COLLATE utf8_general_ci);
-SET @m4_sql = IF(@m4_schemas = 3, 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`one_of_the_three_experiment_schemas_does_not_exist__import_the_snapshot_first`');
+SET @m4_sql = IF(@m4_schemas = 3, 'DO 0', 'SELECT * FROM `m4_guard__an_experiment_schema_is_missing_import_snapshot`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_guard = 'PASS';
 SET @m4_skipped = '';

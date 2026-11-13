@@ -23,20 +23,20 @@ SET @m4_b_password  = IFNULL(@m4_b_password,  '__M4_B_PASSWORD__');
 -- ===== 守門 =====
 SET @m4_guard = 'FAIL';
 SELECT 'S0' AS step, @@port AS port, @@server_uuid AS server_uuid, @@bind_address AS bind_address, VERSION() AS version, CURRENT_USER() AS connected_as;
-SET @m4_sql = IF(@@port = 43324, 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`port_is_not_43324__this_is_not_P24Lab`');
+SET @m4_sql = IF(@@port = 43324, 'DO 0', 'SELECT * FROM `m4_guard__port_is_not_43324_not_p24lab`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_static REGEXP '^[A-Za-z0-9_]+_lito_exp$' AND @m4_lito REGEXP '^[A-Za-z0-9_]+_lito_exp$'
                  AND @m4_ac REGEXP '^[A-Za-z0-9_]+_lito_exp$' AND @m4_static <> @m4_lito AND @m4_static <> @m4_ac AND @m4_lito <> @m4_ac,
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`schema_names_must_be_distinct_and_end_with__lito_exp`');
+                 'DO 0', 'SELECT * FROM `m4_guard__schemas_must_be_distinct_and_end_with_lito_exp`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF(@m4_expected_uuid = '' OR @@server_uuid = @m4_expected_uuid,
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`server_uuid_differs_from_the_recorded_P24Lab_instance`');
+                 'DO 0', 'SELECT * FROM `m4_guard__server_uuid_is_not_the_recorded_p24lab`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 -- 帳號名稱：英數底線 1..13 字（characters.account_name 是 varchar(13)）、三個互不相同、不是佔位符
 SET @m4_sql = IF(@m4_gm_login REGEXP '^[A-Za-z0-9_]{1,13}$' AND @m4_a_login REGEXP '^[A-Za-z0-9_]{1,13}$' AND @m4_b_login REGEXP '^[A-Za-z0-9_]{1,13}$'
                  AND @m4_gm_login NOT LIKE '%\_\_M4\_%' AND @m4_a_login NOT LIKE '%\_\_M4\_%' AND @m4_b_login NOT LIKE '%\_\_M4\_%'
                  AND LOWER(@m4_gm_login) <> LOWER(@m4_a_login) AND LOWER(@m4_gm_login) <> LOWER(@m4_b_login) AND LOWER(@m4_a_login) <> LOWER(@m4_b_login),
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`logins_not_substituted_or_invalid__load_the_private_m4_seed_vars_sql_first`');
+                 'DO 0', 'SELECT * FROM `m4_guard__logins_not_substituted_load_private_vars_first`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 -- 需要的表與欄位（本檔 INSERT 用到的全部欄位）都存在
 SET @m4_cols = (SELECT COUNT(*) FROM information_schema.COLUMNS
@@ -53,7 +53,7 @@ SET @m4_cols = (SELECT COUNT(*) FROM information_schema.COLUMNS
      OR (TABLE_SCHEMA = CONVERT(@m4_lito USING utf8) COLLATE utf8_general_ci
          AND TABLE_NAME = 'commands' AND COLUMN_NAME IN ('name','access_level','class_name','note','system')));
 SELECT 'S0' AS step, @m4_cols AS seed_columns_found, 72 AS seed_columns_expected;
-SET @m4_sql = IF(@m4_cols = 72, 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`a_table_or_column_this_seed_writes_is_missing__run_m4_db_verify_sql_and_compare_structures`');
+SET @m4_sql = IF(@m4_cols = 72, 'DO 0', 'SELECT * FROM `m4_guard__seed_table_or_column_missing_run_m4_db_verify`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 -- 密碼：要新建的帳號必須有已代換的密碼（1..50 字，accounts.password 是 varchar(50)）；已存在的帳號不需要、也不會被修改
 SET @m4_gm_exists = 0; SET @m4_a_exists = 0; SET @m4_b_exists = 0;
@@ -66,7 +66,7 @@ PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_sql = IF((@m4_gm_exists = 1 OR (@m4_gm_password NOT LIKE '%\_\_M4\_%' AND CHAR_LENGTH(@m4_gm_password) BETWEEN 1 AND 50))
              AND (@m4_a_exists = 1 OR (@m4_a_password NOT LIKE '%\_\_M4\_%' AND CHAR_LENGTH(@m4_a_password) BETWEEN 1 AND 50))
              AND (@m4_b_exists = 1 OR (@m4_b_password NOT LIKE '%\_\_M4\_%' AND CHAR_LENGTH(@m4_b_password) BETWEEN 1 AND 50)),
-                 'DO 0', 'SELECT * FROM `M4_GUARD_FAILED`.`password_placeholder_not_substituted_for_an_account_that_has_to_be_created`');
+                 'DO 0', 'SELECT * FROM `m4_guard__password_placeholder_for_account_to_create`.`guard`');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SET @m4_guard = 'PASS';
 SELECT 'S0' AS step, IF(@m4_gm_exists = 1, '已存在（不修改）', '將新建') AS gm_account,
