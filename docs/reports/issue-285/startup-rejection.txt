@@ -1,0 +1,7 @@
+2026-11-14（Asia/Taipei），Issue #285
+操作：以既有 mysql.ini、Hidden 視窗、worktree stdout/stderr 路徑啟動 P24Lab mysqld。
+工具：exec_command / Windows PowerShell / Start-Process
+結果：CreateProcess Rejected: blocked by policy
+自動核准審查未提供更詳細理由。整個命令未執行；沒有建立 owned-mysql.json。
+未重試相同操作、未改用其他工具繞過。未啟動 Java 伺服器或客戶端。
+原始拒絕紀錄保留在本次對話的 functions.exec 工具輸出。

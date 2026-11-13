@@ -1,0 +1,113 @@
+{
+  "observed_utc": "2026-11-13T20:17:37.0335827Z",
+  "source_commit": "55b58bea71330cd19c1c782ef89bac601fa84969",
+  "branch": "task/285",
+  "lease": {
+    "name": "p24lab",
+    "holder": "chaoren0418-arch/lito-launcher-server#285",
+    "since": 1794600812.331731,
+    "exp": 1794606212.331731,
+    "since_utc": "2026-11-13T20:13:32.331731+00:00",
+    "expires_utc": "2026-11-13T21:43:32.331731+00:00"
+  },
+  "build": {
+    "command": "mvn -B -DskipTests -f lito伺服器/LiTo381-Server/pom.xml package",
+    "exit_code": 0,
+    "tests_executed": false,
+    "clean_omitted": "遵守不得遞迴刪除的要求；本輪 javac 編譯 1,185 個來源檔"
+  },
+  "preparation": {
+    "Run": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-285\\scratch\\m4\\run-20261113T201710Z",
+    "Utc": "20261113T201710Z",
+    "JarSha256": "84BA0CDE7ABACE28456232B86922B22DD7FBFF98E8B44E8B7BEC5F995A79EDCC",
+    "JarSha8": "84ba0cde",
+    "ResultDirectory": "docs/acceptance/m4-84ba0cde/",
+    "ResultFile": "docs/acceptance/m4-84ba0cde.md",
+    "ConfigKeys": 22,
+    "ConfigKeysAdded": [],
+    "ConfigKeysRemoved": [],
+    "StaticDatabase": "p24_380db_lito_exp",
+    "LitoDatabase": "p24_lito_lito_exp",
+    "Bind": "127.0.0.1",
+    "GameBind": "127.0.0.2",
+    "Port": 42083,
+    "JdbcBaseUrl": "jdbc:mysql://127.0.0.1:43324/",
+    "RuntimeEntries": 0,
+    "GitIgnored": "是",
+    "Libraries": [
+      "HikariCP-5.1.0.jar",
+      "mysql-connector-j-8.0.33.jar",
+      "protobuf-java-3.21.9.jar",
+      "slf4j-api-1.7.36.jar"
+    ]
+  },
+  "backup": {
+    "utc": "2026-11-13T20:16:13.164392+00:00",
+    "source": "D:\\BinEngine\\environments\\p24\\db-data",
+    "destination": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-285\\scratch\\issue-285\\cold-backup\\db-data",
+    "files": 1722,
+    "bytes": 279501517,
+    "verified": true
+  },
+  "launch_rejection": {
+    "action": "Start-Process D:/BinEngine/environments/p24/mysql/bin/mysqld.exe --defaults-file=D:/BinEngine/environments/p24/mysql.ini --console",
+    "result": "Rejected: blocked by policy",
+    "command_executed": false,
+    "detail": "自動核准審查沒有提供更詳細理由；未改用其他工具或繞過"
+  },
+  "cleanup": {
+    "utc": "2026-11-13T20:17:37.0335827Z",
+    "experimentListeners": [],
+    "matchingProcesses": [
+      {
+        "ProcessId": 4144,
+        "ParentProcessId": 1216,
+        "Name": "mysqld.exe",
+        "ExecutablePath": null
+      }
+    ],
+    "ownedMysqlReceiptExists": false,
+    "ownedServicePids": []
+  },
+  "client_hashes": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "bytes": 1941568,
+      "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+      "bytes": 269824,
+      "sha256": "E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\lito381-compat.ini",
+      "bytes": 121,
+      "sha256": "E8D601C1AF08383FA15296824A67BFA49DD62209C47206E4C6454A5A395E25FD"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\litoddraw.dll",
+      "bytes": 269824,
+      "sha256": "E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\lito_runtime_probe_named.py",
+      "bytes": 442021,
+      "sha256": "16311C07DDA9FD06118D628609E58FAA20D352FDF5EC65CFF29A16CF3C78F136"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\LiTo381Launcher.exe",
+      "bytes": 132096,
+      "sha256": "0BF5DDF2E479EF0B38F3416FF47CFF981AF5A6F4B5095719E24DC3BA9F624280"
+    }
+  ],
+  "client_static_observation": {
+    "generic_ddraw_exists": false,
+    "compat_logging": 1,
+    "source_log_location": "DLL 同目錄/lito381-compat.log",
+    "runtime_writes_verified": false
+  },
+  "sql_queries_executed": 0,
+  "database_mutations_executed": 0,
+  "game_screenshots": 0
+}

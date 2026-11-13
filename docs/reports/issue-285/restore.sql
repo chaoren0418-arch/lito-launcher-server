@@ -1,0 +1,4 @@
+-- Issue #285：本輪未啟動 DB、未連線、未執行 DDL/DML，沒有需要還原的 SQL。
+-- 不可為重跑本張而清空 schema 或還原整個 P24Lab。
+-- 完整冷備份與逐檔雜湊留在 scratch/issue-285/cold-backup/db-data 與 backup.json。
+-- 後續若要變更實驗資料，須於該輪另做完整備份並產生對應還原 SQL。

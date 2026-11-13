@@ -1,0 +1,13 @@
+命令：mvn -B -DskipTests -f lito伺服器/LiTo381-Server/pom.xml package
+來源：55b58bea71330cd19c1c782ef89bac601fa84969（fetch 後與 origin/main 差異 0/0）
+Java：Microsoft JDK 17.0.17.10-hotspot
+BuildExit=0
+[INFO] Tests are skipped.
+[INFO] BUILD SUCCESS
+[INFO] Total time: 01:14 min
+[INFO] Finished at: 2026-11-14T04:16:20+08:00
+M4-PREPARE: PASS
+ConfigKeys=22 Added=[] Removed=[]
+原始完整 build.log：scratch/issue-285/build.log（本機保留）
+未執行 clean：遵守不得遞迴刪除限制；本輪 javac 編譯 1,185 個來源檔。
+未下載同 commit CI artifact 比對；不宣稱可重現雜湊已通過 CI 對照。
