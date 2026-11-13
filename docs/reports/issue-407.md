@@ -46,17 +46,18 @@ dict(..., **dict(formal_deployment_changed=False, **protection))
 
 CI 結果：
 - 第一次 push（run 43484484467）：`test_formal_protection` 14 案全過；新測試 9 案中 8 案通過。唯一失敗的是我的預期值寫錯：targeted 在 `--out` 模式下是 25 支 stage driver 加 2 支 replacement／fault，共 27 支，跟入口自己 `len(rows)==27` 的判斷一致，不是 29。已改正。
-- 第二次 push 的 CI 結果以 PR #408 最新 commit 為準（見本報告最後一節）。
+- 第二次 push（run 43486300669，commit `df9665ba`）：`Combat regression tools (offline, no DB)` job **success**，新測試 9 案與 `test_formal_protection` 14 案全過。其他 job 與本次改動無關（只動 Python 工具與這個 job），結果以 PR #408 最新 commit 為準。
 
 ## 已驗證／推測／待驗證
 
-**已驗證**（CI 離線測試，第一次 push 時通過的 8 案已涵蓋所有失敗路徑）
+**已驗證**（CI 離線測試，run 43486300669 共 9 案全過）
+- 兩個入口的成功路徑會寫出 `passed` 收據，筆數為 27／3。
 - 兩個入口的失敗收據路徑都不再拋 `TypeError`，收據會落在 `failed`。
 - 正式檔有變動時，收據的 `formal_deployment_changed` 是 `True`。
 - 原本的 `test_formal_protection` 14 案沒有受影響。
 
 **推測**
-- #341 報告推測「成功完成行為回歸後，finally 一樣會觸發同一個錯誤」。靜態上確實如此，修正後的成功路徑由 `*_success_*` 測試涵蓋（第二次 push 的 CI 確認）。
+- #341 報告推測「成功完成行為回歸後，finally 一樣會觸發同一個錯誤」。靜態上確實如此。修正後的成功路徑已由 `*_success_*` 測試在 stub driver 下驗證，但真實 driver 的成功路徑還沒有實跑過。
 - 其他入口（`replay_composed_materials.py`、`full_regression.py`、`affected_regressions.py`、`test_curse_clock_boundary.py`、`seal_validation.py`、`reconcile_replay.py`）都把 receipt dict 本身交給 `formal_protection`，沒有再用具名參數重複合併。以 grep 檢查，沒有同類寫法。
 
 **待驗證**
