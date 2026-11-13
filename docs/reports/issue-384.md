@@ -1,4 +1,4 @@
-﻿# Issue #384（T133）凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7）
+# Issue #384（T133）凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7）
 
 分支：`task/384`。對照表寫在 `docs/design/formulas-magic.md` §9.4（並更新 §1 M17、§7、§9.3 Z7）。
 
