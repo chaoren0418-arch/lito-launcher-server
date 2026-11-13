@@ -84,7 +84,9 @@ run 43264755522 的 dump 與 #370 記錄的是同一個循環：`pool-381-thread
   - `Server tests`（必過）：`Tests run: 7452, Failures: 0, Errors: 0, Skipped: 117`，BUILD SUCCESS，8 分 58 秒；`DurableBattleSettlementLockOrderTest` 2/2 通過（0.31 秒）。與 main（run 43365092150，`39c8f849`，7450／0／0／117）逐類別比對：只多出新類別的 2 個測試，其餘類別的測試數相同。127 個改成另一條執行緒執行的類別全部通過。
   - `Server tests (CI MySQL fixture)`：`Tests run: 7719, Failures: 39, Errors: 34, Skipped: 119`；新測試 2/2 通過。與 main 同一個 job（7717／39／34／119）用 surefire XML 逐類別、逐測試案例比對：失敗的 22 個類別相同、73 個失敗案例相同，**沒有新增失敗，也沒有消失的失敗**；多出的 2 個測試就是新類別。job 仍是紅燈，原因是 #334 既有的失敗。
   - `Server (Java 17 / Maven)`、可重現 JAR、Semantic gap、Launcher、Build-Package 全部通過。
+- **合併 origin/main 後**：commit `4827f173`（含 `fb643037`），run 43373926640，整體結論 success：`Server tests` `7452／0／0／117`（8 分 03 秒）；MySQL job `7719／39／34／119`，與 main 逐案例比對同樣沒有新增或消失的失敗。
 - 兩個 job 的 `timeout-minutes` 已在工作流程檔內；本次各 run 都在上限內完成（MySQL job 最長 13 分 11 秒）。
+- 修正後兩次 MySQL job 的 Maven 時間是 12:23、12:07（main 8:46、只有測試的那次 9:18）。原因是 runner 較慢，不是本任務的改動：同一個 job 裡、任何測試開始之前的「編譯 1179 個 main 原始檔」分別花 33.7 秒、31.9 秒，main 與只有測試的那次是 18.5 秒、20.6 秒（job log 時間戳）；變慢也平均分散在沒被改動的類別（例如 `ClassicWorldMonsterItemUseTest` 12→20 秒），同一 commit 的 `Server tests` job 則與 main 相同（8:58、8:03／8:54）。25 分鐘的步驟上限對這種慢 runner 仍有一倍餘裕。
 - 本機 `mvn -B -q -o -DskipTests test-compile` 通過（依本機限制沒有在本機執行測試）。
 - 四個歷史 run 的 log 重新下載後逐行確認（上表）；`docs/design/gameplay.md` 新增段落引用的行號已對過程式。
 
@@ -92,7 +94,6 @@ run 43264755522 的 dump 與 #370 記錄的是同一個循環：`pool-381-thread
 
 - run 43144899123（task/355）也是同一個死結：卡住的類別就是會觸發它的 `BattleDisconnectStressMySqlIntegrationTest`，但當時沒有 thread dump，無法直接證明。
 - 兩個 6 小時 run 最後卡在 `ClientSessionLitoClanRosterIntegrationTest` 的原因是它的 hub 清理走到 `cleanupAllowed` 等同一把 `CONTEXTS`：依程式路徑推論，那個時間點沒有 dump。
-- 修正後的 MySQL job 這次跑 12 分 23 秒（main 是 8 分 46 秒）。變慢分散在沒有被本任務改動的類別（例如 `ClassicWorldMonsterItemUseTest` 12→20 秒），同一 commit 的 `Server tests` 則與 main 相同（8:58／8:54），判斷是 runner 速度差異，不是新加的逾時造成。
 - 斷線判定時 WAL 的 `fsync` 是在 `GameHub` 鎖內做的（`battleDisconnectWork` → `freeze` → `journal.save`）；磁碟慢時全大廳會短暫等待。不是死結，沒有量測，已寫進 §4.2 鎖順序表。
 
 ### 待驗證
