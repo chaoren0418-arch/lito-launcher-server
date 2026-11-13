@@ -153,7 +153,7 @@ D3 之外不需要動權限；D3 是把**實驗庫**的測試帳號設成 GM，�
 | 預期封包或伺服器 log | `[LiTo] login-listen=127.0.0.1:42083`（`S/Main.java:85`）、`[LiTo] source-login id=… port=…`（`S/SourceLogin.java:68`）、`[LiTo] capture=…frames.jsonl`（`S/Main.java:106`）、`[LiTo] ready`（`S/Main.java:117`）。此時還沒有封包 |
 | SQL 前後查詢 | 啟動前 Q1 → `sql-before-01.txt`；啟動後 Q1 → `sql-after-01.txt`，兩者應相同（啟動只重放既有 WAL，本輪 `runtime/` 是空的） |
 | 截圖檔名 | `01-server-ready.png`（console 含 `ready` 行） |
-| 失敗時記什麼 | 退出碼、完整 console、最後一個 `Caused by`。常見：`lacks ranking columns`（`S/SettlementSql.java:46`，缺 P4 的欄位）、`SELECT command denied`（授權）、`Unknown column`（靜態庫結構）、`Unknown/retired setting`／`Missing setting`（設定鍵，`S/UnifiedConfiguration.java:24-25`）、`settlement journal already owned`（`S/SettlementJournal.java:13-14`，同一 `runtime/` 有另一個程序） |
+| 失敗時記什麼 | 退出碼、完整 console、最後一個 `Caused by`。常見：`lacks ranking columns`（`S/SettlementSql.java:46`，缺 P4 的欄位）、`SELECT command denied`（授權）、`Unknown column`（靜態庫結構）、`Unknown/retired setting`／`Missing setting`（設定鍵，`S/UnifiedConfiguration.java:24-25`）、`settlement journal already owned`（`S/SettlementJournal.java:18-19`，同一 `runtime/` 有另一個程序） |
 
 <a id="a02"></a>
 ### A02 監聽位址與來源路由
@@ -297,7 +297,7 @@ D3 之外不需要動權限；D3 是把**實驗庫**的測試帳號設成 GM，�
 | 預期封包或伺服器 log | 死亡：`S_ACTION 0x20` 動作 8、敗方收 `S_LITO_CONFIRM_DEATH 0xE3`（`S/ClientSession.java:74759-74763`，舊路徑所見）；敗方 C→S `C_LITO_CONFIRM_DEATH 0xE0`（`confirmDeath`，`:24728`），console `[LiTo] battle resolution room=… ended=true … reason=…`（`:24737`）。結束：`S_LITO_END_GAME 0xD3`（`:75212`）＋每位參戰者一筆 `S_LITO_POINT 0xDB`（`:75219,13140-13142`）。console 兩行 `[LiTo] battle result player=… won=true／false ranking-points=…`（`:56906-56915`） |
 | SQL 前後查詢 | 見 A15 |
 | 截圖檔名 | `13-battle-end.png` |
-| 失敗時記什麼 | 結束原因（`reason=`）、是否逾時、console 有沒有 `battle result` 兩行、有沒有 `state save failed`（`:56917`）或 stderr `settlement recovery pending`（`S/DurableBattleSettlement.java:164`） |
+| 失敗時記什麼 | 結束原因（`reason=`）、是否逾時、console 有沒有 `battle result` 兩行、有沒有 `state save failed`（`:56917`）或 stderr `settlement recovery pending`（`S/DurableBattleSettlement.java:201`） |
 
 <a id="a14"></a>
 ### A14 結算畫面
@@ -318,7 +318,7 @@ D3 之外不需要動權限；D3 是把**實驗庫**的測試帳號設成 GM，�
 |---|---|
 | 輸入 | Q1 → `sql-after-15.txt`；與 `sql-before-15.txt` 逐欄比對 |
 | 預期畫面 | — |
-| 預期封包或伺服器 log | console 的兩行 `battle result` 數值與 SELECT 一致。寫入順序是 WAL → 收據 → `character_lito` 單一 UPDATE → `applied=1` → 刪 WAL（`gameplay.md:281`；`S/SettlementSql.java:63,97,101`） |
+| 預期封包或伺服器 log | console 的兩行 `battle result` 數值與 SELECT 一致。寫入順序是 WAL → 收據 → `character_lito` 單一 UPDATE → `applied=1` → 刪 WAL（`gameplay.md:281`；`S/SettlementSql.java:63,138,142`） |
 | SQL 前後查詢 | 勝者：`wins+1`、`ranking_points+250`、`monthly_wins`／`monthly_ranking_points` 依月基準增加；敗者：`losses+1`、`ranking_points+50`；雙方 `version+1`、`last_result_id`＝新收據的 `result_id`；收據新增兩列，同一個 `battle_id`，`applied=1`。完整表在 CHECKLIST「戰績預期值」 |
 | 截圖檔名 | `15-sql.png`（前後對照；角色名以 A／B 遮蔽） |
 | 失敗時記什麼 | 哪一欄不符、前後值、收據列（含 `applied`、`applied_at`）、`runtime/battle-settlements/` 清單（有沒有 `.pending`／`.tmp`） |
@@ -809,7 +809,7 @@ C0 不增加時間；C1–C4 各一輪。lease 只夠一輪時的優先順序：
 |---|---|
 | 輸入 | 每一輪結束（A20 的 Ctrl+C 之後）對存下來的 console 檔搜尋下列字串 |
 | 預期畫面 | — |
-| 預期封包或伺服器 log | 下列都**不出現**：`invalid companion NPC damage input`（`S/ClassicWorldCompanionNpcPhysicalAttack.java:140`）、`invalid source weapon combat traits`（`S/LegacyEquipmentMagicLoader.java:810`、`S/Accounts.java:3016`）、`default room reset snapshot missing`（`S/ClientSession.java:13340`）、`lacks ranking columns`（`S/SettlementSql.java:46`）、`Settlement character identity changed`（`S/SettlementSql.java:88`）、`state save failed`、`settlement recovery pending`（`S/DurableBattleSettlement.java:164`） |
+| 預期封包或伺服器 log | 下列都**不出現**：`invalid companion NPC damage input`（`S/ClassicWorldCompanionNpcPhysicalAttack.java:140`）、`invalid source weapon combat traits`（`S/LegacyEquipmentMagicLoader.java:810`、`S/Accounts.java:3016`）、`default room reset snapshot missing`（`S/ClientSession.java:13340`）、`lacks ranking columns`（`S/SettlementSql.java:46`）、`Settlement character identity changed`（`S/SettlementSql.java:129`）、`state save failed`、`settlement recovery pending`（`S/DurableBattleSettlement.java:201`） |
 | SQL 前後查詢 | 無 |
 | 截圖檔名 | `V02-console-grep.png`（搜尋命令與 0 筆結果） |
 | 失敗時記什麼 | 命中的整行、前後各 20 行、當時在做哪一步。第一個字串只有帶寵物／召喚物時才有機會出現（V17、V31），第二個只有角色帶幻象武器時才有機會出現（V30）；沒做那幾項時在結果檔註明「該字串的觸發條件本輪沒有發生」 |
@@ -1214,7 +1214,7 @@ SELECT npcid, name, hprinterval, hpr, mprinterval, mpr FROM npc WHERE npcid = <�
 |---|---|
 | 輸入 | ① Q1 → `sql-before-V21.txt`；列 `runtime/battle-settlements/`。② 開戰，A 把 B 打到快死。③ A 打出最後一下的同時，對實驗 Java PID 執行 `taskkill /F /PID <PID>`。④ 列 `runtime/battle-settlements/`（看有沒有 `.pending`／`.tmp`）；Q1 → `sql-mid-V21.txt`。⑤ 用**同一個** `runtime/` 重做 A01 啟動。⑥ Q1 → `sql-after-V21.txt`。⑦ 再正常關閉、再啟動一次，Q1 → `sql-after2-V21.txt` |
 | 預期畫面 | 兩個客戶端斷線。重啟後 A、B 能重新登入進大廳 |
-| 預期封包或伺服器 log | 重啟的 console 走到 `[LiTo] ready`；沒有 `settlement journal already owned`（`S/SettlementJournal.java:13-14`；出現表示舊程序還活著）、沒有 `Settlement character identity changed` |
+| 預期封包或伺服器 log | 重啟的 console 走到 `[LiTo] ready`；沒有 `settlement journal already owned`（`S/SettlementJournal.java:18-19`；出現表示舊程序還活著）、沒有 `Settlement character identity changed` |
 | SQL 前後查詢 | 那一場**要嘛完全沒記、要嘛剛好記一次**：(a) 沒記——`sql-after` 與 `sql-before` 相同、沒有新收據；或 (b) 記一次——勝者 +1 勝 +250、敗者 +1 敗 +50、雙方 `version` 只 +1、收據兩列 `applied=1`、`last_result_id` 是這一場。`sql-after2` 與 `sql-after` 相同（再重啟不會多加）。重啟後 `runtime/battle-settlements/` 沒有 `.pending`（`.tmp` 殘檔可留，`R/issue-355.md:120`） |
 | 截圖檔名 | `V21-kill-server.png`、`V21-restart-ready.png`、`V21-sql.png` |
 | 失敗時記什麼 | 三份（或四份）SQL 的逐欄差異、每個時點的 WAL 目錄清單、收據列（含 `applied`）、重啟 console 全文。一人記了、另一人沒記；`version` 加了 2；有 `applied=0` 留著——都是失敗。taskkill 落在哪個時間點無法控制，結果是 (a) 或 (b) 都算通過，在結果檔寫明是哪一種；有時間就多做幾次以碰到不同的中止點 |
