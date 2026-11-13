@@ -18,6 +18,33 @@
 
 本任務新增的外部伺服器入口建立在**預設 GUI 的正式客戶端流程**上，只把「啟動並檢查 32000 的內建 Server」換成「檢查外部 Server 的端點」。
 
+## 與 `0-客戶端` 的互動：只讀取與核對（T139／Issue #412）
+
+外部伺服器入口（登入器＋`external_server_startup.py`）對 `D:\lineage開發\0-客戶端` **只讀取、只核對，不寫入任何檔案**。正式流程（`development_startup.py`、預設 GUI、`--legacy-formal-mode`）不受影響，仍照原樣在啟動時複製 `litoddraw.dll` 並寫 `lito381-compat.ini`。
+
+| 客戶端檔案 | 外部入口做什麼 | 不符時 |
+|---|---|---|
+| `LiTo.bin`、`TW13081901.txt` | 讀取比對 SHA（同正式 helper 的 `check_source`） | 拒絕啟動 |
+| `litoddraw.dll` | 讀取比對 SHA-256 = `E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A`（與 `app\compat\litoddraw.dll` 的正式釘選相同） | 拒絕啟動，訊息列出檔名、現有 SHA、預期 SHA；**不覆寫** |
+| `lito381-compat.ini` | 讀取比對內容 = 正式流程在本次縮放下會寫的內容（CRLF／LF 視為相同） | 縮放不同：訊息寫出現有 `ScalePercent`，請在登入器改選同一縮放再按啟動；其他內容不同：列出現有與預期內容。**都不覆寫** |
+| `lito381-compat.log` | 啟動前記下大小、結束後讀取新增部分複製到 run 目錄的 `native-render.log` | — |
+
+核對在 helper 啟動時做一次（任何目錄都還沒建立前），開 `LiTo.bin` 前再做一次。拒絕時 helper 送出 `failed`（含 `differences` 與 `writes: 0`）與 `finished`（`cleanup_verified: true`，因為什麼都沒啟動），登入器日誌會顯示完整原因。
+
+0.6.71 正式流程每次啟動都會把 `0-客戶端` 的這兩個檔寫成正確內容，所以只要之前用正式流程開過一次同縮放的遊戲，外部入口就會直接沿用。若要換縮放，請在登入器改選與現有 `ScalePercent` 相同的縮放，不要手改客戶端。
+
+### 啟動遊戲後由遊戲本身寫出的執行期檔（不是登入器寫的）
+
+`LiTo.bin` 以 `0-客戶端` 為工作目錄執行，它和它載入的 `litoddraw.dll` 會自己寫檔，這部分不在登入器的控制範圍：
+
+| 檔案 | 寫入者 | 依據 |
+|---|---|---|
+| `lito381-compat.log` | `litoddraw.dll`（相容層） | `native/ddraw_proxy.cpp:180`；ini 的 `[Diagnostics] Logging=1` 啟用時附加寫入 |
+| `LiToError.txt` | `LiTo.bin` 本身 | 原版客戶端錯誤紀錄 |
+| 其他原版客戶端自行產生的執行期檔 | `LiTo.bin` | 未逐一列舉 |
+
+T141 重測 08 時請在啟動前、結束後各對 `0-客戶端` 拍一次快照（檔名、大小、修改時間、SHA-256），把差異記進報告；上表以外的變動才需要追查。
+
 ## 前置條件
 
 | 項目 | 要求 |
@@ -44,7 +71,7 @@ dotnet build "lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj" -c Rele
 | 檔案 | SHA-256 |
 |---|---|
 | `development_startup.py` | `ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD`（正式 helper，未改） |
-| `external_server_startup.py` | `D0FE39EB6E379875F04E28FBF12B532E8F6AA2EB54347161E905DD3C86191D32` |
+| `external_server_startup.py` | `3CAE67C05697510CA3B35C8354D7C14E362D4F19A145750A472FD665139428B9`（T139／#412；舊版 `D0FE39EB…1D32` 已作廢） |
 
 ```powershell
 Get-FileHash "<輸出目錄>\development_startup.py","<輸出目錄>\external_server_startup.py"
@@ -81,13 +108,24 @@ Get-FileHash "<輸出目錄>\development_startup.py","<輸出目錄>\external_se
 ### 3. 啟動登入器（外部伺服器驗收模式）
 
 ```powershell
-$env:LITO_LAUNCHER_SETTINGS_DIRECTORY = "D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-<時間>\launcher-settings"
-& "<輸出目錄>\LiTo381Launcher.exe" --external-server-profile "<上一步的 external-profile.json>"
+$run = "D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-<時間>"
+New-Item -ItemType Directory -Force "$run\launcher-settings","$run\launcher-runs" | Out-Null
+$env:LITO_LAUNCHER_SETTINGS_DIRECTORY = "$run\launcher-settings"
+$env:LITO_LAUNCHER_RUN_ROOT = "$run\launcher-runs"
+& "<輸出目錄>\LiTo381Launcher.exe" --external-server-profile "$run\external-profile.json"
 ```
+
+#### 收據目錄開關 `LITO_LAUNCHER_RUN_ROOT`（T139／#412）
+
+- 未設定（或空白）：行為不變，收據寫到 `app\gui-runs\external-*`、helper 寫到 `app\runs\external-*`。
+- 設定為某個目錄：登入器收據改寫到 `<目錄>\gui-runs\external-*`，helper 改寫到 `<目錄>\runs\external-*`（登入器以 `--run-root <目錄>` 傳給 helper）。
+- 拒絕條件（狀態列顯示、不能按啟動；helper 端同樣再檢查一次）：不是絕對路徑、目錄不存在（不會自動建立，請先 `New-Item`）、路徑上任何一層是 junction／symlink／reparse point、位於 `D:\lineage開發\0-客戶端` 底下。
+- 這只搬收據與 run 目錄；設定檔仍由 `LITO_LAUNCHER_SETTINGS_DIRECTORY` 決定。兩個都設定後，此入口在 `0-客戶端` 與 `app\` 都不寫任何檔（`app\` 只讀取比對釘選）。
 
 - **不要加** `--legacy-formal-mode`、`--start-memory-game`、`--start-memory-server`、`--start-development-game`、`--current-isolated-test`；同時出現會被拒絕（結束碼 2）。
 - 視窗標題：`LiTo 3.81C 啟動器 0.6.71（外部伺服器驗收模式）`。
-- 日誌第一行應為：`[外部伺服器] 外部伺服器驗收模式：…（127.0.0.1:42083、127.0.0.1:42084）；不啟動內建伺服器、不覆寫埠。`
+- 日誌第一行應為：`[外部伺服器] 外部伺服器驗收模式：…（127.0.0.1:42083、127.0.0.1:42084）；不啟動內建伺服器、不覆寫埠；0-客戶端只讀取核對、不寫入。`
+- 有設定 `LITO_LAUNCHER_RUN_ROOT` 時，狀態列說明後面會多一句 `收據寫到 <目錄>。`。
 - 介面選項：客戶端 `D:\lineage開發\0-客戶端`、視窗化、縮放任選、遊戲模式「一般無界擂台」。狀態列沒有錯誤時「啟動 LiTo.bin」可按。
 
 ### 4. 啟動遊戲並登入到大廳
@@ -111,10 +149,10 @@ $env:LITO_LAUNCHER_SETTINGS_DIRECTORY = "D:\lineage開發\3-lito開發\scratch\w
 
 | 路徑 | 內容 |
 |---|---|
-| `D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\gui-runs\external-*\` | 登入器端：`request.json`（含外部設定、`server_owned=false`）、`server-ready.json`、`native-created.json`、`terminal.json` |
-| `D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\runs\external-*\` | helper 端：`server-ready.json`（端點檢查）、`server-profile.json`（給 probe 的 connect 轉向）、`native.stdout.log`／`native.stderr.log`、`native-render.log`、`terminal.json` |
+| `<run root>\gui-runs\external-*\`（未設定 run root 時為 `…\LiTo381-Launcher\app\gui-runs\external-*\`） | 登入器端：`request.json`（含外部設定、`server_owned=false`、`run_root`、`client_writes_by_launcher=0`）、`server-ready.json`、`native-created.json`、`terminal.json` |
+| `<run root>\runs\external-*\`（未設定 run root 時為 `…\LiTo381-Launcher\app\runs\external-*\`） | helper 端：`server-ready.json`（端點檢查）、`server-profile.json`（給 probe 的 connect 轉向）、`native.stdout.log`／`native.stderr.log`、`native-render.log`、`terminal.json`（含 `client_compat`、`client_compat_before_native` 核對紀錄與 `client_writes_by_launcher=0`） |
 
-這兩個位置與正式流程的 `development-*` 相同（正式流程本來就會寫），只多了 `external-` 開頭的新場次目錄。
+未設定 run root 時這兩個位置與正式流程的 `development-*` 相同，只多了 `external-` 開頭的新場次目錄；重測 08 請設定 run root，讓收據留在 #284 worktree。
 
 ## 常見失敗訊息
 
@@ -125,6 +163,10 @@ $env:LITO_LAUNCHER_SETTINGS_DIRECTORY = "D:\lineage開發\3-lito開發\scratch\w
 | `外部伺服器 helper 指紋不符`／`開發啟動 helper 指紋不符` | 輸出目錄的 `.py` 與釘選不同；重建，不要手改 |
 | `Startup file changed: …`、`Reparse startup path refused` | 正式交付檔（`app\…`、`0-客戶端\TW13081901.txt`）與正式釘選不符或路徑含 junction；回報，不要修改 |
 | `指定客戶端的 LiTo.bin 指紋不符`、`共用資源版請選擇 D:\lineage開發\0-客戶端` | 客戶端目錄選錯 |
+| `外部伺服器入口只讀取、不改 0-客戶端；…已拒絕啟動` ＋ `litoddraw.dll SHA-256 …，預期 E47BD6C6…` | `0-客戶端\litoddraw.dll` 不是正式版本；回報，不要手動覆寫（由使用者決定是否以 0.6.71 正式流程開一次遊戲讓它恢復） |
+| `… 現有 ScalePercent=200，本次選擇 150；請在登入器改選 200% 縮放後再試` | 在登入器改選訊息中的縮放即可 |
+| `… lito381-compat.ini 內容不同` 或 `不存在` | ini 被改過；回報差異，不要手改 |
+| `LITO_LAUNCHER_RUN_ROOT 必須是絕對路徑／目錄不存在／路徑含 junction／不得位於客戶端目錄底下`；helper 端 `run root …` | 依訊息修正環境變數或先建立目錄 |
 | 選服後連線失敗／帳密被拒 | 這時已經到伺服器協定或帳號資料層，屬 #284 08 本身的結果；保存上面兩個證據目錄與 Server 主控台 |
 
 ## 已知限制

@@ -11,9 +11,15 @@ Server Pair is replaced by a loopback endpoint check.  The formal standard flow
 
 Pure profile functions sit at module level and import only the standard
 library, so tests can import this file on any OS without touching Windows APIs.
+
+T139 / Issue #412: this entry never writes into the client directory
+(D:/lineage開發/0-客戶端).  litoddraw.dll and lito381-compat.ini are only read and
+compared with what the run needs; any difference refuses the start and reports
+it, nothing is copied or rewritten.  The run directory may be moved out of the
+original project with --run-root (the launcher passes LITO_LAUNCHER_RUN_ROOT).
 """
 from pathlib import Path
-import argparse, hashlib, importlib.util, ipaddress, json, os, queue, shutil, socket, subprocess, sys, threading, time, traceback
+import argparse, hashlib, importlib.util, ipaddress, json, os, queue, socket, stat, subprocess, sys, threading, time, traceback
 
 HERE = Path(__file__).resolve().parent
 FORMAL_HELPER = HERE / 'development_startup.py'
@@ -21,10 +27,135 @@ FORMAL_HELPER = HERE / 'development_startup.py'
 FORMAL_HELPER_SHA = 'ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD'
 PROFILE_KIND = 'external'
 LOCAL_CONFIG_PLACEHOLDER = 'external-server.properties'
+# Same pin as development_startup.PINS[app/compat/litoddraw.dll]; checked against the formal table at run time.
+CLIENT_DDRAW_SHA = 'E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A'
+CLIENT_DDRAW_NAME = 'litoddraw.dll'
+CLIENT_INI_NAME = 'lito381-compat.ini'
 
 
 class ExternalProfileError(ValueError):
     pass
+
+
+class ClientCompatMismatch(RuntimeError):
+    """The client directory does not already hold what this run needs; the external entry refuses instead of writing."""
+
+    def __init__(self, message, differences):
+        super().__init__(message)
+        self.differences = differences
+
+
+class RunRootError(ValueError):
+    pass
+
+
+def compat_ini_text(scale):
+    """Exactly the ini content the formal flow writes for this scale (development_startup.py, LF form)."""
+    return ('[Window]\nWidth=640\nHeight=480\nScalePercent=' + str(scale) +
+            '\n[Diagnostics]\nLogging=1\n[NumericBreakthrough]\nEnabled=1\nSchema=4\n')
+
+
+def _ini_scale(text):
+    for line in text.splitlines():
+        key, sep, value = line.partition('=')
+        if sep and key.strip().casefold() == 'scalepercent':
+            return value.strip()
+    return None
+
+
+def verify_client_compat(client, scale, ddraw_sha=CLIENT_DDRAW_SHA):
+    """Read-only check of client/litoddraw.dll and client/lito381-compat.ini.
+
+    Returns a receipt when both already equal what this run needs.  Otherwise raises
+    ClientCompatMismatch listing every difference; the files are never touched.
+    The formal helper writes the ini in text mode, so CRLF and LF are treated alike.
+    """
+    client = Path(client)
+    differences = []
+    ddraw = client / CLIENT_DDRAW_NAME
+    if not ddraw.is_file():
+        differences.append({'file': str(ddraw), 'problem': 'missing', 'expected_sha256': ddraw_sha})
+        ddraw_actual = None
+    else:
+        ddraw_actual = hashlib.sha256(ddraw.read_bytes()).hexdigest().upper()
+        if ddraw_actual != ddraw_sha:
+            differences.append({'file': str(ddraw), 'problem': 'sha256', 'actual_sha256': ddraw_actual, 'expected_sha256': ddraw_sha})
+    ini = client / CLIENT_INI_NAME
+    expected_ini = compat_ini_text(scale)
+    if not ini.is_file():
+        differences.append({'file': str(ini), 'problem': 'missing', 'expected_content': expected_ini})
+        ini_sha = None
+    else:
+        raw = ini.read_bytes()
+        ini_sha = hashlib.sha256(raw).hexdigest().upper()
+        try:
+            actual_ini = raw.decode('ascii').replace('\r\n', '\n')
+        except UnicodeDecodeError:
+            actual_ini = raw.decode('latin-1').replace('\r\n', '\n')
+        if actual_ini != expected_ini:
+            actual_scale = _ini_scale(actual_ini)
+            if actual_scale is not None and actual_scale != str(scale):
+                differences.append({'file': str(ini), 'problem': 'scale', 'actual_scale_percent': actual_scale,
+                                    'expected_scale_percent': str(scale), 'actual_content': actual_ini,
+                                    'expected_content': expected_ini})
+            else:
+                differences.append({'file': str(ini), 'problem': 'content', 'actual_content': actual_ini,
+                                    'expected_content': expected_ini})
+    if differences:
+        lines = ['外部伺服器入口只讀取、不改 0-客戶端；以下檔案與本次需要的不同，已拒絕啟動（未覆寫任何檔案）：']
+        for item in differences:
+            if item['problem'] == 'missing':
+                lines.append(f"- {item['file']} 不存在")
+            elif item['problem'] == 'sha256':
+                lines.append(f"- {item['file']} SHA-256 {item['actual_sha256']}，預期 {item['expected_sha256']}")
+            elif item['problem'] == 'scale':
+                lines.append(f"- {item['file']} 現有 ScalePercent={item['actual_scale_percent']}，本次選擇 "
+                             f"{item['expected_scale_percent']}；請在登入器改選 {item['actual_scale_percent']}% 縮放後再試")
+            else:
+                lines.append(f"- {item['file']} 內容不同；現有 {item['actual_content']!r}，預期 {item['expected_content']!r}")
+        raise ClientCompatMismatch('\n'.join(lines), differences)
+    return {'client_directory': str(client), 'writes': 0,
+            'litoddraw_dll': {'path': str(ddraw), 'sha256': ddraw_actual, 'matches_pin': True},
+            'compat_ini': {'path': str(ini), 'sha256': ini_sha, 'scale_percent': scale, 'matches_expected': True}}
+
+
+def _is_reparse(node):
+    """True for symlinks, junctions and any other Windows reparse point."""
+    node = Path(node)
+    if node.is_symlink():
+        return True
+    is_junction = getattr(node, 'is_junction', None)
+    if is_junction is not None and is_junction():
+        return True
+    try:
+        attributes = getattr(os.lstat(node), 'st_file_attributes', 0)
+    except OSError:
+        return False
+    return bool(attributes & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0x400))
+
+
+def _inside(child, parent):
+    child = os.path.normcase(os.path.abspath(child))
+    parent = os.path.normcase(os.path.abspath(parent)).rstrip('\\/')
+    return child == parent or child.startswith(parent + os.sep) or child.startswith(parent + '/')
+
+
+def resolve_run_root(value, client, is_reparse=_is_reparse):
+    """Validate an explicit run root: absolute existing directory, no reparse point on its path, not inside the client."""
+    if not isinstance(value, str) or not value.strip():
+        raise RunRootError('run root must be a non-empty path')
+    path = Path(value)
+    if not path.is_absolute():
+        raise RunRootError('run root must be an absolute path: ' + value)
+    path = Path(os.path.abspath(path))
+    for node in (path, *path.parents):
+        if is_reparse(node):
+            raise RunRootError('run root path contains a junction/reparse point: ' + str(node))
+    if not path.is_dir():
+        raise RunRootError('run root directory does not exist: ' + str(path))
+    if _inside(path, client):
+        raise RunRootError('run root must not be inside the client directory: ' + str(path))
+    return path
 
 
 def _identifier(value):
@@ -161,18 +292,33 @@ def main():
     parser.add_argument('--service', choices=('StandardArena',), required=True)
     parser.add_argument('--source-id', type=int, choices=range(1, 9), required=True)
     parser.add_argument('--external-profile', required=True)
+    parser.add_argument('--run-root', help='Write runs/<run-id> under this directory instead of the delivery app directory.')
     args = parser.parse_args()
     if not args.run_id.startswith('external-') or any(not (c.isascii() and (c.isalnum() or c == '-')) for c in args.run_id):
         raise ValueError('external run id must start with "external-"')
     profile = load_profile(args.external_profile)
     dev = _formal_helper()
+    if dev.PINS.get(dev.DLL) != CLIENT_DDRAW_SHA:
+        raise ValueError('litoddraw.dll pin differs from the reviewed formal helper')
     dev.check_source(args.client_directory)
+    # Read-only: refuse before anything is created if the client is not already prepared.
+    try:
+        client_compat = verify_client_compat(dev.CLIENT, args.scale)
+        run_root = resolve_run_root(args.run_root, dev.CLIENT) if args.run_root is not None else dev.DELIVERY
+    except (ClientCompatMismatch, RunRootError) as error:
+        print(str(error), file=sys.stderr, flush=True)
+        emit({'event': 'failed', 'reason': str(error), 'writes': 0,
+              'differences': getattr(error, 'differences', [])})
+        # Nothing was started or created, so cleanup is trivially complete.
+        emit({'event': 'finished', 'exit_code': 1, 'accepted': False, 'cleanup_verified': True,
+              'server_owned': False, 'result': None, 'product_complete': False})
+        return 1
     # Identity helpers only; importing Start-Shared-World.py does not start a JVM.
     module = _load('lito_shared_world_identity', dev.ENTRY)
     effective = effective_from_profile(profile)
     source_ids = [s['id'] for s in profile['sources']]
     selected = dev.select_source(effective, args.source_id)
-    run = dev.DELIVERY / 'runs' / args.run_id
+    run = run_root / 'runs' / args.run_id
     run.mkdir(parents=True, exist_ok=False)
     commands = queue.Queue()
 
@@ -200,7 +346,8 @@ def main():
     report = {'run_id': args.run_id, 'external_server': True, 'server_owned': False, 'external_profile': profile,
               'external_profile_path': str(Path(args.external_profile).resolve()), 'game_window_verified': False,
               'runtime_client': str(dev.CLIENT / 'LiTo.bin'), 'bin_sha256': dev.BIN_SHA, 'service': args.service,
-              'scale': args.scale, 'cleanup_verified': False}
+              'scale': args.scale, 'cleanup_verified': False, 'run_root': str(run_root),
+              'client_writes_by_launcher': 0, 'client_compat': client_compat}
     try:
         endpoints = check_endpoints(profile)
         report['endpoint_checks'] = endpoints
@@ -213,9 +360,8 @@ def main():
                  'product_complete': False}
         dev.save(run / 'server-ready.json', ready); emit(ready)
         before_native()
-        shutil.copyfile(dev.DLL, dev.CLIENT / 'litoddraw.dll')
-        (dev.CLIENT / 'lito381-compat.ini').write_text('[Window]\nWidth=640\nHeight=480\nScalePercent=' + str(args.scale) +
-            '\n[Diagnostics]\nLogging=1\n[NumericBreakthrough]\nEnabled=1\nSchema=4\n', encoding='ascii')
+        # T139: re-check (read only) right before the native start; no copy, no rewrite of the client directory.
+        report['client_compat_before_native'] = verify_client_compat(dev.CLIENT, args.scale)
         render_log = dev.CLIENT / 'lito381-compat.log'
         report['render_log_initial_bytes'] = render_log.stat().st_size if render_log.exists() else 0
         native = native_profile(selected, profile)
