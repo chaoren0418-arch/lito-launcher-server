@@ -1,0 +1,47 @@
+{
+ "_說明": "m4-schema-precheck.py 的人工規則：tolerated_columns＝程式能容忍缺少的欄位（附證據）；notes＝缺口判讀（鍵是『庫別.表』）；row_checks＝傾印內資料列檢查；footnotes＝報告結尾的補充。路徑縮寫 S/＝lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/。",
+ "tolerated_columns": {
+  "character.character_buff": ["snapshot_version"]
+ },
+ "notes": {
+  "character.character_buff": "可容忍：`SourceBuffRead.versioned` 先用 `SELECT * … LIMIT 0` 看有沒有 `snapshot_version`，沒有就走舊單表分支（S/SourceBuffRead.java:10-23）；`healthCheck` 經 `SourceBuffRead.healthStatement` 改寫查詢（S/LegacyMySqlRepository.java:321-325）。若實驗庫**有**這一欄，就必須同時有 `character_buff_snapshot`（S/SourceBuffRead.java:24-28）",
+  "character.character_lito": "T103b 新欄位（S/SettlementSql.java:6、45-46；S/SharedDatabase.java:76-80 缺欄位直接拒絕啟動）。`m4-db-prepare.sql` P1c 以 `db/lito_character_ranking.sql` 的同一寫法補上；`p24_accounts_lito_exp` 是 #83 在 T103b 之前建的，預期同樣缺這 6 欄（待 `m4-db-verify.sql` 確認）",
+  "character.server_紀錄_獎勵": "選用表：待領獎勵 UI 才讀（tools/db-grants/review.json optional_tables）；缺表不影響啟動與 CHECKLIST 01–21"
+ },
+ "row_checks": [
+  {"group": "static", "table": "etcitem", "column": "classname", "kind": "values_present", "values": ["wand.Storm_Walk"], "show": ["item_id", "name"],
+   "why": "GM 魔杖：啟動時以 `SELECT item_id FROM etcitem WHERE classname='wand.Storm_Walk'` 取道具編號（S/GmTravel.java:16-17）；CHECKLIST 18／G22"},
+  {"group": "static", "table": "etcitem", "column": "item_id", "kind": "values_present",
+   "values": [40010, 40011, 40012, 40506, 40013, 40014, 40068, 40016, 40015, 140015, 40736], "show": ["name", "classname"],
+   "why": "T111 消耗品參數：啟動時讀這 11 列的 `classname`（S/ConsumableItemParameters.java:84-101、146）；缺列時退回內建值、不擋啟動。40015＝藍水（G25）"},
+  {"group": "static", "table": "etcitem", "column": "item_id", "kind": "values_present", "values": [40308, 40318, 49157, 55000], "show": ["name", "classname"],
+   "why": "`m4-seed-exp.sql` 會放進角色背包的道具：40308 金幣（魔法娃娃耗材）、40318 魔法寶石（緩速術 29 的材料）、49157 刻印的骨頭碎片（血之渴望 186 的材料）、55000 魔法娃娃：肥肥"},
+  {"group": "static", "table": "etcitem_doll_type", "column": "itemid", "kind": "values_present", "values": [55000], "show": ["powers", "need", "count", "time", "nameid"],
+   "why": "魔法娃娃樣板：背包查詢 LEFT JOIN 此表（S/LegacyMySqlRepository.java:8992）；`need`／`count` 是召喚耗材（G25）"},
+  {"group": "static", "table": "etcitem_doll_power_new", "column": "id", "kind": "values_present", "values": [102], "show": ["note", "classname"],
+   "why": "娃娃 55000 的 `powers`=102 必須在此表存在，否則該角色背包載入失敗（S/LegacyMySqlRepository.java:9030-9033、6241-6244）"},
+  {"group": "static", "table": "skills", "column": "skill_id", "kind": "values_present", "values": [4, 26, 29, 87, 186], "show": ["name", "skill_level", "itemConsumeId", "itemConsumeCount", "hpConsume"],
+   "why": "`m4-seed-exp.sql` 會寫進 `character_skills` 的技能：4 光箭與 29（G23）、26 通暢氣脈術（G02）、87 衝擊之暈、186 血之渴望（G25）；`skill_level` 必須 1..28（S/NativeSkillMastery.java:14-23）"},
+  {"group": "lito", "table": "lito_resource_release", "column": "release_id", "kind": "values_present", "values": [1], "show": ["source_version", "qualified_version"],
+   "why": "`ResourceDatabase.load` 要求 `release_id=1` 的 `qualified_version`＝`0.6.61`，否則啟動失敗（S/ResourceDatabase.java:29-30）"},
+  {"group": "lito", "table": "commands", "column": "name", "kind": "values_present", "values": ["polyme", "move", "loc", "item", "spawn", "de"], "show": ["class_name", "access_level"],
+   "why": "GM 指令以 `name` 查 `commands`（S/LegacyMySqlRepository.java:720-723；S/GmPolyMe.java:23-30、S/GmTravel.java:36-40、S/LiToGmCommands.java:26-35）；缺的由 `m4-seed-exp.sql` S2 補（CHECKLIST 12、17；G21）"},
+  {"group": "lito", "table": "commands", "column": "name", "kind": "list", "show": ["class_name", "access_level", "system"],
+   "why": "快照內現有的指令列（對照上一列缺少的名稱）"},
+  {"group": "lito", "table": "lito_source_server", "column": "source_id", "kind": "list", "show": ["display_name", "character_database", "enabled"],
+   "why": "快照的來源路由指向正式來源庫名；改用 `p24_380lito_lito_exp` 時 `m4-db-prepare.sql` P3 會改成只啟用一條、指向 `p24_accounts_lito_exp`（#284 02:43 裁定第 4 點）"},
+  {"group": "lito", "table": "lito_room_policy", "column": "policy_id", "kind": "list", "show": ["test_room_enabled", "test_bot_enabled"],
+   "why": "`NativeRoomRules.install` 啟動時讀（S/NativeRoomRules.java:20）；測試房不回存勝敗，CHECKLIST 08 要用玩家自建房"},
+  {"group": "lito", "table": "lito_battle_settlement", "column": "result_id", "kind": "count",
+   "why": "快照帶有正式環境的既有收據（`source_database` 是正式庫名）；`drainAll` 只處理 `source_database`＝本來源的列（S/SettlementSql.java:74），不影響實驗，但 #284 `Probe.java` 的『收據必須 0 筆』判斷在改用快照庫時不成立"},
+  {"group": "character", "table": "accounts", "column": "login", "kind": "count",
+   "why": "參考傾印內的帳號列數（實驗角色庫只複製結構，不使用這些資料）"}
+ ],
+ "footnotes": [
+  "靜態庫：`380_db.sql` 快照對新 JAR 需要的 56 張表與欄位**沒有缺口**，包含 #335 提到的 `spawnlist_time`、`系統_受擊無動作gfx`，以及 #284 第二輪卡住的 `裝備_armor_魔法.id`。也就是 #284 02:43 裁定的做法（由快照匯入 `p24_380db_lito_exp`）在結構上可行；資料內容是否讓各載入器的值域檢查通過，要實際啟動才知道（待驗證）。",
+  "控制庫：`380_lito.sql` 快照結構沒有缺口，但 `commands` 只有 5 列、名稱是 `1`／`2`／`3`／`de`／`loc`，沒有 `polyme`、`move`、`item`、`spawn`；`lito_source_server` 指向正式來源庫名。兩者都由準備腳本在實驗庫內處理。`p24_lito_lito_exp`（#83 由 P24 的 `p24_lito` 複製）沒有傾印可比，以 `m4-db-verify.sql` 的 V2、V4、V5、V6 為準。",
+  "角色庫：`380_ac.sql` 只是參考。`p24_accounts_lito_exp` 的實際結構（特別是 `character_lito` 的 7 個後加欄位，以及 §6 列出的各表欄位）要在取得 lease、啟動 P24Lab 後用 `m4-db-verify.sql` 查。",
+  "欄位名稱比對不分大小寫（同 MySQL）。`SELECT *` 的表只能檢查程式以 `getXxx(\"欄位\")` 取用的欄位；以欄位序號取值的地方不在靜態比對範圍內。",
+  "本檢查不涵蓋：資料列的值域（例如各載入器對數值範圍的檢查）、索引、字元集／定序、資料量。"
+ ]
+}
