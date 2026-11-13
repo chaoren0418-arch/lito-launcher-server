@@ -107,22 +107,24 @@ foreach ($path in @('D:\a\lito伺服器\LiTo381-Server\runtime', 'D:\a\scratch\m
 
 # ---- 監聽 ----
 $expected = Get-M4ExpectedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(1)
-$allowed = Get-M4AllowedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(1)
-Test-Case '監聽：必要清單' { ($expected -join ',') -eq '127.0.0.1:42083,127.0.0.2:42084' }
-Test-Case '監聽：允許清單' { ($allowed -join ',') -eq '127.0.0.2:42083,127.0.0.1:42084' }
-Test-Case '監聽：source_id 3 → 42086' { ((Get-M4ExpectedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(3)) -join ',') -eq '127.0.0.1:42083,127.0.0.2:42086' }
+$legacy = Get-M4ExpectedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(1) -LegacyTwoOnly
+Test-Case '監聽：預期四個（RUNBOOK A02）' { (($expected | Sort-Object) -join ',') -eq '127.0.0.1:42083,127.0.0.1:42084,127.0.0.2:42083,127.0.0.2:42084' }
+Test-Case '監聽：-LegacyTwoOnly 是任務原文的兩個' { ($legacy -join ',') -eq '127.0.0.1:42083,127.0.0.2:42084' }
+# 函式以「, $陣列」回傳，要先存進變數再接管線（直接接管線會把整個陣列當成一個物件）。
+$sourceThree = Get-M4ExpectedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(3)
+$twoSources = Get-M4ExpectedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(1, 2)
+Test-Case '監聽：source_id 3 → 42086' { (($sourceThree | Sort-Object) -join ',') -eq '127.0.0.1:42083,127.0.0.1:42086,127.0.0.2:42083,127.0.0.2:42086' }
+Test-Case '監聽：兩個來源 → 六個' { @($twoSources).Count -eq 6 }
 Test-Case '監聽：source_id 9 拒絕' { Test-Throws { Get-M4ExpectedListeners -Bind '127.0.0.1' -GameBind '127.0.0.2' -Port 42083 -SourceId @(9) } }
-Test-Case '監聽：剛好兩個 → Ok' { (Compare-M4Listeners -Actual $expected -Expected $expected -Allowed $allowed).Ok }
-Test-Case '監聽：四個（含允許）→ Ok 且列出 AllowedSeen' {
-    $r = Compare-M4Listeners -Actual ($expected + $allowed) -Expected $expected -Allowed $allowed
-    $r.Ok -and @($r.AllowedSeen).Count -eq 2
-}
-Test-Case '監聽：-Strict 下四個 → 不通過' { -not (Compare-M4Listeners -Actual ($expected + $allowed) -Expected $expected -Allowed @()).Ok }
-Test-Case '監聽：少一個 → 不通過' { $r = Compare-M4Listeners -Actual @('127.0.0.1:42083') -Expected $expected -Allowed $allowed; (-not $r.Ok) -and @($r.Missing).Count -eq 1 }
-Test-Case '監聽：0.0.0.0:42083 → 違規' { $r = Compare-M4Listeners -Actual ($expected + @('0.0.0.0:42083')) -Expected $expected -Allowed $allowed; (-not $r.Ok) -and @($r.Violations).Count -eq 1 }
-Test-Case '監聽：127.0.0.1:3306 → 違規' { $r = Compare-M4Listeners -Actual ($expected + @('127.0.0.1:3306')) -Expected $expected -Allowed $allowed; (-not $r.Ok) -and @($r.Violations).Count -eq 1 }
-Test-Case '監聽：[::]:42083 → 違規' { $r = Compare-M4Listeners -Actual ($expected + @(':::42083')) -Expected $expected -Allowed $allowed; (-not $r.Ok) -and @($r.Violations).Count -eq 1 }
-Test-Case '監聽：多一個 loopback 埠 → 不通過' { $r = Compare-M4Listeners -Actual ($expected + @('127.0.0.1:50000')) -Expected $expected -Allowed $allowed; (-not $r.Ok) -and @($r.Unexpected).Count -eq 1 }
+Test-Case '監聽：剛好四個 → Ok' { (Compare-M4Listeners -Actual $expected -Expected $expected).Ok }
+Test-Case '監聽：只有任務原文的兩個 → 少兩個、不通過' { $r = Compare-M4Listeners -Actual $legacy -Expected $expected; (-not $r.Ok) -and @($r.Missing).Count -eq 2 }
+Test-Case '監聽：-LegacyTwoOnly 下四個 → 多兩個、不通過' { $r = Compare-M4Listeners -Actual $expected -Expected $legacy; (-not $r.Ok) -and @($r.Unexpected).Count -eq 2 }
+Test-Case '監聽：允許清單仍可用（AllowedSeen）' { $r = Compare-M4Listeners -Actual $expected -Expected $legacy -Allowed @('127.0.0.2:42083', '127.0.0.1:42084'); $r.Ok -and @($r.AllowedSeen).Count -eq 2 }
+Test-Case '監聽：少一個 → 不通過' { $r = Compare-M4Listeners -Actual @($expected | Select-Object -First 3) -Expected $expected; (-not $r.Ok) -and @($r.Missing).Count -eq 1 }
+Test-Case '監聽：0.0.0.0:42083 → 違規' { $r = Compare-M4Listeners -Actual ($expected + @('0.0.0.0:42083')) -Expected $expected; (-not $r.Ok) -and @($r.Violations).Count -eq 1 }
+Test-Case '監聽：127.0.0.1:3306 → 違規' { $r = Compare-M4Listeners -Actual ($expected + @('127.0.0.1:3306')) -Expected $expected; (-not $r.Ok) -and @($r.Violations).Count -eq 1 }
+Test-Case '監聽：[::]:42083 → 違規' { $r = Compare-M4Listeners -Actual ($expected + @(':::42083')) -Expected $expected; (-not $r.Ok) -and @($r.Violations).Count -eq 1 }
+Test-Case '監聽：多一個 loopback 埠 → 不通過' { $r = Compare-M4Listeners -Actual ($expected + @('127.0.0.1:50000')) -Expected $expected; (-not $r.Ok) -and @($r.Unexpected).Count -eq 1 }
 
 # ---- Label 與唯讀 SQL ----
 foreach ($label in @('before-15', 'after-15', 'before-16-r2', 'after-G24.1')) { Test-Case "Label 接受 $label" { -not (Test-Throws { Assert-M4Label $label }) } }

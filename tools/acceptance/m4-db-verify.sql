@@ -573,6 +573,15 @@ PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 SELECT 'V4b' AS check_id, IFNULL(@m4_release, '（讀不到）') AS qualified_version,
        IF(IFNULL(@m4_release, '') = '0.6.61', 'PASS', IF((@m4_fail := @m4_fail + 1) > 0, 'FAIL', 'FAIL')) AS status;
 
+-- V4c：lito_room_policy 有 policy_id=1 的一列（NativeRoomRules.install 啟動時讀，NativeRoomRules.java:20-24）
+SET @m4_has = (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = CONVERT(@m4_lito USING utf8) AND TABLE_NAME = 'lito_room_policy' AND COLUMN_NAME = 'policy_id');
+SET @m4_policy = -1;
+SET @m4_sql = IF(@m4_has = 1, CONCAT('SELECT COUNT(*) INTO @m4_policy FROM `', @m4_lito, '`.`lito_room_policy` WHERE policy_id = 1'), 'DO 0');
+PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
+SELECT 'V4c' AS check_id, @m4_policy AS room_policy_rows_with_id_1,
+       IF(@m4_policy = 1, 'PASS', IF((@m4_fail := @m4_fail + 1) > 0, 'FAIL', 'FAIL')) AS status;
+
 -- ===== V5：來源路由只有一條啟用，且指向實驗角色庫（#83；UnifiedConfiguration 讀 lito_source_server）=====
 SET @m4_has = (SELECT COUNT(*) FROM information_schema.TABLES
                WHERE TABLE_SCHEMA = CONVERT(@m4_lito USING utf8) AND TABLE_NAME = 'lito_source_server');
@@ -771,7 +780,8 @@ SET @m4_sql = IF(@m4_has = 4, CONCAT(
   'SELECT ''V8'' AS check_id, ''accounts／characters／character_lito／lito_battle_settlement 有缺表，見 V2'' AS note');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 
--- ===== V9：資料前置狀態（INFO，不計入 verdict；數字是 0 的項目代表對應的驗收步驟會被資料擋住，執行 m4-seed-exp.sql 補）=====
+-- ===== V9：資料前置狀態（INFO，不計入 verdict；對應 M4-RUNBOOK「資料前置」D1–D14。characters_below_level_15 以外，數字是 0 的項目
+--        代表對應的驗收步驟會被資料擋住，執行 m4-seed-exp.sql 補）=====
 SET @m4_has = (SELECT COUNT(*) FROM information_schema.TABLES
                WHERE (TABLE_SCHEMA = CONVERT(@m4_ac USING utf8) AND TABLE_NAME IN ('accounts', 'characters', 'character_items', 'character_skills'))
                   OR (TABLE_SCHEMA = CONVERT(@m4_static USING utf8) AND TABLE_NAME = 'etcitem'));
@@ -779,15 +789,27 @@ SET @m4_sql = IF(@m4_has = 5, CONCAT(
   'SELECT ''V9'' AS check_id, ',
   '(SELECT COUNT(*) FROM `', @m4_ac, '`.`accounts` WHERE access_level >= 200 AND banned = 0) AS gm_accounts_level_200, ',
   '(SELECT IFNULL(MAX(q.n), 0) FROM (SELECT COUNT(*) AS n FROM `', @m4_ac, '`.`characters` WHERE Banned = 0 GROUP BY account_name) q) AS max_characters_per_account, ',
+  '(SELECT COUNT(*) FROM `', @m4_ac, '`.`characters` WHERE level < 15 AND Banned = 0) AS characters_below_level_15, ',
+  '(SELECT COUNT(DISTINCT account_name) FROM `', @m4_ac, '`.`characters` WHERE Banned = 0) AS accounts_with_characters, ',
+  '(SELECT COUNT(*) FROM (SELECT Clanname FROM `', @m4_ac, '`.`characters` WHERE Banned = 0 AND Clanname <> '''' GROUP BY Clanname HAVING COUNT(DISTINCT account_name) >= 2) q2) AS clans_spanning_two_accounts, ',
   '(SELECT COUNT(*) FROM `', @m4_ac, '`.`characters` WHERE Type = 5 AND Banned = 0) AS dragon_knights, ',
   '(SELECT COUNT(*) FROM `', @m4_ac, '`.`characters` WHERE Type = 6 AND Banned = 0) AS illusionists, ',
+  '(SELECT COUNT(DISTINCT char_obj_id) FROM `', @m4_ac, '`.`character_skills` WHERE skill_id = 4) AS characters_with_skill_4, ',
   '(SELECT COUNT(DISTINCT char_obj_id) FROM `', @m4_ac, '`.`character_skills` WHERE skill_id = 26) AS characters_with_skill_26, ',
+  '(SELECT COUNT(DISTINCT char_obj_id) FROM `', @m4_ac, '`.`character_skills` WHERE skill_id = 29) AS characters_with_skill_29, ',
   '(SELECT COUNT(DISTINCT char_obj_id) FROM `', @m4_ac, '`.`character_skills` WHERE skill_id = 186) AS characters_with_skill_186, ',
   '(SELECT COUNT(DISTINCT char_id) FROM `', @m4_ac, '`.`character_items` WHERE item_id = 40015) AS characters_with_blue_potion, ',
   '(SELECT COUNT(DISTINCT char_id) FROM `', @m4_ac, '`.`character_items` WHERE item_id = 55000) AS characters_with_magic_doll_55000, ',
   '(SELECT COUNT(DISTINCT i.char_id) FROM `', @m4_ac, '`.`character_items` i JOIN `', @m4_static, '`.`etcitem` e ON e.item_id = i.item_id ',
   'WHERE e.classname = ''wand.Storm_Walk'') AS characters_with_gm_wand'),
   'SELECT ''V9'' AS check_id, ''accounts／characters／character_items／character_skills／etcitem 有缺表，見 V2'' AS note');
+PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
+-- V9b：擂台商店是否有藍色藥水 40015、變形卷軸 40088（D14；TournamentShopCatalog 讀 lito_tournament_shop）
+SET @m4_has = (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = CONVERT(@m4_lito USING utf8) AND TABLE_NAME = 'lito_tournament_shop' AND COLUMN_NAME IN ('item_id', 'enabled', 'buy_price'));
+SET @m4_sql = IF(@m4_has = 3, CONCAT('SELECT ''V9b'' AS check_id, w.item_id, IFNULL(s.enabled, ''（缺）'') AS enabled, s.buy_price ',
+  'FROM (SELECT 40015 AS item_id UNION ALL SELECT 40088) w LEFT JOIN `', @m4_lito, '`.`lito_tournament_shop` s ON s.item_id = w.item_id'),
+  'SELECT ''V9b'' AS check_id, ''lito_tournament_shop 不存在或欄位不同，見 V2'' AS note');
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 
 -- ===== 結論 =====

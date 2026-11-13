@@ -1,6 +1,7 @@
 # tools/acceptance — M4 實驗環境預檢與自動化腳本（T128／Issue #379）
 
 給 Codex 在 P24Lab 實驗環境跑 M4 驗收（#284、#285、T137、T138）用。開機前能查的先查，重複性操作寫成腳本。
+步驟內容與預期畫面在 [`docs/acceptance/M4-RUNBOOK.md`](../../docs/acceptance/M4-RUNBOOK.md)（T127）；本目錄對應它的 P3、P4、P6、P7、A02、A15、A16、A20 與「資料前置」D1–D14。
 結果文件：[`docs/acceptance/m4-schema-precheck.md`](../../docs/acceptance/m4-schema-precheck.md)；任務報告：[`docs/reports/issue-379.md`](../../docs/reports/issue-379.md)。
 
 ## 驗證狀態（先看這一段）
@@ -8,7 +9,7 @@
 | 項目 | 狀態 |
 |---|---|
 | `m4-schema-precheck.py` | **已在本機執行**（python 靜態，讀 `D:\BinEngine\environments\p24\sql\` 三份傾印） |
-| `*.ps1` | 本機只做語法解析與 `m4-selftest.ps1`（純函式 154 項）；只碰檔案的流程在 CI 的 Windows PowerShell 5.1 用假檔案跑過（`ci/dry-run.ps1`） |
+| `*.ps1` | 本機只做語法解析與 `m4-selftest.ps1`（純函式 156 項）；只碰檔案的流程在 CI 的 Windows PowerShell 5.1 用假檔案跑過（`ci/dry-run.ps1`） |
 | `m4-db-prepare.sql`、`m4-db-verify.sql`、`m4-seed-exp.sql` | 只在 CI 的拋棄式 MySQL 8.0（埠 43324、伺服器選項同 P24Lab `mysql.ini`、資料是 repo 的 CI fixture）跑過（`ci/run-sql-checks.sh`）；**沒有對 P24Lab 執行過** |
 | 連 P24Lab、啟動 Java、`m4-sql-snapshot.ps1` 實際連線、`m4-listen-check.ps1` 對真的 Java 程序 | **未實跑**，由 Codex 執行 |
 
@@ -21,11 +22,11 @@
 | `generated/m4-required-columns.tsv` | 每個「庫別／表／欄位」一列的需求清單 | — |
 | `m4-db-verify.sql` | 連線核對（只有 SELECT）：schema、表與欄位、引擎、資源表、來源路由、GM 指令列、實驗帳號權限、資料前置狀態；最後一列 `M4-VERIFY: PASS／FAIL` | 否 |
 | `m4-db-prepare.sql` | 補 `character_lito` 欄位、確認收據表、來源路由指向實驗角色庫、授權實驗帳號 | 只寫 `*_lito_exp` |
-| `m4-seed-exp.sql`＋`m4-seed-vars.example.sql` | 資料前置：GM 帳號、八角色、龍騎士／幻術師、技能、道具、GM 指令列 | 只寫 `*_lito_exp` |
+| `m4-seed-exp.sql`＋`m4-seed-vars.example.sql` | 資料前置（RUNBOOK D1–D14）：GM 帳號、八角色、龍騎士／幻術師、技能、同血盟、道具、GM 指令列、可選的第 3／4 個帳號 | 只寫 `*_lito_exp` |
 | `m4-prepare.ps1` | 建 `scratch/m4/run-<UTC>/`：複製 JAR 與 lib、逐檔 SHA-256、空的 `runtime/`、`evidence/`、不含帳密的設定範本、22 鍵對照 | 只寫 `scratch/m4/` |
 | `m4-sql-snapshot.ps1` | 戰績／收據快照（只有 SELECT）→ `evidence/sql-<Label>.txt` | 只寫 run 目錄 |
 | `m4-sql-diff.ps1` | 比對兩份快照，判定勝敗、積分、收據 | 只寫 run 目錄 |
-| `m4-listen-check.ps1` | 列出 Java PID 的監聽位址並核對 | 只寫 run 目錄 |
+| `m4-listen-check.ps1` | 列出 Java PID 的監聽位址並核對（每個來源四個，同 RUNBOOK A02） | 只寫 run 目錄 |
 | `m4-wal-check.ps1` | 列 `runtime/battle-settlements/`，回報 `.pending`／`.tmp` | 只寫 run 目錄 |
 | `m4-evidence-index.ps1` | 依命名契約掃截圖與證據，產生結果檔骨架，缺檔列「未執行」 | `docs/acceptance/m4-<sha8>.md`（不存在時） |
 | `m4-common.ps1`、`m4-selftest.ps1` | 共用守門函式與自我檢查 | 否 |
@@ -68,7 +69,7 @@ Copy-Item tools\acceptance\m4-seed-vars.example.sql $vars
 notepad $vars
 ```
 
-`$vars` 是私密檔（`scratch/` 被 git 忽略）：把 `__M4_…__` 換成實際值；帳號 A、B 取自 #83 私密交接檔，GM 帳號自訂。存檔用 UTF-8（無 BOM 較保險）。要改用 `380_lito.sql` 快照建的控制庫時，在檔內加一行 `SET @m4_lito = 'p24_380lito_lito_exp';`，並在上面 `m4-prepare.ps1` 加 `-LitoDatabase p24_380lito_lito_exp`。
+`$vars` 是私密檔（`scratch/` 被 git 忽略）：把 `__M4_…__` 換成實際值；帳號 A、B 取自 #83 私密交接檔，GM 帳號自訂；帳號 C、D（RUNBOOK D13，2 對 2 用）不需要就維持佔位符。存檔用 UTF-8（無 BOM 較保險）。要改用 `380_lito.sql` 快照建的控制庫時，在檔內加一行 `SET @m4_lito = 'p24_380lito_lito_exp';`，並在上面 `m4-prepare.ps1` 加 `-LitoDatabase p24_380lito_lito_exp`。
 
 **C. 資料庫（管理身分）**
 
@@ -128,7 +129,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\acceptance\m4-sql-snap
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\acceptance\m4-sql-diff.ps1 -RunDirectory $run -Step 15 -ExpectWinner <勝者角色名> -ExpectLoser <敗者角色名>
 ```
 
-`before` 在開打前、`after` 在結算畫面出現後執行。控制庫不是 `p24_lito_lito_exp` 時，快照加 `-LitoDatabase p24_380lito_lito_exp`。`m4-sql-diff.ps1` 退出碼 0＝PASS、1＝FAIL、3＝沒有新收據。
+`before` 在開打前、`after` 在結算畫面出現後執行。Label 的步驟部分照命名契約寫 `NN`、`G<編號>-<序>` 或 `V<序>`（例：`before-G24-1`）；RUNBOOK P7 的基線是 `-Label before-00`。控制庫不是 `p24_lito_lito_exp` 時，快照加 `-LitoDatabase p24_380lito_lito_exp`。`m4-sql-diff.ps1` 退出碼 0＝PASS、1＝FAIL、3＝沒有新收據。
 
 **F. 結束**
 
@@ -150,47 +151,63 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\acceptance\m4-evidence
 
 ## 資料前置（`m4-seed-exp.sql` 寫什麼、依據是什麼）
 
-T127 尚未合併，下表由 CHECKLIST 05、12、17、18 與 G02、G20–G25 推出。路徑 `S/`＝`lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/`。
+對應 `docs/acceptance/M4-RUNBOOK.md`「資料前置」的 D1–D14（T127）。路徑 `S/`＝`lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/`。「現況」要連線才知道，看 `db-verify` 的 V6、V9、V9b。
 
-| 驗收項目 | 需要的資料 | 判斷依據（類別：行號） | seed 步驟 |
+| RUNBOOK | 需要的資料 | 判斷依據（類別：行號） | seed 怎麼處理 |
 |---|---|---|---|
-| 登入（全部） | `accounts.login`／`password`（**明文比對**）、`banned=0` | `S/LegacyMySqlRepository.java:694-701` | S1 |
-| GM 資格（CHECKLIST 12、17、18；G21、G22） | `accounts.access_level` ≥ 指令的 `commands.access_level`（200）。只看帳號，**不看** `characters.AccessLevel`；權限在登入後首次使用時快取，改完要重新登入 | `S/LegacyMySqlRepository.java:707-718`、`S/SourceAdministration.java:20-33`、`S/GmPolyMe.java:23-30`、`S/GmTravel.java:36-40`、`S/LiToGmCommands.java:26-35` | S1（GM 帳號 200） |
-| GM 指令列 | 控制庫 `commands`：`polyme`／`L1PolyMe`、`loc`／`L1Loc`、`move`／`L1Move`、`item`／`L1CreateItem`、`spawn`／`L1SpawnCmd`、`de`／`L1SpawnDe`，`system=0` | `S/LegacyMySqlRepository.java:720-723`；內容同 `db/lito_commands.sql`、`db/lito_gm_polyme.sql`、`db/lito_gm_travel.sql` | S2 |
-| `.polyme`（G21） | 另讀靜態庫 `polymorphs`（`polyid`、`cause`）；有該列時 `cause` 必須含 2。快照內 `cause` 是 2／3／6／7 的列有 614 筆，例如 945（牛）、947（鹿） | `S/GmPolyMe.java:113-125`（沒有該列時視為允許） | 不需要 seed |
-| 八角色翻頁（CHECKLIST 05） | 同一帳號 5–8 個 `Banned=0` 的角色。清單固定 `ORDER BY char_name LIMIT 8`，不看 `accounts.character_slot`；每頁四格是客戶端行為 | `S/LegacyMySqlRepository.java:969-983` | S3（帳號 A 加 7 個） |
-| 龍騎士／幻術師（G20） | `characters.Type`＝5（龍騎士）／6（幻術師）；`Class` 是外型 6658／6671（男）。結算畫面圖示只送 `Type` | `S/BattleClassGfx.java:5-6`、`S/BattleChainswordWeakness.java:17` | S3（`M4DK` 在帳號 A、`M4IL` 在帳號 B，兩人可對打） |
-| 技能（CHECKLIST 10、11；G02、G23、G25） | `character_skills` 要有該技能列，且靜態庫 `skills.skill_level` 在 1..28 | `S/LegacyMySqlRepository.java:2688-2691`、`S/NativeSkillMastery.java:14-23` | S4：`M4A4`（法師）4 光箭、26 通暢氣脈術、29 緩速術；`M4A2`（騎士）87 衝擊之暈；`M4DK` 186 血之渴望；`M4GM` 4、26 |
-| 技能材料 | 29 緩速術要 40318 魔法寶石；186 血之渴望要 49157 刻印的骨頭碎片＋HP 30（靜態庫 `skills.itemConsumeId`） | 預檢 §5 的 `skills` 列 | S5 |
-| 魔法娃娃（G25） | 背包有娃娃道具（`etcitem_doll_type.itemid`），召喚時扣 `need`／`count`：55000 要 40308 金幣 ×1000；`powers` 的編號必須在 `etcitem_doll_power_new` | `S/LegacyMySqlRepository.java:8992、9030-9033、6241-6244`、`S/ClientSession.java:19935-19976` | S5（`M4DK`、`M4IL` 各 55000 ×1＋金幣 100000） |
-| 藍水（G25） | 背包有 40015（加速魔力回復藥水），`count≥1` | `S/InventoryCatalog.java:703-707`、`S/ConsumableItemParameters.java:84-101` | S5（五個角色各 10 瓶） |
-| GM 魔杖（CHECKLIST 18；G22） | 背包有靜態庫 `etcitem.classname='wand.Storm_Walk'` 的道具（快照內是 42501）；使用魔杖本身不檢查 GM 權限，只能在戰鬥中用 | `S/GmTravel.java:16-17、59-74` | S5（`M4GM`；item_id 執行時從靜態庫查，不寫死） |
+| D1 等級 ≥ 15 | A、B 用來對戰的角色等級 15 以上 | RUNBOOK 引 `S/TournamentRoomPolicy.java:9-18` | seed 的角色全部等級 52。#83 既有角色的等級**不改**（不 UPDATE）；V9 的 `characters_below_level_15` 不是 0 時，改用 seed 的角色 |
+| D2 八角色翻頁 | 同一帳號 5–8 個 `Banned=0` 的角色。清單固定 `ORDER BY char_name LIMIT 8`，不看 `accounts.character_slot` | `S/LegacyMySqlRepository.java:969-983` | S3：帳號 A 加 7 個（連同既有 1 個共 8 個） |
+| D3 GM 帳號 | `accounts.access_level` ≥ 指令門檻（200）。只看帳號，**不看** `characters.AccessLevel`；權限在登入後首次使用時快取，改完要重新登入。登入本身只讀 `login`／`password`（**明文比對**）／`banned` | `S/LegacyMySqlRepository.java:694-701、707-718`、`S/SourceAdministration.java:20-33`、`S/GmPolyMe.java:23-30`、`S/GmTravel.java:36-40`、`S/LiToGmCommands.java:26-35` | S1：新建 GM 帳號（200）與角色 `M4GM` |
+| D4 GM 指令列 | 控制庫 `commands`：`polyme`／`L1PolyMe`、`loc`／`L1Loc`、`move`／`L1Move`、`item`／`L1CreateItem`、`spawn`／`L1SpawnCmd`、`de`／`L1SpawnDe`，`system=0` | `S/LegacyMySqlRepository.java:720-723`；內容同 `db/lito_commands.sql`、`db/lito_gm_polyme.sql`、`db/lito_gm_travel.sql` | S2：只補缺少的名稱。`380_lito.sql` 快照只有 `1`／`2`／`3`／`de`／`loc` |
+| （A12／G21） | `.polyme` 另讀靜態庫 `polymorphs`；有該 `polyid` 的列時 `cause` 必須含 2，沒有列視為允許。快照內 `cause` 是 2／3／6／7 的列有 614 筆，例如 945（牛）、947（鹿） | `S/GmPolyMe.java:113-125` | 不需要 seed |
+| D5 GM 魔杖樣板 | 靜態庫 `etcitem.classname='wand.Storm_Walk'`（快照內是 42501）；背包要有這個道具；使用魔杖本身不檢查 GM 權限，只能在戰鬥中用 | `S/GmTravel.java:16-17、59-74` | S5：放進 `M4GM` 背包（item_id 執行時從靜態庫查，不寫死） |
+| D6 龍騎士／幻術師 | `characters.Type`＝5／6，分屬兩個帳號；`Class` 是外型 6658／6671（男）。結算畫面圖示只送 `Type` | `S/BattleClassGfx.java:5-6`、`S/BattleChainswordWeakness.java:17` | S3：`M4DK`（帳號 A）、`M4IL`（帳號 B） |
+| D7 光箭＋近戰武器 | `character_skills` 有技能 4，且靜態庫 `skills.skill_level` 在 1..28 | `S/LegacyMySqlRepository.java:2688-2691`、`S/NativeSkillMastery.java:14-23` | S4：`M4A4`（帳號 A 的法師）與 `M4GM` 有技能 4。**近戰武器沒有放**（見下方「沒有做的項目」） |
+| D8 技能 26 | 同上；`M4A4` 的 MP 300 | 同上；`S/ClientSession.java:36304-36307` | S4：`M4A4`、`M4GM` |
+| D9 同血盟 | 兩個角色的 `characters.Clanname` 相同且非空。伺服器在角色進場時把原始血盟名稱匯入記憶體，`sameClan` 比的是這個 | `S/ClientSession.java:94074` → `S/GameHub.java:5172-5194`；`S/GameHub.java:5274-5279` | S3：`M4A4`（帳號 A）與 `M4B2`（帳號 B 的騎士）的 `Clanname`＝`M4CLAN`。只填名稱、`ClanID` 留 0、沒有 `clan_data` 列——**是否足夠是推測，待實機**。其他角色不入盟，避免影響一般對戰 |
+| D10 負面技能 | 技能 29 緩速術，材料 40318 魔法寶石 ×1（靜態庫 `skills.itemConsumeId`） | 預檢 §5 的 `skills` 列 | S4＋S5：`M4A4` 有技能 29 與魔法寶石 ×30 |
+| D11 血之渴望 | 技能 186，材料 49157 刻印的骨頭碎片 ×1＋HP 30 | 同上；`S/BattleSpellCatalog.java:218` | S4＋S5：`M4DK` 有技能 186 與碎片 ×30 |
+| D12 魔法娃娃 | 背包有娃娃道具（`etcitem_doll_type.itemid`），召喚時扣 `need`／`count`：55000 要 40308 金幣 ×1000；`powers` 的編號必須在 `etcitem_doll_power_new` | `S/LegacyMySqlRepository.java:8992、9030-9033、6241-6244`、`S/ClientSession.java:19935-19976` | S5：`M4DK`、`M4IL` 各 55000 ×1＋金幣 100000 |
+| D13 第 3、4 個帳號 | 兩個額外的普通帳號各一個角色 | RUNBOOK 引 `gameplay.md:56` | S1＋S3：`$vars` 填了 `@m4_c_login`／`@m4_d_login` 才建立（`M4C1` 騎士、`M4D1` 妖精）；維持佔位符就略過 |
+| D14 商店藍水／變形卷軸 | 控制庫 `lito_tournament_shop` 有 40015、40088 | RUNBOOK 引 `S/TournamentShopCatalog.java:39-54` | 不寫商店表。`380_lito.sql` 快照有這兩列（預檢 §5）；實驗庫現況看 V9b。替代：S5 直接把 40015（五個角色各 10 瓶）與 40088（`M4A4` ×5）放進背包 |
 | 背包列的硬性規則 | `count` 必須 1..2³¹−1、`item_id` 必須對得到樣板，否則**該角色整個背包載入失敗** | `S/LegacyMySqlRepository.java:6181-6188`、`S/LegacyInventoryWeightLoader.java:46-48` | S5 用 JOIN 樣板的方式寫入，樣板不存在就不寫 |
 | 戰績列 | 不需要預先建立：`character_lito` 以 LEFT JOIN 讀取，第一場結算時由 `SettlementSql.drain` 新增 | `S/SharedDatabase.java:98`、`S/SettlementSql.java:98` | 不寫 |
 
-seed 建立的角色：`M4GM`（GM 帳號，法師）、帳號 A 的 `M4DK`（龍騎士）、`M4A2`（騎士）、`M4A3`（妖精）、`M4A4`（法師）、`M4A5`（黑妖）、`M4A6`（王族）、`M4A7`（女騎士）、帳號 B 的 `M4IL`（幻術師）；objid 190379001–190379009，背包列 id 190379101–190379112。
+seed 建立的角色（objid 190379001–190379012，背包列 id 190379101–190379113）：
+
+| 帳號 | 角色 | 職業 | 用途 |
+|---|---|---|---|
+| GM | `M4GM` | 法師 | GM 指令、GM 魔杖（A12、A17、A18、G21、G22） |
+| A | `M4DK` | 龍騎士 | G20、G25（血之渴望、魔法娃娃、藍水） |
+| A | `M4A4` | 法師，血盟 `M4CLAN` | A11、G02、G23（技能 4、26、29） |
+| A | `M4A2`、`M4A3`、`M4A5`、`M4A6`、`M4A7` | 騎士、妖精、黑妖、王族、女騎士 | 八角色翻頁（`M4A2` 另有技能 87） |
+| B | `M4IL` | 幻術師 | G20、G25 |
+| B | `M4B2` | 騎士，血盟 `M4CLAN` | G02 對友方的對象 |
+| C、D（可選） | `M4C1`、`M4D1` | 騎士、妖精 | 2 對 2 |
 
 **使用時要注意**
 
-- **結算、死亡、斷線測試用帳號 A、B，不要用 GM 帳號**：`accounts.access_level≥200` 的帳號受到致命傷害時會回滿血而不是死亡（`S/NativePlayerVitals.java:19-30`、`S/NativePlayerCommit.java:788、808`；只追到排隊傷害這一條路徑）。
-- 帳號 A 原本若已有 2 個以上角色，加 7 個後超過 8 個，依名稱排序第 9 個起不會出現在清單。#83 報告寫每個帳號一個角色；`db-verify` 的 V9 會列出 `max_characters_per_account`。
+- **結算、死亡、斷線測試用帳號 A、B，不要用 GM 帳號**：`accounts.access_level≥200` 的帳號受到致命傷害時會回滿血而不是死亡（`S/NativePlayerVitals.java:12-30`、`S/NativePlayerCommit.java:788、808`；只追到排隊傷害這一條路徑）。
+- 帳號 A 原本若已有 2 個以上角色，加 7 個後超過 8 個，依名稱排序第 9 個起不會出現在清單。#83 報告寫每個帳號一個角色；V9 會列出 `max_characters_per_account`。
 - seed 不改既有帳號：帳號 A、B 已存在時密碼與權限不動；GM 帳號名稱若剛好已存在也不會被改成 200（S0、S1 的輸出會顯示）。
 
 **做不到或沒有做的項目**
 
 | 項目 | 原因 |
 |---|---|
-| 武器、防具（含已裝備狀態） | 沒有放。裝備要同時符合 `weapon`／`armor` 樣板、職業限制與 `is_equipped` 的載入規則，這部分沒有查完；CHECKLIST 10 的近戰技能若需要特定武器（例如 87 衝擊之暈），登入後用 GM 帳號 `.item` 取得或由 T127 的資料前置表補需求 |
+| 客戶端啟動腳本 `m4-start-client`（RUNBOOK P5） | 沒有做。T127 報告寫的是「若主控同意」才加；它要啟動 `LiTo.bin`、設三個環境變數、對第二視窗做記憶體內修補，本機規定不能執行也無法驗證，而且不在 T128 原任務範圍。**A03 之後需要遊戲視窗的步驟仍然是「阻塞：P5」**，請主控決定由誰做 |
+| 近戰武器、防具（D7 的後半） | 沒有放。裝備要同時符合 `weapon`／`armor` 樣板、職業限制與 `is_equipped` 的載入規則，這部分沒有查完。A10 是對 B 按左鍵攻擊，空手是否算數待實機；需要武器時用 GM 帳號 `.item` 取得（只在本場記憶體） |
 | 幻術師、黑妖、妖精的技能 | 沒有放。G20 只需要職業圖示；其他項目沒有指定這些職業的技能 |
 | 血之渴望能否由龍騎士外型施放 | seed 給了技能列與材料，但施放還要求外型支援對應動作（`BattleAnimationCatalog.supportsTimedAction`），沒有逐外型確認，待實機 |
-| 角色數值是否合理 | 等級 52、HP／MP／能力值是自訂的整數，`Exp` 留 0。登入用的查詢不檢查等級與經驗是否一致（`S/LegacyMySqlRepository.java:969-983`），但進場後的行為待實機 |
+| 同血盟（D9）只靠 `Clanname` | 見上表，推測可行、待實機。不行的話 RUNBOOK G02 的第 3、4 案照舊標阻塞 |
+| 角色數值是否合理 | 等級 52、HP／MP／能力值是自訂的整數，`Exp` 留 0。登入用的查詢不檢查等級與經驗是否一致（`S/LegacyMySqlRepository.java:969-983`），進場後的行為待實機 |
 | 清除 seed | 沒有提供刪除腳本（規則：不刪資料）。seed 的列有固定 objid／id 範圍，日後要清由管理者依 #83 的清理流程處理 |
-| G24 斷線、G26 重複登入、G27 map 12000 | 不需要額外資料列（兩個普通帳號即可；G27 看 T130 結論） |
 
 ## 與任務說明不同的地方
 
-- **監聽位址**：任務與 CHECKLIST 02 寫「只有 `127.0.0.1:42083` 與 `127.0.0.2:(42083+source_id)`」。依原始碼靜態閱讀，伺服器還會開 `127.0.0.2:42083`（`S/Main.java:74-80`，`channelPorts＝[port]`）與 `127.0.0.1:(42083+source_id)`（`S/SourceLogin.java:47-50`，每個來源的 LOGIN、GAME 端點各一個 socket）。`m4-listen-check.ps1` 預設把這兩個列為「允許」並在輸出的 `allowed_seen` 註明；加 `-Strict` 才是任務原文的嚴格判定。實際開了幾個以 Codex 的輸出為準，再回頭修正 CHECKLIST。
+- **監聽位址**：T128 任務原文寫「只有 `127.0.0.1:42083` 與 `127.0.0.2:(42083+source_id)`」。T127 依原始碼把 CHECKLIST 02／RUNBOOK A02 改成四個（另有 `127.0.0.2:42083`，`S/Main.java:71-80`；`127.0.0.1:(42083+source_id)`，`S/SourceLogin.java:42-50`），並要求腳本照四個；本機獨立讀程式的結論相同。`m4-listen-check.ps1` 預設斷言四個；`-LegacyTwoOnly` 是任務原文的兩個。四個也還是讀程式的結論，實際以 Codex 第一次的輸出為準。
 - **授權範圍**：#284 的裁定是整庫 SELECT；本目錄預設逐表（順便驗證正式部署的 GRANT 清單），保留 `@m4_grant_mode='schema'`。prepare 只加授權、不撤權，所以 #284 已授的整庫 SELECT 仍在；`db-verify` 的 V7 接受表級、schema 級或全域任一種授權，不會把它當成問題（V7c 只列 SELECT 以外的寫入權限）。
+- **#284 的 `Probe.java`／`verify-run.ps1` 不沿用**（CHECKLIST 也已註明）：它們寫死正式 JAR 的 SHA、`p24_world_lito_exp` 與「收據必須 0 筆」。
 
 ## 維護
 

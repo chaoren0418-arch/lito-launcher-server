@@ -157,31 +157,27 @@ function Compare-M4KeySets {
 }
 
 function Get-M4ExpectedListeners {
-    # 必要（CHECKLIST 02）：登入 bind:port；每個啟用來源 game.bind:(port+source_id)。
-    param([string]$Bind, [string]$GameBind, [int]$Port, [int[]]$SourceId)
+    # CHECKLIST 02／RUNBOOK A02（T127 依原始碼修正後的版本）：一個來源時共四個監聽。
+    #   bind:port、game.bind:port                              Main.java:71-80（channelPorts＝[port]，ServerConfig.java:266）
+    #   bind:(port+source_id)、game.bind:(port+source_id)      SourceLogin.java:42-50（每個來源的 LOGIN、GAME 端點各一個 socket）
+    # -LegacyTwoOnly：T128 任務原文的兩個（bind:port 與 game.bind:(port+source_id)），只在實機證明伺服器只開兩個時使用。
+    param([string]$Bind, [string]$GameBind, [int]$Port, [int[]]$SourceId, [switch]$LegacyTwoOnly)
     Assert-M4Endpoint -Address $Bind -Port $Port -What '登入監聽'
     $expected = @("${Bind}:$Port")
+    if (-not $LegacyTwoOnly) {
+        Assert-M4Endpoint -Address $GameBind -Port $Port -What '遊戲監聽'
+        $expected += "${GameBind}:$Port"
+    }
     foreach ($id in $SourceId) {
         if ($id -lt 1 -or $id -gt 8) { throw "M4 守門：source_id $id 不在 1..8" }
         Assert-M4Endpoint -Address $GameBind -Port ($Port + $id) -What "來源 $id 監聽"
+        if (-not $LegacyTwoOnly) {
+            Assert-M4Endpoint -Address $Bind -Port ($Port + $id) -What "來源 $id 登入監聽"
+            $expected += "${Bind}:$($Port + $id)"
+        }
         $expected += "${GameBind}:$($Port + $id)"
     }
     return , $expected
-}
-
-function Get-M4AllowedListeners {
-    # 依原始碼靜態閱讀，伺服器另外還會開的 loopback 監聽（未實機確認）：
-    #   game.bind:port                 Main.java:74-80（channelPorts＝[port]，ServerConfig.java:266）
-    #   bind:(port+source_id)          SourceLogin.java:47-50（每個來源的 LOGIN 與 GAME 端點各一個 socket）
-    # m4-listen-check.ps1 預設把這些列為「允許」；加 -Strict 時只接受必要清單。
-    param([string]$Bind, [string]$GameBind, [int]$Port, [int[]]$SourceId)
-    Assert-M4Endpoint -Address $GameBind -Port $Port -What '遊戲監聽'
-    $allowed = @("${GameBind}:$Port")
-    foreach ($id in $SourceId) {
-        Assert-M4Endpoint -Address $Bind -Port ($Port + $id) -What "來源 $id 登入監聽"
-        $allowed += "${Bind}:$($Port + $id)"
-    }
-    return , $allowed
 }
 
 function Compare-M4Listeners {

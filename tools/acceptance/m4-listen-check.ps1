@@ -1,8 +1,9 @@
 ﻿# M4 驗收：核對實驗 Java 程序的監聽位址（T128／Issue #379；CHECKLIST 02）。相容 Windows PowerShell 5.1；UTF-8 BOM。
 # 唯讀：只查詢 TCP 監聽表與程序名稱，不啟動、不停止任何程序。
-# 必要（CHECKLIST 02）：127.0.0.1:<Port>、127.0.0.2:(<Port>+source_id)。
-# 允許（依原始碼靜態閱讀，未實機確認）：127.0.0.2:<Port>（Main.java:74-80）、127.0.0.1:(<Port>+source_id)（SourceLogin.java:47-50）。
-# 其他任何監聽、非 loopback 位址、埠 2000／3306 一律 FAIL。加 -Strict 時「允許」清單也算 FAIL（＝只接受必要的兩類）。
+# 預期（CHECKLIST 02／RUNBOOK A02）：每個來源四個——127.0.0.1:<Port>、127.0.0.2:<Port>（Main.java:71-80）、
+#   127.0.0.1:(<Port>+source_id)、127.0.0.2:(<Port>+source_id)（SourceLogin.java:42-50）。這是讀原始碼得到的，尚未實機確認。
+# 多一個、少一個、非 loopback 位址、埠 2000／3306 一律 FAIL。
+# -LegacyTwoOnly：改成 T128 任務原文的兩個（127.0.0.1:<Port> 與 127.0.0.2:(<Port>+source_id)）；只在實機證明伺服器只開兩個時使用。
 # 用法：
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\acceptance\m4-listen-check.ps1 -ProcessId <Java PID> -SourceId 1 -RunDirectory <run>
 param(
@@ -12,15 +13,13 @@ param(
     [string]$GameBind = '127.0.0.2',
     [int]$Port = 42083,
     [string]$RunDirectory = '',
-    [switch]$Strict
+    [switch]$LegacyTwoOnly
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'm4-common.ps1')
 
 try {
-    $expected = Get-M4ExpectedListeners -Bind $Bind -GameBind $GameBind -Port $Port -SourceId $SourceId
-    $allowed = @()
-    if (-not $Strict) { $allowed = Get-M4AllowedListeners -Bind $Bind -GameBind $GameBind -Port $Port -SourceId $SourceId }
+    $expected = Get-M4ExpectedListeners -Bind $Bind -GameBind $GameBind -Port $Port -SourceId $SourceId -LegacyTwoOnly:$LegacyTwoOnly
     $run = ''
     if ($RunDirectory -ne '') {
         $run = (Resolve-Path -LiteralPath $RunDirectory).Path
@@ -43,16 +42,14 @@ try {
         }
     }
     $actual = @($actual | Sort-Object -Unique)
-    $result = Compare-M4Listeners -Actual $actual -Expected $expected -Allowed $allowed
+    $result = Compare-M4Listeners -Actual $actual -Expected $expected
     $verdict = 'FAIL'
     if ($result.Ok) { $verdict = 'PASS' }
     $text = @(
         "M4-LISTEN-CHECK: $verdict",
-        "utc=$([DateTime]::UtcNow.ToString('o')) pid=$ProcessId process=$($process.ProcessName) strict=$([bool]$Strict)",
-        "required=$($expected -join ', ')",
-        "allowed=$(@($allowed) -join ', ')",
+        "utc=$([DateTime]::UtcNow.ToString('o')) pid=$ProcessId process=$($process.ProcessName) legacy_two_only=$([bool]$LegacyTwoOnly)",
+        "expected=$($expected -join ', ')",
         "actual=$($actual -join ', ')",
-        "allowed_seen=$(@($result.AllowedSeen) -join ', ')",
         "missing=$(@($result.Missing) -join ', ')",
         "unexpected=$(@($result.Unexpected) -join ', ')",
         "violations=$(@($result.Violations) -join ', ')")

@@ -103,23 +103,26 @@ cat > "$WORK/m4-seed-vars.sql" <<'SQL'
 SET @m4_gm_login = 'm4gm', @m4_gm_password = 'ci_gm_pw_test_only';
 SET @m4_a_login = 'ci_player', @m4_a_password = '__M4_A_PASSWORD__';
 SET @m4_b_login = 'm4b', @m4_b_password = 'ci_b_pw_test_only';
+SET @m4_c_login = 'm4c', @m4_c_password = 'ci_c_pw_test_only';
 SQL
 seed() { cat "$WORK/m4-seed-vars.sql" "$TOOLS/m4-seed-exp.sql" | root --table --init-command="$NOUUID"; }
 seed > "$WORK/seed-1.txt"
 cat "$WORK/seed-1.txt"
 grep -q 'M4-SEED: DONE' "$WORK/seed-1.txt" || fail 'seed did not finish'
-COUNTS="SELECT CONCAT_WS(':', (SELECT COUNT(*) FROM p24_accounts_lito_exp.accounts), (SELECT COUNT(*) FROM p24_accounts_lito_exp.characters WHERE objid BETWEEN 190379001 AND 190379009), (SELECT COUNT(*) FROM p24_accounts_lito_exp.character_skills WHERE char_obj_id BETWEEN 190379001 AND 190379009), (SELECT COUNT(*) FROM p24_accounts_lito_exp.character_items WHERE id BETWEEN 190379101 AND 190379112), (SELECT COUNT(*) FROM p24_lito_lito_exp.commands WHERE name IN ('polyme','move','loc','item','spawn','de')), (SELECT COUNT(*) FROM p24_accounts_lito_exp.characters WHERE account_name = 'ci_player' AND Banned = 0), (SELECT password FROM p24_accounts_lito_exp.accounts WHERE login = 'ci_player'), (SELECT access_level FROM p24_accounts_lito_exp.accounts WHERE login = 'm4gm'))"
+COUNTS="SELECT CONCAT_WS(':', (SELECT COUNT(*) FROM p24_accounts_lito_exp.accounts), (SELECT COUNT(*) FROM p24_accounts_lito_exp.characters WHERE objid BETWEEN 190379001 AND 190379012), (SELECT COUNT(*) FROM p24_accounts_lito_exp.character_skills WHERE char_obj_id BETWEEN 190379001 AND 190379012), (SELECT COUNT(*) FROM p24_accounts_lito_exp.character_items WHERE id BETWEEN 190379101 AND 190379113), (SELECT COUNT(*) FROM p24_lito_lito_exp.commands WHERE name IN ('polyme','move','loc','item','spawn','de')), (SELECT COUNT(*) FROM p24_accounts_lito_exp.characters WHERE account_name = 'ci_player' AND Banned = 0), (SELECT password FROM p24_accounts_lito_exp.accounts WHERE login = 'ci_player'), (SELECT access_level FROM p24_accounts_lito_exp.accounts WHERE login = 'm4gm'))"
 FIRST="$(root -N -e "$COUNTS")"
 echo "after first seed: $FIRST"
-# accounts 2 fixture + 2 new; 9 characters; 7 skills; 12 item rows; 6 commands; ci_player 1 + 7 = 8 characters; existing password untouched; GM level 200
-[ "$FIRST" = '4:9:7:12:6:8:ci_player_pw:200' ] || fail "unexpected seed result: $FIRST"
+# accounts 2 fixture + 3 new (GM, B, optional C; D left as placeholder = skipped); 11 characters (M4D1 not created); 7 skills;
+# 13 item rows; 6 commands; ci_player 1 + 7 = 8 characters; existing password untouched; GM level 200
+[ "$FIRST" = '5:11:7:13:6:8:ci_player_pw:200' ] || fail "unexpected seed result: $FIRST"
+[ "$(root -N -e "SELECT CONCAT_WS(':', (SELECT COUNT(*) FROM p24_accounts_lito_exp.characters WHERE char_name = 'M4D1'), (SELECT COUNT(DISTINCT account_name) FROM p24_accounts_lito_exp.characters WHERE Clanname = 'M4CLAN'), (SELECT MIN(level) FROM p24_accounts_lito_exp.characters WHERE objid BETWEEN 190379001 AND 190379012))")" = '0:2:52' ] || fail 'optional account D must be skipped; M4CLAN must span two accounts; seeded level must be 52'
 seed > "$WORK/seed-2.txt"
 [ "$(root -N -e "$COUNTS")" = "$FIRST" ] || fail 'seed is not idempotent'
 root --table --init-command="$NOUUID" < "$TOOLS/m4-db-verify.sql" > "$WORK/verify-after-seed.txt"
 tail -n 12 "$WORK/verify-after-seed.txt"
 grep -q 'M4-VERIFY: PASS' "$WORK/verify-after-seed.txt" || fail 'verify should pass after seed'
 # The seeded inventory must satisfy the server's own rule: every item row joins exactly one template and count >= 1.
-[ "$(root -N -e "SELECT COUNT(*) FROM p24_accounts_lito_exp.character_items i LEFT JOIN p24_380db_lito_exp.etcitem e ON e.item_id = i.item_id WHERE i.id BETWEEN 190379101 AND 190379112 AND (e.item_id IS NULL OR i.count IS NULL OR i.count < 1)")" = 0 ] || fail 'seeded an item row without a template or with an invalid count'
+[ "$(root -N -e "SELECT COUNT(*) FROM p24_accounts_lito_exp.character_items i LEFT JOIN p24_380db_lito_exp.etcitem e ON e.item_id = i.item_id WHERE i.id BETWEEN 190379101 AND 190379113 AND (e.item_id IS NULL OR i.count IS NULL OR i.count < 1)")" = 0 ] || fail 'seeded an item row without a template or with an invalid count'
 [ "$(root -N -e "SELECT COUNT(*) FROM p24_accounts_lito_exp.character_items i JOIN p24_380db_lito_exp.etcitem e ON e.item_id = i.item_id WHERE e.classname = 'wand.Storm_Walk' AND i.char_id = 190379001")" = 1 ] || fail 'GM wand was not seeded'
 echo "::endgroup::"
 
