@@ -1,0 +1,18 @@
+{
+  "observedUtc": "2026-11-13T20:06:53.062651+00:00",
+  "head": "0e772e1a1650230e29e6a28f79ea3f1a70216e32",
+  "main": "55b58bea71330cd19c1c782ef89bac601fa84969",
+  "run": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-284\\scratch\\t014\\run-20261113T200448Z",
+  "runtimeEntries": 0,
+  "launcherStarted": false,
+  "gameStarted": false,
+  "serverStarted": false,
+  "p24Started": false,
+  "ownedRuntimePids": [],
+  "databaseConnected": false,
+  "databaseChanged": false,
+  "screenshotCreated": false,
+  "profileIsTemplateOnly": true,
+  "guiLaunchRejected": "blocked by policy; no further reason returned",
+  "stopReason": "Reviewed external helper writes original project and protected 0-客戶端; this task prohibits both writes."
+}

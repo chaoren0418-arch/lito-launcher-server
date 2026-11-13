@@ -1,68 +1,61 @@
-# Issue #284：T014 新 JAR 實驗重測 06–08
+# Issue #284：T014 僅重測 08（external-server-profile）
 
-**結論：部分通過（✅ 9／❌ 1／⚠️ 0）。** 2026-11-14 00:15–00:28（UTC+8）：06 啟動與 07 四端點通過；08 被登入器設定覆寫及資源預檢阻擋，未登入、未到大廳，**不放行 #285**。未修改產品程式。01–05、09–10 沿用前次結果，僅做本次啟動必要的建置、備份、資料保護及程序清理。
+**結論：部分通過（✅ 9／❌ 0／⚠️ 1）。** 本次 2026-11-14（UTC+8）只處理 08；01–07、09–10 沿用既有通過結果，沒有重測。新登入器建置與 helper 指紋通過，但遊戲啟動流程會寫入本張明確禁止修改的原始專案與 `0-客戶端`，因此 08 尚未完成登入／大廳 PNG，**不放行 #285**。未修改產品程式，已標記 `needs:claude`。
 
 ## 已驗證
 
-全程使用既有 `task/284`，同步 main `c258cbb4148a4ccc773b4d0b73b6196e3050d4e2`，建置 HEAD `6bb426b932b7de90aacaf0ffb883b7ba5c091e94`。`docs/REPORT.md` 僅由 merge 帶入，與 main 一致。
+分支仍為 `task/284`，同步 main `55b58bea71330cd19c1c782ef89bac601fa84969`，建置 HEAD `0e772e1a1650230e29e6a28f79ea3f1a70216e32`；未 checkout、未建立／移除 worktree。`docs/REPORT.md` 只由 merge 帶入，與 main 一致。
 
-以下 `E = docs/reports/issue-284/`；`R = scratch/t014/run-20261113T161934Z/` 保存本次私密設定與冷備份；成功啟動目錄 `S = scratch/t014/run-20261113T162233Z/`。兩次伺服器嘗試各用全新空 runtime，未刪除舊資料。
+以下 `E = docs/reports/issue-284/`；本次 `R = scratch/t014/run-20261113T200448Z/`。先前通過證據保留原檔；「沿用」不是本次重新通過。
 
-| 編號 | 結果 | 實際觀察 | 重現步驟 | 證據路徑 |
+| 編號 | 結果 | 實際觀察（現象） | 重現步驟 | 證據路徑 |
 |---|---|---|---|---|
-| 01 | ✅ 通過（沿用） | 前次 JAR／lib、登入器建置通過；本次因同步 main 重新 package 成功，登入器沿用前次本 worktree 成品。 | 執行下方 Maven 命令。 | E/retest-maven-package.txt、retest-artifact-hashes.json；前次 launcher-build.log |
-| 02 | ✅ 通過（沿用） | 統一 22 鍵驗證通過；本次補六鍵 combat 入口，引用來源檔唯讀，前後雜湊一致。 | run-experiment.cmd -PrepareOnly。 | E/retest-config-public.properties、retest-combat.properties、retest-combat-source-hashes.json、retest-replay-prepare-validation.txt |
-| 03 | ✅ 通過（沿用） | 啟動前 lease holder 與派工相同、到期 17:00:37Z；完整冷備份 1,722 檔／278,882,680 bytes，逐檔 SHA 相同。 | 停機備份後核對 UUID、datadir 與 43324。 | E/retest-lease-observation.json、retest-p24-backup.json、retest-before.txt |
-| 04 | ✅ 通過（沿用） | 保留前次遷移；本次補 17 張實驗裝備表的 731 個中文欄位，均由原欄位複製，各表值差異 0。 | 備份後執行 retest-equipment-migration.sql，再執行 retest-equipment-check.sql。 | E/retest-equipment-migration-plan.json、retest-equipment-columns-before.txt、retest-equipment-data-after.tsv |
-| 05 | ✅ 通過（沿用） | 路由仍為 source_id=1、p24_accounts_lito_exp、enabled=1，未改該列。 | 唯讀 SELECT lito_source_server。 | E/retest-counts-before.txt、retest-counts-after.txt |
-| 06 | ✅ 通過（本次） | 補 combat 與裝備欄位後，Java PID 6124 約 3 秒內 ready，無 WAL replay。 | 在 S 執行 java -jar，觀察 120 秒內 ready。 | E/retest-server-console.txt；修正前 E/retest-server-before-migration.txt |
-| 07 | ✅ 通過（本次） | 127.0.0.1、127.0.0.2 各開 42083、42084，沒有多餘監聽。 | m4-listen-check.ps1 -ProcessId 6124；不傳 RunDirectory，另存 stdout。 | E/retest-listen.txt |
-| 08 | ❌ 失敗（本次） | GUI 覆寫實驗 profile 為 32000、強制 StartLocalServer=true；相容資源預檢失敗，啟動按鈕停用，沒有遊戲／大廳；視窗擷取兩次逾時，無 PNG。 | 本次登入器 --legacy-formal-mode，設定檔指向 42083／StartLocalServer=false，觀察 GUI 預檢。 | E/launcher-validation-retest.txt、retest-launcher-profile.json、capture-errors.txt |
-| 09 | ✅ 通過（沿用） | 本次 character_lito 2→2、lito_battle_settlement 0→0；原三庫 270 表 checksum 前後完全一致。 | 啟動前與關閉 Java 後 COUNT(*)、CHECKSUM TABLE EXTENDED。 | E/retest-counts-before.txt、retest-counts-after.txt、retest-original-checksum-before.tsv、retest-original-checksum-after.tsv |
-| 10 | ✅ 通過（沿用） | GUI 正常關閉；Java 以 Ctrl+C 結束；P24 正常 SHUTDOWN，四個自有 PID 均消失，實驗埠無監聽。 | 核對 PID／建立時間／實例身分，無其他 DB 客戶端後 SHUTDOWN。 | E/retest-process-cleanup.json、retest-p24-shutdown-verification.json |
+| 01 | ✅ 通過（沿用） | 前次 JAR／lib 建置通過；本次另完成 main Maven package、登入器 Release 建置作為 08 前置。 | 下方建置命令。 | E/retest-artifact-hashes.json；本次 E/retest08-maven-package.txt、retest08-launcher-build.txt、retest08-artifact-hashes.json |
+| 02 | ✅ 通過（沿用） | 前次統一 22 鍵及 combat 設定已驗證；本次沒有建立含帳密設定。 | 既有 run-experiment.cmd -PrepareOnly。 | E/retest-config-public.properties、retest-combat.properties、retest-replay-prepare-validation.txt |
+| 03 | ✅ 通過（沿用） | 前次完整冷備份已核對；本次 lease 實際持有人不同，只記錄，不啟停其 P24。 | 只讀 /api/state 的 leases；本次未備份／修改 DB。 | E/retest-p24-backup.json、retest08-lease-observation.json |
+| 04 | ✅ 通過（沿用） | 前次實驗庫 17 表／731 中文欄位的值差異 0；本次未遷移。 | 沿用前次遷移及值比對 SQL。 | E/retest-equipment-migration-plan.json、retest-equipment-data-after.tsv |
+| 05 | ✅ 通過（沿用） | 前次 source_id=1 路由到 p24_accounts_lito_exp；本次未連 DB，display_name 尚未查詢。 | 前次唯讀 SELECT lito_source_server；下次需查 display_name 填 profile。 | E/retest-counts-before.txt、retest-counts-after.txt |
+| 06 | ✅ 通過（沿用） | 前次新 JAR 約 3 秒 ready、無 WAL replay；本次新編 JAR 未啟動。 | 前次 java -jar、120 秒內觀察 ready。 | E/retest-server-console.txt |
+| 07 | ✅ 通過（沿用） | 前次兩個 loopback 各開 42083／42084；本次未開服務。 | 前次 m4-listen-check.ps1 -ProcessId 6124。 | E/retest-listen.txt |
+| 08 | ⚠️ 無法完成（本次） | #404 兩支 helper SHA 正確，但啟動會寫原始專案與受保護客戶端；GUI 啟動指令另被自動核准拒絕，未產生視窗／PNG，未測登入協定。 | 新入口 --external-server-profile；按啟動前核對下列固定寫入點。本次未按／未執行 helper。 | E/retest08-write-boundary.txt、retest08-execution.json、retest08-artifact-hashes.json |
+| 09 | ✅ 通過（沿用） | 前次 character_lito 2→2、lito_battle_settlement 0→0，原三庫 270 表 checksum 相同；本次未連 DB，不宣稱新的筆數。 | 前次 COUNT(*)／CHECKSUM TABLE EXTENDED。 | E/retest-counts-before.txt、retest-counts-after.txt、retest-original-checksum-before.tsv、retest-original-checksum-after.tsv |
+| 10 | ✅ 通過（沿用） | 前次自有 PID 已關閉、埠釋放；本次未啟動登入器／遊戲／Java Server／P24，沒有自有實驗程序需關閉。 | 檢查本次執行紀錄；不關閉別人的程序。 | E/retest-process-cleanup.json、retest-p24-shutdown-verification.json；E/retest08-execution.json |
 
-### JAR、設定與重跑
+### 本次建置與 SHA
 
 ```powershell
 mvn -f lito伺服器/LiTo381-Server/pom.xml -B -DskipTests package
+dotnet build lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj -c Release --no-restore
 ```
 
-JAR SHA-256：**`0F3762CE8C8E94F3B91D5404CC03B2BF815B4E329D0CBDCBC20F24F6B8686205`**（15,092,477 bytes）。Main-Class：`local.lito381.server.SharedResourceMain`；四個執行 lib 及 SHA 見 [成品清單](issue-284/retest-artifact-hashes.json)。依指定命令未跑單元測試。
+Maven `BUILD SUCCESS`；登入器 0 警告／0 錯誤。本次只建置，沒有另跑單元測試。新 JAR SHA-256：**`84BA0CDE7ABACE28456232B86922B22DD7FBFF98E8B44E8B7BEC5F995A79EDCC`**，已連同四個 lib 複製至 R，逐檔 hash 相同；R/runtime 是全新空目錄。完整清單見 [本次成品雜湊](issue-284/retest08-artifact-hashes.json)。
 
-[公開設定](issue-284/retest-config-public.properties) 已遮蔽帳密：bind `127.0.0.1`、game.bind `127.0.0.2`、port `42083`、JDBC `127.0.0.1:43324`、靜態庫 `p24_380db_lito_exp`（沿用快照裁定）、控制庫 `p24_lito_lito_exp`。capture／logs 指向各次新 run；憑證只讀 #83 私密交接檔，未讀寫正式 `config/server.properties`。
+兩支已建置 helper 與 [#404 操作文件](../acceptance/launcher-external-server.md) 完全相符：`development_startup.py = ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD`、`external_server_startup.py = D0FE39EB6E379875F04E28FBF12B532E8F6AA2EB54347161E905DD3C86191D32`。沒有使用 `--legacy-formal-mode`。
 
-依[combat 裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6857803556)補 [combat.properties](issue-284/retest-combat.properties)，四個 source 路徑指向 `D:/lineage開發/1-伺服器/`，保留 arena.bot.con／wis=1；額外相依 `config/other.properties` 亦存在且唯讀。主控台實際載入 69 控制值、807 技能、364 武器、1,422 防具。
+### 08 的具體阻礙
 
-無帳密入口已更新本次 SHA、combat 範本複製與來源雜湊核對，`-PrepareOnly` 實際通過；`verify-run.ps1` 語法解析通過。先取得有效 lease、完成備份、啟動並核對 P24，再執行：
+以下是**已讀到的原始碼行為，未實際觸發寫入**，有行號及 SHA 的摘錄見 [寫入邊界證據](issue-284/retest08-write-boundary.txt)：
 
-```bat
-docs\reports\issue-284\run-experiment.cmd -CandidateDirectory "D:\lineage開發\3-lito開發\scratch\wt\task-284\scratch\t014\run-20261113T161934Z"
-```
+1. `ExternalServerStartup.RunAsync` 把 receipt 放在 `DevelopmentStartup.Root/gui-runs/external-*`；Root 固定指向原始專案 `D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app`。helper 另在同一原始 app 的 `runs/external-*` 建資料夾。僅設定 `LITO_LAUNCHER_SETTINGS_DIRECTORY` 無法搬移這兩處。
+2. `external_server_startup.py:216–219` 在端點通過後直接 `shutil.copyfile(dev.DLL, dev.CLIENT / 'litoddraw.dll')`，並寫入 `lito381-compat.ini`；`dev.CLIENT` 固定是 `D:\lineage開發\0-客戶端`。此行為與本張「不改 0-客戶端」直接衝突，不屬程序疑慮，不能為了截圖執行。
+3. GUI 啟動的 `exec_command` 在執行前被自動核准審查拒絕，只回 `blocked by policy`，未提供細部理由；沒有建立該次 GUI 指令中的目錄或程序。後續只做獨立的 worktree 檔案準備與唯讀檢查，不改寫程式、釘選值或換入口重試。沒有可供保存的大廳或登入器 PNG。
 
-入口每次建立新 run，不啟停 MySQL、不自動變更 DB。120 秒啟動時限須由操作者觀察；成功後結束以 Ctrl+C。實測成功主控台以 cmd 原生 stdout/stderr 合併存檔，未再經 PowerShell 的錯誤格式化。Java 關閉時最後留下不完整的 `Exception in thread "main"` 字樣，無堆疊；PID 與埠均已釋放，**未據此宣稱應用層所有 shutdown hook 已驗證**。
+本次唯讀觀察 lease 實際 holder 為 `chaoren0418-arch/tw-bin-engine#1118`，與派工所述 #284 不符，原始回應見 [lease 紀錄](issue-284/retest08-lease-observation.json)。此項是額外觀測，**不是中止 08 的唯一理由**；未修改 lease、未查調度器實作。未啟動 DB，也未取得或修改 #83 私密設定。
 
-T128 的 `-RunDirectory` 只接受 `scratch/m4/run-*`，會拒絕本任務指定的 `scratch/t014/run-*`；本次省略該參數，正常完成相同的四端點驗收並另存輸出，未修改 T128。
+### 設定、主控台與重跑入口
 
-### 實驗資料庫變更與還原
+既有 [run-experiment.cmd](issue-284/run-experiment.cmd)／[run-experiment.ps1](issue-284/run-experiment.ps1) 不含帳密，保留前次實際啟動過的 JAR SHA `0F3762CE8C8E94F3B91D5404CC03B2BF815B4E329D0CBDCBC20F24F6B8686205`。它不是本次新 JAR 的啟動驗證；下次採用本次新成品時應依實際建置 SHA 更新驗收入口，不能把前次 ready 當本次結果。
 
-完整冷備份與逐檔 manifest 在 `R/private-cold-backup/`、`R/private-backup-manifest.json`（私密，不提交）。未改權限、原 P24 三庫或 tw-bin 測試資料；沒有 seed 帳號或假資料。
+前次 [公開設定](issue-284/retest-config-public.properties)、[combat 設定](issue-284/retest-combat.properties) 與[完整成功啟動輸出](issue-284/retest-server-console.txt) 保留。設定為 `127.0.0.1／127.0.0.2:42083`、JDBC `127.0.0.1:43324`、靜態庫 `p24_380db_lito_exp`、控制庫 `p24_lito_lito_exp`。本次 R 僅保留未查證 display_name 的 `external-profile.template.json`，不是已連線的正式驗收設定。
 
-依[實驗結構裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/284#issuecomment-6855340338)，只在 `p24_380db_lito_exp` 依 `NativeSourceEquipmentColumns.QUERIES` 的精確 `中文 AS 英文` 對應補欄位，型別取既有英文欄位；保留原欄位並複製真實值。17 表／731 欄及每表原筆數見 [變更清單](issue-284/retest-equipment-migration-plan.json)；[原結構](issue-284/retest-equipment-columns-before.txt)、[遷移 SQL](issue-284/retest-equipment-migration.sql)、[前後值比對 SQL](issue-284/retest-equipment-check.sql)、[實際比對結果](issue-284/retest-equipment-data-after.tsv)互相對應。兩張原本 0 筆的表仍為 0，未填資料。
-
-本次[還原 SQL](issue-284/retest-equipment-rollback.sql)只移除新增的 731 欄，**未執行**；只適用尚未在新欄位產生獨有資料的狀態，還原前另備份現況。前次遷移、備份位置與 [rollback.sql](issue-284/rollback.sql) 保留，由 git `7cf833da` 的報告追溯，不重做。
-
-### 08 的具體失敗邊界
-
-本次自建登入器 PID 9676 以獨立 `LITO_LAUNCHER_SETTINGS_DIRECTORY=R/launcher-settings` 啟動；設定要求 `127.0.0.1:42083`、`StartLocalServer=false`。`MainForm.cs:289–292` 與 `364–367` 卻強制改成隨附 profile／自行啟動本機服；GUI 文字實際顯示 `endpoint=127.0.0.1:32000`。未按停用的啟動按鈕，**沒有連上 32000**。
-
-客戶端僅以 `0-客戶端` 做唯讀預檢；未建立可執行的隔離相容資源集。GUI 顯示 LTtext 指紋不符、缺 litolauncher-c.pak、Text／Tile／Sprite 世代不合、缺隔離 ddraw；原 `client-isolated` 位置也不存在。這些是本次部署的未備妥項目，不能當作遊戲執行失敗或伺服器登入協定失敗。未改 shared BIN、TW／LHZ、封存、硬連結或 worktree 結構。
+前次完整冷備份位於 `scratch/t014/run-20261113T161934Z/private-cold-backup/`（私密不提交）；實驗結構的[遷移 SQL](issue-284/retest-equipment-migration.sql)、[前後值比對](issue-284/retest-equipment-check.sql)、[還原 SQL](issue-284/retest-equipment-rollback.sql) 仍保留。本次無 DB 變更，因此沒有新增備份或還原 SQL。未碰正式 2000／3306、原 BIN、原始專案、封存、硬連結、登錄檔或服務。
 
 ## 推測
 
-伺服器 ready 與四端點已成立；08 的直接阻礙在登入器實驗部署／連線入口。修正後能否通過帳密驗證、角色選擇與大廳，仍未知。
+固定覆寫路徑處理後，external-server-profile 是否能登入到大廳仍未知；helper 指紋正確與建置成功不代表登入成功。不能把本次未執行歸因為伺服器協定或帳密錯誤。
 
 ## 待驗證／給下一棒的提示
 
-交 **Claude 主控（needs:claude）**處理只連既有實驗服 `42083`、不強制啟動其他服的登入器入口與合法唯讀資源接線；不得為通過舊驗證而改 shared 資源或繞過檢查。圖像工具兩次擷取逾時另記 [capture-errors.txt](issue-284/capture-errors.txt)。
+由 **Claude 主控**處理 external-server-profile 與本張唯讀要求的衝突：讓驗收模式可把產物寫至 worktree，並以獲准的隔離執行資源避免覆寫 `0-客戶端`；本張不修產品程式、不繞過指紋。調度器另排有效 #284 lease。
 
-修正後由 **Codex 只重測 08**（測試帳號登入→大廳 PNG）；沿用 01–07、09–10，仍執行必要的備份、有效 lease 與程序清理。未完成大廳截圖、登入驗證或任何戰鬥測試。未動正式 2000／3306、原始專案檔案或系統設定。
+前置完成後，Codex **仍只重測 08：唯讀查 display_name → 使用新入口 → 選服 → #83 測試帳號登入 → 大廳 PNG**；01–07、09–10 繼續沿用，只執行必要的建置、備份、資料保護與自有 PID 清理。未完成本次 Java 啟動、帳密登入、角色選擇、大廳截圖及任何戰鬥測試。

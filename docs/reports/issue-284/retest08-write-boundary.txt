@@ -1,0 +1,79 @@
+#284 08：唯讀限制衝突的原始碼證據（未執行遊戲啟動）
+
+lito登入器/LiTo381-Launcher/src/DevelopmentStartup.cs
+SHA256=DC8E7F2C4E3143DE685D819ADB8BD8F993DB20A2FCB365E8FDFF37105CCB0E44
+6: internal sealed class DevelopmentStartup(Action<string> log, Action<ExtendedCharacterStatsSnapshot>? extendedStats = null)
+7: {
+8:     internal const string Root = @"D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app";
+9:     private const string ServerRuns = @"D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\server\runs";
+10:     internal const string EntrySha ="ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD";
+
+lito登入器/LiTo381-Launcher/src/ExternalServerStartup.cs
+SHA256=03CA58FB94263F357E8FB38917B923CDAA660C778B8652AA7015EC0F3A6716CB
+100:             if (!result.GetProperty("success").GetBoolean()) throw new InvalidOperationException(result.GetProperty("reason").GetString());
+101:             log($"[多開] 新遊戲視窗 PID {result.GetProperty("pid").GetInt32()} 已就緒，連同一個外部伺服器；請使用另一個帳號登入。");
+102:         }
+103:         finally { CanAddClient = replied && helper.IsAlive && !cancellation.IsCancellationRequested; }
+104:     }
+105:
+106:     internal async Task RunAsync(LauncherMenuPreferences preferences, CancellationToken cancellation, int sourceId)
+107:     {
+108:         if (!profile.Sources.Any(source => source.Id == sourceId)) throw new InvalidOperationException("選擇的來源伺服器不在外部伺服器設定中。");
+109:         var available = CheckAvailability(preferences, profile);
+110:         if (!available.CanStart) throw available.Error!;
+111:         var runId = "external-" + Guid.NewGuid().ToString("N");
+112:         var receipt = Path.Combine(DevelopmentStartup.Root, "gui-runs", runId);
+113:         Directory.CreateDirectory(receipt);
+
+lito登入器/LiTo381-Launcher/src/development_startup.py
+SHA256=ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD
+7: # Published helper is beside the EXE; source helper lives under src.
+8: LAUNCHER = Path('D:/lineage開發/3-lito開發/lito登入器/LiTo381-Launcher')
+9: LITO = LAUNCHER.parent.parent
+10: SERVER = LITO / 'lito伺服器/LiTo381-Server'
+11: DELIVERY = Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app')
+12: SERVER_DELIVERY = DELIVERY / 'server'
+13: CLIENT = Path('D:\\lineage開發\\0-客戶端')
+14: SELECTED = CLIENT
+15: ENTRY = SERVER_DELIVERY / 'Start-Shared-World.py'
+16: PROBE = DELIVERY / 'lito_runtime_probe_named.py'
+
+lito登入器/LiTo381-Launcher/src/external_server_startup.py
+SHA256=D0FE39EB6E379875F04E28FBF12B532E8F6AA2EB54347161E905DD3C86191D32
+174:     selected = dev.select_source(effective, args.source_id)
+175:     run = dev.DELIVERY / 'runs' / args.run_id
+176:     run.mkdir(parents=True, exist_ok=False)
+177:     commands = queue.Queue()
+178:
+179:     def reader():
+180:         for line in sys.stdin: commands.put(line)
+181:         commands.put(None)
+
+lito登入器/LiTo381-Launcher/src/external_server_startup.py
+SHA256=D0FE39EB6E379875F04E28FBF12B532E8F6AA2EB54347161E905DD3C86191D32
+213:                  'product_complete': False}
+214:         dev.save(run / 'server-ready.json', ready); emit(ready)
+215:         before_native()
+216:         shutil.copyfile(dev.DLL, dev.CLIENT / 'litoddraw.dll')
+217:         (dev.CLIENT / 'lito381-compat.ini').write_text('[Window]\nWidth=640\nHeight=480\nScalePercent=' + str(args.scale) +
+218:             '\n[Diagnostics]\nLogging=1\n[NumericBreakthrough]\nEnabled=1\nSchema=4\n', encoding='ascii')
+219:         render_log = dev.CLIENT / 'lito381-compat.log'
+220:         report['render_log_initial_bytes'] = render_log.stat().st_size if render_log.exists() else 0
+221:         native = native_profile(selected, profile)
+222:         dev.save(run / 'server-profile.json', native)
+223:         os.environ['LITO_NUMERIC_BREAKTHROUGH'] = '4'
+224:         os.environ['LITO_EXTENDED_STATS_SCHEMA'] = '2'
+225:         native_env = dict(os.environ, LITO_NATIVE_LOGIN_HOST=profile['host'],
+226:                           LITO_NATIVE_SOURCES=dev.source_catalog(effective, source_ids))
+227:         for key in ('LITO381_ACCOUNT', 'LITO381_PASSWORD', 'LITO381_CHARACTER', 'LITO381_CHARACTER_NAME'):
+228:             native_env.pop(key, None)
+229:
+230:         dev.check_source(args.client_directory); server_alive(); before_native()
+231:         command = dev.native_args(args.service, run); report['native_command'] = command
+232:         for name in ('native.stdout.log', 'native.stderr.log'): native_streams.append((run / name).open('wb'))
+233:         probe = subprocess.Popen(command, cwd=dev.CLIENT, stdin=subprocess.DEVNULL, stdout=native_streams[0],
+234:                                  stderr=native_streams[1], creationflags=subprocess.CREATE_NO_WINDOW, env=native_env)
+235:         report['probe_lifetime_identity'] = module.lifetime_identity(probe)
+236:         report['probe_identity'] = module.identity(probe)
+237:         deadline = time.monotonic() + 40
+238:         while time.monotonic() < deadline:
