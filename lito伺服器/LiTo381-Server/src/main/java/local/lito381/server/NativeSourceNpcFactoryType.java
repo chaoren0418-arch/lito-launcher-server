@@ -15,7 +15,9 @@ final class NativeSourceNpcFactoryType {
         "nativeSourceNpcBraveSpeed",
         "nativeSourceNpcMoveInterval",
         "nativeSourceNpcAttackInterval",
-        "nativeSourceNpcSpellTiming"
+        "nativeSourceNpcSpellTiming",
+        "nativeCloseoutNpcRecovery",
+        "nativeCloseoutControlledNpcData"
       })
   static final class Stamp {
     private final String database;
@@ -29,6 +31,11 @@ final class NativeSourceNpcFactoryType {
     Integer nativeSourceNpcMoveInterval;
     Integer nativeSourceNpcAttackInterval;
     Object nativeSourceNpcSpellTiming;
+    // T135 (#386), ported from candidate 046c58c5: frozen at the controlled (pet / summon) birth.
+    /** {@link NativeCloseoutCompanionRecoveryData.Data} or null when the template is unknown. */
+    Object nativeCloseoutNpcRecovery;
+    /** {@link NativeCloseoutControlledNpcData.Data} or null when the template is unknown. */
+    Object nativeCloseoutControlledNpcData;
 
     Stamp(String database, int npc, String impl, int kind, int undead) {
       this.database = database;
@@ -129,6 +136,20 @@ final class NativeSourceNpcFactoryType {
           attackInterval);
       this.nativeSourceNpcSpellTiming = spellTiming;
     }
+
+    /** Controlled (L1Pet / L1Summon) birth: recovery cadence and mobskill rows of the template. */
+    Stamp(
+        String database,
+        int npc,
+        String impl,
+        int kind,
+        int undead,
+        Object recovery,
+        Object controlledNpcData) {
+      this(database, npc, impl, kind, undead);
+      this.nativeCloseoutNpcRecovery = recovery;
+      this.nativeCloseoutControlledNpcData = controlledNpcData;
+    }
   }
 
   static int kind(String impl) {
@@ -193,11 +214,15 @@ final class NativeSourceNpcFactoryType {
   }
 
   static Stamp controlled(int npc, BattleCompanion.Kind kind) {
-    return kind == BattleCompanion.Kind.PET
-        ? new Stamp("", npc, "L1Pet", 5, 0)
-        : kind == BattleCompanion.Kind.SUMMON || kind == BattleCompanion.Kind.TAMED
-            ? new Stamp("", npc, "L1Summon", 6, 0)
-            : null;
+    if (kind == BattleCompanion.Kind.PET) {
+      var birth = NativeCloseoutControlledNpcData.capture(npc);
+      return new Stamp("", npc, "L1Pet", 5, 0, birth.recovery(), birth.skills());
+    }
+    if (kind == BattleCompanion.Kind.SUMMON || kind == BattleCompanion.Kind.TAMED) {
+      var birth = NativeCloseoutControlledNpcData.capture(npc);
+      return new Stamp("", npc, "L1Summon", 6, 0, birth.recovery(), birth.skills());
+    }
+    return null;
   }
 
   static Object birth(Object actor, BattleCompanion.Snapshot transferred) {

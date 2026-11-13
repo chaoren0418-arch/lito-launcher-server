@@ -11,7 +11,7 @@ final class NativeCompanionPlacement {
  }
  static final class State {
   final WeakReference<ClientSession> owner;final BattleCompanion pet;final long id;final Object bag;
-  volatile NativePlayerCommit.Binding master;volatile Scene scene;volatile Object pose=new Object();Transition pending;
+  volatile NativePlayerCommit.Binding master;volatile Scene scene;volatile Object pose=new Object();volatile Transition pending;
   State(ClientSession pc,BattleCompanion pet,Scene scene){owner=new WeakReference<>(pc);this.pet=pet;this.scene=scene;id=pet.snapshot().objectId();bag=CombatAccess.field(pet,"carriedItems");master=NativePlayerCommit.Binding.capture(pc);}
   boolean actor(){return pet.snapshot().objectId()==id&&CombatAccess.field(pet,"carriedItems")==bag;}
   boolean owned(ClientSession pc){return owner.get()==pc&&actor()&&CombatAccess.call(pc,"ownedCompanion","(J)L"+P+"BattleCompanion;",id)==pet;}
