@@ -121,3 +121,4 @@
 - 2026-11-14 — #407 T141: 回歸工具收據寫入的重複 keyword TypeError（#341 項 11）（code，claude-local，PR 已合併）→ [報告](reports/issue-407.md)
 - 2026-11-14 — #409 分流：lito-launcher-server#284 實機驗收的失敗項目 → 修正任務＋重測（design，claude-local，PR #411 已合併）→ [報告](reports/issue-409.md)
 - 2026-11-14 — #412 T139: 外部伺服器驗收入口：登入器不寫 0-客戶端、收據可改寫到 worktree（#284 08 寫入邊界）（code，claude-local，PR 已合併）→ [報告](reports/issue-412.md)
+- 2026-11-14 — #416 分流：lito-launcher-server#341 實機驗收的失敗項目 → 修正任務＋重測（design，claude-local，PR #417 已合併）→ [報告](reports/issue-416.md)
