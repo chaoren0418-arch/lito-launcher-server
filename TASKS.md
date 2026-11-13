@@ -127,7 +127,7 @@ T127–T130 是 M4 的準備，優先做（Codex 2026-11-13 18:11 恢復）。�
 | T132 | #383 | A 開發 | PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話（`S_SAY_CODE 0x2D`，客戶端有對應封包）、多人 Time Attack 換目標（#353 剩餘 1–3）；設計 `docs/design/skills-npc.md` §6，實機待驗證 RUNBOOK V39（`docs/reports/issue-383.md`） | review |
 | T133 | 待建 | A 開發 | 凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7） | todo |
 | T134 | 待建 | A 開發 | 藥水共用冷卻 `delay_id`／`delay_time`（#352 剩餘） | todo |
-| T135 | 待建 | A 開發 | 受控 NPC 恢復節奏與自身技能：G15 前兩組移植並補測試（#354 剩餘優先 1、2） | todo |
+| T135 | #386 | A 開發 | 受控 NPC 恢復節奏與自身技能：G15 前兩組移植並補測試（#354 剩餘優先 1、2）。恢復與主人 HP 條已接上；技能只到選列與使用狀態，實際施放的入口候選沒有，列為剩餘（`docs/reports/issue-386.md`） | review |
 | T136 | 待建 | A 開發 | 結算待寫入結果的作廢工具與 `.tmp` 清理（#355 移交） | todo |
 
 實機任務 T137、T138（`codex-local`）列在 M4。

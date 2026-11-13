@@ -29,12 +29,22 @@ final class NativeCloseoutCompanionRecoveryTest {
 
   // ---------------------------------------------------------------- Source template fixture
 
+  /**
+   * Intervals are given in seconds. The {@code npc} table stores milliseconds and the template
+   * setter divides by 1000, exactly as {@code templates/L1Npc.java:472-474,492-494} does.
+   */
   static NativeDeNpcTemplate template(int npc, int hprInterval, int hpr, int mprInterval, int mpr) {
+    return rawTemplate(npc, hprInterval * 1000, hpr, mprInterval * 1000, mpr);
+  }
+
+  /** Column values exactly as stored in the Source {@code npc} table. */
+  static NativeDeNpcTemplate rawTemplate(
+      int npc, int hprIntervalMillis, int hpr, int mprIntervalMillis, int mpr) {
     var template = new NativeDeNpcTemplate();
     template.set_npcId(npc);
-    template.set_hprinterval(hprInterval);
+    template.set_hprinterval(hprIntervalMillis);
     template.set_hpr(hpr);
-    template.set_mprinterval(mprInterval);
+    template.set_mprinterval(mprIntervalMillis);
     template.set_mpr(mpr);
     template.set_int(12);
     template.set_wis(9);
@@ -172,6 +182,48 @@ final class NativeCloseoutCompanionRecoveryTest {
           NativeSourceNpcFactoryType.stamp(defaults).nativeCloseoutNpcRecovery,
           "defaults for raw template value " + raw);
     }
+  }
+
+  @Test
+  void sourceNpcRowsStoreMillisecondsAndAreReadAsSeconds() throws Exception {
+    // db/380_db.sql npc rows: 45034 牧羊犬 (hprinterval 5000, hpr 5, mprinterval 0, mpr 0) and
+    // 81222 狂暴蜥蜴人 (5000, 8, 5000, 5).
+    BattleCompanion pet, summon;
+    try (var ignored =
+        templates(
+            snapshot(
+                List.of(
+                    rawTemplate(PET_NPC, 5000, 5, 0, 0), rawTemplate(SUMMON_NPC, 5000, 8, 5000, 5)),
+                List.of()))) {
+      pet = pet();
+      summon = summon();
+    }
+    assertEquals(
+        new NativeCloseoutCompanionRecoveryData.Data(5, 5, 20, 1),
+        NativeSourceNpcFactoryType.stamp(pet).nativeCloseoutNpcRecovery);
+    assertEquals(
+        new NativeCloseoutCompanionRecoveryData.Data(5, 8, 5, 5),
+        NativeSourceNpcFactoryType.stamp(summon).nativeCloseoutNpcRecovery);
+    // A sub-second column value truncates to 0 and therefore falls back to the 20 s default.
+    try (var ignored = templates(snapshot(List.of(rawTemplate(PET_NPC, 999, 5, 999, 5)), List.of()))) {
+      assertEquals(
+          new NativeCloseoutCompanionRecoveryData.Data(20, 5, 20, 5),
+          NativeSourceNpcFactoryType.stamp(pet()).nativeCloseoutNpcRecovery);
+    }
+
+    var arena = new Arena(pet, summon);
+    pet.applyDamage(30); // 78 -> 48
+    summon.applyDamage(100); // 500 -> 400
+    assertTrue(summon.debitManaIfStrictlyAbove(20).debited()); // 50 -> 30
+    for (int tick = 1; tick <= 4; tick++) assertTrue(arena.tick(tick).isEmpty());
+    assertEquals(2, arena.tick(5).size());
+    assertEquals(53, hp(pet));
+    assertEquals(408, hp(summon));
+    assertEquals(35, mp(summon));
+    assertEquals(2, arena.tick(10).size());
+    assertEquals(58, hp(pet));
+    assertEquals(416, hp(summon));
+    assertEquals(40, mp(summon));
   }
 
   @Test
