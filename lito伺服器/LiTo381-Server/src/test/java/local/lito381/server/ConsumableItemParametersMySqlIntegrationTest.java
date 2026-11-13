@@ -46,5 +46,10 @@ final class ConsumableItemParametersMySqlIntegrationTest {
         assertEquals("380_db.etcitem", snapshot.source());
         assertEquals(List.of(), snapshot.fallbacks());
         assertEquals(ConsumableItemParameters.BUILT_IN, snapshot.values());
+        // T134 (#385): the same SELECT reads delay_id/delay_time; CI 380_db equals 1-伺服器.
+        assertEquals(List.of(), snapshot.delayFallbacks());
+        assertEquals(ConsumableItemParameters.BUILT_IN_DELAYS, snapshot.delays());
+        assertEquals(new ConsumableItemParameters.Delay(2, 500), ConsumableItemParameters.delay(40010));
+        assertEquals(new ConsumableItemParameters.Delay(2, 1000), ConsumableItemParameters.delay(40506));
     }
 }
