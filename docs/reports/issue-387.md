@@ -64,15 +64,19 @@
 - **已驗證**
   - 本機 `mvn -B -o -q -DskipTests test-compile` 通過（依規定本機不執行測試）。
   - 本機執行 `db/ci/build_ci_database.py` 與 `tools/acceptance/ci/build_m4_fixture.py`（輸出到 `scratch/`），兩者都產出含作廢遷移的 `30-control.sql`，控制庫名各自正確。
-  - CI：見下方「CI 結果」。
+  - CI（PR #403）：必過的 `Server tests` Failures 0／Errors 0；CI MySQL 中本任務 3 個類別 37 案全過，全體失敗集合與 main 相同（見「CI 結果」）。
 - **推測**
   - 檔案系統時間精度粗的環境（FAT 的 2 秒）可能讓剛寫的 `.tmp` 修改時間被進位到取鎖之後，那種檔會被保留（偏安全的一側），不會誤刪。
 - **待驗證**
   - 正式 `380_lito` 執行 `db/lito_battle_settlement_void.sql`（需資料庫管理者、ALTER 權限、停機時）。
   - 實機流程：真的把一個有待寫入結果的角色在來源庫改名 → 啟動被拒 → 照 `INSTALL.md` §6.1 作廢 → 啟動成功。交給 Codex（可併入 M4 的 V21 附近）。
 
-### CI 結果
-（見下節，push 後補上）
+### CI 結果（PR #403）
+- **head `b9e76c5f`（程式最後一版）**：build run 43461634529、acceptance-tools run 43461634456、package run 43461634624。
+  - `Server tests`（必過）：`Tests run: 7516, Failures: 0, Errors: 0, Skipped: 117`，BUILD SUCCESS；`SettlementJournalRecoveryTest` 11/11。
+  - CI MySQL job（non-blocking）：`SettlementVoidMySqlIntegrationTest` 4/4、`SettlementJournalRecoveryTest` 11/11、`DisconnectSettlementRecoveryMySqlIntegrationTest` 22/22 全過。全體 `Tests run: 7787, Failures: 39, Errors: 34`；和 main 同一個 job（run 43460232594，merge #402，`Tests run: 7779, Failures: 39, Errors: 34`）比對，**失敗的 22 個測試類別完全相同**，多出的 8 案就是本任務新增的測試。job 紅燈來自 T119 時就存在的失敗。
+  - acceptance-tools（含 M4 fixture 在 MySQL 8.0 載入作廢遷移）、package、其他 build job 全部通過。
+- 前一輪 head `ef193fd5`（run 43461050153）結果相同。第一輪 `acceptance-tools` 失敗（run 43460802498）：M4 fixture 會把控制庫改名為 `p24_lito_lito_exp`，`build_ci_database.py` 的檢查寫死 `380_lito`；已改成替換控制庫名（`ef193fd5`）。
 
 ## 未驗證什麼
 - 實機與正式庫（見待驗證）。
