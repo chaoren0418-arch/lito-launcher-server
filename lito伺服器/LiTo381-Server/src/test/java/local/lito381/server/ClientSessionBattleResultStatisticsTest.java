@@ -18,6 +18,8 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.BeforeAll;
 
 /** Encrypted wire proof for the native D3 -> DB result-controller sequence. */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionBattleResultStatisticsTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {

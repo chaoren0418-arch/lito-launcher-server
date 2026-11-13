@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /** Encrypted-wire proof that append-only WORLD maps participate in the AI clock. */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionWorldExpandedMapMonsterAiIntegrationTest {
     private static final int MAP_ID = 304;
     private static final long PLAYER_OBJECT_ID = 0x4200_0304L;

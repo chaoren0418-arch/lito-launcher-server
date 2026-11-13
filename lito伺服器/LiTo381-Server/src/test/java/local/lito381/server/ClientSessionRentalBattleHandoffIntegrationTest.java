@@ -26,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * weapon must drive the actor walk family, the S_ATTACK action and physical
  * damage, while the original character snapshot is restored at match end.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionRentalBattleHandoffIntegrationTest {
     @TempDir Path temporary;
 

@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class RegistryOnlyOpcodeBoundaryTest {
     private static final int[] REGISTRY_ONLY_DEFAULT_IGNORED = {
             0x04, 0x12, 0x15, 0x16, 0x19, 0x2F, 0x32, 0x3D, 0x40, 0x5B,

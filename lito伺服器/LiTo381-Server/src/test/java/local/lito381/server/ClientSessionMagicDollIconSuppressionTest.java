@@ -27,6 +27,8 @@ import org.junit.jupiter.api.io.TempDir;
  * (selected LiTo.bin S_LITO_CLAN) nor the formal 0.6.71 S_EVENT 7B/56|154
  * icon substitute, while the server-side doll lifecycle stays intact.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionMagicDollIconSuppressionTest {
     private static final Pattern FRAME = Pattern.compile(
             "\"direction\":\"server_to_client\",\"opcode\":\"0x([0-9A-F]{2})\""

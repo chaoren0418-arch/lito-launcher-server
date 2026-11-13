@@ -1,6 +1,6 @@
 # LiTo 玩法設計規格（T100，Issue #301）
 
-更新：2026-11-12（T124 #355：§3.8、§4.2 斷線結算的壓力與重啟復原）。本文把**目前正式程式（`src/main`，與正式 0.6.71 JAR 語意等價，見 #78）裡的玩法規則**寫成規格。每條規則後面附程式出處；改規則時請同步更新本文與程式。
+更新：2026-11-13（T131 #382：§4.2 結算鎖順序表；前次 2026-11-12 T124 #355：§3.8、§4.2 斷線結算的壓力與重啟復原）。本文把**目前正式程式（`src/main`，與正式 0.6.71 JAR 語意等價，見 #78）裡的玩法規則**寫成規格。每條規則後面附程式出處；改規則時請同步更新本文與程式。
 本文不改程式；第 7 節列出需要使用者決定的地方，決定後由 T103（#310）等任務實作。
 
 ## 讀法
@@ -286,6 +286,33 @@
 | WAL 檔損毀 | 已提交的 `.pending` 檔格式錯誤時拒絕啟動（不丟結果，檔案留著）；改名前中止留下的 `.tmp` 殘檔不視為結果，會被忽略，但目前不會自動清掉 | `S/SettlementJournal.java:16,24-27` |
 | 同時兩個程序 | WAL 目錄有 `owner.lock`，第二個程序開同一目錄會被拒絕 | `S/SettlementJournal.java:13-14` |
 
+#### 鎖順序（T131 #382）
+
+結算用到的鎖只能照下表**由上往下**取；已經拿著下面的鎖時，不可以再去取上面的鎖。`CONTEXTS`、`TICKETS` 是 static（整個程序共用一把），一旦卡死，所有頻道的離房、清房、戰鬥時鐘都會停住。
+
+| 順序 | 鎖 | 是什麼 | 拿著它時還會再取的鎖 | 出處 |
+|---|---|---|---|---|
+| 1 | `ClientSession` | 單一連線（`recordBattleResult` 是 `synchronized`；結算 worker 逐一鎖 session） | `GameHub`、`CONTEXTS`、`Ticket` | `S/ClientSession.java:56886`；`S/DurableBattleSettlement.java:132,162` |
+| 2 | `GameHub` | 整個大廳（房間、頻道、名單） | `CONTEXTS`、`Context` | `S/GameHub.java:1892,7148-7149,12739,12857,12925`；`S/DurableBattleSettlement.java:27,150,152-155` |
+| 3 | `Context` | 一個房間的一場戰鬥（凍結結果、未落盤清單） | `TICKETS`（只查表）、`SettlementJournal` | `S/DurableBattleSettlement.java:42-61,149` |
+| 4 | `Ticket` | 一個玩家在一場戰鬥的結算票 | `GameStateStore`，其內再取 `Route` | `S/DurableBattleSettlement.java:105-125` |
+| 5 | `GameStateStore` | 記憶體角色資料 | `Route` | `S/DurableBattleSettlement.java:111-122,136-140` |
+| 葉 | `CONTEXTS` | 「大廳 → 房號 → `Context`」對照表（static） | **不取任何鎖** | `S/DurableBattleSettlement.java:28,79,81,129,148` |
+| 葉 | `TICKETS` | 「連線 → `Ticket`」對照表（static） | 不取任何鎖 | `S/DurableBattleSettlement.java:10,30-31,161` |
+| 葉 | `SettlementJournal` | WAL 寫檔（`save`、`pending`） | 不取任何鎖（只做檔案寫入與 `fsync`） | `S/SettlementJournal.java:18-26,48` |
+| 葉 | `Route`、`SharedDatabase.ROUTES` | 來源庫的快取與路由表 | 不取任何鎖 | `S/SettlementSql.java:43,71,102`；`S/DurableBattleSettlement.java:120` |
+| 啟動 | `DurableBattleSettlement.class` | 只在 `open()`（啟動時開 WAL、重放）使用 | 資料庫連線、WAL 檔 | `S/DurableBattleSettlement.java:16-24` |
+
+| 項目 | 規則 | 出處 |
+|---|---|---|
+| `GameHub` 先於 `CONTEXTS` | `GameHub.disconnect`、`resetOrRemove`、`endBattle` 都是拿著 `GameHub` 鎖呼叫 `cleanupAllowed`（取 `CONTEXTS`）。所以**拿著 `CONTEXTS` 時不可以碰 `GameHub`**：`context()` 需要的房間世代與測試房旗標，都在取 `CONTEXTS` 之前、`GameHub` 鎖內讀好 | `S/DurableBattleSettlement.java:26-29`；測試 `DurableBattleSettlementLockOrderTest` |
+| 修正前的死結（T131） | `context()` 在 `CONTEXTS` 鎖內建立 `Context`，建構子呼叫 `NativeRoomRules.testRoom`（取 `GameHub` 鎖）。「一人開戰（`begin`）」與「另一人斷線（`disconnect`）」同時發生時互等，全服的離房、清房、戰鬥時鐘停住，只能重啟 | CI run 43264734337、43264755522、43264993090 的 thread dump（`docs/reports/issue-382.md`） |
+| `CONTEXTS` 的五個持有點 | `context()`（查表、建立）、`cleanupAllowed`、`forget`（內含 `cleanupAllowed`，同一把鎖重入）、`reconcileRecovered` 與 `retry`（只複製清單就放開）。五處在鎖內都只讀寫對照表與 `Context` 的 volatile 欄位 | `S/DurableBattleSettlement.java:28,79,81,129,148` |
+| `Context` 鎖內不回頭取 `GameHub` | `freeze` 進 `Context` 鎖之前先替名單上每個人建好 `Ticket`（`begin` 會取 `GameHub` 與 `CONTEXTS`），鎖內的 `ticket()` 只查表。斷線判定是拿著 `GameHub` 鎖進 `freeze`，所以這個先後不能反過來 | `S/DurableBattleSettlement.java:41-42,49`；`S/GameHub.java:12857,12925` |
+| 資料庫與檔案鎖 | `GET_LOCK` 以「控制庫＋來源庫＋角色」為名，等待上限 5 秒，逾時回報失敗後由背景重試，不會永久互等；`SettlementJournal.replay` 不取 Java 鎖，重複重放靠結果 ID 去重；`owner.lock` 是跨程序的檔案鎖，只在開啟時取一次 | `S/SettlementSql.java:81-83`；`S/SettlementJournal.java:13-14,38-47` |
+| 〔推測〕斷線判定時 WAL 寫檔在 `GameHub` 鎖內 | `battleDisconnectWork`（`synchronized`）→ `TeamDisconnectSettlement.resolve` → `freeze` → `journal.save`（`fsync`）。磁碟慢時，斷線判定那一刻全大廳會跟著等；不是死結，沒有量測過 | `S/GameHub.java:12857,12925`；`S/TeamDisconnectSettlement.java:14`；`S/DurableBattleSettlement.java:58` |
+| 範圍 | 本表只涵蓋結算三個類別（`DurableBattleSettlement`、`SettlementJournal`、`SettlementSql`）與它們被 `GameHub`／`ClientSession` 呼叫的入口；`GameHub` 與 `ClientSession` 彼此之間其他路徑的鎖順序沒有在本次逐一檢查 | — |
+
 ### 4.3 積分（ranking_points）
 
 | 項目 | 規則 | 出處 |
@@ -383,3 +410,4 @@
   - 跨來源雙人同房實機（LC X11、X13）。
   - 斷線合併 300 毫秒在雙人實機的表現（LC B18）。
   - 斷線結算的壓力與重啟復原（§3.8、§4.2，T124 #355）已有 CI MySQL 自動化測試；真實 TCP 斷線（拔線、強制關閉客戶端）與真實程序被強制結束（`taskkill`）仍待實機確認。
+  - 鎖順序（§4.2，T131 #382）由 CI 的 `DurableBattleSettlementLockOrderTest` 驗證；實機「一人開戰、同時另一人斷線」後全服仍可離房與開戰，待雙人實機確認。

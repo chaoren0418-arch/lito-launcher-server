@@ -23,6 +23,8 @@ import org.junit.jupiter.api.io.TempDir;
  * removes only that observer.  The combatants keep their running match,
  * roster and result flow, and the observer can rejoin the same battle.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionBattleObserverExitTest {
     @TempDir Path temporary;
 
