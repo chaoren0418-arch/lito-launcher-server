@@ -16,3 +16,7 @@ py -3 tools/db-grants/jar_tables.py <正式 JAR>
 ```
 
 改了伺服器 SQL 之後重跑前兩行；`generated/` 有變化就要一起提交（輸出不含時間戳，同一份原始碼重跑結果相同）。
+
+`generated/` 或 `review.json` 有變化時，再跑 `py -3 tools/acceptance/m4-schema-precheck.py --update-sql`（T128）：M4 實驗庫的核對與授權腳本（`tools/acceptance/m4-db-verify.sql`、`m4-db-prepare.sql`）的需求清單由同一份資料產生，CI 的 `acceptance-tools` 會檢查兩邊是否同步。
+
+`review.json` 的 `gated_ranges`、`startup_ranges` 是以「檔名＋行號區間」比對的：對應的方法搬檔或前面插入大量程式後要跟著改，否則「啟動即讀」會全部變成「否」、`lito_mysql` 區段的排除也會失效（2026-11-13 `Accounts.java` → `LegacyMySqlRepository.java` 就發生過，T128 已修）。

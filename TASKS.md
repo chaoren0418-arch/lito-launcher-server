@@ -119,7 +119,7 @@ T127–T130 是 M4 的準備，優先做（Codex 2026-11-13 18:11 恢復）。�
 
 | ID | Issue | 類別 | 內容 | 狀態 |
 |---|---|---|---|---|
-| T127 | 待建 | B 準備 | CHECKLIST 改新 JAR 版＋`M4-RUNBOOK.md` A 部（01–21）、B 部（G19–G27、G02 封包） | todo |
+| T127 | #378 | B 準備 | CHECKLIST 改新 JAR 版＋`M4-RUNBOOK.md` A 部（01–21）、B 部（G19–G27、G02 封包）；發現正式登入器不能接外部伺服器（RUNBOOK §P5），需 T128 或另開任務補客戶端啟動腳本 | review |
 | T128 | 待建 | B 準備 | 實驗環境預檢與腳本：存取清單重產、schema／授權靜態比對、資料前置 SQL、`tools/acceptance/` | todo |
 | T129 | 待建 | B 準備 | M3／M3b／M3c、#366–#371 的實機待驗證項目彙整成 RUNBOOK C 部（依賴 T127） | todo |
 | T130 | 待建 | B 準備 | G27：map 12000 資產查核（PakViewer，唯讀） | todo |
