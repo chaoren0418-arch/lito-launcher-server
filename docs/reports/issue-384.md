@@ -1,4 +1,4 @@
-# Issue #384（T133）凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7）
+﻿# Issue #384（T133）凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7）
 
 分支：`task/384`。對照表寫在 `docs/design/formulas-magic.md` §9.4（並更新 §1 M17、§7、§9.3 Z7）。
 
@@ -53,3 +53,8 @@
 ## 建置與 CI
 - 本機 `mvn -B -o -q -DskipTests test-compile`（`lito伺服器/LiTo381-Server`）通過（main＋test 都編得過）。
 - 依本機執行限制，測試**沒有在本機跑**，交 PR 的 GitHub Actions CI（`mvn -B test`）。
+- PR #396 CI（程式碼 commit `e63e6cf2`，run 43387377711）：
+  - 第一次執行「Server tests」在測試開始前失敗：Maven Central 抓不到 `org.apache.maven.surefire:surefire-junit-platform:jar:3.2.5`（下載問題，測試沒有執行）。重跑失敗的 job 後通過。
+  - 重跑結果：Server tests **通過**（`BattleQuestEncounterTest` 52 個、`BattleTimeAttackEncounterTest` 63 個、`FrozenEncounterDamageOrderSourceAuditTest` 3 個，皆 Failures 0／Errors 0／Skipped 0）；Server (Java 17 / Maven)、Server reproducible JAR、Launcher、Semantic gap、Build-Package.ps1 zip 都通過。
+  - 「Server tests (CI MySQL fixture)」（non-blocking）失敗 16 個測試類別，與 main `b2444c77`（run 43382420925）同一 job 的失敗清單逐類別、逐數字相同，不是本 PR 造成；本 PR 的三個測試類別在這個 job 也都通過。
+- 本報告這一節是在上述 CI 之後補寫的文件 commit，該 commit 自己的 CI 結果以 PR 頁面為準。
