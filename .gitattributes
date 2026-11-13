@@ -1,0 +1,2 @@
+# T140 / Issue #404: helper is SHA-pinned in ExternalServerStartup.cs; keep its bytes exact.
+lito登入器/LiTo381-Launcher/src/external_server_startup.py -text

@@ -505,3 +505,11 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Build (Release)
         run: dotnet build "lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj" -c Release
+      # T140 / Issue #404: pure unit tests (no GUI, no Server, no LiTo.bin).
+      - name: Unit tests (.NET)
+        run: dotnet test "lito登入器/LiTo381-Launcher/tests/LiTo381Launcher.Tests/LiTo381Launcher.Tests.csproj" -c Release --logger "console;verbosity=normal"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests (external server helper, Python)
+        run: python -B -X utf8 "lito登入器/LiTo381-Launcher/tests/test_external_server_startup.py" -v

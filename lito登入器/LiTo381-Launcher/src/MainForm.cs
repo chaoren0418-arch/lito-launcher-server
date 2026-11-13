@@ -64,7 +64,15 @@ public sealed class MainForm : Form
     private readonly Button _cancelStartup = new() { Text = "取消／結束本次啟動", AutoSize = true, Enabled = false };
     private DefaultMemoryStartup? _memoryStartup;
     private DevelopmentStartup? _developmentStartup;
-    private bool StartupOwnershipRetained => _memoryStartup?.OwnershipRetained == true || _developmentStartup?.OwnershipRetained == true;
+    // T140 / Issue #404: set only by --external-server-profile; null keeps the formal flow unchanged.
+    private readonly string? _externalProfilePath;
+    private readonly ExternalServerProfile? _externalProfile;
+    private readonly string? _externalProfileError;
+    private ExternalServerStartup? _externalStartup;
+    private bool ExternalServerMode => _externalProfilePath is not null;
+    private bool StartupOwnershipRetained => _memoryStartup?.OwnershipRetained == true || _developmentStartup?.OwnershipRetained == true
+        || _externalStartup?.OwnershipRetained == true;
+    private bool CanAddClientNow => ExternalServerMode ? _externalStartup?.CanAddClient == true : _developmentStartup?.CanAddClient == true;
     private CancellationTokenSource? _memoryCancellation;
     private Task? _memoryOperation;
     private bool _closeAfterMemoryCleanup;
@@ -90,16 +98,25 @@ public sealed class MainForm : Form
     private string? _isolatedConfigurationSha;
     private readonly HashSet<string> _retiredIsolatedConfigurations = new(StringComparer.Ordinal);
 
-    public MainForm(string? isolatedConfig = null, bool defaultMemoryMode = true, bool startMemoryServer = false, bool startMemoryGame = false, bool closeAfterMemoryGame = false, bool startDevelopment = false)
-        : this(isolatedConfig, defaultMemoryMode, startMemoryServer, log => new MemoryServerControl(log), startMemoryGame: startMemoryGame, closeAfterMemoryGame: closeAfterMemoryGame, startDevelopment: startDevelopment) { }
+    public MainForm(string? isolatedConfig = null, bool defaultMemoryMode = true, bool startMemoryServer = false, bool startMemoryGame = false, bool closeAfterMemoryGame = false, bool startDevelopment = false, string? externalServerProfile = null)
+        : this(isolatedConfig, defaultMemoryMode, startMemoryServer, log => new MemoryServerControl(log), startMemoryGame: startMemoryGame, closeAfterMemoryGame: closeAfterMemoryGame, startDevelopment: startDevelopment, externalServerProfile: externalServerProfile) { }
 
     internal MainForm(string? isolatedConfig, bool defaultMemoryMode, bool startMemoryServer,
         Func<Action<string>, MemoryServerControl> serverControlFactory,
-        Action<LauncherMenuPreferences>? saveMenuPreferences = null, string? startupContextRoot = null, bool startMemoryGame = false, bool closeAfterMemoryGame = false, bool startDevelopment = false)
+        Action<LauncherMenuPreferences>? saveMenuPreferences = null, string? startupContextRoot = null, bool startMemoryGame = false, bool closeAfterMemoryGame = false, bool startDevelopment = false, string? externalServerProfile = null)
     {
         if ((startMemoryServer || startMemoryGame) && (isolatedConfig is not null || !defaultMemoryMode || (startMemoryServer && startMemoryGame)))
             throw new ArgumentException("One exclusive automatic startup intent requires the default GUI mode.");
         if (closeAfterMemoryGame && !startMemoryGame) throw new ArgumentException("Close-after-game requires game Start intent.");
+        if (externalServerProfile is not null && (isolatedConfig is not null || !defaultMemoryMode || startMemoryServer || startMemoryGame || startDevelopment))
+            throw new ArgumentException("External Server mode requires the plain default GUI mode.");
+        _externalProfilePath = externalServerProfile;
+        if (externalServerProfile is not null)
+        {
+            try { _externalProfile = ExternalServerProfile.Load(externalServerProfile); }
+            catch (Exception error) when (error is IOException or UnauthorizedAccessException or InvalidDataException)
+            { _externalProfileError = "外部伺服器設定無法使用：" + error.Message; }
+        }
         _isolatedConfig = isolatedConfig;
         _startMemoryServerOnShown = startMemoryServer;
         _startMemoryGameOnShown = startMemoryGame;
@@ -772,7 +789,9 @@ public sealed class MainForm : Form
     private void InitializeMemoryUi()
     {
         InitializeIsolatedUi();
-        Text = "LiTo 3.81C 正式流程啟動器 0.6.71";
+        Text = ExternalServerMode ? "LiTo 3.81C 啟動器 0.6.71（外部伺服器驗收模式）" : "LiTo 3.81C 正式流程啟動器 0.6.71";
+        if (ExternalServerMode)
+            AppendLog(_externalProfile is not null ? "[外部伺服器] " + ExternalServerStartup.Describe(_externalProfile) : "[外部伺服器] " + _externalProfileError);
         _launch.Text = "啟動 LiTo.bin";
         _validate.Text = "重新檢查";
         _launch.Enabled = false;
@@ -782,14 +801,18 @@ public sealed class MainForm : Form
         var actions = Controls[0].Controls.OfType<FlowLayoutPanel>().Single();
         if (!_startMemoryGameOnShown) {
             actions.Controls.Add(_addClient);
-            _cancelStartup.Text = "結束全部遊戲與本次伺服器";
-            _multiClientTimer.Tick += (_, _) => _addClient.Enabled = !_addingClient && _developmentStartup?.CanAddClient == true && _memoryCancellation?.IsCancellationRequested == false;
+            _cancelStartup.Text = ExternalServerMode ? "結束全部遊戲（外部伺服器保持執行）" : "結束全部遊戲與本次伺服器";
+            _multiClientTimer.Tick += (_, _) => _addClient.Enabled = !_addingClient && CanAddClientNow && _memoryCancellation?.IsCancellationRequested == false;
             _multiClientTimer.Start();
             FormClosed += (_, _) => { _multiClientTimer.Stop(); _multiClientTimer.Dispose(); };
             _addClient.Click += async (_, _) => {
-                if (_addingClient || _developmentStartup is null || _memoryCancellation is null) return;
+                if (_addingClient || (ExternalServerMode ? _externalStartup is null : _developmentStartup is null) || _memoryCancellation is null) return;
                 _addingClient = true; _addClient.Enabled = false;
-                try { await _developmentStartup.AddClientAsync(_memoryCancellation.Token); }
+                try
+                {
+                    if (ExternalServerMode) await _externalStartup!.AddClientAsync(_memoryCancellation.Token);
+                    else await _developmentStartup!.AddClientAsync(_memoryCancellation.Token);
+                }
                 catch (OperationCanceledException) { }
                 catch (Exception error) { AppendLog("[多開未完成] " + error.Message); }
                 finally { _addingClient = false; }
@@ -851,7 +874,15 @@ public sealed class MainForm : Form
         if (_gameStartInProgress || _memoryOperation is { IsCompleted: false } || StartupOwnershipRetained) return;
         try
         {
-            if (!_startMemoryGameOnShown)
+            if (ExternalServerMode)
+            {
+                // The formal source list comes from the formal server.properties; the external
+                // Server's sources come only from its own profile.
+                if (_externalProfile is null) throw new InvalidOperationException(_externalProfileError ?? "外部伺服器設定無法使用。");
+                _selectedSourceId = _externalProfile.Sources[0].Id;
+                AppendLog("[選服流程] 外部伺服器：先開啟原生伺服器選單，選定後才輸入帳密。");
+            }
+            else if (!_startMemoryGameOnShown)
             {
                 _selectedSourceId = SourceServerChoice.Load()[0].Id;
                 AppendLog("[選服流程] 先開啟原生伺服器選單，選定後才輸入帳密。");
@@ -865,7 +896,8 @@ public sealed class MainForm : Form
             _cancelStartup.Enabled = true;
             _memoryCancellation?.Dispose();
             _memoryCancellation = new();
-            if (_startMemoryGameOnShown) _memoryStartup = new(AppendLog);
+            if (ExternalServerMode) _externalStartup = new(_externalProfile!, _externalProfilePath!, AppendLog, UpdateExtendedStats);
+            else if (_startMemoryGameOnShown) _memoryStartup = new(AppendLog);
             else _developmentStartup = new(AppendLog, UpdateExtendedStats);
             _memoryOperation = RunMemoryOperationAsync(preferences, _memoryCancellation.Token);
             await _memoryOperation;
@@ -894,7 +926,12 @@ public sealed class MainForm : Form
     {
         try
         {
-            if (_startMemoryGameOnShown)
+            if (ExternalServerMode)
+            {
+                await PrepareOwnedTestPairForGameAsync(cancellation);
+                await _externalStartup!.RunAsync(preferences, cancellation, _selectedSourceId);
+            }
+            else if (_startMemoryGameOnShown)
                 await _memoryStartup!.RunAsync(preferences, cancellation, _startupContextRoot, PrepareOwnedTestPairForGameAsync);
             else
             {
@@ -906,7 +943,7 @@ public sealed class MainForm : Form
         catch (OperationCanceledException) { _status.Text = "本次啟動已取消並完成清理。"; }
         catch (Exception error)
         {
-            var availability = _startMemoryGameOnShown ? DefaultMemoryStartupRelease.CheckAvailability(preferences) : DevelopmentStartup.CheckAvailability(preferences);
+            var availability = CheckGameAvailability(preferences);
             _status.Text = availability.CanStart ? "遊戲啟動未完成，請重新檢查；詳細原因已記錄。" : availability.Message;
             _status.ForeColor = Color.Firebrick;
             AppendLog("[啟動未完成] " + error.Message);
@@ -927,10 +964,19 @@ public sealed class MainForm : Form
         RefreshMemoryServerUi();
     }
 
+    private MemoryStartupAvailability CheckGameAvailability(LauncherMenuPreferences preferences)
+    {
+        if (ExternalServerMode)
+            return _externalProfile is null
+                ? new(MemoryStartupAvailabilityKind.SourceValidationFailed, _externalProfileError ?? "外部伺服器設定無法使用。", null)
+                : ExternalServerStartup.CheckAvailability(preferences, _externalProfile);
+        return _startMemoryGameOnShown ? DefaultMemoryStartupRelease.CheckAvailability(preferences) : DevelopmentStartup.CheckAvailability(preferences);
+    }
+
     private MemoryStartupAvailability RefreshGameAvailability()
     {
         MemoryStartupAvailability availability;
-        try { availability = _startMemoryGameOnShown ? DefaultMemoryStartupRelease.CheckAvailability(ReadIsolatedPreferencesFromUi()) : DevelopmentStartup.CheckAvailability(ReadIsolatedPreferencesFromUi()); }
+        try { availability = CheckGameAvailability(ReadIsolatedPreferencesFromUi()); }
         catch (ArgumentException error) { availability = new(MemoryStartupAvailabilityKind.InvalidPreferences, "請確認客戶端目錄與遊戲設定，再按「重新檢查」。", error); }
         var cleanupPending = StartupOwnershipRetained
             || (_serverControl?.State == MemoryServerControlState.Failed && _serverControl.OwnershipRetained);
