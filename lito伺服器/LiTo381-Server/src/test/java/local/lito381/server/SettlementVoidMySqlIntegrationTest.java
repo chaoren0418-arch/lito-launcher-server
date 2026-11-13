@@ -223,6 +223,7 @@ final class SettlementVoidMySqlIntegrationTest {
         assertTrue(unchanged.getMessage().contains("unchanged"), unchanged.getMessage());
         assertEquals(new Receipt(SettlementSql.PENDING, null, null), receipt(valid.id()));
         assertTrue(Files.exists(wal.resolve(SettlementJournal.VOID_REQUESTS)), "a refused list stays for the operator");
+        assertFalse(Files.exists(wal.resolve(SettlementJournal.VOIDED_DIRECTORY)), "a refused request leaves no audit copy");
         assertEquals(knightBase, fixture.counters(database, KNIGHT));
         Files.delete(wal.resolve(SettlementJournal.VOID_REQUESTS));
         fixture.restart();

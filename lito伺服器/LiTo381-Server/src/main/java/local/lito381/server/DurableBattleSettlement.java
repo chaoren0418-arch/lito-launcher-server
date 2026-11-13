@@ -38,8 +38,8 @@ final class DurableBattleSettlement {
  }
  /**
   * T136 (#387): processes {@code void-requests.txt} in the WAL directory while this process owns it and before any
-  * replay. Order: validate the list → audit-copy the WAL files holding those results → void each receipt
-  * ({@link SettlementSql#voidResult}) → append {@code void-audit.log} → move the list into {@code voided/}.
+  * replay. Order: validate the list → void each receipt ({@link SettlementSql#voidResult}) → audit-copy the WAL
+  * files holding the voided results → append {@code void-audit.log} → move the list into {@code voided/}.
   * A refused request keeps the list in place and refuses startup; requests voided before it stay voided, and
   * a rerun treats them as already voided.
   */
@@ -49,9 +49,9 @@ final class DurableBattleSettlement {
   Map<String,String> wanted=SettlementJournal.voidRequests(requests);
   List<SharedDatabase.Route> routes;synchronized(SharedDatabase.ROUTES){routes=List.copyOf(SharedDatabase.ROUTES.values());}
   for(var route:routes)SettlementSql.requireVoidColumns(route);
-  opened.archive(wanted.keySet());
   List<SettlementSql.Voided> done=new ArrayList<>();Exception failure=null;
   for(var request:wanted.entrySet())try{done.add(SettlementSql.voidResult(request.getKey(),request.getValue()));}catch(Exception e){failure=SettlementSql.collect(failure,e);}
+  opened.archive(done.stream().map(SettlementSql.Voided::resultId).collect(java.util.stream.Collectors.toSet())); // before any replay deletes them; a crash earlier re-archives on the next start (already-voided)
   StringBuilder audit=new StringBuilder();String now=java.time.OffsetDateTime.now().toString();
   for(var v:done){String line=now+"\t"+(v.alreadyVoided()?"already-voided":"voided")+"\t"+v.resultId()+"\t"+v.database()+"/"+v.character()+"\tfrozen="+v.frozenName()+"\tnow="+(v.observedName()==null?"<deleted>":v.observedName())+"\treason="+wanted.get(v.resultId());audit.append(line).append(System.lineSeparator());System.out.println("[LiTo] settlement "+line.replace('\t',' '));}
   if(audit.length()>0)try(var f=java.nio.channels.FileChannel.open(opened.directory().resolve(SettlementJournal.VOID_AUDIT),StandardOpenOption.CREATE,StandardOpenOption.WRITE,StandardOpenOption.APPEND)){var b=java.nio.ByteBuffer.wrap(audit.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));while(b.hasRemaining())f.write(b);f.force(true);}

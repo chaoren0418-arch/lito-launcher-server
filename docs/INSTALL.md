@@ -229,7 +229,7 @@ BAT 與登入器內建伺服器共用埠，**擇一**啟動。
 7. 處理完成後：
    - 收據列 `applied=2`、`voided_at`、`void_reason` 已填（不會刪除收據列）；
    - `void-requests.txt` 已移到 `voided/void-requests-<時間>.txt`；
-   - `voided/` 裡有含這些結果的 `.pending` 檔副本（作廢前複製）；
+   - `voided/` 裡有含這些結果的 `.pending` 檔副本（作廢後、重放刪檔前複製）；
    - `void-audit.log` 每筆一行（時間、`voided`／`already-voided`、`result_id`、來源庫/objid、凍結名、目前名、原因）；
    - 同一場其他玩家的結果照常計入。
 8. 啟動仍失敗時看上表的 `Settlement void refused` 列。清單中排在前面、已經作廢成功的不會回滾；修正清單後再啟動，它們會記為 `already-voided`，不會重複處理。
