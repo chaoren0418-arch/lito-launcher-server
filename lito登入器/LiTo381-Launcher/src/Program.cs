@@ -8,7 +8,12 @@ internal static class Program
     private static int Main(string[] args)
     {
         bool startMemoryServer, startMemoryGame, closeAfterMemoryGame;
-        try { startMemoryServer = ResolveStartMemoryServer(args); startMemoryGame = ResolveStartMemoryGame(args); closeAfterMemoryGame = ResolveCloseAfterMemoryGame(args); }
+        string? externalServerProfile;
+        try
+        {
+            startMemoryServer = ResolveStartMemoryServer(args); startMemoryGame = ResolveStartMemoryGame(args); closeAfterMemoryGame = ResolveCloseAfterMemoryGame(args);
+            externalServerProfile = ResolveExternalServerProfile(args);
+        }
         catch (ArgumentException error) { Console.Error.WriteLine(error.Message); return 2; }
         if (args.Contains("--automated-isolated-test", StringComparer.OrdinalIgnoreCase))
             return AutomatedIsolatedStartup.Run(args);
@@ -26,8 +31,32 @@ internal static class Program
         var startDevelopment = args.Contains("--start-development-game", StringComparer.OrdinalIgnoreCase);
         if (startDevelopment && (!ResolveDefaultMemoryMode(args) || startMemoryServer || startMemoryGame || closeAfterMemoryGame))
             throw new ArgumentException("Development startup requires its own exclusive default GUI intent.");
-        Application.Run(new MainForm(ResolveUiConfiguration(args), ResolveDefaultMemoryMode(args), startMemoryServer, startMemoryGame, closeAfterMemoryGame, startDevelopment));
+        Application.Run(new MainForm(ResolveUiConfiguration(args), ResolveDefaultMemoryMode(args), startMemoryServer, startMemoryGame, closeAfterMemoryGame, startDevelopment, externalServerProfile));
         return 0;
+    }
+
+    internal const string ExternalServerProfileOption = "--external-server-profile";
+
+    /// <summary>
+    /// T140 / Issue #404: development/acceptance entry. Opens the default GUI but connects the
+    /// native flow to an already running loopback Server described by the given profile; the
+    /// bundled Server is not started and the port is not rewritten. Without the option the
+    /// formal flow is unchanged (returns null).
+    /// </summary>
+    internal static string? ResolveExternalServerProfile(string[] args)
+    {
+        var index = Array.FindIndex(args, value => value.Equals(ExternalServerProfileOption, StringComparison.OrdinalIgnoreCase));
+        if (index < 0) return null;
+        if (Array.FindLastIndex(args, value => value.Equals(ExternalServerProfileOption, StringComparison.OrdinalIgnoreCase)) != index)
+            throw new ArgumentException(ExternalServerProfileOption + " may be given only once.");
+        if (index + 1 >= args.Length || args[index + 1].StartsWith("--", StringComparison.Ordinal) || string.IsNullOrWhiteSpace(args[index + 1]))
+            throw new ArgumentException(ExternalServerProfileOption + " requires a profile JSON path.");
+        if (!ResolveDefaultMemoryMode(args) || args.Any(arg => new[] {
+                "--start-memory-server", "--start-memory-game", "--close-after-memory-game", "--start-development-game",
+                "--automated-isolated-test", "--smoke-test", "--server-orchestration-smoke-test"
+            }.Contains(arg, StringComparer.OrdinalIgnoreCase)))
+            throw new ArgumentException(ExternalServerProfileOption + " opens the default GUI against an already running Server; incompatible launch modes refused.");
+        return Path.GetFullPath(args[index + 1]);
     }
 
     internal static string? ResolveUiConfiguration(string[] args)
