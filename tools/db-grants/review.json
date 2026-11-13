@@ -12,9 +12,10 @@
  "exclude_class_prefix": ["Modern"],
  "_exclude_class_prefix": "Modern* 屬 classifier=modern 的另一個入口 ModernStandaloneMain（pom.xml:141-151），不在正式 0.6.71 流程（docs/reports/lito-capability-current.md B24）。",
  "gated_ranges": [
-  {"file": "Accounts.java", "from": 4361, "to": 4495, "reason": "healthCheck 內 `if (repositoryMode.equals(\"lito_mysql\"))` 區塊（Accounts.java:4361）；共用模式固定 legacy_mysql（SharedDatabase.java:50-52）"},
-  {"file": "Accounts.java", "from": 4498, "to": 4700, "reason": "migrateLitoExtensions：`if (!repositoryMode.equals(\"lito_mysql\")) return;`（Accounts.java:4499）"}
+  {"file": "LegacyMySqlRepository.java", "from": 351, "to": 485, "reason": "healthCheck 內 `if (repositoryMode.equals(\"lito_mysql\"))` 區塊（LegacyMySqlRepository.java:351）；共用模式固定 legacy_mysql（SharedDatabase.java:50-52）"},
+  {"file": "LegacyMySqlRepository.java", "from": 488, "to": 692, "reason": "migrateLitoExtensions：`if (!repositoryMode.equals(\"lito_mysql\")) return;`（LegacyMySqlRepository.java:490）"}
  ],
+ "_line_numbers": "T128／#379（2026-11-13）：Accounts.java 的儲存層已搬到 LegacyMySqlRepository.java。gated_ranges、startup_ranges 是 gen_grants.py 實際比對的區段，已改成新檔名與行號；其餘說明文字裡的 `Accounts.java:NNNN` 是搬移前的行號，只供追溯（新位置＝LegacyMySqlRepository.java 內同名方法）。",
  "excluded_tables": {
   "lito_account_origin": "lito_mysql 擴充表：healthCheck 只在 lito_mysql 檢查（Accounts.java:4363）；寫入路徑有 readOnly／lito_mysql 守門（Accounts.java:4842、4897）",
   "lito_board_topic": "lito_mysql 擴充表（Accounts.java:4377）",
@@ -46,16 +47,17 @@
   "lito_battle_settlement": ["INSERT", "UPDATE"]
  },
  "_write_allowed": "SharedDatabase.java:9-11、101-102（只有結算呼叫點能開寫入）；SettlementSql.java:14、38-39、42。其他表的寫入程式只在 lito_mysql 且非唯讀時執行，連線池本身也是唯讀（Accounts.java:4234 setReadOnly）。",
- "startup_classes": ["UnifiedConfiguration", "ResourceDatabase", "NativeProcNpcCatalog", "NativeProcEncounterCatalog", "NativeProcSkillCatalog", "NativeProcHealBonus", "NativeArmorProc", "GmTravel", "CombatDatabase", "SourceSkillControls", "SourceEyeControls", "SourceBlessingControls", "NativeDeSprites", "NativeDeSpriteCatalog", "NativeDeFactoryControls", "NativeDeControlCatalog", "NativeDeNpcTemplateResources", "NativeDeNpcTemplateMobLoader", "NativeDeNpcTemplateNpcLoader", "NativeDeTerrainResources", "NativeDeTerrainTable", "NativeDeShopResources", "NativeDeShopTable", "NativeDeChatResources", "NativeDeChatTable", "NativeRoomRules", "LegacyInventoryWeightLoader"],
+ "startup_classes": ["UnifiedConfiguration", "ResourceDatabase", "NativeProcNpcCatalog", "NativeProcEncounterCatalog", "NativeProcSkillCatalog", "NativeProcHealBonus", "NativeArmorProc", "GmTravel", "CombatDatabase", "SourceSkillControls", "SourceEyeControls", "SourceBlessingControls", "NativeDeSprites", "NativeDeSpriteCatalog", "NativeDeFactoryControls", "NativeDeControlCatalog", "NativeDeNpcTemplateResources", "NativeDeNpcTemplateMobLoader", "NativeDeNpcTemplateNpcLoader", "NativeDeTerrainResources", "NativeDeTerrainTable", "NativeDeShopResources", "NativeDeShopTable", "NativeDeChatResources", "NativeDeChatTable", "NativeRoomRules", "LegacyInventoryWeightLoader", "NativeSkillTargetMetadata", "NativeSourceHealingFormula", "NativeStaticSpawnMetadata", "NativeSourceDollSkillData", "NativeSourceHitReaction"],
+ "_startup_classes_t128": "CombatDatabase.java:80 → NativeSkillTargetMetadata.read（NativeSkillTargetMetadata.java:8、11）在同一個啟動唯讀交易內依序呼叫 NativeSourceHealingFormula.read、NativeStaticSpawnMetadata.read（spawnlist_time／spawnlist_npc，失敗即中止啟動）、NativeSourceDollSkillData.read、NativeSourceHitReaction.read（系統_受擊無動作gfx，SQLException 只記 WARNING 後繼續，NativeSourceHitReaction.java:12-15）。",
  "_startup_classes": "ResourceDatabase.load（ResourceDatabase.java:13-81）依序呼叫的載入器與其表類別；CombatDatabase.java:76 → SourceSkillControls.read → SourceEyeControls／SourceBlessingControls（SourceSkillControls.java:128-129）；GameHub.java:1196 NativeRoomRules.install；Accounts.java:4288 LegacyInventoryWeightLoader.healthCheck。",
  "startup_tables": {
   "character_items_time": "Accounts.java:4313-4314 啟動時跑 sourceInventorySql() + LIMIT 0，該 SQL 在 Accounts.java:13070-13071 JOIN 此表",
   "etcitem_doll_type": "同上，sourceInventorySql() 在 Accounts.java:13140-13143 JOIN 此表"
  },
  "startup_ranges": [
-  {"file": "Accounts.java", "from": 4249, "to": 4360, "reason": "LegacyMySqlRepository.healthCheck（lito_mysql 區塊之前）"},
+  {"file": "LegacyMySqlRepository.java", "from": 238, "to": 350, "reason": "LegacyMySqlRepository.healthCheck（lito_mysql 區塊之前）"},
   {"file": "LegacyEquipmentMagicLoader.java", "from": 1, "to": 171, "reason": "REQUIRED_RESOURCE_TABLES 與 healthCheck（LegacyEquipmentMagicLoader.java:31-60、103-171）"},
-  {"file": "SharedDatabase.java", "from": 69, "to": 81, "reason": "SharedDatabase.check"},
-  {"file": "SettlementSql.java", "from": 7, "to": 7, "reason": "SettlementSql.check"}
+  {"file": "SharedDatabase.java", "from": 70, "to": 87, "reason": "SharedDatabase.check"},
+  {"file": "SettlementSql.java", "from": 45, "to": 47, "reason": "SettlementSql.check"}
  ]
 }
