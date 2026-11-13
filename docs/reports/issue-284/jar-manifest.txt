@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Created-By: Maven JAR Plugin 3.3.0
+Build-Jdk-Spec: 17
+Class-Path: lib/mysql-connector-j-8.0.33.jar lib/protobuf-java-3.21.9.jar lib/HikariCP-5.1.0.jar lib/slf4j-api-1.7.36.jar
+Main-Class: local.lito381.server.SharedResourceMain
+Implementation-Version: 0.6.71
+
