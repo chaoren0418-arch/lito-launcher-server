@@ -51473,6 +51473,21 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] NPC combat damage blocked by Earth Bind target="
                     + objectId + " damage=" + damage + " source=" + source);
         }
+        // 1-伺服器 L1MagicPc.calcNpcMagicDamage:945 dmg0(_targetNpc)：凍結中的 NPC 魔法傷害為 0。
+        // 這裡在計算階段判斷，造成冰凍的那一擊此時目標尚未凍結，所以傷害照算。
+        boolean frozen = !active && (questObjectId > 0
+                ? hub.questMonsterFreezeActive(
+                        currentRoomId, questObjectId, nowNanos)
+                : timeAttackObjectId > 0 && hub.timeAttackActorFreezeActive(
+                        currentRoomId, timeAttackObjectId, nowNanos));
+        if (frozen) {
+            if (protectedDamage > 0) {
+                long objectId = questObjectId > 0 ? questObjectId : timeAttackObjectId;
+                System.out.println("[LiTo] NPC combat damage blocked by Freeze target="
+                        + objectId + " damage=" + damage + " source=" + source);
+            }
+            protectedDamage = Math.min(protectedDamage, 0);
+        }
         return protectedDamage;
     }
 
