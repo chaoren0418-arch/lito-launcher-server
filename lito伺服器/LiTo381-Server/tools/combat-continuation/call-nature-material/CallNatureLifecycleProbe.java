@@ -10,7 +10,7 @@ public class CallNatureLifecycleProbe extends CallNatureMaterialProbe {
   long id=targetId;int item=(int)row.itemConsumeId(),count=row.itemConsumeCount();NativeDeItemPublication.grant(pc,item,count+3);
   try(var self=new SourceActionPairProbe.Wire(pc,peer);var other=new SourceActionPairProbe.Wire(peer,pc)){
    var error=new java.util.concurrent.atomic.AtomicReference<Throwable>();var clean=new java.util.concurrent.atomic.AtomicBoolean();
-   Thread worker=new Thread(()->{try{byte[] packet=new Protocol.Writer().c(Protocol.C_USE_SPELL).c(20).c(4).d(id).bytes();if(nativeEntry)call(pc,"handle",new Class[]{byte[].class},packet);else call(pc,"useCallOfNatureSpell",new Class[]{byte[].class,row.getClass()},packet,row);clean.set(NativeCallNatureMaterialAction.current.get()==null&&NativeAreaMaterialAction.current.get()==null);}catch(Throwable e){error.set(e);}},"call-nature-corpse-race");
+   Thread worker=new Thread(()->{try{byte[] packet=new Protocol.Writer().c(Protocol.C_USE_SPELL).c(20).c(4).d(id).bytes();if(nativeEntry)call(pc,"handle",new Class[]{byte[].class},g16Intent(pc,id,packet));else call(pc,"useCallOfNatureSpell",new Class[]{byte[].class,row.getClass()},packet,row);clean.set(NativeCallNatureMaterialAction.current.get()==null&&NativeAreaMaterialAction.current.get()==null);}catch(Throwable e){error.set(e);}},"call-nature-corpse-race");
    var lock=peer.nativePlayerActionLock();lock.lock();try{
     worker.start();boolean waiting=false;long limit=System.nanoTime()+TimeUnit.SECONDS.toNanos(2);
     while(worker.isAlive()&&System.nanoTime()<limit){if(Arrays.stream(worker.getStackTrace()).anyMatch(f->f.getClassName().endsWith("NativeAreaMaterialAction")&&f.getMethodName().equals("run"))){waiting=true;break;}Thread.sleep(1);}

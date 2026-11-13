@@ -10,7 +10,7 @@ import java.net.Socket;
 public final class CancellationLifecycleProbe extends CancellationMaterialProbe {
  static void send(ClientSession pc,ClientSession target)throws Exception{
   var row=spell(selectedSkill);byte[] packet=new Protocol.Writer().c(Protocol.C_USE_SPELL).c((selectedSkill-1)>>3).c((selectedSkill-1)&7).d(target.playerObjectId()).bytes();
-  call(pc,"handle",new Class[]{byte[].class},packet);
+  call(pc,"handle",new Class[]{byte[].class},g16Intent(pc,target.playerObjectId(),packet));
  }
  static void exercise(ClientSession pc,ClientSession peer,GameHub hub,boolean world,int mode)throws Exception{
   setup(pc,peer,hub,world);var row=spell(selectedSkill);probability(selectedSkill);int item=Math.toIntExact((long)call(row,"itemConsumeId",new Class[]{})),count=(int)call(row,"itemConsumeCount",new Class[]{});
