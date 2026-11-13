@@ -126,7 +126,9 @@ echo "::endgroup::"
 echo "::group::schema grant mode (#284 ruling) is additive and still verifies"
 root --table --init-command="SET @m4_expected_uuid='', @m4_grant_mode='schema'" < "$TOOLS/m4-db-prepare.sql" > "$WORK/prepare-schema-mode.txt"
 exp -e "SELECT 1 FROM p24_380db_lito_exp.\`$UNLISTED\` LIMIT 0" > /dev/null
-exp --table --init-command="$NOUUID" < "$TOOLS/m4-db-verify.sql" | grep -q 'M4-VERIFY: PASS' || fail 'verify should pass in schema grant mode'
+exp --table --init-command="$NOUUID" < "$TOOLS/m4-db-verify.sql" > "$WORK/verify-schema-mode.txt"
+tail -n 5 "$WORK/verify-schema-mode.txt"
+grep -q 'M4-VERIFY: PASS' "$WORK/verify-schema-mode.txt" || fail 'verify should pass in schema grant mode'
 echo "::endgroup::"
 
 echo "::group::snapshot SQL + m4-sql-diff against real mysql --batch output"
