@@ -38,6 +38,8 @@ import org.junit.jupiter.api.io.TempDir;
  * The repository-side lock group itself is exercised against MySQL by
  * {@code LitoMySqlWaterDragonPassIntegrationTest}.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class WaterDragonSqlFirstPersistenceBehaviorTest {
     private static final Path CONFIG = Path.of(
             "src/test/resources/server-config/config/server.selftest.properties");

@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 class TournamentPresenceTest {
     @Test void sourceObjectIdentityIsLosslessAndNamesCannotBypassAReservation() {
         var core = new TournamentPresence(); var sun = core.connect(); var moon = core.connect(); var rival = core.connect();

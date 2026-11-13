@@ -22,6 +22,8 @@ import org.junit.jupiter.api.io.TempDir;
  * item's attributes in the status packets, exactly once, and removing it
  * must restore the previous values.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionRentalMerchantBonusTest {
     private static final int LOVE_RESOURCE_INDEX = 12;
     private static final int KRI_RESOURCE_INDEX = 11;

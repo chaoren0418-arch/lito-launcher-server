@@ -19,6 +19,8 @@ import org.junit.jupiter.api.io.TempDir;
  * room with {@code hub.createRoom} and joins it afterwards; a disconnect of an unrelated player in
  * between used to sweep every empty room and delete the new one ("unknown room" on join).
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class GameHubDisconnectRoomSweepTest {
     @TempDir Path temporary;
     private final List<Socket> sockets = new ArrayList<>();

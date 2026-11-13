@@ -26,6 +26,8 @@ import org.junit.jupiter.api.io.TempDir;
  * swallow the native return chain as an (empty) battle withdrawal.  Only a
  * transition the server itself staged may pass that guard.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionRentalTownReturnTest {
     private static final long TOWN_ROOM = 0x5000_0001L;
     private static final int SEED_LEAVER = 0x3810_3681;

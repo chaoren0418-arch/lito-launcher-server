@@ -14,6 +14,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class GameStateWaterDragonTest {
     private static final ZoneId ZONE = ZoneId.of("Asia/Taipei");
     private static final Instant START = Instant.parse("2026-08-22T00:00:00Z");

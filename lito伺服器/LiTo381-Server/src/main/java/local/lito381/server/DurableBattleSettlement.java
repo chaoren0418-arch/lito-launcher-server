@@ -6,7 +6,7 @@ final class DurableBattleSettlement {
  static void set(Object o,String name,Object value){try{var f=o.getClass().getDeclaredField(name);f.setAccessible(true);f.set(o,value);}catch(ReflectiveOperationException e){throw new IllegalStateException(name,e);}}
  static Object call(Object o,String name,Class<?>[] types,Object...args){try{var m=o.getClass().getDeclaredMethod(name,types);m.setAccessible(true);return m.invoke(o,args);}catch(InvocationTargetException e){throw new IllegalStateException(name,e.getCause());}catch(ReflectiveOperationException e){throw new IllegalStateException(name,e);}}
  static final class Ticket {final WeakReference<ClientSession> session;final Context context;volatile SettlementJournal.Entry entry;volatile GameStateStore.Progress progress;Ticket(ClientSession s,Context c){session=new WeakReference<>(s);context=c;}}
- static final class Context {final WeakReference<GameHub> hub;final long room,generation;final boolean testRoom;final String battle=UUID.randomUUID().toString();volatile BattleRules.Resolution terminal;volatile List<SettlementJournal.Entry> unsaved=List.of();boolean retryNotification;Context(GameHub h,long r,long g){hub=new WeakReference<>(h);room=r;generation=g;testRoom=NativeRoomRules.testRoom(h,r);}}
+ static final class Context {final WeakReference<GameHub> hub;final long room,generation;final boolean testRoom;final String battle=UUID.randomUUID().toString();volatile BattleRules.Resolution terminal;volatile List<SettlementJournal.Entry> unsaved=List.of();boolean retryNotification;Context(GameHub h,long r,long g,boolean test){hub=new WeakReference<>(h);room=r;generation=g;testRoom=test;}}
  private static final Map<ClientSession,Ticket> TICKETS=Collections.synchronizedMap(new WeakHashMap<>());
  private static final Map<GameHub,Map<Long,Context>> CONTEXTS=Collections.synchronizedMap(new WeakHashMap<>());
  private static volatile SettlementJournal journal;private static volatile long lastError;
@@ -23,9 +23,9 @@ final class DurableBattleSettlement {
    Runtime.getRuntime().addShutdownHook(new Thread(()->{try{journal.close();}catch(IOException ignored){}},"settlement-journal-close"));
   }
  }
- static Context context(GameHub hub,long room){
-  Object raw;long generation=0;synchronized(hub){raw=((Map<?,?>)get(hub,"rooms")).get(room);if(raw!=null)generation=(long)get(raw,"battleGeneration");}
-  synchronized(CONTEXTS){var map=CONTEXTS.computeIfAbsent(hub,h->new HashMap<>());Context old=map.get(room);if(old!=null && (!old.unsaved.isEmpty()||old.generation==generation))return old;var c=new Context(hub,room,generation);map.put(room,c);return c;}
+ static Context context(GameHub hub,long room){ // T131 (#382) lock order, gameplay.md §4.2: GameHub before CONTEXTS; nothing is acquired while CONTEXTS is held. The hub calls cleanupAllowed with its monitor held, so the test-room flag is read in the hub block, never inside the CONTEXTS block (that deadlocked "battle start vs. disconnect" for the whole JVM).
+  Object raw;long generation=0;boolean testRoom;synchronized(hub){raw=((Map<?,?>)get(hub,"rooms")).get(room);if(raw!=null)generation=(long)get(raw,"battleGeneration");testRoom=NativeRoomRules.testRoom(hub,room);}
+  synchronized(CONTEXTS){var map=CONTEXTS.computeIfAbsent(hub,h->new HashMap<>());Context old=map.get(room);if(old!=null && (!old.unsaved.isEmpty()||old.generation==generation))return old;var c=new Context(hub,room,generation,testRoom);map.put(room,c);return c;}
  }
  static void begin(ClientSession session){var hub=(GameHub)get(session,"hub");long room=(long)get(session,"currentRoomId");TICKETS.put(session,new Ticket(session,context(hub,room)));}
  private static Ticket ticket(ClientSession session){var t=TICKETS.get(session);if(t==null){begin(session);t=TICKETS.get(session);}return t;}

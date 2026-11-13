@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
  * {@link NativeStaticNpcMotion#occupies(int, int, int, ClassicWorldMonsterPopulation)}，
  * 不得再取 hub 鎖（0.6.71 的 client 執行緒是 hub → population）。
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class NativeStaticNpcMotionLockOrderTest {
     private static final int MAP = 410;
 

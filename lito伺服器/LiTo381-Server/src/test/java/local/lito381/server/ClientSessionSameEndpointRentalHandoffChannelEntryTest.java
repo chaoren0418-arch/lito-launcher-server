@@ -26,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * following C_CA must still be a tournament channel entry, not an LTItemSet
  * re-selection that would replace the continued loadout.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionSameEndpointRentalHandoffChannelEntryTest {
     private static final String ACCOUNT = "same-endpoint-account";
 
