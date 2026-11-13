@@ -280,6 +280,13 @@ final class NativeSourcePhysicalNpc {
         && before(p.origin.scene().hub(), p.origin.scene().id(), p, p.target.id(), p.damage);
   }
 
+  /** The player whose accepted physical commit damages the encounter NPC (hate-list owner). */
+  static ClientSession attacker(Commit p) {
+    if (p == null || p.origin == null) return null;
+    Object pc = p.origin.source().pc();
+    return pc instanceof ClientSession session ? session : null;
+  }
+
   static int force(Object room, Commit p) {
     if (p == null || room != p.origin.scene().room() || p.target.kind() != 1)
       throw new IllegalStateException("original player lane required");

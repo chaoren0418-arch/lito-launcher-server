@@ -3,6 +3,8 @@ package local.lito381.server;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /** Selected-source {@code mobskill}/{@code skills} rows used by Tournament actors. */
 final class BattleTimeAttackMagicSkillCatalog {
@@ -29,6 +31,97 @@ final class BattleTimeAttackMagicSkillCatalog {
             // Retained L1MobSkillUse.isSkillUseble uses chance < TriRnd.
             return oneBasedRoll < triggerChance();
         }
+
+        /** Selected {@code mobskill.ChangeTarget} column (0 or 3 in this catalog). */
+        default int changeTarget() {
+            return BattleTimeAttackMagicSkillCatalog.changeTarget(npcId(), actNo());
+        }
+    }
+
+    /** Retained L1MobSkill.CHANGE_TARGET_RANDOM (L1MobSkill.java:27). */
+    static final int CHANGE_TARGET_RANDOM = 3;
+
+    /**
+     * Selected {@code mobskill} rows whose ChangeTarget column is 3
+     * (1-伺服器 db/380_db.sql:34616, 34617, 34613, 34625, 34618, 34911,
+     * 35106, 35107). Every other row of this catalog has ChangeTarget 0.
+     */
+    private static final Map<Integer, Set<Integer>> CHANGE_TARGET_RANDOM_ROWS = Map.of(
+            45682, Set.of(4, 5, 6),
+            45683, Set.of(3, 4),
+            45684, Set.of(4, 5, 6));
+
+    static int changeTarget(int npcId, int actNo) {
+        Set<Integer> rows = CHANGE_TARGET_RANDOM_ROWS.get(npcId);
+        return rows != null && rows.contains(actNo) ? CHANGE_TARGET_RANDOM : 0;
+    }
+
+    /**
+     * Retained L1MobSkillUse.changeTarget (L1MobSkillUse.java:831-833):
+     * {@code _rnd.nextInt(size * 100) / 100} picks the candidate index.
+     */
+    static int changeTargetIndex(int candidateCount, int roll) {
+        if (candidateCount <= 0 || roll < 0 || roll >= candidateCount * 100) {
+            throw new IllegalArgumentException("change-target roll outside nextInt(size*100)");
+        }
+        return roll / 100;
+    }
+
+    /**
+     * DB table {@code skills_魔屏無效技能} read by retained
+     * SkillCounterMagicExceptionTable (1-伺服器 db/380_db.sql:49020-49030).
+     * It is merged with the hard-coded EXCEPT_COUNTER_MAGIC list
+     * (L1SkillUse.java:334-344, 2767-2775).
+     */
+    static final Set<Integer> COUNTER_MAGIC_DB_EXCEPTIONS =
+            Set.of(44, 87, 112, 132, 153, 161, 173, 174, 187, 188, 192);
+
+    /**
+     * Whether an active COUNTER_MAGIC absorbs this NPC skill. Callers must
+     * only ask for TYPE_ATTACK(64) skills cast at another character
+     * (L1SkillUse.java:2868-2874, 4243-4256); every {@link Definition} row
+     * of this catalog is such a skill.
+     */
+    static boolean counterMagicBlocks(int skillId) {
+        return SourceSkillTargeting.counterMagicApplies(skillId)
+                && !COUNTER_MAGIC_DB_EXCEPTIONS.contains(skillId);
+    }
+
+    /**
+     * Retained L1SkillUse.isUseCounterMagic (L1SkillUse.java:4243-4256): when
+     * the skill is blockable and the target holds COUNTER_MAGIC, the status is
+     * removed and the target leaves the hit list. Exception skills leave the
+     * status untouched.
+     */
+    static boolean absorbedByCounterMagic(
+            Definition skill, BattleTimedStatus targetStatus, long nowNanos) {
+        return skill != null && targetStatus != null
+                && skill.counterMagicBlockable()
+                && targetStatus.consumeCounterMagic(nowNanos);
+    }
+
+    /** Retained L1Character.broadcastPacketX8 (L1NpcInstance.java:4138-4140): 8 tiles. */
+    static final int REST_SHOUT_RADIUS = 8;
+
+    static boolean restShoutReaches(int npcX, int npcY, int listenerX, int listenerY) {
+        return Math.max(Math.abs(npcX - listenerX), Math.abs(npcY - listenerY))
+                <= REST_SHOUT_RADIUS;
+    }
+
+    /** Retained L1SkillUse.java:3037-3041: rest skills make the NPC say {@code $3717}. */
+    static final String REST_SHOUT_MESSAGE = "$3717";
+
+    static boolean restShout(int skillId) {
+        return skillId == 10026 || skillId == 10027
+                || skillId == 10028 || skillId == 10029;
+    }
+
+    /** Retained S_NpcChat(npc, chat): {@code npc.getNameId() + ": " + chat} (S_NpcChat.java:25). */
+    static String restShoutText(String npcNameId) {
+        if (npcNameId == null || npcNameId.isBlank()) {
+            throw new IllegalArgumentException("NPC name id required for rest shout");
+        }
+        return npcNameId + ": " + REST_SHOUT_MESSAGE;
     }
 
     enum Targeting {
@@ -146,6 +239,14 @@ final class BattleTimeAttackMagicSkillCatalog {
 
         boolean drainsLife() {
             return skillId == 28;
+        }
+
+        boolean counterMagicBlockable() {
+            return counterMagicBlocks(skillId);
+        }
+
+        boolean restShout() {
+            return BattleTimeAttackMagicSkillCatalog.restShout(skillId);
         }
 
         boolean castDistance(int distance) {

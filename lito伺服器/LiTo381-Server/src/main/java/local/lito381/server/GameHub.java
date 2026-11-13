@@ -8899,6 +8899,8 @@ final class GameHub implements AutoCloseable {
         if (hit == null) {
             return null;
         }
+        // Retained L1MonsterInstance.receiveDamage -> setHate(attacker, damage) (:981).
+        room.timeAttackEncounter.rememberHate(l2, clientSession.playerObjectId());
         if (!hit.spawned().isEmpty()) {
             room.pveAiPublishAfterNanos = Long.MAX_VALUE;
         }
@@ -13556,6 +13558,11 @@ final class GameHub implements AutoCloseable {
         }
         BattleTimeAttackEncounter.Hit hit = room.timeAttackEncounter.damage(objectId, damage);
         if (hit == null) return null;
+        // Retained L1MonsterInstance.receiveDamage -> setHate(attacker, damage) (:981).
+        ClientSession hateOwner = NativeSourcePhysicalNpc.attacker(commit);
+        if (hateOwner != null) {
+            room.timeAttackEncounter.rememberHate(objectId, hateOwner.playerObjectId());
+        }
         if (!hit.spawned().isEmpty()) room.pveAiPublishAfterNanos = Long.MAX_VALUE;
         BattleRules.Resolution resolution = hit.finalBossesCleared()
                 ? room.match.timeAttackCompleted(
@@ -13568,6 +13575,48 @@ final class GameHub implements AutoCloseable {
                             ? "timeattack-ordinary-fragments-cleared"
                             : "timeattack-next-ordinary-fragment")));
         return new TimeAttackActorHit(hit, resolution);
+    }
+
+    /**
+     * Retained L1MobSkillUse.changeTarget(CHANGE_TARGET_RANDOM) candidates
+     * (L1MobSkillUse.java:789-825): every eligible combatant of the room with
+     * the monster-to-player glanceCheck result. Trigger distance and the hate
+     * list are checked per mobskill row inside the encounter.
+     */
+    private static List<BattleTimeAttackEncounter.ChangeTargetCandidate> timeAttackChangeTargetCandidates(
+            Room room, int sourceX, int sourceY, ClientSession primary, Object choice) {
+        ArenaMapCatalog.Arena arena = ArenaMapCatalog.forMap(room.match.rules().mapId());
+        List<BattleTimeAttackEncounter.ChangeTargetCandidate> candidates = new ArrayList<>();
+        for (ClientSession candidate : room.battleRoster) {
+            if (!candidate.battleAiTargetEligible(room.id)
+                    || candidate.playerObjectId() <= 0
+                    || candidate != primary
+                        && NativeSourceNpcPlayerView.retarget(choice, candidate) == null) {
+                continue;
+            }
+            candidates.add(new BattleTimeAttackEncounter.ChangeTargetCandidate(
+                    candidate.playerObjectId(), candidate.battleX(), candidate.battleY(),
+                    BattleSpellCatalog.hasNativeLineOfSight(arena, sourceX, sourceY,
+                            candidate.battleX(), candidate.battleY())));
+        }
+        return candidates;
+    }
+
+    /** {@code nextInt(size * 100)} of L1MobSkillUse.java:831-832; fixtures pick {@code selector % size}. */
+    private int timeAttackChangeTargetRoll(int bound) {
+        if (this.timeAttackMonsterActNoFixture >= 0
+                || this.timeAttackMonsterMagicFixtureTriggerRoll > 0) {
+            return Math.floorMod(this.timeAttackMonsterCandidateFixtureSelector, bound / 100) * 100;
+        }
+        return ThreadLocalRandom.current().nextInt(bound);
+    }
+
+    private static ClientSession timeAttackRosterMember(Room room, long playerObjectId) {
+        if (playerObjectId == 0L) return null;
+        for (ClientSession candidate : room.battleRoster) {
+            if (candidate.playerObjectId() == playerObjectId) return candidate;
+        }
+        return null;
     }
 
 
@@ -13673,9 +13722,20 @@ final class GameHub implements AutoCloseable {
                 return;
             }
         } else {
-            var var21_19 = this.timeAttackMonsterActNoFixture >= 0 ? room.timeAttackEncounter.nativeSourceNpcPlayerFirstAiAttackForActNoFixture(l, n4, n5, l2, this.timeAttackMonsterActNoFixture, this.timeAttackMonsterCandidateFixtureSelector, object, object2) : (this.timeAttackMonsterMagicFixtureTriggerRoll > 0 ? room.timeAttackEncounter.nativeSourceNpcPlayerFirstAiAttackFor(l, n4, n5, l2, this.timeAttackMonsterMagicFixtureTriggerRoll, this.timeAttackMonsterPhysicalFixtureTriggerRoll > 0 ? this.timeAttackMonsterPhysicalFixtureTriggerRoll : 100, this.timeAttackMonsterCandidateFixtureSelector, object, object2) : (room.timeAttackEncounter.nativeSourceNpcPlayerFirstAiAttackFor(l, n4, n5, l2, object, object2)));
+            // ChangeTarget=3 (L1MobSkillUse.java:777-842): dragon rows may pick another
+            // hated player of the room; with one combatant the AI target is kept.
+            BattleTimeAttackEncounter.ChangeTargetAttack changeTargetAttack = room.timeAttackEncounter.aiAttackWithChangeTarget(clientSession.playerObjectId(), GameHub.timeAttackChangeTargetCandidates(room, n2, n3, clientSession, object2), this::timeAttackChangeTargetRoll, () -> this.timeAttackMonsterActNoFixture >= 0 ? room.timeAttackEncounter.nativeSourceNpcPlayerFirstAiAttackForActNoFixture(l, n4, n5, l2, this.timeAttackMonsterActNoFixture, this.timeAttackMonsterCandidateFixtureSelector, object, object2) : (this.timeAttackMonsterMagicFixtureTriggerRoll > 0 ? room.timeAttackEncounter.nativeSourceNpcPlayerFirstAiAttackFor(l, n4, n5, l2, this.timeAttackMonsterMagicFixtureTriggerRoll, this.timeAttackMonsterPhysicalFixtureTriggerRoll > 0 ? this.timeAttackMonsterPhysicalFixtureTriggerRoll : 100, this.timeAttackMonsterCandidateFixtureSelector, object, object2) : (room.timeAttackEncounter.nativeSourceNpcPlayerFirstAiAttackFor(l, n4, n5, l2, object, object2))));
+            BattleTimeAttackEncounter.AiAttack var21_19 = changeTargetAttack.attack();
             if (var21_19 != null) {
-                list.add(new MonsterAiTick(room.id, mode, l, n, n2, n3, n2, n3, GameHub.heading(n2, n3, n4, n5), clientSession, n7, true, ((BattleTimeAttackEncounter.AiAttack)var21_19).magicSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).visualSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).physicalSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).summonSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).groundSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).spawned(), List.of(), ((BattleTimeAttackEncounter.AiAttack)var21_19).triggerRoll(), string + ";mobskill=selected-380_db-mobskill+skills+npc", object, object2));
+                ClientSession tickTarget = clientSession;
+                Object tickChoice = object2;
+                ClientSession changedTarget = GameHub.timeAttackRosterMember(room, changeTargetAttack.targetObjectId());
+                Object changedChoice = changedTarget == null || changedTarget == clientSession ? null : NativeSourceNpcPlayerView.retarget(object2, changedTarget);
+                if (changedChoice != null) {
+                    tickTarget = changedTarget;
+                    tickChoice = changedChoice;
+                }
+                list.add(new MonsterAiTick(room.id, mode, l, n, n2, n3, n2, n3, GameHub.heading(n2, n3, tickTarget.battleX(), tickTarget.battleY()), tickTarget, n7, true,((BattleTimeAttackEncounter.AiAttack)var21_19).magicSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).visualSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).physicalSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).summonSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).groundSkill(), ((BattleTimeAttackEncounter.AiAttack)var21_19).spawned(), List.of(), ((BattleTimeAttackEncounter.AiAttack)var21_19).triggerRoll(), string + ";mobskill=selected-380_db-mobskill+skills+npc", object, tickChoice));
                 return;
             }
             if (n6 <= 1) {

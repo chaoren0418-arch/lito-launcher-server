@@ -34199,6 +34199,41 @@ final class ClientSession implements Runnable {
                 + " damage=0 status=blocked");
     }
 
+    /**
+     * Retained L1SkillUse.isUseCounterMagic (L1SkillUse.java:4243-4256) for the
+     * Quest／Time Attack NPC magic flows: an active COUNTER_MAGIC absorbs one
+     * blockable TYPE_ATTACK NPC skill, is removed and shows its cast gfx.
+     */
+    private boolean consumeCounterMagicAgainstNpcSkill(
+            BattleTimeAttackMagicSkillCatalog.Definition skill, long nowNanos)
+            throws IOException {
+        if (!BattleTimeAttackMagicSkillCatalog.absorbedByCounterMagic(
+                skill, timedStatus, nowNanos)) return false;
+        publishCounterMagicConsumption(this, skill.skillId());
+        return true;
+    }
+
+    /**
+     * Retained L1SkillUse.java:3037-3041: S_NpcChat(npc, "$3717") through
+     * broadcastPacketX8. LiTo.bin receives NPC speech as S_SAY_CODE (0x2D,
+     * receiver sub_4A3140), the packet the Guardian warning already uses.
+     */
+    private void publishNpcRestShout(
+            long npcObjectId, String npcNameId, int npcX, int npcY,
+            List<ClientSession> recipients, int skillId) throws IOException {
+        if (npcNameId == null || npcNameId.isBlank() || recipients == null) return;
+        byte[] packet = Protocol.sayCode(0, npcObjectId,
+                BattleTimeAttackMagicSkillCatalog.restShoutText(npcNameId), npcX, npcY);
+        for (ClientSession recipient : recipients) {
+            if (!BattleTimeAttackMagicSkillCatalog.restShoutReaches(
+                    npcX, npcY, recipient.positionX, recipient.positionY)) continue;
+            recipient.sendEncrypted(packet,
+                    "S_SAY_CODE mobskill-rest-shout actor=" + npcObjectId
+                            + " skill=" + skillId + " message="
+                            + BattleTimeAttackMagicSkillCatalog.REST_SHOUT_MESSAGE);
+        }
+    }
+
     private void useCubeIgnitionSpell(byte[] byArray, BattleSpellCatalog.CubeIgnitionSpell cubeIgnitionSpell) throws IOException {
         NativeCubeCastAction.cubeIgnition(this, byArray, cubeIgnitionSpell);
     }
@@ -54506,8 +54541,17 @@ final class ClientSession implements Runnable {
                boolean var10 = var9 != null && var9.boss();
                boolean var11 = counterMirrorNpcEligible(var2.npcId(), var9);
                List<ClientSession.TimeAttackMonsterMagicHit> var12 = new ArrayList();
+               Set<ClientSession> counterMagicBlocked = new java.util.HashSet<>();
 
                for (ClientSession var14 : var5) {
+                  // Retained L1SkillUse.java:2868-2874 + 4243-4256: COUNTER_MAGIC absorbs one
+                  // TYPE_ATTACK NPC skill before any damage roll and is consumed.
+                  if (var14.consumeCounterMagicAgainstNpcSkill(var4, var30)) {
+                     counterMagicBlocked.add(var14);
+                     var12.add(new ClientSession.TimeAttackMonsterMagicHit(var14, 0, 0, 0, 0, 0));
+                     continue;
+                  }
+
                   int var15 = var4.baseDamage();
 
                   for (int var16 = 0; var16 < var4.diceCount(); var16++) {
@@ -54606,6 +54650,15 @@ final class ClientSession implements Runnable {
                }
 
                for (ClientSession.TimeAttackMonsterMagicHit var39 : var12) {
+                  if (counterMagicBlocked.contains(var39.target())) {
+                     continue;
+                  }
+
+                  if (var4.restShout()) {
+                     // Retained L1SkillUse.java:3037-3041 (see the Time Attack flow).
+                     this.publishNpcRestShout(var2.objectId(), var2.name(), var2.x(), var2.y(), var3, var4.skillId());
+                  }
+
                   System.out
                      .println(
                         "[LiTo] Quest monster magic npc="
@@ -54762,8 +54815,17 @@ final class ClientSession implements Runnable {
 
                boolean var10 = counterMirrorNpcEligible(var2.npcId(), var9);
                List<ClientSession.TimeAttackMonsterMagicHit> var11 = new ArrayList();
+               Set<ClientSession> counterMagicBlocked = new java.util.HashSet<>();
 
                for (ClientSession var13 : var5) {
+                  // Retained L1SkillUse.java:2868-2874 + 4243-4256: COUNTER_MAGIC absorbs one
+                  // TYPE_ATTACK NPC skill before any damage roll and is consumed.
+                  if (var13.consumeCounterMagicAgainstNpcSkill(var4, var30)) {
+                     counterMagicBlocked.add(var13);
+                     var11.add(new ClientSession.TimeAttackMonsterMagicHit(var13, 0, 0, 0, 0, 0));
+                     continue;
+                  }
+
                   int var14 = var4.baseDamage();
 
                   for (int var15 = 0; var15 < var4.diceCount(); var15++) {
@@ -54862,6 +54924,16 @@ final class ClientSession implements Runnable {
                }
 
                for (ClientSession.TimeAttackMonsterMagicHit var39 : var11) {
+                  if (counterMagicBlocked.contains(var39.target())) {
+                     continue;
+                  }
+
+                  if (var4.restShout()) {
+                     // Retained L1SkillUse.java:3037-3041: every accepted target of the rest
+                     // skills makes the NPC say "$3717" through S_NpcChat (broadcastPacketX8).
+                     this.publishNpcRestShout(var2.objectId(), var2.name(), var2.x(), var2.y(), var3, var4.skillId());
+                  }
+
                   System.out
                      .println(
                         "[LiTo] Time Attack monster magic npc="

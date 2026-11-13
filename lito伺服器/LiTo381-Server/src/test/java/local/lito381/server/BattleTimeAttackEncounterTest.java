@@ -352,6 +352,211 @@ final class BattleTimeAttackEncounterTest {
         assertEquals(18, ground.groundSkill().actionId());
     }
 
+    private static final long PLAYER_ONE = 0x1000_0001L;
+    private static final long PLAYER_TWO = 0x1000_0002L;
+    /** Antharas actNo order 0..7; only act4 (31003, TriRange -4, ChangeTarget 3) rolls. */
+    private static final int[] ANTHARAS_ACT4_ONLY = {100, 100, 100, 100, 1, 100, 100, 100};
+
+    private static BattleTimeAttackEncounter.ChangeTargetCandidate candidate(
+            long objectId, int x, int y, boolean lineOfSight) {
+        return new BattleTimeAttackEncounter.ChangeTargetCandidate(
+                objectId, x, y, lineOfSight);
+    }
+
+    /**
+     * T132 #3 (C9). 期望值出處：1-伺服器 L1MobSkillUse.java:206-213
+     * （ChangeTarget>0 的列先換目標再做觸發檢查）、:789-825（候選＝觸發距離內 :800、
+     * 視線可及 :805、在仇恨名單 :809 的玩家）、:827-828（沒有候選用原目標）、
+     * :831-833（nextInt(size*100)/100）；仇恨名單來源 L1MonsterInstance.java:619
+     * （AI 目標）與 :981（造成傷害）。
+     */
+    @Test
+    void changeTargetRandomPicksAnotherHatedPlayerInsideTriggerRange() {
+        BattleTimeAttackEncounter encounter = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon = dragon(encounter, 1);
+        long dragonId = dragon.objectId();
+        int x = dragon.x();
+        int y = dragon.y();
+        encounter.rememberHate(dragonId, PLAYER_TWO);
+        assertTrue(encounter.hates(dragonId, PLAYER_TWO));
+        assertFalse(encounter.hates(dragonId, PLAYER_ONE));
+        int[] bound = new int[1];
+        BattleTimeAttackEncounter.ChangeTargetAttack changed =
+                encounter.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, x + 4, y, true),
+                                candidate(PLAYER_TWO, x, y + 3, true)),
+                        value -> {
+                            // act4（-4）兩人都在範圍 → nextInt(200)；act5／act6（-3）只有玩家二 → nextInt(100)
+                            bound[0] = Math.max(bound[0], value);
+                            return value == 200 ? 150 : 0;
+                        },
+                        () -> encounter.aiAttackFor(dragonId, x + 4, y, 0,
+                                ANTHARAS_ACT4_ONLY, 0, 0));
+        assertNotNull(changed.attack());
+        assertEquals(31003, changed.attack().visualSkill().skillId());
+        assertEquals(200, bound[0]);
+        assertEquals(PLAYER_TWO, changed.targetObjectId());
+        // L1MonsterInstance.java:619：AI 目標進仇恨名單
+        assertTrue(encounter.hates(dragonId, PLAYER_ONE));
+
+        // 同樣兩人，擲到 0..99 → 第一個候選＝原目標 → 不換
+        BattleTimeAttackEncounter encounter2 = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon2 = dragon(encounter2, 1);
+        encounter2.rememberHate(dragon2.objectId(), PLAYER_TWO);
+        BattleTimeAttackEncounter.ChangeTargetAttack kept =
+                encounter2.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, dragon2.x() + 4, dragon2.y(), true),
+                                candidate(PLAYER_TWO, dragon2.x(), dragon2.y() + 3, true)),
+                        value -> 99,
+                        () -> encounter2.aiAttackFor(dragon2.objectId(),
+                                dragon2.x() + 4, dragon2.y(), 0,
+                                ANTHARAS_ACT4_ONLY, 0, 0));
+        assertEquals(31003, kept.attack().visualSkill().skillId());
+        assertEquals(0L, kept.targetObjectId());
+    }
+
+    /** L1MobSkillUse.java:800、:805、:809：距離外／無視線／不在仇恨名單的玩家不是候選。 */
+    @Test
+    void changeTargetRandomExcludesUnhatedOutOfRangeAndBlockedPlayers() {
+        // 不在仇恨名單（:809）
+        BattleTimeAttackEncounter encounter = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon = dragon(encounter, 1);
+        int[] bound = new int[1];
+        BattleTimeAttackEncounter.ChangeTargetAttack unhated =
+                encounter.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, dragon.x() + 4, dragon.y(), true),
+                                candidate(PLAYER_TWO, dragon.x(), dragon.y() + 3, true)),
+                        value -> {
+                            bound[0] = value;
+                            return value - 1;
+                        },
+                        () -> encounter.aiAttackFor(dragon.objectId(),
+                                dragon.x() + 4, dragon.y(), 0,
+                                ANTHARAS_ACT4_ONLY, 0, 0));
+        assertNotNull(unhated.attack());
+        assertEquals(100, bound[0]);
+        assertEquals(0L, unhated.targetObjectId());
+
+        // 觸發距離外（:800；act4 TriRange -4，玩家二在 5 格）
+        BattleTimeAttackEncounter encounter2 = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon2 = dragon(encounter2, 1);
+        encounter2.rememberHate(dragon2.objectId(), PLAYER_TWO);
+        BattleTimeAttackEncounter.ChangeTargetAttack far =
+                encounter2.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, dragon2.x() + 4, dragon2.y(), true),
+                                candidate(PLAYER_TWO, dragon2.x(), dragon2.y() + 5, true)),
+                        value -> value - 1,
+                        () -> encounter2.aiAttackFor(dragon2.objectId(),
+                                dragon2.x() + 4, dragon2.y(), 0,
+                                ANTHARAS_ACT4_ONLY, 0, 0));
+        assertNotNull(far.attack());
+        assertEquals(0L, far.targetObjectId());
+
+        // 視線被擋（:805）
+        BattleTimeAttackEncounter encounter3 = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon3 = dragon(encounter3, 1);
+        encounter3.rememberHate(dragon3.objectId(), PLAYER_TWO);
+        BattleTimeAttackEncounter.ChangeTargetAttack blocked =
+                encounter3.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, dragon3.x() + 4, dragon3.y(), true),
+                                candidate(PLAYER_TWO, dragon3.x(), dragon3.y() + 3, false)),
+                        value -> value - 1,
+                        () -> encounter3.aiAttackFor(dragon3.objectId(),
+                                dragon3.x() + 4, dragon3.y(), 0,
+                                ANTHARAS_ACT4_ONLY, 0, 0));
+        assertNotNull(blocked.attack());
+        assertEquals(0L, blocked.targetObjectId());
+    }
+
+    /**
+     * L1MobSkillUse.java:209-215：觸發距離是對「換過的目標」檢查，所以原目標在 6 格
+     * （act4 TriRange -4 之外）時，仍可對 3 格內的另一位仇恨玩家放出。
+     * 物理列（act5，TriRange -3、Range 3）同樣換目標；ChangeTarget=0 的列（act0）不換。
+     */
+    @Test
+    void changeTargetRandomAppliesPerRowAndLeavesOtherRowsOnAiTarget() {
+        BattleTimeAttackEncounter encounter = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon = dragon(encounter, 1);
+        encounter.rememberHate(dragon.objectId(), PLAYER_TWO);
+        List<BattleTimeAttackEncounter.ChangeTargetCandidate> players = List.of(
+                candidate(PLAYER_ONE, dragon.x() + 6, dragon.y(), true),
+                candidate(PLAYER_TWO, dragon.x(), dragon.y() + 3, true));
+        // 沒有換目標時：原目標 6 格，act4 放不出
+        assertNull(encounter.aiAttackFor(dragon.objectId(),
+                dragon.x() + 6, dragon.y(), 0, ANTHARAS_ACT4_ONLY, 0, 0));
+        BattleTimeAttackEncounter.ChangeTargetAttack visual =
+                encounter.aiAttackWithChangeTarget(PLAYER_ONE, players, value -> 0,
+                        () -> encounter.aiAttackFor(dragon.objectId(),
+                                dragon.x() + 6, dragon.y(), 0,
+                                ANTHARAS_ACT4_ONLY, 0, 0));
+        assertNotNull(visual.attack());
+        assertEquals(31003, visual.attack().visualSkill().skillId());
+        assertEquals(PLAYER_TWO, visual.targetObjectId());
+
+        BattleTimeAttackEncounter encounter2 = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon2 = dragon(encounter2, 1);
+        encounter2.rememberHate(dragon2.objectId(), PLAYER_TWO);
+        BattleTimeAttackEncounter.ChangeTargetAttack physical =
+                encounter2.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, dragon2.x() + 6, dragon2.y(), true),
+                                candidate(PLAYER_TWO, dragon2.x(), dragon2.y() + 3, true)),
+                        value -> 0,
+                        () -> encounter2.aiAttackFor(dragon2.objectId(),
+                                dragon2.x() + 6, dragon2.y(), 0,
+                                new int[] {100, 100, 100, 100, 100, 1, 100, 100}, 0, 0));
+        assertNotNull(physical.attack());
+        assertEquals(5, physical.attack().physicalSkill().actNo());
+        assertEquals(PLAYER_TWO, physical.targetObjectId());
+
+        // act0（31001，ChangeTarget 0）：兩人都在範圍內也維持 AI 目標
+        BattleTimeAttackEncounter encounter3 = new BattleTimeAttackEncounter();
+        BattleTimeAttackEncounter.Snapshot dragon3 = dragon(encounter3, 1);
+        encounter3.rememberHate(dragon3.objectId(), PLAYER_TWO);
+        BattleTimeAttackEncounter.ChangeTargetAttack breath =
+                encounter3.aiAttackWithChangeTarget(PLAYER_ONE,
+                        List.of(candidate(PLAYER_ONE, dragon3.x() + 4, dragon3.y(), true),
+                                candidate(PLAYER_TWO, dragon3.x(), dragon3.y() + 3, true)),
+                        value -> value - 1,
+                        () -> encounter3.aiAttackFor(dragon3.objectId(),
+                                dragon3.x() + 4, dragon3.y(), 0,
+                                new int[] {1, 100, 100, 100, 100, 100, 100, 100}, 0, 0));
+        assertEquals(31001, breath.attack().magicSkill().skillId());
+        assertEquals(0L, breath.targetObjectId());
+    }
+
+    /** 單人時行為不變：只有原目標一個候選，結果與沒有 ChangeTarget 包裝完全相同。 */
+    @Test
+    void changeTargetRandomKeepsSinglePlayerBehaviour() {
+        for (int actIndex = 0; actIndex < 8; actIndex++) {
+            int[] rolls = {100, 100, 100, 100, 100, 100, 100, 100};
+            rolls[actIndex] = 1;
+            BattleTimeAttackEncounter plain = new BattleTimeAttackEncounter();
+            BattleTimeAttackEncounter.Snapshot plainDragon = dragon(plain, 1);
+            BattleTimeAttackEncounter.AiAttack expected = plain.aiAttackFor(
+                    plainDragon.objectId(), plainDragon.x() + 3, plainDragon.y(),
+                    0, rolls, 0, 0);
+
+            BattleTimeAttackEncounter wrapped = new BattleTimeAttackEncounter();
+            BattleTimeAttackEncounter.Snapshot dragon = dragon(wrapped, 1);
+            BattleTimeAttackEncounter.ChangeTargetAttack actual =
+                    wrapped.aiAttackWithChangeTarget(PLAYER_ONE,
+                            List.of(candidate(PLAYER_ONE, dragon.x() + 3, dragon.y(), true)),
+                            value -> value - 1,
+                            () -> wrapped.aiAttackFor(dragon.objectId(),
+                                    dragon.x() + 3, dragon.y(), 0, rolls, 0, 0));
+            assertEquals(0L, actual.targetObjectId(), "act index " + actIndex);
+            assertEquals(expected == null, actual.attack() == null, "act index " + actIndex);
+            if (expected != null) {
+                assertEquals(expected.magicSkill(), actual.attack().magicSkill());
+                assertEquals(expected.visualSkill(), actual.attack().visualSkill());
+                assertEquals(expected.physicalSkill(), actual.attack().physicalSkill());
+                assertEquals(expected.triggerRoll(), actual.attack().triggerRoll());
+                assertEquals(expected.selectedCandidate(),
+                        actual.attack().selectedCandidate());
+            }
+        }
+    }
+
     @Test
     void recordsTokyoIceGolemThenSeaDancerAsIncompleteEnabledFragments() {
         List<BattleTimeAttackEncounter.DocumentedOrdinaryFragment> fragments =

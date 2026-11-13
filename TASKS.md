@@ -124,7 +124,7 @@ T127–T130 是 M4 的準備，優先做（Codex 2026-11-13 18:11 恢復）。�
 | T129 | #380 | B 準備 | M3／M3b／M3c、#366–#371 的實機待驗證項目彙整成 RUNBOOK C 部 V01–V38（依賴 T127）；租屋城鎮（V35–V37）與經典世界（V38）在統一設定下打不開，列為阻塞；資料前置 E1–E14 中能確定的已進 `m4-seed-exp.sql`，其餘見 `docs/reports/issue-380.md` | review |
 | T130 | #381 | B 準備 | G27：map 12000 資產查核（PakViewer，唯讀）；結論：客戶端資產齊全、房間模式不會進 12000，缺口在伺服器 JAR 內建地形（不含 12000／12004），修法待主控決定（`docs/reports/issue-381.md`） | review |
 | T131 | 待建 | A 開發 | 開戰與斷線同時發生的鎖順序死結（`DurableBattleSettlement.context`）＋CI MySQL job 逾時（#369、#370 移交） | todo |
-| T132 | 待建 | A 開發 | PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話、多人換目標（#353 剩餘 1–3） | todo |
+| T132 | #383 | A 開發 | PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話（`S_SAY_CODE 0x2D`，客戶端有對應封包）、多人 Time Attack 換目標（#353 剩餘 1–3）；設計 `docs/design/skills-npc.md` §6，實機待驗證 RUNBOOK V39（`docs/reports/issue-383.md`） | review |
 | T133 | 待建 | A 開發 | 凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7） | todo |
 | T134 | 待建 | A 開發 | 藥水共用冷卻 `delay_id`／`delay_time`（#352 剩餘） | todo |
 | T135 | 待建 | A 開發 | 受控 NPC 恢復節奏與自身技能：G15 前兩組移植並補測試（#354 剩餘優先 1、2） | todo |
