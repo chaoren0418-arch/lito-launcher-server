@@ -61,7 +61,7 @@
 | 角色 | 唯讀載入、不寫回本體是刻意設計（LC A1、A14）；CurHp／MP 不讀（A3）、Sex 沒用到（A15） | 選角、S_STATUS、S_ABILITY_SCORES 等都已處理（CP §1，多數為 A 級契約） | T100、T103 |
 | 道具 | 沒有捲軸強化（LC I6）：依 S1 §2「LiTo 不需要」→ **不做**；商店價目不是 3.81C 原服資料（I11）；購買與消耗只在記憶體（I13，刻意） | 已處理；**R1**：魔法娃娃圖示（實際為 0x7B 子型別 56／154，原文誤記為 0xFA）客戶端沒有接收端 → #311 已改為不送（CP §5） | T110、T111 |
 | 戰鬥 | 公式都有、**都沒對照驗證**（區塊二）；受控 NPC 語意未完成（LC B23） | 已處理（CP §3） | T101、T102 |
-| 技能 | 181 個有入口；**目標與範圍判定已對照**（#305，`docs/design/skill-targeting.md`：181 列 target_to／area／ranged 規格測試＋目錄有效值比對；183／188／193 目錄 target_to／type 錯位已修正；G03–G08 的 Source 修正已在 `src/main` 接線，實機待驗證）；**共通魔法／法師 79 個的消耗／數值／期限／BUFF 互斥已對照**（#307，`docs/design/skills-wizard.md`：MP 公式、原始 INT 減免、SQL 16 欄、速度／勇敢互斥、BUFF 群組與能力值；47 lawful、18 probability_value 已修正；10／20／27／28／40／41／66／77 正義值未套用、76 自施語意仍不同）；**妖精 40 個的消耗／數值／期限／施放屬性已對照**（#308，`docs/design/skills-elf.md`：SQL 16 欄、`skills_buff_ability`、ElfAttr 施放檢查 13 個；157／159／160／170 原本沒有屬性檢查，已補 `SourceElfAttributeGate`，159／160 catalog attr 已修正；`SkillCoexistSet=0` 時妖精 BUFF 群組不互刪仍不同）；**騎士／黑暗妖精／王族／龍騎士／幻術師 62 個的消耗／數值／期限／能力值／外控倍率已對照**（#309，`docs/design/skills-others.md`：SQL 16 欄、`skills_buff_ability` 15 技能、skillmode 固定值、`ConfigSkill` 缺鍵預設；208 骷髏毀壞 catalog 正義值 +45 誤植（SQL lawful=0）已修正；103 正義值未套用仍同 T107 缺口），效果本體封包與實機仍待驗證；競技場「範圍攻擊打 PC／隊友」與 S1 不同屬產品規則，待裁定；588 列非玩家技能是否在範圍內待定（LC §4） | C_USE_SPELL 各尾格式都已處理（CP §4） | T106、T107、T108、T109 |
+| 技能 | 181 個有入口；**目標與範圍判定已對照**（#305，`docs/design/skill-targeting.md`：181 列 target_to／area／ranged 規格測試＋目錄有效值比對；183／188／193 目錄 target_to／type 錯位已修正；G03–G08 的 Source 修正已在 `src/main` 接線，實機待驗證）；**共通魔法／法師 79 個的消耗／數值／期限／BUFF 互斥已對照**（#307，`docs/design/skills-wizard.md`：MP 公式、原始 INT 減免、SQL 16 欄、速度／勇敢互斥、BUFF 群組與能力值；47 lawful、18 probability_value 已修正；10／20／27／28／40／41／66／77 正義值未套用、76 自施語意仍不同）；**妖精 40 個的消耗／數值／期限／施放屬性已對照**（#308，`docs/design/skills-elf.md`：SQL 16 欄、`skills_buff_ability`、ElfAttr 施放檢查 13 個；157／159／160／170 原本沒有屬性檢查，已補 `SourceElfAttributeGate`，159／160 catalog attr 已修正；`SkillCoexistSet=0` 時妖精 BUFF 群組不互刪仍不同）；**騎士／黑暗妖精／王族／龍騎士／幻術師 62 個的消耗／數值／期限／能力值／外控倍率已對照**（#309，`docs/design/skills-others.md`：SQL 16 欄、`skills_buff_ability` 15 技能、skillmode 固定值、`ConfigSkill` 缺鍵預設；208 骷髏毀壞 catalog 正義值 +45 誤植（SQL lawful=0）已修正；103 正義值未套用仍同 T107 缺口），效果本體封包與實機仍待驗證；競技場「範圍攻擊打 PC／隊友」與 S1 不同屬產品規則，待裁定；**588 列非玩家技能**：競技場 PvE（Quest／Time Attack）用到的 16 列與 33 列 `mobskill` 已對照（#353，`docs/design/skills-npc.md`），其中反制魔法擋怪物魔法、安息 `$3717` 喊話、多人 Time Attack 的 ChangeTarget=3 換目標已補上（#383，同檔 §6；單元測試 CI 驗，實機待驗證 RUNBOOK V39）；仍不同的只剩巴拉卡斯火牢 30004（需使用者決定）與「先選列後檢查 MP」（影響小）；其餘 572 列競技場用不到，不做 | C_USE_SPELL 各尾格式都已處理（CP §4） | T106、T107、T108、T109 |
 | 跨界 | 多來源、分埠選服、各自結算都已具備（LC X3–X12）；缺 objid 撞號（X10）；帳號隔離、職業倍率、技能機率的呼叫點目前靠 patch 插入（X6、B8、B10），B-land 後要變成原始碼呼叫 | 選服 `C_LITO_LIN_CHARACTER_INFO` 已處理 | T105；B-land（#138）驗收 |
 | 資源 | **沒有缺**：24 個 idx 全部查過，伺服器引用的外觀、圖示、特效全部找得到（CP §6.3） | — | — |
 
@@ -91,7 +91,7 @@
 | T111 藥水與消耗品數值改讀 SQL | 目前寫死但能用；數值來源不同不是玩家可見錯誤，等 T107–T109 後再看 |
 | 捲軸強化／爆裝 | S1 §2：LiTo 只讀角色既有裝備，不需要 |
 | 商店價目改成原服資料 | 沒有 3.81C 原服資料來源（LC I11） |
-| 588 列非玩家技能（NPC／道具） | 先由 T100 決定 PvE 範圍 |
+| 588 列非玩家技能（NPC／道具） | 範圍已定（`gameplay.md` D5＝A）：競技場用到的 16 列已做（#353、#383）；其餘 572 列留在 Backlog。巴拉卡斯火牢 30004 是否改成只有特效，等使用者決定 |
 | 受控 NPC（寵物、召喚）完整語意（LC B23、G13、G14、G18） | 範圍大，等 T107–T109 後再排 |
 | 跨程式互連（LC X15） | 目前只需要同一個 LiTo 程式接多個來源庫 |
 | G09–G12、G16 等邊界／時序問題 | 依 customer-gaps 原判斷 |
