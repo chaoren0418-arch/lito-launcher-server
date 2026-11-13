@@ -466,7 +466,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Syntax check
-        run: python -B -m py_compile regression_support.py class_identity.py test_formal_protection.py test_receipt_entrypoints.py test_class_identity.py $ENTRIES
+        run: python -B -m py_compile regression_support.py class_identity.py test_formal_protection.py test_receipt_entrypoints.py test_class_identity.py test_selected_player_intent.py $ENTRIES
       - name: Entry points expose --jar / --out / --config / --resources
         run: |
           set -euo pipefail
@@ -508,6 +508,11 @@ jobs:
           for entry in $ENTRIES; do
             python -B -X utf8 "$entry" --help | grep -q -- --class-identity || { echo "::error::$entry --help lacks --class-identity"; exit 1; }
           done
+      # Issue #420 / T144: G16 explicit-intent probe alignment for #341 F1/F2/F4.
+      # Text checks pin every need( assertion; Java sources are only parsed
+      # (JavacTask.parse), never compiled against fixtures or executed.
+      - name: Offline selected-player-intent probe alignment tests
+        run: python -B -X utf8 -m unittest -v test_selected_player_intent
 
   launcher:
     name: Launcher (.NET 10 / WinForms)

@@ -8,9 +8,21 @@ public class CallNatureMaterialProbe extends ElementalMaterialProbe {
  static final int[] SKILLS={165};static int selectedSkill,selectedMode;static long targetId;static int gaps;
  static final List<String>goldens=new ArrayList<>();
  static Object spell(int skill){return BattleSpellCatalog.resurrectionSpell(skill);}
+ /** #420／G16：受測 runtime 含 NativeSelectedPlayerIntent（50635f7e、Maven）時，BATTLE 中對其他玩家的物件目標施法必須帶 LiTo 客戶端 Ctrl 擴充（LFC1），
+  *  與 integration-lifecycle 既有 forced() 位元組相同；歷史 8d26 runtime 沒有此閘與擴充、WORLD 不受此閘管轄，兩者都維持原始封包。
+  *  只改輸入刺激（玩家按住 Ctrl 對敵方施法），不改任何 need 斷言或預期值。 */
+ static final boolean G16_INTENT=g16Present();
+ static boolean g16Present(){try{Class.forName("local.lito381.server.NativeSelectedPlayerIntent",false,ClientSession.class.getClassLoader());return true;}catch(ClassNotFoundException e){return false;}}
+ static byte[] g16Intent(ClientSession pc,long target,byte[] raw)throws Exception{
+  if(!G16_INTENT||target==pc.playerObjectId()||!String.valueOf(get(pc,"phase")).equals("BATTLE"))return raw;
+  // 與 NativeSelectedPlayerIntent.allowed 同一判定範圍：只有同房間的其他玩家才受閘；NPC／屍體／無效 ID 維持原始封包。
+  boolean player=false;for(Object member:(Iterable<?>)call(get(pc,"hub"),"roomCombatants",new Class[]{long.class},((Number)get(pc,"currentRoomId")).longValue()))if(((ClientSession)member).playerObjectId()==target)player=true;
+  if(!player)return raw;
+  byte[] out=Arrays.copyOf(raw,raw.length+8);System.arraycopy(new byte[]{0x4c,0x46,0x43,0x31,raw[0],1,0x67,(byte)0xa5},0,out,raw.length,8);return out;
+ }
  static void cast(ClientSession pc,int skill,Object row)throws Exception {
   byte[] packet=new Protocol.Writer().c(Protocol.C_USE_SPELL).c((skill-1)>>3).c((skill-1)&7).d(targetId).bytes();
-  call(pc,"handle",new Class[]{byte[].class},packet);
+  call(pc,"handle",new Class[]{byte[].class},g16Intent(pc,targetId,packet));
  }
  static void probability(int skill)throws Exception{
   var f=CombatDatabase.class.getDeclaredField("current");f.setAccessible(true);var data=(CombatDatabase.Snapshot)f.get(null);
