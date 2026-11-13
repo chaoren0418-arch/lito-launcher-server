@@ -1,6 +1,6 @@
 # M4 實機驗收操作手冊（RUNBOOK）
 
-更新：2026-11-13（T127，Issue #378）。A 部＝[`CHECKLIST.md`](CHECKLIST.md) 01–21 逐步展開；B 部＝[`customer-gaps.md`](../reports/customer-gaps.md) 的 G19–G27 與 G02 現場封包；C 部（M3 系列待驗證）由 T129（#380）接在本檔後面。
+更新：2026-11-13（T127，Issue #378）。A 部＝[`CHECKLIST.md`](CHECKLIST.md) 01–21 逐步展開；B 部＝[`customer-gaps.md`](../reports/customer-gaps.md) 的 G19–G27 與 G02 現場封包；C 部＝M3／M3b／M3c 與 #366–#371 各報告的實機待驗證項目 V01–V38（T129，Issue #380）。
 
 本檔只是步驟，**沒有任何一步已實機執行**。執行者是 Codex（T011 #285、T137 #388）；本機 Claude 執行器不啟動任何程式。
 
@@ -719,6 +719,500 @@ T130（#381）用 PakViewer 查客戶端資產後回填下表。在那之前本�
 
 ---
 
-## C 部
+## C 部：M3／M3b／M3c 與 #366–#371 的實機待驗證（T129，#380）
 
-由 T129（#380）依同樣的六欄格式接在這裡，截圖 `V<序>-<短名>.png`。
+來源是 `docs/reports/issue-301.md`～`issue-371.md` 各報告的「待驗證」與「給下一棒的提示」。**沒有任何一項已實機執行**。不需要實機而剔除的項目與理由在 [`issue-380.md`](../reports/issue-380.md)。
+
+### C 部讀法
+
+- `R/` = `docs/reports/`。每項的「來源」寫 `R/issue-NNN.md:行`，行號是 2026-11-13 的 `main`（`9be54257`）。
+- 六欄與 A、B 部相同；多一行「需要」：角色、技能、道具、模式。
+- 技能封包開頭：`C_USE_SPELL 0x14` 的 `plain[1]`＝`(技能編號−1)÷8` 的商、`plain[2]`＝餘數（`S/ForcedCombat.java:27`）。本部列出的開頭 hex 都是照這條公式換算的，沒有現場封包對過。
+- 「記錄型」＝來源報告沒有給單次可判定的預期（手感、頻率、平衡）；照實記數字，不填通過／失敗，交主控判讀。
+- 不影響戰績的項目一律在 Local Lobby 測試房做（`gameplay.md:226`；單人時有 ArenaBot，`gameplay.md:87`）；要看 `character_lito` 的項目才用自建房。
+- 伺服器若整個卡住（所有視窗沒反應、console 不再出新行）：先對 Java PID 執行 `jstack <PID>` 存成 `evidence/jstack-V<序>.txt` 再處理。已知有一個偶發的鎖順序死結，條件是「同一時間一人開戰、另一人斷線」（`R/issue-370.md:40-44`），V19–V21 最容易碰到。
+
+### C 部的三個整體阻塞
+
+| 代號 | 內容 | 依據 | 誰能解除 |
+|---|---|---|---|
+| **阻塞：功能未開放**（租屋城鎮） | 實驗設定打不開租屋城鎮。統一設定只接受 22 個鍵，寫 `lito.rental.town.directory.enabled` 會被 `Unknown/retired setting` 拒絕（`S/UnifiedConfiguration.java:7,24`）；載入後又固定寫成 `false`、傳送路線清空（`:75`）。程式裡唯一會把它改回 `true` 的是啟動參數 `--service-mode=rental-source`（`S/SharedResourceMain.java:13` 轉給 `S/Main.java:18-27`；`S/ServerConfig.java:253,703-726`，在統一設定套用之後才執行），但它同時把 `port` 寫死成 **32000**（正式登入器用的埠）、位址寫死 `127.0.0.1`／`127.0.0.2`，還需要另一個 `rental-battle` 程序佔 `127.0.0.3`／`127.0.0.4:32001`（`:727-743`）。這不符合 M4「只用 42083 起的實驗埠、不碰正式埠」的前提；`port` 改掉後 `login.source.port.base` 仍是 42083（`UnifiedConfiguration.java:79`），兩者不一致時能不能啟動沒有查證〔待驗證〕 | 左列行號 | 主控決定：(a) 開一張 code 任務，讓租屋城鎮能在實驗設定下以實驗埠開啟；或 (b) 使用者同意在正式伺服器停機時段用 `--service-mode` 雙程序跑（要佔 32000／32001）。決定前 V35–V37 不做 |
+| **阻塞：經典世界關閉** | 統一設定固定 `classic.world.compatibility.enabled=false`、`classic.world.monster.ai.enabled=false`（`S/UnifiedConfiguration.java:74`），沒有鍵可開。來源報告裡寫「WORLD」「經典世界」「攻城戰期間旗區」的項目在實驗環境做不到 | 同左 | 同上（需要改程式或另一種設定載入方式）。V38 列出受影響的來源行 |
+| **阻塞：P5** | 與 A 部相同：沒有客戶端啟動腳本時，所有需要遊戲視窗的項目都做不了。只有 V01、V02（伺服器部分）、V06 不受影響 | [P5](#p5-客戶端啟動方式阻塞條件) | T128（#379）或主控 |
+
+另外讀程式時看到一件與既有文件不一致的事〔推測，沒有執行〕：統一設定的 22 個鍵沒有 `battle.reward.win`／`battle.reward.loss`（`S/UnifiedConfiguration.java:7`），寫了會被拒絕，所以統一設定下積分一律是程式預設的勝 250／敗 50（`S/ServerConfig.java:578-579`）；`gameplay.md:304` 寫的「在 `config/server.properties` 加這兩個鍵可改」在統一設定下不成立。C 部的積分預期值都用 250／50。
+
+### C 部資料前置（交 T128 的 `m4-seed-exp.sql`）
+
+T128（#379，PR #393）在本張完成時還沒合併，所以沒有直接改 `m4-seed-exp.sql`；下表是要補的需求，全部只寫 `*_lito_exp`。「T128 現況」取自 `origin/task/379` 的 `docs/reports/issue-379.md:64-77`。
+
+| # | 需要什麼 | 哪些項目要用 | T128 現況 |
+|---|---|---|---|
+| E1 | 第 3 個帳號 C（一個角色、等級 ≥ 15）。D13 目前是「可選」，C 部的 V15、V17、V18 需要它 | V15、V17、V18 | 可選（佔位符不代換就不建） |
+| E2 | 帳號 A 的**法師**角色，等級 52、MP 足夠，已學：10、28、39、44、47、50、58、76、80，以及 BUFF 用的 3、12、21、43（44 相消要看哪些被消、哪些留下） | V09–V14、V15 | 沒有（現有 4、26、29、87、186） |
+| E3 | 帳號 B 的**法師或任一**角色已學 3、12、21、26、43（當 V12 的目標，自己先上 BUFF） | V12 | 沒有 |
+| E4 | 一個**騎士**角色已學 87（衝擊之暈）並有近戰武器 | V14 | 技能有（87）；近戰武器沒有放進 seed（`issue-379.md:19`） |
+| E5 | 一個**妖精**角色已學 148、149、152、153、167；`characters.ElfAttr` 填一個屬性（欄名以實驗庫為準） | V15、V28 | 沒有 |
+| E6 | 一個**黑暗妖精**角色已學 103；龍騎士（D6）加學 194；法師（E2）加學 17、29、40 | V15 | 沒有 |
+| E7 | A、B 背包各放：治癒藥水 40010、自我加速藥水 40013、勇敢藥水 40014、加速魔力回復藥水 40015，各 ≥ 5（編號取自 `docs/design/items-consumables.md:15-23`） | V07 | 只有 40015（D14） |
+| E8 | 一件帶加速效果的裝備，或強化勇敢藥水（`R/issue-336.md:47`）。item_id 沒有查，請 T128 在 `p24_380db_lito_exp` 以名稱查出後放進 B 的背包 | V13 | 沒有 |
+| E9 | B 能在競技房帶出一隻受控 NPC：法師的召喚術（含材料），或寵物（背包項圈＋對應的寵物資料列）。哪一種在競技房可用沒有查證，請 T128 讀 `S/` 後擇一 | V17、V31 | 沒有 |
+| E10 | 魔法娃娃（＝D12） | V08 | D12 已列 |
+| E11 | GM 帳號（＝D3、D4），用 `.loc`／`.move` 對座標 | V16 | 已有 |
+| E12 | 讓 A 的 `character_lito.monthly_period` 是上個月（格式 `YYYYMM`，`db/lito_character_ranking.sql:17`）且 `monthly_ranking_points`、`monthly_wins` 不是 0。這是 **UPDATE**，不符合 seed「只新增、不 UPDATE」的規則（`m4-seed-exp.sql` 檔頭），要主控同意另外放一段一次性的實驗庫 UPDATE | V22 | 沒有；需要決定 |
+| E13 | 第二個來源：另一個 `*_lito_exp` 角色庫（結構同 `p24_accounts_lito_exp`，含 `character_lito` 新欄位），`lito_source_server` 第二列 `enabled=1`，兩個來源各有一個 **`objid` 相同**的角色（等級 ≥ 15），分屬可登入的帳號。`m4-db-prepare.sql` 目前把路由改成只啟用一條，要有對應的切換方式 | V34 | 沒有；量大，建議另開一張 |
+| E14 | 選做：風／生命／形象之魔眼任一（V29）；幻象之劍或幻象之弓並設為已裝備（V30）；妖精角色學一個與 `ElfAttr` 不同屬性的精靈魔法（V28，例如屬性填水、技能學 148 火焰武器）。item_id 請 T128 從靜態庫以名稱查 | V28–V30 | 沒有 |
+
+沒有對應資料的項目填「阻塞：E<編號>」，不臨時改資料。
+
+### C 部時間盒（一輪 60 分鐘）
+
+| 輪 | 內容 | 帳號／角色 | 模式 | 和誰同一輪 |
+|---|---|---|---|---|
+| **C0** | V01–V06：不另外開場，全部掛在 A 部的步驟上 | A、B | 與 A 部相同 | **和 A 部同一輪**：V01＝A01、V02＝全程、V03＝A14、V04＝A15 與 A20 之後、V05＝A04 之後任何時候、V06＝P4 |
+| **C1** | V07–V14：藥水、娃娃、法師效果、時序 | A 法師、B；V14 換騎士 | Local Lobby 死鬥（兩人同房，互為敵方） | 可接在 B 部 G25 後面同一輪（同一批角色與道具）；V07 的藍水＝G25-3、V08＝G25-2，做一次填兩處 |
+| **C2** | V15–V18：目標判定、邊界、受控 NPC、觀戰 | A、B、C；GM | Local Lobby 死鬥；V15 的「打不到隊友」要 D13 的 2 對 2 | 可與 B 部 G23 完整版同一輪（同樣要第 3、4 個帳號） |
+| **C3** | V23–V27：PvE 與逾時（等待時間長：180＋300 秒，V26 再加 1200 秒） | A、B | Quest、死鬥、寵物競賽、Time Attack、攻城 | 獨立一輪；V24 的 180 秒等待期間不要操作 |
+| **C4** | V19–V22：斷線與重啟復原 | A、B | 自建房死鬥（要看戰績） | **最後一輪**，接在 B 部 G24 後面；V21 會強制結束實驗伺服器，之後要重跑 A01–A02 |
+| **C5** | V28–V33：選做與記錄型 | 依各項 | 依各項 | 有剩餘 lease 時間才做 |
+| — | V34–V38：阻塞 | — | — | 不排 |
+
+C0 不增加時間；C1–C4 各一輪。lease 只夠一輪時的優先順序：C0（跟著 A 部）→ C4 的 V19、V21 → C1 的 V07 → 其餘。
+
+---
+
+### C0：併入 A 部的項目
+
+<a id="v01"></a>
+#### V01 啟動時消耗品參數讀表
+
+來源：`R/issue-352.md:26`。需要：無（伺服器 console）。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 在 [A01](#a01) 的 console 輸出裡找 `consumable parameters` |
+| 預期畫面 | — |
+| 預期封包或伺服器 log | `[LiTo] consumable parameters loaded from p24_380db_lito_exp.etcitem: items=11 differing-from-built-in=0 fallbacks=0`（`S/ConsumableItemParameters.java:189-190`）。來源報告寫的是正式庫名 `380_db.etcitem`；log 印的是設定裡的靜態庫名（`:125,133`），實驗環境是 `p24_380db_lito_exp` |
+| SQL 前後查詢 | `SELECT item_id, classname FROM p24_380db_lito_exp.etcitem WHERE item_id IN (40010,40011,40012,40506,40013,40014,40016,40068,40015,140015,40736);` 存 `sql-before-V01.txt`，對照 `docs/design/items-consumables.md:15-25` |
+| 截圖檔名 | `V01-consumable-log.png` |
+| 失敗時記什麼 | 整行原文。`differing-from-built-in` 不是 0：實驗庫的值與內建不同，把後面逐項差異的 log 行一起記下（不算程式錯，V07 的預期值要跟著改）。`fallbacks` 不是 0：記每一列的原因。出現 `etcitem unavailable (…); using built-in values`（`:136`）：記括號內的例外（多半是授權或表不存在） |
+
+<a id="v02"></a>
+#### V02 整輪 console 不得出現的字串
+
+來源：`R/issue-317.md:31`、`R/issue-339.md:90`、`R/issue-370.md:56`、`R/issue-335.md:72`、`R/issue-355.md:119`。需要：無。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 每一輪結束（A20 的 Ctrl+C 之後）對存下來的 console 檔搜尋下列字串 |
+| 預期畫面 | — |
+| 預期封包或伺服器 log | 下列都**不出現**：`invalid companion NPC damage input`（`S/ClassicWorldCompanionNpcPhysicalAttack.java:140`）、`invalid source weapon combat traits`（`S/LegacyEquipmentMagicLoader.java:810`、`S/Accounts.java:3016`）、`default room reset snapshot missing`（`S/ClientSession.java:13340`）、`lacks ranking columns`（`S/SettlementSql.java:46`）、`Settlement character identity changed`（`S/SettlementSql.java:88`）、`state save failed`、`settlement recovery pending`（`S/DurableBattleSettlement.java:164`） |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V02-console-grep.png`（搜尋命令與 0 筆結果） |
+| 失敗時記什麼 | 命中的整行、前後各 20 行、當時在做哪一步。第一個字串只有帶寵物／召喚物時才有機會出現（V17、V31），第二個只有角色帶幻象武器時才有機會出現（V30）；沒做那幾項時在結果檔註明「該字串的觸發條件本輪沒有發生」 |
+
+<a id="v03"></a>
+#### V03 最後一名成員從結算返回
+
+來源：`R/issue-370.md:33,56`。需要：A、B；自建房死鬥（就是 A08–A14 那一場）。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | [A14](#a14) 的結算畫面上，**輸家先按返回，贏家最後按** |
+| 預期畫面 | 兩人都回到大廳；房間列表正常顯示，剛才的自建房不在列表上；沒有卡在結算畫面 |
+| 預期封包或伺服器 log | 每人各自 `C_LITO_EXIT_ROOM 0xD0` → 自己的 `S_LITO_EXIT_ROOM 0xD0`；最後離開的那一位之後收到完整的 `S_LITO_ROOM_INFO 0xCC` 房間列表（`R/issue-370.md:55`）。console 沒有 `default room reset snapshot missing`，沒有例外堆疊 |
+| SQL 前後查詢 | 無（戰績在 A15 看） |
+| 截圖檔名 | `V03-last-leave-lobby.png`（兩視窗並排的大廳） |
+| 失敗時記什麼 | 誰卡住、卡在哪個畫面、最後一個 C→S／S→C、console 的例外整段 |
+
+<a id="v04"></a>
+#### V04 積分顯示與重啟後保留
+
+來源：`R/issue-335.md:57,75`；`R/issue-301.md:26`（當時推測重啟歸零，#335 已改為持久化）。需要：A、B；A13 那一場的結果。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | ① [A15](#a15) 之後在大廳看 A 的積分／戰績顯示。② [A20](#a20) 正常關閉伺服器後，用同一個 `runtime/` 再做一次 A01 啟動，A 重新登入到大廳再看一次 |
+| 預期畫面 | ① 勝者積分比開戰前多 250、敗者多 50。② 重啟後顯示的積分、勝敗數與重啟前相同，沒有歸零 |
+| 預期封包或伺服器 log | ① console `battle result player=… won=true … ranking-points=…`（`S/ClientSession.java:56906-56915`）。② 重啟的 console 沒有 `lacks ranking columns`；積分顯示用哪個封包沒有查證，以畫面為準 |
+| SQL 前後查詢 | 重啟前 Q1 → `sql-before-V04.txt`（可用 `sql-after-20.txt`）；重啟並登入後 Q1 → `sql-after-V04.txt`。兩者 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`、`wins`、`losses`、`version`、`last_result_id` 全部相同；`monthly_period` 是當月 `YYYYMM`；`last_result_id` 是最後一場的收據 |
+| 截圖檔名 | `V04-points-before-restart.png`、`V04-points-after-restart.png` |
+| 失敗時記什麼 | 畫面數字與 SQL 是否一致（畫面錯、SQL 對＝顯示問題；SQL 也變了＝寫回問題）、哪一欄變了、重啟 console 全文 |
+
+斷線敗 −50（`R/issue-335.md:75` 的③）＝[A16](#a16)／[G24](#g24) 第 2 列，不另列。
+
+<a id="v05"></a>
+#### V05 背包物品名稱顏色（祝福欄）
+
+來源：`R/issue-339.md:92`（推測在 `:73-74`）；`R/issue-318.md:89`。需要：A 的角色背包有金幣、任一藥水、一把一般武器（D7、E7 備妥就有）；不必進戰鬥。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | A 進大廳或房間後打開背包，逐一看金幣、藥水、一般武器的名稱顏色；滑鼠移到物品上看提示 |
+| 預期畫面 | 〔待驗證〕報告的推測是：從資料庫載入的一般物品（`bless=0`）被客戶端畫成**祝福**的顏色（`R/issue-339.md:55,73-74`）。本項是記錄型：照實記每件物品的顏色 |
+| 預期封包或伺服器 log | 背包封包裡每件物品的祝福欄直接送資料庫的值（`S/Protocol.java:12753`）：一般物品是 0。客戶端慣例 0＝祝福、1＝一般（`S/RuntimeInventory.java:17-20`） |
+| SQL 前後查詢 | `SELECT item_id, item_name, bless FROM p24_accounts_lito_exp.character_items WHERE char_id=<A 的 objid>;` → `sql-before-V05.txt` |
+| 截圖檔名 | `V05-inventory-colors.png`（背包整頁）、`V05-item-tooltip.png` |
+| 失敗時記什麼 | 不判通過／失敗。記每件物品：`item_id`、資料庫 `bless`、畫面顏色、提示文字有沒有「受祝福的」字樣。結果交主控決定要不要做 `R/issue-339.md:105-110` 的慣例統一 |
+
+<a id="v06"></a>
+#### V06 實驗靜態庫的 bless 分布
+
+來源：`R/issue-318.md:66`（當時沒有連資料庫）。需要：無（只有 SQL；正式庫不查）。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 在 [P4](#前置p-部) 之後用受限帳號執行右列查詢 |
+| 預期畫面 | — |
+| 預期封包或伺服器 log | 無 |
+| SQL 前後查詢 | `SELECT bless, COUNT(*) FROM p24_380db_lito_exp.weapon GROUP BY bless;`、同樣查 `etcitem`、`armor`。欄名若不是 `bless`（1-伺服器 中文欄位版叫 `祝福狀態`，`R/issue-339.md:49`）先用 `SHOW COLUMNS` 確認。存 `sql-before-V06.txt` |
+| 截圖檔名 | `V06-bless-distribution.png` |
+| 失敗時記什麼 | 記錄型。預期一般物品多數是 0、祝福是 1（內部慣例，`R/issue-339.md:48-49`）；若出現其他分布照實記，並註明欄名 |
+
+---
+
+### C1：藥水、娃娃、法師效果、時序（Local Lobby，A、B 同房）
+
+共同做法：A、B 進同一個頻道的 Local Lobby 開戰（死鬥，兩人互為敵方）。每個技能施放前在 `evidence/V<序>-times.txt` 記 UTC 時間，一次只操作一個視窗。HP／MP 用畫面數字，並以 capture 的 `S_HIT_POINT 0x0D`、`S_MANA_POINT 0x4D` 為準。
+
+<a id="v07"></a>
+#### V07 喝紅水、綠水、勇水、藍水
+
+來源：`R/issue-352.md:26`。需要：E7；任何職業；先讓 A 被 B 打掉一些 HP。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 戰鬥中 A 依序使用：治癒藥水 40010（連喝 5 瓶，每瓶記回復量）、自我加速藥水 40013、勇敢藥水 40014、加速魔力回復藥水 40015 |
+| 預期畫面 | 紅水：每瓶回復 10～20 HP，特效 gfx 189。綠水：移動變快 300 秒，特效 191。勇水：攻擊變快 300 秒，特效 751。藍水：狀態列出現回魔圖示 600 秒，特效 190（`docs/design/items-consumables.md:15,19,20,23`；V01 的 `differing` 不是 0 時改用實驗庫的值） |
+| 預期封包或伺服器 log | 每瓶一筆 `C_USE_ITEM 0x1C`；紅水後 `S_HIT_POINT 0x0D`、`S_EFFECT 0x37`；藍水同 [G25](#g25) 第 3 列（`S_EVENT 0x7B` 子碼 34）。綠水、勇水的狀態封包沒有查證，以 capture 為準 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V07-red.png`、`V07-green.png`、`V07-brave.png`、`V07-blue.png`（藍水可與 `G25-3-bluepotion.png` 同一張） |
+| 失敗時記什麼 | 5 瓶紅水各自的回復量（有沒有超出 10～20）、綠水／勇水實際持續秒數（從使用到效果消失，各等 300 秒；沒等完填「到期未觀察」）、用不了時的訊息原文。勇水若被職業擋下也照實記（`R/issue-352.md:29`：LiTo 目前不檢查職業） |
+
+<a id="v08"></a>
+#### V08 魔法娃娃：召喚、血盟畫面、收回
+
+來源：`R/issue-311.md:51`。需要：E10（D12）；戰鬥房（來源寫「WORLD 或戰鬥房」，WORLD 做不到，見 V38）。與 [G25](#g25) 第 2 列同一次操作。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 雙擊娃娃召出 → 打開血盟視窗看一眼 → 再雙擊一次收回 → 再召出後放著等計時到期（等不到就記「到期未觀察」） |
+| 預期畫面 | (1) 娃娃與召喚特效正常出現；(2) 血盟視窗與召喚前相同，沒有多出或改掉任何內容；(3) 再次使用或到期時娃娃消失；狀態列**沒有**娃娃圖示（刻意不送） |
+| 預期封包或伺服器 log | console `[LiTo] magic-doll-icon suppressed object=… reason=no-native-receiver(…)`（`S/ClientSession.java:20298-20313`）；capture 裡沒有 opcode `0xFA` 的 S→C 幀 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V08-doll-summon.png`、`V08-clan-ui.png`、`V08-doll-recall.png` |
+| 失敗時記什麼 | 血盟畫面有變化時前後各一張；capture 出現 `0xFA` 時把該幀剪到 `frames-V08.jsonl`；客戶端崩潰記 probe 退出碼 |
+
+<a id="v09"></a>
+#### V09 施法時的正義值封包
+
+來源：`R/issue-325.md:49`；`R/issue-307.md:42`（47 弱化術）。需要：E2（法師，已學 10、28、47）；目標 B。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | A 對 B 依序施放 10（寒冷戰慄）、28（吸血鬼之吻）、47（弱化術），每個之間等冷卻 |
+| 預期畫面 | 每次施放後 A 的正義值顯示變動（47 是 −10，`R/issue-307.md:42`；其餘的數值以 `S/BattleSpellCatalog.java` 各技能的 `lawfulDelta` 為準，本檔沒有逐一抄） |
+| 預期封包或伺服器 log | C→S `C_USE_SPELL` 開頭 `140101`（10）、`140303`（28）、`140506`（47）。S→C 順序：…→ `S_CHANGE_ALIGNMENT`（來源報告寫 `0x59`）→ `S_MANA_POINT 0x4D`（`R/issue-325.md:49`） |
+| SQL 前後查詢 | `SELECT Lawful FROM p24_accounts_lito_exp.characters WHERE char_name='<A>';` 前後各一次 → `sql-before-V09.txt`、`sql-after-V09.txt`。預期**相同**：角色庫唯讀，正義值只在這一場的記憶體裡變 |
+| 截圖檔名 | `V09-lawful-10.png`、`V09-lawful-28.png`、`V09-lawful-47.png` |
+| 失敗時記什麼 | 每個技能：有沒有 `S_CHANGE_ALIGNMENT`、它在 `S_MANA_POINT` 之前還是之後、封包內的新正義值、畫面數字。SQL 的 `Lawful` 若變了要特別標出（表示寫回了來源庫） |
+
+<a id="v10"></a>
+#### V10 吸血（10、28）與吸魔（39）
+
+來源：`R/issue-336.md:44-45`。需要：E2（已學 10、28、39）；A 先被打掉一些 HP；B 是有 MP 的角色。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | ① A（HP 未滿）對 B 放 28，再放 10。② A 補滿 HP 後再放一次 28。③ A 對 B 放 39（魔力奪取）；之後讓 B 把 MP 用到剩個位數，再放一次 39 |
+| 預期畫面 | ① A 回復的 HP 等於 B 受到的傷害。② A 滿血時 HP 不超過上限。③ B 的 MP 減少、A 的 MP 增加同樣的量；B 的 MP 不夠時 A 只拿到 B 剩下的量 |
+| 預期封包或伺服器 log | `C_USE_SPELL` 開頭 `140303`（28）、`140101`（10）、`140406`（39）。①② A 收 `S_HIT_POINT 0x0D`（增加）、B 的 HP 減少。③ 雙方各收 `S_MANA_POINT 0x4D`：B 減、A 加 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V10-drain-hp.png`、`V10-drain-hp-full.png`、`V10-drain-mp.png` |
+| 失敗時記什麼 | 每次：B 的傷害、A 的回復量、兩者是否相等；39 的兩個 MP 變動量；A 的 MP 是否扣了施法費用後再加（把兩筆 `S_MANA_POINT` 的值都抄下） |
+
+<a id="v11"></a>
+#### V11 火牢（58）每秒一跳
+
+來源：`R/issue-336.md:46`。需要：E2（已學 58）；一件加 INT 的裝備（沒有時只做前半）。來源另寫 WORLD，做不到（V38）。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | A 在 B 腳下放 58，B 站著不動 10 秒，記每一跳的傷害。A 穿上加 INT 的裝備後重做一次 |
+| 預期畫面 | B 每秒掉一次 HP；穿上加 INT 裝備後，每跳傷害的最大值變高 |
+| 預期封包或伺服器 log | `C_USE_SPELL` 開頭 `140701`。之後每秒一筆 B 的 HP 變動；封包種類以 capture 為準 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V11-firewall.png` |
+| 失敗時記什麼 | 兩次各 10 跳的時間戳與傷害值；跳的間隔不是 1 秒、或有一秒跳兩次，把 capture 剪到 `frames-V11.jsonl` |
+
+<a id="v12"></a>
+#### V12 魔法相消術（44）清掉哪些 BUFF
+
+來源：`R/issue-336.md:48`。需要：E2（A 已學 44）；E3（B 已學 3、12、21、26、43）。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | B 先對自己放 3、12、21、26、43（五個圖示都出現後截圖）；A 對 B 放 44 |
+| 預期畫面 | B 身上 **12、21 還在**；**3、26、43 消失**（來源的完整清單：留 12／21／78／79；消 8／48、3／26／42、43／54。這裡只驗 seed 得到的五個） |
+| 預期封包或伺服器 log | `C_USE_SPELL` 開頭 `140503`。被消掉的 BUFF 各有對應的狀態清除封包；種類沒有查證，以 capture 與圖示為準 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V12-before-cancel.png`、`V12-after-cancel.png`（都要拍到 B 的狀態列） |
+| 失敗時記什麼 | 五個 BUFF 各自「留／消」的實際結果；44 是機率技能，沒中時重放並記次數 |
+
+<a id="v13"></a>
+#### V13 集體緩速術（76）對已加速的目標
+
+來源：`R/issue-336.md:47`。需要：E2（A 已學 76）；E8（B 有加速裝備或強化勇水）；第三個在場目標當對照最好（C 或 ArenaBot），沒有就只看 B。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | B 穿上加速裝備（或喝強化勇水）。A 以 B 為目標放 76，重複 5 次 |
+| 預期畫面 | B **不會**被緩速，原本的加速也不被抵銷；5 次都一樣（不是機率沒中） |
+| 預期封包或伺服器 log | `C_USE_SPELL` 開頭 `140903`；A 扣 MP；沒有給 B 的緩速狀態封包 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V13-slow-immune.png` |
+| 失敗時記什麼 | B 被緩速的次數、B 身上的加速來源（哪件裝備或哪種藥水）。對照組：B 脫掉裝備後再放 5 次，記被緩速幾次 |
+
+<a id="v14"></a>
+#### V14 暈眩與冰凍的時序（G10–G12：87、50、80）
+
+來源：`R/issue-356.md:48`（結論表 `:10-12`）。需要：E4（騎士 87＋近戰武器）；E2（法師 50、80）。記錄型：來源只有「狀態要等 HP 入帳之後才上」，候選收據的競態次數實機無法數。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | ① 騎士對 B 放 87（衝擊之暈），做 5 次。② 法師對 B 放 50（冰矛）5 次。③ 法師對 B 放 80（冰雪颶風）5 次 |
+| 預期畫面 | 命中時 B 先掉 HP、再出現暈眩／冰凍；不會出現「已經暈了但 HP 沒扣」或「HP 扣了兩次」；沒命中時不暈、不凍 |
+| 預期封包或伺服器 log | `C_USE_SPELL` 開頭 `140a06`（87）、`140601`（50）、`140907`（80）。同一次施放裡，B 的 HP 封包在暈眩／冰凍狀態封包（`S_PARALYSE 0x25` 類）**之前**；以 capture 的順序為準 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V14-shock.png`、`V14-icelance.png`、`V14-blizzard.png` |
+| 失敗時記什麼 | 每次施放把該秒的 S→C 幀依序抄出（opcode 與 note）；順序相反或狀態沒有對應的 HP 幀時，剪到 `frames-V14-<技能>.jsonl` |
+
+---
+
+### C2：目標判定、邊界、受控 NPC、觀戰
+
+<a id="v15"></a>
+#### V15 單體／範圍／自施的目標判定（G03–G08 與 #321）
+
+來源：`R/issue-305.md:53`（逐項結論 `:32-37`）；`R/issue-321.md:53-56`。需要：E1（第三人當「旁人」）、E2、E5、E6；Local Lobby 死鬥三人同房。「打不到隊友」那一列要 D13 的 2 對 2。
+
+共同的三欄：SQL 前後查詢＝無。截圖檔名＝`V15-<序>-<技能>.png`。失敗時記什麼＝施法者／主目標／旁人三方各自有沒有 HP 或狀態變化、A 的 MP 有沒有扣、`C_USE_SPELL` 的目標 id，並分清「客戶端選不到」與「伺服器沒反應」。
+
+| 序 | 輸入 | 預期畫面 | 預期封包或伺服器 log |
+|---|---|---|---|
+| 1 | 妖精對 B 放 167（風之枷鎖），C 貼著 B 站 | 只有 B 受影響，C 沒事 | 開頭 `141406`；只有一個目標的狀態封包 |
+| 2 | 龍騎士對 B 放 194，C 站在施法者與 B 的直線上 | 只有 B 受影響 | 開頭 `141801` |
+| 3 | 法師以**自己**為目標放 76，B、C 在 3 格內 | 扣 MP、有施法動作；B、C **不會**被緩速（`R/issue-321.md:53`） | 開頭 `140903`，目標 id 是 A 自己；沒有給 B、C 的緩速封包 |
+| 4 | 法師以 B 為目標放 76，C 在 B 的 3 格內 | B 與 C 走正常機率被緩速；A 自己不受影響（`R/issue-321.md:54`） | 同上，目標 id 是 B |
+| 5 | 法師對自己放 29；妖精對自己放 152、153 | 三個都能對自己施放（走正常機率） | 開頭 `140304`、`141207`、`141300`，目標 id 是自己 |
+| 6 | 法師對 B 放 17（極光雷電），C 在 B 的 3 格內、另一次站到 4 格外 | 3 格內的 C 受傷；4 格外不受傷 | 開頭 `140200` |
+| 7 | 妖精對 B 放 148、149；再對一隻召喚物／寵物放（有 E9 時） | 對玩家有效；對召喚物／寵物無效 | 開頭 `141203`、`141204` |
+| 8 | 法師在 3 格處對 B 放 40；黑暗妖精在同格對 B 放 103，再退到 1～3 格放 103 | 40：3 格內可中。103：只有同格才生效；1～3 格時扣 MP、有動作、出現失敗訊息（`R/issue-321.md:55`） | 開頭 `140407`、`140c06` |
+| 9 | 2 對 2 死鬥：法師放龍捲風、暴風雪，範圍內同時有敵人與隊友 | 敵人受傷、隊友不受傷（`R/issue-321.md:56`） | 只有敵方的 HP 封包 |
+
+第 3 列也要以「自己的寵物」為主目標做一次（有 E9 時；`R/issue-321.md:53`）。來源寫的 WORLD 相位做不到（V38）。
+
+<a id="v16"></a>
+#### V16 G09：畫面邊界第 19 格
+
+來源：`R/issue-356.md:50`（差異說明 `:9,38,42`）。需要：E2（29、44、76）；E11（GM 用 `.loc`／`.move`）；A 是施法者、B 是目標。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 用 `.loc` 讀 A、B 座標，用 `.move` 把 B 放到相對 A 的 (19,0)；A 嘗試點 B 放 29。同樣做 (0,19)、(18,−1)、(−1,18)。再做一格對照：(18,0)。有時間再用 44、76 各做 (19,0) 一次 |
+| 預期畫面 | 〔待驗證〕四個邊界格：若客戶端看得到並點得到 B，施法成立（走正常機率）。來源的推測是客戶端可能根本看不到這四格上的目標（`R/issue-356.md:42`）。對照格 (18,0) 一定點得到 |
+| 預期封包或伺服器 log | 有送出時：`C_USE_SPELL` 開頭 `140304`，目標 id 是 B；伺服器接受（A 扣 MP、有施法動作）。console 不應有該次的 `rejected` 行 |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V16-edge-19-0.png`、`V16-edge-0-19.png`、`V16-edge-18-m1.png`、`V16-edge-m1-18.png`、`V16-edge-18-0.png` |
+| 失敗時記什麼 | 每格記三件事：畫面上看不看得到 B、點不點得到（有沒有 C→S 幀）、伺服器有沒有接受。「看不到所以沒送」不算失敗，照實記；「送了但被拒」才是失敗，附 `.loc` 的雙方座標與 console 行 |
+
+<a id="v17"></a>
+#### V17 受控 NPC 當主目標時退役（G14：76、167）
+
+來源：`R/issue-354.md:57`（`:56` 的真實 `capture()` 路徑同一項）。需要：E9（B 帶一隻寵物或召喚物）、E2（A 已學 76）、E5（妖精 167）；E1 的 C 可以幫忙打寵物。記錄型：退役要剛好落在施法的鎖等待窗內，手動很難對準。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | B 帶出寵物／召喚物。A 以該寵物為主目標放 76（或 167），**同一瞬間** B 把寵物收回（或 C 把寵物打死）。做 10 次，記每次的結果 |
+| 預期畫面 | 寵物在施法生效前消失的那幾次：施法放棄、A **不扣 MP**、旁邊的人不受影響。寵物還在的那幾次：正常生效 |
+| 預期封包或伺服器 log | 放棄的那幾次：有 `C_USE_SPELL`（目標 id 是寵物的 object id），之後**沒有** `S_MANA_POINT 0x4D`、沒有狀態封包；console 沒有例外，沒有 `invalid companion NPC damage input` |
+| SQL 前後查詢 | 無 |
+| 截圖檔名 | `V17-pet-retire-76.png`、`V17-pet-retire-167.png` |
+| 失敗時記什麼 | 10 次裡「扣了 MP 但沒有任何效果」「對已消失的寵物送出狀態封包」「console 例外」各幾次；每次的 MP 前後值。10 次都沒有撞到退役的時機時填「未重現時機」，不算通過 |
+
+<a id="v18"></a>
+#### V18 觀戰者中途離場
+
+來源：`R/issue-366.md:26-27,38`；契約 `docs/reference/battle-observer-exit-contract.md:8-28`。需要：E1（A、B 參戰，C 觀戰）；房間要允許觀戰——Local Lobby 允許（`gameplay.md:226`）；自建房是否允許沒有查證。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | A、B 在 Local Lobby 開戰。C 以觀戰身分進同一房（已開戰的房只有觀戰者能進，`gameplay.md:188`）。C 按退出。A、B 繼續打到分出勝負。C 再次以觀戰身分進同一房（要在 A、B 打完之前，所以 A、B 先不要下重手） |
+| 預期畫面 | C 回到大廳的房間列表，沒有結算畫面。A、B 的畫面**沒有**結算、可以繼續移動與攻擊；觀戰名單少一人。A、B 打完後正常出結算。C 第二次能進去觀戰 |
+| 預期封包或伺服器 log | C：`C_LITO_EXIT_ROOM 0xD0` → 自己的 `S_LITO_EXIT_ROOM 0xD0`（房號＋C 的顯示名）→ `S_LITO_ROOM_INFO 0xCC`。若客戶端送的是 `C_LITO_QUIT_FIGHT 0xD9`：先收 `S_LITO_QUIT_FIGHT 0xF0`（值 0）再收 `S_LITO_EXIT_ROOM`。A、B 各只收到一筆 C 的 `S_LITO_EXIT_ROOM`，**沒有** `S_LITO_END_GAME 0xD3`。console 沒有 `battle disconnect pending`、沒有 `battle result` |
+| SQL 前後查詢 | Q1 前後 → `sql-before-V18.txt`、`sql-after-V18.txt`：C 沒有任何變化、沒有 C 的收據（測試房本來也不記戰績） |
+| 截圖檔名 | `V18-observer-in.png`、`V18-observer-left-lobby.png`、`V18-combatants-continue.png`、`V18-observer-rejoin.png` |
+| 失敗時記什麼 | C 離場時 A、B 有沒有被結算（最重要）、C 卡在哪個畫面、C 實際送的是 `0xD0` 還是 `0xD9`、第二次進房被拒的訊息。客戶端沒有觀戰入口或退出鈕時填「阻塞：客戶端沒有入口」並截圖 |
+
+---
+
+### C3：PvE 與逾時
+
+<a id="v23"></a>
+#### V23 Quest 怪物技能：歐吉、Boss 頻率、死亡騎士
+
+來源：`R/issue-353.md:32`（修正內容 `:10-12`）；怪物清單 `docs/design/skills-npc.md:27-28,61,64-65`。需要：A、B 各一隊（隊伍模式兩隊都要有真人，`gameplay.md:56`）；模式 Quest Battle；耐打的角色（等級 52）。哪一張 Quest 地圖、哪一個怪物房有歐吉（45278）與死亡騎士（45601）沒有查到對照表，從第一張地圖開始找，找到後把地圖編號記進結果檔。後兩項是記錄型。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 房主把模式切到 Quest Battle 開戰。① 讓歐吉打 A，看到它放技能（前方 1×2 的重擊）至少 3 次。② A 貼著死亡騎士站 60 秒，數它「放技能」與「普通攻擊」各幾次。③ 看到死亡騎士放 10056（自身 4 格的火屬性範圍技）後，注意接下來 3 秒 |
+| 預期畫面 | ① 歐吉放技能時播的是另一個動作（action 30），不是普通攻擊的動作。② 貼身時普通攻擊約占一半以上（先擲 50% 決定普攻，剩下才擲技能）。③ 10056 之後 3 秒內不會放吸血鬼之吻（28） |
+| 預期封包或伺服器 log | ① 歐吉的 `S_ATTACK 0x23`／`S_ACTION 0x20` 幀，動作欄是 30（`0x1e`）。③ 10056 與下一次 28 的兩幀時間差 ≥ 3 秒。確切的封包欄位位置沒有查證，以 note 欄與時間戳為準 |
+| SQL 前後查詢 | 無（Quest 中途離開的人會被記一敗，同 G23 的註記；用 Local Lobby 以外的房時在結果檔註明） |
+| 截圖檔名 | `V23-ogre-action30.png`、`V23-dk-melee.png`、`V23-dk-10056.png` |
+| 失敗時記什麼 | ① 歐吉技能幀的動作值。② 60 秒內技能次數／普攻次數。③ 10056 之後第一個 28 的時間差（毫秒）。找不到這兩種怪時填「阻塞：找不到怪」並列出試過的地圖 |
+
+<a id="v24"></a>
+#### V24 死鬥 180 秒逾時＝平手
+
+來源：`R/issue-310.md:62`。需要：A、B；**自建房**死鬥（要看戰績不變）。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | Q1 → `sql-before-V24.txt`。開戰後雙方不攻擊，等 180 秒 |
+| 預期畫面 | 兩人的結果畫面都顯示**平手**；回大廳後戰績、積分與開戰前相同 |
+| 預期封包或伺服器 log | `S_LITO_END_GAME 0xD3` 的勝方欄是 −1（沒有勝方，`S/Protocol.java:2258-2262`）。console **沒有** `battle result player=` 兩行；逾時結束時印哪一行沒有查證，照實抄下 |
+| SQL 前後查詢 | Q1 → `sql-after-V24.txt`：與前一份完全相同，沒有新收據 |
+| 截圖檔名 | `V24-draw-a.png`、`V24-draw-b.png` |
+| 失敗時記什麼 | 畫面顯示誰勝、SQL 哪一欄變了、有沒有多出收據 |
+
+<a id="v25"></a>
+#### V25 寵物競賽 300 秒沒人跑完
+
+來源：`R/issue-310.md:64`。需要：A、B；模式寵物競賽（最少 2 人，`gameplay.md:47`）；自建房。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | Q1 → `sql-before-V25.txt`。開賽後兩人都不跑，等 300 秒 |
+| 預期畫面 | 結果是平手，沒有人記勝或敗 |
+| 預期封包或伺服器 log | 同 V24 |
+| SQL 前後查詢 | Q1 → `sql-after-V25.txt`：完全相同 |
+| 截圖檔名 | `V25-petrace-timeout.png` |
+| 失敗時記什麼 | 同 V24。模式切不到寵物競賽或開不了賽（自建房固定死鬥＋雙方人數一致，`S/ClientSession.java:10371-10375`；能不能改模式沒有查證）→ 填「阻塞：開不了寵物競賽」並記系統訊息 |
+
+<a id="v26"></a>
+#### V26 攻城逾時＝守方勝
+
+來源：`R/issue-310.md:63`。需要：攻城每隊要 15 人（`gameplay.md:50,104`），只有實驗設定 `native.siege.roster.enforced=false` 時才可能用 2 人開〔待驗證〕；要等 1200 秒。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | 先確認實驗設定的 `native.siege.roster.enforced`。是 `false`：Q1 → `sql-before-V26.txt`，A、B 分兩隊開攻城，攻方不進攻，等 1200 秒。是 `true`：不做 |
+| 預期畫面 | 守方那一隊記勝、攻方記敗 |
+| 預期封包或伺服器 log | `S_LITO_END_GAME 0xD3` 的勝方是守方隊伍；console 兩行 `battle result` |
+| SQL 前後查詢 | Q1 → `sql-after-V26.txt`：守方勝列（+250）、攻方敗列（+50） |
+| 截圖檔名 | `V26-siege-timeout.png` |
+| 失敗時記什麼 | 哪一隊是攻方（每場開戰時決定，`gameplay.md:106`）、結果、SQL。開不了戰 → 「阻塞：攻城人數」，解除要 30 個帳號或主控接受以 CI 的 `GameplayDecisionRulesTest` 為準 |
+
+<a id="v27"></a>
+#### V27 Time Attack 中有人斷線
+
+來源：`R/issue-355.md:103`（壓力測試沒有涵蓋的模式）；規則 `gameplay.md:122`。需要：A（房主＝隊長）、B；模式 Time Attack；自建房。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | Q1 → `sql-before-V27.txt`。開戰後對 B 的 `LiTo.bin` PID 執行 `Stop-Process -Id <PID> -Force`。A 繼續打或等到結束 |
+| 預期畫面 | A 的比賽**繼續**，不會因為 B 斷線就結束 |
+| 預期封包或伺服器 log | `battle disconnect pending … graceMs=300` → `battle disconnect resolved … reason=…`；A 沒有馬上收到 `S_LITO_END_GAME` |
+| SQL 前後查詢 | Q1 → `sql-after-V27.txt`：B 是斷線敗（`losses+1`、`disconnects+1`、積分 −50 最低 0）；A 依實際結果（打贏＝勝、隊長陣亡＝敗、逾時＝不變） |
+| 截圖檔名 | `V27-ta-disconnect.png` |
+| 失敗時記什麼 | A 是否被強制結束、B 被記成什麼、A 的結果與畫面是否一致。Time Attack 開不了 → 「阻塞」，同 G23 的註記 |
+
+---
+
+### C4：斷線與重啟復原（最後做）
+
+[G24](#g24) 第 1–3 列已涵蓋「一方關視窗／強制結束 → 另一方勝 +250、斷線方 −50」（`R/issue-355.md:97,122` 的①），這裡不重複。真正的拔網路線做不到，理由同 G24（loopback-only）。
+
+<a id="v19"></a>
+#### V19 雙方 300 毫秒內同時斷線＝無效場
+
+來源：`R/issue-355.md:122`（②）、`R/issue-301.md:27`；規則 `gameplay.md:238-239`；畫面部分 `R/issue-355.md:104`。需要：A、B；自建房死鬥。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | Q1 → `sql-before-V19.txt`。開戰約 10 秒後，用**同一條命令**結束兩個自己啟動的客戶端：`Stop-Process -Id <A 的 PID>,<B 的 PID> -Force` |
+| 預期畫面 | 兩個視窗都消失。之後各自重新登入能正常進大廳，不會被帶回舊場次 |
+| 預期封包或伺服器 log | 兩行 `battle disconnect pending room=… graceMs=300`（`S/ClientSession.java:47547-47549`），時間差 < 300 毫秒；一行 `battle disconnect resolved room=… reason=…`（`S/GameHub.java:12974`）；**沒有** `battle result player=`。房間被移除 |
+| SQL 前後查詢 | Q1 → `sql-after-V19.txt`：A、B 所有欄位與前一份相同，沒有新收據。`runtime/battle-settlements/` 沒有 `.pending` |
+| 截圖檔名 | `V19-both-drop-console.png`、`V19-relogin-lobby.png` |
+| 失敗時記什麼 | 兩行 `pending` 的時間差。差 ≥ 300 毫秒時這一次不算（會變成「先斷的敗、後斷的勝」，那是正確行為），重做，最多 5 次，仍對不準就填「未重現時機」並附每次的時間差與 SQL。差 < 300 毫秒卻有人被記勝敗 → 失敗，附兩行 log 與收據列 |
+
+<a id="v20"></a>
+#### V20 A 建房的同時 B 斷線
+
+來源：`R/issue-355.md:122`（④；缺陷說明 `:26-28`）。需要：A、B 都在大廳，B 不在任何房間。記錄型的成分：要對準的窗口很短。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | A 把建房視窗填好、游標停在確認鈕上。對 B 的 PID 執行 `Stop-Process -Force` 的同時 A 按下確認。做 5 次（每次 B 要重新登入） |
+| 預期畫面 | A 每次都正常進入自己建的房間 |
+| 預期封包或伺服器 log | A：`C_LITO_CREATE_ROOM 0xCC` → `S_LITO_JOIN_RESULT 0xCE` 成功；console `[LiTo] C_LITO_CREATE_ROOM name=…`（`S/ClientSession.java:10377`）。沒有 `unknown room` |
+| SQL 前後查詢 | 無（開戰前斷線不算戰鬥斷線，`gameplay.md:244`）；抽查 Q1 沒有變化 |
+| 截圖檔名 | `V20-create-while-drop.png` |
+| 失敗時記什麼 | A 建房失敗的訊息、console 有沒有 `unknown room`、兩個動作的時間差；伺服器卡住時先 `jstack` |
+
+<a id="v21"></a>
+#### V21 對戰中強制結束實驗伺服器，重啟後核對
+
+來源：`R/issue-355.md:98,122`（③；CI 用 JDBC 層模擬的十個中止點在 `:43-54`）。需要：A、B；自建房死鬥。**只能結束自己在 A01 啟動的實驗 Java 程序**，動手前先核對 PID 的命令列含 `scratch\m4\run-`、監聽埠是 42083。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | ① Q1 → `sql-before-V21.txt`；列 `runtime/battle-settlements/`。② 開戰，A 把 B 打到快死。③ A 打出最後一下的同時，對實驗 Java PID 執行 `taskkill /F /PID <PID>`。④ 列 `runtime/battle-settlements/`（看有沒有 `.pending`／`.tmp`）；Q1 → `sql-mid-V21.txt`。⑤ 用**同一個** `runtime/` 重做 A01 啟動。⑥ Q1 → `sql-after-V21.txt`。⑦ 再正常關閉、再啟動一次，Q1 → `sql-after2-V21.txt` |
+| 預期畫面 | 兩個客戶端斷線。重啟後 A、B 能重新登入進大廳 |
+| 預期封包或伺服器 log | 重啟的 console 走到 `[LiTo] ready`；沒有 `settlement journal already owned`（`S/SettlementJournal.java:13-14`；出現表示舊程序還活著）、沒有 `Settlement character identity changed` |
+| SQL 前後查詢 | 那一場**要嘛完全沒記、要嘛剛好記一次**：(a) 沒記——`sql-after` 與 `sql-before` 相同、沒有新收據；或 (b) 記一次——勝者 +1 勝 +250、敗者 +1 敗 +50、雙方 `version` 只 +1、收據兩列 `applied=1`、`last_result_id` 是這一場。`sql-after2` 與 `sql-after` 相同（再重啟不會多加）。重啟後 `runtime/battle-settlements/` 沒有 `.pending`（`.tmp` 殘檔可留，`R/issue-355.md:120`） |
+| 截圖檔名 | `V21-kill-server.png`、`V21-restart-ready.png`、`V21-sql.png` |
+| 失敗時記什麼 | 三份（或四份）SQL 的逐欄差異、每個時點的 WAL 目錄清單、收據列（含 `applied`）、重啟 console 全文。一人記了、另一人沒記；`version` 加了 2；有 `applied=0` 留著——都是失敗。taskkill 落在哪個時間點無法控制，結果是 (a) 或 (b) 都算通過，在結果檔寫明是哪一種；有時間就多做幾次以碰到不同的中止點 |
+
+<a id="v22"></a>
+#### V22 跨月第一場的月計歸零
+
+來源：`R/issue-335.md:57`；規則 `db/lito_character_ranking.sql:17-20`。需要：E12（A 的 `monthly_period` 是上個月、月計不是 0）；自建房死鬥。沒有 E12 → 阻塞。
+
+| 欄 | 內容 |
+|---|---|
+| 輸入 | Q1 → `sql-before-V22.txt`（確認 A 的 `monthly_period` 是上個月）。A、B 打一場，A 勝 |
+| 預期畫面 | 大廳的月榜／月積分（若畫面有顯示）是本場的數字，不是累加上個月的 |
+| 預期封包或伺服器 log | `battle result player=<A> won=true …` |
+| SQL 前後查詢 | Q1 → `sql-after-V22.txt`。A：`monthly_period`＝當月 `YYYYMM`（日界是台北時間 05:00）、`monthly_ranking_points`＝250、`monthly_wins`＝1、`monthly_losses`＝0；`ranking_points`＝前值＋250（總積分不歸零）。B 的 `monthly_period` 本來就是當月時照一般敗列累加 |
+| 截圖檔名 | `V22-monthly-rollover.png` |
+| 失敗時記什麼 | 月計三欄的前後值、`monthly_period` 前後值、執行當下的台北時間（是否在 05:00 前後） |
+
+---
+
+### C5：選做與記錄型
+
+共同的欄：SQL 前後查詢＝無（V30 除外，見該列）。這一組的來源報告都沒有單次可判定的預期，公式本身已由 CI 的參數化測試鎖定；實機只補「畫面與封包有沒有出來」。
+
+| 序 | 來源 | 需要 | 輸入 | 預期畫面 | 預期封包或伺服器 log | 截圖檔名 | 失敗時記什麼 |
+|---|---|---|---|---|---|---|---|
+| <a id="v28"></a>V28 | `R/issue-308.md:43` | E14（妖精學了與自身屬性不同的精靈魔法） | 妖精施放屬性不符的那個技能 3 次，之後立刻改放一個屬性相符的技能 | 屬性不符：沒有效果。重點是客戶端**不會卡在施法動作**，下一個技能照常放得出來 | 有 `C_USE_SPELL`，之後伺服器不送任何封包（LiTo 與 1-伺服器 都不送）；不扣 MP | `V28-elf-attr-mismatch.png` | 客戶端是否卡住（不能移動、不能再施法）、要怎樣才恢復 |
+| <a id="v29"></a>V29 | `R/issue-338.md:36`；`R/issue-304.md:44` | E14（魔眼）；法師 | 記下 SP 面板數字 → 使用魔眼 → 再看面板；前後各對 B 放 10 次光箭記傷害 | SP 面板**不變**（不再多 1）；傷害平均略高（記錄型） | 魔眼使用的 `C_USE_ITEM`；`S_ATTACK` 的傷害值 | `V29-eye-sp-before.png`、`V29-eye-sp-after.png` | 面板前後值、兩組各 10 次傷害 |
+| <a id="v30"></a>V30 | `R/issue-339.md:90-91`；`R/issue-318.md:67` | E14（已裝備幻象之劍／弓的角色）；Quest 裡的不死系怪（死亡騎士召喚的史巴托 45161，是否屬不死系沒有查證） | 帶幻象武器的角色登入並進戰鬥；對不死系怪打 20 下。另用一般武器、祝福武器各打 20 下對照（有的話） | 能正常進場；幻象武器與一般武器沒有額外傷害，祝福武器才有 | console 沒有 `invalid source weapon combat traits`（V02）。SQL：`SELECT item_id, bless, is_equipped FROM …character_items WHERE char_id=<objid>` 存 `sql-before-V30.txt` | `V30-illusion-weapon.png` | 進場失敗的 console、三組各 20 下的傷害。來源另寫「租借武器 84 號」，要租裝 → 阻塞：功能未開放 |
+| <a id="v31"></a>V31 | `R/issue-340.md:45`；`R/issue-317.md:31` | E9；Quest 或 Time Attack | 帶召喚物進 Quest／Time Attack，讓召喚物打任務怪 30 下；再讓怪打開了迴避的玩家 30 下 | 記錄型：召喚物傷害比舊版低約 35% 是預期中的改動；關卡是否還打得過由使用者判斷 | console 沒有 `invalid companion NPC damage input` | `V31-summon-vs-quest.png` | 30 下的傷害與命中數、該波怪打完花的秒數 |
+| <a id="v32"></a>V32 | `R/issue-337.md:48,51,52`；`R/issue-309.md:42` | 幻術師（D6）學立方 205／210／215／220、116、118；龍騎士 181；騎士 112；另要料理道具。seed 都沒有 | 各放一次：立方（看圖示、特效、地裂的束縛）；116（看 729 對話框文字與傳送畫面）；118（看傳送後面向）；112 破壞盔甲打吃了料理的 B；怪物魔法打開著龍之護鎧／耐力的玩家 | 圖示與特效出現；116 的對話框文字正確；118 傳送後面向 5；龍之護鎧／耐力讓怪物魔法傷害少 10／15（記錄型） | 以 capture 為準 | `V32-<技能>.png` | 每個技能：有沒有圖示、特效、訊息代碼；傷害各記 10 次。沒有對應角色 → 「阻塞：資料」（量大，建議主控決定要不要做） |
+| <a id="v33"></a>V33 | `R/issue-301.md:27` | 實驗設定改 `battle.ai.enabled=false` 後重啟一次（這個鍵在 22 鍵內，`S/UnifiedConfiguration.java:7,31`）；A 單人 | A 單人進 Local Lobby 開戰 | 記錄型：ArenaBot 有沒有出現、會不會動、會不會攻擊 | 啟動行 `[LiTo] … battle-ai=`（`S/Main.java:91-105`）顯示關閉 | `V33-arenabot-ai-off.png` | Bot 的行為、能不能開戰、比賽怎麼結束。做完把設定改回並重啟 |
+
+---
+
+### 阻塞項目（不排入時間盒）
+
+| 序 | 來源 | 原本要驗什麼 | 阻塞原因 | 解除後的做法 |
+|---|---|---|---|---|
+| <a id="v34"></a>V34 | `R/issue-306.md:45,60`；`R/issue-301.md:27` | 兩個來源各一個 **objid 相同**的角色同房對戰：看得到彼此、能互打、結算勝負正確；兩個來源庫的 `character_lito` 各自 +1 勝／+1 敗 | **阻塞：E13**（實驗環境只有一個來源） | 六欄照 A08–A15；Q1 對兩個來源庫各跑一次；截圖 `V34-cross-source-room.png`、`V34-cross-source-result.png`、`V34-sql.png`；失敗時記兩人在封包裡的 object id 是否不同（撞號時伺服器會另配，`R/issue-306.md:58`） |
+| <a id="v35"></a>V35 | `R/issue-368.md:37-39,55` | 租裝城鎮按返回／重新開始 → 回角色清單（沒有結算畫面）→ 重新選租裝入村；兩人同村時另一人只看到對方消失；一般戰鬥中退出仍出結算 | **阻塞：功能未開放** | 最後一句「一般戰鬥中退出仍出結算」不需要租屋城鎮，已由 [G23](#g23) 的註記與 A16 涵蓋。其餘待解除後依 `docs/reference/rental-town-return-contract.md` 寫六欄；截圖 `V35-rental-return.png` |
+| <a id="v36"></a>V36 | `R/issue-369.md:60,74` | 租裝角色在租賃村用傳送石 → 同位址重連 → 選頻道 → 看到頻道人數並進大廳，背包仍是傳送前選的那套；離開頻道回選角畫面後租裝選擇鈕恢復可用 | **阻塞：功能未開放** | 截圖 `V36-same-endpoint.png` |
+| <a id="v37"></a>V37 | `R/issue-371.md:54-56,68` | 向勒夫租 29047 → 穿戴 → 屬性視窗火抗 +10 → 卸除還原；向克里租 29032 → 穿戴 → SP +10、AC −12；穿著進戰鬥後的 `S_STATUS`；租期到期時屬性還原 | **阻塞：功能未開放** | 截圖 `V37-merchant-29047.png`、`V37-merchant-29032.png`。注意 `R/issue-371.md:53`：TSV 的 `spell_power`／`magic_resistance` 兩欄可能對調，29032 顯示成 MR +10 而不是 SP +10 時照實記，不直接判失敗 |
+| <a id="v38"></a>V38 | `R/issue-337.md:49-50`；`R/issue-340.md:44`；`R/issue-336.md:46`、`R/issue-321.md:53`、`R/issue-311.md:51` 的 WORLD 部分 | 經典世界：安全區隊友吃到立方屬性 +30、衝擊立方不再讓 MR −10；攻城戰期間 118 回 1192；WORLD 怪物打寵物與 Dspy 護送的命中與傷害 log；火牢、76 自施、魔法娃娃在 WORLD 的同樣行為 | **阻塞：經典世界關閉** | 戰鬥房的對應行為已排在 V08、V11、V15；WORLD 部分等解除 |
