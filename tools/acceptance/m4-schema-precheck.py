@@ -415,12 +415,12 @@ def v2_block(reqs) -> str:
             rows.append(f"UNION ALL SELECT {sql_quote(c)}, '{'Y' if (table_optional == 'Y' or c in r['tolerated']) else 'N'}'")
         status = f"IF(x.optional = 'N', {fail}, {warn})" if r["startup"] else warn
         out += [
-            f"SET @m4_te = (SELECT COUNT(*) FROM information_schema.TABLES t WHERE t.TABLE_SCHEMA = CONVERT({var} USING utf8) COLLATE utf8_general_ci"
+            f"SET @m4_te = (SELECT COUNT(*) FROM information_schema.TABLES t WHERE t.TABLE_SCHEMA = CONVERT({var} USING utf8)"
             f" AND {conv.format('t.TABLE_NAME')} = {conv.format(tbl)});",
             f"SELECT 'V2' AS check_id, IF(x.col = '', '缺表', '缺欄位') AS finding, {sql_quote(r['group'])} AS grp, {var} AS schema_name, {tbl} AS tbl, x.col, "
             f"{sql_quote('/'.join(r['privs']))} AS privs, '{'Y' if r['startup'] else 'N'}' AS startup, x.optional, {status} AS status",
             "FROM (" + " ".join(rows) + ") x",
-            f"LEFT JOIN information_schema.COLUMNS c ON c.TABLE_SCHEMA = CONVERT({var} USING utf8) COLLATE utf8_general_ci"
+            f"LEFT JOIN information_schema.COLUMNS c ON c.TABLE_SCHEMA = CONVERT({var} USING utf8)"
             f" AND {conv.format('c.TABLE_NAME')} = {conv.format(tbl)} AND {conv.format('c.COLUMN_NAME')} = {conv.format('x.col')}",
             "WHERE (x.col = '' AND @m4_te = 0) OR (x.col <> '' AND @m4_te = 1 AND c.COLUMN_NAME IS NULL);",
         ]
@@ -449,8 +449,8 @@ def expand_grants(block: str) -> str:
         var, tbl, privs, opt = m.groups()
         out += [
             f"SET @m4_t = {tbl}; SET @m4_p = {privs}; SET @m4_s = {var};",
-            "SET @m4_exists = (SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = CONVERT(@m4_s USING utf8) COLLATE utf8_general_ci"
-            " AND TABLE_NAME = CONVERT(@m4_t USING utf8) COLLATE utf8_general_ci);",
+            "SET @m4_exists = (SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = CONVERT(@m4_s USING utf8)"
+            " AND TABLE_NAME = CONVERT(@m4_t USING utf8));",
             "SET @m4_do = (@m4_guard='PASS' AND @m4_exists=1 AND (@m4_p<>'SELECT' OR @m4_grant_mode='table' OR @m4_s<>@m4_static));",
             "SET @m4_sql = IF(@m4_do, CONCAT('GRANT ', @m4_p, ' ON `', @m4_s, '`.`', REPLACE(@m4_t,'`','``'), '` TO ', @m4_grantee), 'DO 0');",
             "PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;",

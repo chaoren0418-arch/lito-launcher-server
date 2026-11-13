@@ -40,17 +40,17 @@ SET @m4_sql = IF(@m4_gm_login REGEXP '^[A-Za-z0-9_]{1,13}$' AND @m4_a_login REGE
 PREPARE m4_stmt FROM @m4_sql; EXECUTE m4_stmt; DEALLOCATE PREPARE m4_stmt;
 -- 需要的表與欄位（本檔 INSERT 用到的全部欄位）都存在
 SET @m4_cols = (SELECT COUNT(*) FROM information_schema.COLUMNS
-  WHERE (TABLE_SCHEMA = CONVERT(@m4_ac USING utf8) COLLATE utf8_general_ci AND (
+  WHERE (TABLE_SCHEMA = CONVERT(@m4_ac USING utf8) AND (
            (TABLE_NAME = 'accounts' AND COLUMN_NAME IN ('login','password','access_level','ip','host','banned','character_slot','spw','warehouse','ezpay'))
         OR (TABLE_NAME = 'characters' AND COLUMN_NAME IN ('account_name','AccessLevel','char_name','objid','level','HighLevel','MaxHp','CurHp','MaxMp','CurMp',
               'Ac','Str','Con','Dex','Cha','Intel','Wis','Class','Sex','Type','LocX','LocY','MapID','Food','Lawful',
               'OriginalStr','OriginalCon','OriginalDex','OriginalCha','OriginalInt','OriginalWis','Banned'))
         OR (TABLE_NAME = 'character_skills' AND COLUMN_NAME IN ('char_obj_id','skill_id','skill_name','is_active','activetimeleft'))
         OR (TABLE_NAME = 'character_items' AND COLUMN_NAME IN ('id','item_id','char_id','item_name','count','is_equipped','enchantlvl','is_id','durability','charge_count','remaining_time','bless'))))
-     OR (TABLE_SCHEMA = CONVERT(@m4_static USING utf8) COLLATE utf8_general_ci AND (
+     OR (TABLE_SCHEMA = CONVERT(@m4_static USING utf8) AND (
            (TABLE_NAME = 'etcitem' AND COLUMN_NAME IN ('item_id','name','classname','bless','max_charge_count'))
         OR (TABLE_NAME = 'skills' AND COLUMN_NAME IN ('skill_id','name','skill_level'))))
-     OR (TABLE_SCHEMA = CONVERT(@m4_lito USING utf8) COLLATE utf8_general_ci
+     OR (TABLE_SCHEMA = CONVERT(@m4_lito USING utf8)
          AND TABLE_NAME = 'commands' AND COLUMN_NAME IN ('name','access_level','class_name','note','system')));
 SELECT 'S0' AS step, @m4_cols AS seed_columns_found, 72 AS seed_columns_expected;
 SET @m4_sql = IF(@m4_cols = 72, 'DO 0', 'SELECT * FROM `m4_guard__seed_table_or_column_missing_run_m4_db_verify`.`guard`');
