@@ -5,7 +5,7 @@ name: acceptance-tools
 # mirrors P24Lab's server options. Nothing connects to P24Lab or to any real database.
 on:
   push:
-    branches: [main]
+    branches: [main, 'task/379']
     paths:
       - 'tools/acceptance/**'
       - 'tools/db-grants/**'
