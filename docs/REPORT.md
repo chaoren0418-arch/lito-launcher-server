@@ -105,3 +105,4 @@
 - 2026-11-13 — #370 伺服器：最後成員離房時 broadcastDefaultRoomReset 找不到房間列而丟例外（lito-modern T040 移交 3／4）（code，claude-local，PR 已合併）→ [報告](reports/issue-370.md)
 - 2026-11-13 — #369 伺服器：同端點傳送接續後 C_CA 被當成租裝重選——核對現有守衛是否足夠（lito-modern T040 移交 2／4）（code，claude-local，PR 已合併）→ [報告](reports/issue-369.md)
 - 2026-11-13 — #376 M3d：從 Backlog 再拉一批，並先替 M4 實機驗收做好準備（使用者 2026-11-13 同意）（design，claude-local，PR 已合併）→ [報告](reports/issue-376.md)
+- 2026-11-13 — #378 T127: M4 驗收準備：CHECKLIST 改為新 JAR 版＋逐步操作手冊（CHECKLIST 01–21、G19–G27、G02 封包）（code，claude-local，PR #390 已合併）→ [報告](reports/issue-378.md)

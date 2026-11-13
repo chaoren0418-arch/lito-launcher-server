@@ -142,14 +142,16 @@ python -I scratch\t130\s32_tiles.py "D:\lineage開發\0-客戶端" scratch\t130\
 
 ## 未完成
 
-- `docs/acceptance/M4-RUNBOOK.md` 還在 `task/378`、未合併，所以 G27 小節沒有寫進去；建議文字見下一節。
 - 沒有修伺服器的缺口（本任務是唯讀查核）。
-- 沒有更新 `TASKS.md` 的 T130 狀態列，避免和 `task/378` 衝突。
+
+第二輪（2026-11-13，`task/378` 合併進 main 之後）補上：合併 `origin/main`（`customer-gaps.md` 衝突已解，G19–G26 取 main 版本、G27 取本任務版本並加 RUNBOOK 連結）；`M4-RUNBOOK.md` 的 G27 小節已回填結論、證據與三個預檢／判讀步驟（G27-1 至 G27-3）；`TASKS.md` 的 T130 列改為 #381、`review`。
 
 ## 產出路徑
 
 - `docs/reports/issue-381.md`（本檔）
 - `docs/reports/customer-gaps.md`：G27 列與「待驗證」段落
+- `docs/acceptance/M4-RUNBOOK.md`：G27 小節
+- `TASKS.md`：T130 列
 - `scratch/t130/`（不進 git）：24 份 pak 清單、匯出的 `.tbl`／`.xml`、`s32_tiles.py`、`s32-tiles.json`
 
 ## 給下一棒的提示
@@ -158,6 +160,6 @@ python -I scratch\t130\s32_tiles.py "D:\lineage開發\0-客戶端" scratch\t130\
    - 把 12000、12004 的地形加進 `src/main/resources/combat/terrain/source/` 與 `source-index.tsv`（來源是 `1-伺服器\maps\12000.txt`、`12004.txt`，屬伺服器地形文字檔，與現有 715 張同類）。建議採用，改動最小，也和參考伺服器保持一致。
    - 改 `NativeDeTerrainResources.read`，遇到未打包的列時記錄並略過，不中止啟動。之後參考伺服器再加圖也不會擋啟動，但會偏離「逐列必須有地形」的原設計。
    - 實驗庫的 `mapids` 不放這兩列。只能解實驗環境，正式庫仍會遇到。
-2. M4-RUNBOOK 的 G27 小節建議寫成：「G27 已由 #381 靜態查核：客戶端資產齊全；競技場模式不會進 12000。預檢時先查靜態庫 `mapids` 是否有 12000／12004；有的話確認使用的 JAR 已含這兩張地形，否則啟動會停在 `source map physical asset not packaged`。此項沒有實機步驟。」
+2. M4-RUNBOOK 的 G27 小節已回填（[`M4-RUNBOOK.md#g27`](../acceptance/M4-RUNBOOK.md#g27)）：沒有進圖步驟，T137 只做 G27-1 靜態庫查詢、G27-2 啟動訊息判讀、G27-3 整輪搜尋。
 3. T128（實驗環境預檢）可以加一條：比對靜態庫 `mapids` 的實體 ID 與 JAR 內 `combat/terrain/source-index.tsv`，有差異就先報出來。
 4. 參考伺服器之後若再加地圖，會再出現同樣的問題。
