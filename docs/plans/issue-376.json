@@ -1,0 +1,110 @@
+[
+  {
+    "id": "T127",
+    "title": "M4 驗收準備：CHECKLIST 改為新 JAR 版＋逐步操作手冊（CHECKLIST 01–21、G19–G27、G02 封包）",
+    "stage": "code",
+    "priority": "P0",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）拆出的 B 類準備任務。M4 完成定義（`TASKS.md`）是用 **M3 的新 JAR**（最新 main 的 `mvn package` 產物）在實驗環境跑完 `docs/acceptance/CHECKLIST.md`；但現行 CHECKLIST 還是 #283 的「正式 0.6.71＋P24 實驗 schema」版，而且 `customer-gaps.md` 的 G19–G27 只有一句話，沒有可照做的步驟。目標是讓 Codex（2026-11-13 18:11 恢復）拿到文件後不必再讀歷史報告就能一次跑完。只寫文件，不啟動任何程式。\n\n**必讀**：`docs/acceptance/CHECKLIST.md`、`docs/reports/issue-284.md`（含 #284 的主控 2026-11-07 02:43 與 2026-11-11 14:08 裁定留言：靜態庫改用 `D:\\BinEngine\\environments\\p24\\sql\\380_db.sql` 快照建 `p24_380db_lito_exp`；M4 用新 JAR）、`docs/reports/issue-83.md`、`docs/reports/customer-gaps.md` G02、G19–G27 各列引用的文件、`docs/design/gameplay.md`（結算、積分、斷線規則）、`docs/reports/issue-335.md`（`character_lito` 新欄位）。\n\n**做**：\n1. 更新 `docs/acceptance/CHECKLIST.md`：交付基準改為「最新 main 的 Maven 產物」（步驟 01 之前加『建 JAR 並記 SHA-256』；JAR 路徑、lib、啟動命令依 `pom.xml` 與 `docs/reports/issue-284/run-experiment.ps1` 實際內容寫）；`database.static.database` 改 `p24_380db_lito_exp`；戰績 SELECT 加上 T103b 的 `ranking_points`、`disconnects`、`monthly_*` 欄位，預期值依 `docs/design/gameplay.md`（勝／敗／斷線的積分增量要寫出數字與出處行號）。原 21 步的編號與截圖檔名 `NN-<步驟>.png` 不變。\n2. 新增 `docs/acceptance/M4-RUNBOOK.md`，每一步固定六欄：**輸入**（按鍵、指令、滑鼠位置或 SQL）／**預期畫面**／**預期封包或伺服器 log**（opcode 名稱與方向，從 `Protocol.java`、對應 handler 查出，寫類別與行號；查不到寫『未找到（查過哪裡）』）／**SQL 前後查詢**（只讀 `*_lito_exp`）／**截圖檔名**／**失敗時記什麼**。\n   - A 部：CHECKLIST 01–21 逐步展開。\n   - B 部：G19（＝A 部全程）、G20 結算畫面龍騎士／幻術師圖示、G21 `.polyme`、G22 GM 魔杖點地傳送、G23 Ctrl 強制攻擊／光箭／負面技能、G24 雙玩家斷線（拔線、關視窗兩種）、G25 BUFF／魔法娃娃／藍水／血之渴望圖示與到期、G26 重複登入 `S_LOGIN_CHECK/0x16`、G27 map 12000（引用 T130 結論的位置先留欄位）。每項寫清楚需要哪個職業／技能／道具／GM 權限，沒有就列入『資料前置』表交 T128。\n   - G02：技能 26 不按 Ctrl 自施／對友方施放時抓現場封包的步驟（伺服器 `capture.directory` 的檔名規則與要比對的 target object ID 欄位，從 `src/main` 的 capture 實作查出）。\n3. 命名契約（T128 的腳本與 T137／T138 的執行都照這個）：\n   - 版本目錄 `docs/acceptance/m4-<JAR SHA-256 前 8 碼>/`，結果檔 `docs/acceptance/m4-<前 8 碼>.md`；\n   - 截圖：A 部 `NN-<步驟>.png`，B 部 `G<編號>-<序>-<短名>.png`，C 部（T129）`V<序>-<短名>.png`；\n   - 原始證據在 worktree 的 `scratch/m4/run-<UTC>/evidence/`，SQL 快照 `sql-<before|after>-<步驟>.txt`。\n4. `customer-gaps.md` G19–G27 各列的『建議』欄加上對應 RUNBOOK 小節連結。\n\n**不做**：不寫腳本（T128）、不整理 M3 系列待驗證（T129）、不啟動伺服器／登入器／遊戲、不連任何 DB。\n\n**驗收**：RUNBOOK 的 G19–G27 與 G02 每項都有步驟或『阻塞條件＋誰能解除』；預期封包欄每格有類別／行號或『未找到』；`docs/reports/issue-<本號>.md` 分已驗證／推測／待驗證，並列出『資料前置』缺口清單。",
+    "depends_on": []
+  },
+  {
+    "id": "T128",
+    "title": "M4 驗收準備：實驗環境預檢與自動化腳本（schema／授權靜態比對、SQL 快照、埠與 WAL 檢查）",
+    "stage": "code",
+    "priority": "P0",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）B 類。#284 三次啟動都卡在實驗庫（缺 SELECT 權限、`裝備_armor_魔法.id` 欄位不相容）。新 JAR 在 M3／M3b／M3c 又多了讀寫需求（T103b `character_lito` 新欄位、T111 讀 `etcitem.classname`、#335 報告提到 `380_db.spawnlist_time` 與 `系統_受擊無動作gfx`），不先查就會再空跑。本張把能在開機前查出來的問題先查完，並把重複性操作寫成腳本。\n\n**必讀**：`docs/reports/issue-284.md` 與 `docs/reports/issue-284/`（`run-experiment.ps1`、`verify-run.ps1`、`Prepare.java`、`Probe.java`）、`docs/reports/issue-83.md`、`docs/design/database.md`、`tools/db-grants/`（`scan_db_access.py`、`gen_grants.py`、README）、`docs/reports/issue-335.md:73`、`lito伺服器/LiTo381-Server/db/*.sql`（特別是 `lito_character_ranking.sql`、`lito_battle_settlement.sql`）、`.github/workflows/build.yml` 的 CI fixture 段。\n\n**做**（全部放 `tools/acceptance/`，附 `README.md`）：\n1. **重產存取清單**：照 `tools/db-grants/README` 重跑 `scan_db_access.py`＋`gen_grants.py --update-doc`（python 靜態掃描，可在本機執行），審查差異後提交（#335 記錄的脫節）。\n2. **`m4-schema-precheck.py`**（python 靜態，唯讀）：輸入＝步驟 1 的存取清單＋SQL 傾印檔路徑（預設 `D:\\BinEngine\\environments\\p24\\sql\\380_db.sql`、`380_lito.sql`、`380_ac.sql`，只讀，不複製進 repo）；輸出＝新 JAR 會讀寫、但傾印裡缺少的表與欄位清單，寫到 `docs/acceptance/m4-schema-precheck.md`。本機實際執行一次並提交結果。`p24_accounts_lito_exp`（#83 從 P24 建的角色庫）沒有傾印可比，列出『開機前要用 `information_schema` 查的表與欄位』交給步驟 3 的腳本。\n3. **`m4-db-prepare.sql`／`m4-db-verify.sql`**：依步驟 2 的結果寫出只作用在 `p24_380db_lito_exp`、`p24_380lito_lito_exp`／`p24_lito_lito_exp`、`p24_accounts_lito_exp` 的準備步驟（匯入快照的命令寫在 README、補 `character_lito` 欄位用 `db/lito_character_ranking.sql` 的同一寫法、`GRANT` 清單依步驟 1）。每個檔案開頭用 `SELECT @@port` 斷言 43324，schema 名稱不以 `_lito_exp` 結尾就中止。由 Codex 以 P24Lab 管理身分執行，本張不執行。\n4. **資料前置**：依 T127 的『資料前置』表（T127 未合併時自己從 CHECKLIST 05、12、17、18 與 G20–G25 推出），查明 GM 資格、八角色翻頁、龍騎士／幻術師角色、魔法娃娃／藍水／GM 魔杖各需要哪些資料列（寫出判斷的類別與行號，例如 `LegacyMySqlRepository`、`GmTravel`、`GmPolyMe`、`db/lito_gm_*.sql`）；產出 `m4-seed-exp.sql`（只寫 `*_lito_exp`，帳號密碼用佔位符，由 Codex 從 #83 私密交接檔代入；不得把任何帳密寫進 repo）。做不到的項目寫明原因。\n5. **PowerShell 腳本**（相容 Windows PowerShell 5.1，檔案存 UTF-8 BOM，不用 `&&`）：\n   - `m4-prepare.ps1`：從 `target/` 複製 JAR 與 lib 到 `scratch/m4/run-<UTC>/`，逐檔記 SHA-256，建空的 `runtime/`、`evidence/`，產生不含帳密的設定範本（沿用 `issue-284/run-experiment.ps1` 的 22 鍵檢查；確認新 JAR 的 `UnifiedConfiguration.KEYS` 是否有增減）。\n   - `m4-sql-snapshot.ps1 -Label <before|after>-<步驟>`：只做 SELECT（`character_lito` 含新欄位、`lito_battle_settlement`、`lito_source_server`），輸出到 `evidence/sql-<Label>.txt`；另出 `m4-sql-diff.ps1` 比對兩份快照並判定『勝者 wins+1、敗者 losses+1、積分增量、收據 applied=1』。\n   - `m4-listen-check.ps1`：列出 Java PID 的監聽位址，斷言只有 `127.0.0.1:42083` 與 `127.0.0.2:(42083+source_id)`。\n   - `m4-wal-check.ps1`：列 `runtime/battle-settlements/`，回報 `.pending`／`.tmp`。\n   - `m4-evidence-index.ps1`：依 T127 的命名契約掃截圖與證據，產生結果檔骨架，缺檔列為『未執行』。\n   - 共用守門：任何腳本遇到埠 2000／3306、非 loopback 位址、或 `config/server.properties` 路徑一律拒絕並退出碼非 0。\n\n**本機限制**：python 靜態腳本可以執行；PowerShell 腳本只做語法解析（`[System.Management.Automation.Language.Parser]::ParseFile`）與守門邏輯的純函式檢查，不啟動 Java、不連 DB、不啟動 P24Lab。未實跑的部分寫進報告『待驗證』。\n\n**驗收**：`docs/acceptance/m4-schema-precheck.md` 有實際執行結果（缺表／缺欄位清單或『0 項』）；`tools/acceptance/README.md` 寫出 Codex 的執行順序（一行一條命令）；CI 綠燈；報告分已驗證／推測／待驗證。",
+    "depends_on": []
+  },
+  {
+    "id": "T129",
+    "title": "M4 驗收準備：M3／M3b／M3c 與 #366–#371 的實機待驗證項目彙整成操作手冊 C 部",
+    "stage": "code",
+    "priority": "P0",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）B 類。M3 系列每張報告的『待驗證』都有交給 Codex 的實機項目，散在 30 多份報告裡。本張把它們收成一份可照做的清單，接在 T127 的 `docs/acceptance/M4-RUNBOOK.md` 後面當 C 部。只寫文件。\n\n**做**：\n1. 逐份讀 `docs/reports/issue-301.md`～`issue-371.md`（M3：#301–#311、#317、#318、#321、#325；M3b：#334–#340；M3c：#352–#357；#366、#368–#371）的『待驗證』與『給下一棒的提示』，挑出需要實機、P24Lab 或真 MySQL 的項目。\n2. 每項依 T127 的六欄格式寫：輸入／預期畫面／預期封包或 log／SQL 前後查詢／截圖檔名 `V<序>-<短名>.png`／失敗時記什麼；並標『需要的角色、技能、道具、模式（死鬥／Quest／Time Attack）』。已知至少包含：\n   - #352 啟動 log `consumable parameters loaded from 380_db.etcitem: items=11 differing-from-built-in=0 fallbacks=0`，喝紅水／綠水／勇水／藍水；\n   - #353 Quest 歐吉 action 30、貼身 Boss 放技能頻率、死亡騎士 10056 後 3 秒內不放吸血鬼之吻；\n   - #354 帶寵物／召喚物被 76／167 指定時寵物死亡或收回；\n   - #355 一方拔線（勝 +250／斷線 −50 以 `gameplay.md` 為準）、雙方 300 ms 內同時關閉為無效場、對戰中 `taskkill /F` 實驗伺服器後重啟查 `character_lito`、A 建房同時 B 斷線；\n   - #356 G09 邊界 4 格、G10–G12 時序觀察；\n   - #335 重啟後積分／斷線數／月計不歸零；#311 魔法娃娃圖示；#339 祝福欄顯示；\n   - #366 觀戰者離場、#370 最後成員離房後大廳房間列表與 log；#368、#369、#371 租裝城鎮（統一設定目前關閉租屋城鎮：先查 `UnifiedConfiguration` 的開關能不能只在實驗設定打開，不能就標『阻塞：功能未開放』）。\n3. 依『一次 60 分鐘時間盒』排順序：同一場戰鬥能順便驗的併在一起，並標出哪些可以和 A 部同一輪做。\n4. 需要資料前置的項目補進 T128 的 `m4-seed-exp.sql` 需求表（T128 已合併就直接改檔，否則列在報告）。\n\n**不做**：不啟動任何程式；不改 `src/main`。\n\n**驗收**：C 部每項都能追溯到來源報告（檔名＋行號）；報告列出『不需要實機、已由 CI 涵蓋而剔除』的項目與理由。",
+    "depends_on": ["T127"]
+  },
+  {
+    "id": "T130",
+    "title": "G27：map 12000 資產查核（PakViewer 查遍客戶端 pak，唯讀）",
+    "stage": "resource",
+    "priority": "P1",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）B 類。`customer-gaps.md` G27：#83 引述前一輪觀察到 map 12000 資產缺口（`docs/reports/issue-83.md:7`、`:148`；`issue-284.md:110`），從未用 PakViewer 查過，正式版是否受影響未知。規則要求宣稱缺資源前必須先查遍客戶端所有 .pak。這件事不需要開遊戲，先查完，M4 遇到時才能直接判讀。\n\n**做**（全部唯讀；輸出只寫本專案 `scratch/t130/` 與報告；不得修改 `D:\\lineage開發\\0-客戶端` 任何檔案）：\n1. 從 `src/main` 找出伺服器哪裡用到 map 12000（房間模式、`lito_room_policy`、地圖表、`ModernWorld*` 或 `Battle*` 的地圖常數），寫出類別與行號，以及哪些房間模式會把玩家送到這張圖。\n2. 查客戶端：`D:\\lineage開發\\0-客戶端` 的 map 目錄是否有 12000 的地圖檔（列目錄即可）；用 `D:\\lineage開發\\PakViewer-main` 的 CLI 列出**所有** .pak（含 Text、Sprite、UI、Tile 相關）內與 12000 有關的項目（地圖名稱表、zone／地圖索引 XML、tile）。`lito脫殼資源/` 有相關分析也一併引用。\n3. 對照正常可用的競技場地圖（從 `lito_room_policy` 或程式常數挑一張使用者已確認能進的），比較兩者在客戶端具備的檔案種類。\n4. 結論三選一並附證據：『資產齊全』／『缺 X（列出查過的 pak 與檔名清單）』／『伺服器不會送玩家到 12000』。把結論寫回 `customer-gaps.md` G27 與 T127 RUNBOOK 的 G27 小節（RUNBOOK 尚未合併就只寫報告）。\n\n**驗收**：報告附查詢過的 pak 清單（檔名、項目數）與命令；分已驗證／推測／待驗證；沒有把任何 pak／map／sprite 內容複製進 git。",
+    "depends_on": []
+  },
+  {
+    "id": "T131",
+    "title": "開戰與斷線同時發生的鎖順序死結（DurableBattleSettlement.context）＋CI MySQL job 逾時",
+    "stage": "code",
+    "priority": "P1",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）A 類；來源是 #370、#369 報告的移交事項。`docs/reports/issue-370.md:40-45` 的 thread dump（run 43264734337）顯示正式程式碼的鎖順序相反：\n- 執行緒 A：`GameHub.disconnect` → `resetOrRemove`（持有 `GameHub` 鎖）→ `DurableBattleSettlement.cleanupAllowed`（等 `CONTEXTS`，`DurableBattleSettlement.java:79`）；\n- 執行緒 B：`DurableBattleSettlement.begin` → `context()`（持有 `CONTEXTS`，`:28`）→ `new Context` → `NativeRoomRules.testRoom`（等 `GameHub` 鎖，`:9`）。\n`CONTEXTS` 是 static，死結後整個伺服器的離房、清房、戰鬥時鐘都停住。玩家端的現象是『一人開戰、同時另一人斷線』時全服卡死。CI 的 MySQL job 也因此偶發掛到 6 小時上限，擋住合併。\n\n**做**：\n1. 修 `DurableBattleSettlement.context()`：取 `CONTEXTS` 鎖之前先算好 `NativeRoomRules.testRoom(hub, room)`（或等價做法），確保任何路徑都不會在持有 `CONTEXTS` 時進 `GameHub` 鎖。全檔檢查 `CONTEXTS` 的其他持有點（`begin`、`record`、`retry`、`cleanupAllowed`）與 `SettlementJournal`、`SettlementSql` 的鎖，寫出鎖順序表放進 `docs/design/gameplay.md` §4.2。\n2. 加確定性測試（不靠 sleep；可參考 `NativeSourceAreaPairFirstTest` 的 `RetiringLock` 手法或用 latch 卡住兩條執行緒），修正前會死結、修正後通過；測試要有 `@Timeout`。\n3. `.github/workflows/build.yml` 的 `server-integration-test` job 加 `timeout-minutes`（正常約 10 分鐘，取 30）；`server-test` job 沒有的話一併加。\n4. 查 `ModernSiegeWireOracleTest` 在 MySQL job 偶發卡住的原因（`docs/reports/issue-369.md:96`、`issue-355.md:91`）：先看是不是同一個死結的受害者；不是的話只加 `@Timeout` 並把觀察寫進報告，不硬修。\n5. 掃 `src/test` 中使用真 `GameHub` 而沒有 `@Timeout` 的測試類別，補上類別層級逾時。\n\n**參考**：行為面不涉及 `1-伺服器`（LiTo 專有的結算持久化）；設計依 `docs/design/gameplay.md` §3.8、§4.2 與 `docs/reports/issue-355.md`。\n\n**驗收**：新測試在 `Server tests`（必過 job）執行並通過；`mvn -B test` Failures 0／Errors 0；MySQL job 有逾時上限且本任務沒有新增失敗（與 main 同一 job 逐類別比對）；報告分已驗證／推測／待驗證。",
+    "depends_on": []
+  },
+  {
+    "id": "T132",
+    "title": "競技場 PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話、多人時換目標（#353 剩餘 1–3）",
+    "stage": "code",
+    "priority": "P2",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）A 類；`TASKS.md` Backlog『588 列非玩家技能』中 #353（T122）列為未修的前三項（`docs/reports/issue-353.md:44-46`，對照表 `docs/design/skills-npc.md` 的 C9、C11）。\n\n**做**（行為以 `D:\\lineage開發\\1-伺服器` 為準，唯讀）：\n1. **反制魔法擋 NPC 魔法（C11）**：`1-伺服器` `L1SkillUse.java:2767-2775`、`:2871`、`:2899`、`:4243-4245`；例外清單 `EXCEPT_COUNTER_MAGIC`（`:334-344`，含 10027–10029）與 DB 表 `SkillCounterMagicExceptionTable`（先從 `db/380_db.sql` 讀出內容寫進設計文件）。LiTo 的 Quest／Time Attack NPC 魔法流程在 `ClientSession.java` 約 `:54440-54600` 與 TA 對應段約 `:54729`（行號會位移，以方法名為準）。玩家有 COUNTER_MAGIC 時擋掉一次 NPC 魔法並消耗狀態，例外技能不擋；玩家對玩家的既有反制魔法行為不得改變。\n2. **安息 10027／10028／10029 的 NPC 喊話 `$3717`**：`L1SkillUse.java:3037-3041`，每次命中廣播 `S_NpcChat`。先確認 LiTo 的 `Protocol` 有對應封包與 3.81C opcode（`docs/reference/client-protocol-needs.md`）；沒有就寫『未找到（查過哪裡）』並停在設計，不自創 opcode。\n3. **ChangeTarget=3（C9）**：`L1MobSkillUse.java:777-842`；Time Attack 多人時龍的 8 列技能從仇恨名單隨機換目標。`GameHub.appendMonsterAiTick`（約 `GameHub.java:12500` 起）要把候選玩家傳進 encounter。單人時行為不變。\n4. 更新 `docs/design/skills-npc.md` 對應列與 `docs/reports/server-capability-matrix.md`。\n\n**不做**：30004 火牢是否對齊（會削弱 Boss，需使用者決定）、C10、距離 2 擲幣——留在 Backlog。\n\n**驗收**：每項有單元測試（期望值附 `1-伺服器` 檔名與行號）；`mvn -B test` Failures 0／Errors 0（CI）；實機觀察項目寫進『待驗證』並補到 T129 的 C 部（已合併就直接改 RUNBOOK）。",
+    "depends_on": []
+  },
+  {
+    "id": "T133",
+    "title": "凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7）",
+    "stage": "code",
+    "priority": "P2",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）A 類；#338（T118）報告的未結項（`docs/reports/issue-338.md:32`、`:48`；`docs/design/formulas-magic.md` §9.3 Z7）。`1-伺服器` 對凍結中的目標，魔法與物理傷害都是 0（物理：`L1AttackMode.java:129`；魔法側的出處見 formulas-magic §9.3）。LiTo 的 Quest／Time Attack 怪物 `Monster.damage(amount, true)` 沒有這個判斷，冰凍後的怪物照樣掉血。\n\n**做**：\n1. 先讀 `ClientSession.java` 的冰凍技能命中流程（#338 記的 `:45263-45296`、`:88521`，以方法名為準），確認『本次冰凍技能自己的傷害』與 `questEncounter.freeze`／`timeAttackEncounter.freeze` 的先後——造成冰凍的那一擊要照 `1-伺服器` 的順序處理，不能被自己擋掉。\n2. 在 `BattleQuestEncounter`、`BattleTimeAttackEncounter` 的 `Monster.damage` 加上凍結中擋傷害；`poisonDamage` 是否一起擋，先查 `1-伺服器` 的毒傷路徑再決定，寫出檔名行號。\n3. 核對玩家目標與受控 NPC 目標是否已有同樣規則（#338 的『傷害為 0 狀態清單』），只補缺的。\n4. 更新 `docs/design/formulas-magic.md` §9.3 與 §7 的未結清單。\n\n**驗收**：測試『凍結中的 Quest 怪物受魔法與物理傷害為 0、解凍後恢復』『造成冰凍的那一擊傷害照算』；`mvn -B test` Failures 0／Errors 0（CI）；報告分已驗證／推測／待驗證。",
+    "depends_on": []
+  },
+  {
+    "id": "T134",
+    "title": "藥水共用冷卻（etcitem.delay_id／delay_time）對照 1-伺服器",
+    "stage": "code",
+    "priority": "P2",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）A 類；#352（T111）未處理項 2（`docs/reports/issue-352.md:30`、`docs/design/items-consumables.md:39`）。`1-伺服器` 的治癒類藥水是冷卻群組 2、`delay_time` 500／1000 毫秒；LiTo 藥水分派沒有讀這兩欄，玩家可以比原服更快連喝。\n\n**做**：\n1. 讀 `1-伺服器` 的道具延遲實作（`src/com/lineage/server/model/L1ItemDelay.java` 與 `clientpackets/C_ItemUSe.java` 內的 delay 檢查，寫出行號）與 `db/380_db.sql` 中 LiTo 支援的 14 項藥水的 `delay_id`、`delay_time`，列表寫進 `docs/design/items-consumables.md`。\n2. 查 LiTo 現況：`ClientSession` 藥水分派有沒有任何使用間隔限制，寫出行號。\n3. 比照 T111 的 `ConsumableItemParameters`：啟動時唯讀讀 `etcitem.delay_id, delay_time`（同一條 SELECT 加欄位，讀不到用內建值並寫 log，不得讓啟動失敗），使用藥水時依群組檢查冷卻；冷卻中被拒絕時送什麼封包照 `1-伺服器`，並確認 3.81C 客戶端有對應處理。\n4. 新增的欄位讀取要在 `tools/db-grants` 的既有 `380_db.etcitem` SELECT 授權內；若 T128 已合併，同步更新 `docs/acceptance/m4-schema-precheck.md`。\n\n**不做**：勇敢藥水職業限制（`limit_class`：`1-伺服器` 傾印是 2、repo `db/lito_static.sql` 是 127，要先知道正式 380_db 的值，留 Backlog 等使用者或 M4 查）；其他消耗品。\n\n**驗收**：單元測試（群組共用、時間邊界、讀表失敗退回內建值）；CI MySQL 整合測試比照 `ConsumableItemParametersMySqlIntegrationTest`；`mvn -B test` Failures 0／Errors 0；實機連喝間隔寫進『待驗證』。",
+    "depends_on": []
+  },
+  {
+    "id": "T135",
+    "title": "受控 NPC（寵物、召喚物）恢復節奏與自身技能：移植候選 046c58c5 的 G15 前兩組並補測試",
+    "stage": "code",
+    "priority": "P2",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）A 類；`TASKS.md` Backlog『候選 `3ccbb…`／`046c58c5…` 差異』經 #354（T123）盤點後剩下的部分（`docs/design/controlled-npc.md` 的 G15 表、`docs/reports/issue-354.md:61-67` 優先 1、2）。這兩組玩家看得到：寵物／召喚物的回血回魔節奏與主人畫面的 HP 條、召喚物會不會放自己的技能。候選本身**沒有任何測試收據**（`combat-closeout-current.zh-TW.md:76`），所以不能照搬，必須逐項對 `1-伺服器` 並自己補測試。\n\n**範圍**：\n- 第 1 組：`NativeCloseoutControlledNpcData`、`NativeCloseoutCompanionRecoveryData`、`NativeCloseoutCompanionRecovery`；\n- 第 2 組：`NativeCloseoutCompanionSkills`、`NativeCloseoutMobSkillSelection`。\n原始碼在 `lito伺服器/LiTo381-Server/tools/combat-continuation/integration-lifecycle/closeout-src/`，插點看對應的 `build_closeout_*.py`／`Closeout*Methods.java`，重建順序見 `combat-closeout-current.zh-TW.md:19`。\n\n**做**：\n1. 先寫設計段（`docs/design/controlled-npc.md` 新增一節）：每個類別對應 `1-伺服器` 的哪段（寵物／召喚物的 HP／MP 回復：從 `model/Instance/L1PetInstance.java`、`L1SummonInstance.java` 追出實際的回復計時類別；選技：`model/L1MobSkillUse.java`），逐項列『候選做法／1-伺服器 做法／一致與否』，檔名行號齊全。候選與 `1-伺服器` 不一致的地方以 `1-伺服器` 為準。\n2. 移植到 `src/main`（Java 原始碼，不走 patch 鏈）。候選改到的既有類別（`BattleCompanion`、`GameHub`、`ClientSession` 等）只取這兩組需要的插點，逐一列在報告。\n3. 測試：重用 `NativeSourceAreaPairFirstTest.Scene` fixture；涵蓋回復間隔與回復量、主人 HP 條封包、選技機率與冷卻、寵物死亡／收回後不再回復或施法。\n4. 量超過一張 PR 時：先完成第 1 組並合併，第 2 組在報告列為剩餘，交主控另開，不硬塞。\n\n**不做**：G15 其餘 24 個類別（自然 NPC 範圍魔法與數值、LOS、`NativeCloseoutSkillEffects`——文件自述消費端待實作）、046 版 `NativeSourceAreaPairFirst` 擴充；留在 Backlog。\n\n**驗收**：`mvn -B test` Failures 0／Errors 0（CI）；`controlled-npc.md` G15 表更新各類別狀態；實機項目寫進『待驗證』並補到 T129 的 C 部。",
+    "depends_on": []
+  },
+  {
+    "id": "T136",
+    "title": "結算待寫入結果的作廢工具與 .tmp 殘檔清理（#355 移交）",
+    "stage": "code",
+    "priority": "P3",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#376（M3d）A 類；#355（T124）『給下一棒的提示』（`docs/reports/issue-355.md:119-120`）。角色在來源庫被改名或刪除時，啟動 log 出現 `Settlement character identity changed: <db>/<objid>`，伺服器拒絕啟動；目前營運只能手動改 `lito_battle_settlement.applied` 並搬走 `.pending` 檔，沒有工具，容易做錯。`runtime/battle-settlements/*.tmp` 殘檔也不會自動清。\n\n**做**：\n1. 設計（寫進 `docs/design/gameplay.md` §4.2）：作廢一筆結果的安全條件（只能作廢『身分已變更』而失敗的結果；要留稽核紀錄；不得動 `character_lito` 計數）。作法擇一並說明理由：(a) 離線命令列入口（伺服器停機時執行，參數是 `result_id`），或 (b) 啟動時讀取營運放置的作廢清單檔。兩者都不得新增對來源庫的寫入權限。\n2. 實作在 `src/main`（`SettlementJournal`、`SettlementSql`、`DurableBattleSettlement` 附近），收據列以新狀態或既有欄位標記作廢（需要加欄位時，在 `db/` 加可重跑的遷移 SQL，寫法比照 `db/lito_battle_settlement.sql`；AI 不對任何正式庫執行）。\n3. 啟動時清理 `.tmp`：只刪『已確認不是進行中寫入』的殘檔（條件寫清楚），其餘保留。\n4. 更新 `docs/INSTALL.md` 的常見錯誤段，寫營運操作步驟。\n\n**驗收**：單元測試＋CI MySQL 整合測試（比照 `DisconnectSettlementRecoveryMySqlIntegrationTest` 的『改名角色』案例：作廢後可啟動、其他結果不受影響、作廢的結果不計入、重複作廢冪等）；`mvn -B test` Failures 0／Errors 0。",
+    "depends_on": []
+  },
+  {
+    "id": "T137",
+    "title": "M4 實機：依 M4-RUNBOOK B 部驗收 G19–G27 與 G02 現場封包（實驗環境，Codex）",
+    "stage": "test",
+    "priority": "P1",
+    "runner": "codex-local",
+    "text": "runner: codex-local\n\n**背景**：#376（M3d）拆出的實機任務。`customer-gaps.md` G19–G27 都是『從未人工驗收』，G02（技能 26 要按 Ctrl 才放得出來）需要現場封包才能判斷原因。步驟、預期與截圖檔名都在 T127 的 `docs/acceptance/M4-RUNBOOK.md` B 部；腳本與資料前置在 T128 的 `tools/acceptance/`；G27 的資產結論在 T130 報告。\n\n**前置（不成立就停，RESULT 寫阻塞原因，不要自己補做）**：\n- #284（T014）有『新 JAR 在實驗環境啟動、42083 LISTENING』的成功 RESULT；\n- #285（T011）已用新版 CHECKLIST 跑過 01–21，或與本張同一輪接著做（同一個 `p24lab` lease 內先 A 部再 B 部最省時間）；\n- 持有調度器的 `p24lab` lease。\n\n**做**：\n1. 依 `tools/acceptance/README.md` 的順序：`m4-prepare.ps1` → `m4-db-verify.sql`（需要時 `m4-db-prepare.sql`、`m4-seed-exp.sql`，只作用在 `*_lito_exp`）→ 啟動 → `m4-listen-check.ps1`。\n2. 照 RUNBOOK B 部逐項執行 G20–G26；每項前後跑 `m4-sql-snapshot.ps1`（有戰績變動的項目），截圖依命名契約存 `docs/acceptance/m4-<JAR SHA 前 8 碼>/G<編號>-<序>-<短名>.png`。\n3. G02：照 RUNBOOK 抓技能 26『不按 Ctrl 自施／對友方』『按 Ctrl』四種情況的封包，把 target object ID 與施法者／友方的 object ID 對照寫進結果。只記錄，不修。\n4. G27：T130 結論是『伺服器會送玩家到 12000』時，實際開一場該模式並記錄畫面；否則引用 T130 結論，標『不適用（附理由）』。\n5. 結束時 `m4-wal-check.ps1`、`m4-evidence-index.ps1`，正常關閉自己啟動的伺服器、客戶端與 P24Lab。\n\n**產出**：`docs/acceptance/m4-<前 8 碼>.md` 的 B 部結果（每項 通過／失敗／阻塞＋證據）；失敗項寫『現象／步驟／證據』，回填 `customer-gaps.md` 對應列；`docs/reports/issue-<本號>.md` 分已驗證／推測／待驗證。\n\n**規則**：不碰正式 2000／3306、`0-客戶端`（唯讀引用）、正式 `LiTo.bin`、`config/server.properties`；不改 P24Lab 原有的庫與 tw-bin 測試資料；帳密不進 git、不入截圖；失敗不修程式。使用者觀看畫面驗收。",
+    "depends_on": ["T127", "T128", "T130"]
+  },
+  {
+    "id": "T138",
+    "title": "M4 實機：依 M4-RUNBOOK C 部驗收 M3 系列改動（斷線與重啟、PvE 怪物、藥水、受控 NPC、離房）",
+    "stage": "test",
+    "priority": "P2",
+    "runner": "codex-local",
+    "text": "runner: codex-local\n\n**背景**：#376（M3d）拆出的實機任務。M3／M3b／M3c 與 #366–#371 的程式改動都只有單元測試與 CI，報告的『待驗證』留給實機。T129 已把它們整理成 `docs/acceptance/M4-RUNBOOK.md` C 部。\n\n**前置（不成立就停，RESULT 寫阻塞原因）**：#284 有新 JAR 啟動成功的 RESULT；#285 的 CHECKLIST 01–21 已跑完（C 部的戰鬥項目以它為基線）；持有 `p24lab` lease。\n\n**做**：\n1. 環境步驟同 T137 第 1 步（同一輪做時不重複）。\n2. 照 C 部順序執行；每項依表記錄輸入、畫面、伺服器 log 行、SQL 前後快照（`m4-sql-snapshot.ps1`／`m4-sql-diff.ps1`），截圖 `V<序>-<短名>.png`。\n3. 『對戰中 `taskkill /F` 伺服器後重啟』只能對**自己啟動的實驗 Java PID** 做，先用 `m4-listen-check.ps1` 確認該 PID 只監聽實驗埠；重啟後查 `character_lito` 與 `lito_battle_settlement`，該場必須是『完全沒記』或『剛好記一次』。\n4. 標為『阻塞：功能未開放』的項目（例如租裝城鎮）不要為了測試去改設定以外的東西；RUNBOOK 允許用實驗設定開關時才開。\n5. 時間盒 60 分鐘一輪；跑不完的項目標『未執行』，RESULT 寫明剩餘清單，由調度器重派。\n\n**產出**：`docs/acceptance/m4-<前 8 碼>.md` 的 C 部結果；失敗項寫『現象／步驟／證據』並對應來源 Issue 編號；`docs/reports/issue-<本號>.md` 分已驗證／推測／待驗證。\n\n**規則**：同 T137。失敗只記錄、不修程式；主控依結果另開修正任務。",
+    "depends_on": ["T128", "T129"]
+  }
+]
