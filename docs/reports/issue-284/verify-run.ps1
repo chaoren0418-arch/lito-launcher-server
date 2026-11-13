@@ -1,9 +1,9 @@
-param([Parameter(Mandatory=$true)][string]$RunDirectory)
+﻿param([Parameter(Mandatory=$true)][string]$RunDirectory)
 $ErrorActionPreference='Stop'
 $run=(Resolve-Path -LiteralPath $RunDirectory).Path
 $lease=@((Invoke-RestMethod 'http://localhost:8787/api/state').leases | Where-Object name -eq 'p24lab')
 if($lease.Count -ne 1 -or $lease[0].holder -ne 'chaoren0418-arch/lito-launcher-server#284' -or $lease[0].exp -le ([DateTimeOffset]::UtcNow.ToUnixTimeSeconds()+120)){throw 'Issue 284 requires a valid p24lab lease covering the next 120 seconds'}
-if((Get-FileHash -LiteralPath "$run/LiTo381-SharedResources-candidate.jar" -Algorithm SHA256).Hash -ne 'E1498871C7BE6B287821C57EF5D95933DB1740D9B4D4A80F6C3465F21D99D498'){throw 'Formal JAR hash mismatch'}
+if((Get-FileHash -LiteralPath "$run/LiTo381-Server.jar" -Algorithm SHA256).Hash -ne 'FF4EAD8B222E7682A09C1C55979753A943B10402320E36C3F27B8B0E383F7064'){throw 'Formal JAR hash mismatch'}
 foreach($item in @('config/experiment.properties','lib/mysql-connector-j-8.0.33.jar','runtime','tmp','logs')){
   if(-not (Test-Path -LiteralPath (Join-Path $run $item))){throw "Missing required path: $item"}
 }
@@ -21,7 +21,7 @@ if(@(Compare-Object ($keys | Sort-Object) (@($settings.Keys) | Sort-Object)).Cou
 $expectedSettings=@{
   'bind'='127.0.0.1';'game.bind'='127.0.0.2';'port'='42083';
   'database.jdbc.base.url'='jdbc:mysql://127.0.0.1:43324/';
-  'database.static.database'='p24_world_lito_exp';'database.lito.database'='p24_lito_lito_exp';
+  'database.static.database'='p24_380db_lito_exp';'database.lito.database'='p24_lito_lito_exp';
   'capture.directory'='../captures';'logs.directory'='../logs';
   'memory.initial'='512m';'memory.maximum'='2048m';'cpu.limit'='4';'startup.timeout.seconds'='120'
 }
