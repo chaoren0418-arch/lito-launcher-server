@@ -53,6 +53,22 @@ final class NativeSourceNpcPlayerView {
         : choice instanceof ClientSession pc ? pc : null;
   }
 
+  /**
+   * Retained L1MobSkillUse.changeTarget: the same discovery, re-pointed at another member it
+   * already captured. Returns null when that player was not captured or is no longer current, in
+   * which case the caller keeps the original target.
+   */
+  static Object retarget(Object choice, ClientSession pc) {
+    if (pc == null) return null;
+    if (choice == null || choice instanceof ClientSession) return pc;
+    if (!(choice instanceof NativeSourceNpcPlayer.Origin o)) return null;
+    if (o.primary() == pc) return o;
+    var member = o.members().get(pc);
+    if (member == null) return null;
+    var changed = new NativeSourceNpcPlayer.Origin(o.hub(), o.room(), pc, member, o.members());
+    return current(changed) ? changed : null;
+  }
+
   static boolean current(Object choice) {
     if (choice == null || choice instanceof ClientSession) return true;
     if (!(choice instanceof NativeSourceNpcPlayer.Origin o)) return false;

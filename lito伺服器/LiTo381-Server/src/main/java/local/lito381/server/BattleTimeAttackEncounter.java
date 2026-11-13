@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.function.IntUnaryOperator;
+import java.util.function.Supplier;
 
 /**
  * Authoritative cooperative Time Attack end-game encounter on native map 540.
@@ -1493,20 +1495,43 @@ final class BattleTimeAttackEncounter {
                 || monster.freezeActive(nowNanos)
                 || monster.earthBindActive(nowNanos)) return null;
 
-        int distance = NativeSourceNpcMotion.onTarget(
+        int primaryDistance = NativeSourceNpcMotion.onTarget(
                 Math.max(Math.abs(monster.x - targetX), Math.abs(monster.y - targetY)), monster);
+        ChangeTargetContext changeContext = changeTargetContext;
+        if (changeContext != null) {
+            changeContext.changedTargetObjectId = 0L;
+            // Retained L1MonsterInstance.searchTarget (:619) puts the AI
+            // target on the hate list with hate 0.
+            if (changeContext.primaryObjectId > 0) {
+                monster.hateObjectIds.add(changeContext.primaryObjectId);
+            }
+        }
         record Eligible(BattleTimeAttackMagicSkillCatalog.MobskillRow row,
-                        int triggerRoll) {}
+                        int triggerRoll, int targetX, int targetY,
+                        long changedTargetObjectId) {}
         List<Eligible> eligible = new ArrayList<>(rows.size());
         for (int index = 0; index < rows.size(); index++) {
             BattleTimeAttackMagicSkillCatalog.MobskillRow row = rows.get(index);
             int roll = triggerRolls[index];
+            // Retained L1MobSkillUse.skillUse (:206-213): a ChangeTarget row
+            // replaces the target before its own trigger checks; every other
+            // row keeps the AI target.
+            ChangeTargetCandidate changed = changeContext == null ? null
+                    : changeTarget(monster, row, changeContext);
+            int rowTargetX = changed == null ? targetX : changed.x();
+            int rowTargetY = changed == null ? targetY : changed.y();
+            long rowTargetObjectId = changed == null ? 0L : changed.objectId();
+            int distance = changed == null ? primaryDistance
+                    : Math.max(Math.abs(monster.x - rowTargetX),
+                            Math.abs(monster.y - rowTargetY));
             if (!row.triggerDistance(distance) || !row.triggerRoll(roll)) continue;
+            Eligible candidate = new Eligible(
+                    row, roll, rowTargetX, rowTargetY, rowTargetObjectId);
             if (row instanceof BattleTimeAttackMagicSkillCatalog.Definition magic) {
                 if (magic.castDistance(distance)
                         && !monster.silenceActive(nowNanos)
                         && monster.magicReady(magic, nowNanos)) {
-                    eligible.add(new Eligible(row, roll));
+                    eligible.add(candidate);
                 }
             } else if (row instanceof BattleTimeAttackMagicSkillCatalog
                     .VisualDefinition visual) {
@@ -1515,19 +1540,19 @@ final class BattleTimeAttackEncounter {
                         && monster.visualReady(visual, nowNanos)
                         && BattleAnimationCatalog.get().supportsTimedAction(
                                 monster.gfx, visual.actionId())) {
-                    eligible.add(new Eligible(row, roll));
+                    eligible.add(candidate);
                 }
             } else if (row instanceof BattleTimeAttackMagicSkillCatalog
                     .PhysicalDefinition physical) {
                 if (physical.attackDistance(distance)
                         && BattleAnimationCatalog.get().supportsTimedAction(
                         monster.gfx, physical.effectiveActionId())) {
-                    eligible.add(new Eligible(row, roll));
+                    eligible.add(candidate);
                 }
             } else if (row instanceof BattleTimeAttackMagicSkillCatalog
                     .SummonDefinition summon
                     && monster.summonReady(summon)) {
-                eligible.add(new Eligible(row, roll));
+                eligible.add(candidate);
             } else if (row instanceof BattleTimeAttackMagicSkillCatalog
                     .GroundDefinition ground) {
                 if (ground.castDistance(distance)
@@ -1535,7 +1560,7 @@ final class BattleTimeAttackEncounter {
                         && monster.groundReady(ground, nowNanos)
                         && BattleAnimationCatalog.get().supportsTimedAction(
                                 monster.gfx, ground.actionId())) {
-                    eligible.add(new Eligible(row, roll));
+                    eligible.add(candidate);
                 }
             }
             // InertDefinition rows retain their exact actNo/trigger position
@@ -1547,6 +1572,9 @@ final class BattleTimeAttackEncounter {
         if (!eligible.isEmpty()) {
             int selected = candidateSelector % eligible.size();
             Eligible chosen = eligible.get(selected);
+            if (changeContext != null) {
+                changeContext.changedTargetObjectId = chosen.changedTargetObjectId();
+            }
             if (chosen.row() instanceof BattleTimeAttackMagicSkillCatalog
                     .Definition magic) {
                 monster.scheduleMagic(nowNanos, magic);
@@ -1564,7 +1592,7 @@ final class BattleTimeAttackEncounter {
                 Monster scheduledMonster = monster;
                 long scheduledAt = nowNanos;
                 int actionId = physical.effectiveActionId();
-                NativeSourceNpcMotion.facing(monster, targetX, targetY);
+                NativeSourceNpcMotion.facing(monster, chosen.targetX(), chosen.targetY());
                 scheduledMonster.schedule(scheduledAt, actionId);
                 return new AiAttack(monster.snapshot(), false, null,
                         physical, null, List.of(), chosen.triggerRoll(), selected);
@@ -1589,7 +1617,7 @@ final class BattleTimeAttackEncounter {
 
         // Retained L1NpcInstance falls through to ordinary attack after a
         // rejected mobskill. Only sprites with exact action 1 may do so.
-        if (distance <= 1 && BattleAnimationCatalog.get().supportsTimedAction(
+        if (primaryDistance <= 1 && BattleAnimationCatalog.get().supportsTimedAction(
                 monster.gfx, BattleActionCodes.ATTACK)) {
             Monster scheduledMonster = monster;
             long scheduledAt = nowNanos;
@@ -1600,6 +1628,108 @@ final class BattleTimeAttackEncounter {
                     null, null, List.of(), 0, 0);
         }
         return null;
+    }
+
+    /**
+     * One player offered to retained L1MobSkillUse.changeTarget
+     * (L1MobSkillUse.java:789-825). {@code lineOfSight} is the caller's
+     * glanceCheck result from the monster to this player.
+     */
+    record ChangeTargetCandidate(long objectId, int x, int y, boolean lineOfSight) {
+        ChangeTargetCandidate {
+            if (objectId <= 0) throw new IllegalArgumentException("invalid change-target candidate");
+        }
+    }
+
+    /** AI decision plus the ChangeTarget result; {@code targetObjectId} 0 keeps the AI target. */
+    record ChangeTargetAttack(AiAttack attack, long targetObjectId) {}
+
+    private static final class ChangeTargetContext {
+        final long primaryObjectId;
+        final List<ChangeTargetCandidate> candidates;
+        final IntUnaryOperator roll;
+        long changedTargetObjectId;
+
+        ChangeTargetContext(long primaryObjectId,
+                            List<ChangeTargetCandidate> candidates,
+                            IntUnaryOperator roll) {
+            this.primaryObjectId = primaryObjectId;
+            this.candidates = candidates;
+            this.roll = roll;
+        }
+    }
+
+    private ChangeTargetContext changeTargetContext;
+
+    /**
+     * Runs one AI attack decision with the room's players available to
+     * ChangeTarget=3 rows (L1MobSkillUse.java:162-170, 206-213, 777-842).
+     * {@code roll} receives the retained bound {@code size * 100} and must
+     * return {@code nextInt(bound)}. Without this wrapper (or with one
+     * candidate) every row keeps the AI target, exactly as before.
+     */
+    synchronized ChangeTargetAttack aiAttackWithChangeTarget(
+            long primaryObjectId, List<ChangeTargetCandidate> candidates,
+            IntUnaryOperator roll, Supplier<AiAttack> decision) {
+        if (candidates == null || roll == null || decision == null) {
+            throw new IllegalArgumentException("invalid change-target request");
+        }
+        ChangeTargetContext context = new ChangeTargetContext(
+                primaryObjectId, List.copyOf(candidates), roll);
+        ChangeTargetContext previous = changeTargetContext;
+        changeTargetContext = context;
+        try {
+            AiAttack attack = decision.get();
+            long changed = attack == null
+                    || context.changedTargetObjectId == primaryObjectId
+                    ? 0L : context.changedTargetObjectId;
+            return new ChangeTargetAttack(attack, changed);
+        } finally {
+            changeTargetContext = previous;
+        }
+    }
+
+    /**
+     * Retained hate list entry: L1MonsterInstance.receiveDamage calls
+     * setHate(attacker, damage) (L1MonsterInstance.java:981, 1183-1209).
+     */
+    synchronized void rememberHate(long objectId, long playerObjectId) {
+        Monster monster = monster(objectId);
+        if (monster != null && playerObjectId > 0) {
+            monster.hateObjectIds.add(playerObjectId);
+        }
+    }
+
+    synchronized boolean hates(long objectId, long playerObjectId) {
+        Monster monster = monster(objectId);
+        return monster != null && monster.hateObjectIds.contains(playerObjectId);
+    }
+
+    /**
+     * Retained L1MobSkillUse.changeTarget(CHANGE_TARGET_RANDOM): candidates
+     * are visible players inside the row's trigger distance (:800), with
+     * line of sight (:805) and on the hate list (:809). An empty list keeps
+     * the current target (:827-828); otherwise
+     * {@code nextInt(size * 100) / 100} picks one (:831-833).
+     */
+    private static ChangeTargetCandidate changeTarget(
+            Monster monster, BattleTimeAttackMagicSkillCatalog.MobskillRow row,
+            ChangeTargetContext context) {
+        if (row.changeTarget() != BattleTimeAttackMagicSkillCatalog.CHANGE_TARGET_RANDOM) {
+            return null;
+        }
+        List<ChangeTargetCandidate> accepted = new ArrayList<>();
+        for (ChangeTargetCandidate candidate : context.candidates) {
+            int distance = Math.max(Math.abs(monster.x - candidate.x()),
+                    Math.abs(monster.y - candidate.y()));
+            if (!row.triggerDistance(distance) || !candidate.lineOfSight()
+                    || !monster.hateObjectIds.contains(candidate.objectId())) continue;
+            accepted.add(candidate);
+        }
+        if (accepted.isEmpty()) return null;
+        int bound = accepted.size() * 100;
+        return accepted.get(BattleTimeAttackMagicSkillCatalog.changeTargetIndex(
+                accepted.size(), context.roll.applyAsInt(bound)));
     }
 
     private List<Snapshot> spawnSummons(
@@ -1953,6 +2083,8 @@ final class BattleTimeAttackEncounter {
         int maxMp;
         final Map<Integer, Long> skillReadyNanos = new HashMap<Integer, Long>();
         final Map<Integer, Integer> skillUseCounts = new HashMap<Integer, Integer>();
+        /** Players on the retained hate list (AI targets and damage dealers). */
+        final java.util.Set<Long> hateObjectIds = new java.util.HashSet<>();
         long nextActionNanos;
         long blindExpiresAtNanos;
         long weaknessExpiresAtNanos;
