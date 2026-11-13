@@ -1,0 +1,5 @@
+skill_id	effect_skill_id	name	skill_level	skill_number	mpConsume	hpConsume	itemConsumeId	itemConsumeCount	reuseDelay	buffDuration	target	target_to	damage_value	damage_dice	damage_dice_count	probability_value	probability_dice	attr	type	lawful	ranged	area	through	id	nameid	action_id	castgfx	castgfx2	sysmsgID_happen	sysmsgID_stop	sysmsgID_fail
+33	0	木乃伊的詛咒	5	0	150	0	40318	2	5000	20	buff	3	0	0	0	0	4	1	4	-500	2	0	0	1	$1456	19	746	0	0	0	280
+44	0	魔法相消術	6	3	40	0	40318	2	500	0	buff	3	0	0	0	0	3	8	1	0	-1	0	0	8	$1464	19	870	0	0	0	280
+165	0	生命呼喚	21	4	50	0	40319	1	0	0	buff	3	0	0	0	0	0	4	32	0	10	0	0	16		19	2245	0	0	0	280
+170	0	水之元氣	22	1	1	0	40319	1	100	64	buff	1	0	0	0	0	0	4	2	0	-1	0	0	2		19	4401	0	0	0	280

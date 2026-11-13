@@ -1,0 +1,2763 @@
+{
+  "issue": 419,
+  "collected_utc": "2026-11-13T22:22:53.884485+00:00",
+  "verified": {
+    "historical_qualification_runtime_sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8",
+    "requested_runtime_sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729",
+    "historical_configuration_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\config\\server.properties",
+    "historical_source_profile": "公牛/SignedHp1（8d26c9d7 的 F1–F4 log）",
+    "current_source_profile": "P24LiToExp/SignedHp1（#341 log）",
+    "historical_start_mp": "1000/1000；probe setup、F1 goldens 950、F3 log 999/1000 互相支持",
+    "current_start_mp": "1000/1000；#341 log 與相同 probe setup",
+    "historical_water_life": "mp-cost=1、mp=999/1000，與 #341 相同；不能單憑技能表消耗值歸因 F3",
+    "current_database": {
+      "host": "127.0.0.1",
+      "port": 43324,
+      "accounts_schema": "p24_accounts_lito_exp",
+      "static_schema": "p24_world_lito_exp",
+      "lito_schema": "p24_lito_lito_exp"
+    },
+    "resourceProfile": {
+      "F1_F4_historical": "所查 driver 未明確帶 -Dlito.resourceProfile；實際歷史值找不到",
+      "F5_historical_and_issue341": "tw13081901-v1（driver／#341 argv）"
+    },
+    "historical_database_schema": "找不到；所查公開 log／receipt 未保存 JDBC/schema 快照；未讀私密 config/server.properties，也未連正式 DB",
+    "requested_50635_same_suite_qualification": "找不到；所查 50635f7e 收據為 staged/not-promoted/common-integration-open 或 byte-identical reproduction；指定全套資格入口的 SHA 是 8d26c9d7，不能移用其 passed 身分"
+  },
+  "inferences": [
+    "來源名稱／資源路由及 runtime 版本皆不同；需 T144 分別定位，不能先斷言只改環境即可通過",
+    "未找到同 SHA 同套資格，只表示本次已查證據不足，不宣稱其他地方必不存在"
+  ],
+  "pending": [
+    "歷史實際 DB/schema 的可公開快照",
+    "50635f7e 對 F1–F5 同套入口的歷史通過收據",
+    "現行 ephemeral source snapshot 與 fixture CharacterSummary 覆寫後是否一致"
+  ],
+  "F5_pinned_input_comparison": {
+    "source_vectors": {
+      "historical": [
+        [
+          "source-vectors.tsv",
+          "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8"
+        ]
+      ],
+      "issue341": [
+        [
+          "source-vectors.tsv",
+          "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8"
+        ]
+      ],
+      "same_pins": true,
+      "actual_files": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\proc-follower-receiver-development\\source-runs\\20261016T145901969015Z\\source-vectors.tsv",
+          "recorded_sha256": "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8",
+          "actual_sha256": "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\proc-follower-receiver-development\\source-runs\\20261016T145901969015Z\\source-vectors.tsv",
+          "recorded_sha256": "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8",
+          "actual_sha256": "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8",
+          "match": true
+        }
+      ]
+    },
+    "profile_vectors": {
+      "historical": [
+        [
+          "profile-vectors.tsv",
+          "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56"
+        ]
+      ],
+      "issue341": [
+        [
+          "profile-vectors.tsv",
+          "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56"
+        ]
+      ],
+      "same_pins": true,
+      "actual_files": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\de-actor-state-development\\source-runs\\20261016T153135442531Z\\profile-vectors.tsv",
+          "recorded_sha256": "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56",
+          "actual_sha256": "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\de-actor-state-development\\source-runs\\20261016T153135442531Z\\profile-vectors.tsv",
+          "recorded_sha256": "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56",
+          "actual_sha256": "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56",
+          "match": true
+        }
+      ]
+    },
+    "support": {
+      "historical": [
+        [
+          "fixture-support.zip",
+          "874cb6918e634674fb14b02d7e8df75bb79c218584f16e8049f5c609834a2fb8"
+        ]
+      ],
+      "issue341": [
+        [
+          "fixture-support.zip",
+          "874cb6918e634674fb14b02d7e8df75bb79c218584f16e8049f5c609834a2fb8"
+        ]
+      ],
+      "same_pins": true,
+      "actual_files": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\fixture-support.zip",
+          "recorded_sha256": "874cb6918e634674fb14b02d7e8df75bb79c218584f16e8049f5c609834a2fb8",
+          "actual_sha256": "874cb6918e634674fb14b02d7e8df75bb79c218584f16e8049f5c609834a2fb8",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\fixture-support.zip",
+          "recorded_sha256": "874cb6918e634674fb14b02d7e8df75bb79c218584f16e8049f5c609834a2fb8",
+          "actual_sha256": "874cb6918e634674fb14b02d7e8df75bb79c218584f16e8049f5c609834a2fb8",
+          "match": true
+        }
+      ]
+    },
+    "fixture_dependencies": {
+      "historical": [
+        [
+          "NativeAcceptedStateRegression$1$1.class",
+          "9cbadc253597eac8dcbaea7b9d336e9c97e1a863a0ecfea0273db2f88c277ab4"
+        ],
+        [
+          "NativeAcceptedStateRegression$1.class",
+          "16c54853e49166199a1fa59bec8ca5cff5f2f71a032e0ea8f0093c790109eace"
+        ],
+        [
+          "NativeAcceptedStateRegression$2$1.class",
+          "c883f3d871105193c85dce24a9999b40030674f41a92be7c67ec921352903069"
+        ],
+        [
+          "NativeAcceptedStateRegression$2.class",
+          "896b15a6f1815f7b60801434155dc0de1a751e85794497c3ea13dc31dd1af5d6"
+        ],
+        [
+          "NativeAcceptedStateRegression$3$1.class",
+          "7cb89c7f3cd9c1e87bee350d56dc939f260cb55a84edf2ee7a696fb1730458ff"
+        ],
+        [
+          "NativeAcceptedStateRegression$3.class",
+          "318111b5b1e4e75f660c0c2ba87380236b8e5fe0151b74e267ddfe9c1e522713"
+        ],
+        [
+          "NativeAcceptedStateRegression$4$1.class",
+          "ae13d408081a6d4ba62845dda42fda6f5997fc85fb50dcc3b0e8903705a75cf2"
+        ],
+        [
+          "NativeAcceptedStateRegression$4.class",
+          "e88be6f0f67bd85219301b845781e0f10fb11b7c8df6490423b405d335aa9965"
+        ],
+        [
+          "NativeAcceptedStateRegression.class",
+          "e840137aa1004ffc2f4c144c6e69ebdda6b1c05f452a525344a41cbef95fd19c"
+        ],
+        [
+          "NativeCombatAttackerRegression$Actor.class",
+          "324fa09a3541b6e77defffc754e31213f3228e4271f6f34504f860468d1ecb40"
+        ],
+        [
+          "NativeCombatAttackerRegression.class",
+          "1277c6a07c3d7a2d9ec0e79103f39144bb29ac45d52688e9f7dde67222112352"
+        ],
+        [
+          "NativeCombatOriginRegression$1.class",
+          "21846e6aff9e0c1139925ea7dd5d7b859be5ef9c0a9b94b9a427cbbf1ba1fde3"
+        ],
+        [
+          "NativeCombatOriginRegression.class",
+          "665cdd66c944830baedafa29bca0ca06bdf1bf9fa0c5a45943d3637f9f6bc6b5"
+        ],
+        [
+          "NativeDefenseFixtures.class",
+          "7f8cb081d1f783a3ece46f07af6f1236fd3a013e0ebee3f4bf3a7523c02acbd6"
+        ],
+        [
+          "NativeDefensePlanRegression$1$1.class",
+          "c7680ab8e54205d927789b7a9ef82059caf09ad89480e4452e11049c4b9c394b"
+        ],
+        [
+          "NativeDefensePlanRegression$1.class",
+          "e400cb812735f1ce60dd6601289f8e1d0581739f23d780fc315a887085c4042a"
+        ],
+        [
+          "NativeDefensePlanRegression$2$1.class",
+          "4dc514659ce74c26c935149ee75ae5d090b68f9e441bcbc776fb6d11f6c5ba89"
+        ],
+        [
+          "NativeDefensePlanRegression$2.class",
+          "0f0acadb8fffe72fa7cd152c48e8a097e4a35ddedcc5373f80d70d0124140b46"
+        ],
+        [
+          "NativeDefensePlanRegression$3$1.class",
+          "f7be3ed893c033a214a3dfc19a51dfd109fbd5a4e3a25a9e2519e2685bb2d5a4"
+        ],
+        [
+          "NativeDefensePlanRegression$3.class",
+          "110fc27c0b47fae72a2b364c499dc0aae4e305a36979b25456add81de22aa92b"
+        ],
+        [
+          "NativeDefensePlanRegression.class",
+          "c80a8c7d52e172f2f20a49be512ab1a0d2f02b1b5ad6e034cd31ba481786af7f"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$1$1.class",
+          "a47560e1bacbb74e32dfa10810a82ac3cee684758f866daa3b6b09e2af37e1fc"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$1.class",
+          "60a9c7b9d1d35d47fae57f439fc85efac47a423908367b74d818c101bfcc2a72"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$2$1.class",
+          "f8fd3b5f34647cfe469310bceeea5d0eae57f44a18abd5b4645620636332f293"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$2.class",
+          "522cee5a0fa8c8236fd00896220b6611be1537794065b1dbeec4d5580de38896"
+        ],
+        [
+          "NativeEquipmentDefenseRegression.class",
+          "051de29fbaaf3aa0199c0fafc6b1634df81e03bd70065c255fd34c1c4ecab897"
+        ],
+        [
+          "NativeNpcLifetimeRegression$NpcWrite$1$1.class",
+          "e659ceb9eac1717ed7f842a2ee5a69a1643f2a26bc2c21bdbd74deac2b4c9ce0"
+        ],
+        [
+          "NativeNpcLifetimeRegression$NpcWrite$1.class",
+          "6248f2d7874cbf634a5ec5dab22f22b57011b71adb3f2030703808c8949b9e00"
+        ],
+        [
+          "NativeNpcLifetimeRegression$NpcWrite.class",
+          "4ab64251772c4634a125b9e979b29bdd2cc0c7fd1fb1b088735c87ef6347f9fa"
+        ],
+        [
+          "NativeNpcLifetimeRegression$Target.class",
+          "9393645ba4742740bad989b376c62707640312f7e7055a6e37d4f51d591bb7c9"
+        ],
+        [
+          "NativeNpcLifetimeRegression.class",
+          "16b756ec5393d32543e91ad875eba59821bece356bad38b696b9bef4a7c3f285"
+        ],
+        [
+          "NativePlayerCommitIngressProbe$1$1.class",
+          "105b85678ddc99edee11b5c9839e51deefb35d992a2d900f4ddfdbd37715e735"
+        ],
+        [
+          "NativePlayerCommitIngressProbe$1.class",
+          "739e0707137f91f93fd69dde28168472298189b5b6b4075764e2c2f9b88d3ab2"
+        ],
+        [
+          "NativePlayerCommitIngressProbe.class",
+          "36f1b2825cf71ff55c02802c4afec16a957044479cdba17f588f949e255a09f0"
+        ],
+        [
+          "NativePlayerCommitRegression$1$1.class",
+          "e492f1b05c9e86ee18982ada57a1f937e44bf293b626ef4d5d300b75d0be62c0"
+        ],
+        [
+          "NativePlayerCommitRegression$1.class",
+          "10768952533e146178bf3daf6c6c7d494170f6f03489ac5467093a3c06079e60"
+        ],
+        [
+          "NativePlayerCommitRegression.class",
+          "7608f5f1ce787d49e1d7eab58d8af9da12284ae451da2158e3bad7212f381304"
+        ],
+        [
+          "NativePlayerLifetimeRegression$App.class",
+          "36ac42678664c9e32d6b799e3bc60a3713480c7e2d09accc19e9ac8646d575e2"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Held.class",
+          "69962415068ff7ea24b03ebe79bca66e4375735154a72dcf312ae1e4408d5579"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Publication$1$1.class",
+          "43a9449a98695b2e5ae1fc058598cd6e3589e7657bc66e7911b09393819ee55a"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Publication$1.class",
+          "0ee41b6c984b6b5af30413981daca5131470fa18fdc3e87ebfe569ed48e68d19"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Publication.class",
+          "fced68c94d1e2a6b3500c5ae711c7d00ba84631b93c739ee7213d5347aa88141"
+        ],
+        [
+          "NativePlayerLifetimeRegression.class",
+          "1bd753b6d68e0b1579b29b7a8a0e14fb8715a1c39e1ce94652be9af87a43d2bd"
+        ],
+        [
+          "NativePlayerWorldCommitRegression.class",
+          "0836b56568f996adde3aea8908a0a48763edd0ec466b768001f56fe9b6d15313"
+        ],
+        [
+          "NativeSignedHpProbe.class",
+          "c89b7bc9c399224135682b8da58047a487fe7d94fff126c8ba94a08ba4eda99f"
+        ],
+        [
+          "NativeSignedHpRegression$1$1.class",
+          "45bdf59dc18f1897782334d7c604b258695558338b6dd8e3b86449be8dfc5389"
+        ],
+        [
+          "NativeSignedHpRegression$1.class",
+          "18097389296a45a9c25df6493821c6b7ebcc898ab616ae0d48072bb0a7d0a2cf"
+        ],
+        [
+          "NativeSignedHpRegression.class",
+          "51513878bfc8dbd0b64fba527c19b22b9bbedb570c385337dd4bf593275f13fb"
+        ],
+        [
+          "NativeZeroHpRegression$1$1.class",
+          "084cb1081bc5a06bd2d306f9df057790f76b34893e499149a3a5c68746bb07a3"
+        ],
+        [
+          "NativeZeroHpRegression$1.class",
+          "7ea8eb50bb421fb6353eaba384145ce91aeaf51d67bd0d17044becc118ad2d42"
+        ],
+        [
+          "NativeZeroHpRegression$2$1.class",
+          "32aa0100e788d66fd74646acb4c961f07a3ab621d6e5cd22c4b453b20be87d2e"
+        ],
+        [
+          "NativeZeroHpRegression$2.class",
+          "8638598d0c9ce2d096e0529304e2e7b66eed22ce58813f164d3e27952a89e8a2"
+        ],
+        [
+          "NativeZeroHpRegression.class",
+          "5ac0b544ee14c6ff15129d74610d95c1b085fc3d2afc7b0f5c03fd68fcc0479a"
+        ],
+        [
+          "PlayerCommitIngressProbe$1$1.class",
+          "8da28353490f633f2fb45e3909275bc253b21b4209d7c524dd328630dd4a1bbb"
+        ],
+        [
+          "PlayerCommitIngressProbe$1.class",
+          "bc742be02f2a68b8e8b6df0d9eaaefe019045b4a875b3838407e56b627a4fcbe"
+        ],
+        [
+          "PlayerCommitIngressProbe.class",
+          "38e5a44b204de53eae14d7f1d451fbe3ed8763890fa4780166fa6069455fa700"
+        ],
+        [
+          "RunNativeCalcCleanup.class",
+          "1da3fc0f29c9ecb18db2519fcdb7e13d84f53beb8c104b602e2547c979735984"
+        ],
+        [
+          "RunNativePcPrototype.class",
+          "020f97fe7703ccf6a0e5f25886f58b9f9be20b25901f190f4873082280076057"
+        ]
+      ],
+      "issue341": [
+        [
+          "NativeAcceptedStateRegression$1$1.class",
+          "9cbadc253597eac8dcbaea7b9d336e9c97e1a863a0ecfea0273db2f88c277ab4"
+        ],
+        [
+          "NativeAcceptedStateRegression$1.class",
+          "16c54853e49166199a1fa59bec8ca5cff5f2f71a032e0ea8f0093c790109eace"
+        ],
+        [
+          "NativeAcceptedStateRegression$2$1.class",
+          "c883f3d871105193c85dce24a9999b40030674f41a92be7c67ec921352903069"
+        ],
+        [
+          "NativeAcceptedStateRegression$2.class",
+          "896b15a6f1815f7b60801434155dc0de1a751e85794497c3ea13dc31dd1af5d6"
+        ],
+        [
+          "NativeAcceptedStateRegression$3$1.class",
+          "7cb89c7f3cd9c1e87bee350d56dc939f260cb55a84edf2ee7a696fb1730458ff"
+        ],
+        [
+          "NativeAcceptedStateRegression$3.class",
+          "318111b5b1e4e75f660c0c2ba87380236b8e5fe0151b74e267ddfe9c1e522713"
+        ],
+        [
+          "NativeAcceptedStateRegression$4$1.class",
+          "ae13d408081a6d4ba62845dda42fda6f5997fc85fb50dcc3b0e8903705a75cf2"
+        ],
+        [
+          "NativeAcceptedStateRegression$4.class",
+          "e88be6f0f67bd85219301b845781e0f10fb11b7c8df6490423b405d335aa9965"
+        ],
+        [
+          "NativeAcceptedStateRegression.class",
+          "e840137aa1004ffc2f4c144c6e69ebdda6b1c05f452a525344a41cbef95fd19c"
+        ],
+        [
+          "NativeCombatAttackerRegression$Actor.class",
+          "324fa09a3541b6e77defffc754e31213f3228e4271f6f34504f860468d1ecb40"
+        ],
+        [
+          "NativeCombatAttackerRegression.class",
+          "1277c6a07c3d7a2d9ec0e79103f39144bb29ac45d52688e9f7dde67222112352"
+        ],
+        [
+          "NativeCombatOriginRegression$1.class",
+          "21846e6aff9e0c1139925ea7dd5d7b859be5ef9c0a9b94b9a427cbbf1ba1fde3"
+        ],
+        [
+          "NativeCombatOriginRegression.class",
+          "665cdd66c944830baedafa29bca0ca06bdf1bf9fa0c5a45943d3637f9f6bc6b5"
+        ],
+        [
+          "NativeDefenseFixtures.class",
+          "7f8cb081d1f783a3ece46f07af6f1236fd3a013e0ebee3f4bf3a7523c02acbd6"
+        ],
+        [
+          "NativeDefensePlanRegression$1$1.class",
+          "c7680ab8e54205d927789b7a9ef82059caf09ad89480e4452e11049c4b9c394b"
+        ],
+        [
+          "NativeDefensePlanRegression$1.class",
+          "e400cb812735f1ce60dd6601289f8e1d0581739f23d780fc315a887085c4042a"
+        ],
+        [
+          "NativeDefensePlanRegression$2$1.class",
+          "4dc514659ce74c26c935149ee75ae5d090b68f9e441bcbc776fb6d11f6c5ba89"
+        ],
+        [
+          "NativeDefensePlanRegression$2.class",
+          "0f0acadb8fffe72fa7cd152c48e8a097e4a35ddedcc5373f80d70d0124140b46"
+        ],
+        [
+          "NativeDefensePlanRegression$3$1.class",
+          "f7be3ed893c033a214a3dfc19a51dfd109fbd5a4e3a25a9e2519e2685bb2d5a4"
+        ],
+        [
+          "NativeDefensePlanRegression$3.class",
+          "110fc27c0b47fae72a2b364c499dc0aae4e305a36979b25456add81de22aa92b"
+        ],
+        [
+          "NativeDefensePlanRegression.class",
+          "c80a8c7d52e172f2f20a49be512ab1a0d2f02b1b5ad6e034cd31ba481786af7f"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$1$1.class",
+          "a47560e1bacbb74e32dfa10810a82ac3cee684758f866daa3b6b09e2af37e1fc"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$1.class",
+          "60a9c7b9d1d35d47fae57f439fc85efac47a423908367b74d818c101bfcc2a72"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$2$1.class",
+          "f8fd3b5f34647cfe469310bceeea5d0eae57f44a18abd5b4645620636332f293"
+        ],
+        [
+          "NativeEquipmentDefenseRegression$2.class",
+          "522cee5a0fa8c8236fd00896220b6611be1537794065b1dbeec4d5580de38896"
+        ],
+        [
+          "NativeEquipmentDefenseRegression.class",
+          "051de29fbaaf3aa0199c0fafc6b1634df81e03bd70065c255fd34c1c4ecab897"
+        ],
+        [
+          "NativeNpcLifetimeRegression$NpcWrite$1$1.class",
+          "e659ceb9eac1717ed7f842a2ee5a69a1643f2a26bc2c21bdbd74deac2b4c9ce0"
+        ],
+        [
+          "NativeNpcLifetimeRegression$NpcWrite$1.class",
+          "6248f2d7874cbf634a5ec5dab22f22b57011b71adb3f2030703808c8949b9e00"
+        ],
+        [
+          "NativeNpcLifetimeRegression$NpcWrite.class",
+          "4ab64251772c4634a125b9e979b29bdd2cc0c7fd1fb1b088735c87ef6347f9fa"
+        ],
+        [
+          "NativeNpcLifetimeRegression$Target.class",
+          "9393645ba4742740bad989b376c62707640312f7e7055a6e37d4f51d591bb7c9"
+        ],
+        [
+          "NativeNpcLifetimeRegression.class",
+          "16b756ec5393d32543e91ad875eba59821bece356bad38b696b9bef4a7c3f285"
+        ],
+        [
+          "NativePlayerCommitIngressProbe$1$1.class",
+          "105b85678ddc99edee11b5c9839e51deefb35d992a2d900f4ddfdbd37715e735"
+        ],
+        [
+          "NativePlayerCommitIngressProbe$1.class",
+          "739e0707137f91f93fd69dde28168472298189b5b6b4075764e2c2f9b88d3ab2"
+        ],
+        [
+          "NativePlayerCommitIngressProbe.class",
+          "36f1b2825cf71ff55c02802c4afec16a957044479cdba17f588f949e255a09f0"
+        ],
+        [
+          "NativePlayerCommitRegression$1$1.class",
+          "e492f1b05c9e86ee18982ada57a1f937e44bf293b626ef4d5d300b75d0be62c0"
+        ],
+        [
+          "NativePlayerCommitRegression$1.class",
+          "10768952533e146178bf3daf6c6c7d494170f6f03489ac5467093a3c06079e60"
+        ],
+        [
+          "NativePlayerCommitRegression.class",
+          "7608f5f1ce787d49e1d7eab58d8af9da12284ae451da2158e3bad7212f381304"
+        ],
+        [
+          "NativePlayerLifetimeRegression$App.class",
+          "36ac42678664c9e32d6b799e3bc60a3713480c7e2d09accc19e9ac8646d575e2"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Held.class",
+          "69962415068ff7ea24b03ebe79bca66e4375735154a72dcf312ae1e4408d5579"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Publication$1$1.class",
+          "43a9449a98695b2e5ae1fc058598cd6e3589e7657bc66e7911b09393819ee55a"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Publication$1.class",
+          "0ee41b6c984b6b5af30413981daca5131470fa18fdc3e87ebfe569ed48e68d19"
+        ],
+        [
+          "NativePlayerLifetimeRegression$Publication.class",
+          "fced68c94d1e2a6b3500c5ae711c7d00ba84631b93c739ee7213d5347aa88141"
+        ],
+        [
+          "NativePlayerLifetimeRegression.class",
+          "1bd753b6d68e0b1579b29b7a8a0e14fb8715a1c39e1ce94652be9af87a43d2bd"
+        ],
+        [
+          "NativePlayerWorldCommitRegression.class",
+          "0836b56568f996adde3aea8908a0a48763edd0ec466b768001f56fe9b6d15313"
+        ],
+        [
+          "NativeSignedHpProbe.class",
+          "c89b7bc9c399224135682b8da58047a487fe7d94fff126c8ba94a08ba4eda99f"
+        ],
+        [
+          "NativeSignedHpRegression$1$1.class",
+          "45bdf59dc18f1897782334d7c604b258695558338b6dd8e3b86449be8dfc5389"
+        ],
+        [
+          "NativeSignedHpRegression$1.class",
+          "18097389296a45a9c25df6493821c6b7ebcc898ab616ae0d48072bb0a7d0a2cf"
+        ],
+        [
+          "NativeSignedHpRegression.class",
+          "51513878bfc8dbd0b64fba527c19b22b9bbedb570c385337dd4bf593275f13fb"
+        ],
+        [
+          "NativeZeroHpRegression$1$1.class",
+          "084cb1081bc5a06bd2d306f9df057790f76b34893e499149a3a5c68746bb07a3"
+        ],
+        [
+          "NativeZeroHpRegression$1.class",
+          "7ea8eb50bb421fb6353eaba384145ce91aeaf51d67bd0d17044becc118ad2d42"
+        ],
+        [
+          "NativeZeroHpRegression$2$1.class",
+          "32aa0100e788d66fd74646acb4c961f07a3ab621d6e5cd22c4b453b20be87d2e"
+        ],
+        [
+          "NativeZeroHpRegression$2.class",
+          "8638598d0c9ce2d096e0529304e2e7b66eed22ce58813f164d3e27952a89e8a2"
+        ],
+        [
+          "NativeZeroHpRegression.class",
+          "5ac0b544ee14c6ff15129d74610d95c1b085fc3d2afc7b0f5c03fd68fcc0479a"
+        ],
+        [
+          "PlayerCommitIngressProbe$1$1.class",
+          "8da28353490f633f2fb45e3909275bc253b21b4209d7c524dd328630dd4a1bbb"
+        ],
+        [
+          "PlayerCommitIngressProbe$1.class",
+          "bc742be02f2a68b8e8b6df0d9eaaefe019045b4a875b3838407e56b627a4fcbe"
+        ],
+        [
+          "PlayerCommitIngressProbe.class",
+          "38e5a44b204de53eae14d7f1d451fbe3ed8763890fa4780166fa6069455fa700"
+        ],
+        [
+          "RunNativeCalcCleanup.class",
+          "1da3fc0f29c9ecb18db2519fcdb7e13d84f53beb8c104b602e2547c979735984"
+        ],
+        [
+          "RunNativePcPrototype.class",
+          "020f97fe7703ccf6a0e5f25886f58b9f9be20b25901f190f4873082280076057"
+        ]
+      ],
+      "same_pins": true,
+      "actual_files": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$1$1.class",
+          "recorded_sha256": "9cbadc253597eac8dcbaea7b9d336e9c97e1a863a0ecfea0273db2f88c277ab4",
+          "actual_sha256": "9cbadc253597eac8dcbaea7b9d336e9c97e1a863a0ecfea0273db2f88c277ab4",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$1.class",
+          "recorded_sha256": "16c54853e49166199a1fa59bec8ca5cff5f2f71a032e0ea8f0093c790109eace",
+          "actual_sha256": "16c54853e49166199a1fa59bec8ca5cff5f2f71a032e0ea8f0093c790109eace",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$2$1.class",
+          "recorded_sha256": "c883f3d871105193c85dce24a9999b40030674f41a92be7c67ec921352903069",
+          "actual_sha256": "c883f3d871105193c85dce24a9999b40030674f41a92be7c67ec921352903069",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$2.class",
+          "recorded_sha256": "896b15a6f1815f7b60801434155dc0de1a751e85794497c3ea13dc31dd1af5d6",
+          "actual_sha256": "896b15a6f1815f7b60801434155dc0de1a751e85794497c3ea13dc31dd1af5d6",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$3$1.class",
+          "recorded_sha256": "7cb89c7f3cd9c1e87bee350d56dc939f260cb55a84edf2ee7a696fb1730458ff",
+          "actual_sha256": "7cb89c7f3cd9c1e87bee350d56dc939f260cb55a84edf2ee7a696fb1730458ff",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$3.class",
+          "recorded_sha256": "318111b5b1e4e75f660c0c2ba87380236b8e5fe0151b74e267ddfe9c1e522713",
+          "actual_sha256": "318111b5b1e4e75f660c0c2ba87380236b8e5fe0151b74e267ddfe9c1e522713",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$4$1.class",
+          "recorded_sha256": "ae13d408081a6d4ba62845dda42fda6f5997fc85fb50dcc3b0e8903705a75cf2",
+          "actual_sha256": "ae13d408081a6d4ba62845dda42fda6f5997fc85fb50dcc3b0e8903705a75cf2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$4.class",
+          "recorded_sha256": "e88be6f0f67bd85219301b845781e0f10fb11b7c8df6490423b405d335aa9965",
+          "actual_sha256": "e88be6f0f67bd85219301b845781e0f10fb11b7c8df6490423b405d335aa9965",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression.class",
+          "recorded_sha256": "e840137aa1004ffc2f4c144c6e69ebdda6b1c05f452a525344a41cbef95fd19c",
+          "actual_sha256": "e840137aa1004ffc2f4c144c6e69ebdda6b1c05f452a525344a41cbef95fd19c",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatAttackerRegression$Actor.class",
+          "recorded_sha256": "324fa09a3541b6e77defffc754e31213f3228e4271f6f34504f860468d1ecb40",
+          "actual_sha256": "324fa09a3541b6e77defffc754e31213f3228e4271f6f34504f860468d1ecb40",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatAttackerRegression.class",
+          "recorded_sha256": "1277c6a07c3d7a2d9ec0e79103f39144bb29ac45d52688e9f7dde67222112352",
+          "actual_sha256": "1277c6a07c3d7a2d9ec0e79103f39144bb29ac45d52688e9f7dde67222112352",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatOriginRegression$1.class",
+          "recorded_sha256": "21846e6aff9e0c1139925ea7dd5d7b859be5ef9c0a9b94b9a427cbbf1ba1fde3",
+          "actual_sha256": "21846e6aff9e0c1139925ea7dd5d7b859be5ef9c0a9b94b9a427cbbf1ba1fde3",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatOriginRegression.class",
+          "recorded_sha256": "665cdd66c944830baedafa29bca0ca06bdf1bf9fa0c5a45943d3637f9f6bc6b5",
+          "actual_sha256": "665cdd66c944830baedafa29bca0ca06bdf1bf9fa0c5a45943d3637f9f6bc6b5",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefenseFixtures.class",
+          "recorded_sha256": "7f8cb081d1f783a3ece46f07af6f1236fd3a013e0ebee3f4bf3a7523c02acbd6",
+          "actual_sha256": "7f8cb081d1f783a3ece46f07af6f1236fd3a013e0ebee3f4bf3a7523c02acbd6",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$1$1.class",
+          "recorded_sha256": "c7680ab8e54205d927789b7a9ef82059caf09ad89480e4452e11049c4b9c394b",
+          "actual_sha256": "c7680ab8e54205d927789b7a9ef82059caf09ad89480e4452e11049c4b9c394b",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$1.class",
+          "recorded_sha256": "e400cb812735f1ce60dd6601289f8e1d0581739f23d780fc315a887085c4042a",
+          "actual_sha256": "e400cb812735f1ce60dd6601289f8e1d0581739f23d780fc315a887085c4042a",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$2$1.class",
+          "recorded_sha256": "4dc514659ce74c26c935149ee75ae5d090b68f9e441bcbc776fb6d11f6c5ba89",
+          "actual_sha256": "4dc514659ce74c26c935149ee75ae5d090b68f9e441bcbc776fb6d11f6c5ba89",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$2.class",
+          "recorded_sha256": "0f0acadb8fffe72fa7cd152c48e8a097e4a35ddedcc5373f80d70d0124140b46",
+          "actual_sha256": "0f0acadb8fffe72fa7cd152c48e8a097e4a35ddedcc5373f80d70d0124140b46",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$3$1.class",
+          "recorded_sha256": "f7be3ed893c033a214a3dfc19a51dfd109fbd5a4e3a25a9e2519e2685bb2d5a4",
+          "actual_sha256": "f7be3ed893c033a214a3dfc19a51dfd109fbd5a4e3a25a9e2519e2685bb2d5a4",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$3.class",
+          "recorded_sha256": "110fc27c0b47fae72a2b364c499dc0aae4e305a36979b25456add81de22aa92b",
+          "actual_sha256": "110fc27c0b47fae72a2b364c499dc0aae4e305a36979b25456add81de22aa92b",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression.class",
+          "recorded_sha256": "c80a8c7d52e172f2f20a49be512ab1a0d2f02b1b5ad6e034cd31ba481786af7f",
+          "actual_sha256": "c80a8c7d52e172f2f20a49be512ab1a0d2f02b1b5ad6e034cd31ba481786af7f",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$1$1.class",
+          "recorded_sha256": "a47560e1bacbb74e32dfa10810a82ac3cee684758f866daa3b6b09e2af37e1fc",
+          "actual_sha256": "a47560e1bacbb74e32dfa10810a82ac3cee684758f866daa3b6b09e2af37e1fc",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$1.class",
+          "recorded_sha256": "60a9c7b9d1d35d47fae57f439fc85efac47a423908367b74d818c101bfcc2a72",
+          "actual_sha256": "60a9c7b9d1d35d47fae57f439fc85efac47a423908367b74d818c101bfcc2a72",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$2$1.class",
+          "recorded_sha256": "f8fd3b5f34647cfe469310bceeea5d0eae57f44a18abd5b4645620636332f293",
+          "actual_sha256": "f8fd3b5f34647cfe469310bceeea5d0eae57f44a18abd5b4645620636332f293",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$2.class",
+          "recorded_sha256": "522cee5a0fa8c8236fd00896220b6611be1537794065b1dbeec4d5580de38896",
+          "actual_sha256": "522cee5a0fa8c8236fd00896220b6611be1537794065b1dbeec4d5580de38896",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression.class",
+          "recorded_sha256": "051de29fbaaf3aa0199c0fafc6b1634df81e03bd70065c255fd34c1c4ecab897",
+          "actual_sha256": "051de29fbaaf3aa0199c0fafc6b1634df81e03bd70065c255fd34c1c4ecab897",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$NpcWrite$1$1.class",
+          "recorded_sha256": "e659ceb9eac1717ed7f842a2ee5a69a1643f2a26bc2c21bdbd74deac2b4c9ce0",
+          "actual_sha256": "e659ceb9eac1717ed7f842a2ee5a69a1643f2a26bc2c21bdbd74deac2b4c9ce0",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$NpcWrite$1.class",
+          "recorded_sha256": "6248f2d7874cbf634a5ec5dab22f22b57011b71adb3f2030703808c8949b9e00",
+          "actual_sha256": "6248f2d7874cbf634a5ec5dab22f22b57011b71adb3f2030703808c8949b9e00",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$NpcWrite.class",
+          "recorded_sha256": "4ab64251772c4634a125b9e979b29bdd2cc0c7fd1fb1b088735c87ef6347f9fa",
+          "actual_sha256": "4ab64251772c4634a125b9e979b29bdd2cc0c7fd1fb1b088735c87ef6347f9fa",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$Target.class",
+          "recorded_sha256": "9393645ba4742740bad989b376c62707640312f7e7055a6e37d4f51d591bb7c9",
+          "actual_sha256": "9393645ba4742740bad989b376c62707640312f7e7055a6e37d4f51d591bb7c9",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression.class",
+          "recorded_sha256": "16b756ec5393d32543e91ad875eba59821bece356bad38b696b9bef4a7c3f285",
+          "actual_sha256": "16b756ec5393d32543e91ad875eba59821bece356bad38b696b9bef4a7c3f285",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitIngressProbe$1$1.class",
+          "recorded_sha256": "105b85678ddc99edee11b5c9839e51deefb35d992a2d900f4ddfdbd37715e735",
+          "actual_sha256": "105b85678ddc99edee11b5c9839e51deefb35d992a2d900f4ddfdbd37715e735",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitIngressProbe$1.class",
+          "recorded_sha256": "739e0707137f91f93fd69dde28168472298189b5b6b4075764e2c2f9b88d3ab2",
+          "actual_sha256": "739e0707137f91f93fd69dde28168472298189b5b6b4075764e2c2f9b88d3ab2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitIngressProbe.class",
+          "recorded_sha256": "36f1b2825cf71ff55c02802c4afec16a957044479cdba17f588f949e255a09f0",
+          "actual_sha256": "36f1b2825cf71ff55c02802c4afec16a957044479cdba17f588f949e255a09f0",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitRegression$1$1.class",
+          "recorded_sha256": "e492f1b05c9e86ee18982ada57a1f937e44bf293b626ef4d5d300b75d0be62c0",
+          "actual_sha256": "e492f1b05c9e86ee18982ada57a1f937e44bf293b626ef4d5d300b75d0be62c0",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitRegression$1.class",
+          "recorded_sha256": "10768952533e146178bf3daf6c6c7d494170f6f03489ac5467093a3c06079e60",
+          "actual_sha256": "10768952533e146178bf3daf6c6c7d494170f6f03489ac5467093a3c06079e60",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitRegression.class",
+          "recorded_sha256": "7608f5f1ce787d49e1d7eab58d8af9da12284ae451da2158e3bad7212f381304",
+          "actual_sha256": "7608f5f1ce787d49e1d7eab58d8af9da12284ae451da2158e3bad7212f381304",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$App.class",
+          "recorded_sha256": "36ac42678664c9e32d6b799e3bc60a3713480c7e2d09accc19e9ac8646d575e2",
+          "actual_sha256": "36ac42678664c9e32d6b799e3bc60a3713480c7e2d09accc19e9ac8646d575e2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Held.class",
+          "recorded_sha256": "69962415068ff7ea24b03ebe79bca66e4375735154a72dcf312ae1e4408d5579",
+          "actual_sha256": "69962415068ff7ea24b03ebe79bca66e4375735154a72dcf312ae1e4408d5579",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Publication$1$1.class",
+          "recorded_sha256": "43a9449a98695b2e5ae1fc058598cd6e3589e7657bc66e7911b09393819ee55a",
+          "actual_sha256": "43a9449a98695b2e5ae1fc058598cd6e3589e7657bc66e7911b09393819ee55a",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Publication$1.class",
+          "recorded_sha256": "0ee41b6c984b6b5af30413981daca5131470fa18fdc3e87ebfe569ed48e68d19",
+          "actual_sha256": "0ee41b6c984b6b5af30413981daca5131470fa18fdc3e87ebfe569ed48e68d19",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Publication.class",
+          "recorded_sha256": "fced68c94d1e2a6b3500c5ae711c7d00ba84631b93c739ee7213d5347aa88141",
+          "actual_sha256": "fced68c94d1e2a6b3500c5ae711c7d00ba84631b93c739ee7213d5347aa88141",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression.class",
+          "recorded_sha256": "1bd753b6d68e0b1579b29b7a8a0e14fb8715a1c39e1ce94652be9af87a43d2bd",
+          "actual_sha256": "1bd753b6d68e0b1579b29b7a8a0e14fb8715a1c39e1ce94652be9af87a43d2bd",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerWorldCommitRegression.class",
+          "recorded_sha256": "0836b56568f996adde3aea8908a0a48763edd0ec466b768001f56fe9b6d15313",
+          "actual_sha256": "0836b56568f996adde3aea8908a0a48763edd0ec466b768001f56fe9b6d15313",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeSignedHpRegression$1$1.class",
+          "recorded_sha256": "45bdf59dc18f1897782334d7c604b258695558338b6dd8e3b86449be8dfc5389",
+          "actual_sha256": "45bdf59dc18f1897782334d7c604b258695558338b6dd8e3b86449be8dfc5389",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeSignedHpRegression$1.class",
+          "recorded_sha256": "18097389296a45a9c25df6493821c6b7ebcc898ab616ae0d48072bb0a7d0a2cf",
+          "actual_sha256": "18097389296a45a9c25df6493821c6b7ebcc898ab616ae0d48072bb0a7d0a2cf",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeSignedHpRegression.class",
+          "recorded_sha256": "51513878bfc8dbd0b64fba527c19b22b9bbedb570c385337dd4bf593275f13fb",
+          "actual_sha256": "51513878bfc8dbd0b64fba527c19b22b9bbedb570c385337dd4bf593275f13fb",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$1$1.class",
+          "recorded_sha256": "084cb1081bc5a06bd2d306f9df057790f76b34893e499149a3a5c68746bb07a3",
+          "actual_sha256": "084cb1081bc5a06bd2d306f9df057790f76b34893e499149a3a5c68746bb07a3",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$1.class",
+          "recorded_sha256": "7ea8eb50bb421fb6353eaba384145ce91aeaf51d67bd0d17044becc118ad2d42",
+          "actual_sha256": "7ea8eb50bb421fb6353eaba384145ce91aeaf51d67bd0d17044becc118ad2d42",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$2$1.class",
+          "recorded_sha256": "32aa0100e788d66fd74646acb4c961f07a3ab621d6e5cd22c4b453b20be87d2e",
+          "actual_sha256": "32aa0100e788d66fd74646acb4c961f07a3ab621d6e5cd22c4b453b20be87d2e",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$2.class",
+          "recorded_sha256": "8638598d0c9ce2d096e0529304e2e7b66eed22ce58813f164d3e27952a89e8a2",
+          "actual_sha256": "8638598d0c9ce2d096e0529304e2e7b66eed22ce58813f164d3e27952a89e8a2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression.class",
+          "recorded_sha256": "5ac0b544ee14c6ff15129d74610d95c1b085fc3d2afc7b0f5c03fd68fcc0479a",
+          "actual_sha256": "5ac0b544ee14c6ff15129d74610d95c1b085fc3d2afc7b0f5c03fd68fcc0479a",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\RunNativeCalcCleanup.class",
+          "recorded_sha256": "1da3fc0f29c9ecb18db2519fcdb7e13d84f53beb8c104b602e2547c979735984",
+          "actual_sha256": "1da3fc0f29c9ecb18db2519fcdb7e13d84f53beb8c104b602e2547c979735984",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\RunNativePcPrototype.class",
+          "recorded_sha256": "020f97fe7703ccf6a0e5f25886f58b9f9be20b25901f190f4873082280076057",
+          "actual_sha256": "020f97fe7703ccf6a0e5f25886f58b9f9be20b25901f190f4873082280076057",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-signed-hp-development\\signed-probe-fixtures\\local\\lito381\\server\\NativeSignedHpProbe.class",
+          "recorded_sha256": "c89b7bc9c399224135682b8da58047a487fe7d94fff126c8ba94a08ba4eda99f",
+          "actual_sha256": "c89b7bc9c399224135682b8da58047a487fe7d94fff126c8ba94a08ba4eda99f",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\local\\lito381\\server\\PlayerCommitIngressProbe$1$1.class",
+          "recorded_sha256": "8da28353490f633f2fb45e3909275bc253b21b4209d7c524dd328630dd4a1bbb",
+          "actual_sha256": "8da28353490f633f2fb45e3909275bc253b21b4209d7c524dd328630dd4a1bbb",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\local\\lito381\\server\\PlayerCommitIngressProbe$1.class",
+          "recorded_sha256": "bc742be02f2a68b8e8b6df0d9eaaefe019045b4a875b3838407e56b627a4fcbe",
+          "actual_sha256": "bc742be02f2a68b8e8b6df0d9eaaefe019045b4a875b3838407e56b627a4fcbe",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\local\\lito381\\server\\PlayerCommitIngressProbe.class",
+          "recorded_sha256": "38e5a44b204de53eae14d7f1d451fbe3ed8763890fa4780166fa6069455fa700",
+          "actual_sha256": "38e5a44b204de53eae14d7f1d451fbe3ed8763890fa4780166fa6069455fa700",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$1$1.class",
+          "recorded_sha256": "9cbadc253597eac8dcbaea7b9d336e9c97e1a863a0ecfea0273db2f88c277ab4",
+          "actual_sha256": "9cbadc253597eac8dcbaea7b9d336e9c97e1a863a0ecfea0273db2f88c277ab4",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$1.class",
+          "recorded_sha256": "16c54853e49166199a1fa59bec8ca5cff5f2f71a032e0ea8f0093c790109eace",
+          "actual_sha256": "16c54853e49166199a1fa59bec8ca5cff5f2f71a032e0ea8f0093c790109eace",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$2$1.class",
+          "recorded_sha256": "c883f3d871105193c85dce24a9999b40030674f41a92be7c67ec921352903069",
+          "actual_sha256": "c883f3d871105193c85dce24a9999b40030674f41a92be7c67ec921352903069",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$2.class",
+          "recorded_sha256": "896b15a6f1815f7b60801434155dc0de1a751e85794497c3ea13dc31dd1af5d6",
+          "actual_sha256": "896b15a6f1815f7b60801434155dc0de1a751e85794497c3ea13dc31dd1af5d6",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$3$1.class",
+          "recorded_sha256": "7cb89c7f3cd9c1e87bee350d56dc939f260cb55a84edf2ee7a696fb1730458ff",
+          "actual_sha256": "7cb89c7f3cd9c1e87bee350d56dc939f260cb55a84edf2ee7a696fb1730458ff",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$3.class",
+          "recorded_sha256": "318111b5b1e4e75f660c0c2ba87380236b8e5fe0151b74e267ddfe9c1e522713",
+          "actual_sha256": "318111b5b1e4e75f660c0c2ba87380236b8e5fe0151b74e267ddfe9c1e522713",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$4$1.class",
+          "recorded_sha256": "ae13d408081a6d4ba62845dda42fda6f5997fc85fb50dcc3b0e8903705a75cf2",
+          "actual_sha256": "ae13d408081a6d4ba62845dda42fda6f5997fc85fb50dcc3b0e8903705a75cf2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression$4.class",
+          "recorded_sha256": "e88be6f0f67bd85219301b845781e0f10fb11b7c8df6490423b405d335aa9965",
+          "actual_sha256": "e88be6f0f67bd85219301b845781e0f10fb11b7c8df6490423b405d335aa9965",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeAcceptedStateRegression.class",
+          "recorded_sha256": "e840137aa1004ffc2f4c144c6e69ebdda6b1c05f452a525344a41cbef95fd19c",
+          "actual_sha256": "e840137aa1004ffc2f4c144c6e69ebdda6b1c05f452a525344a41cbef95fd19c",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatAttackerRegression$Actor.class",
+          "recorded_sha256": "324fa09a3541b6e77defffc754e31213f3228e4271f6f34504f860468d1ecb40",
+          "actual_sha256": "324fa09a3541b6e77defffc754e31213f3228e4271f6f34504f860468d1ecb40",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatAttackerRegression.class",
+          "recorded_sha256": "1277c6a07c3d7a2d9ec0e79103f39144bb29ac45d52688e9f7dde67222112352",
+          "actual_sha256": "1277c6a07c3d7a2d9ec0e79103f39144bb29ac45d52688e9f7dde67222112352",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatOriginRegression$1.class",
+          "recorded_sha256": "21846e6aff9e0c1139925ea7dd5d7b859be5ef9c0a9b94b9a427cbbf1ba1fde3",
+          "actual_sha256": "21846e6aff9e0c1139925ea7dd5d7b859be5ef9c0a9b94b9a427cbbf1ba1fde3",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeCombatOriginRegression.class",
+          "recorded_sha256": "665cdd66c944830baedafa29bca0ca06bdf1bf9fa0c5a45943d3637f9f6bc6b5",
+          "actual_sha256": "665cdd66c944830baedafa29bca0ca06bdf1bf9fa0c5a45943d3637f9f6bc6b5",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefenseFixtures.class",
+          "recorded_sha256": "7f8cb081d1f783a3ece46f07af6f1236fd3a013e0ebee3f4bf3a7523c02acbd6",
+          "actual_sha256": "7f8cb081d1f783a3ece46f07af6f1236fd3a013e0ebee3f4bf3a7523c02acbd6",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$1$1.class",
+          "recorded_sha256": "c7680ab8e54205d927789b7a9ef82059caf09ad89480e4452e11049c4b9c394b",
+          "actual_sha256": "c7680ab8e54205d927789b7a9ef82059caf09ad89480e4452e11049c4b9c394b",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$1.class",
+          "recorded_sha256": "e400cb812735f1ce60dd6601289f8e1d0581739f23d780fc315a887085c4042a",
+          "actual_sha256": "e400cb812735f1ce60dd6601289f8e1d0581739f23d780fc315a887085c4042a",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$2$1.class",
+          "recorded_sha256": "4dc514659ce74c26c935149ee75ae5d090b68f9e441bcbc776fb6d11f6c5ba89",
+          "actual_sha256": "4dc514659ce74c26c935149ee75ae5d090b68f9e441bcbc776fb6d11f6c5ba89",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$2.class",
+          "recorded_sha256": "0f0acadb8fffe72fa7cd152c48e8a097e4a35ddedcc5373f80d70d0124140b46",
+          "actual_sha256": "0f0acadb8fffe72fa7cd152c48e8a097e4a35ddedcc5373f80d70d0124140b46",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$3$1.class",
+          "recorded_sha256": "f7be3ed893c033a214a3dfc19a51dfd109fbd5a4e3a25a9e2519e2685bb2d5a4",
+          "actual_sha256": "f7be3ed893c033a214a3dfc19a51dfd109fbd5a4e3a25a9e2519e2685bb2d5a4",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression$3.class",
+          "recorded_sha256": "110fc27c0b47fae72a2b364c499dc0aae4e305a36979b25456add81de22aa92b",
+          "actual_sha256": "110fc27c0b47fae72a2b364c499dc0aae4e305a36979b25456add81de22aa92b",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeDefensePlanRegression.class",
+          "recorded_sha256": "c80a8c7d52e172f2f20a49be512ab1a0d2f02b1b5ad6e034cd31ba481786af7f",
+          "actual_sha256": "c80a8c7d52e172f2f20a49be512ab1a0d2f02b1b5ad6e034cd31ba481786af7f",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$1$1.class",
+          "recorded_sha256": "a47560e1bacbb74e32dfa10810a82ac3cee684758f866daa3b6b09e2af37e1fc",
+          "actual_sha256": "a47560e1bacbb74e32dfa10810a82ac3cee684758f866daa3b6b09e2af37e1fc",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$1.class",
+          "recorded_sha256": "60a9c7b9d1d35d47fae57f439fc85efac47a423908367b74d818c101bfcc2a72",
+          "actual_sha256": "60a9c7b9d1d35d47fae57f439fc85efac47a423908367b74d818c101bfcc2a72",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$2$1.class",
+          "recorded_sha256": "f8fd3b5f34647cfe469310bceeea5d0eae57f44a18abd5b4645620636332f293",
+          "actual_sha256": "f8fd3b5f34647cfe469310bceeea5d0eae57f44a18abd5b4645620636332f293",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression$2.class",
+          "recorded_sha256": "522cee5a0fa8c8236fd00896220b6611be1537794065b1dbeec4d5580de38896",
+          "actual_sha256": "522cee5a0fa8c8236fd00896220b6611be1537794065b1dbeec4d5580de38896",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeEquipmentDefenseRegression.class",
+          "recorded_sha256": "051de29fbaaf3aa0199c0fafc6b1634df81e03bd70065c255fd34c1c4ecab897",
+          "actual_sha256": "051de29fbaaf3aa0199c0fafc6b1634df81e03bd70065c255fd34c1c4ecab897",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$NpcWrite$1$1.class",
+          "recorded_sha256": "e659ceb9eac1717ed7f842a2ee5a69a1643f2a26bc2c21bdbd74deac2b4c9ce0",
+          "actual_sha256": "e659ceb9eac1717ed7f842a2ee5a69a1643f2a26bc2c21bdbd74deac2b4c9ce0",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$NpcWrite$1.class",
+          "recorded_sha256": "6248f2d7874cbf634a5ec5dab22f22b57011b71adb3f2030703808c8949b9e00",
+          "actual_sha256": "6248f2d7874cbf634a5ec5dab22f22b57011b71adb3f2030703808c8949b9e00",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$NpcWrite.class",
+          "recorded_sha256": "4ab64251772c4634a125b9e979b29bdd2cc0c7fd1fb1b088735c87ef6347f9fa",
+          "actual_sha256": "4ab64251772c4634a125b9e979b29bdd2cc0c7fd1fb1b088735c87ef6347f9fa",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression$Target.class",
+          "recorded_sha256": "9393645ba4742740bad989b376c62707640312f7e7055a6e37d4f51d591bb7c9",
+          "actual_sha256": "9393645ba4742740bad989b376c62707640312f7e7055a6e37d4f51d591bb7c9",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeNpcLifetimeRegression.class",
+          "recorded_sha256": "16b756ec5393d32543e91ad875eba59821bece356bad38b696b9bef4a7c3f285",
+          "actual_sha256": "16b756ec5393d32543e91ad875eba59821bece356bad38b696b9bef4a7c3f285",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitIngressProbe$1$1.class",
+          "recorded_sha256": "105b85678ddc99edee11b5c9839e51deefb35d992a2d900f4ddfdbd37715e735",
+          "actual_sha256": "105b85678ddc99edee11b5c9839e51deefb35d992a2d900f4ddfdbd37715e735",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitIngressProbe$1.class",
+          "recorded_sha256": "739e0707137f91f93fd69dde28168472298189b5b6b4075764e2c2f9b88d3ab2",
+          "actual_sha256": "739e0707137f91f93fd69dde28168472298189b5b6b4075764e2c2f9b88d3ab2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitIngressProbe.class",
+          "recorded_sha256": "36f1b2825cf71ff55c02802c4afec16a957044479cdba17f588f949e255a09f0",
+          "actual_sha256": "36f1b2825cf71ff55c02802c4afec16a957044479cdba17f588f949e255a09f0",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitRegression$1$1.class",
+          "recorded_sha256": "e492f1b05c9e86ee18982ada57a1f937e44bf293b626ef4d5d300b75d0be62c0",
+          "actual_sha256": "e492f1b05c9e86ee18982ada57a1f937e44bf293b626ef4d5d300b75d0be62c0",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitRegression$1.class",
+          "recorded_sha256": "10768952533e146178bf3daf6c6c7d494170f6f03489ac5467093a3c06079e60",
+          "actual_sha256": "10768952533e146178bf3daf6c6c7d494170f6f03489ac5467093a3c06079e60",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerCommitRegression.class",
+          "recorded_sha256": "7608f5f1ce787d49e1d7eab58d8af9da12284ae451da2158e3bad7212f381304",
+          "actual_sha256": "7608f5f1ce787d49e1d7eab58d8af9da12284ae451da2158e3bad7212f381304",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$App.class",
+          "recorded_sha256": "36ac42678664c9e32d6b799e3bc60a3713480c7e2d09accc19e9ac8646d575e2",
+          "actual_sha256": "36ac42678664c9e32d6b799e3bc60a3713480c7e2d09accc19e9ac8646d575e2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Held.class",
+          "recorded_sha256": "69962415068ff7ea24b03ebe79bca66e4375735154a72dcf312ae1e4408d5579",
+          "actual_sha256": "69962415068ff7ea24b03ebe79bca66e4375735154a72dcf312ae1e4408d5579",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Publication$1$1.class",
+          "recorded_sha256": "43a9449a98695b2e5ae1fc058598cd6e3589e7657bc66e7911b09393819ee55a",
+          "actual_sha256": "43a9449a98695b2e5ae1fc058598cd6e3589e7657bc66e7911b09393819ee55a",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Publication$1.class",
+          "recorded_sha256": "0ee41b6c984b6b5af30413981daca5131470fa18fdc3e87ebfe569ed48e68d19",
+          "actual_sha256": "0ee41b6c984b6b5af30413981daca5131470fa18fdc3e87ebfe569ed48e68d19",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression$Publication.class",
+          "recorded_sha256": "fced68c94d1e2a6b3500c5ae711c7d00ba84631b93c739ee7213d5347aa88141",
+          "actual_sha256": "fced68c94d1e2a6b3500c5ae711c7d00ba84631b93c739ee7213d5347aa88141",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerLifetimeRegression.class",
+          "recorded_sha256": "1bd753b6d68e0b1579b29b7a8a0e14fb8715a1c39e1ce94652be9af87a43d2bd",
+          "actual_sha256": "1bd753b6d68e0b1579b29b7a8a0e14fb8715a1c39e1ce94652be9af87a43d2bd",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativePlayerWorldCommitRegression.class",
+          "recorded_sha256": "0836b56568f996adde3aea8908a0a48763edd0ec466b768001f56fe9b6d15313",
+          "actual_sha256": "0836b56568f996adde3aea8908a0a48763edd0ec466b768001f56fe9b6d15313",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeSignedHpRegression$1$1.class",
+          "recorded_sha256": "45bdf59dc18f1897782334d7c604b258695558338b6dd8e3b86449be8dfc5389",
+          "actual_sha256": "45bdf59dc18f1897782334d7c604b258695558338b6dd8e3b86449be8dfc5389",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeSignedHpRegression$1.class",
+          "recorded_sha256": "18097389296a45a9c25df6493821c6b7ebcc898ab616ae0d48072bb0a7d0a2cf",
+          "actual_sha256": "18097389296a45a9c25df6493821c6b7ebcc898ab616ae0d48072bb0a7d0a2cf",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeSignedHpRegression.class",
+          "recorded_sha256": "51513878bfc8dbd0b64fba527c19b22b9bbedb570c385337dd4bf593275f13fb",
+          "actual_sha256": "51513878bfc8dbd0b64fba527c19b22b9bbedb570c385337dd4bf593275f13fb",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$1$1.class",
+          "recorded_sha256": "084cb1081bc5a06bd2d306f9df057790f76b34893e499149a3a5c68746bb07a3",
+          "actual_sha256": "084cb1081bc5a06bd2d306f9df057790f76b34893e499149a3a5c68746bb07a3",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$1.class",
+          "recorded_sha256": "7ea8eb50bb421fb6353eaba384145ce91aeaf51d67bd0d17044becc118ad2d42",
+          "actual_sha256": "7ea8eb50bb421fb6353eaba384145ce91aeaf51d67bd0d17044becc118ad2d42",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$2$1.class",
+          "recorded_sha256": "32aa0100e788d66fd74646acb4c961f07a3ab621d6e5cd22c4b453b20be87d2e",
+          "actual_sha256": "32aa0100e788d66fd74646acb4c961f07a3ab621d6e5cd22c4b453b20be87d2e",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression$2.class",
+          "recorded_sha256": "8638598d0c9ce2d096e0529304e2e7b66eed22ce58813f164d3e27952a89e8a2",
+          "actual_sha256": "8638598d0c9ce2d096e0529304e2e7b66eed22ce58813f164d3e27952a89e8a2",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\NativeZeroHpRegression.class",
+          "recorded_sha256": "5ac0b544ee14c6ff15129d74610d95c1b085fc3d2afc7b0f5c03fd68fcc0479a",
+          "actual_sha256": "5ac0b544ee14c6ff15129d74610d95c1b085fc3d2afc7b0f5c03fd68fcc0479a",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\RunNativeCalcCleanup.class",
+          "recorded_sha256": "1da3fc0f29c9ecb18db2519fcdb7e13d84f53beb8c104b602e2547c979735984",
+          "actual_sha256": "1da3fc0f29c9ecb18db2519fcdb7e13d84f53beb8c104b602e2547c979735984",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-accept-development\\fixtures\\local\\lito381\\server\\RunNativePcPrototype.class",
+          "recorded_sha256": "020f97fe7703ccf6a0e5f25886f58b9f9be20b25901f190f4873082280076057",
+          "actual_sha256": "020f97fe7703ccf6a0e5f25886f58b9f9be20b25901f190f4873082280076057",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\pc-native-signed-hp-development\\signed-probe-fixtures\\local\\lito381\\server\\NativeSignedHpProbe.class",
+          "recorded_sha256": "c89b7bc9c399224135682b8da58047a487fe7d94fff126c8ba94a08ba4eda99f",
+          "actual_sha256": "c89b7bc9c399224135682b8da58047a487fe7d94fff126c8ba94a08ba4eda99f",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\local\\lito381\\server\\PlayerCommitIngressProbe$1$1.class",
+          "recorded_sha256": "8da28353490f633f2fb45e3909275bc253b21b4209d7c524dd328630dd4a1bbb",
+          "actual_sha256": "8da28353490f633f2fb45e3909275bc253b21b4209d7c524dd328630dd4a1bbb",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\local\\lito381\\server\\PlayerCommitIngressProbe$1.class",
+          "recorded_sha256": "bc742be02f2a68b8e8b6df0d9eaaefe019045b4a875b3838407e56b627a4fcbe",
+          "actual_sha256": "bc742be02f2a68b8e8b6df0d9eaaefe019045b4a875b3838407e56b627a4fcbe",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\local\\lito381\\server\\PlayerCommitIngressProbe.class",
+          "recorded_sha256": "38e5a44b204de53eae14d7f1d451fbe3ed8763890fa4780166fa6069455fa700",
+          "actual_sha256": "38e5a44b204de53eae14d7f1d451fbe3ed8763890fa4780166fa6069455fa700",
+          "match": true
+        }
+      ]
+    },
+    "classes": {
+      "historical": [
+        [
+          "NativeDeActorStateRegression$1$1.class",
+          "3fff4299d8feb0284cc6999748f736d113b6fc00205b23882a47279e7f600e66"
+        ],
+        [
+          "NativeDeActorStateRegression$1.class",
+          "b8c69dc9a6470bd0d2d9a9401504f90e076380c32151af8c00ce92b21f228ce7"
+        ],
+        [
+          "NativeDeActorStateRegression.class",
+          "c72cfa80f528788d48f7eb40517d20d9f9252e5b55f853c3b74bcec5cb4fadda"
+        ],
+        [
+          "NativeDeAiChecks.class",
+          "96ac3eb0158fe592bbd5c990dc5da7ee1a0a1adac07a8b59bd68e91aad0b293b"
+        ],
+        [
+          "NativeDeStateChecks.class",
+          "770cc65bd509072660a255db971485e00e03ce929bc9b330fcecf155cd557f52"
+        ],
+        [
+          "NativeDeTimerChecks$Clock.class",
+          "3eb04f11d0d23822cf087357b84866e86a7838a8ad81bf1e5fe942cfa96fee0e"
+        ],
+        [
+          "NativeDeTimerChecks$Handle.class",
+          "f6273277119e40e5ad9813739e438239d293104e51094e5ef2185cca623d6792"
+        ],
+        [
+          "NativeDeTimerChecks.class",
+          "36090a5bd3f0adc9730b91050777f31a556a4b75dee435aca0767fe1507b3e59"
+        ],
+        [
+          "NativeDeWorkerChecks$Block.class",
+          "c65fec1f27d007d74a99d46c031a547aabea465a336c872b5b3b82919c0884e8"
+        ],
+        [
+          "NativeDeWorkerChecks.class",
+          "dca7ec3323cb8c5c25bb8c515edc9472989c6deed1b25f6c3aa9126cac6c3552"
+        ]
+      ],
+      "issue341": [
+        [
+          "NativeDeActorStateRegression$1$1.class",
+          "3fff4299d8feb0284cc6999748f736d113b6fc00205b23882a47279e7f600e66"
+        ],
+        [
+          "NativeDeActorStateRegression$1.class",
+          "b8c69dc9a6470bd0d2d9a9401504f90e076380c32151af8c00ce92b21f228ce7"
+        ],
+        [
+          "NativeDeActorStateRegression.class",
+          "c72cfa80f528788d48f7eb40517d20d9f9252e5b55f853c3b74bcec5cb4fadda"
+        ],
+        [
+          "NativeDeAiChecks.class",
+          "96ac3eb0158fe592bbd5c990dc5da7ee1a0a1adac07a8b59bd68e91aad0b293b"
+        ],
+        [
+          "NativeDeStateChecks.class",
+          "770cc65bd509072660a255db971485e00e03ce929bc9b330fcecf155cd557f52"
+        ],
+        [
+          "NativeDeTimerChecks$Clock.class",
+          "3eb04f11d0d23822cf087357b84866e86a7838a8ad81bf1e5fe942cfa96fee0e"
+        ],
+        [
+          "NativeDeTimerChecks$Handle.class",
+          "f6273277119e40e5ad9813739e438239d293104e51094e5ef2185cca623d6792"
+        ],
+        [
+          "NativeDeTimerChecks.class",
+          "36090a5bd3f0adc9730b91050777f31a556a4b75dee435aca0767fe1507b3e59"
+        ],
+        [
+          "NativeDeWorkerChecks$Block.class",
+          "c65fec1f27d007d74a99d46c031a547aabea465a336c872b5b3b82919c0884e8"
+        ],
+        [
+          "NativeDeWorkerChecks.class",
+          "dca7ec3323cb8c5c25bb8c515edc9472989c6deed1b25f6c3aa9126cac6c3552"
+        ]
+      ],
+      "same_pins": true,
+      "actual_files": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeActorStateRegression$1$1.class",
+          "recorded_sha256": "3fff4299d8feb0284cc6999748f736d113b6fc00205b23882a47279e7f600e66",
+          "actual_sha256": "3fff4299d8feb0284cc6999748f736d113b6fc00205b23882a47279e7f600e66",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeActorStateRegression$1.class",
+          "recorded_sha256": "b8c69dc9a6470bd0d2d9a9401504f90e076380c32151af8c00ce92b21f228ce7",
+          "actual_sha256": "b8c69dc9a6470bd0d2d9a9401504f90e076380c32151af8c00ce92b21f228ce7",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeActorStateRegression.class",
+          "recorded_sha256": "c72cfa80f528788d48f7eb40517d20d9f9252e5b55f853c3b74bcec5cb4fadda",
+          "actual_sha256": "c72cfa80f528788d48f7eb40517d20d9f9252e5b55f853c3b74bcec5cb4fadda",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeAiChecks.class",
+          "recorded_sha256": "96ac3eb0158fe592bbd5c990dc5da7ee1a0a1adac07a8b59bd68e91aad0b293b",
+          "actual_sha256": "96ac3eb0158fe592bbd5c990dc5da7ee1a0a1adac07a8b59bd68e91aad0b293b",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeStateChecks.class",
+          "recorded_sha256": "770cc65bd509072660a255db971485e00e03ce929bc9b330fcecf155cd557f52",
+          "actual_sha256": "770cc65bd509072660a255db971485e00e03ce929bc9b330fcecf155cd557f52",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeTimerChecks$Clock.class",
+          "recorded_sha256": "3eb04f11d0d23822cf087357b84866e86a7838a8ad81bf1e5fe942cfa96fee0e",
+          "actual_sha256": "3eb04f11d0d23822cf087357b84866e86a7838a8ad81bf1e5fe942cfa96fee0e",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeTimerChecks$Handle.class",
+          "recorded_sha256": "f6273277119e40e5ad9813739e438239d293104e51094e5ef2185cca623d6792",
+          "actual_sha256": "f6273277119e40e5ad9813739e438239d293104e51094e5ef2185cca623d6792",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeTimerChecks.class",
+          "recorded_sha256": "36090a5bd3f0adc9730b91050777f31a556a4b75dee435aca0767fe1507b3e59",
+          "actual_sha256": "36090a5bd3f0adc9730b91050777f31a556a4b75dee435aca0767fe1507b3e59",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeWorkerChecks$Block.class",
+          "recorded_sha256": "c65fec1f27d007d74a99d46c031a547aabea465a336c872b5b3b82919c0884e8",
+          "actual_sha256": "c65fec1f27d007d74a99d46c031a547aabea465a336c872b5b3b82919c0884e8",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\classes\\local\\lito381\\server\\NativeDeWorkerChecks.class",
+          "recorded_sha256": "dca7ec3323cb8c5c25bb8c515edc9472989c6deed1b25f6c3aa9126cac6c3552",
+          "actual_sha256": "dca7ec3323cb8c5c25bb8c515edc9472989c6deed1b25f6c3aa9126cac6c3552",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeActorStateRegression$1$1.class",
+          "recorded_sha256": "3fff4299d8feb0284cc6999748f736d113b6fc00205b23882a47279e7f600e66",
+          "actual_sha256": "3fff4299d8feb0284cc6999748f736d113b6fc00205b23882a47279e7f600e66",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeActorStateRegression$1.class",
+          "recorded_sha256": "b8c69dc9a6470bd0d2d9a9401504f90e076380c32151af8c00ce92b21f228ce7",
+          "actual_sha256": "b8c69dc9a6470bd0d2d9a9401504f90e076380c32151af8c00ce92b21f228ce7",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeActorStateRegression.class",
+          "recorded_sha256": "c72cfa80f528788d48f7eb40517d20d9f9252e5b55f853c3b74bcec5cb4fadda",
+          "actual_sha256": "c72cfa80f528788d48f7eb40517d20d9f9252e5b55f853c3b74bcec5cb4fadda",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeAiChecks.class",
+          "recorded_sha256": "96ac3eb0158fe592bbd5c990dc5da7ee1a0a1adac07a8b59bd68e91aad0b293b",
+          "actual_sha256": "96ac3eb0158fe592bbd5c990dc5da7ee1a0a1adac07a8b59bd68e91aad0b293b",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeStateChecks.class",
+          "recorded_sha256": "770cc65bd509072660a255db971485e00e03ce929bc9b330fcecf155cd557f52",
+          "actual_sha256": "770cc65bd509072660a255db971485e00e03ce929bc9b330fcecf155cd557f52",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeTimerChecks$Clock.class",
+          "recorded_sha256": "3eb04f11d0d23822cf087357b84866e86a7838a8ad81bf1e5fe942cfa96fee0e",
+          "actual_sha256": "3eb04f11d0d23822cf087357b84866e86a7838a8ad81bf1e5fe942cfa96fee0e",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeTimerChecks$Handle.class",
+          "recorded_sha256": "f6273277119e40e5ad9813739e438239d293104e51094e5ef2185cca623d6792",
+          "actual_sha256": "f6273277119e40e5ad9813739e438239d293104e51094e5ef2185cca623d6792",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeTimerChecks.class",
+          "recorded_sha256": "36090a5bd3f0adc9730b91050777f31a556a4b75dee435aca0767fe1507b3e59",
+          "actual_sha256": "36090a5bd3f0adc9730b91050777f31a556a4b75dee435aca0767fe1507b3e59",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeWorkerChecks$Block.class",
+          "recorded_sha256": "c65fec1f27d007d74a99d46c031a547aabea465a336c872b5b3b82919c0884e8",
+          "actual_sha256": "c65fec1f27d007d74a99d46c031a547aabea465a336c872b5b3b82919c0884e8",
+          "match": true
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\classes\\local\\lito381\\server\\NativeDeWorkerChecks.class",
+          "recorded_sha256": "dca7ec3323cb8c5c25bb8c515edc9472989c6deed1b25f6c3aa9126cac6c3552",
+          "actual_sha256": "dca7ec3323cb8c5c25bb8c515edc9472989c6deed1b25f6c3aa9126cac6c3552",
+          "match": true
+        }
+      ]
+    }
+  },
+  "checked_files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\build.json",
+      "reason": "指定歷史建置入口",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\qualification-current.json",
+      "reason": "指定歷史資格入口（需核對 SHA）",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\receipt.json",
+      "reason": "各 stage 資格收據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\receipt.json",
+      "reason": "各 stage 資格收據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\curse-clock-boundary\\receipt.json",
+      "reason": "各 stage 資格收據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\current.json",
+      "reason": "各 stage 資格收據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\result.json",
+      "reason": "composed 實際逐組收據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\test.py",
+      "reason": "歷史實際執行設定路徑",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\result.json",
+      "reason": "歷史測試結果",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\after\\observations.json",
+      "reason": "歷史 after observations",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\test.log",
+      "reason": "歷史來源 profile 與技能輸出",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\after\\goldens.txt",
+      "reason": "歷史 F1 first-case MP",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\test.py",
+      "reason": "歷史實際執行設定路徑",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\tests\\result.json",
+      "reason": "歷史測試結果",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\tests\\after\\observations.json",
+      "reason": "歷史 after observations",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\tests\\test.log",
+      "reason": "歷史來源 profile 與技能輸出",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\replay_composed_materials.py",
+      "reason": "歷史 composed 設定與 classpath",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\WaterLifeMaterial\\observations.json",
+      "reason": "歷史 F3 observations",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\WaterLifeMaterial\\probe.log",
+      "reason": "歷史 F3 MP、來源名",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\curse-clock-boundary\\observations.json",
+      "reason": "歷史 F4 observations",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\curse-clock-boundary\\probe.log",
+      "reason": "歷史 F4 MP、來源名",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-build-current.json",
+      "reason": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\manifest.json",
+      "reason": "50635f7e 實際 manifest",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\inputs\\build_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\inputs\\probe_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\inputs\\verify_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-verification-current.json",
+      "reason": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\manifest.json",
+      "reason": "50635f7e 實際 manifest",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\inputs\\verify_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\verify.log",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probe-current.json",
+      "reason": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\manifest.json",
+      "reason": "50635f7e 實際 manifest",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\inputs\\probe_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\probe.log",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-common-reproduction-current.json",
+      "reason": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\manifest.json",
+      "reason": "50635f7e 實際 manifest",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\inputs\\build_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\inputs\\probe_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\inputs\\verify_source_negative_final_frame.py",
+      "reason": "50635f7e 實際執行環境線索",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-current.json",
+      "reason": "歷史 existing 資格",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T195524198285Z\\manifest.json",
+      "reason": "歷史 existing manifest",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\run-native-de-item-state-regressions.py.log",
+      "reason": "歷史 existing 第七組 log",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\run-native-de-item-state-regressions.py",
+      "reason": "F5 歷史實際 driver（只讀）",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\inputs\\run-native-de-item-state-regressions.py",
+      "reason": "F5 歷史實際 driver（只讀）",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\run-native-de-item-state-regressions.py",
+      "reason": "F5 原始 driver（只讀）",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\manifest.json",
+      "reason": "F5 歷史成功執行與固定 fixture",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\manifest.json",
+      "reason": "F5 本次失敗執行與固定 fixture",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\proc-follower-receiver-development\\source-runs\\20261016T145901969015Z\\source-vectors.tsv",
+      "reason": "F5 固定向量（不重建）",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\de-actor-state-development\\source-runs\\20261016T153135442531Z\\profile-vectors.tsv",
+      "reason": "F5 固定向量（不重建）",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-targeted.log",
+      "reason": "#341 現行失敗證據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-player.log",
+      "reason": "#341 現行失敗證據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-composed.log",
+      "reason": "#341 現行失敗證據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-curse-clock.log",
+      "reason": "#341 現行失敗證據",
+      "exists": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-existing-affected.log",
+      "reason": "#341 現行失敗證據",
+      "exists": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\build.json",
+      "sha256": "7a911d6e2f4129d3ae75237c61b0f1b9bb2b6fa8a07fbfb1dee1548db0550aa7",
+      "modified_utc": "2026-10-19T19:41:45.783568+00:00",
+      "purpose": "指定歷史建置入口",
+      "summary": {
+        "status": "built-unqualified",
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-material\\build\\candidate-cancellation-battle-material.jar",
+          "sha256": "f8e1ac47131db493c74451e005118005345ff61d8a55847e640fd80668c6a366"
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\qualification-current.json",
+      "sha256": "130b928b195b7f057399f41bd4c2ff01be90014b1146c1ddf70e88d47d64d206",
+      "modified_utc": "2026-10-19T20:12:47.535120+00:00",
+      "purpose": "指定歷史資格入口（需核對 SHA）",
+      "summary": {
+        "status": "backend-regressions-passed-native-validation-deferred-by-user",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        },
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-material\\build\\candidate-cancellation-battle-material.jar",
+          "sha256": "f8e1ac47131db493c74451e005118005345ff61d8a55847e640fd80668c6a366"
+        },
+        "updated_utc": "2026-10-19T20:12:47.533124+00:00",
+        "same_sha_backend_regression_passed": true,
+        "targeted_summary": {
+          "cases": 2400,
+          "checks": 45156,
+          "socket_writes_under_locks": 0,
+          "failed_material_partial_commits": 0
+        },
+        "composed_cases": 5164,
+        "additional_publication_clock_cases": 24
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\receipt.json",
+      "sha256": "f0c9902051c1d482d000d2fe013aa45917ae0538fd743734ecbbe1ddcd62286a",
+      "modified_utc": "2026-10-19T19:54:34.519519+00:00",
+      "purpose": "各 stage 資格收據",
+      "summary": {
+        "status": "passed",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\receipt.json",
+      "sha256": "6c88a681178718b19eeaa03130ca78e23a3b21b31ee8e29d8c9469aa40c4145e",
+      "modified_utc": "2026-10-19T19:51:44.924080+00:00",
+      "purpose": "各 stage 資格收據",
+      "summary": {
+        "status": "passed",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\curse-clock-boundary\\receipt.json",
+      "sha256": "b191689cbe55468fad6e7e2a2d3ba903c57b12b9ad257a1343ef4a3a90c9018b",
+      "modified_utc": "2026-10-19T19:45:36.352551+00:00",
+      "purpose": "各 stage 資格收據",
+      "summary": {
+        "status": "passed-measured-paralysis-publication-clock-boundary",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        },
+        "counts": {
+          "cases": 24,
+          "checks": 987,
+          "early_warning_clocks": 0,
+          "remaining_millis": [
+            4998,
+            0,
+            1999,
+            4999,
+            0,
+            1999,
+            4999,
+            0,
+            1999,
+            4999,
+            0,
+            1999,
+            4999,
+            0,
+            1999,
+            4999,
+            -1,
+            1999,
+            4999,
+            0,
+            1999,
+            4999,
+            0,
+            1999
+          ],
+          "locked_writes": 0,
+          "full_goal_achieved": false
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\current.json",
+      "sha256": "24222fb09585e66eb82f58143cf89d6133f72ba3157a54687bb9a3c6b5c1b8c8",
+      "modified_utc": "2026-10-19T20:12:21.145493+00:00",
+      "purpose": "各 stage 資格收據",
+      "summary": {
+        "status": "passed",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        },
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\result.json",
+          "sha256": "ff94a4c1a3a06011272bdb346e784c6617f869ed3806f3d61319120e6aa5385c"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\result.json",
+      "sha256": "ff94a4c1a3a06011272bdb346e784c6617f869ed3806f3d61319120e6aa5385c",
+      "modified_utc": "2026-10-19T20:12:21.130914+00:00",
+      "purpose": "composed 實際逐組收據",
+      "summary": {
+        "status": "passed",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        }
+      },
+      "result_summaries": [
+        {
+          "probe": "WaterLifeMaterial",
+          "observations": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\WaterLifeMaterial\\observations.json",
+            "sha256": "9ac5bd3bf39eb4f6602687e5b38d87bc2013b412afbaf1959c07c3977aa2b69e"
+          },
+          "log": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\WaterLifeMaterial\\probe.log",
+            "sha256": "51d1dc1c2ed17b7351275f18063e027e1217914c33ff6bb554b7a2f87440d344"
+          }
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\test.py",
+      "sha256": "687f7b6090bf6d681803a8b5315e0059a911b806f82becb730b9f4c799355665",
+      "modified_utc": "2026-10-19T19:43:32.043689+00:00",
+      "purpose": "歷史實際執行設定路徑",
+      "excerpts": [
+        {
+          "line": 22,
+          "text": "   invoke(J/'java.exe','-Xverify:all','-cp',cp,'local.lito381.server.CallNatureMaterialProbe',S/'config/server.properties',dest/'runtime',dest/'observations.json',jar,mode)"
+        },
+        {
+          "line": 12,
+          "text": "F=B/'baseline-PC-ingress-efd4-v2';deps=[classes,R.parent/'elemental-material/build/boundaries/classes',R.parent/'build/tests/classes',B/'pc-native-signed-hp-development/signed-probe-fixtures',B/'pc-native-accept-development/fixtures',F,F/'fixture-support.zip']"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\result.json",
+      "sha256": "67a9816b1cc6d8c2b4d31aec3c45528bcf40985fc8c25a3595c632e3d0bc76c5",
+      "modified_utc": "2026-10-19T19:44:21.556987+00:00",
+      "purpose": "歷史測試結果",
+      "summary": {
+        "status": "passed-call-nature-player-material",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        },
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-material\\build\\candidate-cancellation-battle-material.jar",
+          "sha256": "f8e1ac47131db493c74451e005118005345ff61d8a55847e640fd80668c6a366"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\after\\observations.json",
+      "sha256": "40a7f3be2d3520a7f6ed348593411059aa430aefc3899ecc33a12cf7fa143610",
+      "modified_utc": "2026-10-19T19:44:21.507475+00:00",
+      "purpose": "歷史 after observations",
+      "summary": {
+        "cases": 128,
+        "checks": 1731
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\test.log",
+      "sha256": "fb207407ca63b49c66c62cdcabb8edeca9822dcb27647e5fd0cf12306445d527",
+      "modified_utc": "2026-10-19T19:44:21.507475+00:00",
+      "purpose": "歷史來源 profile 與技能輸出",
+      "excerpts": [
+        {
+          "line": 61,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 62,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 63,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 65,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 60,
+          "text": "[LiTo] C_USE_SPELL Call-of-Nature prompt target=SignedHp2 caster=SignedHp1 phase=BATTLE mp-cost=50"
+        },
+        {
+          "line": 74,
+          "text": "[LiTo] C_USE_SPELL Call-of-Nature prompt target=SignedHp2 caster=SignedHp1 phase=BATTLE mp-cost=50"
+        },
+        {
+          "line": 76,
+          "text": "[LiTo] C_USE_SPELL Call-of-Nature prompt target=SignedHp2 caster=SignedHp1 phase=BATTLE mp-cost=50"
+        },
+        {
+          "line": 78,
+          "text": "[LiTo] C_USE_SPELL Call-of-Nature prompt target=SignedHp2 caster=SignedHp1 phase=BATTLE mp-cost=50"
+        },
+        {
+          "line": 64,
+          "text": "[LiTo] C_USE_SPELL light caster=SignedHp1 phase=BATTLE duration=3600 range=14 mp=996/1000"
+        },
+        {
+          "line": 95,
+          "text": "[LiTo] C_USE_SPELL light caster=SignedHp1 phase=BATTLE duration=3600 range=14 mp=996/1000"
+        },
+        {
+          "line": 126,
+          "text": "[LiTo] C_USE_SPELL light caster=SignedHp1 phase=WORLD duration=3600 range=14 mp=996/1000"
+        },
+        {
+          "line": 157,
+          "text": "[LiTo] C_USE_SPELL light caster=SignedHp1 phase=WORLD duration=3600 range=14 mp=996/1000"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\targeted\\call-nature-material\\tests\\after\\goldens.txt",
+      "sha256": "2b79771c59dca7bcc43570ecf4a7c2d7ac2b3e34b4eeded95932a12a32910607",
+      "modified_utc": "2026-10-19T19:44:21.507475+00:00",
+      "purpose": "歷史 F1 first-case MP",
+      "excerpts": [
+        {
+          "line": 1,
+          "text": "skill=165 world=false mode=0 targetHp=0 mp=950 self=[1a0000007003000000, 1800000070baebc646a5c92028332900, 0c0200103f01000000000c120c0c0c0ca00f8813b603e8030a000000000500000000000000, 200200103f13, 370300103fc508, 4db603e803] peer=[200200103f13, 370300103fc508, 24420100]"
+        },
+        {
+          "line": 8,
+          "text": "skill=165 world=false mode=0 targetHp=0 mp=950 self=[1a0f00007003000000, 180f000070baebc646a5c92028332900, 0c0200103f01000000000c120c0c0c0ca00f8813b603e8030a000000000500000000000000, 200200103f13, 370300103fc508, 4db603e803] peer=[200200103f13, 370300103fc508, 24420100]"
+        },
+        {
+          "line": 29,
+          "text": "skill=165 world=false mode=0 targetHp=0 mp=950 self=[1a3c00007003000000, 183c000070baebc646a5c92028332900, 0c0200103f01000000000c120c0c0c0ca00f8813b603e8030a000000000500000000000000, 200200103f13, 370300103fc508, 4db603e803] peer=[200200103f13, 370300103fc508, 24420100]"
+        },
+        {
+          "line": 36,
+          "text": "skill=165 world=false mode=0 targetHp=0 mp=950 self=[1a4b00007003000000, 184b000070baebc646a5c92028332900, 0c0200103f01000000000c120c0c0c0ca00f8813b603e8030a000000000500000000000000, 200200103f13, 370300103fc508, 4db603e803] peer=[200200103f13, 370300103fc508, 24420100]"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\test.py",
+      "sha256": "2ae655468dcb9c9426637b27bcfd8c8d843362b8269d0e0f35771f4c24654b1e",
+      "modified_utc": "2026-10-19T19:49:38.613992+00:00",
+      "purpose": "歷史實際執行設定路徑",
+      "excerpts": [
+        {
+          "line": 22,
+          "text": "   invoke(J/'java.exe','-Xverify:all','-cp',cp,'local.lito381.server.CancellationProbabilityProbe',S/'config/server.properties',dest/'runtime',dest/'observations.json',jar,mode)"
+        },
+        {
+          "line": 12,
+          "text": "F=B/'baseline-PC-ingress-efd4-v2';deps=[classes,R.parent/'elemental-material/build/boundaries/classes',R.parent/'build/tests/classes',B/'pc-native-signed-hp-development/signed-probe-fixtures',B/'pc-native-accept-development/fixtures',F,F/'fixture-support.zip']"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\tests\\result.json",
+      "sha256": "01c6030d87277cc014ecf5a1acc55f0d2000acb0b3a697ff25fd30d735f3fce5",
+      "modified_utc": "2026-10-19T19:50:42.679083+00:00",
+      "purpose": "歷史測試結果",
+      "summary": {
+        "status": "passed-native-player-probability-packets",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        },
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-material\\build\\candidate-cancellation-battle-material.jar",
+          "sha256": "f8e1ac47131db493c74451e005118005345ff61d8a55847e640fd80668c6a366"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\tests\\after\\observations.json",
+      "sha256": "ef2c022e50da69e8424f643d59506001126017e676a256a5b16622b61f1b768d",
+      "modified_utc": "2026-10-19T19:50:42.634512+00:00",
+      "purpose": "歷史 after observations",
+      "summary": {
+        "cases": 176,
+        "checks": 2959
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\player-cancellation\\cancellation-probability\\tests\\test.log",
+      "sha256": "d091a70289c99662db50106d23b895618c5cdea31b73d11dc3691315d51f8d45",
+      "modified_utc": "2026-10-19T19:50:42.634512+00:00",
+      "purpose": "歷史來源 profile 與技能輸出",
+      "excerpts": [
+        {
+          "line": 61,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 63,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 65,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 67,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 60,
+          "text": "[LiTo] Source Cancellation probability target=1058013187 chance=50 roll=81 success=false"
+        },
+        {
+          "line": 62,
+          "text": "[LiTo] Source Cancellation probability target=1058013187 chance=50 roll=51 success=false"
+        },
+        {
+          "line": 76,
+          "text": "[LiTo] Source Cancellation probability target=1058013186 chance=100 roll=0 success=true"
+        },
+        {
+          "line": 80,
+          "text": "[LiTo] Source Cancellation probability target=1058013187 chance=50 roll=41 success=true"
+        },
+        {
+          "line": 78,
+          "text": "[LiTo] C_USE_SPELL Cancellation caster=SignedHp1 target=1058013186 mp-cost=35 gems=2 player-target=true quest-target=false time-target=false armor-break=false patience=false mp=965/1000"
+        },
+        {
+          "line": 83,
+          "text": "[LiTo] C_USE_SPELL Cancellation caster=SignedHp1 target=1058013187 mp-cost=35 gems=2 player-target=true quest-target=false time-target=false armor-break=false patience=false mp=965/1000"
+        },
+        {
+          "line": 89,
+          "text": "[LiTo] C_USE_SPELL Cancellation caster=SignedHp1 target=1058013187 mp-cost=35 gems=2 player-target=true quest-target=false time-target=false armor-break=false patience=false mp=965/1000"
+        },
+        {
+          "line": 93,
+          "text": "[LiTo] C_USE_SPELL Cancellation caster=SignedHp1 target=1058013187 mp-cost=35 gems=2 player-target=true quest-target=false time-target=false armor-break=false patience=false mp=965/1000"
+        },
+        {
+          "line": 64,
+          "text": "[LiTo] C_USE_SPELL Cancellation rejected state skill=44 mp=0 cost=35 cooldownNanos=0"
+        },
+        {
+          "line": 66,
+          "text": "[LiTo] C_USE_SPELL light caster=SignedHp1 phase=BATTLE duration=3600 range=14 mp=996/1000"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\replay_composed_materials.py",
+      "sha256": "27bbfe0f8138c9845362ab78718e3c9fc2b304c3fc4c70169e682a275196056e",
+      "modified_utc": "2026-10-19T19:43:32.078665+00:00",
+      "purpose": "歷史 composed 設定與 classpath",
+      "excerpts": [
+        {
+          "line": 132,
+          "text": "                subprocess.run(list(map(str, [J/'java.exe', '-Xverify:all', '-cp', cp, 'local.lito381.server.'+prefix+name+'Probe', S/'config/server.properties', dest/'runtime', dest/'observations.json', jar, 'after'])), cwd=S, env=env, check=True, stdout=out, stderr=subprocess.STDOUT, timeout=300)"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\WaterLifeMaterial\\observations.json",
+      "sha256": "9ac5bd3bf39eb4f6602687e5b38d87bc2013b412afbaf1959c07c3977aa2b69e",
+      "modified_utc": "2026-10-19T19:44:00.689898+00:00",
+      "purpose": "歷史 F3 observations",
+      "summary": {
+        "cases": 64,
+        "checks": 771
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\composed-replay\\20261019T194332077667Z\\WaterLifeMaterial\\probe.log",
+      "sha256": "51d1dc1c2ed17b7351275f18063e027e1217914c33ff6bb554b7a2f87440d344",
+      "modified_utc": "2026-10-19T19:44:00.690895+00:00",
+      "purpose": "歷史 F3 MP、來源名",
+      "excerpts": [
+        {
+          "line": 57,
+          "text": "[LiTo] C_USE_SPELL Water Life caster=SignedHp1 selector=21/1 target=SignedHp1 duration=64 refreshed=false attribute-gate=acquisition-only one-shot-next-heal=double-before-recovery-debuffs mp-cost=1 mp=999/1000 reagent=40319x1 selected-reuse-ms=100 secondary-reuse-ms=0 client-clock-ms=400 counter-magic-bypass=true phase=BATTLE persisted=false icon=omitted-no-selected-LiTo-packetbox-receiver"
+        },
+        {
+          "line": 59,
+          "text": "[LiTo] C_USE_SPELL Water Life caster=SignedHp1 selector=21/1 target=SignedHp2 duration=64 refreshed=false attribute-gate=acquisition-only one-shot-next-heal=double-before-recovery-debuffs mp-cost=1 mp=999/1000 reagent=40319x1 selected-reuse-ms=100 secondary-reuse-ms=0 client-clock-ms=400 counter-magic-bypass=true phase=BATTLE persisted=false icon=omitted-no-selected-LiTo-packetbox-receiver"
+        },
+        {
+          "line": 67,
+          "text": "[LiTo] C_USE_SPELL Water Life caster=SignedHp1 selector=21/1 target=SignedHp1 duration=64 refreshed=false attribute-gate=acquisition-only one-shot-next-heal=double-before-recovery-debuffs mp-cost=1 mp=999/1000 reagent=40319x1 selected-reuse-ms=100 secondary-reuse-ms=0 client-clock-ms=400 counter-magic-bypass=true phase=BATTLE persisted=false icon=omitted-no-selected-LiTo-packetbox-receiver"
+        },
+        {
+          "line": 69,
+          "text": "[LiTo] C_USE_SPELL Water Life caster=SignedHp1 selector=21/1 target=SignedHp2 duration=64 refreshed=false attribute-gate=acquisition-only one-shot-next-heal=double-before-recovery-debuffs mp-cost=1 mp=999/1000 reagent=40319x1 selected-reuse-ms=100 secondary-reuse-ms=0 client-clock-ms=400 counter-magic-bypass=true phase=BATTLE persisted=false icon=omitted-no-selected-LiTo-packetbox-receiver"
+        },
+        {
+          "line": 58,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 60,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 61,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 63,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\curse-clock-boundary\\observations.json",
+      "sha256": "8e443eb0ab0272a7a5e2af60cbb3314b3943364871432ee30c6c219ef2b561b9",
+      "modified_utc": "2026-10-19T19:45:36.292590+00:00",
+      "purpose": "歷史 F4 observations",
+      "summary": {
+        "cases": 24,
+        "checks": 987
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\curse-clock-boundary\\probe.log",
+      "sha256": "597a7bf24695635a292562c6727de3e66240116b842c190cbc6704e3dbbbcf3a",
+      "modified_utc": "2026-10-19T19:45:36.292590+00:00",
+      "purpose": "歷史 F4 MP、來源名",
+      "excerpts": [
+        {
+          "line": 58,
+          "text": "[LiTo] C_USE_SPELL paralysis skill=33 caster=SignedHp1 target=1058013187 npc=0 probability=50 roll=1 probability-success=true applied=true countered=false boss-immune=false earth-bind-blocked=false freeze-blocked=false mr=36 stone-resistance=0 equipment-magic-hit=0 buff-magic-hit=0 total-magic-hit=0 warning-ms=5000 active-ms=10000 mp-cost=146 mp=854/1000"
+        },
+        {
+          "line": 61,
+          "text": "[LiTo] C_USE_SPELL paralysis skill=33 caster=SignedHp1 target=1058013187 npc=0 probability=50 roll=1 probability-success=true applied=true countered=false boss-immune=false earth-bind-blocked=false freeze-blocked=false mr=36 stone-resistance=0 equipment-magic-hit=0 buff-magic-hit=0 total-magic-hit=0 warning-ms=0 active-ms=1000 mp-cost=146 mp=854/1000"
+        },
+        {
+          "line": 64,
+          "text": "[LiTo] C_USE_SPELL paralysis skill=33 caster=SignedHp1 target=1058013187 npc=0 probability=50 roll=1 probability-success=true applied=true countered=false boss-immune=false earth-bind-blocked=false freeze-blocked=false mr=36 stone-resistance=0 equipment-magic-hit=0 buff-magic-hit=0 total-magic-hit=0 warning-ms=2000 active-ms=3000 mp-cost=146 mp=854/1000"
+        },
+        {
+          "line": 67,
+          "text": "[LiTo] C_USE_SPELL paralysis skill=33 caster=SignedHp1 target=1058013187 npc=0 probability=50 roll=1 probability-success=true applied=true countered=false boss-immune=false earth-bind-blocked=false freeze-blocked=false mr=36 stone-resistance=0 equipment-magic-hit=0 buff-magic-hit=0 total-magic-hit=0 warning-ms=5000 active-ms=10000 mp-cost=146 mp=854/1000"
+        },
+        {
+          "line": 60,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 63,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 66,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 69,
+          "text": "[LiTo] released ephemeral source profile=公牛/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 59,
+          "text": "CLOCK_BOUNDARY world=false mode=0 delayedNs=251471800 deltaNs=253666100 measuredOperationNs=758049100"
+        },
+        {
+          "line": 62,
+          "text": "CLOCK_BOUNDARY world=false mode=1 delayedNs=258000200 deltaNs=259367500 measuredOperationNs=623532900"
+        },
+        {
+          "line": 65,
+          "text": "CLOCK_BOUNDARY world=false mode=2 delayedNs=264141800 deltaNs=264900900 measuredOperationNs=637657900"
+        },
+        {
+          "line": 68,
+          "text": "CLOCK_BOUNDARY world=false mode=0 delayedNs=262140600 deltaNs=262744900 measuredOperationNs=627981800"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-build-current.json",
+      "sha256": "d40626477fb795faa68e1d899fc35ce8e4ce48054a83a42f73b1fa5009f2fa7b",
+      "modified_utc": "2026-10-27T06:11:49.074732+00:00",
+      "purpose": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "summary": {
+        "status": "built-common-negative-final-frame-program-unqualified",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        },
+        "manifest": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\manifest.json",
+          "sha256": "4bd4d6f3cfc8208c2cd032e6dddffd96a65aa546d5149782cba4bf584404eaf2"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\manifest.json",
+      "sha256": "4bd4d6f3cfc8208c2cd032e6dddffd96a65aa546d5149782cba4bf584404eaf2",
+      "modified_utc": "2026-10-27T06:11:49.047807+00:00",
+      "purpose": "50635f7e 實際 manifest",
+      "summary": {
+        "status": "built-common-negative-final-frame-program-unqualified",
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-pair-first-builds\\20261027T053148070551Z\\candidate-negative-pair-first-unqualified.jar",
+          "sha256": "bf4aa2a61d488bd68c2cdaa0d9a7df3221f2e7848443f225c584ea137ddcbaf2"
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\inputs\\build_source_negative_final_frame.py",
+      "sha256": "36576a26ac805fb642ddd1fc97a9f91056f4c6dae0ed2580a9f67c741062aa5c",
+      "modified_utc": "2026-10-27T06:09:39.155446+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\inputs\\probe_source_negative_final_frame.py",
+      "sha256": "4491a34a5b621e0d40ed18677c5b18e954d07d72231c89b62ec438a137fb893c",
+      "modified_utc": "2026-10-27T06:09:39.150460+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T060934904682Z\\inputs\\verify_source_negative_final_frame.py",
+      "sha256": "3210b596cd1997ae9a45cc5dd8313d176de9020d5888c42937c65a245995d5a5",
+      "modified_utc": "2026-10-27T06:09:39.154449+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-verification-current.json",
+      "sha256": "3af30ebc0d4c337207e91c4449334e2729d4874156d2215051dfaeab2b7535f8",
+      "modified_utc": "2026-10-27T06:03:13.494625+00:00",
+      "purpose": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "summary": {
+        "status": "verified-controlled-negative-final-frame-staged-common-integration-open",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T055752443350Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        },
+        "manifest": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\manifest.json",
+          "sha256": "0b2750e2031285702fb9ff9124151e408f0c6231fd477ad5d40902771da9997c"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\manifest.json",
+      "sha256": "0b2750e2031285702fb9ff9124151e408f0c6231fd477ad5d40902771da9997c",
+      "modified_utc": "2026-10-27T06:03:13.487641+00:00",
+      "purpose": "50635f7e 實際 manifest",
+      "summary": {
+        "status": "verified-controlled-negative-final-frame-staged-common-integration-open",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T055752443350Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\inputs\\verify_source_negative_final_frame.py",
+      "sha256": "3210b596cd1997ae9a45cc5dd8313d176de9020d5888c42937c65a245995d5a5",
+      "modified_utc": "2026-10-27T06:03:09.057268+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-validation\\20261027T060309044301Z\\verify.log",
+      "sha256": "4dfb4ea02c2e62c16c1848c626fe771ccfd936d59a5d823d6d9889bad5a8f817",
+      "modified_utc": "2026-10-27T06:03:12.900477+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probe-current.json",
+      "sha256": "bd357cc8bc99c234b0edc44d7d92d675d2befd9468889eb4eeb3c6a8de8166de",
+      "modified_utc": "2026-10-27T06:06:24.268950+00:00",
+      "purpose": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "summary": {
+        "status": "staged-negative-final-frame-observed-not-promoted",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        },
+        "manifest": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\manifest.json",
+          "sha256": "727fde64ccb7f47db44652d940f61fb869660d7afc97a7afd10511006c617056"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\manifest.json",
+      "sha256": "727fde64ccb7f47db44652d940f61fb869660d7afc97a7afd10511006c617056",
+      "modified_utc": "2026-10-27T06:06:24.262792+00:00",
+      "purpose": "50635f7e 實際 manifest",
+      "summary": {
+        "status": "staged-negative-final-frame-observed-not-promoted",
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-pair-first-builds\\20261027T053148070551Z\\candidate-negative-pair-first-unqualified.jar",
+          "sha256": "bf4aa2a61d488bd68c2cdaa0d9a7df3221f2e7848443f225c584ea137ddcbaf2"
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\inputs\\probe_source_negative_final_frame.py",
+      "sha256": "4491a34a5b621e0d40ed18677c5b18e954d07d72231c89b62ec438a137fb893c",
+      "modified_utc": "2026-10-27T06:06:12.890114+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-probes\\20261027T060612872161Z\\probe.log",
+      "sha256": "2744f46dcbb17f7dd91840fe97786b7369b22097fdfe8d08d2c6417fb3bee33b",
+      "modified_utc": "2026-10-27T06:06:24.155981+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-common-reproduction-current.json",
+      "sha256": "4e226a2c34addccc8021935154df43e18500236abea044e712806c8d2aec08f9",
+      "modified_utc": "2026-10-27T06:15:33.459443+00:00",
+      "purpose": "50635f7e 後續建置／有限驗證，不能當成 inherited 全套通過",
+      "summary": {
+        "status": "passed-frozen-byte-identical-common-build",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        },
+        "manifest": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\manifest.json",
+          "sha256": "aa921ffa14518f489f0ab4549d6f581a04bd5c7cf6fc03518c12d1c0010e4b0b"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\manifest.json",
+      "sha256": "aa921ffa14518f489f0ab4549d6f581a04bd5c7cf6fc03518c12d1c0010e4b0b",
+      "modified_utc": "2026-10-27T06:15:33.451265+00:00",
+      "purpose": "50635f7e 實際 manifest",
+      "summary": {
+        "status": "built-common-negative-final-frame-program-unqualified",
+        "base": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-pair-first-builds\\20261027T053148070551Z\\candidate-negative-pair-first-unqualified.jar",
+          "sha256": "bf4aa2a61d488bd68c2cdaa0d9a7df3221f2e7848443f225c584ea137ddcbaf2"
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\candidate-negative-final-frame-unqualified.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\inputs\\build_source_negative_final_frame.py",
+      "sha256": "36576a26ac805fb642ddd1fc97a9f91056f4c6dae0ed2580a9f67c741062aa5c",
+      "modified_utc": "2026-10-27T06:13:19.303402+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\inputs\\probe_source_negative_final_frame.py",
+      "sha256": "4491a34a5b621e0d40ed18677c5b18e954d07d72231c89b62ec438a137fb893c",
+      "modified_utc": "2026-10-27T06:13:19.411519+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-negative-final-frame-builds\\20261027T061319278467Z\\inputs\\verify_source_negative_final_frame.py",
+      "sha256": "3210b596cd1997ae9a45cc5dd8313d176de9020d5888c42937c65a245995d5a5",
+      "modified_utc": "2026-10-27T06:13:19.936117+00:00",
+      "purpose": "50635f7e 實際執行環境線索",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-current.json",
+      "sha256": "3d4e0edaed9847b1c3e0d4c6f89ce28c194dc587fe2fb628de32cb6f8b80f252",
+      "modified_utc": "2026-10-19T19:58:02.703732+00:00",
+      "purpose": "歷史 existing 資格",
+      "summary": {
+        "status": "passed-twelve-native-regression-drivers-and-eight-authority-item-Main-replays",
+        "manifest": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T195524198285Z\\manifest.json",
+          "sha256": "a0bd9bc2f3c47d7d27969890811fdf06f9817b8c9cb2cc67d2ed4e33688721f3"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T195524198285Z\\manifest.json",
+      "sha256": "a0bd9bc2f3c47d7d27969890811fdf06f9817b8c9cb2cc67d2ed4e33688721f3",
+      "modified_utc": "2026-10-19T19:58:02.683979+00:00",
+      "purpose": "歷史 existing manifest",
+      "summary": {
+        "status": "passed-twelve-native-regression-drivers-and-eight-authority-item-Main-replays",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        }
+      },
+      "result_summaries": [
+        {
+          "name": "run-native-de-item-state-regressions.py",
+          "exit_code": 0,
+          "log": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\run-native-de-item-state-regressions.py.log",
+            "sha256": "9368cf47ddbabe7e27832757fa0a93a954a4118faa8bb96e6da780e840616bc1"
+          }
+        },
+        {
+          "name": "run-native-de-item-state-sprite-startup.py",
+          "exit_code": 0,
+          "log": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\run-native-de-item-state-sprite-startup.py.log",
+            "sha256": "0f9e3958b7174a024b6a88c2c2d0e37bfb36b8e774c177c1aaab92e1cb5c639a"
+          }
+        },
+        {
+          "name": "run-native-de-item-state-startup.py",
+          "exit_code": 0,
+          "log": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\run-native-de-item-state-startup.py.log",
+            "sha256": "c5400ca7a6393f89cd13f434f8a99f6f3081f3b7fa3edb4cd41a6eff5ef89f67"
+          }
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\run-native-de-item-state-regressions.py.log",
+      "sha256": "9368cf47ddbabe7e27832757fa0a93a954a4118faa8bb96e6da780e840616bc1",
+      "modified_utc": "2026-10-19T19:49:23.960021+00:00",
+      "purpose": "歷史 existing 第七組 log",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\run-native-de-item-state-regressions.py",
+      "sha256": "3b6f8754faa40ad56efb72f441a098f34ca318f6faa07a02dd750898507cf3d5",
+      "modified_utc": "2026-10-17T08:53:47.287553+00:00",
+      "purpose": "F5 歷史實際 driver（只讀）",
+      "excerpts": [
+        {
+          "line": 12,
+          "text": "  command=[J/'java.exe','-Xverify:all','-Dfile.encoding=UTF-8','-Dlineage.damage.commitWorkers=2','-Dlineage.damage.commitDispatchCapacity=256','-Dlineage.damage.maxTargetPending=64','-Dlineage.damage.maxGlobalPending=64','-Dlito.resourceProfile=tw13081901-v1','-Dlito.commonCatalog='+str(S.parent.parent/'lito登入器/LiTo381-Launcher/app/common_catalog.bin'),'-cp',cp,'local.lito381.server.NativeDeActorStateRegression',S/'config/server.properties',root,obs,mode,resolve(old['source_vectors']['path']),resolve(old['profile_vectors']['path']),state_obs,ai_obs,timer_obs,worker_obs]"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\qualification-runs\\20261019T194332359213Z\\inputs\\run-native-de-item-state-regressions.py",
+      "sha256": "405c1e91be959b350df041cbdc3d3e1564755a19ee2c6c7dda2680248f48b89b",
+      "modified_utc": "2026-10-19T19:48:03.584905+00:00",
+      "purpose": "F5 歷史實際 driver（只讀）",
+      "excerpts": [
+        {
+          "line": 12,
+          "text": "  command=[J/'java.exe','-Xverify:all','-Dfile.encoding=UTF-8','-Dlineage.damage.commitWorkers=2','-Dlineage.damage.commitDispatchCapacity=256','-Dlineage.damage.maxTargetPending=64','-Dlineage.damage.maxGlobalPending=64','-Dlito.resourceProfile=tw13081901-v1','-Dlito.commonCatalog='+str(S.parent.parent/'lito登入器/LiTo381-Launcher/app/common_catalog.bin'),'-cp',cp,'local.lito381.server.NativeDeActorStateRegression',S/'config/server.properties',root,obs,mode,resolve(old['source_vectors']['path']),resolve(old['profile_vectors']['path']),state_obs,ai_obs,timer_obs,worker_obs]"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\run-native-de-item-state-regressions.py",
+      "sha256": "3b6f8754faa40ad56efb72f441a098f34ca318f6faa07a02dd750898507cf3d5",
+      "modified_utc": "2026-10-17T08:53:47.287553+00:00",
+      "purpose": "F5 原始 driver（只讀）",
+      "excerpts": [
+        {
+          "line": 12,
+          "text": "  command=[J/'java.exe','-Xverify:all','-Dfile.encoding=UTF-8','-Dlineage.damage.commitWorkers=2','-Dlineage.damage.commitDispatchCapacity=256','-Dlineage.damage.maxTargetPending=64','-Dlineage.damage.maxGlobalPending=64','-Dlito.resourceProfile=tw13081901-v1','-Dlito.commonCatalog='+str(S.parent.parent/'lito登入器/LiTo381-Launcher/app/common_catalog.bin'),'-cp',cp,'local.lito381.server.NativeDeActorStateRegression',S/'config/server.properties',root,obs,mode,resolve(old['source_vectors']['path']),resolve(old['profile_vectors']['path']),state_obs,ai_obs,timer_obs,worker_obs]"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\cancellation-battle-runtime-regression\\8d26c9d791e0\\regressions\\20261019T194825792247Z\\manifest.json",
+      "sha256": "cc8e976f1916468ba7282199cfe747b9f43365086ff06ad822d540fd12d911af",
+      "modified_utc": "2026-10-19T19:49:23.948052+00:00",
+      "purpose": "F5 歷史成功執行與固定 fixture",
+      "summary": {
+        "status": "passed-native-equipment-frozen-De-and-encounter-regressions",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+        },
+        "counts": {
+          "cases": 10783,
+          "checks": 89955
+        }
+      },
+      "result_summaries": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate\\regression\\regressions\\20261113T212952990978Z\\manifest.json",
+      "sha256": "08e57a28083e60362f80dd66ae846ecebf41cccda6d0c994e363875bae76ba7d",
+      "modified_utc": "2026-11-13T21:30:17.795329+00:00",
+      "purpose": "F5 本次失敗執行與固定 fixture",
+      "summary": {
+        "status": "failed",
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar",
+          "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+        }
+      }
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\proc-follower-receiver-development\\source-runs\\20261016T145901969015Z\\source-vectors.tsv",
+      "sha256": "0fb4b3393e34832fff67ef9d39017197401986bb83f1ca0727290a73b10cb1a8",
+      "modified_utc": "2026-10-16T14:59:04.608899+00:00",
+      "purpose": "F5 固定向量（不重建）",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\de-actor-state-development\\source-runs\\20261016T153135442531Z\\profile-vectors.tsv",
+      "sha256": "c12fa230cda2b685bd10632d1a30994da65f3976ce5fe02ec74024c331ab0f56",
+      "modified_utc": "2026-10-16T15:31:37.742726+00:00",
+      "purpose": "F5 固定向量（不重建）",
+      "excerpts": []
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-targeted.log",
+      "sha256": "017c935ffe2583d55cfc3204805500893db982d7bb1bbc27c70db6c71256afb4",
+      "modified_utc": "2026-11-13T21:26:00.858325+00:00",
+      "purpose": "#341 現行失敗證據",
+      "excerpts": [
+        {
+          "line": 65,
+          "text": "[LiTo] released ephemeral source profile=P24LiToExp/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 66,
+          "text": "Exception in thread \"main\" java.lang.AssertionError: resurrection Source MP actual=1000 expectedCost=50 mode=0 skill=165 world=false"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-player.log",
+      "sha256": "b6e6af922a0752919d6c717053d92e4866ff90865b821f1cff1eed4c83d0c08f",
+      "modified_utc": "2026-11-13T21:26:05.786243+00:00",
+      "purpose": "#341 現行失敗證據",
+      "excerpts": [
+        {
+          "line": 61,
+          "text": "[LiTo] released ephemeral source profile=P24LiToExp/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 62,
+          "text": "Exception in thread \"main\" java.lang.AssertionError: one actual probability evaluation after material admission"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-composed.log",
+      "sha256": "1ec72845e2c6af0958df784df029f227f6633e15721ec8318c54ec74667e8609",
+      "modified_utc": "2026-11-13T21:26:10.120955+00:00",
+      "purpose": "#341 現行失敗證據",
+      "excerpts": [
+        {
+          "line": 58,
+          "text": "[LiTo] released ephemeral source profile=P24LiToExp/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 59,
+          "text": "[LiTo] released ephemeral source profile=P24LiToExp/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 57,
+          "text": "[LiTo] C_USE_SPELL Water Life caster=SignedHp1 selector=21/1 target=SignedHp1 duration=64 refreshed=false attribute-gate=acquisition-only one-shot-next-heal=double-before-recovery-debuffs mp-cost=1 mp=999/1000 reagent=40319x1 selected-reuse-ms=100 secondary-reuse-ms=0 client-clock-ms=400 counter-magic-bypass=true phase=BATTLE persisted=false icon=omitted-no-selected-LiTo-packetbox-receiver"
+        },
+        {
+          "line": 60,
+          "text": "Exception in thread \"main\" java.lang.AssertionError: Source resources and no HP change"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-curse-clock.log",
+      "sha256": "b886459185067d608e516fe8022af8e814f2c878156f741a03f064a0ad7bccea",
+      "modified_utc": "2026-11-13T21:30:23.168591+00:00",
+      "purpose": "#341 現行失敗證據",
+      "excerpts": [
+        {
+          "line": 46,
+          "text": "[LiTo] released ephemeral source profile=P24LiToExp/SignedHp1 pets=0 provenance=0"
+        },
+        {
+          "line": 47,
+          "text": "Exception in thread \"main\" java.lang.AssertionError: actual first socket write delayed"
+        }
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-341\\scratch\\issue-341\\retest\\results\\candidate-existing-affected.log",
+      "sha256": "9304ba579498e489544d96cb3f656c0ae9587cc923dc29d47d6834e50c4ad44b",
+      "modified_utc": "2026-11-13T21:30:18.193029+00:00",
+      "purpose": "#341 現行失敗證據",
+      "excerpts": [
+        {
+          "line": 35,
+          "text": "Exception in thread \"main\" java.lang.AssertionError: child encounter value event is queued before HP"
+        },
+        {
+          "line": 45,
+          "text": "subprocess.CalledProcessError: Command '['C:\\\\Program Files\\\\Microsoft\\\\jdk-17.0.17.10-hotspot\\\\bin\\\\java.exe', '-Xverify:all', '-Dfile.encoding=UTF-8', '-Dlineage.damage.commitWorkers=2', '-Dlineage.damage.commitDispatchCapacity=256', '-Dlineage.damage.maxTargetPending=64', '-Dlineage.damage.maxGlobalPending=64', '-Dlito.resourceProfile=tw13081901-v1', '-Dlito.commonCatalog=D:\\\\lineage開發\\\\3-lito開發\\\\lito登入器\\\\LiTo381-Launcher\\\\app\\\\common_catalog.bin', '-cp', 'D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\scratch\\\\issue-341\\\\retest\\\\results\\\\candidate\\\\regression\\\\regressions\\\\20261113T212952990978Z\\\\classes;D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\tools\\\\resource-database\\\\build\\\\pc-native-signed-hp-development\\\\signed-probe-fixtures;D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\tools\\\\resource-database\\\\build\\\\pc-native-accept-development\\\\fixtures;D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\tools\\\\resource-database\\\\build\\\\baseline-PC-ingress-efd4-v2;D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\tools\\\\resource-database\\\\build\\\\baseline-PC-ingress-efd4-v2\\\\fixture-support.zip;D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\lito伺服器\\\\LiTo381-Server\\\\reference\\\\candidate-50635f7e.jar;D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\lib\\\\*', 'local.lito381.server.NativeDeActorStateRegression', 'D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\scratch\\\\issue-341\\\\retest\\\\inputs\\\\isolated-test.properties', 'D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\scratch\\\\issue-341\\\\retest\\\\results\\\\candidate\\\\regression\\\\runtime\\\\combat-native-de-instance-regressions\\\\20261113T212952990978Z\\\\normal', 'D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\scratch\\\\issue-341\\\\retest\\\\results\\\\candidate\\\\regression\\\\regressions\\\\20261113T212952990978Z\\\\normal-observations.json', 'normal', 'D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\tools\\\\resource-database\\\\build\\\\proc-follower-receiver-development\\\\source-runs\\\\20261016T145901969015Z\\\\source-vectors.tsv', 'D:\\\\lineage開發\\\\3-lito開發\\\\lito伺服器\\\\LiTo381-Server\\\\tools\\\\resource-database\\\\build\\\\de-actor-state-development\\\\source-runs\\\\20261016T153135442531Z\\\\profile-vectors.tsv', 'D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\scratch\\\\issue-341\\\\retest\\\\results\\\\candidate\\\\regression\\\\regressions\\\\20261113T212952990978Z\\\\state-observations.json', 'D:\\\\lineage開發\\\\3-lito開發\\\\scratch\\\\wt\\\\task-341\\\\scratch\\\\issue-341\\\\retest\\\\results\\\\candidate\\\\regression\\\\regressions\\\\20261113T212952990978Z\\\\AI-observ"
+        }
+      ]
+    }
+  ],
+  "collection_audit": {
+    "lease": {
+      "name": "p24lab",
+      "holder": "chaoren0418-arch/lito-launcher-server#419",
+      "since": 1794607878.6618218,
+      "exp": 1794610578.6618218
+    },
+    "owned_mysql": {
+      "Pid": 15224,
+      "Utc": "2026-11-13T22:12:45.6304835Z",
+      "StartTime": "/Date(1794607964967)/",
+      "Executable": "D:\\BinEngine\\environments\\p24\\mysql\\bin\\mysqld.exe"
+    },
+    "shutdown": {
+      "IdentityVerified": true,
+      "Listeners": [],
+      "OwnedExited": true,
+      "OwnedPid": 15224,
+      "ShutdownExit": 0,
+      "Utc": "2026-11-13T22:13:59.5851840Z"
+    },
+    "select_queries": [
+      "SELECT UTC_TIMESTAMP() AS queried_utc,CURRENT_USER() AS db_user,@@port AS port,@@server_uuid AS uuid,@@datadir AS datadir,@@bind_address AS bind_address",
+      "SELECT UTC_TIMESTAMP() AS queried_utc,account_name,char_name,objid,level,Class,Type,Intel,Wis,MaxHp,CurHp,MaxMp,CurMp,OriginalInt,OriginalWis FROM p24_accounts_lito_exp.characters WHERE char_name='SignedHp1'",
+      "SELECT * FROM p24_world_lito_exp.skills WHERE skill_id IN (165,44,170,33) ORDER BY skill_id",
+      "SELECT s.skill_id,s.itemConsumeId,s.itemConsumeCount,c.char_name,c.objid,i.id AS inventory_id,i.item_id,i.item_name,i.count,i.is_equipped FROM p24_world_lito_exp.skills s CROSS JOIN p24_accounts_lito_exp.characters c LEFT JOIN p24_accounts_lito_exp.character_items i ON i.char_id=c.objid AND i.item_id=s.itemConsumeId WHERE s.skill_id IN (165,44,170,33) AND c.char_name='SignedHp1' ORDER BY s.skill_id,i.id",
+      "SELECT UTC_TIMESTAMP() AS queried_utc,'p24_accounts_lito_exp' AS schema_name,'character_lito' AS table_name,COUNT(*) AS row_count FROM p24_accounts_lito_exp.character_lito UNION ALL SELECT UTC_TIMESTAMP(),'p24_lito_lito_exp','lito_battle_settlement',COUNT(*) FROM p24_lito_lito_exp.lito_battle_settlement"
+    ],
+    "identity_tsv": [
+      "queried_utc\tdb_user\tport\tuuid\tdatadir\tbind_address",
+      "2026-11-13 22:13:56\tlito83_exp@127.0.0.1\t43324\te3443e40-d090-11f1-8040-4cedfb679789\tD:\\BinEngine\\environments\\p24\\db-data\\\t127.0.0.1"
+    ],
+    "limitations": [
+      "既有 start 腳本只比對父 PID 而誤報 timeout；已核實 listener 子 PID18832 之父為自啟 PID15224，未重複啟動",
+      "首次 identity 查詢別名 current_user 觸發 SQL1064，改成 db_user 後成功；所有資料查詢皆 SELECT",
+      "SHUTDOWN 僅沿用既有管理腳本驗證自有實例與無其他連線後執行，非 DML/DDL；資料查詢均用 lito83_exp",
+      "counts 是 #419 延後補查，不能補成 #341 當時即時測後快照"
+    ]
+  }
+}
