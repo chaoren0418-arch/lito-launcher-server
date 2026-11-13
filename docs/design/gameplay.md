@@ -1,6 +1,6 @@
 # LiTo 玩法設計規格（T100，Issue #301）
 
-更新：2026-11-13（T131 #382：§4.2 結算鎖順序表；前次 2026-11-12 T124 #355：§3.8、§4.2 斷線結算的壓力與重啟復原）。本文把**目前正式程式（`src/main`，與正式 0.6.71 JAR 語意等價，見 #78）裡的玩法規則**寫成規格。每條規則後面附程式出處；改規則時請同步更新本文與程式。
+更新：2026-11-14（T136 #387：§4.2 待寫入結果的作廢、`.tmp` 殘檔清理；2026-11-13 T131 #382：§4.2 結算鎖順序表；前次 2026-11-12 T124 #355：§3.8、§4.2 斷線結算的壓力與重啟復原）。本文把**目前正式程式（`src/main`，與正式 0.6.71 JAR 語意等價，見 #78）裡的玩法規則**寫成規格。每條規則後面附程式出處；改規則時請同步更新本文與程式。
 本文不改程式；第 7 節列出需要使用者決定的地方，決定後由 T103（#310）等任務實作。
 
 ## 讀法
@@ -207,14 +207,14 @@
 |---|---|---|
 | 條件 | 房間要允許觀戰（0x08）；預設房與自動配對房都允許 | `S/GameHub.java:1436,1529,13185-13193` |
 | 權限 | 觀戰者不佔參戰名額、不能準備、不算開戰人數 | `S/GameHub.java:1548,9687`；`S/NativeRoomRules.java:84-85` |
-| 結算 | 觀戰者不寫戰績、不進斷線判定 | `S/DurableBattleSettlement.java:45`；`S/GameHub.java:12971`；`S/ClientSession.java:87746` |
+| 結算 | 觀戰者不寫戰績、不進斷線判定 | `S/DurableBattleSettlement.java:82`；`S/GameHub.java:12971`；`S/ClientSession.java:87746` |
 
 ### 3.6 結束、結果畫面與離開
 
 | 項目 | 規則 | 出處 |
 |---|---|---|
 | 結束時機 | 勝負成立（§2）、逾時、或斷線判定結束（§3.8） | `S/GameHub.java:10260-10278,13095-13149` |
-| 結算順序 | **先凍結結果、寫入可重試的日誌，再送結果畫面**；日誌沒存好，房間不能清除 | `S/ClientSession.java:11809-11810`；`S/DurableBattleSettlement.java:33-58`；`S/GameHub.java:6993-6994` |
+| 結算順序 | **先凍結結果、寫入可重試的日誌，再送結果畫面**；日誌沒存好，房間不能清除 | `S/ClientSession.java:11809-11810`；`S/DurableBattleSettlement.java:70-95`；`S/GameHub.java:6993-6994` |
 | 結果畫面 | 結果畫面期間房間不開放進入；所有人確認離開後才回到可用狀態 | `S/GameHub.java:7002-7005` |
 | 本場物品 | 開啟原生經濟時：結算移除本場買的消耗品；回大廳時重新給固定金幣（預設 20,000） | `S/ClientSession.java:20453-20470`；`S/ServerConfig.java:583-585`；`D/config/server.properties.example:55-56` |
 | 離開房間 | 開戰前離開：清掉準備與隊伍、交出房主、空房刪除（預設房保留） | `S/GameHub.java:1627-1641` |
@@ -224,7 +224,7 @@
 | 項目 | 規則 | 出處 |
 |---|---|---|
 | 測試房 | 每個頻道一個預設房「Local Lobby」：死鬥、容量 8、允許觀戰；由 `lito_room_policy.test_room_enabled` 控制 | `S/GameHub.java:12891-12896,13185-13193`；`D/db/lito_room_policy.sql` |
-| 不計戰績 | 測試房的結果**不寫** `character_lito`、不加積分；進房時系統訊息提示 | `S/DurableBattleSettlement.java:45,69`；`S/ClientSession.java:87743`；`S/NativeRoomRules.java:115-119` |
+| 不計戰績 | 測試房的結果**不寫** `character_lito`、不加積分；進房時系統訊息提示 | `S/DurableBattleSettlement.java:82,106`；`S/ClientSession.java:87743`；`S/NativeRoomRules.java:115-119` |
 | 自動配對 | 自動配對永遠不會選到測試房 | `S/GameHub.java:1424-1427` |
 | ArenaBot 出現條件 | 測試房 ＋ 死鬥 ＋ `test_bot_enabled=1` ＋ 只有 1 位真人 ＋ 沒有 GM 假人 | `S/NativeRoomRules.java:51-62` |
 | ArenaBot 規則 | 藍隊、HP 100；真人必須選紅隊才能開始；真人陣亡＝藍隊勝 | `S/GameHub.java:32,9851-9858`；`S/NativeRoomRules.java:66-68,77-81` |
@@ -240,9 +240,9 @@
 | 還能打 | PvP：還有 ≥2 隊（隊伍模式）或 ≥2 人（個人）留下；PvE：還有人留下 → 比賽繼續，斷線者記斷線敗 | `S/TeamDisconnectSettlement.java:9-12,16-23` |
 | 打不下去 | 留下的人全部記勝，斷線者記斷線敗，比賽結束 | `S/TeamDisconnectSettlement.java:12` |
 | 寵物競賽、Time Attack | 有專用規則（§2.2、§2.6） | `S/GameHub.java:13041-13093` |
-| 重試 | 判定失敗時 2 秒後重試；日誌背景每 2 秒重送 | `S/TeamDisconnectSettlement.java:28-32`；`S/DurableBattleSettlement.java:22,146-165` |
-| 斷線時機（T124 #355） | 開戰前（房間內）與結果畫面上斷線**不算**戰鬥斷線（`registerBattleDisconnect` 只收開戰中的參戰者），不記任何勝敗；戰鬥中斷線記斷線敗；結果已凍結後才斷線，維持凍結時的判定（一般敗不會變成斷線敗，勝也不會被推翻）；斷線後在判定前重新登入，新連線不會帶走舊場次的結果 | `S/GameHub.java:12799-12812`；`S/DurableBattleSettlement.java:43`；測試 `BattleDisconnectStressMySqlIntegrationTest` |
-| 清理（T124） | 每場結束後房間會移除、斷線的 session 會離開 hub；斷線者的記憶體角色資料在結算後不會被重建（結算時改用暫存 store）。斷線**只清理自己所在的房間**（T124 修正：之前會掃掉所有空房，包括別人剛 `createRoom`、還沒加入的房間）；結算未落盤時被清空的房間，由結算 worker 在落盤後移除 | `S/GameHub.java:1878-1896`；`S/DurableBattleSettlement.java:109-121,152-156`；測試 `GameHubDisconnectRoomSweepTest` |
+| 重試 | 判定失敗時 2 秒後重試；日誌背景每 2 秒重送 | `S/TeamDisconnectSettlement.java:28-32`；`S/DurableBattleSettlement.java:21,183-202` |
+| 斷線時機（T124 #355） | 開戰前（房間內）與結果畫面上斷線**不算**戰鬥斷線（`registerBattleDisconnect` 只收開戰中的參戰者），不記任何勝敗；戰鬥中斷線記斷線敗；結果已凍結後才斷線，維持凍結時的判定（一般敗不會變成斷線敗，勝也不會被推翻）；斷線後在判定前重新登入，新連線不會帶走舊場次的結果 | `S/GameHub.java:12799-12812`；`S/DurableBattleSettlement.java:80`；測試 `BattleDisconnectStressMySqlIntegrationTest` |
+| 清理（T124） | 每場結束後房間會移除、斷線的 session 會離開 hub；斷線者的記憶體角色資料在結算後不會被重建（結算時改用暫存 store）。斷線**只清理自己所在的房間**（T124 修正：之前會掃掉所有空房，包括別人剛 `createRoom`、還沒加入的房間）；結算未落盤時被清空的房間，由結算 worker 在落盤後移除 | `S/GameHub.java:1878-1896`；`S/DurableBattleSettlement.java:146-158,189-193`；測試 `GameHubDisconnectRoomSweepTest` |
 
 ### 3.9 自動配對（Match Making）
 
@@ -266,25 +266,30 @@
 | 勝者 | 勝 +1 | `S/BattleRules.java:561-569`；`S/SettlementSql.java:38-39` |
 | 參戰但不是勝者（含陣亡、Time Attack 打倒 Boss 時已陣亡者） | 敗 +1 |
 | 逾時無勝者（平手，D4；攻城除外） | 不記 | `S/BattleRules.java` `finishDraw`；`S/DurableBattleSettlement.java` `entry` 回傳 null | `S/BattleRules.java:564-565` |
-| 斷線 | 敗 +1，並標記「斷線」 | `S/DurableBattleSettlement.java:48`；`S/GameStateStore.java:5603-5608` |
+| 斷線 | 敗 +1，並標記「斷線」 | `S/DurableBattleSettlement.java:85`；`S/GameStateStore.java:5603-5608` |
 | 全員斷線（無效場） | 不記 | `S/TeamDisconnectSettlement.java:7` |
-| 觀戰者、測試房、GM 假人、ArenaBot | 不記 | `S/DurableBattleSettlement.java:45`；`S/ClientSession.java:87743-87746` |
+| 觀戰者、測試房、GM 假人、ArenaBot | 不記 | `S/DurableBattleSettlement.java:82`；`S/ClientSession.java:87743-87746` |
 
 ### 4.2 `character_lito` 寫回（持久）
 
 | 項目 | 規則 | 出處 |
 |---|---|---|
-| 位置 | 玩家**自己來源庫**的 `character_lito`（跨來源同場時各寫各的） | `S/DurableBattleSettlement.java:32,46-48`；`S/SettlementSql.java:25-47` |
-| 欄位 | `wins`、`losses`、`version`、`last_result_id`、`char_name`，以及 T103b（#335）起的積分、斷線數、月計（§4.3） | `S/SettlementSql.java:6-7,97` |
-| 冪等 | 結果 ID＝SHA-256(場次｜資料庫｜角色)；先寫收據表 `lito_battle_settlement`（必須 InnoDB），再用 `GET_LOCK`＋`last_result_id` 更新計數；重送不會重複加 | `S/SettlementJournal.java:7`；`S/SettlementSql.java:59-68,80-106` |
-| 身分保護 | 角色名與 objid 對不上（角色被改名／刪除）就拒絕寫入 | `S/SettlementSql.java:88` |
-| 寫入順序 | ①結果凍結（送出任何結果封包之前）→ ②WAL 檔：先寫 `.tmp`、`fsync`、再原子改名為 `.pending` → ③收據（InnoDB 交易）→ ④`character_lito` 單一 UPDATE／INSERT（勝敗、積分、斷線數、月計、`version`、`last_result_id` 同一列同一敘述）→ ⑤收據 `applied=1` → ⑥刪 WAL 檔。啟動時先重放全部 WAL 檔，再處理所有 `applied=0` 收據 | `S/DurableBattleSettlement.java:21,40-62`；`S/SettlementJournal.java:18-26,38-47`；`S/SettlementSql.java:48-106` |
+| 位置 | 玩家**自己來源庫**的 `character_lito`（跨來源同場時各寫各的） | `S/DurableBattleSettlement.java:69,83-85`；`S/SettlementSql.java:25-47` |
+| 欄位 | `wins`、`losses`、`version`、`last_result_id`、`char_name`，以及 T103b（#335）起的積分、斷線數、月計（§4.3） | `S/SettlementSql.java:6-7,138` |
+| 冪等 | 結果 ID＝SHA-256(場次｜資料庫｜角色)；先寫收據表 `lito_battle_settlement`（必須 InnoDB），再用 `GET_LOCK`＋`last_result_id` 更新計數；重送不會重複加 | `S/SettlementJournal.java:7`；`S/SettlementSql.java:59-68,121-147` |
+| 身分保護 | 角色名與 objid 對不上（角色被改名／刪除）就拒絕寫入 | `S/SettlementSql.java:129` |
+| 寫入順序 | ①結果凍結（送出任何結果封包之前）→ ②WAL 檔：先寫 `.tmp`、`fsync`、再原子改名為 `.pending` → ③收據（InnoDB 交易）→ ④`character_lito` 單一 UPDATE／INSERT（勝敗、積分、斷線數、月計、`version`、`last_result_id` 同一列同一敘述）→ ⑤收據 `applied=1` → ⑥刪 WAL 檔。啟動時先重放全部 WAL 檔，再處理所有 `applied=0` 收據 | `S/DurableBattleSettlement.java:29-38,77-99`；`S/SettlementJournal.java:65-73,85-94`；`S/SettlementSql.java:48-147` |
 | 重啟復原（T124 #355） | 在 ②～⑥ 任一步中止再啟動，每筆結果剛好寫一次：②之後中止→重放 WAL；③交易中止→收據回滾、重放重寫；④已寫但沒收到回覆或沒做⑤→`last_result_id` 已是本結果，只補⑤；⑤之後、⑥之前中止→重放時收據已存在、計數不動；WAL 目錄遺失但③已提交→啟動時的收據掃描仍會補寫；復原途中再中止一次也一樣 | 測試 `DisconnectSettlementRecoveryMySqlIntegrationTest`（MyISAM `380_ac_1`、InnoDB `380_ac_2` 各跑一次） |
-| 「寫入中」中止（現行行為） | ④是單列單一敘述：MyISAM 的單列 UPDATE 不會只寫一半欄位，InnoDB 為 autocommit 交易，所以結果只有「整列已寫」或「完全沒寫」兩種，兩種都由上一列處理；不會出現勝場加了、積分沒加的情況。〔推測〕MyISAM 在 mysqld 本身當機（非 LiTo 中止）時可能損壞資料表，需 `REPAIR TABLE`，此情況不在測試範圍 | `S/SettlementSql.java:97-98` |
-| 凍結前中止（取捨） | ①完成前（WAL 尚未寫入）伺服器中止，這場**不計**：沒有人加勝敗或積分。因為結果封包一律在 WAL 寫入之後才送，玩家不會看到結果畫面卻沒記錄。代價：快結束時當機的那場算白打（原 evidence 的已知限制「未結束的戰鬥不重建」） | `S/DurableBattleSettlement.java:3,55-58` |
-| 單筆永久失敗（T124 修正） | 某筆結果因角色改名／刪除被拒時，只留下那個 WAL 檔與收據，**不再擋住其他結果**（修正前 WAL 依隨機檔名排序，排在它後面的結果全部卡住）。啟動時仍會因這筆失敗拒絕啟動，log 會出現 `identity changed`，需要營運確認角色後處理；拒寫的那筆不會寫進任何計數 | `S/SettlementJournal.java:34-47`；`S/SettlementSql.java:51-55,70-79`；`S/DurableBattleSettlement.java:157-163` |
-| WAL 檔損毀 | 已提交的 `.pending` 檔格式錯誤時拒絕啟動（不丟結果，檔案留著）；改名前中止留下的 `.tmp` 殘檔不視為結果，會被忽略，但目前不會自動清掉 | `S/SettlementJournal.java:16,24-27` |
-| 同時兩個程序 | WAL 目錄有 `owner.lock`，第二個程序開同一目錄會被拒絕 | `S/SettlementJournal.java:13-14` |
+| 「寫入中」中止（現行行為） | ④是單列單一敘述：MyISAM 的單列 UPDATE 不會只寫一半欄位，InnoDB 為 autocommit 交易，所以結果只有「整列已寫」或「完全沒寫」兩種，兩種都由上一列處理；不會出現勝場加了、積分沒加的情況。〔推測〕MyISAM 在 mysqld 本身當機（非 LiTo 中止）時可能損壞資料表，需 `REPAIR TABLE`，此情況不在測試範圍 | `S/SettlementSql.java:138-139` |
+| 凍結前中止（取捨） | ①完成前（WAL 尚未寫入）伺服器中止，這場**不計**：沒有人加勝敗或積分。因為結果封包一律在 WAL 寫入之後才送，玩家不會看到結果畫面卻沒記錄。代價：快結束時當機的那場算白打（原 evidence 的已知限制「未結束的戰鬥不重建」） | `S/DurableBattleSettlement.java:3,92-95` |
+| 單筆永久失敗（T124 修正） | 某筆結果因角色改名／刪除被拒時，只留下那個 WAL 檔與收據，**不再擋住其他結果**（修正前 WAL 依隨機檔名排序，排在它後面的結果全部卡住）。啟動時仍會因這筆失敗拒絕啟動，log 會出現 `Settlement character identity changed: <來源庫>/<objid> result=<result_id>`（T136 起附上結果 ID），由營運確認角色後用下面的「作廢」處理；拒寫的那筆不會寫進任何計數 | `S/SettlementJournal.java:80-94`；`S/SettlementSql.java:51-55,70-79,129`；`S/DurableBattleSettlement.java:194-200` |
+| 作廢（T136 #387）：作法 | 採 **(b) 啟動時讀營運放的作廢清單**：伺服器停機後，營運在 WAL 目錄放 `void-requests.txt`（一行一個 `result_id`，空白後可接原因，`#` 開頭為註解），下次啟動時在取得 `owner.lock` 之後、重放 WAL 之前處理。不採 (a) 離線命令列：正式啟動入口 `Main` 與正式 JAR 逐位元比對，加新入口要另開一條讀設定、建 Route 的路徑；(b) 直接沿用啟動時已建好的 Route、控制庫連線與 `owner.lock`（保證沒有另一個程序在寫同一目錄），也不需要營運直接下 SQL | `S/DurableBattleSettlement.java:14-24,29-38,46-62` |
+| 作廢：安全條件 | 逐筆在與寫入相同的 `GET_LOCK`（控制庫＋來源庫＋角色）內檢查，**全部成立才作廢**：①收據存在且 `applied=0`（已計入的 `applied=1` 拒絕；已作廢的 `applied=2` 視為成功，冪等）；②來源庫 `characters` 目前**沒有**這個 objid，或名字和凍結時不同（身分沒變的結果會正常寫入，拒絕作廢）；③該角色 `character_lito.last_result_id` 不是這筆結果（已寫進計數、只差回條的情況拒絕，避免收據說作廢但計數已加）。任一筆被拒就拒絕啟動，清單留在原處；同一份清單裡先前已作廢的不回滾，重跑時視為已作廢 | `S/SettlementSql.java:81-120` |
+| 作廢：寫入範圍 | 只更新控制庫收據列：`applied=2`、`voided_at`、`void_reason`（欄位由 `db/lito_battle_settlement_void.sql` 新增；只有清單存在時才檢查欄位，缺欄位拒絕啟動）。**不寫 `character_lito`、不寫來源庫任何表**，執行帳號不需要新權限（既有 `lito_battle_settlement` 表級 UPDATE 已涵蓋）。之後重放含該筆的 WAL 檔時，收據已存在、`drain` 只處理 `applied=0`，所以檔案正常處理並刪除，同檔其他人的結果照常寫入 | `S/SettlementSql.java:116`；`db/lito_battle_settlement_void.sql` |
+| 作廢：稽核紀錄 | ①資料庫：收據列保留（不刪），`voided_at`、`void_reason`；②WAL 目錄 `voided/`：含被作廢結果的 `.pending` 檔在作廢後、重放前**複製**一份（被拒的請求不複製）；③`void-audit.log`：每筆一行（時間、`voided`／`already-voided`、`result_id`、來源庫/objid、凍結名、目前名或 `<deleted>`、原因），寫完 `fsync`；④處理完的清單移到 `voided/void-requests-<時間>.txt`。啟動 log 也逐筆印出 | `S/DurableBattleSettlement.java:52-61`；`S/SettlementJournal.java:56-64` |
+| WAL 檔損毀 | 已提交的 `.pending` 檔格式錯誤時拒絕啟動（不丟結果，檔案留著）；改名前中止留下的 `.tmp` 殘檔不視為結果，啟動時依下一列清理 | `S/SettlementJournal.java:24,70-72` |
+| `.tmp` 殘檔清理（T136） | 啟動開 WAL 目錄時，`.tmp` 只在**四個條件都成立**時刪除：①本程序已取得 `owner.lock`（其他程序不可能正在寫這個目錄，`save` 只在持有者程序內執行）；②檔名正好是 `save` 產生的 `<小寫 UUID>.tmp`；③是一般檔案（不是目錄或連結）；④最後修改時間不晚於取得鎖的時刻（比本程序任何一次 `save` 都早）。其他 `.tmp` 保留並在啟動 log 印 `kept unrecognised`；第二個程序取不到鎖時什麼都不刪 | `S/SettlementJournal.java:11-40` |
+| 同時兩個程序 | WAL 目錄有 `owner.lock`，第二個程序開同一目錄會被拒絕 | `S/SettlementJournal.java:18-19` |
 
 #### 鎖順序（T131 #382）
 
@@ -292,25 +297,25 @@
 
 | 順序 | 鎖 | 是什麼 | 拿著它時還會再取的鎖 | 出處 |
 |---|---|---|---|---|
-| 1 | `ClientSession` | 單一連線（`recordBattleResult` 是 `synchronized`；結算 worker 逐一鎖 session） | `GameHub`、`CONTEXTS`、`Ticket` | `S/ClientSession.java:56886`；`S/DurableBattleSettlement.java:132,162` |
-| 2 | `GameHub` | 整個大廳（房間、頻道、名單） | `CONTEXTS`、`Context` | `S/GameHub.java:1892,7148-7149,12739,12857,12925`；`S/DurableBattleSettlement.java:27,150,152-155` |
-| 3 | `Context` | 一個房間的一場戰鬥（凍結結果、未落盤清單） | `TICKETS`（只查表）、`SettlementJournal` | `S/DurableBattleSettlement.java:42-61,149` |
-| 4 | `Ticket` | 一個玩家在一場戰鬥的結算票 | `GameStateStore`，其內再取 `Route` | `S/DurableBattleSettlement.java:105-125` |
-| 5 | `GameStateStore` | 記憶體角色資料 | `Route` | `S/DurableBattleSettlement.java:111-122,136-140` |
-| 葉 | `CONTEXTS` | 「大廳 → 房號 → `Context`」對照表（static） | **不取任何鎖** | `S/DurableBattleSettlement.java:28,79,81,129,148` |
-| 葉 | `TICKETS` | 「連線 → `Ticket`」對照表（static） | 不取任何鎖 | `S/DurableBattleSettlement.java:10,30-31,161` |
-| 葉 | `SettlementJournal` | WAL 寫檔（`save`、`pending`） | 不取任何鎖（只做檔案寫入與 `fsync`） | `S/SettlementJournal.java:18-26,48` |
-| 葉 | `Route`、`SharedDatabase.ROUTES` | 來源庫的快取與路由表 | 不取任何鎖 | `S/SettlementSql.java:43,71,102`；`S/DurableBattleSettlement.java:120` |
-| 啟動 | `DurableBattleSettlement.class` | 只在 `open()`（啟動時開 WAL、重放）使用 | 資料庫連線、WAL 檔 | `S/DurableBattleSettlement.java:16-24` |
+| 1 | `ClientSession` | 單一連線（`recordBattleResult` 是 `synchronized`；結算 worker 逐一鎖 session） | `GameHub`、`CONTEXTS`、`Ticket` | `S/ClientSession.java:56886`；`S/DurableBattleSettlement.java:169,199` |
+| 2 | `GameHub` | 整個大廳（房間、頻道、名單） | `CONTEXTS`、`Context` | `S/GameHub.java:1892,7148-7149,12739,12857,12925`；`S/DurableBattleSettlement.java:64,187,189-192` |
+| 3 | `Context` | 一個房間的一場戰鬥（凍結結果、未落盤清單） | `TICKETS`（只查表）、`SettlementJournal` | `S/DurableBattleSettlement.java:79-98,186` |
+| 4 | `Ticket` | 一個玩家在一場戰鬥的結算票 | `GameStateStore`，其內再取 `Route` | `S/DurableBattleSettlement.java:142-162` |
+| 5 | `GameStateStore` | 記憶體角色資料 | `Route` | `S/DurableBattleSettlement.java:148-159,173-177` |
+| 葉 | `CONTEXTS` | 「大廳 → 房號 → `Context`」對照表（static） | **不取任何鎖** | `S/DurableBattleSettlement.java:65,116,118,166,185` |
+| 葉 | `TICKETS` | 「連線 → `Ticket`」對照表（static） | 不取任何鎖 | `S/DurableBattleSettlement.java:10,67-68,198` |
+| 葉 | `SettlementJournal` | WAL 寫檔（`save`、`pending`） | 不取任何鎖（只做檔案寫入與 `fsync`） | `S/SettlementJournal.java:65-73,95` |
+| 葉 | `Route`、`SharedDatabase.ROUTES` | 來源庫的快取與路由表 | 不取任何鎖 | `S/SettlementSql.java:43,71,143`；`S/DurableBattleSettlement.java:157` |
+| 啟動 | `DurableBattleSettlement.class` | 只在 `open()`（啟動時開 WAL、清 `.tmp`、處理作廢清單、重放；`recover`）使用 | 資料庫連線、WAL 檔 | `S/DurableBattleSettlement.java:16-38` |
 
 | 項目 | 規則 | 出處 |
 |---|---|---|
-| `GameHub` 先於 `CONTEXTS` | `GameHub.disconnect`、`resetOrRemove`、`endBattle` 都是拿著 `GameHub` 鎖呼叫 `cleanupAllowed`（取 `CONTEXTS`）。所以**拿著 `CONTEXTS` 時不可以碰 `GameHub`**：`context()` 需要的房間世代與測試房旗標，都在取 `CONTEXTS` 之前、`GameHub` 鎖內讀好 | `S/DurableBattleSettlement.java:26-29`；測試 `DurableBattleSettlementLockOrderTest` |
+| `GameHub` 先於 `CONTEXTS` | `GameHub.disconnect`、`resetOrRemove`、`endBattle` 都是拿著 `GameHub` 鎖呼叫 `cleanupAllowed`（取 `CONTEXTS`）。所以**拿著 `CONTEXTS` 時不可以碰 `GameHub`**：`context()` 需要的房間世代與測試房旗標，都在取 `CONTEXTS` 之前、`GameHub` 鎖內讀好 | `S/DurableBattleSettlement.java:63-66`；測試 `DurableBattleSettlementLockOrderTest` |
 | 修正前的死結（T131） | `context()` 在 `CONTEXTS` 鎖內建立 `Context`，建構子呼叫 `NativeRoomRules.testRoom`（取 `GameHub` 鎖）。「一人開戰（`begin`）」與「另一人斷線（`disconnect`）」同時發生時互等，全服的離房、清房、戰鬥時鐘停住，只能重啟 | CI run 43264734337、43264755522、43264993090 的 thread dump（`docs/reports/issue-382.md`） |
-| `CONTEXTS` 的五個持有點 | `context()`（查表、建立）、`cleanupAllowed`、`forget`（內含 `cleanupAllowed`，同一把鎖重入）、`reconcileRecovered` 與 `retry`（只複製清單就放開）。五處在鎖內都只讀寫對照表與 `Context` 的 volatile 欄位 | `S/DurableBattleSettlement.java:28,79,81,129,148` |
-| `Context` 鎖內不回頭取 `GameHub` | `freeze` 進 `Context` 鎖之前先替名單上每個人建好 `Ticket`（`begin` 會取 `GameHub` 與 `CONTEXTS`），鎖內的 `ticket()` 只查表。斷線判定是拿著 `GameHub` 鎖進 `freeze`，所以這個先後不能反過來 | `S/DurableBattleSettlement.java:41-42,49`；`S/GameHub.java:12857,12925` |
-| 資料庫與檔案鎖 | `GET_LOCK` 以「控制庫＋來源庫＋角色」為名，等待上限 5 秒，逾時回報失敗後由背景重試，不會永久互等；`SettlementJournal.replay` 不取 Java 鎖，重複重放靠結果 ID 去重；`owner.lock` 是跨程序的檔案鎖，只在開啟時取一次 | `S/SettlementSql.java:81-83`；`S/SettlementJournal.java:13-14,38-47` |
-| 〔推測〕斷線判定時 WAL 寫檔在 `GameHub` 鎖內 | `battleDisconnectWork`（`synchronized`）→ `TeamDisconnectSettlement.resolve` → `freeze` → `journal.save`（`fsync`）。磁碟慢時，斷線判定那一刻全大廳會跟著等；不是死結，沒有量測過 | `S/GameHub.java:12857,12925`；`S/TeamDisconnectSettlement.java:14`；`S/DurableBattleSettlement.java:58` |
+| `CONTEXTS` 的五個持有點 | `context()`（查表、建立）、`cleanupAllowed`、`forget`（內含 `cleanupAllowed`，同一把鎖重入）、`reconcileRecovered` 與 `retry`（只複製清單就放開）。五處在鎖內都只讀寫對照表與 `Context` 的 volatile 欄位 | `S/DurableBattleSettlement.java:65,116,118,166,185` |
+| `Context` 鎖內不回頭取 `GameHub` | `freeze` 進 `Context` 鎖之前先替名單上每個人建好 `Ticket`（`begin` 會取 `GameHub` 與 `CONTEXTS`），鎖內的 `ticket()` 只查表。斷線判定是拿著 `GameHub` 鎖進 `freeze`，所以這個先後不能反過來 | `S/DurableBattleSettlement.java:78-79,86`；`S/GameHub.java:12857,12925` |
+| 資料庫與檔案鎖 | `GET_LOCK` 以「控制庫＋來源庫＋角色」為名，等待上限 5 秒，逾時回報失敗後由背景重試，不會永久互等；`SettlementJournal.replay` 不取 Java 鎖，重複重放靠結果 ID 去重；`owner.lock` 是跨程序的檔案鎖，只在開啟時取一次。T136 的作廢（`voidResult`）用同一個鎖名（`lockName`），只在啟動時、背景 worker 開始之前執行 | `S/SettlementSql.java:81,106,122-124`；`S/SettlementJournal.java:18-19,85-94` |
+| 〔推測〕斷線判定時 WAL 寫檔在 `GameHub` 鎖內 | `battleDisconnectWork`（`synchronized`）→ `TeamDisconnectSettlement.resolve` → `freeze` → `journal.save`（`fsync`）。磁碟慢時，斷線判定那一刻全大廳會跟著等；不是死結，沒有量測過 | `S/GameHub.java:12857,12925`；`S/TeamDisconnectSettlement.java:14`；`S/DurableBattleSettlement.java:95` |
 | 範圍 | 本表只涵蓋結算三個類別（`DurableBattleSettlement`、`SettlementJournal`、`SettlementSql`）與它們被 `GameHub`／`ClientSession` 呼叫的入口；`GameHub` 與 `ClientSession` 彼此之間其他路徑的鎖順序沒有在本次逐一檢查 | — |
 
 ### 4.3 積分（ranking_points）
@@ -325,7 +330,7 @@
 | 排行榜 | 總榜：積分→勝場→名字；月榜：本月積分→本月勝場→總積分→名字；榜單快照每天 05:00 更新 | `S/GameStateStore.java:5811-5854`；`:1098` |
 | 經驗與等級 | 勝 +100、敗 +25（料理可加成），LiTo 內部等級＝1＋經驗÷1000；**只在記憶體**，不寫 `characters` | `S/GameStateStore.java:5619-5624` |
 | **持久性**（D3＝B，T103b #335） | 積分、斷線數、月計**跨伺服器重啟保留**：存在各來源庫 `character_lito` 的 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`；登入／排行榜載入時一併讀回 | `S/SharedDatabase.java:97-98,196`；`D/db/lito_character_ranking.sql` |
-| 寫回 | 結算沿用 `last_result_id` 冪等：同一場結果重放（WAL 重放、背景重試、回覆遺失）只加一次。`SettlementSql.drain` 依收據的勝／敗／斷線，用與記憶體 `recordResult` 相同的規則（`SettlementSql.next`）算出新值，和勝敗、`version`、`last_result_id` 寫在同一條 UPDATE；直接寫入路徑 `SharedDatabase.persist` 也寫同 6 欄。寫回後記憶體的積分欄位改用資料庫值 | `S/SettlementSql.java:29,84-87`；`S/SharedDatabase.java:154,162`；`S/DurableBattleSettlement.java:116` |
+| 寫回 | 結算沿用 `last_result_id` 冪等：同一場結果重放（WAL 重放、背景重試、回覆遺失）只加一次。`SettlementSql.drain` 依收據的勝／敗／斷線，用與記憶體 `recordResult` 相同的規則（`SettlementSql.next`）算出新值，和勝敗、`version`、`last_result_id` 寫在同一條 UPDATE；直接寫入路徑 `SharedDatabase.persist` 也寫同 6 欄。寫回後記憶體的積分欄位改用資料庫值 | `S/SettlementSql.java:29,125-128`；`S/SharedDatabase.java:154,162`；`S/DurableBattleSettlement.java:153` |
 | 跨月 | 資料庫存的 `monthly_period`（YYYYMM，台北 05:00 日界，`GameStateStore.rankingPeriodKeyAt`）和本場所在月份不同時，先把月積分／月勝／月敗歸零再加本場；總積分不受影響 | `S/SettlementSql.java:29-38`；`S/GameStateStore.java:5982` |
 | 升級 | 部署新版前，SQL 管理者對每個 `enabled=1` 來源執行 `db/lito_character_ranking.sql`（既有列新欄位為 0；升級前的積分只在記憶體、無從回填）；缺欄位時伺服器拒絕啟動。LiTo 執行帳號不需新權限（表級 UPDATE 已涵蓋），見 `docs/design/database.md` §2、§7 | `D/db/lito_character_ranking.sql` |
 | 設定 | 在 `config/server.properties` 加 `battle.reward.win`、`battle.reward.loss` 可改（範圍 0～1000000，修改後重啟生效）；沒寫就用程式預設 **勝 250、敗 50**，斷線敗扣 `battle.reward.loss`（預設 −50），最低 0（D1，T103）。範例設定 `.example` 目前沒有列這兩項（調度器閘門禁止改 `config/server.properties*`）。〔待驗證〕正式機實際值要看正式 `server.properties` | `S/ServerConfig.java:578-579`；`D/README.zh-TW.md` |
@@ -353,7 +358,7 @@
 | 顯示來源 | 房間與戰鬥內顯示「帳號(來源名)」，總長不超過 27 bytes，太長就截短來源名 | `S/ClientSession.java:87790-87804` |
 | 排行榜 | 名字帶來源名 | `S/GameStateStore.java:6001-6002` |
 | 配對 | 不看來源、不做來源間平衡 | `S/GameHub.java:1515-1523` |
-| 結算 | 每位玩家寫回**自己來源庫**的 `character_lito` | `S/DurableBattleSettlement.java:32,46-48` |
+| 結算 | 每位玩家寫回**自己來源庫**的 `character_lito` | `S/DurableBattleSettlement.java:69,83-85` |
 | 已知風險 | 戰鬥內玩家 ID 直接用來源 objid；兩個來源撞號時的處理未實作（T105 #306） | LC X10；`S/ClientSession.java:88170-88174` |
 | 不做 | 不同 LiTo 程式之間互連（跨程式對戰） | LC X15 |
 

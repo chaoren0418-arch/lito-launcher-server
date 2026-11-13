@@ -360,15 +360,15 @@ GRANT SELECT ON `380_ac`.`server_盟屋_紀錄` TO 'lito_shared'@'127.0.0.1';
 - LiTo 接受 InnoDB 或 MyISAM（`S/SharedDatabase.java:75-77`），但收據表 `lito_battle_settlement` **必須** InnoDB（`S/SettlementSql.java:7`）。
 
 **寫入流程**（`S/SettlementSql.java`、`S/DurableBattleSettlement.java`）
-1. 戰鬥結束先把結果寫本機 WAL 並 `fsync`（`S/SettlementJournal.java:18-25`）。
+1. 戰鬥結束先把結果寫本機 WAL 並 `fsync`（`S/SettlementJournal.java:65-72`）。
 2. `apply`：在一個 InnoDB 交易裡 `INSERT … ON DUPLICATE KEY` 收據並讀回比對，`commit`（`S/SettlementSql.java:11-17`）。收據 ID＝SHA-256(場次|來源庫|角色)，重放不會產生第二筆（`S/SettlementJournal.java:7`）。
 3. `drain`：autocommit 模式，先 `GET_LOCK(<64 字元雜湊>,5)`（`:26-28`），依 `sequence_id` 逐筆處理未套用收據：
    - 讀 `character_lito` 的 wins／losses／version／last_result_id（`:35`）；
    - 若 `last_result_id != 本收據`：**一條** `UPDATE … SET wins,losses,version+1,last_result_id=本收據 WHERE char_obj_id=? AND version=? AND last_result_id=?`，影響列數不是 1 就丟例外（`:38`）；沒有列時一條 `INSERT`（`:39`）；
    - 再把收據標 `applied=1`（InnoDB，`:42`）。
-4. 失敗由背景每 2 秒重試（`S/DurableBattleSettlement.java:22,111-122`）；啟動時先重放 WAL 再 `drainAll`（`:21`）。
+4. 失敗由背景每 2 秒重試（`S/DurableBattleSettlement.java:21,148-159`）；啟動時先重放 WAL 再 `drainAll`（`:29-38`；T136 起之前先清 `.tmp`、處理作廢清單，見 `docs/design/gameplay.md` §4.2）。
 
-**T103b（#335）後的寫入流程**：上面第 3 步的「一條 UPDATE」現在同時寫 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`（`S/SettlementSql.java:84-87`）。新值由 `SettlementSql.next` 從收據的 `won`／`disconnected` 計算（`:29`；規則見 `docs/design/gameplay.md` §4.3），和 wins／losses／version／`last_result_id` 在**同一列、同一條敘述**，所以上表每一列的結論對新欄位一樣成立：
+**T103b（#335）後的寫入流程**：上面第 3 步的「一條 UPDATE」現在同時寫 `ranking_points`、`disconnects`、`monthly_period`、`monthly_ranking_points`、`monthly_wins`、`monthly_losses`（`S/SettlementSql.java:125-128`）。新值由 `SettlementSql.next` 從收據的 `won`／`disconnected` 計算（`:29`；規則見 `docs/design/gameplay.md` §4.3），和 wins／losses／version／`last_result_id` 在**同一列、同一條敘述**，所以上表每一列的結論對新欄位一樣成立：
 - MyISAM：單一敘述對單列原子；回覆遺失或標記失敗時重試讀到 `last_result_id == 本收據` 就跳過，積分不會重複加（CI 測試 `SettlementRankingMySqlIntegrationTest` 對 MyISAM 的 `380_ac_1` 驗證）。
 - InnoDB：autocommit 下同一條 UPDATE 也是原子；CI fixture 把 `380_ac_2` 的 `character_lito` 建成 InnoDB，跑同一組測試。
 - 直接寫入路徑 `SharedDatabase.persist`（`commitResult`，非 WAL）也寫同 6 欄，CAS 條件不變（`version`＋wins＋losses，`S/SharedDatabase.java:162`）；另外拒絕「斷線數增加但沒有多一敗」或月份無效的結果（`:154`）。
@@ -599,8 +599,8 @@ LiTo 的 `S/NativeDeItemTable.java` 與 1-伺服器 `ItemTable.java` 是同一�
 | 類別 | 位置 | 用哪個 ID | T105 後 |
 |---|---|---|---|
 | 房間／戰鬥名單、目標、封包 objectId | `S/ClientSession.java`（1,348 處）、`S/GameHub.java`（69 處）、`Combat*`／`Native*` 輔助類 | `playerObjectId()` | 改回傳**執行期 ID**（見下） |
-| 勝負判定 | `S/BattleRules.java` `Resolution(winners, losers)`；`S/DurableBattleSettlement.java:37,45-52` | `playerObjectId()` | 執行期 ID，不撞號 |
-| 結算收據與回寫 | `S/DurableBattleSettlement.java:71-74`（`entry`）、`S/SettlementSql.java`、`S/SharedDatabase.java:98-158` | `(route.database, ch.objectId())` 原 objid | 不變：一直是「來源庫＋原 objid」 |
+| 勝負判定 | `S/BattleRules.java` `Resolution(winners, losers)`；`S/DurableBattleSettlement.java:74,82-89` | `playerObjectId()` | 執行期 ID，不撞號 |
+| 結算收據與回寫 | `S/DurableBattleSettlement.java:108-111`（`entry`）、`S/SettlementSql.java`、`S/SharedDatabase.java:98-158` | `(route.database, ch.objectId())` 原 objid | 不變：一直是「來源庫＋原 objid」 |
 | 戰績／排名 | `S/ClientSession.java:7778-7812`（`sqlTournamentProfiles` 每個 session 各自一份、以原 objid 為 key）；`GameStateStore.sourceCharacter(來源名, 角色名)`（`S/ClientSession.java:56793-56795`） | 原 objid／來源＋角色名 | 不變：本來就有來源區隔 |
 | 角色庫讀取（背包、buff、信件、寵物…） | `S/ClientSession.java:7932-8100` 等 `var5.xxx(var1.objectId())` | `CharacterSummary.objectId()` 原 objid | 不變 |
 | 盟屋競標寫入 | `S/ClientSession.java:6919` `persistHouseBid` | 原本誤用 `playerObjectId()` | 改用 `sourceCharacterObjectId()`（原 objid） |
@@ -612,7 +612,7 @@ LiTo 的 `S/NativeDeItemTable.java` 與 1-伺服器 `ItemTable.java` 是同一�
   - 別名區 `0x7800_0000..0x78FF_FFFF`（`S/SourceObjectIds.java:43-44`）：盤點所有執行期配號區段（`0x4000_0000` 假人、`0x5000_0000..0x5FFF_FFFF` 地面物品、`0x6000_0000..0x76FF_FFFF` NPC／效果／門／塔等、`0x7A10_0000` 魔法娃娃、`0x8000_0000` 料理火、`0x9000_0000` 寵物）後挑的空段；值 ≤ `0x7FFF_FFFF`，送給客戶端仍是合法的有號 32 位元 objectId。
   - 別名在 owner 存活期間不重配（不依 socket 狀態回收），斷線結算時拿到的 ID 與戰鬥中一致；owner 被 GC 或改選別的角色時才釋放。
 - `ClientSession.playerObjectId()`（`S/ClientSession.java:57100-57106`）改為查登記表；只有一個來源（`login.classic.server.names` 只有一個）、或原 objid 不在 1..0x7FFF_FFFF 時直接回原值，所以**單來源部署行為完全不變**。新增 `sourceCharacterObjectId()`（`S/ClientSession.java:57109`）給資料庫用。
-- 結算：`DurableBattleSettlement.freeze` 先做 `requireDistinct`（`S/DurableBattleSettlement.java:47,64-69`）——同一個執行期 ID 對到兩個不同的（來源庫, 原 objid）就拒絕凍結（寧可不結算也不寫錯）；勝負用執行期 ID 判，收據與 `character_lito` 回寫仍用 `(route.database, 原 objid)`（`entry`，`S/DurableBattleSettlement.java:71-74`）。收據 key `SettlementJournal.Entry.key(battle, database, objid)` 與 drain 鎖名 `controls_database + objid` 本來就含來源庫，不需改。
+- 結算：`DurableBattleSettlement.freeze` 先做 `requireDistinct`（`S/DurableBattleSettlement.java:84,101-106`）——同一個執行期 ID 對到兩個不同的（來源庫, 原 objid）就拒絕凍結（寧可不結算也不寫錯）；勝負用執行期 ID 判，收據與 `character_lito` 回寫仍用 `(route.database, 原 objid)`（`entry`，`S/DurableBattleSettlement.java:108-111`）。收據 key `SettlementJournal.Entry.key(battle, database, objid)` 與 drain 鎖名 `controls_database + objid` 本來就含來源庫，不需改。
 
 ### 不處理（範圍外）
 

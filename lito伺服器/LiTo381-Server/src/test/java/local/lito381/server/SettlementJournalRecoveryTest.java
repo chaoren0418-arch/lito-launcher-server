@@ -1,6 +1,7 @@
 package local.lito381.server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -133,14 +135,90 @@ final class SettlementJournalRecoveryTest {
             journal.save(List.of(entry(9, "Kept", true, false)));
         }
         // A crash between the .tmp write and the atomic rename leaves a partial .tmp file.
-        Files.writeString(dir.resolve(UUID.randomUUID() + ".tmp"), "format=1\ncount=1\n0.id=trunc",
-                StandardCharsets.ISO_8859_1);
+        Path partial = dir.resolve(UUID.randomUUID() + ".tmp");
+        Files.writeString(partial, "format=1\ncount=1\n0.id=trunc", StandardCharsets.ISO_8859_1);
+        Files.setLastModifiedTime(partial, FileTime.fromMillis(System.currentTimeMillis() - 60_000));
         try (SettlementJournal restarted = new SettlementJournal(dir)) {
             assertEquals(1, restarted.pending(), "the partial save is not a committed result");
+            // T136: the dead owner's leftover is removed once this process owns the directory.
+            assertFalse(Files.exists(partial));
+            assertEquals(List.of(partial.getFileName()), restarted.removedTemporaryFiles().stream().map(Path::getFileName).toList());
             List<SettlementJournal.Entry> replayed = new ArrayList<>();
             restarted.replay(replayed::addAll);
             assertEquals(1, replayed.size());
             assertEquals("Kept", replayed.get(0).name());
+        }
+    }
+
+    @Test
+    void onlyStaleTemporaryFilesWithTheSaveNamePatternAreRemoved() throws Exception {
+        Path dir = temporary.resolve("journal");
+        Files.createDirectories(dir);
+        long old = System.currentTimeMillis() - 60_000;
+        Path stale = dir.resolve(UUID.randomUUID() + ".tmp");
+        Path foreign = dir.resolve("operator-notes.tmp"); // not a save() name
+        Path upper = dir.resolve(UUID.randomUUID().toString().toUpperCase(java.util.Locale.ROOT) + ".tmp");
+        Path future = dir.resolve(UUID.randomUUID() + ".tmp"); // modified after the lock was taken
+        Path folder = dir.resolve(UUID.randomUUID() + ".tmp"); // not a regular file
+        for (Path p : List.of(stale, foreign, upper, future)) Files.writeString(p, "x");
+        Files.createDirectory(folder);
+        for (Path p : List.of(stale, foreign, upper, folder)) Files.setLastModifiedTime(p, FileTime.fromMillis(old));
+        Files.setLastModifiedTime(future, FileTime.fromMillis(System.currentTimeMillis() + 3_600_000));
+        try (SettlementJournal journal = new SettlementJournal(dir)) {
+            assertFalse(Files.exists(stale));
+            for (Path p : List.of(foreign, upper, future, folder)) assertTrue(Files.exists(p), p.getFileName().toString());
+            assertEquals(1, journal.removedTemporaryFiles().size());
+            assertEquals(4, journal.keptTemporaryFiles().size());
+        }
+    }
+
+    @Test
+    void secondOwnerNeverTouchesTheTemporaryFilesOfTheRunningOwner() throws Exception {
+        Path dir = temporary.resolve("journal");
+        try (SettlementJournal owner = new SettlementJournal(dir)) {
+            Path inFlight = dir.resolve(UUID.randomUUID() + ".tmp");
+            Files.writeString(inFlight, "x");
+            Files.setLastModifiedTime(inFlight, FileTime.fromMillis(System.currentTimeMillis() - 60_000));
+            assertThrows(Exception.class, () -> new SettlementJournal(dir).close());
+            assertTrue(Files.exists(inFlight), "a refused second process deletes nothing");
+        }
+    }
+
+    @Test
+    void voidRequestListIsParsedStrictly() throws Exception {
+        Path file = temporary.resolve("void-requests.txt");
+        String a = "a".repeat(64), b = "B".repeat(64);
+        Files.writeString(file, "\uFEFF# operator list\n\n" + a + "   角色已改名 ticket-17\n" + b + "\n" + a + " duplicate\n",
+                StandardCharsets.UTF_8);
+        var parsed = SettlementJournal.voidRequests(file);
+        assertEquals(List.of(a, "b".repeat(64)), List.copyOf(parsed.keySet()));
+        assertEquals("角色已改名 ticket-17", parsed.get(a));
+        assertEquals("identity changed in source database", parsed.get("b".repeat(64)));
+        Files.writeString(file, a + "\n" + "c".repeat(63) + "\n", StandardCharsets.UTF_8);
+        IOException bad = assertThrows(IOException.class, () -> SettlementJournal.voidRequests(file));
+        assertTrue(bad.getMessage().contains("line 2"), bad.getMessage());
+        Files.writeString(file, a + " " + "x".repeat(201) + "\n", StandardCharsets.UTF_8);
+        assertThrows(IOException.class, () -> SettlementJournal.voidRequests(file));
+    }
+
+    @Test
+    void archiveCopiesOnlyTheFilesHoldingVoidedResultsAndKeepsThemPending() throws Exception {
+        Path dir = temporary.resolve("journal");
+        SettlementJournal.Entry renamed = entry(21, "Renamed", false, true);
+        SettlementJournal.Entry partner = entry(22, "Partner", true, false);
+        SettlementJournal.Entry other = entry(23, "Other", true, false);
+        try (SettlementJournal journal = new SettlementJournal(dir)) {
+            journal.save(List.of(renamed, partner));
+            journal.save(List.of(other));
+            List<Path> copies = journal.archive(Set.of(renamed.id()));
+            assertEquals(1, copies.size());
+            assertTrue(copies.get(0).startsWith(dir.resolve(SettlementJournal.VOIDED_DIRECTORY)));
+            assertEquals(2, journal.pending(), "archiving copies; the replay still owns the originals");
+            assertEquals(copies, journal.archive(Set.of(renamed.id())), "a rerun does not duplicate the copy");
+        }
+        // The audit sub-directory is not read as committed results.
+        try (SettlementJournal reopened = new SettlementJournal(dir)) {
+            assertEquals(2, reopened.pending());
         }
     }
 
