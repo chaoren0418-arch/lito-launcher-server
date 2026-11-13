@@ -80,4 +80,6 @@
 5. `$` 開頭的名稱編號查 `Text.pak` 的 `desc-c.tbl`（第 N+2 行＝`$N`，CP950）；`string-c.tbl` 是系統訊息表。
 
 ## CI
-（push 後回填）
+PR #395，commit `8f6a75ca`，run 43377405977／43377406023：
+- 通過：Server tests（7m1s，含本次新增的 7 個測試）、Server (Java 17 / Maven)、Server reproducible JAR、Semantic gap、Launcher、Build-Package.ps1 zip。
+- 失敗：只有 non-blocking 的「Server tests (CI MySQL fixture)」（11m54s）。main 最近三次（`81b2fb98`、`1a4cd45b`、`fb643037`）同一個 job 也都失敗，是既有狀況（T131 範圍），與本 PR 無關。
