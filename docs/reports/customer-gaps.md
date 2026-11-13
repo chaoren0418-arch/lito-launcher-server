@@ -54,7 +54,7 @@
 | G24 | 戰鬥中斷線的結算：冪等與清理有測試，但雙玩家人工斷線未全驗收（CHECKLIST 16）。 | 玩家 | [VALIDATION.md:9](../../lito伺服器/LiTo381-Server/VALIDATION.md#L9) | b | Backlog（待 #285） | — |
 | G25 | BUFF 圖示、魔法娃娃、藍色藥水、血之渴望的狀態圖示與到期顯示：沒有逐項人工回報。 | 玩家 | [buff-schema-and-character-pages-20261018.zh-TW.md:43](../../lito伺服器/LiTo381-Server/docs/maintenance/buff-schema-and-character-pages-20261018.zh-TW.md#L43)；[world-resource-compat-current.zh-TW.md:72-76](../../lito登入器/LiTo381-Launcher/docs/maintenance/world-resource-compat-current.zh-TW.md#L72) | b | Backlog（待 #285） | — |
 | G26 | 重複登入（`S_LOGIN_CHECK/0x16`）訊息後回到空白帳號頁：實際畫面待驗收。 | 玩家 | [world-resource-compat-current.zh-TW.md:36](../../lito登入器/LiTo381-Launcher/docs/maintenance/world-resource-compat-current.zh-TW.md#L36) | b | Backlog（待 #285） | — |
-| G27 | map 12000 資產缺口：#83 引述的前輪觀察（候選環境），正式版是否受影響未知。本報告**未**宣稱缺資源，也未執行 PakViewer 查核。 | 玩家（若該圖被選到） | [issue-83.md:7](issue-83.md#L7)、[issue-83.md:148](issue-83.md#L148)；[issue-284.md:110](issue-284.md#L110) | b | Backlog（待 #285；若 M1 碰到，須先用 PakViewer 查遍客戶端 pak 再定性） | — |
+| G27 | map 12000 資產缺口：#83 引述的前輪觀察（候選環境）。**#381 已查核**：客戶端資產齊全（`map\12000` 66 個 `.s32`、tile 在 `Tile.pak` 齊全、`zone3-c.tbl` 有名稱；查過 24 個 pak）；房間模式不會送玩家到 12000。缺口在伺服器：JAR 內建地形 715 張不含 12000／12004，靜態庫 `mapids` 若有這兩列（`1-伺服器` 2026-10-29 新增），啟動會停在 `source map physical asset not packaged: 12000 -> 12000`。正式 0.6.71 與 `src/main` 索引相同〔靜態已驗證；未實跑〕 | 營運（啟動失敗時間接影響全部玩家） | [issue-381.md](issue-381.md)；[issue-83.md:7](issue-83.md#L7)、[issue-83.md:148](issue-83.md#L148)；[issue-284.md:110](issue-284.md#L110) | b | 修（待主控決定做法，選項見 [issue-381.md](issue-381.md)「給下一棒的提示」）；不需要實機驗收 | `src/main/resources/combat/terrain/source-index.tsv` 與 `source/`，或 `NativeDeTerrainResources.read` |
 | G28 | 技能 131 傳送在競技場停用（現行規則）。 | 玩家 | [combat-continuation-current.zh-TW.md:22](../../lito伺服器/LiTo381-Server/docs/maintenance/combat-continuation-current.zh-TW.md#L22)、[:84](../../lito伺服器/LiTo381-Server/docs/maintenance/combat-continuation-current.zh-TW.md#L84) | b | Backlog：刻意的規則，不是缺陷；要開放需使用者決定 | — |
 
 ## 已核對、不列為缺口
@@ -81,8 +81,9 @@
 
 **待驗證**
 - 來源 (a)：#285 跑表結果。
-- G19–G27：都需要實機（交 Codex／dot 依 CHECKLIST 執行）。
-- G01：補表後是否還有其他漏授權表、map 12000 是否影響正式 JAR。
+- G19–G26：都需要實機（交 Codex／dot 依 CHECKLIST 執行）。
+- G27：靜態查核已完成（#381）；待查實驗庫與正式庫的靜態庫 `mapids` 是否含 12000／12004，以及含這兩列時的實際啟動結果。
+- G01：補表後是否還有其他漏授權表。
 
 ## 下一步
 
