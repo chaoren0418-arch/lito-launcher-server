@@ -51962,6 +51962,7 @@ final class ClientSession implements Runnable {
     }
 
     private void serverClassicWorldCompanionTick(BattleCompanion battleCompanion, int n, long l) throws IOException {
+        NativeCloseoutCompanionSkills.tick(battleCompanion);
         NativeCombatAttacker.Ingress ingress = NativeCombatAttacker.enterCompanion(this, battleCompanion);
         try {
             boolean bl;
@@ -52327,6 +52328,7 @@ final class ClientSession implements Runnable {
    }
 
     private void serverCompanionTick(BattleCompanion var1, long var2, long var4) throws IOException {
+      NativeCloseoutCompanionSkills.tick(var1);
       NativeCombatAttacker.Ingress var34 = NativeCombatAttacker.enterCompanion(this, var1);
 
       try {

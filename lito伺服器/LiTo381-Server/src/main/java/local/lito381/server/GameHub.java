@@ -1037,6 +1037,8 @@ final class GameHub implements AutoCloseable {
 
     private volatile Object nativeStaticNpcScenes;
     private volatile boolean nativeStaticMotionClosed;
+    /** T135 (#386): the one {@link NativeCloseoutCompanionRecovery.Clock} of this Hub, or null. */
+    private volatile Object nativeCloseoutCompanionRecoveryClock;
     private long nativeStaticMotionRestTick;
     private volatile long nativeSummonNextPhaseNanos;
     volatile Object nativeSourceCubeBurnPhase;
@@ -1494,6 +1496,7 @@ final class GameHub implements AutoCloseable {
             this.battleClock.scheduleWithFixedDelay(this::classicWorldMonsterTickSafely, serverConfig.classicWorldMonsterAiTickMs(), serverConfig.classicWorldMonsterAiTickMs(), TimeUnit.MILLISECONDS);
         }
         NativePlayerLifetime.openHub(this);
+        NativeCloseoutCompanionRecovery.init(this);
     }
 
     synchronized ChannelSnapshot enterChannel(int channelId, ClientSession session) {
@@ -13026,6 +13029,7 @@ final class GameHub implements AutoCloseable {
 
     @Override
     public void close() {
+        NativeCloseoutCompanionRecovery.close(this);
         NativeStaticNpcScene.close(this);
         NativeCancellationBattleRuntime.close(this);
         NativeCancellationNpcRuntime.close(this);

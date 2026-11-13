@@ -496,7 +496,7 @@ final class BattleCompanion {
 
     private final long objectId;
     private final Kind kind;
-    private Profile profile;
+    private volatile Profile profile;
     private String name;
     private volatile boolean active;
     private Posture posture = Posture.STAY;
@@ -570,6 +570,8 @@ final class BattleCompanion {
     volatile Object nativeSourceElementalLease;
     volatile Object nativeSourceDollSlowEpoch;
     final Object nativeSourceNpcFactoryType;
+    /** T135 (#386): actor-owned Source mobskill use counts and reuse delays; see NativeCloseoutCompanionSkills. */
+    volatile Object nativeCloseoutMobSkillState;
 
     BattleCompanion(long objectId) {
         this(objectId, Profile.arenaDefault(), Kind.ARENA);
@@ -589,6 +591,7 @@ final class BattleCompanion {
         moveSpeed = profile.moveSpeed();
         sourceTemplateLevel = profile.level();
         this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryType.birth(this, null);
+        NativeCloseoutCompanionSkills.install(this);
     }
 
     static BattleCompanion tamed(long objectId, int npcId, int gfx, String name,
@@ -972,6 +975,7 @@ final class BattleCompanion {
         boolean updatedValue = false;
         NativeCompanionCallbacks.advance(this);
         recipient.active = updatedValue;
+        NativeCloseoutCompanionSkills.terminal(this);
         this.targetObjectId = 0L;
         this.pathFailCount = 0;
         this.nextActionNanos = 0L;
@@ -1664,6 +1668,7 @@ final class BattleCompanion {
         }
         int n2 = Math.min(this.hp, amount);
         this.hp -= n2;
+        NativeCloseoutCompanionSkills.terminal(this);
         this.timedStatus.cancelSleep();
         boolean bl2 = bl = this.hp == 0;
         if (bl) {
@@ -1681,6 +1686,7 @@ final class BattleCompanion {
                 boolean updatedValue = false;
                 NativeCompanionCallbacks.advance(this);
                 recipient.active = updatedValue;
+                NativeCloseoutCompanionSkills.terminal(this);
                 this.targetObjectId = 0L;
                 this.nextActionNanos = 0L;
             }
@@ -1720,6 +1726,7 @@ final class BattleCompanion {
                 boolean updatedValue = false;
                 NativeCompanionCallbacks.advance(this);
                 recipient.active = updatedValue;
+                NativeCloseoutCompanionSkills.terminal(this);
                 this.targetObjectId = 0L;
                 this.nextActionNanos = 0L;
                 this.clearSpeedEffects();
