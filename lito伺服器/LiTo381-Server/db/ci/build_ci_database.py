@@ -137,6 +137,11 @@ def control_database() -> str:
     parts.append(create)
     for _, _, db in SOURCES:
         parts.append(f"SET @lito_source = '{db}';" + migration.split("-- 現場已")[0])
+    # T136: void audit columns on the receipt table (control database only).
+    void = read(DB / "lito_battle_settlement_void.sql")
+    if void.count(f"SET @lito_controls = '{CONTROL}';") != 1:
+        sys.exit("lito_battle_settlement_void.sql controls database changed")
+    parts.append(void)
 
     # T103b: ranking columns, the same upgrade an operator runs on each source.
     ranking = read(DB / "lito_character_ranking.sql")

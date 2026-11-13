@@ -39,6 +39,7 @@
    | 5 | `db/lito_gm_polyme.sql` | 可（`WHERE NOT EXISTS`） | `.polyme` |
    | 6 | `db/lito_room_policy.sql` | 可（`IF NOT EXISTS`） | 測試房／ArenaBot |
    | 7 | `db/lito_resource_compact.sql` | **僅首次** | 現行 10 張 `lito_resource_*` |
+   | 8 | `db/lito_battle_settlement_void.sql` | 可（先查 `information_schema`） | 結算收據的作廢稽核欄位 `voided_at`／`void_reason`（T136）。只有要作廢結果時才必須先跑；需要 ALTER 權限，請在伺服器停機時執行 |
 
 5. `lito_resource_compact.sql` 檔頭寫明 Fresh install only；`CREATE TABLE` **沒有** `IF NOT EXISTS`，既有表會直接報錯。匯入前先查：
 
@@ -196,5 +197,43 @@ BAT 與登入器內建伺服器共用埠，**擇一**啟動。
 | `dotnet` 找不到 | PATH 沒有 SDK | 安裝後重開終端 |
 | 客戶端立刻拒絕啟動 | 不是指定的 `LiTo.bin` | 維持 `D:\lineage開發\0-客戶端`；核對 SHA `CE6EE68A…` |
 | zip 裡出現 `LiTo.bin`／`server.properties`／pak | 打包腳本被改壞或手動加檔 | 丟棄該包；用 `Build-Package.ps1` 重打 |
+| 啟動失敗：`Settlement character identity changed: <來源庫>/<objid> result=<result_id>` | 有一筆待寫入的戰績，凍結時的角色在來源庫已被改名或刪除（同一個 objid 的名字不同或查無此列）；伺服器拒絕把戰績寫到別的角色上，所以拒絕啟動。其他結果已經寫入 | 照下方「6.1 作廢待寫入的戰績」處理。**不要**手動改 `lito_battle_settlement.applied`、不要手動搬 `.pending` 檔 |
+| 啟動失敗：`Settlement void refused: …` | 作廢清單裡有不能作廢的結果：`unknown result`（ID 打錯）、`already counted`（已經計入）、`identity … is unchanged`（角色沒改名，這筆會正常寫入，不該作廢）、`already in character_lito`（計數已寫、只差收據回條） | 把那一行從 `void-requests.txt` 刪掉再啟動。`already in character_lito` 請交給資料庫管理者確認，不要作廢 |
+| 啟動失敗：`lacks void columns; run db/lito_battle_settlement_void.sql first` | 放了作廢清單，但控制庫還沒有作廢欄位 | 由資料庫管理者在 `380_lito` 執行 `db/lito_battle_settlement_void.sql`（可重跑），再啟動 |
+| 啟動失敗：`void-requests.txt line N: …` | 作廢清單格式錯：不是 64 個十六進位字元的 `result_id`，或原因超過 200 字、跨行 | 修正該行；清單沒有被處理，資料庫沒有任何改變 |
+| 啟動 log：`settlement journal: removed stale <UUID>.tmp`／`kept unrecognised …` | 上次程序在寫 WAL 檔途中結束，留下 `.tmp` 殘檔 | `removed` 是自動清掉、不用處理（`.tmp` 從來不是已提交的結果）。`kept` 表示檔名或型態不是伺服器產生的，伺服器不碰；確認是誰放的再手動移走 |
+
+### 6.1 作廢待寫入的戰績（角色改名／刪除，T136）
+
+作廢＝這一場的這一筆戰績**永遠不計入**任何角色，只在控制庫留下紀錄；不會改 `character_lito` 的任何數字，也不需要給執行帳號新的權限。只能作廢「角色身分已變更」而寫不進去的結果。
+
+1. 停止伺服器（BAT 或登入器內建伺服器都要停）。
+2. 從啟動 log 抄下每一行 `Settlement character identity changed: <來源庫>/<objid> result=<result_id>` 的 `result_id`（64 個小寫十六進位字元）。同一角色可能有好幾筆，每筆都要抄；用下面的 SQL 也可以查（唯讀）：
+
+   ```sql
+   SELECT result_id, battle_id, source_database, char_obj_id, char_name, won, disconnected, created_at
+   FROM `380_lito`.`lito_battle_settlement` WHERE applied=0 ORDER BY sequence_id;
+   ```
+
+3. 確認角色真的改名或刪除了（在來源庫查 `SELECT objid, char_name FROM characters WHERE objid=<objid>`，名字和上面的 `char_name` 不同或查無此列）。若其實是誤改、可以把名字改回來，就不要作廢——改回原名後直接重啟，這筆會正常計入。
+4. 第一次作廢前，請資料庫管理者先在 `380_lito` 執行 `db/lito_battle_settlement_void.sql`（可重跑）。
+5. 在伺服器的 WAL 目錄（啟動 log 的 `[LiTo] settlement journal=…` 那一行；一般是 `lito伺服器/LiTo381-Server/runtime/battle-settlements/`）建立 `void-requests.txt`，UTF-8，一行一筆，`result_id` 後面空一格可以寫原因（最多 200 字，會寫進資料庫），`#` 開頭是註解：
+
+   ```text
+   # 2026-11-14 角色 A 已改名為 B，客服單 1234
+   3f5c…（64 字）  角色已改名，客服單 1234
+   9a01…（64 字）
+   ```
+
+6. 啟動伺服器。成功時 log 每筆會印一行 `[LiTo] settlement … voided <result_id> <來源庫>/<objid> frozen=<凍結名> now=<目前名或 <deleted>> reason=…`，然後走到 `[LiTo] ready`。
+7. 處理完成後：
+   - 收據列 `applied=2`、`voided_at`、`void_reason` 已填（不會刪除收據列）；
+   - `void-requests.txt` 已移到 `voided/void-requests-<時間>.txt`；
+   - `voided/` 裡有含這些結果的 `.pending` 檔副本（作廢前複製）；
+   - `void-audit.log` 每筆一行（時間、`voided`／`already-voided`、`result_id`、來源庫/objid、凍結名、目前名、原因）；
+   - 同一場其他玩家的結果照常計入。
+8. 啟動仍失敗時看上表的 `Settlement void refused` 列。清單中排在前面、已經作廢成功的不會回滾；修正清單後再啟動，它們會記為 `already-voided`，不會重複處理。
+
+`voided/`、`void-audit.log` 是稽核紀錄，不要刪除；也不要把 `voided/` 裡的 `.pending` 搬回上一層。
 
 實機登入、看畫面、打一場戰鬥只由使用者驗收（`docs/acceptance/CHECKLIST.md`）。

@@ -128,7 +128,7 @@ T127–T130 是 M4 的準備，優先做（Codex 2026-11-13 18:11 恢復）。�
 | T133 | 待建 | A 開發 | 凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7） | todo |
 | T134 | 待建 | A 開發 | 藥水共用冷卻 `delay_id`／`delay_time`（#352 剩餘） | todo |
 | T135 | 待建 | A 開發 | 受控 NPC 恢復節奏與自身技能：G15 前兩組移植並補測試（#354 剩餘優先 1、2） | todo |
-| T136 | 待建 | A 開發 | 結算待寫入結果的作廢工具與 `.tmp` 清理（#355 移交） | todo |
+| T136 | #387 | A 開發 | 結算待寫入結果的作廢（啟動時讀 `runtime/battle-settlements/void-requests.txt`，收據 `applied=2`＋稽核欄位 `db/lito_battle_settlement_void.sql`）與 `.tmp` 殘檔清理；設計 `docs/design/gameplay.md` §4.2，營運步驟 `docs/INSTALL.md` §6.1（`docs/reports/issue-387.md`） | review |
 
 實機任務 T137、T138（`codex-local`）列在 M4。
 
