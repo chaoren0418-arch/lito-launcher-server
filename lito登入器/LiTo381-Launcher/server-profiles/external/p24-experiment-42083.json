@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "kind": "external",
+  "profileId": "t014-p24-external",
+  "displayName": "T014 P24 實驗伺服器（外部，已在執行）",
+  "host": "127.0.0.1",
+  "port": 42083,
+  "staticDatabase": "p24_380db_lito_exp",
+  "sources": [
+    { "id": 1, "name": "P24LiToExp", "database": "p24_accounts_lito_exp" }
+  ]
+}

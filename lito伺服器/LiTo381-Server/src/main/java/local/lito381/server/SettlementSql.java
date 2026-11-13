@@ -77,15 +77,56 @@ final class SettlementSql {
   }
   if(failure!=null)throw failure;
  }
+ /** Per (controls, source, character) MySQL user lock shared by {@link #drain} and {@link #voidResult}. */
+ static String lockName(SharedDatabase.Route route,long id){return SettlementJournal.Entry.key("00000000-0000-0000-0000-000000000000",route.controls+"_"+route.database,id);}
+ /** Receipt states in lito_battle_settlement.applied: 0 pending, 1 written to character_lito, 2 voided by the operator (T136). */
+ static final int PENDING=0,APPLIED=1,VOIDED=2;
+ /** Audit columns added by db/lito_battle_settlement_void.sql; needed only when a void request is processed. */
+ static void requireVoidColumns(SharedDatabase.Route r)throws SQLException{
+  try(var c=r.connection();var s=c.createStatement()){s.executeQuery("SELECT voided_at,void_reason FROM "+table(r)+" LIMIT 0").close();}
+  catch(SQLException missing){throw new SQLException("lito_battle_settlement in "+r.controls+" lacks void columns; run db/lito_battle_settlement_void.sql first",missing);}
+ }
+ /** Outcome of one void request; {@code observedName} is null when the source character row no longer exists. */
+ record Voided(String resultId,String database,long character,String frozenName,String observedName,boolean alreadyVoided){}
+ /**
+  * T136 (#387): marks one pending receipt as voided (applied=2) so drain never counts it. Allowed only while
+  * the frozen identity no longer matches the source character (renamed or deleted), the receipt is still
+  * pending and character_lito does not already carry this result. Writes only the control-database receipt
+  * row; character_lito and the source tables are read, never written. Voiding an already voided receipt is a no-op.
+  */
+ static Voided voidResult(String resultId,String reason)throws Exception{
+  if(resultId==null||!resultId.matches("[a-f0-9]{64}"))throw new IllegalArgumentException("invalid result id");
+  if(reason==null||reason.isBlank()||reason.length()>255)throw new IllegalArgumentException("void reason must be 1..255 characters");
+  List<SharedDatabase.Route> routes;synchronized(SharedDatabase.ROUTES){routes=List.copyOf(SharedDatabase.ROUTES.values());}
+  String database=null;long id=0;
+  for(var r:routes){try(var c=r.connection();var p=c.prepareStatement("SELECT source_database,char_obj_id FROM "+table(r)+" WHERE result_id=?")){p.setString(1,resultId);try(var rows=p.executeQuery()){if(rows.next()){database=rows.getString(1);id=rows.getLong(2);break;}}}}
+  if(database==null)throw new SQLException("Settlement void refused: unknown result "+resultId);
+  SharedDatabase.Route route=route(database);String lock=lockName(route,id);
+  try(var c=route.connection()){
+   c.setAutoCommit(true);try(var p=c.prepareStatement("SELECT GET_LOCK(?,5)")){p.setString(1,lock);try(var r=p.executeQuery()){if(!r.next()||r.getInt(1)!=1)throw new SQLException("Settlement lock busy");}}
+   try{
+    String frozen;int state;
+    try(var p=c.prepareStatement("SELECT char_name,applied FROM "+table(route)+" WHERE result_id=?")){p.setString(1,resultId);try(var r=p.executeQuery()){if(!r.next())throw new SQLException("Settlement void refused: unknown result "+resultId);frozen=r.getString(1);state=r.getInt(2);}}
+    String observed=null;
+    try(var p=c.prepareStatement("SELECT char_name FROM characters WHERE objid=?")){p.setLong(1,id);try(var r=p.executeQuery()){if(r.next())observed=r.getString(1);}}
+    if(state==VOIDED)return new Voided(resultId,database,id,frozen,observed,true);
+    if(state!=PENDING)throw new SQLException("Settlement void refused: result "+resultId+" is already counted (applied="+state+")");
+    if(frozen.equals(observed))throw new SQLException("Settlement void refused: identity of "+database+"/"+id+" is unchanged; result "+resultId+" would settle normally");
+    try(var p=c.prepareStatement("SELECT last_result_id FROM character_lito WHERE char_obj_id=?")){p.setLong(1,id);try(var r=p.executeQuery()){if(r.next()&&resultId.equals(r.getString(1)))throw new SQLException("Settlement void refused: result "+resultId+" is already in character_lito of "+database+"/"+id);}}
+    try(var p=c.prepareStatement("UPDATE "+table(route)+" SET applied="+VOIDED+",voided_at=CURRENT_TIMESTAMP,void_reason=? WHERE result_id=? AND applied="+PENDING)){p.setString(1,reason);p.setString(2,resultId);if(p.executeUpdate()!=1)throw new SQLException("Settlement void concurrent writer conflict: "+resultId);}
+    return new Voided(resultId,database,id,frozen,observed,false);
+   }finally{try(var p=c.prepareStatement("SELECT RELEASE_LOCK(?)")){p.setString(1,lock);p.executeQuery().close();}}
+  }
+ }
  static void drain(SharedDatabase.Route route,long id)throws Exception{
-  String lockName=SettlementJournal.Entry.key("00000000-0000-0000-0000-000000000000",route.controls+"_"+route.database,id);
+  String lockName=lockName(route,id);
   try(var c=route.connection()){
    c.setAutoCommit(true);try(var p=c.prepareStatement("SELECT GET_LOCK(?,5)")){p.setString(1,lockName);try(var r=p.executeQuery()){if(!r.next()||r.getInt(1)!=1)throw new SQLException("Settlement lock busy");}}
    try{
     List<String> pending=new ArrayList<>();try(var p=c.prepareStatement("SELECT result_id FROM "+table(route)+" WHERE source_database=? AND char_obj_id=? AND applied=0 ORDER BY sequence_id")){p.setString(1,route.database);p.setLong(2,id);try(var r=p.executeQuery()){while(r.next())pending.add(r.getString(1));}}
     for(String token:pending){String name;boolean won,disconnected;
      try(var p=c.prepareStatement("SELECT char_name,won,disconnected FROM "+table(route)+" WHERE result_id=? AND applied=0")){p.setString(1,token);try(var r=p.executeQuery()){if(!r.next())continue;name=r.getString(1);won=r.getBoolean(2);disconnected=r.getBoolean(3);}}
-     try(var p=c.prepareStatement("SELECT char_name FROM characters WHERE objid=?")){p.setLong(1,id);try(var r=p.executeQuery()){if(!r.next()||!name.equals(r.getString(1)))throw new SQLException("Settlement character identity changed: "+route.database+"/"+id);}}
+     try(var p=c.prepareStatement("SELECT char_name FROM characters WHERE objid=?")){p.setLong(1,id);try(var r=p.executeQuery()){if(!r.next()||!name.equals(r.getString(1)))throw new SQLException("Settlement character identity changed: "+route.database+"/"+id+" result="+token);}}
      Counters counters=Counters.ZERO;long version=0;String last="";boolean exists;
      try(var p=c.prepareStatement("SELECT version,last_result_id,"+COUNTER_COLUMNS+" FROM character_lito WHERE char_obj_id=?")){p.setLong(1,id);try(var r=p.executeQuery()){exists=r.next();if(exists){version=r.getLong(1);last=r.getString(2);counters=Counters.read(r,3);}}}
      if(!token.equals(last)){

@@ -466,7 +466,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Syntax check
-        run: python -B -m py_compile regression_support.py test_formal_protection.py $ENTRIES
+        run: python -B -m py_compile regression_support.py test_formal_protection.py test_receipt_entrypoints.py $ENTRIES
       - name: Entry points expose --jar / --out / --config / --resources
         run: |
           set -euo pipefail
@@ -494,6 +494,10 @@ jobs:
           PY
       - name: Offline formal-protection tests
         run: python -B -X utf8 -m unittest -v test_formal_protection
+      # Issue #407 / T141: entry receipts end passed/failed (never running);
+      # child drivers are stubs, so no JAR, SQL or behavior is executed.
+      - name: Offline entry receipt tests
+        run: python -B -X utf8 -m unittest -v test_receipt_entrypoints
 
   launcher:
     name: Launcher (.NET 10 / WinForms)
@@ -505,3 +509,11 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Build (Release)
         run: dotnet build "lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj" -c Release
+      # T140 / Issue #404: pure unit tests (no GUI, no Server, no LiTo.bin).
+      - name: Unit tests (.NET)
+        run: dotnet test "lito登入器/LiTo381-Launcher/tests/LiTo381Launcher.Tests/LiTo381Launcher.Tests.csproj" -c Release --logger "console;verbosity=normal"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests (external server helper, Python)
+        run: python -B -X utf8 "lito登入器/LiTo381-Launcher/tests/test_external_server_startup.py" -v

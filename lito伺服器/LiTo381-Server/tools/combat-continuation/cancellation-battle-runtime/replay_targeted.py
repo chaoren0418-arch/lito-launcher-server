@@ -35,4 +35,4 @@ except BaseException:
  status='failed'
  raise
 finally:
- write(D/'receipt.json',dict(status=status if status=='passed' else 'failed',runtime=b['runtime'],tests=rows,**dict(formal_deployment_changed=False,**protection)))
+ write(D/'receipt.json',dict(status=status if status=='passed' else 'failed',runtime=b['runtime'],tests=rows,**{'formal_deployment_changed':False,**protection}))

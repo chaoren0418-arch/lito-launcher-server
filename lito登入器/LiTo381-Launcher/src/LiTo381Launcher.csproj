@@ -13,6 +13,9 @@
   <ItemGroup>
     <Compile Remove="obj\**;bin\**" />
     <Content Include="development_startup.py" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <!-- T140 / Issue #404: acceptance-only helper for the external-server-profile option. -->
+    <Content Include="external_server_startup.py" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <InternalsVisibleTo Include="LiTo381Launcher.Tests" />
     <Content Include="..\server-profiles\*.json"
              Link="server-profiles\%(Filename)%(Extension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
