@@ -1,0 +1,165 @@
+# Issue #380 — T129：M3／M3b／M3c 與 #366–#371 的實機待驗證彙整成 RUNBOOK C 部
+
+分支 `task/380`。文件加上 T128 的資料前置 SQL（`tools/acceptance/m4-seed-exp.sql` 與它的 CI 預期值）；沒有改 `src/main`，沒有啟動任何程式。
+
+## 結論
+
+- `docs/acceptance/M4-RUNBOOK.md` 新增 C 部 **V01–V38**：33 項可排入實機（其中 6 項不另外開場、掛在 A 部步驟上），5 項阻塞。每項都有來源報告的檔名與行號。
+- **租屋城鎮在實驗設定下打不開**，#368、#369、#371 的實機項目（V35–V37）標「阻塞：功能未開放」，需要主控決定怎麼解除（見「需要主控處理」1）。
+- 另外查到統一設定同樣把**經典世界**固定關閉，所以各報告裡寫 WORLD 的項目（V38）也做不到。
+- T128（#379，PR #393）在本張進行中合併，所以照任務第 4 點直接改了 `m4-seed-exp.sql`：能確定的資料（技能、藥水、材料、妖精屬性）已加進去；還缺的 E4 武器、E8、E9、E12、E13、E14(b)(c) 列在 RUNBOOK「C 部資料前置」與本報告。seed 的改動**只由 CI 的拋棄式 MySQL 驗證**，沒有對 P24Lab 執行過。
+
+## 做了什麼
+
+1. 讀了 #301–#311、#317、#318、#321、#325、#333–#340、#350、#352–#358、#366、#368–#371 共 36 份報告的「待驗證／未驗證／給下一棒的提示」，另外對照 #376、#378 的交接。
+2. 挑出需要實機、P24Lab 或真 MySQL 的項目，寫成 C 部：
+   - C0（V01–V06）：併入 A 部同一輪，不增加時間。
+   - C1（V07–V14）：藥水、魔法娃娃、法師效果數值、G10–G12 時序。
+   - C2（V15–V18）：G03–G08 目標判定、G09 邊界 4 格、受控 NPC 退役、觀戰者離場。
+   - C3（V23–V27）：Quest 怪物技能、各模式逾時、Time Attack 斷線。
+   - C4（V19–V22）：雙方同時斷線、建房時斷線、強制結束伺服器後重啟、跨月月計。
+   - C5（V28–V33）：選做與記錄型。
+   - V34–V38：阻塞。
+3. 每項依 T127 的六欄寫，加一行「需要」（角色、技能、道具、模式）；排了一輪 60 分鐘的時間盒，標出哪些能和 A 部、B 部同一輪做。
+4. 查了 `UnifiedConfiguration` 能不能只在實驗設定打開租屋城鎮（不能，細節見下）。
+5. 改 `tools/acceptance/m4-seed-exp.sql`（細節見「資料前置」）、`ci/run-sql-checks.sh` 的預期筆數、`tools/acceptance/README.md` 的說明。
+6. `TASKS.md` T129 列改成 #380／review。RUNBOOK 檔頭對 C 部的描述同步更新。
+
+## 怎麼驗證
+
+### 已驗證（讀檔）
+
+- C 部引用的來源行號：用腳本把每份報告的相關章節連行號印出後逐條對照（基準 `main` `9be54257`）。
+- 租屋城鎮開關：`UnifiedConfiguration.java:7`（22 鍵）、`:24`（未知鍵拒絕）、`:75`（固定 `false`、路線清空）；`ServerConfig.java:253`（`applyServiceMode` 在統一設定之後執行）、`:703-743`（`rental-source`／`rental-battle` 寫死 32000／32001 與四個 loopback 位址）；`Main.java:18-27` 與 `SharedResourceMain.java:13`（參數會傳到）。
+- 經典世界：`UnifiedConfiguration.java:74` 固定關閉兩個鍵。
+- C 部用到的 console 字串都在 `src/main` 找得到，行號寫在 V02。
+- 藥水編號與數值取自 `docs/design/items-consumables.md:15-25`；Quest 怪物編號取自 `docs/design/skills-npc.md:27-28,61,64-65`；規則取自 `docs/design/gameplay.md`（行號寫在各項）。
+- seed 加的 22 個技能編號在 CI 用的靜態庫（`db/lito_static.sql`）都有列、`skill_level` 都在 1..28；40010、40013、40014、40319、40321 在 `etcitem` 有樣板；角色表有 `ElfAttr` 欄（`db/380_ac_1.sql:1808`）。五個妖精技能裡只有 167 的 `skills.attr` 不是 0（＝8），所以 `M4A3` 的 `ElfAttr` 填 8（`SourceElfAttributeGate.java:20-24`）。
+- seed 在 CI 的結果見文末「CI」。
+
+### 推測
+
+- `--service-mode=rental-source` 搭配統一設定能不能啟動：`port` 被改成 32000，`login.source.port.base` 仍是 42083，沒有執行過。
+- 統一設定下 `battle.reward.win`／`battle.reward.loss` 設不了（不在 22 鍵內，寫了會被拒），積分一律是預設 250／50。`gameplay.md:304` 寫「在 `config/server.properties` 加這兩個鍵可改」，在統一設定下不成立。這是讀程式的推論，沒有執行。
+- C 部裡各技能的 `C_USE_SPELL` 開頭 hex 是照 `S/ForcedCombat.java:27` 的公式換算的，沒有現場封包對過。
+
+### 待驗證（全部要實機，交 Codex T138）
+
+- C 部 V01–V33 的每一步。
+- 自建房能不能切到 Quest、寵物競賽、Time Attack、攻城（`createRoom` 固定死鬥＋雙方人數一致）；自建房是否允許觀戰。
+- Quest 的哪一張地圖有歐吉與死亡騎士（V23）；史巴托是不是不死系（V30）。
+- 綠水、勇水的狀態封包，以及逾時結束時 console 印哪一行（RUNBOOK 寫「以 capture 為準」的地方）。
+
+## 剔除的項目（不排進 C 部）與理由
+
+### 已由 CI 涵蓋，或實機沒有可判定的預期
+
+| 來源 | 內容 | 理由 |
+|---|---|---|
+| `issue-303.md:29` | 負 AC 怪的命中手感、龍騎／火妖精命中 | 公式由 `PhysicalFormulaServer1ParityTest` 鎖定；「手感」沒有單次可判定的預期 |
+| `issue-304.md:43` | 正義值 ±10000 的傷害與機率略升降、INT ≥ 44 成功率上升 | 由 #304 的參數化測試鎖定；實機只能看統計趨勢，還要特殊角色 |
+| `issue-307.md:40`、`issue-308.md:44`、`issue-309.md:41` | 「各處理器的封包順序、狀態圖示、HP／MP 實際入帳」 | 泛稱，沒有具體預期；以 A10、A11、G25 與 C 部各技能項的 capture 當代表。308 的 154／162／165 沒有排（要精靈與復活問答的資料） |
+| `issue-307.md:41` | 10／28、39、58、44、緩速免疫 | 已由 #336 細化，改列 V10–V13 |
+| `issue-317.md:32` | N-D7、N-D9 逐值對照 | 文件與測試工作，不是實機 |
+| `issue-318.md:67` 後半 | 52 級騎士每下比改前 +8 | 同一顆 JAR 沒有「改前」可比；由 `PhysicalBalanceDecisionT113Test` 涵蓋 |
+| `issue-325.md:50-51` | 正義值變化對 #304 守護的實際效果、沉睡之霧連放的下降速度是否符合廠商預期 | 前者同 304；後者是廠商判斷，不是驗證 |
+| `issue-355.md:43-77` | 十個中止點、SQL 與 GameHub 壓力 | CI MySQL job 已跑過（31 案）；實機只補真程序強殺（V21）與真斷線（V19、V20、G24） |
+| `issue-356.md:47,51`、`issue-311.md:52` | CI 結果、semantic-gap 的預期差異 | CI 項目 |
+| `issue-366.md:27` | 重新觀戰的完整 bootstrap 封包 | 併入 V18 最後一步，不另列 |
+| `issue-369.md:61-62` | 測試用反射、傳送取消／逾期／重入 | 前者是測試手法說明；後者報告自己寫明不在範圍 |
+
+### 屬於 CI 或測試環境，不是實機
+
+| 來源 | 內容 | 理由 |
+|---|---|---|
+| `issue-308.md:45`、`issue-309.md:43`、`issue-318.md:68`、`issue-339.md:93` | 需要 `config/server.properties` 的整合測試在 CI 被跳過 | #334 之後有 CI MySQL job，剩下的失敗屬 `issue-334.md:231-236` 建議的 T119a／T119b |
+| `issue-334.md:218-219` | 35 案根因、`lito_static.sql` 與本機 `380_db` 的差異 | CI 與資料比對；後者要連正式庫，不允許 |
+| `issue-354.md:56` | `capture()` 的真實首次捕捉 | 與 V17 是同一次實機操作，不另列 |
+| `issue-369.md:95-96`、`issue-370.md:54` | CI job 逾時、鎖順序死結 | 程式與 CI 任務。死結的觸發條件已寫進 C 部讀法（卡住時先 `jstack`） |
+
+### 已由 A 部、B 部或前置涵蓋
+
+| 來源 | 內容 | 在哪裡 |
+|---|---|---|
+| `issue-302.md:38` | 實驗帳號 `SELECT … LIMIT 0`、寫入被拒、啟動到 ready | T128 的 `m4-db-verify.sql`（以實驗帳號核對最小權限）＋A01 |
+| `issue-335.md:75` ③、`issue-355.md:97,122` ① | 斷線敗 −50、一方拔線 | A16、G24 第 1–3 列（實體拔線的阻塞也寫在 G24） |
+| `issue-356.md:49`、`:65` | G02／G16 的現場封包 | B 部 G02 |
+| `issue-357.md:41` | 本機建的 JAR 與 CI 的 SHA 是否相同 | CHECKLIST「00 建 JAR」已要求比對 `reproducible-jars.sha256` |
+| `issue-311.md:51` 的 (1)(4) | 娃娃顯示與 `suppressed` log | G25 第 2 列；(2)(3) 補在 V08 |
+
+### 要正式環境、使用者或營運，實驗環境做不了
+
+| 來源 | 內容 | 理由 |
+|---|---|---|
+| `issue-301.md:27`、`issue-310.md:65` | 正式機 `battle.reward.*` 實際值 | 正式設定不可讀；且見上「推測」第 2 點 |
+| `issue-302.md:39-40` | 現場啟用的來源、現場 380_db 是英文還是中文欄位版 | 要問營運（`needs:user`） |
+| `issue-335.md:58` | 正式三個來源庫執行升級 SQL | 現場 DDL，營運執行 |
+| `issue-306.md:46` 及各報告的「正式 0.6.71 JAR 未含本修改」 | — | M4 用新 JAR（#284 裁定），不適用 |
+| `issue-355.md:99` | 數小時的長時間運轉 | 超過 60 分鐘時間盒；要另外排浸泡測試 |
+
+### 設計問題或另案，不是驗證
+
+`issue-303.md:30`（D11／D12／H4／H13）、`issue-304.md:45`（千分比迴避）、`issue-305.md:54`（103 對寵物，#321 已裁定維持）、`issue-352.md:29-31`（勇水職業限制、共用冷卻、其他消耗品）、`issue-371.md:53`（TSV 兩欄可能對調，建議的 resource 任務；V37 已加註）、`issue-333.md:11`／`issue-350.md:16`／`issue-358.md:13`（主控流程）。
+
+## 資料前置（`tools/acceptance/m4-seed-exp.sql`）
+
+完整表在 RUNBOOK「C 部資料前置」E1–E14。
+
+**已加進 seed**（只新增列；seed 尚未對 P24Lab 執行過，所以改既有的 `UNION ALL` 清單不會造成新舊資料不一致）：
+
+| 位置 | 內容 | 用在 |
+|---|---|---|
+| S0 守門、S3 | `characters` 的 INSERT 多寫 `ElfAttr`（守門的欄位數 73 → 74）；`M4A3`＝8（風），其餘 0 | V15、V28 |
+| S4 | `M4A4`：3、10、12、17、21、28、39、40、43、44、47、50、58、76、80。`M4GM`：3、12、21、43。`M4A3`：148、149、152、153、167。`M4A5`：103。`M4DK`：194。`M4D1`（可選帳號 D）：167 | V09–V16、V28 |
+| S5 | `M4A4`：40010 ×10、40013 ×5、40014 ×5，魔法寶石 40318 由 30 改成 100。`M4A3`：精靈玉 40319 ×30。`M4A5`：二級黑魔石 40321 ×30。`M4D1`：40319 ×5。背包列 id 範圍變成 190379101–190379119 | V07、V15 |
+| `ci/run-sql-checks.sh` | 預期值 `5:11:7:13:6:8` → `5:11:33:18:6:8`（技能 7＋26、道具 13＋5；帳號 D 在 CI 不建立，所以它的 1 個技能、1 列道具不算）；兩處 id 範圍改到 190379119 | — |
+
+**沒有加、還缺的**：
+
+| # | 內容 | 為什麼沒加 |
+|---|---|---|
+| E4 | 騎士的近戰武器 | 裝備要符合 `weapon` 樣板、職業限制與 `is_equipped` 的載入規則，T128 沒查完，本張也沒查 |
+| E8 | 加速裝備或強化勇水（V13） | item_id 與載入規則沒有查 |
+| E9 | 競技房可用的召喚物或寵物（V17、V31） | 哪一種可用沒有查證 |
+| E12 | A 的 `monthly_period` 改成上個月（V22） | 是 UPDATE，不符 seed 規則，要主控同意 |
+| E13 | 第二個來源庫與同 objid 角色（V34） | 量大，建議另開一張 |
+| E14(b)(c) | 魔眼、幻象武器（V29、V30） | item_id 沒有查 |
+## 需要主控處理
+
+1. **租屋城鎮怎麼驗**（V35–V37）。實驗設定沒有開關；唯一的程式路徑 `--service-mode=rental-source` 會佔正式埠 32000，還要第二個程序佔 32001。兩個選項：(a) 開一張 code 任務，讓它能在實驗埠開啟；(b) 使用者同意在正式伺服器停機時用雙程序跑。在這之前 #368、#369、#371 只有 CI 的證據。
+2. **經典世界項目**（V38）同樣被統一設定關掉。要不要為了驗這幾項另外開路，或接受只有 CI 證據。
+3. **E12**：允不允許對實驗庫 `character_lito` 做一次性 UPDATE 來驗跨月。
+4. **E13**：要不要準備第二個實驗來源庫來驗 #306 的撞號（跨來源是 #290 的目標之一，但資料量大）。
+5. **`gameplay.md:304` 與程式不符**（推測）：統一設定下 `battle.reward.*` 設不了。要改文件，或把兩個鍵加進 22 鍵，請決定。
+6. 要不要另開一張小任務補 E4、E8、E9、E14(b)(c)（都要先查 item_id 與載入規則）。
+
+## 未驗證什麼／沒做什麼
+
+- 沒有實機執行任何一項；沒有啟動伺服器、客戶端或資料庫。
+- seed 的新資料沒有對 P24Lab 執行，也沒有實機確認：技能能不能由該角色施放（外型是否支援動作）、`M4A4` 背包會不會超重、GM 身分的 `M4GM` 當 V12 目標會不會影響結果。
+- 沒有逐一查各技能的封包欄位與狀態封包種類；RUNBOOK 裡寫「以 capture 為準」「沒有查證」的地方都是這種情況。
+- E8、E9、E14 的 item_id 與可行方式沒有查。
+- 沒有改 `gameplay.md`、`docs/REPORT.md`。
+
+## 產出路徑
+
+- `docs/acceptance/M4-RUNBOOK.md`（C 部；檔頭一行）
+- `tools/acceptance/m4-seed-exp.sql`、`tools/acceptance/ci/run-sql-checks.sh`、`tools/acceptance/README.md`
+- `TASKS.md`（T129 列）
+- `docs/reports/issue-380.md`（本檔）
+
+## 給下一棒的提示
+
+- **Codex（T138）**：先做 C0——它只是在 A 部的步驟上多看幾樣東西。C4 一定排最後，V21 之後要重跑 A01–A02。lease 只夠一輪時的順序寫在 RUNBOOK「C 部時間盒」下方。記錄型項目不要填通過／失敗。
+- **Codex 跑 seed 時**：C 部需要帳號 C（V15、V17、V18），私密檔要填 `@m4_c_login`；V28 另要帳號 D。跑完看 S3 輸出每個角色的 `skills`／`item_rows` 數。
+- 伺服器整個卡住時先 `jstack` 再處理：`issue-370.md:40-44` 記的死結（開戰與斷線同時發生）還沒修，V19–V21 最容易碰到。
+- C 部的行號基準是 `9be54257`；`ClientSession.java` 常被改，位移時以字串或方法名為準。
+
+## CI
+
+PR #394，head `87b5d839`：
+
+- `acceptance-tools`（run 43374286508）兩個 job 都通過：「SQL scripts on MySQL 8.0 port 43324 (guards, prepare, verify, seed, snapshot diff)」與「PowerShell 5.1 scripts」。seed 在拋棄式 MySQL 上跑兩次，結果等於新的預期值 `5:11:33:18:6:8`（技能 33 列、道具 18 列），也就是加的 26 個技能列與 5 列道具都對得到靜態庫樣板。
+- `build`（run 43374286659）：Server (Java 17 / Maven)、Server reproducible JAR、Launcher 通過；寫本節時 Server tests、CI MySQL fixture（non-blocking）、Semantic gap（non-blocking）還在跑。本 PR 沒有改任何 Java 或測試。
+- `package`：Build-Package.ps1 zip 通過。
+- 本節之後只多一個補報告的 commit；最終結果以 PR 最新 commit 的 CI 為準。
