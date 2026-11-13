@@ -1,0 +1,79 @@
+name: acceptance-tools
+
+# T128 / Issue #379: tools/acceptance (M4 experiment pre-flight). Everything here uses disposable
+# runners only: fake JAR bytes, hand-written snapshots, and a throwaway MySQL 8.0 container that
+# mirrors P24Lab's server options. Nothing connects to P24Lab or to any real database.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/acceptance/**'
+      - 'tools/db-grants/**'
+      - 'lito伺服器/LiTo381-Server/db/**'
+      - 'lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/UnifiedConfiguration.java'
+      - 'lito伺服器/LiTo381-Server/config/server.properties.example'
+      - '.github/workflows/acceptance-tools.yml'
+  pull_request:
+    paths:
+      - 'tools/acceptance/**'
+      - 'tools/db-grants/**'
+      - 'lito伺服器/LiTo381-Server/db/**'
+      - 'lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/UnifiedConfiguration.java'
+      - 'lito伺服器/LiTo381-Server/config/server.properties.example'
+      - '.github/workflows/acceptance-tools.yml'
+
+jobs:
+  scripts:
+    name: PowerShell 5.1 scripts (self-test + file-only dry run)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Self-test (parse, BOM, guards, snapshot diff rules)
+        shell: powershell
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\acceptance\m4-selftest.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: File-only dry run with fake artifacts (no Java, no database)
+        shell: powershell
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\acceptance\ci\dry-run.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+  sql:
+    name: SQL scripts on MySQL 8.0 port 43324 (guards, prepare, verify, seed, snapshot diff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generated SQL blocks are in sync with tools/db-grants
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp tools/acceptance/m4-db-verify.sql "$RUNNER_TEMP/verify.before"
+          cp tools/acceptance/m4-db-prepare.sql "$RUNNER_TEMP/prepare.before"
+          cp tools/acceptance/generated/m4-required-columns.tsv "$RUNNER_TEMP/tsv.before"
+          python3 tools/acceptance/m4-schema-precheck.py --static= --lito= --character= --update-sql --out "$RUNNER_TEMP/precheck.md"
+          diff "$RUNNER_TEMP/verify.before" tools/acceptance/m4-db-verify.sql
+          diff "$RUNNER_TEMP/prepare.before" tools/acceptance/m4-db-prepare.sql
+          diff "$RUNNER_TEMP/tsv.before" tools/acceptance/generated/m4-required-columns.tsv
+      - name: Static pre-check also runs on the repository dumps
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/acceptance/m4-schema-precheck.py \
+            --static "lito伺服器/LiTo381-Server/db/lito_static.sql" --lito= \
+            --character "lito伺服器/LiTo381-Server/db/380_ac_1.sql" \
+            --out "$RUNNER_TEMP/m4-precheck-repo.md" --tsv "$RUNNER_TEMP/m4-required-columns-repo.tsv"
+          sed -n '1,40p' "$RUNNER_TEMP/m4-precheck-repo.md"
+      - name: PowerShell self-test on PowerShell 7 (same pure functions)
+        shell: bash
+        run: pwsh -NoProfile -File tools/acceptance/m4-selftest.ps1
+      - name: Run SQL checks
+        shell: bash
+        run: bash tools/acceptance/ci/run-sql-checks.sh
+      - name: Upload SQL outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acceptance-sql-outputs
+          path: ${{ runner.temp }}/m4-sql/*.txt
+          if-no-files-found: ignore

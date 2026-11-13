@@ -1,31 +1,30 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Persistent, cancelable player dodge-down lease for native skill188. */
 import java.util.concurrent.TimeUnit;
 
-/** Persistent, cancelable player dodge-down lease for native skill188. */
 final class BattleResistFearStatus {
-    record Snapshot(boolean active, int dodgeDown, int remainingSeconds) {
-        static Snapshot none() {
-            return new Snapshot(false, 0, 0);
-        }
-    }
-
     private long expiresAtNanos;
     private int dodgeDown;
+    volatile transient long nativeSourceIcons1Version;
 
-    synchronized boolean activate(
-            long nowNanos, int durationSeconds, int dodgeDownModifier) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || dodgeDownModifier <= 0 || dodgeDownModifier > 10) {
+    BattleResistFearStatus() {
+    }
+
+    synchronized boolean activate(long nowNanos, int durationSeconds, int dodgeDownModifier) {
+        boolean bl;
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || dodgeDownModifier <= 0 || dodgeDownModifier > 10) {
             throw new IllegalArgumentException("invalid native Resist Fear lease");
         }
-        boolean alreadyActive = expiresAtNanos != 0 && nowNanos < expiresAtNanos;
-        // Retained RESIST_FEAR checks !hasSkillEffect before installing the
-        // lease, so a successful recast spends resources but does not refresh.
-        if (alreadyActive) return true;
-        expiresAtNanos = Math.addExact(
-                nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
-        dodgeDown = dodgeDownModifier;
+        boolean bl2 = bl = this.expiresAtNanos != 0L && nowNanos < this.expiresAtNanos;
+        if (bl) {
+            return true;
+        }
+        BattleResistFearStatus battleResistFearStatus;
+        (battleResistFearStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleResistFearStatus);
+        this.dodgeDown = dodgeDownModifier;
         return false;
     }
 
@@ -63,7 +62,15 @@ final class BattleResistFearStatus {
     }
 
     synchronized void clear() {
-        expiresAtNanos = 0;
-        dodgeDown = 0;
+        BattleResistFearStatus battleResistFearStatus;
+        (battleResistFearStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleResistFearStatus);
+        this.dodgeDown = 0;
+    }
+
+    record Snapshot(boolean active, int dodgeDown, int remainingSeconds) {
+        static Snapshot none() {
+            return new Snapshot(false, 0, 0);
+        }
     }
 }

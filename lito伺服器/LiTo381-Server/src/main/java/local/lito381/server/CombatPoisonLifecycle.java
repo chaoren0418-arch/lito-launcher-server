@@ -1,3 +1,5 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
+// 待驗證：nativeRawOriginalBattle 的外層例外保護區間仍 DIFF；不得視為已驗收，見 issue-68 報告。
 package local.lito381.server;
 
 import java.util.*;
@@ -19,10 +21,9 @@ final class CombatPoisonLifecycle {
  private record Death(Actor target,Actor caster,long room,long generation){}
  private static final class Damage {final Death identity;final long thread=Thread.currentThread().getId();Damage next;Damage(Death identity,Damage next){this.identity=identity;this.next=next;}}
  static final class State {
-  // 正式 0.6.71 的 owner 契約；A-land 的 NativeCombatOrigin 經 NativePlayerCommit 存取。
-  private volatile Object sourcePlayerQueue;
-  private volatile Object sourcePlayerOwner;
-  private volatile Object sourceNpcOwner;
+        private volatile Object sourceNpcOwner;
+        private volatile Object sourcePlayerOwner;
+        private volatile Object sourcePlayerQueue;
   private volatile Lease current;
   private State curse;
   private BattleTimedStatus monsterCurse;
@@ -42,10 +43,11 @@ final class CombatPoisonLifecycle {
   boolean complete(Transition value){return value!=null&&UPDATER.compareAndSet(this,value,null);}
  }
  static class Lease {
+        private volatile Object sourceCombatOrigin;
   final Actor target,caster;
   BattleTimedStatus paralysis;long warningNanos,activeNanos,initialLogical,initialWall,activationLogical,activationWall;int paralysisPhase;
   Lease(){this(null,null);}
-  Lease(Actor target,Actor caster){this.target=target;this.caster=caster;}
+  Lease(Actor target,Actor caster){this.target=target;this.caster=caster;NativeCombatOrigin.leaseCreated(this);}
   final AtomicInteger callbacks=new AtomicInteger();
   private final AtomicReference<Plan> cleanup=new AtomicReference<>();
   private final AtomicBoolean cleanupStarted=new AtomicBoolean();
@@ -98,7 +100,7 @@ final class CombatPoisonLifecycle {
   final Actor target;
   Lease producer,clock;boolean clockActive,producerActive,removalActive,paralysisActivatedPalette,paralysisTerminal;Snapshot frozen;long clockNow,generation;Removal removal;Palette initialSilence;
   Context(Scope scope,ClientSession pc){this.scope=scope;this.pc=pc;timed=CombatPoisonAtomic.status(pc);state=state(timed,true);target=Actor.take(pc);objectId=pc.playerObjectId();phase=CombatAccess.field(pc,"phase");room=number(pc,"currentRoomId");map=number(pc,"classicWorldMapId");instance=number(pc,"classicWorldInstanceId");}
-  boolean valid(){return target.same(pc)&&pc.playerObjectId()==objectId&&CombatAccess.field(pc,"phase")==phase&&number(pc,"currentRoomId")==room&&number(pc,"classicWorldMapId")==map&&number(pc,"classicWorldInstanceId")==instance;}
+  boolean valid(){return NativeCombatOrigin.contextValid(target.same(pc)&&pc.playerObjectId()==objectId&&CombatAccess.field(pc,"phase")==phase&&number(pc,"currentRoomId")==room&&number(pc,"classicWorldMapId")==map&&number(pc,"classicWorldInstanceId")==instance,this);}
  }
  private record Palette(int intended,String reason,ClientSession recipient,byte[] packet,long now,CombatCurseLifecycle.Release release){Palette(int intended,String reason,ClientSession recipient,byte[] packet,long now){this(intended,reason,recipient,packet,now,null);}}
  private static final class Removal implements Runnable {
@@ -232,7 +234,9 @@ final class CombatPoisonLifecycle {
  static long object(ClientSession pc,Scope scope){var c=frozen(pc,scope);return c==null?number(pc,"classicWorldPoisonAttackerObjectId"):c.frozen.npc;}
  static boolean world(boolean legacy,ClientSession pc,Scope scope){return legacy||CombatRules.loaded()&&String.valueOf(CombatAccess.field(pc,"phase")).equals("BATTLE")&&kind(pc,scope)!=ClassicWorldMonsterPoisonAttack.Kind.NONE;}
  private static boolean tickAllowed(ClientSession pc,Scope scope){var c=scope==null?null:scope.find(pc);return c==null||c.clock==null||c.clockActive&&c.valid();}
- private static ClientSession liveCaster(Context c){return c.clock.caster!=null&&c.clock.caster.same(c.frozen.caster)&&c.frozen.caster.transportOpen()?c.frozen.caster:null;}
+ private static ClientSession liveCaster(Context context) {
+        return NativeCombatOrigin.caster(context.clock.caster != null && context.clock.caster.same(context.frozen.caster) && context.frozen.caster.transportOpen() ? context.frozen.caster : null, context);
+    }
  private static long generation(ClientSession pc){var hub=(GameHub)CombatAccess.field(pc,"hub");synchronized(hub){var room=((Map<?,?>)CombatAccess.field(hub,"rooms")).get(number(pc,"currentRoomId"));return room==null?-1:number(room,"battleGeneration");}}
  private static Damage damage(Context c){synchronized(c.timed){var damage=new Damage(new Death(c.target,c.clock.caster,c.room,c.generation),c.state.damage);c.state.damage=damage;return damage;}}
  private static void finished(Context c,Damage damage){synchronized(c.timed){Damage prior=null;for(var next=c.state.damage;next!=null;next=next.next){if(next==damage){if(prior==null)c.state.damage=next.next;else prior.next=next.next;break;}prior=next;}if(c.state.death==damage.identity&&(number(c.pc,"playerHp")>0||!c.valid()))c.state.death=null;}}
@@ -260,7 +264,77 @@ final class CombatPoisonLifecycle {
  static void silenceDeathSend(ClientSession pc,byte[] packet,String reason,Scope scope){var c=scope==null?null:scope.find(pc);if(c!=null&&c.removal!=null){if(c.valid())c.removal.notice(packet,reason);return;}CombatAccess.call(pc,"sendEncrypted","([BLjava/lang/String;)V",packet,reason);}
  static void silenceStartSend(ClientSession pc,byte[] packet,String reason,Scope scope){var c=scope==null?null:scope.find(pc);if(c!=null&&c.producerActive){c.initialSilence=new Palette(0,reason,pc,packet,0);return;}CombatAccess.call(pc,"sendEncrypted","([BLjava/lang/String;)V",packet,reason);}
  private static void initialNotice(Context c){var notice=c.initialSilence;c.initialSilence=null;if(notice!=null&&c.valid())CombatAccess.call(c.pc,"sendEncrypted","([BLjava/lang/String;)V",notice.packet,notice.reason);}
- static void battle(ClientSession pc,int legacy,ClientSession caster,Scope scope){if(!tickAllowed(pc,scope))return;var c=frozen(pc,scope);if(c==null){CombatNpcPoison.battleTick(pc,legacy,caster);return;}boolean npc=c.frozen.kind==ClassicWorldMonsterPoisonAttack.Kind.DAMAGE;var damage=damage(c);try{CombatAccess.call(pc,"takePlayerPoisonDamage","(I"+C+")V",npc?ClassicWorldMonsterPoisonAttack.DAMAGE_PER_TICK:legacy,npc?null:liveCaster(c));}finally{finished(c,damage);}}
- static Object worldNpc(ClientSession pc,int damage,long object,Scope scope){return tickAllowed(pc,scope)?CombatAccess.call(pc,"takeClassicWorldMonsterDamage","(IJ)L"+P+"ClientSession$ClassicWorldFatalContext;",damage,frozen(pc,scope)==null?object:object(pc,scope)):null;}
- static void worldPlayer(ClientSession pc,int damage,ClientSession caster,Scope scope){if(!tickAllowed(pc,scope))return;var c=frozen(pc,scope);if(c==null){CombatAccess.call(pc,"takeClassicWorldPlayerPoisonDamage","(I"+C+")V",damage,caster);return;}var live=liveCaster(c);if(live!=null)CombatAccess.call(pc,"takeClassicWorldPlayerPoisonDamage","(I"+C+")V",damage,live);else if(c.clock.caster!=null){last(pc,null);CombatAccess.call(pc,"takeClassicWorldMonsterDamage","(IJ)L"+P+"ClientSession$ClassicWorldFatalContext;",damage,c.clock.caster.object);}}
+ static void nativeRawOriginalBattle(ClientSession clientSession, int n, ClientSession clientSession2, Scope scope) {
+        NativeCombatOrigin.Clock clock = NativeCombatOrigin.enterClock(clientSession, scope);
+        try {
+            if (!CombatPoisonLifecycle.tickAllowed(clientSession, scope)) {
+                NativeCombatOrigin.leaveClock(clock);
+                return;
+            }
+            Context context = CombatPoisonLifecycle.frozen(clientSession, scope);
+            if (context == null) {
+                CombatNpcPoison.battleTick(clientSession, n, clientSession2);
+                NativeCombatOrigin.leaveClock(clock);
+                return;
+            }
+            boolean bl = context.frozen.kind == ClassicWorldMonsterPoisonAttack.Kind.DAMAGE;
+            Damage damage = CombatPoisonLifecycle.damage(context);
+            try {
+                CombatAccess.call(clientSession, "takePlayerPoisonDamage", "(ILlocal/lito381/server/ClientSession;)V", bl ? 5 : n, bl ? null : CombatPoisonLifecycle.liveCaster(context));
+            }
+            finally {
+                CombatPoisonLifecycle.finished(context, damage);
+            }
+            NativeCombatOrigin.leaveClock(clock);
+            return;
+        }
+        catch (Throwable throwable) {
+            NativeCombatOrigin.leaveClock(clock);
+            throw throwable;
+        }
+    }
+ static Object worldNpc(ClientSession clientSession, int n, long l, Scope scope) {
+        NativeCombatOrigin.Clock clock = NativeCombatOrigin.enterClock(clientSession, scope);
+        try {
+            Object object = CombatPoisonLifecycle.tickAllowed(clientSession, scope) ? CombatAccess.call(clientSession, "takeClassicWorldMonsterDamage", "(IJ)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;", n, CombatPoisonLifecycle.frozen(clientSession, scope) == null ? l : CombatPoisonLifecycle.object(clientSession, scope)) : null;
+            NativeCombatOrigin.leaveClock(clock);
+            return object;
+        }
+        catch (Throwable throwable) {
+            NativeCombatOrigin.leaveClock(clock);
+            throw throwable;
+        }
+    }
+ static void worldPlayer(ClientSession clientSession, int n, ClientSession clientSession2, Scope scope) {
+        NativeCombatOrigin.Clock clock = NativeCombatOrigin.enterClock(clientSession, scope);
+        try {
+            if (!CombatPoisonLifecycle.tickAllowed(clientSession, scope)) {
+                NativeCombatOrigin.leaveClock(clock);
+                return;
+            }
+            Context context = CombatPoisonLifecycle.frozen(clientSession, scope);
+            if (context == null) {
+                CombatAccess.call(clientSession, "takeClassicWorldPlayerPoisonDamage", "(ILlocal/lito381/server/ClientSession;)V", n, clientSession2);
+                NativeCombatOrigin.leaveClock(clock);
+                return;
+            }
+            ClientSession clientSession3 = CombatPoisonLifecycle.liveCaster(context);
+            if (clientSession3 != null) {
+                CombatAccess.call(clientSession, "takeClassicWorldPlayerPoisonDamage", "(ILlocal/lito381/server/ClientSession;)V", n, clientSession3);
+            } else if (context.clock.caster != null) {
+                CombatPoisonLifecycle.last(clientSession, null);
+                CombatAccess.call(clientSession, "takeClassicWorldMonsterDamage", "(IJ)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;", n, context.clock.caster.object);
+            }
+            NativeCombatOrigin.leaveClock(clock);
+            return;
+        }
+        catch (Throwable throwable) {
+            NativeCombatOrigin.leaveClock(clock);
+            throw throwable;
+        }
+    }
+
+    static void battle(ClientSession clientSession, int n, ClientSession clientSession2, Scope scope) {
+        NativeSourceRawDamage.poison(clientSession, n, clientSession2, scope);
+    }
 }

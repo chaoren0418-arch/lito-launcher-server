@@ -1,10 +1,10 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
 package local.lito381.server;
-
 import java.lang.invoke.MethodHandle;
+
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import local.lito381.server.BattleTimedStatus;
@@ -18,6 +18,7 @@ import local.lito381.server.CombatRules;
 import local.lito381.server.GameHub;
 import local.lito381.server.NativeCombatAttacker;
 import local.lito381.server.NativePlayerCommit;
+import local.lito381.server.NativeSourceNpcPlayer;
 
 final class NativeCombatOrigin {
     private static final String FIELD = "sourceCombatOrigin";
@@ -52,6 +53,9 @@ final class NativeCombatOrigin {
     }
 
     static boolean validTick(ClientSession clientSession, GameHub.MonsterAiTick monsterAiTick) {
+        if (!NativeSourceNpcPlayer.validTick(clientSession, monsterAiTick)) {
+            return false;
+        }
         if (!CombatRules.loaded() || monsterAiTick == null) {
             return true;
         }
@@ -175,7 +179,7 @@ final class NativeCombatOrigin {
             return new CombatPoisonAtomic.NpcState(ClassicWorldMonsterPoisonAttack.Kind.NONE, 0, false, false, false);
         }
         try {
-            return (CombatPoisonAtomic.NpcState) NPC_STATE.invokeExact(clientSession, l, n, n2, n3, l2, string);
+            return (CombatPoisonAtomic.NpcState)NPC_STATE.invokeExact(clientSession, l, n, n2, n3, l2, string);
         }
         catch (Throwable throwable) {
             throw new IllegalStateException("native NPC poison state failed", throwable);

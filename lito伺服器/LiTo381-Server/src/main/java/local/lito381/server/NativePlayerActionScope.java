@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -18,8 +18,8 @@ final class NativePlayerActionScope {
         for (ClientSession clientSessionArray2 : clientSessionArray) {
             Objects.requireNonNull(clientSessionArray2, "pc");
         }
-        Object object = current.get();
-        int n2 = n = object == null ? 1 : 0;
+        Root object = current.get();
+        n = object == null ? 1 : 0;
         if (n != 0) {
             object = new Root();
         }
@@ -90,6 +90,10 @@ final class NativePlayerActionScope {
     private NativePlayerActionScope() {
     }
 
+    static Object nativeSourcePairScopeRoot() {
+        return current.get();
+    }
+
     static final class Root {
         final Thread owner = Thread.currentThread();
         final Object fence = new Object();
@@ -141,14 +145,18 @@ final class NativePlayerActionScope {
                 int n;
                 for (n = 0; n < this.releaseOrder.size(); ++n) {
                     clientSession = this.releaseOrder.get(n);
-                    if (this.members.remove(clientSession) == null) continue;
+                    if (!(this.members.remove(clientSession) == null)) {
                     this.drain(clientSession);
-                }
+
+                    }
+}
                 for (n = 0; n < this.order.size(); ++n) {
                     clientSession = this.order.get(n);
-                    if (this.members.remove(clientSession) == null) continue;
+                    if (!(this.members.remove(clientSession) == null)) {
                     this.drain(clientSession);
-                }
+
+                    }
+}
             }
             finally {
                 this.members.clear();

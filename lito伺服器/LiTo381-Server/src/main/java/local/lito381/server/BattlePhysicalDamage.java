@@ -72,6 +72,25 @@ final class BattlePhysicalDamage {
         return Math.max(0, damage);
     }
 
+    /**
+     * T113 D9: 1-伺服器 {@code L1AttackPc.pcDmgMode} adds
+     * {@code getClassFeature().getAttackLevel(level)} to every PC physical
+     * hit (PvP and PvE) after {@code weaponDamage2} has applied the weapon
+     * multiplier and before any target reduction.  Kiringku (type 17) keeps
+     * its own magic-style arithmetic in {@link CombatKiringku#finish}, which
+     * already adds the same term, so it is excluded here.
+     */
+    static int withClassAttackLevel(
+            int multipliedDamage, boolean hit, boolean kiringku,
+            int characterType, int level) {
+        if (multipliedDamage < 0) {
+            throw new IllegalArgumentException("negative multiplied physical damage");
+        }
+        if (!hit || kiringku) return multipliedDamage;
+        return Math.addExact(multipliedDamage,
+                BattleKiringkuDamage.classAttackLevel(characterType, level));
+    }
+
     /** Exact retained unarmed expression: (random 4..8) >> 2. */
     static int unarmedDamage(int randomFourThroughEight) {
         if (randomFourThroughEight < 4 || randomFourThroughEight > 8) {

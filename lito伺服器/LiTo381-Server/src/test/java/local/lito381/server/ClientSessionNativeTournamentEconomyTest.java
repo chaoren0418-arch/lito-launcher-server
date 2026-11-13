@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.BeforeAll;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionNativeTournamentEconomyTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
@@ -4738,6 +4740,8 @@ final class ClientSessionNativeTournamentEconomyTest {
                     SourceBaseMagicResistance.from(casterCharacter));
             setField(caster, "learnedSkills",
                     java.util.Set.of(BattleSpellCatalog.EARTH_BLESS));
+            // Issue #308: S1 isAttrAgrees requires the source attribute (380_db row159 attr=1).
+            setField(caster, "elfAttribute", BattleSpellCatalog.ATTRIBUTE_EARTH);
             setField(target, "account", "earth-bless-target-account");
             setField(target, "selectedCharacter", targetCharacter.name());
             setField(target, "inventoryCharacter", targetCharacter.name());
@@ -4918,6 +4922,8 @@ final class ClientSessionNativeTournamentEconomyTest {
                     SourceBaseMagicResistance.from(casterCharacter));
             setField(caster, "learnedSkills",
                     java.util.Set.of(BattleSpellCatalog.AQUA_PROTECTER));
+            // Issue #308: S1 isAttrAgrees requires the source attribute (380_db row160 attr=4).
+            setField(caster, "elfAttribute", BattleSpellCatalog.ATTRIBUTE_WATER);
             setField(target, "account", "aqua-protect-target-account");
             setField(target, "selectedCharacter", targetCharacter.name());
             setField(target, "inventoryCharacter", targetCharacter.name());

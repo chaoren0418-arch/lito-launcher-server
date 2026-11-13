@@ -1,5 +1,8 @@
 package local.lito381.server;
 
+// ported from candidate-50635f7e.jar onto src/main; T029 targets formal 0.6.71.
+// Incomplete semantic verification: see docs/reports/issue-70.md before B-land.
+
 
 
 import java.io.ByteArrayOutputStream;
@@ -8848,29 +8851,7 @@ final class Protocol {
 
     static AttackRequest attackRequest(byte[] payload, int expectedOpcode) {
 
-        if (expectedOpcode != C_ATTACK && expectedOpcode != C_FAR_ATTACK
-
-                && expectedOpcode != C_ALT_ATTACK) {
-
-            throw new IllegalArgumentException("unsupported native attack opcode");
-
-        }
-
-        Reader in = new Reader(payload);
-
-        if (in.c() != expectedOpcode) throw new IllegalArgumentException("wrong native attack opcode");
-
-        AttackRequest request = new AttackRequest(in.d(), in.h(), in.h());
-
-        requireDwordId(request.targetObjectId(), "native attack target");
-
-        if (in.remaining() != 0) {
-
-            throw new IllegalArgumentException("invalid native attack layout");
-
-        }
-
-        return request;
+        return EmptyMelee.parse(payload, expectedOpcode);
 
     }
 
@@ -9324,7 +9305,7 @@ final class Protocol {
 
                 selector.row(), selector.column(), in.d());
 
-        if (request.selection() == 0 || in.remaining() != 0) {
+        if (in.remaining() != 0) {
 
             throw new IllegalArgumentException("invalid native summon C_USE_SPELL layout");
 
@@ -9692,7 +9673,7 @@ final class Protocol {
 
                 .c(hitMarker).c(heading).d(sequence)
 
-                .h(nativeGfx).c(0)
+                .h(SharedClientResources.effect(nativeGfx, effectGfx)).c(0)
 
                 .h(casterX).h(casterY).h(targetX).h(targetY)
 
@@ -9725,6 +9706,8 @@ final class Protocol {
             int damageMarker, int heading, long sequence, int projectileGfx,
 
             int attackerX, int attackerY, int targetX, int targetY) {
+
+        projectileGfx = ResourceDatabase.arrow(projectileGfx);
 
         requireByte(actionId, "ranged-physical action");
 
@@ -9760,7 +9743,7 @@ final class Protocol {
 
                 .c(damageMarker).c(heading).d(sequence)
 
-                .h(projectileGfx).c(0x7f)
+                .h(projectileGfx).c(ResourceDatabase.flightType(0x7f))
 
                 .h(attackerX).h(attackerY).h(targetX).h(targetY)
 
@@ -12462,7 +12445,8 @@ final class Protocol {
 
         }
 
-        return new Writer().c(S_SHOW_MAP).d(inventoryObjectId).c(page).bytes();
+        return ResourceDatabase.mapPage(
+                new Writer().c(S_SHOW_MAP).d(inventoryObjectId).c(page).bytes(), page);
 
     }
 
@@ -14538,7 +14522,7 @@ final class Protocol {
 
     /** S_BLINK locks native action bit 8; mode 17 releases it without curing status effects. */
     static byte[] movementLockRelease() {
-        return new Writer().c(S_PARALYSE).c(17).bytes();
+        return new byte[]{S_PARALYSE, 17};
     }
 
 
@@ -15050,40 +15034,20 @@ final class Protocol {
 
 
 
-    /** Retained S_PacketBox(DOLL=56, seconds), opcode 250. */
-
-    static byte[] magicDollIcon(int remainingSeconds) {
-
-        if (remainingSeconds < 0 || remainingSeconds > 0xFFFF) {
-
+    static byte[] magicDollIcon(int n) {
+        if (n < 0 || n > 65535) {
             throw new IllegalArgumentException("invalid magic doll icon duration");
-
         }
-
-        return new Writer().c(S_PACKET_BOX).c(56).h(remainingSeconds).bytes();
-
+        return new Writer().c(123).c(56).h(n).h(0).bytes();
     }
 
 
 
-    /** Retained S_IconConfig(SKILL_ICON=154) add/remove form. */
-
-    static byte[] magicDollCustomIcon(
-
-            int iconId, int remainingSeconds, boolean remove) {
-
-        if (iconId <= 0 || iconId > 0xFFFF || remainingSeconds < 0
-
-                || remainingSeconds > 0xFFFF) {
-
+    static byte[] magicDollCustomIcon(int n, int n2, boolean bl) {
+        if (n <= 0 || n > 65535 || n2 < 0 || n2 > 65535) {
             throw new IllegalArgumentException("invalid magic doll custom icon");
-
         }
-
-        return new Writer().c(S_PACKET_BOX).c(154)
-
-                .h(remainingSeconds).h(iconId).h(0).h(remove ? 1 : 0).bytes();
-
+        return new Writer().c(123).c(154).h(n2).h(n).h(0).h(bl ? 1 : 0).bytes();
     }
 
 
@@ -15486,6 +15450,11 @@ final class Protocol {
 
     static byte[] cubeIgnition(BattleCubeIgnitionEffects.Cube cube) {
 
+        byte[] nativePacket = NativeSourceCubeTemplate.packet(cube);
+
+        if (nativePacket != null) return nativePacket;
+
+
         if (cube == null) throw new IllegalArgumentException(
 
                 "Cube: Ignition object is null");
@@ -15516,6 +15485,12 @@ final class Protocol {
 
     static byte[] cubeQuake(BattleCubeQuakeEffects.Cube cube) {
 
+        byte[] nativePacket = NativeSourceCubeTemplate.packet(cube);
+
+        if (nativePacket != null) return nativePacket;
+
+
+
         if (cube == null) throw new IllegalArgumentException(
 
                 "Cube: Quake object is null");
@@ -15544,6 +15519,12 @@ final class Protocol {
 
     static byte[] cubeShock(BattleCubeShockEffects.Cube cube) {
 
+        byte[] nativePacket = NativeSourceCubeTemplate.packet(cube);
+
+        if (nativePacket != null) return nativePacket;
+
+
+
         if (cube == null) throw new IllegalArgumentException(
 
                 "Cube: Shock object is null");
@@ -15571,6 +15552,12 @@ final class Protocol {
     /** NPC-shaped S_PUT_OBJECT for retained effect NPC 80152 / GFX6724. */
 
     static byte[] cubeHarmony(BattleCubeHarmonyEffects.Cube cube) {
+
+        byte[] nativePacket = NativeSourceCubeTemplate.packet(cube);
+
+        if (nativePacket != null) return nativePacket;
+
+
 
         if (cube == null) throw new IllegalArgumentException(
 
@@ -15734,76 +15721,44 @@ final class Protocol {
 
     /** Native common S_PUT_OBJECT body for one authoritative Quest monster. */
 
-    static byte[] questMonster(BattleQuestEncounter.Snapshot monster) {
-
-        if (monster == null || monster.objectId() == 0
-
-                || monster.force() < 0 || monster.force() > 1
-
-                || monster.roomNumber() < 1 || monster.roomNumber() > 4
-
-                || !monster.alive() || monster.hp() <= 0
-
-                || monster.hp() > monster.maxHp()) {
-
+    static byte[] questMonster(BattleQuestEncounter.Snapshot snapshot) {
+        if (snapshot != null && snapshot.objectId() != 0L
+                && snapshot.force() >= 0 && snapshot.force() <= 1
+                && snapshot.roomNumber() >= 1 && snapshot.roomNumber() <= 4
+                && snapshot.alive() && snapshot.hp() > 0) {
+            snapshot.hp();
+            snapshot.maxHp();
+        } else {
             throw new IllegalArgumentException("invalid native Quest monster");
-
         }
-
-        BattleAnimationCatalog.get().requireBattleCapableSprite(
-
-                monster.gfx(), BattleActionCodes.WALK);
-
-        return battleActor(monster.objectId(), monster.x(), monster.y(),
-
-                monster.gfx(), BattleActionCodes.WALK, 0,
-
-                BattleTimedStatus.NORMAL, monster.name(), "", 0,
-
-                healthRatio(monster.hp(), monster.maxHp()), monster.level());
-
+        BattleAnimationCatalog.get().requireBattleCapableSprite(snapshot.gfx(), 0);
+        return battleActor(snapshot.objectId(), snapshot.x(), snapshot.y(), snapshot.gfx(),
+                0, 0, 0, snapshot.name(), "", 0,
+                NativeBattleTamedLifecycle.visualHealthRatio(snapshot.hp(), snapshot.maxHp()),
+                snapshot.level());
     }
 
 
 
     /** Native common S_PUT_OBJECT body for one cooperative Time Attack actor. */
 
-    static byte[] timeAttackActor(BattleTimeAttackEncounter.Snapshot actor) {
-
-        if (actor == null || actor.objectId() == 0 || !actor.alive()
-
-                || actor.hp() <= 0 || actor.hp() > actor.maxHp()) {
-
-            throw new IllegalArgumentException("invalid native Time Attack actor");
-
-        }
-
-        if (actor.finalBoss()) {
-
-            BattleAnimationCatalog.get().requireBattleCapableSprite(
-
-                    actor.gfx(), BattleActionCodes.WALK);
-
+    static byte[] timeAttackActor(BattleTimeAttackEncounter.Snapshot snapshot) {
+        if (snapshot != null && snapshot.objectId() != 0L
+                && snapshot.alive() && snapshot.hp() > 0) {
+            snapshot.hp();
+            snapshot.maxHp();
         } else {
-
-            // The documented Sea Dancer supports walk plus actions 18/19,
-
-            // but not ordinary melee action 1. It remains a passive fragment.
-
-            BattleAnimationCatalog.get().requireWalkAction(
-
-                    actor.gfx(), BattleActionCodes.WALK);
-
+            throw new IllegalArgumentException("invalid native Time Attack actor");
         }
-
-        return battleActor(actor.objectId(), actor.x(), actor.y(),
-
-                actor.gfx(), BattleActionCodes.WALK, 0,
-
-                BattleTimedStatus.NORMAL, actor.name(), "", 0,
-
-                healthRatio(actor.hp(), actor.maxHp()), actor.level());
-
+        if (snapshot.finalBoss()) {
+            BattleAnimationCatalog.get().requireBattleCapableSprite(snapshot.gfx(), 0);
+        } else {
+            BattleAnimationCatalog.get().requireWalkAction(snapshot.gfx(), 0);
+        }
+        return battleActor(snapshot.objectId(), snapshot.x(), snapshot.y(), snapshot.gfx(),
+                0, 0, 0, snapshot.name(), "", 0,
+                NativeBattleTamedLifecycle.visualHealthRatio(snapshot.hp(), snapshot.maxHp()),
+                snapshot.level());
     }
 
 
@@ -16144,7 +16099,7 @@ final class Protocol {
 
         };
 
-        return new Writer().c(S_EFFECT).d(objectId).h(nativeGfx).bytes();
+        return new Writer().c(S_EFFECT).d(objectId).h(SharedClientResources.effect(nativeGfx, gfx)).bytes();
 
     }
 
@@ -17447,4 +17402,3 @@ final class Protocol {
     static byte[] copyOf(byte[] data) { return Arrays.copyOf(data, data.length); }
 
 }
-

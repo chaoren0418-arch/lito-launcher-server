@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -22,6 +22,8 @@ import local.lito381.server.CombatWorldCommit;
 import local.lito381.server.GameHub;
 import local.lito381.server.NativeArmorProc;
 import local.lito381.server.NativeCombatAttacker;
+import local.lito381.server.NativeCompanionProcScene;
+import local.lito381.server.NativeCompanionRefScene;
 import local.lito381.server.NativeNpcLifetime;
 import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativeProcHealBonus;
@@ -42,17 +44,21 @@ final class NativeProcHealingCompanion {
             return null;
         }
         for (ClientSession clientSession : gameHub.connectedSessionsSnapshot()) {
-            if (!binding.matchesFast(clientSession)) continue;
+            if (!(!binding.matchesFast(clientSession))) {
             return clientSession;
-        }
+
+            }
+}
         return null;
     }
 
     private static boolean contains(List<ClientSession> list, ClientSession clientSession) {
         for (ClientSession clientSession2 : list) {
-            if (clientSession2 != clientSession) continue;
+            if (!(clientSession2 != clientSession)) {
             return true;
-        }
+
+            }
+}
         return false;
     }
 
@@ -71,59 +77,52 @@ final class NativeProcHealingCompanion {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    private static <T> T withTarget(GameHub gameHub, Plan plan, boolean bl, Function<Live, T> function) {
+    private static <T> T nativeProcSceneOriginalWithTarget(GameHub gameHub, Plan plan, boolean bl, Function<Live, T> function) {
         NativeCombatAttacker.Ref ref = plan.target();
         if (ref == null || ref.kind() != 2 || ref.master() == null) {
             return null;
         }
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
-            BattleTimedStatus battleTimedStatus;
+        synchronized (gameHub) {
             ClientSession clientSession;
             ClientSession clientSession2 = NativeProcHealingCompanion.find(gameHub, ref.master());
-            ClientSession clientSession3 = clientSession = bl ? NativeProcHealingCompanion.find(gameHub, plan.caster()) : null;
+            clientSession = bl ? NativeProcHealingCompanion.find(gameHub, plan.caster()) : null;
             if (clientSession2 == null || bl && clientSession == null) {
                 return null;
             }
             BattleTimedStatus battleTimedStatus2 = CombatPoisonAtomic.status(clientSession2);
-            BattleTimedStatus battleTimedStatus3 = battleTimedStatus = bl ? CombatPoisonAtomic.status(clientSession) : battleTimedStatus2;
+            BattleTimedStatus battleTimedStatus3 = bl ? CombatPoisonAtomic.status(clientSession) : battleTimedStatus2;
             synchronized (battleTimedStatus3) {
-                BattleTimedStatus battleTimedStatus4 = battleTimedStatus2;
-                synchronized (battleTimedStatus4) {
-                    List list;
+                synchronized (battleTimedStatus2) {
                     if (!ref.master().matches(clientSession2) || !NativeProcHealingCompanion.registered(gameHub, clientSession2, ref.master())) {
                         return null;
                     }
                     if (!(!bl || plan.caster().matches(clientSession) && NativeProcHealingCompanion.registered(gameHub, clientSession, plan.caster()) && NativeProcHealingCompanion.sameScene(plan.caster(), ref.master()))) {
                         return null;
                     }
-                    List list2 = list = (List)CombatAccess.field(clientSession2, "tamedCompanions");
-                    synchronized (list2) {
-                        Object object;
-                        Object object2 = (BattleCompanion)CombatAccess.field(clientSession2, "battleCompanion");
-                        if (((BattleCompanion)object2).snapshot().objectId() != ref.id()) {
+                    List<?> list = (List<?>)CombatAccess.field(clientSession2, "tamedCompanions");
+                    synchronized (list) {
+                        BattleCompanion object2 = (BattleCompanion)CombatAccess.field(clientSession2, "battleCompanion");
+                        if (object2.snapshot().objectId() != ref.id()) {
                             object2 = null;
                             for (Object object3 : list) {
-                                if (!(object3 instanceof BattleCompanion) || ((BattleCompanion)(object = (BattleCompanion)object3)).snapshot().objectId() != ref.id()) continue;
+                                if (object3 instanceof BattleCompanion object && object.snapshot().objectId() == ref.id()) {
                                 object2 = object;
                                 break;
-                            }
+
+                                }
+}
                         }
                         if (object2 == null) {
                             return null;
                         }
-                        Object object4 = object2;
-                        synchronized (object4) {
-                            Object object3;
-                            BattleTimedStatus timedStatus = (BattleTimedStatus)CombatAccess.field(object2, "timedStatus");
-                            object3 = timedStatus;
-                            object = timedStatus;
-                            synchronized (object) {
-                                BattleCompanion.Snapshot snapshot = ((BattleCompanion)object2).snapshot();
-                                if (!snapshot.active() || snapshot.hp() <= 0 || snapshot.objectId() != ref.id() || NativeCombatAttacker.token(timedStatus, false) != ref.owner()) {
+                        synchronized (object2) {
+                            BattleTimedStatus object3 = (BattleTimedStatus)CombatAccess.field(object2, "timedStatus");
+                            synchronized (object3) {
+                                BattleCompanion.Snapshot snapshot = object2.snapshot();
+                                if (!snapshot.active() || snapshot.hp() <= 0 || snapshot.objectId() != ref.id() || NativeCombatAttacker.token(object3, false) != ref.owner()) {
                                     return null;
                                 }
-                                return function.apply(new Live(clientSession, clientSession2, (BattleCompanion)object2, timedStatus, snapshot));
+                                return function.apply(new Live(clientSession, clientSession2, object2, object3, snapshot));
                             }
                         }
                     }
@@ -150,7 +149,7 @@ final class NativeProcHealingCompanion {
             throw new IllegalStateException("missing companion Proc skill=" + rule.skill());
         }
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        Boolean bl = NativeProcHealingCompanion.withTarget(gameHub, plan = new Plan(ref, binding, rule.skill()), true, live -> {
+        Boolean bl = (Boolean)NativeProcHealingCompanion.withTarget(gameHub, plan = new Plan(ref, binding, rule.skill()), true, (Function<Live, Boolean>) live -> {
             if (!NativePlayerCommit.validFrame(clientSession)) {
                 return false;
             }
@@ -197,11 +196,11 @@ final class NativeProcHealingCompanion {
     }
 
     static boolean offer(GameHub gameHub, Plan plan, int n) {
-        return Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, plan, true, live -> NativeProcHealingCompanion.enqueue(gameHub, live.timed(), plan, n)));
+        return Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, plan, true, (Function<Live, Boolean>) live -> NativeProcHealingCompanion.enqueue(gameHub, live.timed(), plan, n)));
     }
 
     private static void publish(GameHub gameHub, Receipt receipt) {
-        Meter meter = NativeProcHealingCompanion.withTarget(gameHub, receipt.plan(), false, live -> {
+        Meter meter = (Meter)NativeProcHealingCompanion.withTarget(gameHub, receipt.plan(), false, (Function<Live, Meter>) live -> {
             int n = receipt.pet() ? live.snapshot().hp() : receipt.hp();
             int n2 = live.snapshot().maxHp();
             if (n2 <= 0) {
@@ -210,11 +209,11 @@ final class NativeProcHealingCompanion {
             byte[] byArray = new Protocol.Writer().c(104).d(receipt.plan().target().id()).c(100 * n / n2).bytes();
             return new Meter(live.master(), receipt.plan().target().master(), byArray);
         });
-        if (meter == null || !meter.binding().matches(meter.master())) {
+        if (meter == null || !NativeCompanionProcScene.meterBinding(meter.binding(), meter.master())) {
             return;
         }
-        if (Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, receipt.plan(), false, live -> live.master() == meter.master()))) {
-            NativePlayerCommit.safeSend(meter.master(), meter.packet(), "S_HIT_RATIO equipment-companion-healing skill=" + receipt.plan().skill() + " target=" + receipt.plan().target().id());
+        if (Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, receipt.plan(), false, (Function<Live, Boolean>) live -> live.master() == meter.master()))) {
+            NativeCompanionProcScene.sendMeter(meter.master(), meter.packet(), "S_HIT_RATIO equipment-companion-healing skill=" + receipt.plan().skill() + " target=" + receipt.plan().target().id(), gameHub, receipt.plan().target());
         }
     }
 
@@ -222,7 +221,7 @@ final class NativeProcHealingCompanion {
         if (n <= 0) {
             return;
         }
-        ClientSession clientSession = NativeProcHealingCompanion.withTarget(gameHub, plan, true, live -> live.caster());
+        ClientSession clientSession = (ClientSession)NativeProcHealingCompanion.withTarget(gameHub, plan, true, (Function<Live, ClientSession>) live -> live.caster());
         if (clientSession == null || !NativePlayerCommit.validFrame(clientSession) || !NativeProcPlayerState.show(clientSession)) {
             return;
         }
@@ -232,17 +231,32 @@ final class NativeProcHealingCompanion {
         arrayList.add(clientSession);
         if (!((BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus")).active()) {
             for (ClientSession object : list) {
-                if (object == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(object, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(object, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L) continue;
+                if (!(object == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(object, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(object, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L)) {
                 arrayList.add(object);
-            }
+
+                }
+}
         }
-        Object object = Protocol.effectObject(plan.target().id(), n);
+        byte[] object = Protocol.effectObject(plan.target().id(), n);
         for (ClientSession clientSession2 : arrayList) {
             NativePlayerCommit.Binding binding2 = NativePlayerCommit.Binding.capture(clientSession2);
-            if (!NativePlayerCommit.validFrame(clientSession) || !Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, plan, true, live -> true))) break;
-            if (!binding2.matches(clientSession2)) continue;
-            NativePlayerCommit.safeSend(clientSession2, (byte[])object, "S_EFFECT equipment-companion-healing skill=" + plan.skill() + " target=" + plan.target().id());
+            if (!NativePlayerCommit.validFrame(clientSession) || !Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, plan, true, (Function<Live, Boolean>) live -> true))) break;
+            if (!(!binding2.matches(clientSession2))) {
+            NativePlayerCommit.safeSend(clientSession2, object, "S_EFFECT equipment-companion-healing skill=" + plan.skill() + " target=" + plan.target().id());
+
+            }
+}
+    }
+
+    private static Object withTarget(GameHub gameHub, Plan plan, boolean bl, Function function) {
+        if (NativeCompanionRefScene.worldRef(plan.target())) {
+            return NativeCompanionProcScene.withTarget(gameHub, plan, bl, function);
         }
+        return NativeProcHealingCompanion.nativeProcSceneOriginalWithTarget(gameHub, plan, bl, function);
+    }
+
+    static Object nativeProcSceneLive(ClientSession clientSession, ClientSession clientSession2, BattleCompanion battleCompanion, BattleTimedStatus battleTimedStatus, BattleCompanion.Snapshot snapshot) {
+        return new Live(clientSession, clientSession2, battleCompanion, battleTimedStatus, snapshot);
     }
 
     record Plan(NativeCombatAttacker.Ref target, NativePlayerCommit.Binding caster, int skill) implements CombatWorldCommit.Plan
@@ -274,11 +288,11 @@ final class NativeProcHealingCompanion {
                 }
                 try {
                     Object object = event.physical();
-                    if (!(object instanceof Plan)) {
+                    Plan plan;
+                    if (object instanceof Plan value) { plan = value; } else {
                         throw new IllegalStateException("foreign companion HP queue plan");
                     }
-                    Plan plan = (Plan)object;
-                    object = NativeProcHealingCompanion.withTarget(this.hub, plan, true, live -> {
+                    Receipt receipt = (Receipt)NativeProcHealingCompanion.withTarget(this.hub, plan, true, (Function<Live, Receipt>) live -> {
                         if (event.damage() >= 0) {
                             throw new IllegalStateException("invalid companion recovery event");
                         }
@@ -290,13 +304,10 @@ final class NativeProcHealingCompanion {
                         int n2 = live.actor().heal(n - snapshot.hp());
                         return n2 == snapshot.hp() ? null : new Receipt(plan, n2, snapshot.kind() == BattleCompanion.Kind.PET);
                     });
-                    if (object == null) continue;
-                    NativeProcHealingCompanion.publish(this.hub, (Receipt)object);
-                    continue;
+                    if (receipt != null) NativeProcHealingCompanion.publish(this.hub, receipt);
                 }
                 catch (Throwable throwable) {
                     CombatNpcDamageQueue.failed(throwable);
-                    continue;
                 }
                 finally {
                     this.queue.complete(event);

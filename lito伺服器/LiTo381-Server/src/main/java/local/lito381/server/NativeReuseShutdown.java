@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -7,7 +7,7 @@ package local.lito381.server;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import local.lito381.server.NativePlayerLifetime;
-import local.lito381.server.NativePlayerVitalCompletions;
+import local.lito381.server.NativeSummonRetirement;
 
 final class NativeReuseShutdown {
     private static final Set<NativePlayerLifetime> deferred = ConcurrentHashMap.newKeySet();
@@ -18,7 +18,7 @@ final class NativeReuseShutdown {
     static boolean defer(NativePlayerLifetime nativePlayerLifetime) {
         Object object = nativePlayerLifetime.admission;
         synchronized (object) {
-            if (NativePlayerVitalCompletions.pending(nativePlayerLifetime) == 0L) {
+            if (NativeSummonRetirement.pending(nativePlayerLifetime) == 0L) {
                 return false;
             }
             deferred.add(nativePlayerLifetime);
@@ -32,7 +32,7 @@ final class NativeReuseShutdown {
     static void receiptReleased(NativePlayerLifetime nativePlayerLifetime) {
         Object object = nativePlayerLifetime.admission;
         synchronized (object) {
-            if (NativePlayerVitalCompletions.pending(nativePlayerLifetime) == 0L && deferred.remove(nativePlayerLifetime)) {
+            if (NativeSummonRetirement.pending(nativePlayerLifetime) == 0L && deferred.remove(nativePlayerLifetime)) {
                 nativePlayerLifetime.retry.shutdown();
                 nativePlayerLifetime.workers.shutdown();
             }

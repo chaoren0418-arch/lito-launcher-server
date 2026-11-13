@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
 import java.util.ArrayList;
@@ -13,7 +14,45 @@ import java.util.List;
  */
 final class BattleGroundEffects {
     record Actor(long objectId, int x, int y, boolean alive, boolean bot) {}
-    record Pulse(int skillId, long casterObjectId, long targetObjectId, boolean bot) {}
+    @AsRecord(components = {"skillId", "casterObjectId", "targetObjectId", "bot"}, finalFields = {"nativeSourceGroundProof"})
+    static final class Pulse {
+        private final int skillId;
+        private final long casterObjectId;
+        private final long targetObjectId;
+        private final boolean bot;
+        Object nativeSourceGroundProof;
+
+        Pulse(int n, long l, long l2, boolean bl) {
+            this.skillId = n;
+            this.casterObjectId = l;
+            this.targetObjectId = l2;
+            this.bot = bl;
+        }
+
+
+
+
+        public int skillId() {
+            return this.skillId;
+        }
+
+        public long casterObjectId() {
+            return this.casterObjectId;
+        }
+
+        public long targetObjectId() {
+            return this.targetObjectId;
+        }
+
+        public boolean bot() {
+            return this.bot;
+        }
+
+        Pulse(int n, long l, long l2, boolean bl, BattleGroundEffects battleGroundEffects, Object object) {
+            this(n, l, l2, bl);
+            this.nativeSourceGroundProof = NativeSourceGroundOrigin.pulse(this, battleGroundEffects, object);
+        }
+    }
     record CastResult(boolean accepted, List<ArenaMapCatalog.Point> points) {
         CastResult {
             points = points == null ? List.of() : List.copyOf(points);
@@ -26,52 +65,40 @@ final class BattleGroundEffects {
 
     private static final int MAX_FIRE_WALL_SEGMENTS_PER_CASTER = 24;
     private final List<Lease> leases = new ArrayList<>();
+    volatile Object nativeSourceGroundEpoch;
+    volatile Object nativeSourceGroundScene;
+    volatile Object nativeSourceGroundInstalling;
+    volatile Object nativeSourceGroundScan;
 
-    CastResult cast(BattleSpellCatalog.GroundSpell spell, long casterObjectId,
-                    int sourceX, int sourceY, int targetX, int targetY,
-                    ArenaMapCatalog.Arena arena, long nowNanos) {
-        if (spell == null || casterObjectId <= 0 || arena == null || nowNanos < 0
-                || !arena.contains(targetX, targetY)) {
-            return CastResult.rejected();
-        }
-
-        List<ArenaMapCatalog.Point> points = spell.skillId() == BattleSpellCatalog.FIRE_WALL
-                ? fireWallPoints(spell, casterObjectId, sourceX, sourceY,
-                        targetX, targetY, arena)
-                : List.of(new ArenaMapCatalog.Point(targetX, targetY));
-        if (points.isEmpty()) return CastResult.rejected();
-
-        long expiresAt = Math.addExact(nowNanos,
-                Math.multiplyExact(spell.durationSeconds(), 1_000_000_000L));
-        long firstPulse = spell.pulseIntervalMillis() <= 0 ? Long.MAX_VALUE
-                : Math.addExact(nowNanos,
-                        Math.multiplyExact(spell.pulseIntervalMillis(), 1_000_000L));
-        for (ArenaMapCatalog.Point point : points) {
-            leases.add(new Lease(spell.skillId(), casterObjectId,
-                    point.x(), point.y(), spell.effectRadius(), expiresAt,
-                    firstPulse, spell.pulseIntervalMillis()));
-        }
-        return new CastResult(true, points);
+    BattleGroundEffects() {
+        NativeSourceGroundOrigin.reset(this);
     }
 
-    CastResult castPattern(int skillId, long casterObjectId,
-                           List<ArenaMapCatalog.Point> points, int radius,
-                           int durationMillis, int pulseIntervalMillis,
-                           ArenaMapCatalog.Arena arena, long nowNanos) {
-        if (skillId <= 0 || casterObjectId <= 0 || points == null || points.isEmpty()
-                || radius < 0 || durationMillis <= 0 || pulseIntervalMillis <= 0
-                || arena == null || nowNanos < 0
-                || points.stream().anyMatch(point -> point == null
-                    || !arena.contains(point.x(), point.y()))) {
+    CastResult cast(BattleSpellCatalog.GroundSpell spell, long casterObjectId, int sourceX, int sourceY, int targetX, int targetY, ArenaMapCatalog.Arena arena, long nowNanos) {
+        List<ArenaMapCatalog.Point> list;
+        if (spell == null || casterObjectId <= 0L || arena == null || nowNanos < 0L || !arena.contains(targetX, targetY)) {
             return CastResult.rejected();
         }
-        long expiresAt = Math.addExact(nowNanos,
-                Math.multiplyExact(durationMillis, 1_000_000L));
-        long firstPulse = Math.addExact(nowNanos,
-                Math.multiplyExact(pulseIntervalMillis, 1_000_000L));
-        for (ArenaMapCatalog.Point point : points) {
-            leases.add(new Lease(skillId, casterObjectId, point.x(), point.y(),
-                    radius, expiresAt, firstPulse, pulseIntervalMillis));
+        List<ArenaMapCatalog.Point> list2 = list = spell.skillId() == 58 ? this.fireWallPoints(spell, casterObjectId, sourceX, sourceY, targetX, targetY, arena) : List.of(new ArenaMapCatalog.Point(targetX, targetY));
+        if (list.isEmpty()) {
+            return CastResult.rejected();
+        }
+        long l3 = Math.addExact(nowNanos, Math.multiplyExact((long)spell.durationSeconds(), 1000000000L));
+        long l4 = spell.pulseIntervalMillis() <= 0 ? Long.MAX_VALUE : Math.addExact(nowNanos, Math.multiplyExact((long)spell.pulseIntervalMillis(), 1000000L));
+        for (ArenaMapCatalog.Point point : list) {
+            this.leases.add(new Lease(spell.skillId(), casterObjectId, point.x(), point.y(), spell.effectRadius(), l3, l4, spell.pulseIntervalMillis(), this));
+        }
+        return new CastResult(true, list);
+    }
+
+    CastResult castPattern(int skillId, long casterObjectId, List<ArenaMapCatalog.Point> points, int radius, int durationMillis, int pulseIntervalMillis, ArenaMapCatalog.Arena arena, long nowNanos) {
+        if (skillId <= 0 || casterObjectId <= 0L || points == null || points.isEmpty() || radius < 0 || durationMillis <= 0 || pulseIntervalMillis <= 0 || arena == null || nowNanos < 0L || points.stream().anyMatch(point -> point == null || !arena.contains(point.x(), point.y()))) {
+            return CastResult.rejected();
+        }
+        long l3 = Math.addExact(nowNanos, Math.multiplyExact((long)durationMillis, 1000000L));
+        long l4 = Math.addExact(nowNanos, Math.multiplyExact((long)pulseIntervalMillis, 1000000L));
+        for (ArenaMapCatalog.Point point2 : points) {
+            this.leases.add(new Lease(skillId, casterObjectId, point2.x(), point2.y(), radius, l3, l4, pulseIntervalMillis, this));
         }
         return new CastResult(true, points);
     }
@@ -101,7 +128,7 @@ final class BattleGroundEffects {
                         Math.abs(actor.y() - lease.y));
                 if (distance <= lease.radius) {
                     pulses.add(new Pulse(lease.skillId, lease.casterObjectId,
-                            actor.objectId(), actor.bot()));
+                            actor.objectId(), actor.bot(), this, lease));
                 }
             }
         }
@@ -123,7 +150,8 @@ final class BattleGroundEffects {
     }
 
     void clear() {
-        leases.clear();
+        NativeSourceGroundOrigin.reset(this);
+        this.leases.clear();
     }
 
     private List<ArenaMapCatalog.Point> fireWallPoints(
@@ -167,6 +195,7 @@ final class BattleGroundEffects {
         return result;
     }
 
+    @AsmFinal({"nativeSourceGroundEntity"})
     private static final class Lease {
         final int skillId;
         final long casterObjectId;
@@ -176,17 +205,22 @@ final class BattleGroundEffects {
         final long expiresAtNanos;
         final int pulseIntervalMillis;
         long nextPulseNanos;
+        Object nativeSourceGroundEntity;
 
-        Lease(int skillId, long casterObjectId, int x, int y, int radius,
-              long expiresAtNanos, long nextPulseNanos, int pulseIntervalMillis) {
-            this.skillId = skillId;
-            this.casterObjectId = casterObjectId;
-            this.x = x;
-            this.y = y;
-            this.radius = radius;
-            this.expiresAtNanos = expiresAtNanos;
-            this.nextPulseNanos = nextPulseNanos;
-            this.pulseIntervalMillis = pulseIntervalMillis;
+        Lease(int n, long l, int n2, int n3, int n4, long l2, long l3, int n5) {
+            this.skillId = n;
+            this.casterObjectId = l;
+            this.x = n2;
+            this.y = n3;
+            this.radius = n4;
+            this.expiresAtNanos = l2;
+            this.nextPulseNanos = l3;
+            this.pulseIntervalMillis = n5;
+        }
+
+        Lease(int n, long l, int n2, int n3, int n4, long l2, long l3, int n5, BattleGroundEffects battleGroundEffects) {
+            this(n, l, n2, n3, n4, l2, l3, n5);
+            this.nativeSourceGroundEntity = NativeSourceGroundOrigin.entity(this, battleGroundEffects);
         }
     }
 }

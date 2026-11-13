@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -38,6 +38,9 @@ import local.lito381.server.NativeProcHealingPlayer;
 import local.lito381.server.NativeProcNpcState;
 import local.lito381.server.NativeProcPlayerState;
 import local.lito381.server.NativeProcSkillCatalog;
+import local.lito381.server.NativeSourceCubeNpcQueue;
+import local.lito381.server.NativeSourcePhysicalNpc;
+import local.lito381.server.NativeSourcePoisonNpc;
 import local.lito381.server.Protocol;
 
 final class NativeProcHealingEncounter {
@@ -100,9 +103,11 @@ final class NativeProcHealingEncounter {
 
     static ClientSession find(GameHub gameHub, NativePlayerCommit.Binding binding) {
         for (ClientSession clientSession : gameHub.connectedSessionsSnapshot()) {
-            if (!binding.matchesFast(clientSession)) continue;
+            if (!(!binding.matchesFast(clientSession))) {
             return clientSession;
-        }
+
+            }
+}
         return null;
     }
 
@@ -171,13 +176,13 @@ final class NativeProcHealingEncounter {
                 return null;
             }
             NativeProcEncounterCatalog.Npc npc = NativeProcEncounterCatalog.catalog().require(NativePlayerCommit.integer(live.snapshot(), "npcId"));
-            Plan applied = new Plan(ref, binding, rule.skill(), NativeProcHealingEncounter.generation(live.container()), npc);
+            Plan capturedPlan = new Plan(ref, binding, rule.skill(), NativeProcHealingEncounter.generation(live.container()), npc);
             long l = System.nanoTime();
-            Target target = new Target((Live)live, applied, l);
+            Target target = new Target((Live)live, capturedPlan, l);
             NativeProcHealingKernel.apply(target, () -> NativeProcHealingKernel.calculate(skill.damageDice(), skill.damageValue(), NativeProcHealBonus.catalog().bonus(NativeProcHealingPlayer.intelligence(clientSession, l)), NativePlayerCommit.integer(clientSession, "playerLawful"), 10, n -> ThreadLocalRandom.current().nextInt(n)), (int)CombatRules.number("NATURES_BLESSING_HEAL", 0.0), () -> {
                 target.graphics = true;
             });
-            return target.graphics ? applied : null;
+            return target.graphics ? capturedPlan : null;
         });
         if (plan != null) {
             NativeProcHealingEncounter.graphics(gameHub, plan, skill.castGraphics());
@@ -229,7 +234,7 @@ final class NativeProcHealingEncounter {
             throw new IllegalStateException("unqualified encounter receive owner");
         }
         NativeCombatAttacker.Ref ref = plan.target();
-        int n3 = n2 = ref.kind() == 3 ? live.hub().questMonsterPoisonPalette(ref.room(), ref.id(), System.nanoTime()) : live.hub().timeAttackActorPoisonPalette(ref.room(), ref.id(), System.nanoTime());
+        n2 = ref.kind() == 3 ? live.hub().questMonsterPoisonPalette(ref.room(), ref.id(), System.nanoTime()) : live.hub().timeAttackActorPoisonPalette(ref.room(), ref.id(), System.nanoTime());
         if (n > 0) {
             Object object = direct.get();
             direct.set(live.actor());
@@ -270,7 +275,6 @@ final class NativeProcHealingEncounter {
     }
 
     private static void graphics(GameHub gameHub, Plan plan, int n) {
-        Object object;
         if (n <= 0) {
             return;
         }
@@ -282,20 +286,27 @@ final class NativeProcHealingEncounter {
         arrayList.add(clientSession);
         if (!((BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus")).active()) {
             java.util.Iterator<ClientSession> members = gameHub.roomMembers(plan.target().room()).iterator();
-            object = members;
             while (members.hasNext()) {
                 ClientSession clientSession2 = members.next();
-                if (clientSession2 == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L) continue;
+                if (!(clientSession2 == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L)) {
                 arrayList.add(clientSession2);
-            }
+
+                }
+}
         }
-        object = Protocol.effectObject(plan.target().id(), n);
+        byte[] object = Protocol.effectObject(plan.target().id(), n);
         for (ClientSession clientSession3 : arrayList) {
             NativePlayerCommit.Binding binding = NativePlayerCommit.Binding.capture(clientSession3);
             if (!NativePlayerCommit.validFrame(clientSession) || !Boolean.TRUE.equals(NativeProcHealingEncounter.withLive(gameHub, plan.target(), plan.caster(), plan.generation(), live -> true))) break;
-            if (!binding.matches(clientSession3)) continue;
-            NativePlayerCommit.safeSend(clientSession3, (byte[])object, "S_EFFECT equipment-encounter-healing skill=" + plan.skill() + " target=" + plan.target().id());
-        }
+            if (!(!binding.matches(clientSession3))) {
+            NativePlayerCommit.safeSend(clientSession3, object, "S_EFFECT equipment-encounter-healing skill=" + plan.skill() + " target=" + plan.target().id());
+
+            }
+}
+    }
+
+    static Runnable nativeSourceCubeDrain(GameHub gameHub, CombatNpcDamageQueue.Queue queue) {
+        return new Dispatch(gameHub, queue);
     }
 
     record Live(GameHub hub, Object room, Object container, Object actor, BattleTimedStatus timed, Object snapshot, ClientSession caster) {
@@ -326,14 +337,22 @@ final class NativeProcHealingEncounter {
                     return;
                 }
                 try {
+                    if (NativeSourcePoisonNpc.consume(this.hub, this.queue, event)) {
+                        continue;
+                    }
+                    if (NativeSourcePhysicalNpc.consume(this.hub, this.queue, event)) {
+                        continue;
+                    }
+                    if (NativeSourceCubeNpcQueue.consume(this.hub, this.queue, event)) {
+                        continue;
+                    }
                     Object object = event.physical();
-                    if (!(object instanceof Plan)) {
+                    if (!(object instanceof Plan plan)) {
                         throw new IllegalStateException("foreign encounter Proc queue plan");
                     }
-                    Plan plan = (Plan)object;
-                    object = NativeProcHealingEncounter.withLive(this.hub, plan.target(), plan.caster(), plan.generation(), live -> NativeProcHealingEncounter.commit(live, plan, event.damage()));
-                    if (object == null) continue;
-                    NativeProcEncounterPublication.publish((NativeProcEncounterPublication.Context)object);
+                    NativeProcEncounterPublication.Context context = NativeProcHealingEncounter.withLive(this.hub, plan.target(), plan.caster(), plan.generation(), live -> NativeProcHealingEncounter.commit(live, plan, event.damage()));
+                    if (context == null) continue;
+                    NativeProcEncounterPublication.publish(context);
                     continue;
                 }
                 catch (Throwable throwable) {

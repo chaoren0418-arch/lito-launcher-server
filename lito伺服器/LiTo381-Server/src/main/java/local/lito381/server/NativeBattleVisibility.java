@@ -1,6 +1,21 @@
+// ported from candidate 50635f7e; three-way baseline: base-0.6.71.jar and src/main
 package local.lito381.server;
-
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import local.lito381.server.BattleSpellCatalog;
+import local.lito381.server.BattleTimedStatus;
+import local.lito381.server.ClientSession;
+import local.lito381.server.GameHub;
+import local.lito381.server.NativeSourceCubeVisibility;
+import local.lito381.server.Protocol;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -47,7 +62,7 @@ final class NativeBattleVisibility {
         long id=(long)call(actor,"playerObjectId");call(viewer,"sendEncrypted",Protocol.removeObject(id),"S_REMOVE_OBJECT battle-screen-exit object="+id);
     }
     static void afterMove(ClientSession actor,byte[] request)throws IOException {
-        if(!field(actor,"phase").toString().equals("BATTLE"))return;
+        if(!field(actor,"phase").toString().equals("BATTLE")){NativeSourceCubeVisibility.refresh(actor);return;}
         var old=Protocol.moveRequest(request);int x=number(actor,"positionX"),y=number(actor,"positionY");
         if(x!=old.x() || y!=old.y())throw new IllegalStateException("uncommitted visibility move");
         var hub=(GameHub)field(actor,"hub");long room=(long)field(actor,"currentRoomId");
@@ -60,5 +75,6 @@ final class NativeBattleVisibility {
             if(!(boolean)field(actor,"invisible")){if(after)reveal(peer,actor);else remove(peer,actor);}
             if(!(boolean)field(peer,"invisible") && !(boolean)field(peer,"observer")){if(after)reveal(actor,peer);else remove(actor,peer);}
         }
-    }
+        NativeSourceCubeVisibility.refresh(actor);
+}
 }

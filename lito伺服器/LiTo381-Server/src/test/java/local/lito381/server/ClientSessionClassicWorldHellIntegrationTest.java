@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /** Encrypted C/S acceptance for retained Hell entry, expiry and death restart. */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionClassicWorldHellIntegrationTest {
     private static final AtomicInteger NEXT = new AtomicInteger();
     @TempDir Path temporary;

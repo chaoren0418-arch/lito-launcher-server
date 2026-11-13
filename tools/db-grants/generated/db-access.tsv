@@ -1,0 +1,909 @@
+db	table	op	reach	method	file:line	columns	in_schema	engine
+character	accounts	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:240		Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:694	banned,login,password	Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:709	access_level	Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:822		Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:843		Y	MyISAM
+character	accounts	insert	formal+modern	sql	LegacyMySqlRepository.java:855	access_level,banned,character_slot,ezpay,host,ip,lastactive,login,password,server_no,spw,warehouse	Y	MyISAM
+character	accounts	delete	formal+modern	sql	LegacyMySqlRepository.java:873		Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:889		Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:907	password	Y	MyISAM
+character	accounts	update	formal+modern	sql	LegacyMySqlRepository.java:921	lastactive,password	Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:936	password	Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:955		Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:5750	warehouse	Y	MyISAM
+character	accounts	select	formal+modern	sql	LegacyMySqlRepository.java:5780	warehouse	Y	MyISAM
+character	accounts	update	formal+modern	sql	LegacyMySqlRepository.java:5800	warehouse	Y	MyISAM
+character	accounts	select	formal+modern	sql	ModernGmCommandJdbc.java:27	access_level,banned,login	Y	MyISAM
+character	accounts	select	formal+modern	sql	ModernJdbcBackend.java:40	banned,login,password	Y	MyISAM
+character	accounts	select	formal+modern	sql	ModernShopCatalogJdbc.java:29	banned,login	Y	MyISAM
+character	character_buddys	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:249		Y	MyISAM
+character	character_buddys	delete	formal+modern	sql	LegacyMySqlRepository.java:1357		Y	MyISAM
+character	character_buddys	select	formal+modern	sql	LegacyMySqlRepository.java:3118	buddy_id,buddy_name	Y	MyISAM
+character	character_buddys	delete	formal+modern	sql	LegacyMySqlRepository.java:3168		Y	MyISAM
+character	character_buddys	insert	formal+modern	sql	LegacyMySqlRepository.java:3199	buddy_id,buddy_name,char_id	Y	MyISAM
+character	character_buff	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:248		Y	MyISAM
+character	character_buff	select	formal+modern	sql	LegacyMySqlRepository.java:324	char_obj_id,poly_id,remaining_time,skill_id,snapshot_version	Y	MyISAM
+character	character_buff	delete	formal+modern	sql	LegacyMySqlRepository.java:1347		Y	MyISAM
+character	character_buff	insert	formal+modern	sql	LegacyMySqlRepository.java:2939	char_obj_id,poly_id,remaining_time,skill_id,snapshot_version	Y	MyISAM
+character	character_buff	delete	formal+modern	sql	LegacyMySqlRepository.java:2964		Y	MyISAM
+character	character_buff	delete	formal+modern	sql	LegacyMySqlRepository.java:2975		Y	MyISAM
+character	character_buff	select	formal+modern	sql	LegacyMySqlRepository.java:3000	snapshot_version	Y	MyISAM
+character	character_buff	select	formal+modern	sql	SourceBuffRead.java:12	*,get:poly_id,get:remaining_time,get:skill_id	Y	MyISAM
+character	character_buff	select	formal+modern	sql	SourceBuffRead.java:34	char_obj_id,poly_id,remaining_time,skill_id	Y	MyISAM
+character	character_buff	select	formal+modern	sql	SourceBuffRead.java:51	poly_id,remaining_time,skill_id	Y	MyISAM
+character	character_buff_snapshot	select	formal+modern	sql	LegacyMySqlRepository.java:324	char_obj_id,completed_version	Y	MyISAM
+character	character_buff_snapshot	delete	formal+modern	sql	LegacyMySqlRepository.java:1352		Y	MyISAM
+character	character_buff_snapshot	insert	formal+modern	sql	LegacyMySqlRepository.java:2953	char_obj_id,completed_at,completed_version	Y	MyISAM
+character	character_buff_snapshot	select	formal+modern	sql	SourceBuffRead.java:25	char_obj_id,completed_version	Y	MyISAM
+character	character_buff_snapshot	select	formal+modern	sql	SourceBuffRead.java:43	completed_version	Y	MyISAM
+character	character_elf_warehouse	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:252		Y	MyISAM
+character	character_elf_warehouse	select	formal+modern	sql	LegacyMySqlRepository.java:5101	id	Y	MyISAM
+character	character_elf_warehouse	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:8555		Y	MyISAM
+character	character_elf_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:9020		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:116	attr_enchant_kind,attr_enchant_level	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:480	attr_enchant_kind,attr_enchant_level,bless,char_id,durability,enchantlvl,greater,id,is_equipped,item_id,magic_stone_item_id,magic_stone_level,magic_stone_time	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:825	char_id,count,id,is_equipped,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyInventoryWeightLoader.java:19	item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyInventoryWeightLoader.java:31	char_id,count,id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:245		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:299	id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:1055	id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:1136	id	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:1170		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:1230	id	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:1282		Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:1317		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:1949		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:2265		Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:2352		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:2390		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:2400		Y	MyISAM
+character	character_items	insert	formal+modern	sql	LegacyMySqlRepository.java:2431	bless,char_id,charge_count,count,durability,enchantlvl,id,is_equipped,is_id,is_sealed,item_id,item_name	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:2499		Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:2515	bless,charge_count,count,durability,enchantlvl,is_equipped,is_id,is_sealed,item_id	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:2562		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:3301		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:3315	*,get:attr_enchant_kind,get:attr_enchant_level,get:bless,get:charge_count,get:count,get:durability,get:enchantlvl,get:gamno,get:greater,get:id,get:is_equipped,get:is_id,get:is_sealed,get:item_id,get:item_name	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:3333	id	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:3377		Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:3397	count	Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:3442	item_id	Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:3458	item_id	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:3522		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:3553	char_id,id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:3569		Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:4403	count	Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:4592	count	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:4992		Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:4999	count	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:5082	id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:5098	id	Y	MyISAM
+character	character_items	insert	formal+modern	sql	LegacyMySqlRepository.java:5115	bless,char_id,charge_count,count,durability,enchantlvl,id,is_equipped,is_id,is_sealed,item_id,item_name	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:5177		Y	MyISAM
+character	character_items	update	formal+modern	sql	LegacyMySqlRepository.java:5184	count	Y	MyISAM
+character	character_items	insert	formal+modern	sql	LegacyMySqlRepository.java:5692	bless,char_id,charge_count,count,durability,enchantlvl,id,is_equipped,is_id,is_sealed,item_id,item_name	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:5711		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:6003	attr_enchant_kind,attr_enchant_level,gamno,greater,item_id,item_name	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:6025		Y	MyISAM
+character	character_items	insert	formal+modern	sql	LegacyMySqlRepository.java:6043	attr_enchant_kind,attr_enchant_level,bless,char_id,charge_count,count,durability,enchantlvl,gamno,greater,id,is_equipped,is_id,is_sealed,item_id,item_name,last_used,remaining_time	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:6277	char_id,is_equipped,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:6447	char_id,id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:7291	id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:8473	bless,charge_count,durability,enchantlvl,is_equipped,is_id,is_sealed,item_id	Y	MyISAM
+character	character_items	delete	formal+modern	sql	LegacyMySqlRepository.java:8506		Y	MyISAM
+character	character_items	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:8554		Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:8990	char_id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:8991	char_id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:8992	char_id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	LegacyMySqlRepository.java:9001		Y	MyISAM
+character	character_items	select	formal+modern	sql	ModernCharacterDataJdbc.java:39	char_id,item_id	Y	MyISAM
+character	character_items	select	formal+modern	sql	ModernItemLifetimeJdbc.java:55	char_id,id,is_equipped,item_id,remaining_time	Y	MyISAM
+character	character_items_card	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:480	card_1,card_2,card_3,card_4,card_5,item_objid	Y	MyISAM
+character	character_items_card	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:254		Y	MyISAM
+character	character_items_card	select	formal+modern	sql	ModernEquipmentSourceJdbc.java:148	card_1,card_2,card_3,card_4,card_5,item_objid	Y	MyISAM
+character	character_items_dark	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:114	add_ac,add_bow_dmg,add_bow_hit,add_bow_redux,add_cha,add_con,add_def_earth,add_def_fire,add_def_water,add_def_wind,add_dex,add_dmg,add_dmg_redux,add_hit,add_hp,add_hp_regen,add_ignore_reduction,add_magic_hit,add_melee_redux,add_mp,add_mp_regen,add_potion_recovery,add_regist_blind,add_regist_freeze,add_regist_sleep,add_regist_stone,add_regist_stun,add_regist_sustain,add_str,add_stun_success,add_weight_reduction	Y	MyISAM
+character	character_items_dark	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:480	add_ac,add_bow_dmg,add_bow_hit,add_bow_redux,add_cha,add_con,add_def_earth,add_def_fire,add_def_water,add_def_wind,add_dex,add_dmg,add_dmg_redux,add_er,add_hit,add_hp,add_hp_regen,add_ignore_reduction,add_int,add_magic_dmg_modifier,add_magic_hit,add_melee_redux,add_mp,add_mp_regen,add_mr,add_potion_recovery,add_regist_blind,add_regist_freeze,add_regist_sleep,add_regist_stone,add_regist_stun,add_regist_sustain,add_sp,add_str,add_stun_success,add_weight_reduction,add_wis,item_objid	Y	MyISAM
+character	character_items_dark	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:255		Y	MyISAM
+character	character_items_dark	select	formal+modern	sql	ModernEquipmentSourceJdbc.java:149	item_objid	Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:1278		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:1301		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:2347		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:2470		Y	MyISAM
+character	character_items_time	insert	formal+modern	sql	LegacyMySqlRepository.java:2476	itemr_obj_id,usertime	Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:2494		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:2538		Y	MyISAM
+character	character_items_time	insert	formal+modern	sql	LegacyMySqlRepository.java:2544	itemr_obj_id,usertime	Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:2557		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:3386		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:3517		Y	MyISAM
+character	character_items_time	delete	formal+modern	sql	LegacyMySqlRepository.java:6034		Y	MyISAM
+character	character_items_time	insert	formal+modern	sql	LegacyMySqlRepository.java:6070	itemr_obj_id,usertime	Y	MyISAM
+character	character_items_time	select	formal+modern	sql	LegacyMySqlRepository.java:8988	itemr_obj_id	Y	MyISAM
+character	character_items_time	select	formal+modern	sql	LegacyMySqlRepository.java:9003	itemr_obj_id	Y	MyISAM
+character	character_items_time	select	formal+modern	sql	ModernItemLifetimeJdbc.java:56	itemr_obj_id,usertime	Y	MyISAM
+character	character_letter	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:250		Y	MyISAM
+character	character_letter	select	formal+modern	sql	LegacyMySqlRepository.java:396	code,content,date,isCheck,item_object_id,receiver,sender,subject,template_id	Y	MyISAM
+character	character_letter	select	formal+modern	sql	LegacyMySqlRepository.java:1241	item_object_id	Y	MyISAM
+character	character_letter	delete	formal+modern	sql	LegacyMySqlRepository.java:1250		Y	MyISAM
+character	character_letter	insert	formal+modern	sql	LegacyMySqlRepository.java:3348	code,content,date,isCheck,item_object_id,receiver,sender,subject,template_id	Y	MyISAM
+character	character_letter	update	formal+modern	sql	LegacyMySqlRepository.java:3453	isCheck	Y	MyISAM
+character	character_letter	delete	formal+modern	sql	LegacyMySqlRepository.java:3506		Y	MyISAM
+character	character_letter	select	formal+modern	sql	LegacyMySqlRepository.java:3552	code,content,date,isCheck,item_object_id,receiver,sender,subject,template_id	Y	MyISAM
+character	character_letter	select	formal+modern	sql	LegacyMySqlRepository.java:3566		Y	MyISAM
+character	character_letter	delete	formal+modern	sql	LegacyMySqlRepository.java:5709		Y	MyISAM
+character	character_lito	select	formal+modern	sql	SettlementSql.java:45	last_result_id	N	
+character	character_lito	select	formal+modern	sql	SettlementSql.java:46		N	
+character	character_lito	select	formal+modern	sql	SettlementSql.java:90	last_result_id,version	N	
+character	character_lito	update	formal+modern	sql	SettlementSql.java:97	char_name,disconnects,last_result_id,losses,monthly_losses,monthly_period,monthly_ranking_points,monthly_wins,ranking_points,version,wins	N	
+character	character_lito	insert	formal+modern	sql	SettlementSql.java:98	char_name,char_obj_id,last_result_id,version	N	
+character	character_lito	select	formal+modern	sql	SettlementSql.java:110	version	N	
+character	character_lito	select	formal+modern	sql	SharedDatabase.java:75	char_name,char_obj_id,losses,updated_at,version,wins	N	
+character	character_lito	select	formal+modern	sql	SharedDatabase.java:76		N	
+character	character_lito	select	formal+modern	sql	SharedDatabase.java:98	char_obj_id,version	N	
+character	character_lito	select	formal+modern	sql	SharedDatabase.java:132	version	N	
+character	character_lito	insert	formal+modern	sql	SharedDatabase.java:161	char_name,char_obj_id,disconnects,losses,monthly_losses,monthly_period,monthly_ranking_points,monthly_wins,ranking_points,version,wins	N	
+character	character_lito	update	formal+modern	sql	SharedDatabase.java:161	char_name,char_obj_id,disconnects,losses,monthly_losses,monthly_period,monthly_ranking_points,monthly_wins,ranking_points,version,wins	N	
+character	character_other	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:242		Y	MyISAM
+character	character_other	select	formal+modern	sql	LegacyMySqlRepository.java:285	char_obj_id,deathCount,killCount	Y	MyISAM
+character	character_other	insert	formal+modern	sql	LegacyMySqlRepository.java:1116	char_obj_id	Y	MyISAM
+character	character_other	delete	formal+modern	sql	LegacyMySqlRepository.java:1164		Y	MyISAM
+character	character_other	delete	formal+modern	sql	LegacyMySqlRepository.java:1397		Y	MyISAM
+character	character_other	insert	formal+modern	sql	LegacyMySqlRepository.java:1467	char_obj_id,deathCount,killCount	Y	MyISAM
+character	character_other	select	formal+modern	sql	LegacyMySqlRepository.java:2665	deathCount,killCount	Y	MyISAM
+character	character_pets	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:246		Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:298	exp,hp,item_obj_id,lawful,lvl,mp,name,npcid,objid	Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:1056	objid	Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:1137	objid	Y	MyISAM
+character	character_pets	delete	formal+modern	sql	LegacyMySqlRepository.java:1280		Y	MyISAM
+character	character_pets	delete	formal+modern	sql	LegacyMySqlRepository.java:1309		Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:2280		Y	MyISAM
+character	character_pets	update	formal+modern	sql	LegacyMySqlRepository.java:2294	exp,hp,lawful,lvl,mp,name,npcid	Y	MyISAM
+character	character_pets	insert	formal+modern	sql	LegacyMySqlRepository.java:2316	exp,hp,item_obj_id,lawful,lvl,mp,name,npcid,objid	Y	MyISAM
+character	character_pets	delete	formal+modern	sql	LegacyMySqlRepository.java:2342		Y	MyISAM
+character	character_pets	delete	formal+modern	sql	LegacyMySqlRepository.java:2489		Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:3334	objid	Y	MyISAM
+character	character_pets	delete	formal+modern	sql	LegacyMySqlRepository.java:3512		Y	MyISAM
+character	character_pets	delete	formal+modern	sql	LegacyMySqlRepository.java:5897		Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:6446	exp,hp,item_obj_id,lawful,lvl,mp,name,npcid,objid	Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:7292	objid	Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:8565		Y	MyISAM
+character	character_pets	select	formal+modern	sql	LegacyMySqlRepository.java:8988	item_obj_id	Y	MyISAM
+character	character_quests	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:244		Y	MyISAM
+character	character_quests	delete	formal+modern	sql	LegacyMySqlRepository.java:1337		Y	MyISAM
+character	character_quests	select	formal+modern	sql	LegacyMySqlRepository.java:2609	quest_id	Y	MyISAM
+character	character_quests	delete	formal+modern	sql	LegacyMySqlRepository.java:2616		Y	MyISAM
+character	character_quests	insert	formal+modern	sql	LegacyMySqlRepository.java:2626	char_id,quest_id,quest_step	Y	MyISAM
+character	character_quests	select	formal+modern	sql	LegacyMySqlRepository.java:2716	quest_id,quest_step	Y	MyISAM
+character	character_skills	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:243		Y	MyISAM
+character	character_skills	delete	formal+modern	sql	LegacyMySqlRepository.java:1332		Y	MyISAM
+character	character_skills	select	formal+modern	sql	LegacyMySqlRepository.java:2573	skill_id	Y	MyISAM
+character	character_skills	delete	formal+modern	sql	LegacyMySqlRepository.java:2580		Y	MyISAM
+character	character_skills	insert	formal+modern	sql	LegacyMySqlRepository.java:2590	activetimeleft,char_obj_id,is_active,skill_id,skill_name	Y	MyISAM
+character	character_skills	select	formal+modern	sql	LegacyMySqlRepository.java:2688	char_obj_id,skill_id	Y	MyISAM
+character	character_skills	select	formal+modern	sql	ModernDisintegrateCatalog.java:36	char_obj_id,skill_id	Y	MyISAM
+character	character_skills	select	formal+modern	sql	ModernGreaterHasteCatalog.java:40	char_obj_id,skill_id	Y	MyISAM
+character	character_skills	select	formal+modern	sql	ModernHasteCatalog.java:40	char_obj_id,skill_id	Y	MyISAM
+character	character_skills	select	formal+modern	sql	ModernSkillsJdbc.java:38	char_obj_id,skill_id	Y	MyISAM
+character	character_skills	select	formal+modern	sql	ModernSlowCatalog.java:46	char_obj_id,skill_id	Y	MyISAM
+character	character_teleport	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:247		Y	MyISAM
+character	character_teleport	select	formal+modern	sql	LegacyMySqlRepository.java:315	char_id,id,locx,locy,mapid,name	Y	MyISAM
+character	character_teleport	delete	formal+modern	sql	LegacyMySqlRepository.java:1342		Y	MyISAM
+character	character_teleport	delete	formal+modern	sql	LegacyMySqlRepository.java:2803		Y	MyISAM
+character	character_teleport	insert	formal+modern	sql	LegacyMySqlRepository.java:2813	char_id,locx,locy,mapid,name	Y	MyISAM
+character	character_teleport	select	formal+modern	sql	LegacyMySqlRepository.java:2866	id,locx,locy,mapid,name	Y	MyISAM
+character	character_warehouse	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:251		Y	MyISAM
+character	character_warehouse	select	formal+modern	sql	LegacyMySqlRepository.java:5099	id	Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8098		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8108		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8111		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8131		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8136		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8503		Y	MyISAM
+character	character_warehouse	delete	formal+modern	sql	LegacyMySqlRepository.java:8512		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8521		Y	MyISAM
+character	character_warehouse	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:8554		Y	MyISAM
+character	character_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:9018		Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:463	Type	Y	MyISAM
+character	characters	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:241		Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:280	Food,HellTime,OriginalCon,OriginalDex,OriginalStr	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:891		Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:969	Ac,Banned,Cha,Clanname,Con,Dex,ElfAttr,Food,Intel,MaxHp,MaxMp,OriginalCon,OriginalDex,OriginalInt,OriginalStr,OriginalWis,Sex,Str,Type,Wis,account_name,char_name,level	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:1033		Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:1041	*,get:Ac,get:Cha,get:ClanID,get:ClanRank,get:Clanname,get:Class,get:Con,get:Dex,get:ElfAttr,get:Exp,get:Food,get:HellTime,get:Intel,get:LastPk,get:LastPkForElf,get:Lawful,get:LocX,get:LocY,get:MapID,get:MaxHp,get:MaxMp,get:OriginalCon,get:OriginalDex,get:OriginalInt,get:OriginalStr,get:OriginalWis,get:PKcount,get:PkCountForElf,get:Sex,get:Str,get:Title,get:Type,get:Wis,get:account_name,get:char_name,get:clanNote,get:level,get:objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:1054	objid	Y	MyISAM
+character	characters	insert	formal+modern	sql	LegacyMySqlRepository.java:1073	Ac,Cha,Class,Con,CreateTime,CurHp,CurMp,Dex,Food,Heading,HighLevel,Intel,LocX,LocY,MapID,MaxHp,MaxMp,OriginalCha,OriginalCon,OriginalDex,OriginalInt,OriginalStr,OriginalWis,Sex,Str,Type,Wis,account_name,char_name,level,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:1135	objid	Y	MyISAM
+character	characters	delete	formal+modern	sql	LegacyMySqlRepository.java:1172		Y	MyISAM
+character	characters	delete	formal+modern	sql	LegacyMySqlRepository.java:1402		Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:1438	CurHp,CurMp,ElfAttr,Exp,Heading,HellTime,HighLevel,LastPk,LastPkForElf,Lawful,LocX,LocY,MapID,OnlineStatus,PKcount,PkCountForElf,level	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:1500		Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:2381		Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:2649	HellTime	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:3232	objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:3278	char_name	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:3289	char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:3332	objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:3552	char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:4730	ClanID	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:5213	Banned,char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:5213	Banned,char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:5657	objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:5681	char_name	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:6301	OriginalWis,Type,Wis,level,objid	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:6748	Title	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:6822	ClanID,ClanRank,Clanname	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:6890	ClanID,ClanRank,Clanname	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:6942	ClanID,ClanRank,Clanname	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:6942	ClanID,ClanRank,Clanname	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:7023	ClanID,ClanRank,Clanname	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7100	PartnerID,char_name,objid	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:7123	PartnerID	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7150	Title	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7204	ClanRank,Title,char_name,clanNote,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7239	ClanID,ClanRank,char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7239	ClanID,ClanRank,char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7256	ClanID,ClanRank,char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:7290	objid	Y	MyISAM
+character	characters	update	formal+modern	sql	LegacyMySqlRepository.java:7321	ClanID,ClanRank,Clanname	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:8433	account_name,char_name	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:8737	account_name	Y	MyISAM
+character	characters	select	formal+modern	sql	LegacyMySqlRepository.java:8869		Y	MyISAM
+character	characters	select	formal+modern	sql	ModernCharacterDataJdbc.java:39	objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernDisintegrateCatalog.java:36	Banned,account_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernGmCommandJdbc.java:27	Banned,Sex,Type,account_name,char_name,level,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernGreaterHasteCatalog.java:40	Banned,account_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernHasteCatalog.java:40	Banned,account_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernItemLifetimeJdbc.java:55	Banned,account_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernJdbcBackend.java:43	Sex,Type,char_name,level,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernShopCatalogJdbc.java:29	Banned,Sex,Type,account_name,char_name,level,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernSkillsJdbc.java:38	Banned,Sex,Type,account_name,char_name,level,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	ModernSlowCatalog.java:46	AccessLevel,Banned,account_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	NativeCastMaterialPolicy.java:44	AccessLevel	Y	MyISAM
+character	characters	?	formal+modern	whitelist:string-only	RuntimeLifecycle.java:27		Y	MyISAM
+character	characters	select	formal+modern	sql	SettlementSql.java:88	char_name	Y	MyISAM
+character	characters	select	formal+modern	sql	SharedDatabase.java:98	Banned,char_name,objid	Y	MyISAM
+character	characters	select	formal+modern	sql	SharedDatabase.java:126	char_name	Y	MyISAM
+character	clan_data	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:347		Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:1221		Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:4744	clan_id,clan_name,leader_name	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:4797	clan_id,hashouse	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:4882	clan_id,hashouse	Y	MyISAM
+character	clan_data	update	formal+modern	sql	LegacyMySqlRepository.java:4915	hashouse	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:6799	clan_id	Y	MyISAM
+character	clan_data	insert	formal+modern	sql	LegacyMySqlRepository.java:6811	Announcement,ClanBirthDay,clan_id,clan_name,hascastle,hashouse,leader_id,leader_name,max_online_user,showEmblem	Y	MyISAM
+character	clan_data	delete	formal+modern	sql	LegacyMySqlRepository.java:7030		Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:7184	Announcement,ClanBirthDay,clan_name,hascastle,hashouse,leader_id,leader_name,max_online_user,showEmblem	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:7293	clan_id	Y	MyISAM
+character	clan_data	delete	formal+modern	sql	LegacyMySqlRepository.java:7331		Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:7347	clan_id,clan_name	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:7372	clan_name,hascastle,leader_id,leader_name	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:7399	clan_name,hascastle,leader_id,leader_name	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:7908	clan_id	Y	MyISAM
+character	clan_data	update	formal+modern	sql	LegacyMySqlRepository.java:7917	hascastle	Y	MyISAM
+character	clan_data	update	formal+modern	sql	LegacyMySqlRepository.java:7928	hascastle	Y	MyISAM
+character	clan_data	update	formal+modern	sql	LegacyMySqlRepository.java:7957	hascastle	Y	MyISAM
+character	clan_data	update	formal+modern	sql	LegacyMySqlRepository.java:7971	hascastle	Y	MyISAM
+character	clan_data	select	formal+modern	sql	LegacyMySqlRepository.java:8722	clan_id,leader_id	Y	MyISAM
+character	clan_emblem	select	formal+modern	sql	LegacyMySqlRepository.java:7347	clan_id,emblem_id,emblemicon	Y	MyISAM
+character	clan_warehouse	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:253		Y	MyISAM
+character	clan_warehouse	select	formal+modern	sql	LegacyMySqlRepository.java:5100	id	Y	MyISAM
+character	clan_warehouse	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:8555		Y	MyISAM
+character	clan_warehouse	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:9019		Y	MyISAM
+character	lito_account_origin	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:353		Y	MyISAM
+character	lito_account_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:850		Y	MyISAM
+character	lito_account_origin	insert	formal+modern	sql	LegacyMySqlRepository.java:865	created_at,login	Y	MyISAM
+character	lito_account_origin	select	formal+modern	sql	LegacyMySqlRepository.java:889		Y	MyISAM
+character	lito_board_topic	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:367		Y	MyISAM
+character	lito_board_topic	delete	formal+modern	sql	LegacyMySqlRepository.java:1375		Y	MyISAM
+character	lito_buddy_group	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:359		Y	MyISAM
+character	lito_buddy_group	select	formal+modern	sql	LegacyMySqlRepository.java:383	char_obj_id,group_id,group_name	Y	MyISAM
+character	lito_buddy_group	delete	formal+modern	sql	LegacyMySqlRepository.java:1363		Y	MyISAM
+character	lito_buddy_group	select	formal+modern	sql	LegacyMySqlRepository.java:3074	group_id,group_name	Y	MyISAM
+character	lito_buddy_group	delete	formal+modern	sql	LegacyMySqlRepository.java:3178		Y	MyISAM
+character	lito_buddy_group	insert	formal+modern	sql	LegacyMySqlRepository.java:3183	char_obj_id,group_id,group_name	Y	MyISAM
+character	lito_buddy_metadata	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:360		Y	MyISAM
+character	lito_buddy_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:390	buddy_id,buddy_name,char_obj_id,group_id,origin,palette_offset,relationship_style,target_source	Y	MyISAM
+character	lito_buddy_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:1368		Y	MyISAM
+character	lito_buddy_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:3096	buddy_id,buddy_name,group_id,origin,palette_offset,relationship_style,target_source	Y	MyISAM
+character	lito_buddy_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:3173		Y	MyISAM
+character	lito_buddy_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:3194	buddy_id,buddy_name,char_obj_id,group_id,origin,palette_offset,relationship_style,target_source	Y	MyISAM
+character	lito_castle_metadata	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:362		Y	MyISAM
+character	lito_castle_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:410	castle_id,mercenary_0,mercenary_1,mercenary_2,mercenary_3,security_enabled,snapshot_version	Y	MyISAM
+character	lito_castle_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:7528	castle_id,mercenary_0,mercenary_1,mercenary_2,mercenary_3,security_enabled,snapshot_version	Y	MyISAM
+character	lito_castle_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:8580	castle_id,mercenary_0,mercenary_1,mercenary_2,mercenary_3,security_enabled,snapshot_version	Y	MyISAM
+character	lito_castle_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:8632	*,get:castle_id,get:mercenary_0,get:mercenary_1,get:mercenary_2,get:mercenary_3,get:security_enabled,get:snapshot_version	Y	MyISAM
+character	lito_castle_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:8836		Y	MyISAM
+character	lito_castle_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:8843	castle_id,mercenary_0,mercenary_1,mercenary_2,mercenary_3,security_enabled,snapshot_version	Y	MyISAM
+character	lito_castle_security_settlement	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:364		Y	MyISAM
+character	lito_castle_security_settlement	select	formal+modern	sql	LegacyMySqlRepository.java:417	castle_id,charge_adena,charged_adena,completed,prepared,treasury_before,war_start_millis	Y	MyISAM
+character	lito_castle_security_settlement	insert	formal+modern	sql	LegacyMySqlRepository.java:7706	castle_id,charge_adena,charged_adena,completed,prepared,settled_at,treasury_before,war_start_millis	Y	MyISAM
+character	lito_castle_security_settlement	update	formal+modern	sql	LegacyMySqlRepository.java:7774	charged_adena,prepared,settled_at	Y	MyISAM
+character	lito_castle_security_settlement	update	formal+modern	sql	LegacyMySqlRepository.java:7855	completed,settled_at	Y	MyISAM
+character	lito_castle_security_settlement	select	formal+modern	sql	LegacyMySqlRepository.java:8675	charge_adena,charged_adena,completed,prepared,treasury_before	Y	MyISAM
+character	lito_character_origin	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:352		Y	MyISAM
+character	lito_character_origin	insert	formal+modern	sql	LegacyMySqlRepository.java:1121	account_name,char_name,char_obj_id,created_at	Y	MyISAM
+character	lito_character_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:1166		Y	MyISAM
+character	lito_character_origin	select	formal+modern	sql	LegacyMySqlRepository.java:1210	char_obj_id	Y	MyISAM
+character	lito_character_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:1410		Y	MyISAM
+character	lito_clan_metadata	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:361		Y	MyISAM
+character	lito_clan_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:403	clan_id,destroy_pending,lito_owned,snapshot_version	Y	MyISAM
+character	lito_clan_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:6832	clan_id,destroy_pending,lito_owned,snapshot_version	Y	MyISAM
+character	lito_clan_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:6989	clan_id,destroy_pending,lito_owned,snapshot_version	Y	MyISAM
+character	lito_clan_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:7037		Y	MyISAM
+character	lito_clan_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:7219	destroy_pending	Y	MyISAM
+character	lito_clan_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:7310	lito_owned	Y	MyISAM
+character	lito_clan_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:7330		Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:376		Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	sql	LegacyMySqlRepository.java:455	expires_at,item_obj_id,meeting_hall,npc_id,released,renter_identity,renter_obj_id,room_number,show_id	Y	MyISAM
+character	lito_hotel_lease_key	update	formal+modern	sql	LegacyMySqlRepository.java:1259	released	Y	MyISAM
+character	lito_hotel_lease_key	delete	formal+modern	sql	LegacyMySqlRepository.java:1265		Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	sql	LegacyMySqlRepository.java:1900		Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	sql	LegacyMySqlRepository.java:1916	meeting_hall,renter_obj_id,room_number,show_id	Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	sql	LegacyMySqlRepository.java:1948		Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	sql	LegacyMySqlRepository.java:1978	expires_at,released,show_id	Y	MyISAM
+character	lito_hotel_lease_key	insert	formal+modern	sql	LegacyMySqlRepository.java:2000	expires_at,item_obj_id,meeting_hall,npc_id,released,renter_identity,renter_obj_id,room_number,show_id	Y	MyISAM
+character	lito_hotel_lease_key	update	formal+modern	sql	LegacyMySqlRepository.java:2027	released	Y	MyISAM
+character	lito_hotel_lease_key	delete	formal+modern	sql	LegacyMySqlRepository.java:2033		Y	MyISAM
+character	lito_hotel_lease_key	select	formal+modern	sql	LegacyMySqlRepository.java:3877	expires_at,item_obj_id,meeting_hall,npc_id,released,renter_identity,room_number,show_id	Y	MyISAM
+character	lito_house_auction_metadata	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:366		Y	MyISAM
+character	lito_house_auction_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:423	house_id,snapshot_version	Y	MyISAM
+character	lito_house_auction_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:4629		Y	MyISAM
+character	lito_house_auction_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:4811	snapshot_version	Y	MyISAM
+character	lito_house_auction_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:4855		Y	MyISAM
+character	lito_house_auction_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:4947		Y	MyISAM
+character	lito_house_auction_metadata	select	formal+modern	sql	LegacyMySqlRepository.java:5048		Y	MyISAM
+character	lito_house_auction_metadata	insert	formal+modern	sql	LegacyMySqlRepository.java:5133	house_id,snapshot_version	Y	MyISAM
+character	lito_house_auction_metadata	delete	formal+modern	sql	LegacyMySqlRepository.java:5161		Y	MyISAM
+character	lito_item_origin	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:354		Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:1168		Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:1284		Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:1322		Y	MyISAM
+character	lito_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:2158	item_obj_id	Y	MyISAM
+character	lito_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:2409		Y	MyISAM
+character	lito_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:2419	item_obj_id	Y	MyISAM
+character	lito_item_origin	insert	formal+modern	sql	LegacyMySqlRepository.java:2457	catalog_id,char_obj_id,created_at,item_obj_id,tournament_reward	Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:2505		Y	MyISAM
+character	lito_item_origin	insert	formal+modern	sql	LegacyMySqlRepository.java:3363	catalog_id,char_obj_id,created_at,item_obj_id,tournament_reward	Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:3391		Y	MyISAM
+character	lito_item_origin	update	formal+modern	sql	LegacyMySqlRepository.java:3471	catalog_id	Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:3531		Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:5710		Y	MyISAM
+character	lito_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:6129		Y	MyISAM
+character	lito_item_origin	insert	formal+modern	sql	LegacyMySqlRepository.java:6144	catalog_id,char_obj_id,created_at,item_obj_id,tournament_reward	Y	MyISAM
+character	lito_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:6442	item_obj_id	Y	MyISAM
+character	lito_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:8986	item_obj_id	Y	MyISAM
+character	lito_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:9004	item_obj_id,owner_key,scope	Y	MyISAM
+character	lito_private_inventory	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:356		Y	MyISAM
+character	lito_private_inventory	select	formal+modern	sql	LegacyMySqlRepository.java:448	char_obj_id,inventory_state,snapshot_version	Y	MyISAM
+character	lito_private_inventory	delete	formal+modern	sql	LegacyMySqlRepository.java:1327		Y	MyISAM
+character	lito_private_inventory	select	formal+modern	sql	LegacyMySqlRepository.java:2046	inventory_state,snapshot_version	Y	MyISAM
+character	lito_private_inventory	insert	formal+modern	sql	LegacyMySqlRepository.java:2182	char_obj_id,inventory_state,snapshot_version,updated_at	Y	MyISAM
+character	lito_tournament_profile	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:370		Y	MyISAM
+character	lito_tournament_profile	select	formal+modern	sql	LegacyMySqlRepository.java:435	char_name,char_obj_id,profile_state,snapshot_version	Y	MyISAM
+character	lito_tournament_profile	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:1190		Y	MyISAM
+character	lito_tournament_profile	select	formal+modern	sql	LegacyMySqlRepository.java:5220	char_name,char_obj_id,disconnects,losses,profile_state,ranking_points,snapshot_version,source_server_id,wins	Y	MyISAM
+character	lito_tournament_profile	insert	formal+modern	sql	LegacyMySqlRepository.java:5297	char_name,char_obj_id,profile_state,snapshot_version,updated_at	Y	MyISAM
+character	lito_tournament_profile	update	formal+modern	sql	LegacyMySqlRepository.java:5310	char_name,profile_state,snapshot_version,updated_at	Y	MyISAM
+character	lito_tournament_profile	select	formal+modern	sql	LegacyMySqlRepository.java:5341	char_name,char_obj_id,profile_state,snapshot_version	Y	MyISAM
+character	lito_warehouse_item_origin	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:358		Y	MyISAM
+character	lito_warehouse_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:6120		Y	MyISAM
+character	lito_warehouse_item_origin	delete	formal+modern	sql	LegacyMySqlRepository.java:6134		Y	MyISAM
+character	lito_warehouse_item_origin	insert	formal+modern	sql	LegacyMySqlRepository.java:6159	catalog_id,created_at,item_obj_id,owner_key,scope,tournament_reward	Y	MyISAM
+character	lito_warehouse_item_origin	select	formal+modern	sql	LegacyMySqlRepository.java:9005	item_obj_id,owner_key,scope	Y	MyISAM
+character	lito_water_dragon_pass	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:378		Y	MyISAM
+character	lito_water_dragon_pass	select	formal+modern	sql	LegacyMySqlRepository.java:462	expires_at,item_obj_id,renter_identity,renter_obj_id,room_number,show_id	Y	MyISAM
+character	lito_water_dragon_pass	delete	formal+modern	sql	LegacyMySqlRepository.java:1273		Y	MyISAM
+character	lito_water_dragon_pass	delete	formal+modern	sql	LegacyMySqlRepository.java:1825		Y	MyISAM
+character	lito_water_dragon_pass	select	formal+modern	sql	LegacyMySqlRepository.java:1830		Y	MyISAM
+character	lito_water_dragon_pass	select	formal+modern	sql	LegacyMySqlRepository.java:1842	*,get:expires_at,get:item_obj_id,get:renter_identity,get:renter_obj_id,get:room_number,get:show_id	Y	MyISAM
+character	lito_water_dragon_pass	insert	formal+modern	sql	LegacyMySqlRepository.java:1856	expires_at,item_obj_id,renter_identity,renter_obj_id,room_number,show_id	Y	MyISAM
+character	lito_water_dragon_pass	select	formal+modern	sql	LegacyMySqlRepository.java:3917	expires_at,item_obj_id,renter_identity,room_number,show_id	Y	MyISAM
+character	server_info	update	formal+modern	sql	LegacyMySqlRepository.java:1051	id,maxid	Y	MyISAM
+character	server_info	update	formal+modern	sql	LegacyMySqlRepository.java:1132	id,maxid	Y	MyISAM
+character	server_info	update	formal+modern	sql	LegacyMySqlRepository.java:3330	id,maxid	Y	MyISAM
+character	server_info	update	formal+modern	sql	LegacyMySqlRepository.java:7288	id,maxid	Y	MyISAM
+character	server_城堡	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:348		Y	MyISAM
+character	server_城堡	select	formal+modern	sql	LegacyMySqlRepository.java:7372	castle_id,name,public_money,tax_rate,war_time	Y	MyISAM
+character	server_城堡	select	formal+modern	sql	LegacyMySqlRepository.java:7399	castle_id,name,public_money,tax_rate,war_time	Y	MyISAM
+character	server_城堡	select	formal+modern	sql	LegacyMySqlRepository.java:7424	*,castle_id,name,war_duration,war_interval,war_time,get:castle_id,get:count,get:item_id,get:name,get:note,get:public_money,get:tax_rate,get:war_duration,get:war_interval	Y	MyISAM
+character	server_城堡	update	formal+modern	sql	LegacyMySqlRepository.java:7515	public_money,tax_rate	Y	MyISAM
+character	server_城堡	update	formal+modern	sql	LegacyMySqlRepository.java:7608	public_money,tax_rate,war_time	Y	MyISAM
+character	server_城堡	update	formal+modern	sql	LegacyMySqlRepository.java:7741	public_money	Y	MyISAM
+character	server_城堡	update	formal+modern	sql	LegacyMySqlRepository.java:8332	public_money	Y	MyISAM
+character	server_城堡	select	formal+modern	sql	LegacyMySqlRepository.java:8628	*,get:castle_id,get:count,get:item_id,get:name,get:note,get:public_money,get:tax_rate,get:war_duration,get:war_interval	Y	MyISAM
+character	server_城堡	select	formal+modern	sql	LegacyMySqlRepository.java:8710	item_id	Y	MyISAM
+character	server_城堡	update	formal+modern	sql	LegacyMySqlRepository.java:8823	public_money,tax_rate,war_time	Y	MyISAM
+character	server_盟屋_佈告	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:350		Y	MyISAM
+character	server_盟屋_佈告	select	formal+modern	sql	LegacyMySqlRepository.java:429	content,date,id,name,title	Y	MyISAM
+character	server_盟屋_佈告	delete	formal+modern	sql	LegacyMySqlRepository.java:1380		Y	MyISAM
+character	server_盟屋_佈告	select	formal+modern	sql	LegacyMySqlRepository.java:3655	content,date,id,name,title	Y	MyISAM
+character	server_盟屋_佈告	insert	formal+modern	sql	LegacyMySqlRepository.java:3782	content,date,id,name,title	Y	MyISAM
+character	server_盟屋_佈告	delete	formal+modern	sql	LegacyMySqlRepository.java:3799		Y	MyISAM
+character	server_盟屋_佈告	delete	formal+modern	sql	LegacyMySqlRepository.java:3843		Y	MyISAM
+character	server_盟屋_佈告	select	formal+modern	sql	LegacyMySqlRepository.java:5612	content,date,id,name,title	Y	MyISAM
+character	server_盟屋_佈告	select	formal+modern	sql	LegacyMySqlRepository.java:5644	id	Y	MyISAM
+character	server_盟屋_拍賣	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:349		Y	MyISAM
+character	server_盟屋_拍賣	insert	formal+modern	sql	LegacyMySqlRepository.java:4203	bidder,bidder_id,deadline,house_area,house_id,house_name,location,old_owner,old_owner_id,price	Y	MyISAM
+character	server_盟屋_拍賣	update	formal+modern	sql	LegacyMySqlRepository.java:4417	bidder,bidder_id,price	Y	MyISAM
+character	server_盟屋_拍賣	update	formal+modern	sql	LegacyMySqlRepository.java:4551	deadline	Y	MyISAM
+character	server_盟屋_拍賣	delete	formal+modern	sql	LegacyMySqlRepository.java:4623		Y	MyISAM
+character	server_盟屋_拍賣	select	formal+modern	sql	LegacyMySqlRepository.java:4776		Y	MyISAM
+character	server_盟屋_拍賣	delete	formal+modern	sql	LegacyMySqlRepository.java:4869		Y	MyISAM
+character	server_盟屋_拍賣	insert	formal+modern	sql	LegacyMySqlRepository.java:5016	bidder,bidder_id,deadline,house_area,house_id,house_name,location,old_owner,old_owner_id,price	Y	MyISAM
+character	server_盟屋_拍賣	select	formal+modern	sql	LegacyMySqlRepository.java:5041		Y	MyISAM
+character	server_盟屋_拍賣	update	formal+modern	sql	LegacyMySqlRepository.java:5152	bidder,bidder_id,price	Y	MyISAM
+character	server_盟屋_紀錄	update	formal+modern	sql	LegacyMySqlRepository.java:4067	tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	update	formal+modern	sql	LegacyMySqlRepository.java:4102	tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	update	formal+modern	sql	LegacyMySqlRepository.java:4220	is_on_sale,is_purchase_basement,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	update	formal+modern	sql	LegacyMySqlRepository.java:4612	is_on_sale,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	select	formal+modern	sql	LegacyMySqlRepository.java:4678	house_area,house_id,house_name,is_on_sale,is_purchase_basement,location,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	select	formal+modern	sql	LegacyMySqlRepository.java:4694	house_area,house_id,house_name,is_on_sale,is_purchase_basement,location,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	select	formal+modern	sql	LegacyMySqlRepository.java:4715	house_area,house_id,house_name,is_on_sale,is_purchase_basement,location,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	update	formal+modern	sql	LegacyMySqlRepository.java:4839	is_on_sale,is_purchase_basement,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	select	formal+modern	sql	LegacyMySqlRepository.java:4900	is_on_sale,is_purchase_basement,tax_deadline	Y	MyISAM
+character	server_盟屋_紀錄	update	formal+modern	sql	LegacyMySqlRepository.java:4962	is_on_sale,is_purchase_basement,tax_deadline	Y	MyISAM
+character	server_紀錄_獎勵	select	formal+modern	sql	LegacyMySqlRepository.java:467		Y	InnoDB
+character	server_紀錄_獎勵	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:496		Y	InnoDB
+character	server_紀錄_獎勵	ddl:alter	formal+modern	sql	LegacyMySqlRepository.java:497		Y	InnoDB
+character	server_紀錄_獎勵	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:502		Y	InnoDB
+character	server_紀錄_獎勵	ddl:alter	formal+modern	sql	LegacyMySqlRepository.java:503		Y	InnoDB
+character	server_紀錄_獎勵	select	formal+modern	sql	LegacyMySqlRepository.java:7992	強化值,流水號,玩家帳號,發送物品數量,發送物品編號	Y	InnoDB
+character	server_紀錄_獎勵	update	formal+modern	sql	LegacyMySqlRepository.java:8151	ip,領取時間,領取狀態,領取玩家角色	Y	InnoDB
+character	server_紀錄_獎勵	select	formal+modern	sql	LegacyMySqlRepository.java:8447	強化值,玩家帳號,發送物品數量,發送物品編號	Y	InnoDB
+character	server_紀錄_獎勵	insert	formal+modern	sql	LegacyMySqlRepository.java:8765	lito_event_key,強化值,玩家帳號,發送物品數量,發送物品編號,領取狀態	Y	InnoDB
+character	server_紀錄_獎勵	select	formal+modern	sql	LegacyMySqlRepository.java:8790	強化值,玩家帳號,發送物品數量,發送物品編號,領取狀態	Y	InnoDB
+character	server_紀錄_獎勵	delete	formal+modern	sql	LegacyMySqlRepository.java:8811		Y	InnoDB
+information_schema	COLUMNS	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:743	COLUMN_NAME	N	
+information_schema	COLUMNS	select	formal+modern	sql	LegacyMySqlRepository.java:668		N	
+information_schema	COLUMNS	select	modern	sql	ModernCharacterRecordJdbc.java:28	CHARACTER_MAXIMUM_LENGTH,COLUMN_NAME,COLUMN_TYPE,DATA_TYPE,IS_NULLABLE	N	
+information_schema	COLUMNS	select	formal+modern	sql	ModernEquipmentCatalogJdbc.java:134	COLUMN_NAME,OCTET_LENGTH	N	
+information_schema	COLUMNS	select	formal+modern	sql	ModernEquipmentSourceJdbc.java:54	COLUMN_NAME,OCTET_LENGTH	N	
+information_schema	COLUMNS	select	formal+modern	sql	ModernMatchSettlementJdbc.java:45	CHARACTER_MAXIMUM_LENGTH,COLUMN_NAME,COLUMN_TYPE,DATA_TYPE,IS_NULLABLE,TABLE_NAME	N	
+information_schema	COLUMNS	select	modern	sql	ModernPetRaceSettlementJdbc.java:163	CHARACTER_MAXIMUM_LENGTH,COLUMN_NAME,COLUMN_TYPE,DATA_TYPE,IS_NULLABLE,TABLE_NAME	N	
+information_schema	COLUMNS	select	modern	sql	ModernWorldPolicyJdbc.java:29	CHARACTER_MAXIMUM_LENGTH,COLUMN_NAME,COLUMN_TYPE,DATA_TYPE,EXTRA,IS_NULLABLE,TABLE_NAME	N	
+information_schema	STATISTICS	select	formal+modern	sql	LegacyMySqlRepository.java:682		N	
+information_schema	STATISTICS	select	modern	sql	ModernCharacterRecordJdbc.java:29	COLUMN_NAME,INDEX_NAME,SEQ_IN_INDEX	N	
+information_schema	STATISTICS	select	formal+modern	sql	ModernMatchSettlementJdbc.java:46	COLUMN_NAME,INDEX_NAME,SEQ_IN_INDEX,SUB_PART,TABLE_NAME	N	
+information_schema	STATISTICS	select	modern	sql	ModernPetRaceSettlementJdbc.java:178	COLUMN_NAME,INDEX_NAME,SEQ_IN_INDEX,SUB_PART,TABLE_NAME	N	
+information_schema	STATISTICS	select	modern	sql	ModernWorldPolicyJdbc.java:30	COLUMN_NAME,INDEX_NAME,SEQ_IN_INDEX,SUB_PART,TABLE_NAME	N	
+information_schema	TABLES	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:720		N	
+information_schema	TABLES	select	modern	sql	ModernCharacterRecordJdbc.java:25	ENGINE,TABLE_NAME	N	
+information_schema	TABLES	select	formal+modern	sql	ModernMatchSettlementJdbc.java:44	ENGINE,TABLE_NAME	N	
+information_schema	TABLES	select	modern	sql	ModernPetRaceSettlementJdbc.java:155	ENGINE,TABLE_NAME	N	
+information_schema	TABLES	select	modern	sql	ModernWorldPolicyJdbc.java:27	ENGINE,TABLE_NAME,TABLE_TYPE	N	
+information_schema	TABLES	select	formal+modern	sql	SettlementSql.java:47	ENGINE	N	
+information_schema	TABLES	select	formal+modern	sql	SharedDatabase.java:81	ENGINE	N	
+information_schema	tables	select	formal+modern	sql	ResourceDatabase.java:36	table_name	N	
+lito	commands	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:261		Y	InnoDB
+lito	commands	select	formal+modern	sql	LegacyMySqlRepository.java:723	access_level,class_name,name,note,system	Y	InnoDB
+lito	commands	select	formal+modern	sql-backtick	ModernGmCommandJdbc.java:28		Y	InnoDB
+lito	commands	select	formal+modern	whitelist:table-arg	SharedDatabase.java:22		Y	InnoDB
+lito	lito_battle_object	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:267		Y	
+lito	lito_battle_object	select	formal+modern	sql	LegacyMySqlRepository.java:778	gfx,map_id,maximum_hp,mode_id,role,x,y	Y	
+lito	lito_battle_object	select	formal+modern	whitelist:table-arg	SharedDatabase.java:21		Y	
+lito	lito_battle_player_spawn	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:271		Y	
+lito	lito_battle_player_spawn	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:635		Y	
+lito	lito_battle_player_spawn	select	formal+modern	sql	LegacyMySqlRepository.java:807	map_id,mode_id,spawn_index,x,y	Y	
+lito	lito_battle_player_spawn	select	formal+modern	whitelist:table-arg	SharedDatabase.java:22		Y	
+lito	lito_battle_rule	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:265		Y	
+lito	lito_battle_rule	select	formal+modern	sql	LegacyMySqlRepository.java:765	enabled,goal,map_id,minimum_players,mode_id,time_limit_seconds	Y	
+lito	lito_battle_rule	select	formal+modern	whitelist:table-arg	SharedDatabase.java:21		Y	
+lito	lito_battle_settlement	select	formal+modern	sql	SettlementSql.java:47	applied,battle_id,char_obj_id,disconnected,result_id,source_database,won	Y	InnoDB
+lito	lito_battle_settlement	insert	formal+modern	sql	SettlementSql.java:63	battle_id,char_name,char_obj_id,disconnected,result_id,source_database,source_name,won	Y	InnoDB
+lito	lito_battle_settlement	select	formal+modern	sql	SettlementSql.java:65	battle_id,char_name,char_obj_id,disconnected,source_database,won	Y	InnoDB
+lito	lito_battle_settlement	select	formal+modern	sql	SettlementSql.java:74	char_obj_id	Y	InnoDB
+lito	lito_battle_settlement	select	formal+modern	sql	SettlementSql.java:85	result_id	Y	InnoDB
+lito	lito_battle_settlement	select	formal+modern	sql	SettlementSql.java:87	char_name,disconnected,won	Y	InnoDB
+lito	lito_battle_settlement	update	formal+modern	sql	SettlementSql.java:101	applied,applied_at	Y	InnoDB
+lito	lito_battle_spawn	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:269		Y	
+lito	lito_battle_spawn	select	formal+modern	sql	LegacyMySqlRepository.java:791	map_id,mode_id,npc_id,quantity,sort_order,wave,x,y	Y	
+lito	lito_battle_spawn	select	formal+modern	whitelist:table-arg	SharedDatabase.java:22		Y	
+lito	lito_resource_buff	select	formal+modern	sql	ResourceDatabase.java:48	packet_opcode,packet_selector,skill_id	Y	InnoDB
+lito	lito_resource_map	select	formal+modern	sql	ResourceDatabase.java:51	category,map_id,name,raw_slot	Y	InnoDB
+lito	lito_resource_map_page	select	formal+modern	sql	ResourceDatabase.java:58	wire_page	Y	InnoDB
+lito	lito_resource_npc_identity	select	formal+modern	sql	ResourceDatabase.java:57	description,resource_index	Y	InnoDB
+lito	lito_resource_pending	select	formal+modern	sql	ResourceDatabase.java:40	archive_ref,category,evidence_note,evidence_status,record_key,source_table	Y	InnoDB
+lito	lito_resource_portal	select	formal+modern	sql	ResourceDatabase.java:59	raw_tag,source_map_id,source_x,source_y,target_map_id,target_x,target_y	Y	InnoDB
+lito	lito_resource_projectile	select	formal+modern	sql	ResourceDatabase.java:68	flight_type,packet_opcode,projectile_gfx	Y	InnoDB
+lito	lito_resource_release	select	formal+modern	sql	ResourceDatabase.java:29	qualified_version	Y	InnoDB
+lito	lito_resource_skill_value	select	formal+modern	sql	ResourceDatabase.java:41	field_name,record_type,skill_id,value	Y	InnoDB
+lito	lito_resource_zone	select	formal+modern	sql	ResourceDatabase.java:54	blue,color_index,green,map_id,max_x,max_y,min_x,min_y,red,zone_key	Y	InnoDB
+lito	lito_room_policy	select	formal+modern	sql	NativeRoomRules.java:20	policy_id,test_bot_enabled,test_room_enabled	Y	InnoDB
+lito	lito_source_server	select	formal+modern	sql	UnifiedConfiguration.java:51	character_database,display_name,enabled,source_id	Y	InnoDB
+lito	lito_tournament_shop	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:263		Y	
+lito	lito_tournament_shop	select	formal+modern	sql	LegacyMySqlRepository.java:741	buy_price,item_id,sell_price,sort_order	Y	
+lito	lito_tournament_shop	select	formal+modern	sql	ModernShopCatalogJdbc.java:30	buy_price,enabled,item_id,sell_price,sort_order	Y	
+lito	lito_tournament_shop	select	formal+modern	whitelist:table-arg	SharedDatabase.java:22		Y	
+modern	lito_modern_character_record	select	modern	whitelist:table-arg	ModernCharacterRecordJdbc.java:24		Y	InnoDB
+modern	lito_modern_character_record	?	formal+modern	whitelist:string-only	ModernMatchSettlementJdbc.java:41		Y	InnoDB
+modern	lito_modern_match	?	formal+modern	whitelist:string-only	ModernMatchSettlementJdbc.java:39		Y	InnoDB
+modern	lito_modern_match_bot	?	formal+modern	whitelist:string-only	ModernMatchSettlementJdbc.java:42		Y	InnoDB
+modern	lito_modern_match_participant	?	formal+modern	whitelist:string-only	ModernMatchSettlementJdbc.java:40		Y	InnoDB
+modern	lito_modern_pet_race_participant	?	modern	whitelist:string-only	ModernPetRaceSettlementJdbc.java:27		Y	InnoDB
+modern	lito_modern_pet_race_result	?	modern	whitelist:string-only	ModernPetRaceSettlementJdbc.java:27		Y	InnoDB
+static	armor	?	formal+modern	whitelist:string-only	Accounts.java:2305		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	Accounts.java:2359		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:680		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:1281		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:1311		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:231		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:233		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:233		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	GameStateStore.java:1830		Y	MyISAM
+static	armor	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:38		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LegacyEquipmentMagicLoader.java:62		Y	MyISAM
+static	armor	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:122	ac,add_bow_dmgup,add_bow_hitup,add_bow_redux,add_cha,add_con,add_dex,add_dmgup,add_hitup,add_hp,add_hpr,add_ignore_reduction,add_magic_hit,add_melee_redux,add_mp,add_mpr,add_potion_recovery,add_str,add_stun_success,bow_dmg_modifier,bow_hit_modifier,defense_earth,defense_fire,defense_water,defense_wind,dmg_modifier,hit_modifier,invgfx,regist_blind,regist_freeze,regist_sleep,regist_stone,regist_stun,regist_sustain,weight_reduction	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LegacyEquipmentMagicLoader.java:233		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LegacyEquipmentMagicLoader.java:306		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LegacyInventoryWeightLoader.java:20		Y	MyISAM
+static	armor	select	formal+modern	sql	LegacyInventoryWeightLoader.java:31	item_id	Y	MyISAM
+static	armor	select	formal+modern	sql	LegacyMySqlRepository.java:2365	*,get:ac,get:add_cha,get:add_con,get:add_dex,get:add_hp,get:add_int,get:add_mp,get:add_sp,get:add_str,get:add_wis,get:bless,get:cant_delete,get:classname,get:damage_reduction,get:defense_earth,get:defense_fire,get:defense_water,get:defense_wind,get:grdgfx,get:haste_item,get:invgfx,get:item_id,get:itemdesc_id,get:m_def,get:material,get:name,get:name_id,get:note,get:regist_blind,get:regist_freeze,get:regist_sleep,get:regist_stone,get:regist_stun,get:regist_sustain,get:safenchant,get:trade,get:type,get:weight	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6217		Y	MyISAM
+static	armor	select	formal+modern	sql	LegacyMySqlRepository.java:6277	item_id	Y	MyISAM
+static	armor	select	formal+modern	sql	LegacyMySqlRepository.java:8939	ac,add_cha,add_con,add_dex,add_hp,add_int,add_mp,add_sp,add_str,add_wis,bless,cant_delete,defense_earth,defense_fire,defense_water,defense_wind,grdgfx,haste_item,invgfx,item_id,itemdesc_id,m_def,material,name,name_id,regist_blind,regist_freeze,regist_sleep,regist_stone,regist_stun,regist_sustain,safenchant,trade,type,use_darkelf,use_dragonknight,use_elf,use_illusionist,use_knight,use_mage,use_royal,weight	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8947		Y	MyISAM
+static	armor	select	formal+modern	sql	LegacyMySqlRepository.java:8991	item_id	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LiToGmCommands.java:68		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LiToItemDetails.java:50		Y	MyISAM
+static	armor	select	formal+modern	whitelist:table-arg	LiToItemTemplates.java:18		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LiToItemTemplates.java:34		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	LiToItemTemplates.java:67		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	MemoryAccountRepository.java:593		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	MemoryAccountRepository.java:593		Y	MyISAM
+static	armor	select	formal+modern	sql	ModernCharacterDataJdbc.java:41	item_id	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ModernEquipmentCatalogJdbc.java:216		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ModernEquipmentSourceJdbc.java:65		Y	MyISAM
+static	armor	select	formal+modern	sql	ModernItemLifetimeJdbc.java:53	item_id,max_use_time	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ModernItemLifetimeJdbc.java:129		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ModernItemLifetimeJdbc.java:138		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:199		Y	MyISAM
+static	armor	select	formal+modern	sql	ModernShopCatalogJdbc.java:32	item_id	Y	MyISAM
+static	armor	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:23	*	Y	MyISAM
+static	armor	select	formal+modern	sql	NativeDeItemTable.java:284	*,get:ac,get:add_adena_rate,get:add_boss_dmg,get:add_boss_redux,get:add_bow_dmgup,get:add_bow_hitup,get:add_bow_redux,get:add_cha,get:add_con,get:add_dex,get:add_dmgup,get:add_dodge,get:add_drop_rate,get:add_er,get:add_exp_rate,get:add_hitup,get:add_hp,get:add_hpr,get:add_ignore_reduction,get:add_int,get:add_magic_hit,get:add_melee_redux,get:add_mp,get:add_mpr,get:add_poison_resist,get:add_potion_recovery,get:add_pvp_dmg,get:add_pvp_redux,get:add_sp,get:add_str,get:add_stun_success,get:add_wis,get:bless,get:bow_dmg_modifier,get:bow_hit_modifier,get:cant_delete,get:classname,get:damage_reduction,get:defense_earth,get:defense_fire,get:defense_water,get:defense_wind,get:dmg_modifier,get:grdgfx,get:greater_tier,get:haste_item,get:hit_modifier,get:invgfx,get:is_activity,get:item_id,get:itemdesc_id,get:m_def,get:magicdmgmodifier,get:material,get:max_lvl,get:max_use_time,get:min_lvl,get:name,get:name_id,get:regist_blind,get:regist_freeze,get:regist_sleep,get:regist_stone,get:regist_stun,get:regist_sustain,get:safenchant,get:set_id,get:trade,get:type,get:use_darkelf,get:use_dragonknight,get:use_elf,get:use_illusionist,get:use_knight,get:use_mage,get:use_royal,get:weight,get:weight_reduction	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	NativeDeItemTable.java:567		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	NativeDeItemTable.java:622		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	NativeLitoRentalMerchantCatalog.java:144		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	NativeLitoRentalMerchantCatalog.java:235		Y	MyISAM
+static	armor	select	formal+modern	sql	NativeSourceEquipmentColumns.java:8	*,item_id	Y	MyISAM
+static	armor	select	formal+modern	sql	NativeSourceEquipmentColumns.java:8	*,item_id	Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	RentalEquipmentBonuses.java:144		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:34		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:97		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:167		Y	MyISAM
+static	armor	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:198		Y	MyISAM
+static	etcitem	select	formal+modern	sql	ConsumableItemParameters.java:146	classname,item_id	Y	MyISAM
+static	etcitem	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:38		Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:130	bless,material	Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:764		Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:825	bless,item_id,material,use_type	Y	MyISAM
+static	etcitem	?	formal+modern	whitelist:string-only	LegacyInventoryWeightLoader.java:20		Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyInventoryWeightLoader.java:31	item_id,weight	Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyMySqlRepository.java:2366	*,get:bless,get:cant_delete,get:classname,get:grdgfx,get:invgfx,get:item_id,get:itemdesc_id,get:material,get:name,get:name_id,get:note,get:stackable,get:trade,get:use_type,get:weight	Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyMySqlRepository.java:8963	bless,cant_delete,grdgfx,invgfx,item_id,itemdesc_id,material,name,name_id,stackable,trade,use_type,weight	Y	MyISAM
+static	etcitem	select	formal+modern	sql	LegacyMySqlRepository.java:8992	bless,cant_delete,grdgfx,invgfx,item_id,itemdesc_id,material,name_id,stackable,trade,use_type,weight	Y	MyISAM
+static	etcitem	?	formal+modern	whitelist:string-only	LiToGmCommands.java:68		Y	MyISAM
+static	etcitem	select	formal+modern	sql	ModernCharacterDataJdbc.java:42	item_id	Y	MyISAM
+static	etcitem	select	formal+modern	sql	ModernItemLifetimeJdbc.java:60	item_id,item_type	Y	MyISAM
+static	etcitem	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:199		Y	MyISAM
+static	etcitem	select	formal+modern	sql	ModernShopCatalogJdbc.java:33	bless,cant_delete,classname,delay_effect,delay_id,delay_time,food_volume,item_id,item_type,limit_class,material,max_charge_count,max_lvl,min_lvl,save_at_once,stackable,trade,use_type	Y	MyISAM
+static	etcitem	select	formal+modern	sql	ModernVipEquipmentJdbc.java:44	item_id	Y	MyISAM
+static	etcitem	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:23	*,item_id	Y	MyISAM
+static	etcitem	select	formal+modern	sql	NativeDeItemTable.java:70	*,item_id,get:bless,get:cant_delete,get:classname,get:delay_effect,get:delay_id,get:delay_time,get:food_volume,get:grdgfx,get:invgfx,get:item_id,get:item_type,get:itemdesc_id,get:limit_class,get:material,get:max_charge_count,get:max_lvl,get:min_lvl,get:name,get:name_id,get:save_at_once,get:stackable,get:trade,get:use_type,get:weight	Y	MyISAM
+static	etcitem	select	formal+modern	sql	SourceEyeControls.java:20	delay_effect,delay_id,delay_time,item_id	Y	MyISAM
+static	etcitem_arrow	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:57		Y	MyISAM
+static	etcitem_arrow	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:158		Y	MyISAM
+static	etcitem_arrow	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:161	arrow_spr,consume_on_attack,dmg_large,dmg_small,item_id	Y	MyISAM
+static	etcitem_arrow	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:819		Y	MyISAM
+static	etcitem_arrow	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:827	arrow_spr,consume_on_attack,dmg_large,dmg_small,item_id	Y	MyISAM
+static	etcitem_arrow	select	formal+modern	sql	ModernShopCatalogJdbc.java:34	arrow_spr,consume_on_attack,dmg_large,dmg_small,item_id	Y	MyISAM
+static	etcitem_arrow	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:23	arrow_spr,consume_on_attack,dmg_large,dmg_small,item_id	Y	MyISAM
+static	etcitem_arrow	select	formal+modern	sql	NativeDeItemTable.java:70	arrow_spr,consume_on_attack,dmg_large,dmg_small,item_id	Y	MyISAM
+static	etcitem_buff藥水能力	select	formal+modern	sql	SourceEyeControls.java:40	*,get:item_id	Y	InnoDB
+static	etcitem_buff藥水設置	select	formal+modern	sql	SourceEyeControls.java:20	*,item_id,get:buff_id,get:buff_time_sec,get:can_overwrite,get:cast_gfx,get:consume_count,get:consume_item_id,get:end_msg_str,get:group_check,get:item_id,get:status_icon,get:use_custom_packet	Y	InnoDB
+static	etcitem_doll_power_new	select	formal+modern	sql	LegacyMySqlRepository.java:9033	attr_type,classname,gfx_id,gfx_target,id,interval_time,item_count,item_id,mode,note,passive_skill_id,probability,status_id,trigger_skill_id,value_main,value_sub	Y	MyISAM
+static	etcitem_doll_type	select	formal+modern	sql	LegacyMySqlRepository.java:8992	count,doll_type,gfxid,icon,itemid,nameid,need,powers,time	Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	ClassicWorldMobGroupCatalog.java:42		Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	ClassicWorldMonsterCatalog.java:421		Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	ClassicWorldNpcCatalog.java:309		Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6464		Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6512		Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	NativeDeNpcTemplateNpcLoader.java:54		Y	MyISAM
+static	exp	?	formal+modern	whitelist:string-only	SourceBlessingControls.java:26		Y	MyISAM
+static	lito_tournament_character_record	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:373		Y	MyISAM
+static	lito_tournament_character_record	select	formal+modern	sql	LegacyMySqlRepository.java:439	char_name,char_obj_id,disconnects,losses,profile_state,ranking_points,snapshot_version,source_server_id,wins	Y	MyISAM
+static	lito_tournament_character_record	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:580		Y	MyISAM
+static	lito_tournament_character_record	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:5354		Y	MyISAM
+static	mapids	select	formal+modern	sql	LitoMapRepository.java:99	CopyMapId,endX,endY,escapable,mapid,markable,penalty,recall_pets,startX,startY,teleportable	Y	MyISAM
+static	mapids	select	formal+modern	sql	NativeDeTerrainTable.java:20	*,get:CopyMapId,get:drop_rate,get:endX,get:endY,get:escapable,get:is_arrows,get:is_guaji,get:locationname,get:mapid,get:markable,get:monster_amount,get:painwand,get:penalty,get:recall_pets,get:resurrection,get:startX,get:startY,get:take_pets,get:teleportable,get:underwater,get:usable_item,get:usable_shop,get:usable_skill	Y	MyISAM
+static	mapids	select	formal+modern	sql	SourceBlessingControls.java:32	CopyMapId,endX,endY,escapable,mapid,markable,penalty,recall_pets,startX,startY,teleportable	Y	MyISAM
+static	mapids_shop	select	formal+modern	sql	NativeDeShopTable.java:41	currency,mapid,x_max,x_min,y_max,y_min	Y	InnoDB
+static	mobskill	select	formal+modern	sql	NativeDeNpcTemplateMobLoader.java:19	*,mobid,get:AreaHeight,get:AreaWidth,get:ChangeTarget,get:Gfxid,get:Leverage,get:PolyId,get:Range,get:SkillId,get:SummonId,get:SummonMax,get:SummonMin,get:TriCompanionHp,get:TriCount,get:TriHp,get:TriRange,get:TriRnd,get:actNo,get:mobid,get:mobname,get:reuseDelay	Y	MyISAM
+static	mobskill	select	formal+modern	sql	NativeDeNpcTemplateMobLoader.java:20	*,get:AreaHeight,get:AreaWidth,get:ChangeTarget,get:Gfxid,get:Leverage,get:PolyId,get:Range,get:SkillId,get:SummonId,get:SummonMax,get:SummonMin,get:TriCompanionHp,get:TriCount,get:TriHp,get:TriRange,get:TriRnd,get:actNo,get:mobid,get:mobname,get:reuseDelay	Y	MyISAM
+static	npc	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:38		Y	MyISAM
+static	npc	select	formal+modern	sql	LegacyMySqlRepository.java:290	IsErase,IsTU,ac,boss,bowActId,damage_reduction,dex,hard,lawful,mp,mr,npcid,paralysis_atk,poison_atk,ranged,size,str,tamable,undead,weakAttr	Y	MyISAM
+static	npc	select	formal+modern	sql	LegacyMySqlRepository.java:6409	ac,atkspeed,dex,gfxid,hp,lvl,mp,name,nameid,npcid,passispeed,str	Y	MyISAM
+static	npc	select	formal+modern	sql	LegacyMySqlRepository.java:6480	ac,agro,atkspeed,boss,bowActId,change_head,con,damage_reduction,dex,doppel,exp,gfxid,hard,hp,intel,lawful,light_size,lvl,mp,mr,name,nameid,npcid,paralysis_atk,passispeed,poison_atk,ranged,size,str,undead,weakAttr,wis	Y	MyISAM
+static	npc	select	formal+modern	sql	LegacyMySqlRepository.java:9165	IsErase,IsTU,ac,boss,bowActId,damage_reduction,dex,hard,lawful,mp,mr,npcid,paralysis_atk,poison_atk,ranged,size,str,tamable,undead,weakAttr	Y	MyISAM
+static	npc	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:9197		Y	MyISAM
+static	npc	?	formal+modern	whitelist:string-only	LiToGmCommands.java:68		Y	MyISAM
+static	npc	select	formal+modern	sql	LiToGmNpcs.java:21	*	Y	MyISAM
+static	npc	select	formal+modern	sql	NativeCancellationNpcRules.java:23	npcid	Y	MyISAM
+static	npc	select	formal+modern	sql	NativeCancellationNpcRules.java:23	npcid	Y	MyISAM
+static	npc	select	formal+modern	sql	NativeDeNpcTemplateNpcLoader.java:27	*,get:IsErase,get:IsTU,get:ac,get:agro,get:agrocoi,get:agrofamily,get:agrogfxid1,get:agrogfxid2,get:agrososc,get:amount_fixed,get:atk_magic_speed,get:atkspeed,get:boss,get:bowActId,get:bravespeed,get:cant_resurrect,get:change_head,get:classname,get:con,get:damage_reduction,get:dex,get:digestitem,get:doppel,get:exp,get:family,get:gfxid,get:hard,get:hp,get:hpr,get:hprinterval,get:impl,get:intel,get:karma,get:lawful,get:light_size,get:lvl,get:mp,get:mpr,get:mprinterval,get:mr,get:name,get:nameid,get:npcid,get:paralysis_atk,get:passispeed,get:picupitem,get:poison_atk,get:randomac,get:randomexp,get:randomhp,get:randomlawful,get:randomlevel,get:randommp,get:ranged,get:size,get:str,get:sub_magic_speed,get:tamable,get:teleport,get:transform_gfxid,get:transform_id,get:undead,get:weakAttr,get:wis	Y	MyISAM
+static	npc	select	formal+modern	sql	NativeDeNpcTemplateNpcLoader.java:166	family	Y	MyISAM
+static	npc	select	formal+modern	sql	NativeNpcPhysicalSource.java:18	IsErase,IsTU,ac,boss,bowActId,damage_reduction,dex,hard,lawful,mp,mr,npcid,paralysis_atk,poison_atk,ranged,size,str,tamable,undead,weakAttr	Y	MyISAM
+static	npc	?	formal+modern	whitelist:string-only	NativePlayerCommit.java:1626		Y	MyISAM
+static	npc	select	formal+modern	sql	NativeProcEncounterCatalog.java:30	impl,lawful,npcid,undead	Y	MyISAM
+static	npc	select	formal+modern	sql	NativeProcNpcCatalog.java:30	impl,npcid,undead	Y	MyISAM
+static	npc	?	formal+modern	whitelist:string-only	NativeSourceNpcFactoryType.java:11		Y	MyISAM
+static	npc	select	formal+modern	sql	SourceBlessingControls.java:18	atkspeed,change_head,classname,exp,gfxid,hp,lawful,light_size,lvl,mp,nameid,npcid,passispeed	Y	MyISAM
+static	npc	select	formal+modern	sql	SourceSkillControls.java:115	boss,con,mr,npcid,wis	Y	MyISAM
+static	npcchat	select	formal+modern	sql	NativeDeChatTable.java:29	*,get:chat_id1,get:chat_id2,get:chat_id3,get:chat_id4,get:chat_id5,get:chat_interval,get:chat_timing,get:game_time,get:is_repeat,get:is_shout,get:is_world_chat,get:npc_id,get:repeat_interval,get:start_delay_time	Y	MyISAM
+static	petitem	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:1277		Y	MyISAM
+static	petitem	?	formal+modern	whitelist:string-only	ModernItemLifetimeJdbc.java:37		Y	MyISAM
+static	petitem	?	formal+modern	whitelist:string-only	NativeDeItemTable.java:547		Y	MyISAM
+static	petitem	?	formal+modern	whitelist:string-only	NativeDeItemTable.java:553		Y	MyISAM
+static	pettypes	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:259		Y	MyISAM
+static	pettypes	select	formal+modern	sql	LegacyMySqlRepository.java:334	BaseNpcId,ChaCost,CollarId,EvolutionItemId,HpUpMax,HpUpMin,MinEvoLevel,MpUpMax,MpUpMin,NpcIdForEvolving	Y	MyISAM
+static	pettypes	select	formal+modern	sql	LegacyMySqlRepository.java:6488	BaseNpcId,ChaCost,CollarId,EvolutionItemId,HpUpMax,HpUpMin,ItemIdForTaming,MinEvoLevel,MpUpMax,MpUpMin,NpcIdForEvolving,TameRate	Y	MyISAM
+static	poly_變身賦予能力	select	formal+modern	sql	ModernVipEquipmentJdbc.java:69		Y	InnoDB
+static	polymorphs	select	formal+modern	whitelist:table-arg	GmPolyMe.java:107		Y	MyISAM
+static	polymorphs	select	formal+modern	sql	NativePolymorphSource.java:20	*,get:armorequip,get:cause,get:isSkillUse,get:minlevel,get:name,get:polyid,get:weaponequip	Y	MyISAM
+static	server_event	?	formal+modern	whitelist:string-only	NativeSourceIcons1Policy.java:8		Y	MyISAM
+static	server_event	select	formal+modern	sql	SourceSkillControls.java:79	eventstart	Y	MyISAM
+static	skills	select	formal+modern	sql	CombatDatabase.java:63	buffDuration,damage_dice,damage_dice_count,damage_value,hpConsume,itemConsumeCount,itemConsumeId,mpConsume,probability_dice,probability_value,reuseDelay,skill_id	Y	MyISAM
+static	skills	?	formal+modern	whitelist:string-only	GameStateStore.java:7223		Y	MyISAM
+static	skills	?	formal+modern	whitelist:string-only	GameStateStore.java:7953		Y	MyISAM
+static	skills	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:257		Y	MyISAM
+static	skills	select	formal+modern	sql	LegacyMySqlRepository.java:2688	skill_id,skill_level	Y	MyISAM
+static	skills	select	formal+modern	sql	LegacyMySqlRepository.java:6358	reuseDelay,skill_id	Y	MyISAM
+static	skills	select	formal+modern	sql	ModernArmorProtectionCatalog.java:70	action_id,area,attr,buffDuration,castgfx,castgfx2,damage_dice,damage_dice_count,damage_value,effect_skill_id,hpConsume,id,itemConsumeCount,itemConsumeId,lawful,mpConsume,probability_dice,probability_value,ranged,reuseDelay,skill_id,skill_level,skill_number,sysmsgID_fail,sysmsgID_happen,sysmsgID_stop,target,target_to,through,type	Y	MyISAM
+static	skills	select	formal+modern	sql	NativeDeNpcTemplateResources.java:107	name,skill_id	Y	MyISAM
+static	skills	select	formal+modern	sql	NativeProcSkillCatalog.java:22	castgfx,damage_dice,damage_value,skill_id,type	Y	MyISAM
+static	skills	?	formal+modern	whitelist:string-only	NativeProcSkillCatalog.java:79		Y	MyISAM
+static	skills	select	formal+modern	sql	NativeSkillTargetMetadata.java:12	area,attr,id,ranged,skill_id,target,target_to,through,type	Y	MyISAM
+static	skills	select	formal+modern	sql	NativeSourceDollSkillData.java:5	attr,buffDuration,castgfx,castgfx2,damage_dice,damage_dice_count,damage_value,skill_id,skill_level	Y	MyISAM
+static	skills	select	formal+modern	sql	SourceSkillControls.java:82	skill_id	Y	MyISAM
+static	skills_buff_ability	select	formal+modern	sql	ModernArmorProtectionCatalog.java:77	skill_id	Y	InnoDB
+static	skills_buff_ability	select	formal+modern	sql	ModernDisintegrateCatalog.java:45	skill_id	Y	InnoDB
+static	skills_buff_ability	select	formal+modern	sql	ModernGreaterHasteCatalog.java:49	skill_id	Y	InnoDB
+static	skills_buff_ability	select	formal+modern	sql	ModernHasteCatalog.java:49	skill_id	Y	InnoDB
+static	skills_buff_ability	select	formal+modern	sql	ModernSkillsJdbc.java:227	skill_id	Y	InnoDB
+static	skills_buff_ability	select	formal+modern	sql	ModernSlowCatalog.java:55	skill_id	Y	InnoDB
+static	skills_buff_ability	select	formal+modern	sql	SourceSkillControls.java:104	ability_type,ability_value,skill_id	Y	InnoDB
+static	skills_item	select	formal+modern	sql	ModernArmorProtectionCatalog.java:75	counts,itemids,skill_id	Y	MyISAM
+static	skills_item	select	formal+modern	sql	ModernDisintegrateCatalog.java:43	counts,itemids,skill_id	Y	MyISAM
+static	skills_item	select	formal+modern	sql	ModernGreaterHasteCatalog.java:47	counts,itemids,skill_id	Y	MyISAM
+static	skills_item	select	formal+modern	sql	ModernHasteCatalog.java:47	counts,itemids,skill_id	Y	MyISAM
+static	skills_item	select	formal+modern	sql	ModernSkillsJdbc.java:225	counts,itemids,skill_id	Y	MyISAM
+static	skills_item	select	formal+modern	sql	ModernSlowCatalog.java:53	counts,itemids,skill_id	Y	MyISAM
+static	skills_相消免疫技能	select	formal+modern	sql	SourceSkillControls.java:82	skill_id	Y	InnoDB
+static	skills_相消怪物轉換	select	formal+modern	sql	NativeCancellationNpcRules.java:23	duration_seconds,new_name_id,new_passispeed,npc_id,target_id,transform_type	Y	InnoDB
+static	skills_負面boss免疫	select	formal+modern	sql	ModernSlowCatalog.java:135	modifier,skill_id	Y	InnoDB
+static	skills_負面boss免疫	select	formal+modern	sql	SourceSkillControls.java:97	modifier,skill_id	Y	InnoDB
+static	skills_負面技能控制	select	formal+modern	sql	ModernArmorProtectionCatalog.java:79	skill_id	Y	InnoDB
+static	skills_負面技能控制	select	formal+modern	sql	ModernDisintegrateCatalog.java:47	skill_id	Y	InnoDB
+static	skills_負面技能控制	select	formal+modern	sql	ModernGreaterHasteCatalog.java:51	skill_id	Y	InnoDB
+static	skills_負面技能控制	select	formal+modern	sql	ModernHasteCatalog.java:51	skill_id	Y	InnoDB
+static	skills_負面技能控制	select	formal+modern	sql	ModernSlowCatalog.java:132	bonus_dex,bonus_int,bonus_str,check_magic_hit,check_magic_level,check_resist_type,con_multiplier,mr_multiplier,prob_equal,prob_high,prob_low,skill_id,wis_multiplier	Y	InnoDB
+static	skills_負面技能控制	select	formal+modern	sql	SourceSkillControls.java:85	bonus_dex,bonus_int,bonus_str,check_magic_hit,check_magic_level,check_resist_type,con_multiplier,mr_multiplier,prob_equal,prob_high,prob_low,skill_id,wis_multiplier	Y	InnoDB
+static	skills_魔屏無效技能	select	formal+modern	sql	LegacyMySqlRepository.java:6337	skill_id	Y	InnoDB
+static	skills_魔屏無效技能	select	formal+modern	sql	ModernSlowCatalog.java:57	skill_id	Y	InnoDB
+static	spawnlist_npc	select	formal+modern	sql	NativeStaticSpawnMetadata.java:12	heading,id,locx,locy,mapid,movement_distance,npc_templateid,randomx,randomy,respawn_delay	Y	MyISAM
+static	spawnlist_npc	select	formal+modern	sql	SourceBlessingControls.java:18	*,count,id,npc_templateid,get:count,get:heading,get:id,get:locx,get:locy,get:mapid,get:movement_distance,get:npc_templateid,get:randomx,get:randomy	Y	MyISAM
+static	spawnlist_time	select	formal+modern	sql	NativeStaticSpawnMetadata.java:11	npc_id	Y	MyISAM
+static	spr_action	select	formal+modern	sql	NativeDeSpriteCatalog.java:12	*,get:act_id,get:framecount,get:framerate,get:spr_id	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	Accounts.java:2354		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:680		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:704		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:1275		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:1281		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldDropCatalog.java:1361		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:225		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:227		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:229		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:240		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:240		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:242		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:242		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:244		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ClassicWorldRoyalTrialCatalog.java:244		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	GameStateStore.java:1794		Y	MyISAM
+static	weapon	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:38		Y	MyISAM
+static	weapon	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:128	add_bow_dmgup,add_bow_hitup,add_bow_redux,add_cha,add_con,add_dex,add_dmgup,add_hitup,add_hp,add_hpr,add_ignore_reduction,add_magic_hit,add_melee_redux,add_mp,add_mpr,add_pierce,add_potion_recovery,add_str,add_stun_success,bless,dmg_cri,dmg_cri_chance,dmg_large,dmg_max_chance,dmg_small,dmgmodifier,hitmodifier,invgfx,material,range	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LegacyEquipmentMagicLoader.java:234		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LegacyEquipmentMagicLoader.java:306		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LegacyInventoryWeightLoader.java:20		Y	MyISAM
+static	weapon	select	formal+modern	sql	LegacyInventoryWeightLoader.java:31	item_id	Y	MyISAM
+static	weapon	select	formal+modern	sql	LegacyMySqlRepository.java:2364	*,get:add_cha,get:add_con,get:add_dex,get:add_hp,get:add_int,get:add_mp,get:add_sp,get:add_str,get:add_wis,get:bless,get:cant_delete,get:classname,get:dmg_large,get:dmg_small,get:grdgfx,get:haste_item,get:invgfx,get:item_id,get:itemdesc_id,get:m_def,get:material,get:name,get:name_id,get:safenchant,get:trade,get:type,get:weight	Y	MyISAM
+static	weapon	select	formal+modern	sql	LegacyMySqlRepository.java:8917	bless,cant_delete,dmg_large,dmg_small,grdgfx,invgfx,item_id,itemdesc_id,material,name,name_id,safenchant,trade,type,use_darkelf,use_dragonknight,use_elf,use_illusionist,use_knight,use_mage,use_royal,weight	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8923		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:8923		Y	MyISAM
+static	weapon	select	formal+modern	sql	LegacyMySqlRepository.java:8990	item_id	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LiToGmCommands.java:68		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	LiToItemDetails.java:50		Y	MyISAM
+static	weapon	select	formal+modern	whitelist:table-arg	LiToItemTemplates.java:18		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	MemoryAccountRepository.java:634		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	MemoryAccountRepository.java:634		Y	MyISAM
+static	weapon	select	formal+modern	sql	ModernCharacterDataJdbc.java:40	item_id	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ModernEquipmentCatalogJdbc.java:216		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ModernEquipmentSourceJdbc.java:197		Y	MyISAM
+static	weapon	select	formal+modern	sql	ModernItemLifetimeJdbc.java:52	item_id,max_use_time	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ModernItemLifetimeJdbc.java:129		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ModernItemLifetimeJdbc.java:137		Y	MyISAM
+static	weapon	select	formal+modern	sql	ModernPhysicalCombatSourceJdbc.java:167	arrow_spr,item_id,magic_bow	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:199		Y	MyISAM
+static	weapon	select	formal+modern	sql	ModernShopCatalogJdbc.java:31	item_id	Y	MyISAM
+static	weapon	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:23	*	Y	MyISAM
+static	weapon	select	formal+modern	sql	NativeDeItemTable.java:160	*,get:add_adena_rate,get:add_boss_dmg,get:add_boss_redux,get:add_bow_dmgup,get:add_bow_hitup,get:add_bow_redux,get:add_cha,get:add_con,get:add_dex,get:add_dmgup,get:add_dodge,get:add_drop_rate,get:add_er,get:add_exp_rate,get:add_hitup,get:add_hp,get:add_hpr,get:add_ignore_reduction,get:add_int,get:add_magic_hit,get:add_melee_redux,get:add_mp,get:add_mpr,get:add_pierce,get:add_poison_resist,get:add_potion_recovery,get:add_pvp_dmg,get:add_pvp_redux,get:add_sp,get:add_str,get:add_stun_success,get:add_wis,get:arrow_spr,get:bless,get:canbedmg,get:cant_delete,get:classname,get:dmg_cri_chance,get:dmg_cri_effect,get:dmg_large,get:dmg_max_chance,get:dmg_max_effect,get:dmg_small,get:dmgmodifier,get:grdgfx,get:greater_tier,get:haste_item,get:hitmodifier,get:invgfx,get:item_id,get:itemdesc_id,get:m_def,get:magic_bow,get:magicdmgmodifier,get:material,get:max_lvl,get:max_use_time,get:min_lvl,get:name,get:name_id,get:range,get:safenchant,get:set_id,get:trade,get:type,get:use_darkelf,get:use_dragonknight,get:use_elf,get:use_illusionist,get:use_knight,get:use_mage,get:use_royal,get:weight	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	NativeDeItemTable.java:566		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	NativeLitoRentalMerchantCatalog.java:144		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	NativeLitoRentalMerchantCatalog.java:165		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	NativeLitoRentalMerchantCatalog.java:202		Y	MyISAM
+static	weapon	select	formal+modern	sql	NativeSourceEquipmentColumns.java:6	*,item_id	Y	MyISAM
+static	weapon	select	formal+modern	sql	NativeSourceEquipmentColumns.java:6	*,item_id	Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalEquipmentBonuses.java:126		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:34		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:97		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:119		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:125		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:157		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RentalItemDefinitionCatalog.java:160		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RuntimeInventory.java:1447		Y	MyISAM
+static	weapon	?	formal+modern	whitelist:string-only	RuntimeInventory.java:1460		Y	MyISAM
+static	假人_人物清單	select	formal+modern	sql	NativeDeControlCatalog.java:22	*,get:clanid,get:class_id,get:denamebig5,get:deobjid,get:deshopbig5,get:detitlebig5,get:sex,get:weapon_type	Y	MyISAM
+static	假人_人物清單	select	formal+modern	sql	NativeDeControlCatalog.java:62	*,get:clanid,get:class_id,get:denamebig5,get:deobjid,get:deshopbig5,get:detitlebig5,get:sex,get:weapon_type	Y	MyISAM
+static	假人_能力設置	select	formal+modern	sql	NativeDeControlCatalog.java:23	*,get:class_id	Y	MyISAM
+static	假人_設置狀態	select	formal+modern	sql	NativeDeControlCatalog.java:24	*,get:De_pet,get:akk_skill,get:class_id,get:doll_list,get:id,get:poly_list,get:use_item_Gfx,get:use_skill,get:weapon_type	Y	InnoDB
+static	假人_設置狀態	select	formal+modern	sql	NativeDeControlCatalog.java:177	*,get:De_pet,get:akk_skill,get:class_id,get:doll_list,get:id,get:poly_list,get:use_item_Gfx,get:use_skill,get:weapon_type	Y	InnoDB
+static	系統_劇情任務	select	formal+modern	sql	SourceBlessingControls.java:14	action_name,event_type,id	Y	InnoDB
+static	系統_受擊無動作gfx	select	formal+modern	sql	NativeSourceHitReaction.java:5	gfx_id	Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:33		Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:41		Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:43		Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	sql	NativeDeItemIdStatsTable.java:83	*,get:add_ac,get:bless_id,get:item_id	Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:16	*,item_id	Y	InnoDB
+static	裝備_armor_bless_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:16	*,item_id	Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:32		Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:40		Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:42		Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	sql	NativeDeItemBlessStatsTable.java:74	*,get:add_ac,get:armor_type,get:bless_id	Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:8	*	Y	InnoDB
+static	裝備_armor_bless_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:8	*	Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:34		Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:42		Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:44		Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	sql	NativeDeItemEnchantBonusTable.java:78	*,get:add_ac,get:enchant_level,get:item_id	Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:12	*,item_id	Y	InnoDB
+static	裝備_armor_enchant_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:12	*,item_id	Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:35		Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:43		Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:45		Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	sql	NativeDeItemCommonEnchantTable.java:81	*,get:add_ac,get:armor_type,get:over_enchant	Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:10	*	Y	InnoDB
+static	裝備_armor_enchant_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:10	*	Y	InnoDB
+static	裝備_armor_greater_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:31		Y	MyISAM
+static	裝備_armor_greater_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:39		Y	MyISAM
+static	裝備_armor_greater_類型	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:41		Y	MyISAM
+static	裝備_armor_greater_類型	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	MyISAM
+static	裝備_armor_greater_類型	select	formal+modern	sql	NativeDeItemGreaterTierTable.java:103	*,get:add_ac,get:armor_type,get:tier_id	Y	MyISAM
+static	裝備_armor_greater_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:14	*,裝備說明	Y	MyISAM
+static	裝備_armor_greater_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:14	*,裝備說明	Y	MyISAM
+static	裝備_armor_魔法	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:126		Y	InnoDB
+static	裝備_armor_魔法	select	formal+modern	sql	NativeArmorProc.java:40		Y	InnoDB
+static	裝備_armor_魔法	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_armor_魔法	select	formal+modern	sql	NativeDeItemEquipProcTable.java:46	*,get:enchant_level,get:flat_damage,get:gfx_id,get:gfx_mode,get:heal_hp,get:heal_hp_rand,get:heal_mode,get:heal_mp,get:heal_mp_rand,get:id,get:item_id,get:on_attack_chance,get:on_hurt_chance,get:proc_group,get:rand_damage,get:skill_target,get:skill_time_sec,get:trigger_skill	Y	InnoDB
+static	裝備_armor_魔法	select	formal+modern	sql	NativeSourceEquipmentColumns.java:20	*,item_id	Y	InnoDB
+static	裝備_armor_魔法	select	formal+modern	sql	NativeSourceEquipmentColumns.java:20	*,item_id	Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:33		Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:41		Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:43		Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	sql	NativeDeItemIdStatsTable.java:46	*,get:bless_id,get:item_id	Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:15	*,item_id	Y	InnoDB
+static	裝備_weapon_bless_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:15	*,item_id	Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:32		Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:40		Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:42		Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	sql	NativeDeItemBlessStatsTable.java:45	*,get:add_ac,get:bless_id,get:weapon_type	Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:7	*	Y	InnoDB
+static	裝備_weapon_bless_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:7	*	Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:34		Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:42		Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:44		Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	sql	NativeDeItemEnchantBonusTable.java:43	*,get:add_ac,get:enchant_level,get:item_id	Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:11	*,item_id	Y	InnoDB
+static	裝備_weapon_enchant_指定	select	formal+modern	sql	NativeSourceEquipmentColumns.java:11	*,item_id	Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:35		Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:43		Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:45		Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	sql	NativeDeItemCommonEnchantTable.java:46	*,get:add_ac,get:over_enchant,get:weapon_type	Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:9	*	Y	InnoDB
+static	裝備_weapon_enchant_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:9	*	Y	InnoDB
+static	裝備_weapon_greater_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:31		Y	MyISAM
+static	裝備_weapon_greater_類型	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:39		Y	MyISAM
+static	裝備_weapon_greater_類型	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:41		Y	MyISAM
+static	裝備_weapon_greater_類型	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	MyISAM
+static	裝備_weapon_greater_類型	select	formal+modern	sql	NativeDeItemGreaterTierTable.java:65	*,get:tier_id,get:weapon_type	Y	MyISAM
+static	裝備_weapon_greater_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:13	*,裝備說明	Y	MyISAM
+static	裝備_weapon_greater_類型	select	formal+modern	sql	NativeSourceEquipmentColumns.java:13	*,裝備說明	Y	MyISAM
+static	裝備_weapon_屬性	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:38		Y	InnoDB
+static	裝備_weapon_屬性	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:132	id,stage,type_dmg_passive	Y	InnoDB
+static	裝備_weapon_屬性	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:784	type_dmg_passive	Y	InnoDB
+static	裝備_weapon_屬性	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_weapon_屬性	select	formal+modern	sql	NativeDeItemWeaponAttrTable.java:29	*,get:chance,get:id,get:name,get:probability,get:stage,get:type_add_dmg_max,get:type_add_dmg_min,get:type_dmg_passive,get:type_dmgup,get:type_drain_hp_max,get:type_drain_hp_min,get:type_drain_mp_max,get:type_drain_mp_min,get:type_gfx_id,get:type_range,get:type_range_dmg	Y	InnoDB
+static	裝備_weapon_屬性	select	formal+modern	sql	NativeSourceEquipmentColumns.java:6	*	Y	InnoDB
+static	裝備_weapon_屬性	select	formal+modern	sql	NativeSourceEquipmentColumns.java:6	*	Y	InnoDB
+static	裝備_weapon_魔法	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:124		Y	InnoDB
+static	裝備_weapon_魔法	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_weapon_魔法	select	formal+modern	sql	NativeDeItemWeaponProcTable.java:31	*,get:area_size,get:description,get:dmg_attr,get:dmg_fix,get:dmg_rnd,get:dmg_scaling,get:dmg_type,get:enchant_step,get:gfx_id,get:gfx_target,get:hp_drain_fix,get:hp_drain_rnd,get:id,get:min_enchant,get:mp_drain_fix,get:mp_drain_rnd,get:prob_base,get:prob_enchant,get:skill_id,get:skill_target,get:skill_time_sec,get:weapon_id	Y	InnoDB
+static	裝備_weapon_魔法	select	formal+modern	sql	NativeSourceEquipmentColumns.java:19	*	Y	InnoDB
+static	裝備_weapon_魔法	select	formal+modern	sql	NativeSourceEquipmentColumns.java:19	*	Y	InnoDB
+static	裝備_特殊_卡片_組合	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:44		Y	InnoDB
+static	裝備_特殊_卡片_組合	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:151	add_bow_dmg,add_bow_hit,add_bow_redux,add_cha,add_con,add_dex,add_dmg,add_earth,add_fire,add_hit,add_hp,add_hpr,add_ignore_reduction,add_magic_hit,add_melee_redux,add_mp,add_mpr,add_pierce,add_potion_recovery,add_reduction,add_str,add_stun_success,add_water,add_weight_reduction,add_wind,add_wis,regist_blind,regist_freeze,regist_sleep,regist_stone,regist_stun,regist_sustain	Y	InnoDB
+static	裝備_特殊_卡片_組合	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:1080	add_ac,add_bow_dmg,add_bow_hit,add_bow_redux,add_cha,add_con,add_dex,add_dmg,add_earth,add_er,add_fire,add_hit,add_hp,add_hpr,add_ignore_reduction,add_int,add_magic_dmg,add_magic_hit,add_melee_redux,add_mp,add_mpr,add_mr,add_pierce,add_potion_recovery,add_pvp_redux,add_reduction,add_str,add_stun_success,add_water,add_weight_reduction,add_wind,add_wis,regist_blind,regist_freeze,regist_sleep,regist_stone,regist_stun,regist_sustain,require_cards	Y	InnoDB
+static	裝備_特殊_卡片_組合	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:256		Y	InnoDB
+static	裝備_特殊_卡片_組合	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:291		Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:36		Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:44		Y	InnoDB
+static	裝備_特殊_卡片_能力	?	formal+modern	whitelist:string-only	LegacyEquipmentMagicLoader.java:342		Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:983		Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:45		Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:212		Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	sql	NativeDeItemInlayCardTable.java:35	*,get:item_id	Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	sql	NativeSourceEquipmentColumns.java:18	*,item_id	Y	InnoDB
+static	裝備_特殊_卡片_能力	select	formal+modern	sql	NativeSourceEquipmentColumns.java:18	*,item_id	Y	InnoDB
+static	裝備_特殊_套裝_能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:45		Y	InnoDB
+static	裝備_特殊_套裝_能力	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:146	ac,add_bow_dmgup,add_bow_hitup,add_cha,add_con,add_dex,add_dmgup,add_hitup,add_hp,add_hpr,add_ignore_reduction,add_magic_hit,add_mp,add_mpr,add_pierce,add_potion_recovery,add_str,add_stun_success,add_wis,defense_earth,defense_fire,defense_water,defense_wind,regist_blind,regist_freeze,regist_sleep,regist_stone,regist_stun,regist_sustain,weight_reduction	Y	InnoDB
+static	裝備_特殊_套裝_能力	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:1028	ac,add_bow_dmgup,add_bow_hitup,add_cha,add_con,add_dex,add_dmgup,add_er,add_hitup,add_hp,add_hpr,add_ignore_reduction,add_int,add_magic_hit,add_mp,add_mpr,add_pierce,add_potion_recovery,add_pvp_redux,add_str,add_stun_success,add_wis,damage_reduction,defense_earth,defense_fire,defense_water,defense_wind,m_def,magic_dmg_modifier,regist_blind,regist_freeze,regist_sleep,regist_stone,regist_stun,regist_sustain,weight_reduction	Y	InnoDB
+static	裝備_特殊_套裝_能力	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:241		Y	InnoDB
+static	裝備_特殊_套裝_能力	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:291		Y	InnoDB
+static	裝備_特殊_魔石_魔法	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:45		Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:141	add_con,add_dex,add_hp,add_mp,add_str	Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:1003	add_con,add_dex,add_hp,add_int,add_mp,add_mr,add_sp,add_str,add_wis	Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:213		Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:290		Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	sql	NativeDeItemDefinitionsSql.java:22	*	Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	sql	NativeDeItemMagicStoneTable.java:30	*,get:add_con,get:add_dex,get:add_hp,get:add_int,get:add_mp,get:add_mr,get:add_sp,get:add_str,get:add_wis,get:area_size,get:dmg_attr,get:dmg_fix,get:dmg_rnd,get:dmg_type,get:duration,get:gfx_id,get:hp_drain,get:item_id,get:mp_drain,get:name_suffix,get:prob_fail_mode,get:prob_success,get:proc_chance,get:skill_id,get:tier	Y	MyISAM
+static	裝備_特殊_魔石_魔法	?	formal+modern	whitelist:string-only	NativeDeItemMagicStoneTable.java:46		Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	sql	NativeSourceEquipmentColumns.java:17	*,item_id	Y	MyISAM
+static	裝備_特殊_魔石_魔法	select	formal+modern	sql	NativeSourceEquipmentColumns.java:17	*,item_id	Y	MyISAM
+static	角色_力量成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:344		Y	InnoDB
+static	角色_力量成長	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6394		Y	InnoDB
+static	角色_力量成長	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6395		Y	InnoDB
+static	角色_力量成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:9084		Y	InnoDB
+static	角色_力量成長	?	formal+modern	whitelist:string-only	ModernNpcCatalogJdbc.java:36		Y	InnoDB
+static	角色_力量成長	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:113		Y	InnoDB
+static	角色_敏捷成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:346		Y	InnoDB
+static	角色_敏捷成長	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6396		Y	InnoDB
+static	角色_敏捷成長	?	formal+modern	whitelist:string-only	LegacyMySqlRepository.java:6397		Y	InnoDB
+static	角色_敏捷成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:9084		Y	InnoDB
+static	角色_敏捷成長	?	formal+modern	whitelist:string-only	ModernNpcCatalogJdbc.java:36		Y	InnoDB
+static	角色_敏捷成長	?	formal+modern	whitelist:string-only	ModernPhysicalCombatSourceJdbc.java:113		Y	InnoDB
+static	角色_智力成長	select	formal+modern	sql	NativeProcHealBonus.java:31	*,get:id,get:治癒骰加成,get:魔法加成	Y	InnoDB
+static	角色_智力成長	select	formal+modern	sql	NativeSourceHealingFormula.java:7	*,get:id,get:治癒骰加成,get:魔法加成	Y	InnoDB
+static	角色_精神成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:340		Y	InnoDB
+static	角色_精神成長	select	formal+modern	sql	LegacyMySqlRepository.java:6308	id,魔防	Y	InnoDB
+static	角色_精神成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:9083		Y	InnoDB
+static	角色_體質成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:342		Y	InnoDB
+static	角色_體質成長	select	formal+modern	sql	LegacyMySqlRepository.java:983	id,回血	Y	InnoDB
+static	角色_體質成長	select	formal+modern	whitelist:table-arg	LegacyMySqlRepository.java:9083		Y	InnoDB
+static	道具_物品時間限制	select	formal+modern	sql	ModernItemLifetimeJdbc.java:57	h,itemid	Y	MyISAM
+static	道具_自訂穿脫能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:53		Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:152		Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:156	力量,回血,回魔,地屬性防禦,寒冰耐性,支撐耐性,敏捷,昏迷耐性,暗黑耐性,水屬性防禦,火屬性防禦,睡眠耐性,石化耐性,近戰傷害,近戰命中,遠攻傷害,遠攻命中,風屬性防禦,體質	Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	whitelist:table-arg	LegacyEquipmentMagicLoader.java:230		Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	sql	LegacyEquipmentMagicLoader.java:869	力量,回血,回魔,地屬性防禦,寒冰耐性,抗魔,支撐耐性,敏捷,昏迷耐性,智力,暗黑耐性,水屬性防禦,火屬性防禦,睡眠耐性,石化耐性,精神,近戰傷害,近戰命中,遠攻傷害,遠攻命中,風屬性防禦,體質,魔攻	Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:39		Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	whitelist:table-arg	ModernEquipmentCatalogJdbc.java:214		Y	InnoDB
+static	道具_自訂穿脫能力	select	formal+modern	sql	ModernVipEquipmentJdbc.java:43	道具編號	Y	InnoDB
+static	道具_變形控制魔杖	select	formal+modern	sql	NativePolymorphSource.java:14	*,get:chance,get:name,get:poly_id	Y	InnoDB

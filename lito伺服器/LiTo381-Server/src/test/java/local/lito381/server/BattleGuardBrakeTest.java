@@ -41,7 +41,7 @@ final class BattleGuardBrakeTest {
         assertEquals(1_800, spell.clientCastClockMillis());
         assertEquals(60, spell.durationSeconds());
         assertEquals(3, spell.maximumRange());
-        assertEquals(26, spell.targetTo());
+        assertEquals(3, spell.targetTo());
         assertEquals(15, spell.armorClassModifier());
         assertEquals(280, spell.failureMessage());
         assertFalse(spell.counterMagicBypass());
@@ -88,7 +88,7 @@ final class BattleGuardBrakeTest {
         assertEquals(0, spell.clientCastClockMillis());
         assertEquals(60, spell.durationSeconds());
         assertEquals(3, spell.maximumRange());
-        assertEquals(26, spell.targetTo());
+        assertEquals(3, spell.targetTo());
         assertEquals(1, spell.nativeId());
         assertEquals(0, spell.armorClassModifier());
         assertTrue(spell.horrorOfDeath());

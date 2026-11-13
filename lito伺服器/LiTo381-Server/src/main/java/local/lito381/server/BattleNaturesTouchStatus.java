@@ -1,25 +1,24 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Authoritative cancelable lease for native Elf skill158 Nature's Touch. */
 import java.util.concurrent.TimeUnit;
 
-/** Authoritative cancelable lease for native Elf skill158 Nature's Touch. */
 final class BattleNaturesTouchStatus {
     static final int NATIVE_HPR_BONUS = 15;
+    private long expiresAtNanos;
+    volatile transient long nativeSourceIcons1Version;
 
-    record Snapshot(boolean active, int hpRegen, int remainingSeconds) {
-        static Snapshot none() {
-            return new Snapshot(false, 0, 0);
-        }
+    BattleNaturesTouchStatus() {
     }
 
-    private long expiresAtNanos;
-
     synchronized boolean activate(long nowNanos, int durationSeconds) {
-        validate(nowNanos, durationSeconds);
-        boolean refreshed = expiresAtNanos != 0 && nowNanos < expiresAtNanos;
-        expiresAtNanos = Math.addExact(
-                nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
-        return refreshed;
+        BattleNaturesTouchStatus.validate(nowNanos, durationSeconds);
+        boolean bl = this.expiresAtNanos != 0L && nowNanos < this.expiresAtNanos;
+        BattleNaturesTouchStatus battleNaturesTouchStatus;
+        (battleNaturesTouchStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleNaturesTouchStatus);
+        return bl;
     }
 
     synchronized Snapshot snapshot(long nowNanos) {
@@ -56,12 +55,20 @@ final class BattleNaturesTouchStatus {
     }
 
     synchronized void clear() {
-        expiresAtNanos = 0;
+        BattleNaturesTouchStatus battleNaturesTouchStatus;
+        (battleNaturesTouchStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleNaturesTouchStatus);
     }
 
     private static void validate(long nowNanos, int durationSeconds) {
         if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
             throw new IllegalArgumentException("invalid native Nature's Touch lease");
+        }
+    }
+
+    record Snapshot(boolean active, int hpRegen, int remainingSeconds) {
+        static Snapshot none() {
+            return new Snapshot(false, 0, 0);
         }
     }
 }

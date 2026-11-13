@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -6,6 +6,7 @@ package local.lito381.server;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import local.lito381.server.NativeAcceptedFreezeMutation;
 import local.lito381.server.NativeAcceptedHpContext;
 import local.lito381.server.NativePlayerCommit;
 import local.lito381.server.NativePlayerVitalCompletions;
@@ -64,6 +65,7 @@ implements Runnable {
         try {
             nativeAcceptedHpContext = NativeAcceptedHpContext.detach();
             NativePlayerCommit.acceptedTail(this.frame);
+            NativeAcceptedFreezeMutation.completed(this.frame);
         }
         catch (Throwable throwable) {
             NativePlayerCommit.acceptedTailFailure(this.frame, throwable);
@@ -82,6 +84,24 @@ implements Runnable {
                     nativeAcceptedHpContext.close();
                 }
             }
+        }
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static NativeAcceptedHpCompletion enqueue(NativePlayerCommit.Frame frame, NativePlayerVitalCompletions.Receipt receipt) {
+        if (receipt == null) {
+            throw new IllegalStateException("accepted native HP completion lost application admission");
+        }
+        try {
+            NativeAcceptedHpCompletion nativeAcceptedHpCompletion = new NativeAcceptedHpCompletion(frame);
+            NativePlayerVitalCompletions.enqueueLocked(receipt, nativeAcceptedHpCompletion);
+            NativeAcceptedHpCompletion nativeAcceptedHpCompletion2 = nativeAcceptedHpCompletion;
+            return nativeAcceptedHpCompletion2;
+        }
+        finally {
+            receipt.close();
         }
     }
 }

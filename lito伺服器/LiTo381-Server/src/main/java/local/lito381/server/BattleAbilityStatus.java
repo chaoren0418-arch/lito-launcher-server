@@ -1,75 +1,9 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
 import java.util.concurrent.TimeUnit;
 
-/** Server-authoritative leases for native ability and damage-protection buffs. */
 final class BattleAbilityStatus {
-    record Modifier(int amount, int remainingSeconds) {}
-    record ArmorProtection(int skillId, int armorClass, int remainingSeconds) {}
-    record Berserk(int armorClass, int meleeHit, int meleeDamage,
-                   int remainingSeconds) {}
-    record Protection(int divisor, int remainingSeconds) {
-        int applyTo(int damage) {
-            if (damage < 0) throw new IllegalArgumentException("negative combat damage");
-            return divisor == 0 ? damage : damage / divisor;
-        }
-    }
-    record ReductionArmor(int remainingSeconds) {}
-    record BounceAttack(int armorClass, int meleeHit,
-                        int weaponDamageChance, int remainingSeconds) {}
-    record SolidCarriage(int evasionRate, int remainingSeconds) {}
-    record DressEvasion(int evasionRate, int remainingSeconds) {}
-    record UncannyDodge(int dodgeModifier, int remainingSeconds) {}
-    record MirrorImage(int dodgeModifier, int remainingSeconds) {}
-    record IllusionOgre(int meleeHit, int meleeDamage, int remainingSeconds) {}
-    record IllusionLich(int spellPower, int remainingSeconds) {}
-    record IllusionAvatar(int meleeDamage, int rangedDamage, int spellPower,
-                          double incomingDamageRate, int remainingSeconds) {
-        int applyIncomingDamage(int damage) {
-            if (damage < 0) {
-                throw new IllegalArgumentException("negative incoming damage");
-            }
-            // Retained L1PcInstance multiplies the double and then casts the
-            // completed value to int, which truncates fractional halves.
-            return (int) (damage * incomingDamageRate);
-        }
-    }
-    record DiamondGolem(int armorClass, int remainingSeconds) {}
-    record Insight(int abilityScoreModifier, int remainingSeconds) {}
-    record Panic(int abilityScoreModifier, int remainingSeconds) {}
-    record CounterBarrier(int remainingSeconds) {}
-    record MortalBody(int remainingSeconds) {}
-    record RoyalAura(int skillId, int armorClass, int meleeHit, int rangedHit,
-                     int magicResistance, int remainingSeconds) {}
-    record BraveAura(int meleeDamage, int remainingSeconds) {}
-    record MagicResistance(int amount, int remainingSeconds) {}
-    record Cancellation(int armorProtectionSkillId,
-                        int strengthSkillId, int dexteritySkillId,
-                        int royalAuraSkillId, int braveAuraSkillId,
-                        boolean magicResistance,
-                        boolean berserkers, boolean immuneToHarm,
-                        boolean bounceAttack, boolean uncannyDodge,
-                        boolean mirrorImage,
-                        boolean illusionOgre,
-                        boolean illusionLich,
-                        boolean illusionAvatar,
-                        boolean diamondGolem,
-                        boolean insight,
-                        boolean panic,
-                        boolean dressEvasion, boolean mortalBody) {
-        boolean shield() {
-            return armorProtectionSkillId != 0;
-        }
-
-        boolean strength() {
-            return strengthSkillId != 0;
-        }
-
-        boolean dexterity() {
-            return dexteritySkillId != 0;
-        }
-    }
-
     private long shieldExpiresAtNanos;
     private int shieldSkillId;
     private int shieldModifier;
@@ -126,80 +60,76 @@ final class BattleAbilityStatus {
     private int braveAuraMeleeDamage;
     private long magicResistanceExpiresAtNanos;
     private int magicResistanceModifier;
+    private final CombatBuffLeases sourceBuffLeases = new CombatBuffLeases();
+    volatile transient Object nativeSourceProc68IconLease;
+    volatile transient long nativeSourceIcons1Version;
+
+    BattleAbilityStatus() {
+    }
 
     synchronized void activateShield(long nowNanos, int durationSeconds, int modifier) {
         activateArmorProtection(BattleSpellCatalog.SHIELD,
                 nowNanos, durationSeconds, modifier);
     }
 
-    synchronized void activateArmorProtection(
-            int skillId, long nowNanos, int durationSeconds, int modifier) {
+    synchronized void activateArmorProtection(int skillId, long nowNanos, int durationSeconds, int modifier) {
         if (skillId <= 0) {
             throw new IllegalArgumentException("invalid armor-protection skill id");
         }
-        validateActivation(nowNanos, durationSeconds, modifier);
-        shieldExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        shieldSkillId = skillId;
-        shieldModifier = modifier;
+        BattleAbilityStatus.validateActivation(nowNanos, durationSeconds, modifier);
+        this.shieldExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        this.shieldSkillId = skillId;
+        this.shieldModifier = modifier;
+        this.sourceBuffLeases.activate(skillId, nowNanos, durationSeconds);
     }
 
     synchronized void activateStrength(long nowNanos, int durationSeconds, int modifier) {
-        activateStrength(BattleSpellCatalog.PHYSICAL_ENCHANT_STR,
-                nowNanos, durationSeconds, modifier);
+        this.activateStrength(42, nowNanos, durationSeconds, modifier);
     }
 
-    synchronized int activateStrength(
-            int skillId, long nowNanos, int durationSeconds, int modifier) {
-        validateSkillId(skillId);
-        validateActivation(nowNanos, durationSeconds, modifier);
-        int replacedSkillId = activeSkillId(
-                nowNanos, strengthExpiresAtNanos, strengthSkillId);
-        strengthExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        strengthSkillId = skillId;
-        strengthModifier = modifier;
-        return replacedSkillId == skillId ? 0 : replacedSkillId;
+    synchronized int activateStrength(int skillId, long nowNanos, int durationSeconds, int modifier) {
+        BattleAbilityStatus.validateSkillId(skillId);
+        BattleAbilityStatus.validateActivation(nowNanos, durationSeconds, modifier);
+        int n4 = BattleAbilityStatus.activeSkillId(nowNanos, this.strengthExpiresAtNanos, this.strengthSkillId);
+        this.strengthExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        this.strengthSkillId = skillId;
+        this.strengthModifier = modifier;
+        return this.sourceBuffLeases.replace(n4 == skillId ? 0 : n4, skillId, nowNanos, durationSeconds);
     }
 
     synchronized void activateDexterity(long nowNanos, int durationSeconds, int modifier) {
-        activateDexterity(BattleSpellCatalog.PHYSICAL_ENCHANT_DEX,
-                nowNanos, durationSeconds, modifier);
+        this.activateDexterity(26, nowNanos, durationSeconds, modifier);
     }
 
-    synchronized int activateDexterity(
-            int skillId, long nowNanos, int durationSeconds, int modifier) {
-        validateSkillId(skillId);
-        validateActivation(nowNanos, durationSeconds, modifier);
-        int replacedSkillId = activeSkillId(
-                nowNanos, dexterityExpiresAtNanos, dexteritySkillId);
-        dexterityExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        dexteritySkillId = skillId;
-        dexterityModifier = modifier;
-        return replacedSkillId == skillId ? 0 : replacedSkillId;
+    synchronized int activateDexterity(int skillId, long nowNanos, int durationSeconds, int modifier) {
+        BattleAbilityStatus.validateSkillId(skillId);
+        BattleAbilityStatus.validateActivation(nowNanos, durationSeconds, modifier);
+        int n4 = BattleAbilityStatus.activeSkillId(nowNanos, this.dexterityExpiresAtNanos, this.dexteritySkillId);
+        this.dexterityExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        this.dexteritySkillId = skillId;
+        this.dexterityModifier = modifier;
+        return this.sourceBuffLeases.replace(n4 == skillId ? 0 : n4, skillId, nowNanos, durationSeconds);
     }
 
-    synchronized void activateBerserk(long nowNanos, int durationSeconds,
-                                      int armorClass, int meleeHit,
-                                      int meleeDamage) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || armorClass <= 0 || armorClass > 127
-                || meleeHit <= 0 || meleeHit > 127
-                || meleeDamage <= 0 || meleeDamage > 127) {
+    synchronized void activateBerserk(long nowNanos, int durationSeconds, int armorClass, int meleeHit, int meleeDamage) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || armorClass <= 0 || armorClass > 127 || meleeHit <= 0 || meleeHit > 127 || meleeDamage <= 0 || meleeDamage > 127) {
             throw new IllegalArgumentException("invalid native Berserkers lease");
         }
-        berserkExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        berserkArmorClass = armorClass;
-        berserkMeleeHit = meleeHit;
-        berserkMeleeDamage = meleeDamage;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).berserkExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.berserkArmorClass = armorClass;
+        this.berserkMeleeHit = meleeHit;
+        this.berserkMeleeDamage = meleeDamage;
     }
 
-    synchronized void activateImmuneToHarm(
-            long nowNanos, int durationSeconds, int divisor) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || divisor <= 1 || divisor > 127) {
+    synchronized void activateImmuneToHarm(long nowNanos, int durationSeconds, int divisor) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || divisor <= 1 || divisor > 127) {
             throw new IllegalArgumentException("invalid native Immune to Harm lease");
         }
-        immuneToHarmExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        immuneToHarmDivisor = divisor;
+        this.immuneToHarmExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        this.immuneToHarmDivisor = divisor;
+        this.nativeSourceProc68IconLease = new Object();
     }
 
     synchronized void activateReductionArmor(long nowNanos, int durationSeconds) {
@@ -234,14 +164,14 @@ final class BattleAbilityStatus {
         solidCarriageEvasionRate = evasionRate;
     }
 
-    synchronized void activateDressEvasion(
-            long nowNanos, int durationSeconds, int evasionRate) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || evasionRate <= 0 || evasionRate > 127) {
+    synchronized void activateDressEvasion(long nowNanos, int durationSeconds, int evasionRate) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || evasionRate <= 0 || evasionRate > 127) {
             throw new IllegalArgumentException("invalid native Dress Evasion lease");
         }
-        dressEvasionExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        dressEvasionRate = evasionRate;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).dressEvasionExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.dressEvasionRate = evasionRate;
     }
 
     synchronized boolean activateUncannyDodge(
@@ -341,39 +271,31 @@ final class BattleAbilityStatus {
         return refreshed;
     }
 
-    /**
-     * Installs retained skill216 exactly: an active Insight lease neither stacks
-     * nor refreshes. The return value is true only when a new lease was applied.
-     */
-    synchronized boolean activateInsight(
-            long nowNanos, int durationSeconds, int abilityScoreModifier) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || abilityScoreModifier <= 0 || abilityScoreModifier > 127) {
+    synchronized boolean activateInsight(long nowNanos, int durationSeconds, int abilityScoreModifier) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || abilityScoreModifier <= 0 || abilityScoreModifier > 127) {
             throw new IllegalArgumentException("invalid native Insight lease");
         }
-        if (insightExpiresAtNanos != 0 && nowNanos < insightExpiresAtNanos) {
+        if (this.insightExpiresAtNanos != 0L && nowNanos < this.insightExpiresAtNanos) {
             return false;
         }
-        insightExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        insightAbilityScoreModifier = abilityScoreModifier;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).insightExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.insightAbilityScoreModifier = abilityScoreModifier;
         return true;
     }
 
-    /**
-     * Installs retained skill217 exactly: an active Panic lease neither stacks
-     * nor refreshes. The return value is true only when a new lease was applied.
-     */
-    synchronized boolean activatePanic(
-            long nowNanos, int durationSeconds, int abilityScoreModifier) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || abilityScoreModifier >= 0 || abilityScoreModifier < -127) {
+    synchronized boolean activatePanic(long nowNanos, int durationSeconds, int abilityScoreModifier) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || abilityScoreModifier >= 0 || abilityScoreModifier < -127) {
             throw new IllegalArgumentException("invalid native Panic lease");
         }
-        if (panicExpiresAtNanos != 0 && nowNanos < panicExpiresAtNanos) {
+        if (this.panicExpiresAtNanos != 0L && nowNanos < this.panicExpiresAtNanos) {
             return false;
         }
-        panicExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        panicAbilityScoreModifier = abilityScoreModifier;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).panicExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.panicAbilityScoreModifier = abilityScoreModifier;
         return true;
     }
 
@@ -385,33 +307,27 @@ final class BattleAbilityStatus {
     }
 
     synchronized void activateMortalBody(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native Mortal Body lease");
         }
-        mortalBodyExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).mortalBodyExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
     }
 
-    synchronized int activateRoyalAura(
-            int skillId, long nowNanos, int durationSeconds,
-            int armorClass, int meleeHit, int rangedHit, int magicResistance) {
-        validateSkillId(skillId);
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF
-                || armorClass < -127 || armorClass > 127
-                || meleeHit < 0 || meleeHit > 127
-                || rangedHit < 0 || rangedHit > 127
-                || magicResistance < 0 || magicResistance > 127
-                || armorClass + meleeHit + rangedHit + magicResistance == 0) {
+    synchronized int activateRoyalAura(int skillId, long nowNanos, int durationSeconds, int armorClass, int meleeHit, int rangedHit, int magicResistance) {
+        BattleAbilityStatus.validateSkillId(skillId);
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535 || armorClass < -127 || armorClass > 127 || meleeHit < 0 || meleeHit > 127 || rangedHit < 0 || rangedHit > 127 || magicResistance < 0 || magicResistance > 127 || armorClass + meleeHit + rangedHit + magicResistance == 0) {
             throw new IllegalArgumentException("invalid native royal-aura lease");
         }
-        int replacedSkillId = activeSkillId(
-                nowNanos, royalAuraExpiresAtNanos, royalAuraSkillId);
-        royalAuraExpiresAtNanos = expiresAt(nowNanos, durationSeconds);
-        royalAuraSkillId = skillId;
-        royalAuraArmorClass = armorClass;
-        royalAuraMeleeHit = meleeHit;
-        royalAuraRangedHit = rangedHit;
-        royalAuraMagicResistance = magicResistance;
-        return replacedSkillId == skillId ? 0 : replacedSkillId;
+        int n7 = BattleAbilityStatus.activeSkillId(nowNanos, this.royalAuraExpiresAtNanos, this.royalAuraSkillId);
+        this.royalAuraExpiresAtNanos = BattleAbilityStatus.expiresAt(nowNanos, durationSeconds);
+        this.royalAuraSkillId = skillId;
+        this.royalAuraArmorClass = armorClass;
+        this.royalAuraMeleeHit = meleeHit;
+        this.royalAuraRangedHit = rangedHit;
+        this.royalAuraMagicResistance = magicResistance;
+        return this.sourceBuffLeases.replace(n7 == skillId ? 0 : n7, skillId, nowNanos, durationSeconds);
     }
 
     synchronized void activateBraveAura(
@@ -436,41 +352,56 @@ final class BattleAbilityStatus {
     }
 
     synchronized Modifier shield(long nowNanos) {
-        return modifier(nowNanos, shieldExpiresAtNanos, shieldModifier);
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.shield(nowNanos);
+        }
+        return BattleAbilityStatus.modifier(nowNanos, this.shieldExpiresAtNanos, this.shieldModifier);
     }
 
     synchronized ArmorProtection armorProtection(long nowNanos) {
-        Modifier active = modifier(nowNanos, shieldExpiresAtNanos, shieldModifier);
-        if (active.remainingSeconds() == 0) {
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.armorProtection(nowNanos);
+        }
+        Modifier modifier = BattleAbilityStatus.modifier(nowNanos, this.shieldExpiresAtNanos, this.shieldModifier);
+        if (modifier.remainingSeconds() == 0) {
             return new ArmorProtection(0, 0, 0);
         }
-        return new ArmorProtection(
-                shieldSkillId, active.amount(), active.remainingSeconds());
+        return new ArmorProtection(this.shieldSkillId, modifier.amount(), modifier.remainingSeconds());
     }
 
     synchronized Modifier strength(long nowNanos) {
-        return modifier(nowNanos, strengthExpiresAtNanos, strengthModifier);
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.strength(nowNanos);
+        }
+        return BattleAbilityStatus.modifier(nowNanos, this.strengthExpiresAtNanos, this.strengthModifier);
     }
 
     synchronized int strengthSkillId(long nowNanos) {
-        return activeSkillId(nowNanos, strengthExpiresAtNanos, strengthSkillId);
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.strengthSkillId(nowNanos);
+        }
+        return BattleAbilityStatus.activeSkillId(nowNanos, this.strengthExpiresAtNanos, this.strengthSkillId);
     }
 
     synchronized Modifier dexterity(long nowNanos) {
-        return modifier(nowNanos, dexterityExpiresAtNanos, dexterityModifier);
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.dexterity(nowNanos);
+        }
+        return BattleAbilityStatus.modifier(nowNanos, this.dexterityExpiresAtNanos, this.dexterityModifier);
     }
 
     synchronized int dexteritySkillId(long nowNanos) {
-        return activeSkillId(nowNanos, dexterityExpiresAtNanos, dexteritySkillId);
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.dexteritySkillId(nowNanos);
+        }
+        return BattleAbilityStatus.activeSkillId(nowNanos, this.dexterityExpiresAtNanos, this.dexteritySkillId);
     }
 
     synchronized Berserk berserk(long nowNanos) {
-        if (berserkExpiresAtNanos == 0 || nowNanos >= berserkExpiresAtNanos) {
+        if (this.berserkExpiresAtNanos == 0L || nowNanos >= this.berserkExpiresAtNanos) {
             return new Berserk(0, 0, 0, 0);
         }
-        return new Berserk(berserkArmorClass, berserkMeleeHit,
-                berserkMeleeDamage,
-                modifier(nowNanos, berserkExpiresAtNanos, 1).remainingSeconds());
+        return new Berserk(CombatBuffLeases.value(this.berserkArmorClass, 55, "AC"), CombatBuffLeases.value(this.berserkMeleeHit, 55, "HIT"), CombatBuffLeases.value(this.berserkMeleeDamage, 55, "DMG"), BattleAbilityStatus.modifier(nowNanos, this.berserkExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized Protection immuneToHarm(long nowNanos) {
@@ -489,15 +420,10 @@ final class BattleAbilityStatus {
     }
 
     synchronized BounceAttack bounceAttack(long nowNanos) {
-        if (bounceAttackExpiresAtNanos == 0
-                || nowNanos >= bounceAttackExpiresAtNanos) {
+        if (this.bounceAttackExpiresAtNanos == 0L || nowNanos >= this.bounceAttackExpiresAtNanos) {
             return new BounceAttack(0, 0, 0, 0);
         }
-        return new BounceAttack(
-                bounceAttackArmorClass, bounceAttackMeleeHit,
-                bounceAttackWeaponDamageChance,
-                modifier(nowNanos, bounceAttackExpiresAtNanos, 1)
-                        .remainingSeconds());
+        return new BounceAttack(CombatBuffLeases.value(this.bounceAttackArmorClass, 89, "AC"), CombatBuffLeases.value(this.bounceAttackMeleeHit, 89, "HIT"), this.bounceAttackWeaponDamageChance, BattleAbilityStatus.modifier(nowNanos, this.bounceAttackExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized SolidCarriage solidCarriage(long nowNanos) {
@@ -541,14 +467,10 @@ final class BattleAbilityStatus {
     }
 
     synchronized IllusionOgre illusionOgre(long nowNanos) {
-        if (illusionOgreExpiresAtNanos == 0
-                || nowNanos >= illusionOgreExpiresAtNanos) {
+        if (this.illusionOgreExpiresAtNanos == 0L || nowNanos >= this.illusionOgreExpiresAtNanos) {
             return new IllusionOgre(0, 0, 0);
         }
-        return new IllusionOgre(
-                illusionOgreMeleeHit, illusionOgreMeleeDamage,
-                modifier(nowNanos, illusionOgreExpiresAtNanos, 1)
-                        .remainingSeconds());
+        return new IllusionOgre(CombatBuffLeases.value(this.illusionOgreMeleeHit, 204, "HIT"), CombatBuffLeases.value(this.illusionOgreMeleeDamage, 204, "DMG"), BattleAbilityStatus.modifier(nowNanos, this.illusionOgreExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized IllusionLich illusionLich(long nowNanos) {
@@ -563,26 +485,17 @@ final class BattleAbilityStatus {
     }
 
     synchronized IllusionAvatar illusionAvatar(long nowNanos) {
-        if (illusionAvatarExpiresAtNanos == 0
-                || nowNanos >= illusionAvatarExpiresAtNanos) {
-            return new IllusionAvatar(0, 0, 0, 1.0D, 0);
+        if (this.illusionAvatarExpiresAtNanos == 0L || nowNanos >= this.illusionAvatarExpiresAtNanos) {
+            return new IllusionAvatar(0, 0, 0, 1.0, 0);
         }
-        return new IllusionAvatar(
-                illusionAvatarMeleeDamage, illusionAvatarRangedDamage,
-                illusionAvatarSpellPower, illusionAvatarIncomingDamageRate,
-                modifier(nowNanos, illusionAvatarExpiresAtNanos, 1)
-                        .remainingSeconds());
+        return new IllusionAvatar(CombatBuffLeases.value(this.illusionAvatarMeleeDamage, 219, "DMG"), CombatBuffLeases.value(this.illusionAvatarRangedDamage, 219, "BOW_DMG"), this.illusionAvatarSpellPower, this.illusionAvatarIncomingDamageRate, BattleAbilityStatus.modifier(nowNanos, this.illusionAvatarExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized DiamondGolem diamondGolem(long nowNanos) {
-        if (diamondGolemExpiresAtNanos == 0
-                || nowNanos >= diamondGolemExpiresAtNanos) {
+        if (this.diamondGolemExpiresAtNanos == 0L || nowNanos >= this.diamondGolemExpiresAtNanos) {
             return new DiamondGolem(0, 0);
         }
-        return new DiamondGolem(
-                diamondGolemArmorClass,
-                modifier(nowNanos, diamondGolemExpiresAtNanos, 1)
-                        .remainingSeconds());
+        return new DiamondGolem(CombatBuffLeases.value(this.diamondGolemArmorClass, 214, "AC"), BattleAbilityStatus.modifier(nowNanos, this.diamondGolemExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized Insight insight(long nowNanos) {
@@ -618,22 +531,20 @@ final class BattleAbilityStatus {
     }
 
     synchronized RoyalAura royalAura(long nowNanos) {
-        if (royalAuraExpiresAtNanos == 0 || nowNanos >= royalAuraExpiresAtNanos) {
+        if (CombatBuffLeases.loaded()) {
+            return this.sourceBuffLeases.royalAura(nowNanos);
+        }
+        if (this.royalAuraExpiresAtNanos == 0L || nowNanos >= this.royalAuraExpiresAtNanos) {
             return new RoyalAura(0, 0, 0, 0, 0, 0);
         }
-        return new RoyalAura(
-                royalAuraSkillId, royalAuraArmorClass,
-                royalAuraMeleeHit, royalAuraRangedHit,
-                royalAuraMagicResistance,
-                modifier(nowNanos, royalAuraExpiresAtNanos, 1).remainingSeconds());
+        return new RoyalAura(this.royalAuraSkillId, this.royalAuraArmorClass, this.royalAuraMeleeHit, this.royalAuraRangedHit, this.royalAuraMagicResistance, BattleAbilityStatus.modifier(nowNanos, this.royalAuraExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized BraveAura braveAura(long nowNanos) {
-        if (braveAuraExpiresAtNanos == 0 || nowNanos >= braveAuraExpiresAtNanos) {
+        if (this.braveAuraExpiresAtNanos == 0L || nowNanos >= this.braveAuraExpiresAtNanos) {
             return new BraveAura(0, 0);
         }
-        return new BraveAura(braveAuraMeleeDamage,
-                modifier(nowNanos, braveAuraExpiresAtNanos, 1).remainingSeconds());
+        return new BraveAura(CombatBuffLeases.value(this.braveAuraMeleeDamage, 117, "DMG"), BattleAbilityStatus.modifier(nowNanos, this.braveAuraExpiresAtNanos, 1).remainingSeconds());
     }
 
     synchronized MagicResistance magicResistance(long nowNanos) {
@@ -681,32 +592,30 @@ final class BattleAbilityStatus {
         return expiredSkillId;
     }
 
-    /** Removes only the named lease, matching L1PcInstance.removeSkillEffect. */
     synchronized boolean removeSkill(int skillId) {
-        if (skillId == shieldSkillId && shieldExpiresAtNanos != 0) {
-            shieldExpiresAtNanos = 0;
-            shieldSkillId = 0;
-            shieldModifier = 0;
-            return true;
+        if (skillId == this.shieldSkillId && this.shieldExpiresAtNanos != 0L) {
+            this.shieldExpiresAtNanos = 0L;
+            this.shieldSkillId = 0;
+            this.shieldModifier = 0;
+            return this.sourceBuffLeases.remove(true, skillId);
         }
-        if (skillId == strengthSkillId && strengthExpiresAtNanos != 0) {
-            strengthExpiresAtNanos = 0;
-            strengthSkillId = 0;
-            strengthModifier = 0;
-            return true;
+        if (skillId == this.strengthSkillId && this.strengthExpiresAtNanos != 0L) {
+            this.strengthExpiresAtNanos = 0L;
+            this.strengthSkillId = 0;
+            this.strengthModifier = 0;
+            return this.sourceBuffLeases.remove(true, skillId);
         }
-        if (skillId == dexteritySkillId && dexterityExpiresAtNanos != 0) {
-            dexterityExpiresAtNanos = 0;
-            dexteritySkillId = 0;
-            dexterityModifier = 0;
-            return true;
+        if (skillId == this.dexteritySkillId && this.dexterityExpiresAtNanos != 0L) {
+            this.dexterityExpiresAtNanos = 0L;
+            this.dexteritySkillId = 0;
+            this.dexterityModifier = 0;
+            return this.sourceBuffLeases.remove(true, skillId);
         }
-        if (skillId == BattleSpellCatalog.BERSERKERS
-                && berserkExpiresAtNanos != 0) {
-            clearBerserk();
-            return true;
+        if (skillId == 55 && this.berserkExpiresAtNanos != 0L) {
+            this.clearBerserk();
+            return this.sourceBuffLeases.remove(true, skillId);
         }
-        return false;
+        return this.sourceBuffLeases.remove(false, skillId);
     }
 
     synchronized boolean expireBerserk(long nowNanos) {
@@ -812,14 +721,22 @@ final class BattleAbilityStatus {
     }
 
     synchronized boolean expireMortalBody(long nowNanos) {
-        if (!expired(nowNanos, mortalBodyExpiresAtNanos)) return false;
-        mortalBodyExpiresAtNanos = 0;
+        if (!BattleAbilityStatus.expired(nowNanos, this.mortalBodyExpiresAtNanos)) {
+            return false;
+        }
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).mortalBodyExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
         return true;
     }
 
     synchronized boolean removeMortalBody() {
-        if (mortalBodyExpiresAtNanos == 0) return false;
-        mortalBodyExpiresAtNanos = 0;
+        if (this.mortalBodyExpiresAtNanos == 0L) {
+            return false;
+        }
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).mortalBodyExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
         return true;
     }
 
@@ -843,43 +760,49 @@ final class BattleAbilityStatus {
     }
 
     synchronized void clear() {
-        clearCancelable();
-        reductionArmorExpiresAtNanos = 0;
-        clearSolidCarriage();
-        clearUncannyDodge();
-        counterBarrierExpiresAtNanos = 0;
-        mortalBodyExpiresAtNanos = 0;
-        clearRoyalAura();
-        clearBraveAura();
-        clearMagicResistance();
+        this.clearCancelable();
+        this.reductionArmorExpiresAtNanos = 0L;
+        this.clearSolidCarriage();
+        this.clearUncannyDodge();
+        this.counterBarrierExpiresAtNanos = 0L;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).mortalBodyExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.clearRoyalAura();
+        this.clearBraveAura();
+        this.clearMagicResistance();
+        this.sourceBuffLeases.clear();
     }
 
     private void clearCancelable() {
-        shieldExpiresAtNanos = 0;
-        shieldSkillId = 0;
-        shieldModifier = 0;
-        strengthExpiresAtNanos = 0;
-        strengthSkillId = 0;
-        strengthModifier = 0;
-        dexterityExpiresAtNanos = 0;
-        dexteritySkillId = 0;
-        dexterityModifier = 0;
-        clearBerserk();
-        clearImmuneToHarm();
-        clearBounceAttack();
-        clearUncannyDodge();
-        clearMirrorImage();
-        clearIllusionOgre();
-        clearIllusionLich();
-        clearIllusionAvatar();
-        clearDiamondGolem();
-        clearInsight();
-        clearPanic();
-        clearDressEvasion();
-        mortalBodyExpiresAtNanos = 0;
-        clearRoyalAura();
-        clearBraveAura();
-        clearMagicResistance();
+        this.shieldExpiresAtNanos = 0L;
+        this.shieldSkillId = 0;
+        this.shieldModifier = 0;
+        this.strengthExpiresAtNanos = 0L;
+        this.strengthSkillId = 0;
+        this.strengthModifier = 0;
+        this.dexterityExpiresAtNanos = 0L;
+        this.dexteritySkillId = 0;
+        this.dexterityModifier = 0;
+        this.clearBerserk();
+        this.clearImmuneToHarm();
+        this.clearBounceAttack();
+        this.clearUncannyDodge();
+        this.clearMirrorImage();
+        this.clearIllusionOgre();
+        this.clearIllusionLich();
+        this.clearIllusionAvatar();
+        this.clearDiamondGolem();
+        this.clearInsight();
+        this.clearPanic();
+        this.clearDressEvasion();
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).mortalBodyExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.clearRoyalAura();
+        this.clearBraveAura();
+        this.clearMagicResistance();
+        this.sourceBuffLeases.cancel();
     }
 
     synchronized Cancellation cancelMagicEffects() {
@@ -908,15 +831,18 @@ final class BattleAbilityStatus {
     }
 
     private void clearBerserk() {
-        berserkExpiresAtNanos = 0;
-        berserkArmorClass = 0;
-        berserkMeleeHit = 0;
-        berserkMeleeDamage = 0;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).berserkExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.berserkArmorClass = 0;
+        this.berserkMeleeHit = 0;
+        this.berserkMeleeDamage = 0;
     }
 
     private void clearImmuneToHarm() {
-        immuneToHarmExpiresAtNanos = 0;
-        immuneToHarmDivisor = 0;
+        this.immuneToHarmExpiresAtNanos = 0L;
+        this.immuneToHarmDivisor = 0;
+        this.nativeSourceProc68IconLease = null;
     }
 
     private void clearBounceAttack() {
@@ -966,18 +892,24 @@ final class BattleAbilityStatus {
     }
 
     private void clearInsight() {
-        insightExpiresAtNanos = 0;
-        insightAbilityScoreModifier = 0;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).insightExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.insightAbilityScoreModifier = 0;
     }
 
     private void clearPanic() {
-        panicExpiresAtNanos = 0;
-        panicAbilityScoreModifier = 0;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).panicExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.panicAbilityScoreModifier = 0;
     }
 
     private void clearDressEvasion() {
-        dressEvasionExpiresAtNanos = 0;
-        dressEvasionRate = 0;
+        BattleAbilityStatus battleAbilityStatus;
+        (battleAbilityStatus = this).dressEvasionExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleAbilityStatus);
+        this.dressEvasionRate = 0;
     }
 
     private void clearRoyalAura() {
@@ -1032,5 +964,98 @@ final class BattleAbilityStatus {
                 / TimeUnit.SECONDS.toNanos(1);
         return new Modifier(amount,
                 (int) Math.min(0xFFFFL, Math.max(1L, remainingSeconds)));
+    }
+
+    record Modifier(int amount, int remainingSeconds) {
+    }
+
+    record ArmorProtection(int skillId, int armorClass, int remainingSeconds) {
+    }
+
+    record Berserk(int armorClass, int meleeHit, int meleeDamage, int remainingSeconds) {
+    }
+
+    record Protection(int divisor, int remainingSeconds) {
+        int applyTo(int damage) {
+            if (damage < 0) {
+                throw new IllegalArgumentException("negative combat damage");
+            }
+            return this.divisor == 0 ? damage : CombatRules.protectedDamage(damage);
+        }
+    }
+
+    record ReductionArmor(int remainingSeconds) {
+    }
+
+    record BounceAttack(int armorClass, int meleeHit, int weaponDamageChance, int remainingSeconds) {
+    }
+
+    record SolidCarriage(int evasionRate, int remainingSeconds) {
+    }
+
+    record DressEvasion(int evasionRate, int remainingSeconds) {
+    }
+
+    record UncannyDodge(int dodgeModifier, int remainingSeconds) {
+    }
+
+    record MirrorImage(int dodgeModifier, int remainingSeconds) {
+    }
+
+    record IllusionOgre(int meleeHit, int meleeDamage, int remainingSeconds) {
+    }
+
+    record IllusionLich(int spellPower, int remainingSeconds) {
+    }
+
+    record IllusionAvatar(int meleeDamage, int rangedDamage, int spellPower, double incomingDamageRate, int remainingSeconds) {
+        int applyIncomingDamage(int damage) {
+            if (damage < 0) {
+                throw new IllegalArgumentException("negative incoming damage");
+            }
+            return (int)((double)damage * CombatRules.avatarIncomingRate(this.incomingDamageRate, this.remainingSeconds()));
+        }
+
+        public double incomingDamageRate() {
+            return CombatRules.avatarIncomingRate(this.incomingDamageRate, this.remainingSeconds());
+        }
+    }
+
+    record DiamondGolem(int armorClass, int remainingSeconds) {
+    }
+
+    record Insight(int abilityScoreModifier, int remainingSeconds) {
+    }
+
+    record Panic(int abilityScoreModifier, int remainingSeconds) {
+    }
+
+    record CounterBarrier(int remainingSeconds) {
+    }
+
+    record MortalBody(int remainingSeconds) {
+    }
+
+    record RoyalAura(int skillId, int armorClass, int meleeHit, int rangedHit, int magicResistance, int remainingSeconds) {
+    }
+
+    record BraveAura(int meleeDamage, int remainingSeconds) {
+    }
+
+    record MagicResistance(int amount, int remainingSeconds) {
+    }
+
+    record Cancellation(int armorProtectionSkillId, int strengthSkillId, int dexteritySkillId, int royalAuraSkillId, int braveAuraSkillId, boolean magicResistance, boolean berserkers, boolean immuneToHarm, boolean bounceAttack, boolean uncannyDodge, boolean mirrorImage, boolean illusionOgre, boolean illusionLich, boolean illusionAvatar, boolean diamondGolem, boolean insight, boolean panic, boolean dressEvasion, boolean mortalBody) {
+        boolean shield() {
+            return armorProtectionSkillId != 0;
+        }
+
+        boolean strength() {
+            return strengthSkillId != 0;
+        }
+
+        boolean dexterity() {
+            return dexteritySkillId != 0;
+        }
     }
 }

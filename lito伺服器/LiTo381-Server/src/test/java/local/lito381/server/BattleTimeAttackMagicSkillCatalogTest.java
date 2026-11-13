@@ -3,6 +3,7 @@ package local.lito381.server;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -49,6 +50,157 @@ final class BattleTimeAttackMagicSkillCatalogTest {
                 ancient.targeting());
     }
 
+    /**
+     * T132 #1 (C11). 期望值出處：1-伺服器 L1SkillUse.java:334-344
+     * （EXCEPT_COUNTER_MAGIC 含 10026–10029）、:2767-2775（硬編碼＋DB 表合併）、
+     * :2868-2874（TYPE_ATTACK 在算傷害前先問 isUseCounterMagic）、
+     * :4243-4256（擋下後 removeSkillEffect(COUNTER_MAGIC)）；
+     * DB 表內容 db/380_db.sql:49020-49030。
+     */
+    @Test
+    void counterMagicAbsorbsNpcAttackSkillsExceptRetainedExceptionList() {
+        // db/380_db.sql:49020-49030 skills_魔屏無效技能
+        assertEquals(java.util.Set.of(44, 87, 112, 132, 153, 161, 173, 174, 187, 188, 192),
+                BattleTimeAttackMagicSkillCatalog.COUNTER_MAGIC_DB_EXCEPTIONS);
+        // L1SkillUse.java:343-344：安息 10026–10029 不可被反制魔法擋
+        java.util.Set<Integer> rest = java.util.Set.of(10027, 10028, 10029);
+        assertEquals(18, BattleTimeAttackMagicSkillCatalog.magicDefinitions().size());
+        for (BattleTimeAttackMagicSkillCatalog.Definition row
+                : BattleTimeAttackMagicSkillCatalog.magicDefinitions()) {
+            assertEquals(!rest.contains(row.skillId()), row.counterMagicBlockable(),
+                    "npc " + row.npcId() + " act " + row.actNo() + " skill " + row.skillId());
+        }
+        assertFalse(BattleTimeAttackMagicSkillCatalog.counterMagicBlocks(10026));
+        // DB 外控表的技能即使不在硬編碼表也不擋（:2773-2775），例如 174、192
+        assertTrue(SourceSkillTargeting.counterMagicApplies(174));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.counterMagicBlocks(174));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.counterMagicBlocks(192));
+
+        long now = 1_000L;
+        BattleTimeAttackMagicSkillCatalog.Definition antharasBreath =
+                BattleTimeAttackMagicSkillCatalog.magicForNpcDefinitions(45682).get(0);
+        BattleTimeAttackMagicSkillCatalog.Definition antharasRest =
+                BattleTimeAttackMagicSkillCatalog.magicForNpcDefinitions(45682).get(1);
+        assertEquals(31001, antharasBreath.skillId());
+        assertEquals(10027, antharasRest.skillId());
+
+        // 例外技能：不擋，也不消耗狀態（_isCounterMagic=false，:4245 不成立）
+        BattleTimedStatus status = new BattleTimedStatus();
+        status.activateCounterMagic(now, 16);
+        assertFalse(BattleTimeAttackMagicSkillCatalog.absorbedByCounterMagic(
+                antharasRest, status, now + 1));
+        assertTrue(status.counterMagicActive(now + 1));
+
+        // 可擋技能：擋一次並消耗（:4246），第二次不再擋
+        assertTrue(BattleTimeAttackMagicSkillCatalog.absorbedByCounterMagic(
+                antharasBreath, status, now + 2));
+        assertFalse(status.counterMagicActive(now + 3));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.absorbedByCounterMagic(
+                antharasBreath, status, now + 3));
+
+        // 沒有反制魔法狀態：不擋
+        assertFalse(BattleTimeAttackMagicSkillCatalog.absorbedByCounterMagic(
+                antharasBreath, new BattleTimedStatus(), now));
+    }
+
+    /**
+     * T132 #2. 期望值出處：1-伺服器 L1SkillUse.java:3037-3041
+     * （10026–10029 每個目標 broadcastPacketX8(new S_NpcChat(_npc, "$3717"))）、
+     * S_NpcChat.java:21-25（color 0、npc id、nameId + ": " + chat）、
+     * L1NpcInstance.java:4138-4140（X8＝8 格）、npc nameid db/380_db.sql:35553-35555。
+     * LiTo.bin 的對應封包是 S_SAY_CODE 0x2D（Protocol.java sayCode，receiver sub_4A3140）。
+     */
+    @Test
+    void restSkillsShoutMessage3717ThroughNativeNpcSpeechPacket() {
+        for (BattleTimeAttackMagicSkillCatalog.Definition row
+                : BattleTimeAttackMagicSkillCatalog.magicDefinitions()) {
+            boolean rest = row.skillId() == 10027 || row.skillId() == 10028
+                    || row.skillId() == 10029;
+            assertEquals(rest, row.restShout(), "skill " + row.skillId());
+        }
+        assertTrue(BattleTimeAttackMagicSkillCatalog.restShout(10026));
+        assertEquals("$3717", BattleTimeAttackMagicSkillCatalog.REST_SHOUT_MESSAGE);
+        assertEquals("$1116: $3717",
+                BattleTimeAttackMagicSkillCatalog.restShoutText("$1116"));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.restShoutText(" "));
+
+        assertEquals(0x2D, Protocol.S_SAY_CODE);
+        org.junit.jupiter.api.Assertions.assertArrayEquals(
+                new Protocol.Writer().c(0x2D).c(0).d(0x6D00_0001L)
+                        .s("$1426: $3717").h(32700).h(32800).bytes(),
+                Protocol.sayCode(0, 0x6D00_0001L,
+                        BattleTimeAttackMagicSkillCatalog.restShoutText("$1426"),
+                        32700, 32800));
+
+        assertEquals(8, BattleTimeAttackMagicSkillCatalog.REST_SHOUT_RADIUS);
+        assertTrue(BattleTimeAttackMagicSkillCatalog.restShoutReaches(100, 100, 108, 92));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.restShoutReaches(100, 100, 109, 100));
+    }
+
+    /**
+     * T132 #3 (C9). 期望值出處：1-伺服器 db/380_db.sql 的 mobskill.ChangeTarget 欄
+     * （:34616、:34617、:34613、:34625、:34618、:34911、:35106、:35107 為 3，其餘 0）、
+     * L1MobSkill.java:27（CHANGE_TARGET_RANDOM=3）、
+     * L1MobSkillUse.java:831-833（nextInt(size*100)/100）。
+     */
+    @Test
+    void changeTargetRandomRowsAndIndexMatchRetainedMobskill() {
+        assertEquals(3, BattleTimeAttackMagicSkillCatalog.CHANGE_TARGET_RANDOM);
+        java.util.Map<Integer, java.util.Set<Integer>> expected = java.util.Map.of(
+                45682, java.util.Set.of(4, 5, 6),
+                45683, java.util.Set.of(3, 4),
+                45684, java.util.Set.of(4, 5, 6));
+        int changeRows = 0;
+        for (int npcId : new int[] {45278, 45584, 45601, 45610, 45650,
+                45682, 45683, 45684, 45812}) {
+            for (BattleTimeAttackMagicSkillCatalog.MobskillRow row
+                    : BattleTimeAttackMagicSkillCatalog.rowsForNpc(npcId)) {
+                boolean random = expected.getOrDefault(npcId, java.util.Set.of())
+                        .contains(row.actNo());
+                assertEquals(random ? 3 : 0, row.changeTarget(),
+                        "npc " + npcId + " act " + row.actNo());
+                if (random) changeRows++;
+            }
+        }
+        assertEquals(8, changeRows);
+
+        assertEquals(0, BattleTimeAttackMagicSkillCatalog.changeTargetIndex(1, 0));
+        assertEquals(0, BattleTimeAttackMagicSkillCatalog.changeTargetIndex(1, 99));
+        assertEquals(0, BattleTimeAttackMagicSkillCatalog.changeTargetIndex(3, 99));
+        assertEquals(1, BattleTimeAttackMagicSkillCatalog.changeTargetIndex(3, 100));
+        assertEquals(2, BattleTimeAttackMagicSkillCatalog.changeTargetIndex(3, 299));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.changeTargetIndex(3, 300));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.changeTargetIndex(0, 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.changeTargetIndex(2, -1));
+    }
+
+    @Test
+    void attackPositionCoinMatchesRetainedL1NpcInstanceAttack() {
+        // 1-伺服器 L1NpcInstance.java:894-897: nextInt(2) >= 1 -> ordinary attack.
+        assertTrue(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(1, 1));
+        assertTrue(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(0, 1));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(1, 0));
+        // Not an adjacent attack position: the mobskill roll always runs.
+        assertFalse(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(2, 1));
+        assertFalse(BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(8, 1));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(1, 2));
+        assertThrows(IllegalArgumentException.class,
+                () -> BattleTimeAttackMagicSkillCatalog.ordinaryAttackBranch(-1, 0));
+        // Roll 100 used by the coin never passes any strict TriRnd row.
+        for (int npcId : new int[] {45278, 45584, 45601, 45610, 45650,
+                45682, 45683, 45684, 45812}) {
+            for (BattleTimeAttackMagicSkillCatalog.MobskillRow row
+                    : BattleTimeAttackMagicSkillCatalog.rowsForNpc(npcId)) {
+                assertFalse(row.triggerRoll(100), npcId + "/" + row.actNo());
+            }
+        }
+    }
+
     @Test
     void selectedPhysicalRowsAndStrictTriRndBoundaryRemainExact() {
         BattleTimeAttackMagicSkillCatalog.PhysicalDefinition ogre =
@@ -62,7 +214,9 @@ final class BattleTimeAttackMagicSkillCatalogTest {
         assertEquals(-2, ogre.triggerRange());
         assertEquals(2, ogre.attackRange());
         assertEquals(20, ogre.leverage());
-        assertEquals(0, ogre.actionOverride());
+        // 1-伺服器 db/380_db.sql:34296 ActId=30; L1MobSkillUse.java:660-661.
+        assertEquals(30, ogre.actionOverride());
+        assertEquals(30, ogre.effectiveActionId());
         assertEquals(1, ogre.areaWidth());
         assertEquals(2, ogre.areaHeight());
         assertTrue(ogre.areaAttack());

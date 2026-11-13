@@ -1,0 +1,10 @@
+[
+  {
+    "id": "T103b",
+    "title": "T103b: 積分／斷線數／月計持久化到 character_lito（T100 D3 決定 B）",
+    "stage": "code",
+    "priority": "medium",
+    "text": "依 docs/design/gameplay.md §7 D3（決定 B）：在各來源庫 character_lito 加 ranking_points、disconnects、monthly_period、monthly_ranking_points、monthly_wins、monthly_losses 欄位，重啟後不再歸零。範圍：(1) db/ 下新增可重跑的遷移 SQL（比照 db/lito_battle_settlement.sql 的 information_schema 檢查＋PREPARE 寫法，每來源各跑一次，由 SQL 管理者執行；AI 不得對正式 3306 執行）；(2) SettlementSql.drain 在同一個 MyISAM 列 UPDATE（與 last_result_id 同列，維持冪等）中依收據的 won／disconnected 與 battle.reward.win/loss 計算積分增量、斷線數與月計（台北 05:00 日界、跨月歸零），積分最低 0；(3) 收據表 lito_battle_settlement 是否要凍結 point_delta（避免重送時設定已改導致分數不同）先在設計段寫明；(4) SharedDatabase.Route.profile、SettlementSql.current、SharedDatabase 另一條 character_lito 寫入路徑（約 :140-156 的 replacement commit）一併讀寫新欄位；DurableBattleSettlement.record 的 baseline 也要扣掉本場積分增量；(5) SettlementSql.check 在欄位缺少時要給明確錯誤或降級策略（設計決定）。驗收：單元測試涵蓋增量計算、跨月歸零、斷線扣分下限 0、重送不重複加分；mvn -B test Failures 0 Errors 0；真 MySQL 測試（*RealMysqlTest）與正式庫遷移列入待驗證交給 Codex。",
+    "depends_on": []
+  }
+]

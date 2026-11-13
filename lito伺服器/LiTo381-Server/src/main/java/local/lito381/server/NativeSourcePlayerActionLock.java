@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -9,6 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 import local.lito381.server.ClientSession;
 import local.lito381.server.NativePlayerActionScope;
+import local.lito381.server.NativeSourcePairAdmission;
+import local.lito381.server.NativeSourceSelfFinalFrame;
 
 public final class NativeSourcePlayerActionLock {
     private static final Object IDENTITY_HASH_TIE_LOCK = new Object();
@@ -21,7 +23,7 @@ public final class NativeSourcePlayerActionLock {
         ReentrantLock reentrantLock = NativeSourcePlayerActionLock.actionLock(clientSession);
         reentrantLock.lock();
         try {
-            runnable.run();
+            NativeSourceSelfFinalFrame.run(runnable, clientSession);
         }
         finally {
             reentrantLock.unlock();
@@ -57,6 +59,10 @@ public final class NativeSourcePlayerActionLock {
         Objects.requireNonNull(runnable, "action");
         if (clientSession == null || clientSession2 == null) {
             throw new NullPointerException("\u73a9\u5bb6\u4e0d\u80fd\u70ba\u7a7a");
+        }
+        if (NativeSourcePairAdmission.both(clientSession, clientSession2)) {
+            runnable.run();
+            return;
         }
         if (clientSession == clientSession2) {
             NativeSourcePlayerActionLock.run(clientSession, runnable);

@@ -19,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class NativeLitoRentalTeleportEndpointCatalogTest {
     @TempDir Path temporary;
 
@@ -109,6 +111,10 @@ final class NativeLitoRentalTeleportEndpointCatalogTest {
                     receive(client, receiver));
             assertTrue((boolean) field(session, "rentalTownTransferPending"));
 
+            // Issue #368: the town scene is Phase.BATTLE, and a transfer the server
+            // itself staged passes quitFight()'s BATTLE guard, so C_D9 runs the
+            // configured-endpoint rental handoff instead of an empty withdrawal.
+            assertEquals("BATTLE", field(session, "phase").toString());
             invoke(session, "quitFight", new Class<?>[0]);
             assertArrayEquals(new Protocol.Writer()
                             .c(Protocol.S_LITO_QUIT_FIGHT).c(0).bytes(),

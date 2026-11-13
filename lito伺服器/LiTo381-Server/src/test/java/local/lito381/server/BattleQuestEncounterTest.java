@@ -162,7 +162,8 @@ final class BattleQuestEncounterTest {
         assertEquals(0, physical.actNo());
         assertEquals(2, physical.attackRange());
         assertEquals(20, physical.leverage());
-        assertEquals(BattleActionCodes.ATTACK, physical.effectiveActionId());
+        // 1-伺服器 mobskill ActId=30 is passed to L1AttackNpc.setActId.
+        assertEquals(30, physical.effectiveActionId());
         assertEquals(1, physical.areaWidth());
         assertEquals(2, physical.areaHeight());
         assertTrue(physical.areaContains(
@@ -202,6 +203,40 @@ final class BattleQuestEncounterTest {
         assertEquals(BattleTimeAttackMagicSkillCatalog.Targeting.CASTER_RADIUS,
                 earthquake.magicSkill().targeting());
         assertEquals(245, earthquake.actor().currentMp());
+    }
+
+    @Test
+    void questDeathKnightEarthquakeReuseDelayIsCasterWideLikeRetainedL1SkillDelay() {
+        // 1-伺服器 skills(10056).reuseDelay=3000 (db/380_db.sql:48301) is
+        // reserved on the caster (L1SkillUse.java:2675-2676) and rejects every
+        // later L1SkillUse cast by that NPC (:2642/:2658), including skill28.
+        BattleQuestEncounter encounter = encounterAtRoom(4);
+        BattleQuestEncounter.Snapshot deathKnight = actor(encounter, 45601);
+
+        BattleQuestEncounter.AiAttack earthquake = encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 6,
+                deathKnight.y(), 0, 1, 0);
+        assertNotNull(earthquake);
+        assertEquals(10056, earthquake.magicSkill().skillId());
+
+        long blocked = TimeUnit.MILLISECONDS.toNanos(2_000);
+        assertNull(encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 3,
+                deathKnight.y(), blocked, 0, 0));
+        // The actor itself is ready again: a non-L1SkillUse summon row fires.
+        BattleQuestEncounter.AiAttack summon = encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 3,
+                deathKnight.y(), blocked, 2, 0);
+        assertNotNull(summon);
+        assertTrue(summon.summon());
+
+        long released = TimeUnit.MILLISECONDS.toNanos(3_500);
+        BattleQuestEncounter.AiAttack vampire = encounter.aiAttackForActNoFixture(
+                deathKnight.objectId(), deathKnight.x() + 3,
+                deathKnight.y(), released, 0, 0);
+        assertNotNull(vampire);
+        assertTrue(vampire.magic());
+        assertEquals(28, vampire.magicSkill().skillId());
     }
 
     @Test
@@ -873,6 +908,65 @@ final class BattleQuestEncounterTest {
                 .stream().map(BattleQuestEncounter.Snapshot::objectId).toList());
         assertTrue(encounter.expireEarthBinds(expiry).isEmpty());
         assertFalse(encounter.damage(monster.objectId(), 0, 1).damage().diedNow());
+    }
+
+    /**
+     * Issue #384（#338 Z7）：1-伺服器 L1AttackPc.java:421,1096 與 L1MagicPc.java:945 的
+     * dmg0(_targetNpc) 對凍結中的 NPC 物理／魔法傷害為 0。LiTo 的物理與魔法都經
+     * encounter.damage 扣血；造成冰凍的那一擊在 ClientSession 是先扣血、再寫凍結。
+     */
+    @Test
+    void frozenQuestMonsterTakesNoDamageUntilThawAndTheFreezingHitStillCounts() {
+        BattleQuestEncounter encounter = new BattleQuestEncounter();
+        encounter.reset(rules(), ArenaMapCatalog.forMap(554));
+        BattleQuestEncounter.Snapshot monster = encounter.snapshots(0).get(0);
+        long start = System.nanoTime();
+        long expiry = start + TimeUnit.SECONDS.toNanos(16);
+
+        BattleQuestEncounter.Hit freezingHit =
+                encounter.damage(monster.objectId(), 0, 3);
+        assertEquals(monster.maxHp() - 3, freezingHit.damage().after().hp());
+        assertTrue(encounter.freeze(monster.objectId(), 0, start, 16));
+
+        assertNull(encounter.damage(monster.objectId(), 0, 1).damage());
+        assertNull(encounter.damage(
+                monster.objectId(), 0, monster.maxHp()).damage());
+        assertEquals(monster.maxHp() - 3,
+                encounter.find(monster.objectId()).hp());
+        assertTrue(encounter.freezeActive(monster.objectId(), start + 1));
+
+        assertEquals(List.of(monster.objectId()), encounter.expireFreezes(expiry)
+                .stream().map(BattleQuestEncounter.Snapshot::objectId).toList());
+        assertEquals(monster.maxHp() - 4, encounter.damage(
+                monster.objectId(), 0, 1).damage().after().hp());
+
+        assertTrue(encounter.freeze(
+                monster.objectId(), 0, System.nanoTime(), 16));
+        assertNull(encounter.damage(monster.objectId(), 0, 1).damage());
+        assertTrue(encounter.cancelFreeze(monster.objectId()));
+        assertEquals(monster.maxHp() - 5, encounter.damage(
+                monster.objectId(), 0, 1).damage().after().hp());
+    }
+
+    /** 1-伺服器 L1DamagePoison.poisonTickCurrent 直接 receiveDamage，不經 dmg0。 */
+    @Test
+    void damagePoisonStillTicksOnFrozenQuestMonster() {
+        BattleQuestEncounter encounter = new BattleQuestEncounter();
+        encounter.reset(rules(), ArenaMapCatalog.forMap(554));
+        BattleQuestEncounter.Snapshot monster = encounter.snapshots(0).get(0);
+        long start = System.nanoTime();
+
+        assertTrue(encounter.poison(monster.objectId(), 0, 15L,
+                start, 30, 3_000));
+        assertTrue(encounter.freeze(monster.objectId(), 0, start + 1, 16));
+        assertNull(encounter.damage(monster.objectId(), 0, 1).damage());
+
+        List<BattleQuestEncounter.PoisonUpdate> tick = encounter.pollPoisons(
+                start + TimeUnit.SECONDS.toNanos(3), 3_000, 5);
+        assertEquals(1, tick.size());
+        assertEquals(1, tick.get(0).hits().size());
+        assertEquals(monster.maxHp() - 5,
+                tick.get(0).hits().get(0).damage().after().hp());
     }
 
     @Test

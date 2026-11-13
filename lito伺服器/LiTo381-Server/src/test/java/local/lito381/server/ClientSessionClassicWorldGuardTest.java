@@ -21,6 +21,8 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionClassicWorldGuardTest {
     private static final int[] DX = {0, 1, 1, 1, 0, -1, -1, -1};
     private static final int[] DY = {-1, -1, 0, 1, 1, 1, 0, -1};

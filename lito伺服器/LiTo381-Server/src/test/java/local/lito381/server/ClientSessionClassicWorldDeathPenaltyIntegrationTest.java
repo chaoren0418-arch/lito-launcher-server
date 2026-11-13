@@ -21,13 +21,28 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Encrypted S_ACTION/S_EXP proof for retained ordinary-WORLD death loss. */
+/**
+ * Encrypted S_ACTION proof for ordinary-WORLD death, war and kill-feed handling.
+ *
+ * <p>#138 B-land (test outdated, candidate == official): both {@code reference/base-0.6.71.jar}
+ * and candidate 50635f7e replace the {@code applyClassicWorldDeathExperiencePenalty(J)V} call in
+ * both world death tails ({@code sourcePlayerWorldCommit} and
+ * {@code sourcePlayerLegacyWorldDirectDamage}) with {@code POP2; POP}
+ * ({@code tools/resource-database/DeathPenaltyPatch.java}, hook {@code lito-no-death-penalties}:
+ * "LiTo death never enters the source item/skill/experience penalty dispatcher"). The old
+ * src/main still called it, so these tests used to assert item/skill/EXP loss and death-safe
+ * consumption; they now pin the official behaviour: death action, war/siege/kill-feed/PK
+ * handling unchanged, and no item, skill or experience penalty, no death-safe debit/notice.
+ */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
     private static final long SOURCE_EXP = 244_276;
+    /** The old src/main level-22 penalty result; 0.6.71 must never publish or store it. */
     private static final long EXPECTED_EXP = SOURCE_EXP - 4_558;
     @TempDir Path temporary;
 
-    @Test void fatalNpcDamageEmitsDeathBeforeExpAndPersistsOverlay()
+    @Test void fatalNpcDamageEmitsDeathWithoutExperienceLossLikeOfficial071()
             throws Exception {
         Path stateFile = temporary.resolve("death-exp.properties");
         try (Fixture fixture = fixture(stateFile, 4, 33313, 32339)) {
@@ -35,17 +50,16 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             List<byte[]> packets = fixture.packets();
             byte[] death = Protocol.objectAction(
                     fixture.session.playerObjectId(), BattleActionCodes.DIE);
-            byte[] experience = Protocol.experience(22, EXPECTED_EXP);
-            int deathIndex = indexOf(packets, death);
-            int experienceIndex = indexOf(packets, experience);
-            assertTrue(deathIndex >= 0 && experienceIndex > deathIndex,
+            assertTrue(indexOf(packets, death) >= 0,
+                    () -> packets.stream().map(Protocol::hex).toList().toString());
+            assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)),
                     () -> packets.stream().map(Protocol::hex).toList().toString());
             assertEquals(0, intField(fixture.session, "playerHp"));
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(fixture.session, "playerClassicExperience"));
             assertEquals(22, intField(fixture.session, "playerClassicLevel"));
             GameStateStore reloaded = new GameStateStore(stateFile, true);
-            assertEquals(EXPECTED_EXP, reloaded.reconcileClassicExperience(
+            assertEquals(SOURCE_EXP, reloaded.reconcileClassicExperience(
                     fixture.session.sourceCharacterIdentity(), SOURCE_EXP, 22)
                     .effectiveExperience());
         }
@@ -61,28 +75,27 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
                 "death-exp-combat.properties", 34053, 32230);
     }
 
-    @Test void consumableExperienceDeathSafeIsDebitedAndPreventsLoss()
+    @Test void consumableExperienceDeathSafeIsNotDebitedBecauseNoPenaltyRuns()
             throws Exception {
         Path stateFile = temporary.resolve("death-exp-consumable-safe.properties");
         try (Fixture fixture = fixture(stateFile, 4, 33313, 32339,
                 Map.of(InventoryCatalog.DEATH_SAFE_EXPERIENCE, 1))) {
             fixture.damage(50, 0x6500_1234L);
             List<byte[]> packets = fixture.packets();
+            assertTrue(indexOf(packets, Protocol.objectAction(
+                    fixture.session.playerObjectId(), BattleActionCodes.DIE)) >= 0);
             assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)));
-            assertTrue(indexOf(packets, Protocol.messageCode(
-                    166, "已消耗一個死亡保護道具")) >= 0);
+            assertEquals(-1, indexOf(packets, Protocol.messageCode(
+                    166, "已消耗一個死亡保護道具")));
             RuntimeInventory after = (RuntimeInventory) field(fixture.session, "inventory");
-            assertEquals(0, after.countCatalog(
+            assertEquals(1, after.countCatalog(
                     InventoryCatalog.DEATH_SAFE_EXPERIENCE));
             assertEquals(SOURCE_EXP,
                     longField(fixture.session, "playerClassicExperience"));
-            assertEquals(0, new GameStateStore(stateFile, true).economy(
-                    fixture.session.sourceCharacterIdentity()).inventory()
-                    .getOrDefault(InventoryCatalog.DEATH_SAFE_EXPERIENCE, 0));
         }
     }
 
-    @Test void nonConsumableAllDeathSafePreventsLossWithoutDebit()
+    @Test void nonConsumableAllDeathSafeStaysSilentBecauseNoPenaltyRuns()
             throws Exception {
         try (Fixture fixture = fixture(
                 temporary.resolve("death-exp-nonconsume-safe.properties"),
@@ -90,19 +103,19 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
                 Map.of(InventoryCatalog.DEATH_SAFE_ALL, 1))) {
             fixture.damage(50, 0x6500_1234L);
             List<byte[]> packets = fixture.packets();
+            assertTrue(indexOf(packets, Protocol.objectAction(
+                    fixture.session.playerObjectId(), BattleActionCodes.DIE)) >= 0);
             assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)));
-            assertTrue(indexOf(packets, Protocol.messageCode(
-                    166, "死亡保護道具發揮了作用")) >= 0);
+            assertEquals(0, countOf(packets, Protocol.messageCode(
+                    166, "死亡保護道具發揮了作用")));
             RuntimeInventory after = (RuntimeInventory) field(fixture.session, "inventory");
             assertEquals(1, after.countCatalog(InventoryCatalog.DEATH_SAFE_ALL));
             assertEquals(SOURCE_EXP,
                     longField(fixture.session, "playerClassicExperience"));
-            assertEquals(1, countOf(packets, Protocol.messageCode(
-                    166, "死亡保護道具發揮了作用")));
         }
     }
 
-    @Test void negativeLawfulDeathRemovesSkillBeforeExperienceAndPersistsMask()
+    @Test void negativeLawfulDeathKeepsSkillsAndPersistsNoLostSkillMask()
             throws Exception {
         Path stateFile = temporary.resolve("death-skill.properties");
         try (Fixture fixture = fixture(stateFile, 4, 33313, 32339)) {
@@ -113,17 +126,18 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             setInt(fixture.session, "classicDeathSkillSelectorOverride", 0);
             fixture.damage(50, 0x6500_1234L);
             List<byte[]> packets = fixture.packets();
-            int removed = indexOf(packets, Protocol.removeSpells(Set.of(1)));
-            int experience = indexOf(packets, Protocol.experience(22, EXPECTED_EXP));
-            assertTrue(removed >= 0 && experience > removed,
+            assertTrue(indexOf(packets, Protocol.objectAction(
+                    fixture.session.playerObjectId(), BattleActionCodes.DIE)) >= 0,
                     () -> packets.stream().map(Protocol::hex).toList().toString());
-            assertEquals(Set.of(), field(fixture.session, "learnedSkills"));
-            assertEquals(Set.of(1), new GameStateStore(stateFile, true)
+            assertEquals(-1, indexOf(packets, Protocol.removeSpells(Set.of(1))));
+            assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)));
+            assertEquals(Set.of(1), field(fixture.session, "learnedSkills"));
+            assertEquals(Set.of(), new GameStateStore(stateFile, true)
                     .deathLostSkills(fixture.session.sourceCharacterIdentity()));
         }
     }
 
-    @Test void negativeLawfulDeathDropsWholeItemBeforeExperienceAndGroundIsPickable()
+    @Test void negativeLawfulDeathKeepsWholeItemAndPublishesNoGround()
             throws Exception {
         Path stateFile = temporary.resolve("death-item.properties");
         try (Fixture fixture = fixture(stateFile, 4, 33313, 32339,
@@ -134,34 +148,18 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             setInt(fixture.session, "classicDeathItemSelectorOverride", 0);
             fixture.damage(50, 0x6500_1234L);
             List<byte[]> packets = fixture.packets();
-            List<ClassicWorldGroundItems.Item> grounds =
-                    fixture.hub.classicWorldGroundItemsInScreen(
-                            4, -1, 33313, 32339);
-            assertEquals(1, grounds.size());
-            ClassicWorldGroundItems.Item ground = grounds.get(0);
-            assertEquals(InventoryCatalog.LIQUOR,
-                    ground.definition().catalogId());
-            assertEquals(2, ground.quantity());
-            assertTrue(!ground.state().sourceBound());
-            int death = indexOf(packets, Protocol.objectAction(
-                    fixture.session.playerObjectId(), BattleActionCodes.DIE));
-            int put = indexOf(packets, Protocol.groundItem(
-                    ground.objectId(), ground.x(), ground.y(),
-                    ground.definition().groundGfx(), ground.quantity(),
-                    ground.displayName()));
-            int experience = indexOf(packets, Protocol.experience(22, EXPECTED_EXP));
-            assertTrue(death >= 0 && put > death && experience > put,
+            assertTrue(indexOf(packets, Protocol.objectAction(
+                    fixture.session.playerObjectId(), BattleActionCodes.DIE)) >= 0,
                     () -> packets.stream().map(Protocol::hex).toList().toString());
+            assertTrue(fixture.hub.classicWorldGroundItemsInScreen(
+                    4, -1, 33313, 32339).isEmpty());
+            assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)));
             RuntimeInventory after = (RuntimeInventory) field(fixture.session, "inventory");
-            assertEquals(0, after.countCatalog(InventoryCatalog.LIQUOR));
-            assertEquals(InventoryCatalog.LIQUOR,
-                    fixture.hub.takeClassicWorldGroundItem(
-                            4, -1, ground.objectId(), 2).taken()
-                            .definition().catalogId());
+            assertEquals(2, after.countCatalog(InventoryCatalog.LIQUOR));
         }
     }
 
-    @Test void itemDeathSafeConsumesOneSlotThenExperienceStillApplies()
+    @Test void itemDeathSafeIsNotConsumedAndItemsStayBecauseNoPenaltyRuns()
             throws Exception {
         try (Fixture fixture = fixture(
                 temporary.resolve("death-item-safe.properties"),
@@ -175,10 +173,12 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             List<byte[]> packets = fixture.packets();
             assertTrue(fixture.hub.classicWorldGroundItemsInScreen(
                     4, -1, 33313, 32339).isEmpty());
-            assertTrue(indexOf(packets, Protocol.experience(22, EXPECTED_EXP)) >= 0);
+            assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)));
             RuntimeInventory after = (RuntimeInventory) field(fixture.session, "inventory");
-            assertEquals(0, after.countCatalog(InventoryCatalog.DEATH_SAFE_ITEM));
+            assertEquals(1, after.countCatalog(InventoryCatalog.DEATH_SAFE_ITEM));
             assertEquals(2, after.countCatalog(InventoryCatalog.LIQUOR));
+            assertEquals(SOURCE_EXP,
+                    longField(fixture.session, "playerClassicExperience"));
         }
     }
 
@@ -200,7 +200,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void selectedSettingFourItemVanishesInsteadOfPublishingGround()
+    @Test void selectedSettingFourItemIsKeptBecauseNoPenaltyRuns()
             throws Exception {
         try (Fixture fixture = fixture(
                 temporary.resolve("death-item-vanish.properties"),
@@ -221,9 +221,9 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             List<byte[]> packets = fixture.packets();
             assertTrue(fixture.hub.classicWorldGroundItemsInScreen(
                     4, -1, 33313, 32339).isEmpty());
-            assertEquals(0, ((RuntimeInventory) field(fixture.session, "inventory"))
+            assertEquals(1, ((RuntimeInventory) field(fixture.session, "inventory"))
                     .countCatalog(300087));
-            assertTrue(indexOf(packets, Protocol.messageCode(638, "一星珠")) >= 0);
+            assertEquals(-1, indexOf(packets, Protocol.messageCode(638, "一星珠")));
         }
     }
 
@@ -251,7 +251,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void skillDeathSafeConsumesBeforeSkillSlotButDoesNotProtectExperience()
+    @Test void skillDeathSafeIsNotConsumedAndExperienceStaysBecauseNoPenaltyRuns()
             throws Exception {
         try (Fixture fixture = fixture(
                 temporary.resolve("death-skill-safe.properties"),
@@ -264,10 +264,12 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             fixture.damage(50, 0x6500_1234L);
             List<byte[]> packets = fixture.packets();
             assertEquals(-1, indexOf(packets, Protocol.removeSpells(Set.of(1))));
-            assertTrue(indexOf(packets, Protocol.experience(22, EXPECTED_EXP)) >= 0);
+            assertEquals(-1, indexOf(packets, Protocol.experience(22, EXPECTED_EXP)));
             assertEquals(Set.of(1), field(fixture.session, "learnedSkills"));
             RuntimeInventory after = (RuntimeInventory) field(fixture.session, "inventory");
-            assertEquals(0, after.countCatalog(InventoryCatalog.DEATH_SAFE_SKILL));
+            assertEquals(1, after.countCatalog(InventoryCatalog.DEATH_SAFE_SKILL));
+            assertEquals(SOURCE_EXP,
+                    longField(fixture.session, "playerClassicExperience"));
         }
     }
 
@@ -353,7 +355,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void encounterGapNineStillAppliesExperienceAndGeneralPk()
+    @Test void encounterGapNineKeepsExperienceButStillRecordsGeneralPk()
             throws Exception {
         long sourceExperience = ClassicExperienceCatalog.minimumExperienceForLevel(20)
                 + 1_000;
@@ -369,14 +371,14 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             victim.playerDamage(50, attacker.session);
             victim.packets();
 
-            assertEquals(sourceExperience - ClassicExperienceCatalog.deathPenalty(20),
+            assertEquals(sourceExperience,
                     longField(victim.session, "playerClassicExperience"));
             assertEquals(1, intField(attacker.session, "generalPkCount"));
             assertTrue(intField(attacker.session, "playerLawful") < 0);
         }
     }
 
-    @Test void activeCastleWarKeepsDeathPenaltyButSuppressesPkAndPink()
+    @Test void activeCastleWarSuppressesPkAndPinkAndAppliesNoDeathPenalty()
             throws Exception {
         try (Fixture victim = fixture(
                 temporary.resolve("death-active-castle-war.properties"),
@@ -396,7 +398,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             victim.playerDamage(50, attacker.session);
             victim.packets();
 
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(victim.session, "playerClassicExperience"));
             assertEquals(0, intField(attacker.session, "generalPkCount"));
             assertEquals(0, intField(attacker.session, "playerLawful"));
@@ -407,7 +409,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void inactiveCastleAreaKeepsDeathPenaltyAndPinkButSuppressesPk()
+    @Test void inactiveCastleAreaKeepsPinkButSuppressesPkAndAppliesNoDeathPenalty()
             throws Exception {
         try (Fixture victim = fixture(
                 temporary.resolve("death-inactive-castle-area.properties"),
@@ -421,7 +423,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             victim.playerDamage(50, attacker.session);
             victim.packets();
 
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(victim.session, "playerClassicExperience"));
             assertEquals(0, intField(attacker.session, "generalPkCount"));
             assertEquals(0, intField(attacker.session, "playerLawful"));
@@ -430,7 +432,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void clanWarKeepsDeathPenaltyAndPinkButSuppressesGeneralPk()
+    @Test void clanWarKeepsPinkButSuppressesGeneralPkAndAppliesNoDeathPenalty()
             throws Exception {
         try (Fixture victim = fixture(
                 temporary.resolve("death-clan-war.properties"),
@@ -465,7 +467,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             victim.playerDamage(50, attacker.session);
             victim.packets();
 
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(victim.session, "playerClassicExperience"));
             assertEquals(0, intField(attacker.session, "generalPkCount"));
             assertEquals(0, intField(attacker.session, "playerLawful"));
@@ -477,7 +479,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void clanLeaderDeathEndsWarBeforePenaltyAndRetainsFatalWarExemption()
+    @Test void clanLeaderDeathEndsWarThenAnnouncesWithoutPenaltyAndRetainsFatalWarExemption()
             throws Exception {
         try (Fixture victim = fixture(
                 temporary.resolve("death-clan-leader.properties"),
@@ -516,14 +518,14 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             int deathIndex = indexOf(victimPackets, death);
             int endedIndex = indexOf(victimPackets, ended);
             int announcementIndex = indexOf(victimPackets, announcement);
-            int experienceIndex = indexOf(victimPackets, experience);
             assertTrue(deathIndex >= 0 && deathIndex < endedIndex
-                            && endedIndex < announcementIndex
-                            && announcementIndex < experienceIndex,
+                            && endedIndex < announcementIndex,
+                    () -> victimPackets.stream().map(Protocol::hex).toList().toString());
+            assertEquals(-1, indexOf(victimPackets, experience),
                     () -> victimPackets.stream().map(Protocol::hex).toList().toString());
             assertTrue(indexOf(attackerPackets, ended) >= 0);
             assertTrue(indexOf(attackerPackets, announcement) >= 0);
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(victim.session, "playerClassicExperience"));
             assertFalse(victim.hub.classicClanWarActiveBetween(
                     victimOwner, attackerOwner));
@@ -572,7 +574,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
                     "retained simulated-war end is sent only to both clans");
             assertFalse(victim.hub.classicClanWarActiveBetween(
                     victimOwner, enemyOwner));
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(victim.session, "playerClassicExperience"));
             assertEquals(1, intField(outsider.session, "generalPkCount"));
             assertTrue(intField(outsider.session, "playerLawful") < 0);
@@ -620,7 +622,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void attackingCastleLeaderDeathCeasesSiegeBeforePenaltyOutsideField()
+    @Test void attackingCastleLeaderDeathCeasesSiegeWithoutPenaltyOutsideField()
             throws Exception {
         try (Fixture victim = fixture(
                 temporary.resolve("death-castle-attacking-leader.properties"),
@@ -654,11 +656,12 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
                     Protocol.ClanWarNoticeType.ENDED,
                     "SiegeClan", "LegacyKent");
             byte[] experience = Protocol.experience(22, EXPECTED_EXP);
-            assertTrue(indexOf(packets, death) < indexOf(packets, ended));
-            assertTrue(indexOf(packets, ended) < indexOf(packets, experience));
+            assertTrue(indexOf(packets, death) >= 0
+                    && indexOf(packets, death) < indexOf(packets, ended));
+            assertEquals(-1, indexOf(packets, experience));
             assertFalse(victim.hub.classicCastleSiegeParticipant(
                     source, 1, "SiegeClan"));
-            assertEquals(EXPECTED_EXP,
+            assertEquals(SOURCE_EXP,
                     longField(victim.session, "playerClassicExperience"));
             assertEquals(1, intField(attacker.session, "generalPkCount"),
                     "outside the castle field the leader-death cease is not a PK exemption");
@@ -666,7 +669,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         }
     }
 
-    @Test void ordinaryPlayerKillAnnouncesBeforePenaltyAndPersistsBothCounters()
+    @Test void ordinaryPlayerKillAnnouncesWithoutPenaltyAndPersistsBothCounters()
             throws Exception {
         Path stateFile = temporary.resolve("death-kill-feed.properties");
         try (Fixture victim = fixture(
@@ -685,10 +688,12 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
             int death = indexOf(victimPackets, Protocol.objectAction(
                     victim.session.playerObjectId(), BattleActionCodes.DIE));
             int feed = indexOf(victimPackets, announcement);
-            int experience = indexOf(victimPackets,
-                    Protocol.experience(22, EXPECTED_EXP));
-            assertTrue(death >= 0 && feed > death && experience > feed,
+            assertTrue(death >= 0 && feed > death,
                     () -> victimPackets.stream().map(Protocol::hex).toList().toString());
+            assertEquals(-1, indexOf(victimPackets,
+                    Protocol.experience(22, EXPECTED_EXP)));
+            assertEquals(SOURCE_EXP,
+                    longField(victim.session, "playerClassicExperience"));
             assertTrue(indexOf(attackerPackets, announcement) >= 0);
             assertEquals(1, intField(attacker.session, "classicKillCount"));
             assertEquals(1, intField(victim.session, "classicDeathCount"));

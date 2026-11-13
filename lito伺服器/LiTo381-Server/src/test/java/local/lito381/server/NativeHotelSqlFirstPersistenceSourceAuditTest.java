@@ -16,7 +16,11 @@ final class NativeHotelSqlFirstPersistenceSourceAuditTest {
         String session = Files.readString(Path.of("src", "main", "java", "local",
                 "lito381", "server", "ClientSession.java"), StandardCharsets.UTF_8);
         String repository = Files.readString(Path.of("src", "main", "java", "local",
-                "lito381", "server", "Accounts.java"), StandardCharsets.UTF_8);
+                "lito381", "server", "Accounts.java"), StandardCharsets.UTF_8)
+                // #138 B-land: LegacyMySqlRepository now lives in its own file.
+                + Files.readString(Path.of(
+                        "src/main/java/local/lito381/server/LegacyMySqlRepository.java"),
+                        StandardCharsets.UTF_8);
 
         int sql = state.indexOf("sqlPersistence.persist(lease);");
         int sidecar = state.indexOf("save();", sql);

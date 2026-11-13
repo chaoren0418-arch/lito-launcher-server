@@ -23,6 +23,8 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionWorldCkewEntryTest {
     @TempDir Path temporary;
 
@@ -325,8 +327,27 @@ final class ClientSessionWorldCkewEntryTest {
                     assertEquals(ClassicWorldCkewCatalog.QUEST_STARTED,
                             state.storyQuests(fixture.identity())
                                     .step(ClassicWorldCkewCatalog.QUEST_ID));
-                    assertTrue(fixture.packets().isEmpty(),
-                            "native first talk starts quest without HTML");
+                    // B-land（#138 主控裁定 1）：候選的 L1Quest 對話會讓入口
+                    // NPC 轉向說話者並送 S_CHANGE_DIRECTION（正式 0.6.71
+                    // 不送）。這是有意採用的行為改變；首次對話仍不送 HTML。
+                    int expectedHeading = NativeStaticNpcMotion.direction(
+                            NativeStaticNpcMotion.x(entrance, fixture.session),
+                            NativeStaticNpcMotion.y(entrance, fixture.session),
+                            (int) CombatAccess.field(fixture.session, "positionX"),
+                            (int) CombatAccess.field(fixture.session, "positionY"));
+                    if (expectedHeading < 0) {
+                        expectedHeading = NativeStaticNpcScene.heading(
+                                hub, entrance, fixture.session);
+                    }
+                    byte[] turn = Protocol.changeDirection(
+                            entrance.objectId(), expectedHeading);
+                    List<byte[]> firstTalk = fixture.packets();
+                    assertFalse(firstTalk.isEmpty(),
+                            "native first talk turns the entrance NPC");
+                    assertTrue(firstTalk.stream().allMatch(packet ->
+                                    java.util.Arrays.equals(packet, turn)),
+                            "native first talk starts quest without HTML;"
+                                    + " only the L1Quest talk turn is sent");
                     state.saveStoryQuestSteps(fixture.identity(), Map.of(
                             ClassicWorldCkewCatalog.QUEST_ID,
                             ClassicWorldCkewCatalog.QUEST_STARTED,

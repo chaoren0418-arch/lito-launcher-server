@@ -1,36 +1,23 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Authoritative retained skill-134 one-shot magic-reflection lease. */
 import java.util.concurrent.TimeUnit;
 
-/** Authoritative retained skill-134 one-shot magic-reflection lease. */
 final class BattleCounterMirrorStatus {
-    record Decision(boolean active, boolean eligible, boolean triggered,
-                    int wisdom, int roll, int reflectedDamage) {
-        Decision {
-            if (wisdom < 0 || wisdom > 255 || roll < 0 || roll > 99
-                    || reflectedDamage < 0
-                    || triggered != (active && eligible
-                        && wisdom >= roll && reflectedDamage > 0)) {
-                throw new IllegalArgumentException(
-                        "invalid Counter Mirror decision");
-            }
-        }
+    private long expiresAtNanos;
+    volatile transient long nativeSourceIcons1Version;
 
-        static Decision inactive(int wisdom, int roll) {
-            return new Decision(false, false, false,
-                    wisdom, roll, 0);
-        }
+    BattleCounterMirrorStatus() {
     }
 
-    private long expiresAtNanos;
-
     synchronized void activate(long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
-            throw new IllegalArgumentException(
-                    "invalid native Counter Mirror lease");
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
+            throw new IllegalArgumentException("invalid native Counter Mirror lease");
         }
-        expiresAtNanos = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        BattleCounterMirrorStatus battleCounterMirrorStatus;
+        (battleCounterMirrorStatus = this).expiresAtNanos = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
+        NativeSourceIcons1Epoch.bump(battleCounterMirrorStatus);
     }
 
     synchronized boolean active(long nowNanos) {
@@ -38,46 +25,67 @@ final class BattleCounterMirrorStatus {
         return expiresAtNanos != 0 && nowNanos < expiresAtNanos;
     }
 
-    /**
-     * Retained comparison is {@code wisdom >= random.nextInt(100)}.  The
-     * lease is consumed only by an eligible, positive-damage successful roll.
-     */
-    synchronized Decision resolve(
-            long nowNanos, int wisdom, int zeroBasedRoll,
-            int incomingDamage, boolean eligibleSource) {
-        if (nowNanos < 0 || wisdom < 0 || wisdom > 255
-                || zeroBasedRoll < 0 || zeroBasedRoll > 99
-                || incomingDamage < 0) {
-            throw new IllegalArgumentException(
-                    "invalid Counter Mirror resolution input");
+    synchronized Decision resolve(long nowNanos, int wisdom, int zeroBasedRoll, int incomingDamage, boolean eligibleSource) {
+        boolean bl2;
+        if (nowNanos < 0L || wisdom < 0 || wisdom > 255 || zeroBasedRoll < 0 || zeroBasedRoll > 99 || incomingDamage < 0) {
+            throw new IllegalArgumentException("invalid Counter Mirror resolution input");
         }
-        boolean leaseActive = active(nowNanos);
-        if (!leaseActive) {
-            if (expiresAtNanos != 0 && nowNanos >= expiresAtNanos) {
-                expiresAtNanos = 0;
+        boolean bl3 = this.active(nowNanos);
+        if (!bl3) {
+            if (this.expiresAtNanos != 0L && nowNanos >= this.expiresAtNanos) {
+                long l2 = 0L;
+                BattleCounterMirrorStatus battleCounterMirrorStatus = this;
+                this.expiresAtNanos = l2;
+                NativeSourceIcons1Epoch.bump(battleCounterMirrorStatus);
             }
             return Decision.inactive(wisdom, zeroBasedRoll);
         }
-        boolean triggered = eligibleSource && incomingDamage > 0
-                && wisdom >= zeroBasedRoll;
-        if (triggered) expiresAtNanos = 0;
-        return new Decision(true, eligibleSource, triggered,
-                wisdom, zeroBasedRoll, triggered ? incomingDamage : 0);
+        boolean bl4 = bl2 = eligibleSource && incomingDamage > 0 && wisdom >= zeroBasedRoll;
+        if (bl2) {
+            long l3 = 0L;
+            BattleCounterMirrorStatus battleCounterMirrorStatus = this;
+            this.expiresAtNanos = l3;
+            NativeSourceIcons1Epoch.bump(battleCounterMirrorStatus);
+        }
+        return new Decision(true, eligibleSource, bl2, wisdom, zeroBasedRoll, bl2 ? incomingDamage : 0);
     }
 
     synchronized boolean expire(long nowNanos) {
-        if (expiresAtNanos == 0 || nowNanos < expiresAtNanos) return false;
-        expiresAtNanos = 0;
+        if (this.expiresAtNanos == 0L || nowNanos < this.expiresAtNanos) {
+            return false;
+        }
+        BattleCounterMirrorStatus battleCounterMirrorStatus;
+        (battleCounterMirrorStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleCounterMirrorStatus);
         return true;
     }
 
     synchronized boolean cancel() {
-        if (expiresAtNanos == 0) return false;
-        expiresAtNanos = 0;
+        if (this.expiresAtNanos == 0L) {
+            return false;
+        }
+        BattleCounterMirrorStatus battleCounterMirrorStatus;
+        (battleCounterMirrorStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleCounterMirrorStatus);
         return true;
     }
 
     synchronized void clear() {
-        expiresAtNanos = 0;
+        BattleCounterMirrorStatus battleCounterMirrorStatus;
+        (battleCounterMirrorStatus = this).expiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleCounterMirrorStatus);
+    }
+
+    record Decision(boolean active, boolean eligible, boolean triggered, int wisdom, int roll, int reflectedDamage) {
+        Decision {
+            if (wisdom < 0 || wisdom > 255 || roll < 0 || roll > 99 || reflectedDamage < 0 || triggered != (active && eligible && wisdom >= roll && reflectedDamage > 0)) {
+                throw new IllegalArgumentException("invalid Counter Mirror decision");
+            }
+        }
+
+        static Decision inactive(int wisdom, int roll) {
+            return new Decision(false, false, false,
+                    wisdom, roll, 0);
+        }
     }
 }

@@ -1,35 +1,45 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
+/** Server-authoritative leases for the three native inventory-weight spells. */
 import java.util.concurrent.TimeUnit;
 
-/** Server-authoritative leases for the three native inventory-weight spells. */
 final class BattleWeightStatus {
-    record Snapshot(int decreaseWeightSeconds, int exoticVitalizeSeconds,
-                    int additionalFireSeconds) {
-        boolean decreaseWeightActive() { return decreaseWeightSeconds > 0; }
-        boolean regenerationBypassActive() {
-            return exoticVitalizeSeconds > 0 || additionalFireSeconds > 0;
-        }
-    }
-
     private long decreaseWeightExpiresAtNanos;
     private long exoticVitalizeExpiresAtNanos;
     private long additionalFireExpiresAtNanos;
+    volatile transient long nativeSourceIcons1Version;
+
+    BattleWeightStatus() {
+    }
 
     synchronized void activate(int skillId, long nowNanos, int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 0xFFFF) {
+        if (nowNanos < 0L || durationSeconds <= 0 || durationSeconds > 65535) {
             throw new IllegalArgumentException("invalid native weight-spell lease");
         }
-        long expiresAt = Math.addExact(nowNanos,
-                TimeUnit.SECONDS.toNanos(durationSeconds));
+        long l2 = Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds));
         switch (skillId) {
-            case BattleSpellCatalog.DECREASE_WEIGHT ->
-                    decreaseWeightExpiresAtNanos = expiresAt;
-            case BattleSpellCatalog.EXOTIC_VITALIZE ->
-                    exoticVitalizeExpiresAtNanos = expiresAt;
-            case BattleSpellCatalog.ADDITIONAL_FIRE ->
-                    additionalFireExpiresAtNanos = expiresAt;
-            default -> throw new IllegalArgumentException("unknown native weight spell");
+            case 14: {
+                long l3 = l2;
+                BattleWeightStatus battleWeightStatus = this;
+                this.decreaseWeightExpiresAtNanos = l3;
+                NativeSourceIcons1Epoch.bump(battleWeightStatus);
+                break;
+            }
+            case 169: {
+                this.exoticVitalizeExpiresAtNanos = l2;
+                break;
+            }
+            case 176: {
+                long l4 = l2;
+                BattleWeightStatus battleWeightStatus = this;
+                this.additionalFireExpiresAtNanos = l4;
+                NativeSourceIcons1Epoch.bump(battleWeightStatus);
+                break;
+            }
+            default: {
+                throw new IllegalArgumentException("unknown native weight spell");
+            }
         }
     }
 
@@ -41,26 +51,39 @@ final class BattleWeightStatus {
     }
 
     synchronized boolean expire(long nowNanos) {
-        boolean changed = false;
-        if (expired(nowNanos, decreaseWeightExpiresAtNanos)) {
-            decreaseWeightExpiresAtNanos = 0;
-            changed = true;
+        BattleWeightStatus battleWeightStatus;
+        long l2;
+        boolean bl = false;
+        if (BattleWeightStatus.expired(nowNanos, this.decreaseWeightExpiresAtNanos)) {
+            l2 = 0L;
+            battleWeightStatus = this;
+            this.decreaseWeightExpiresAtNanos = l2;
+            NativeSourceIcons1Epoch.bump(battleWeightStatus);
+            bl = true;
         }
-        if (expired(nowNanos, exoticVitalizeExpiresAtNanos)) {
-            exoticVitalizeExpiresAtNanos = 0;
-            changed = true;
+        if (BattleWeightStatus.expired(nowNanos, this.exoticVitalizeExpiresAtNanos)) {
+            this.exoticVitalizeExpiresAtNanos = 0L;
+            bl = true;
         }
-        if (expired(nowNanos, additionalFireExpiresAtNanos)) {
-            additionalFireExpiresAtNanos = 0;
-            changed = true;
+        if (BattleWeightStatus.expired(nowNanos, this.additionalFireExpiresAtNanos)) {
+            l2 = 0L;
+            battleWeightStatus = this;
+            this.additionalFireExpiresAtNanos = l2;
+            NativeSourceIcons1Epoch.bump(battleWeightStatus);
+            bl = true;
         }
-        return changed;
+        return bl;
     }
 
     synchronized void clear() {
-        decreaseWeightExpiresAtNanos = 0;
-        exoticVitalizeExpiresAtNanos = 0;
-        additionalFireExpiresAtNanos = 0;
+        BattleWeightStatus battleWeightStatus;
+        (battleWeightStatus = this).decreaseWeightExpiresAtNanos = 0L;
+        NativeSourceIcons1Epoch.bump(battleWeightStatus);
+        this.exoticVitalizeExpiresAtNanos = 0L;
+        long l = 0L;
+        battleWeightStatus = this;
+        this.additionalFireExpiresAtNanos = l;
+        NativeSourceIcons1Epoch.bump(battleWeightStatus);
     }
 
     synchronized boolean cancelMagicEffects() {
@@ -80,5 +103,13 @@ final class BattleWeightStatus {
         long second = TimeUnit.SECONDS.toNanos(1);
         long remaining = (expiresAtNanos - nowNanos + second - 1) / second;
         return (int) Math.min(0xFFFFL, Math.max(1L, remaining));
+    }
+
+    record Snapshot(int decreaseWeightSeconds, int exoticVitalizeSeconds, int additionalFireSeconds) {
+        boolean decreaseWeightActive() { return decreaseWeightSeconds > 0; }
+
+        boolean regenerationBypassActive() {
+            return exoticVitalizeSeconds > 0 || additionalFireSeconds > 0;
+        }
     }
 }

@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
 
 import java.util.ArrayList;
@@ -66,15 +67,58 @@ final class BattleCubeShockEffects {
         }
     }
 
-    record Cube(long objectId, long casterObjectId, int x, int y,
-                long expiresAtNanos) {
-        Cube {
-            if (objectId < FIRST_OBJECT_ID || objectId > LAST_OBJECT_ID
-                    || casterObjectId <= 0 || casterObjectId > 0xFFFF_FFFFL
-                    || x < 0 || x > 0xFFFF || y < 0 || y > 0xFFFF
-                    || expiresAtNanos <= 0) {
+    @AsRecord(components = {"objectId", "casterObjectId", "x", "y", "expiresAtNanos"}, finalFields = {"nativeSourceCubeEntity", "nativeSourceCubeFaction", "nativeSourceCubeVisibility", "nativeSourceCubePresentation"})
+    static final class Cube {
+        private final long objectId;
+        private final long casterObjectId;
+        private final int x;
+        private final int y;
+        private final long expiresAtNanos;
+        Object nativeSourceCubeEntity;
+        Object nativeSourceCubeFaction;
+        Object nativeSourceCubeVisibility;
+        Object nativeSourceCubePresentation;
+
+        Cube(long l, long l2, int n, int n2, long l3) {
+            if (l < 0x74000000L || l > 0x74FFFFFFL || l2 <= 0L || l2 > 0xFFFFFFFFL || n < 0 || n > 65535 || n2 < 0 || n2 > 65535 || l3 <= 0L) {
                 throw new IllegalArgumentException("invalid Cube: Shock object");
             }
+            this.objectId = l;
+            this.casterObjectId = l2;
+            this.x = n;
+            this.y = n2;
+            this.expiresAtNanos = l3;
+        }
+
+
+
+
+        public long objectId() {
+            return this.objectId;
+        }
+
+        public long casterObjectId() {
+            return this.casterObjectId;
+        }
+
+        public int x() {
+            return this.x;
+        }
+
+        public int y() {
+            return this.y;
+        }
+
+        public long expiresAtNanos() {
+            return this.expiresAtNanos;
+        }
+
+        Cube(long l, long l2, int n, int n2, long l3, Object object) {
+            this(l, l2, n, n2, l3);
+            this.nativeSourceCubeEntity = NativeSourceCubeStatus.entity(this, object);
+            this.nativeSourceCubeFaction = NativeSourceCubeNpc.captureFaction(this.nativeSourceCubeEntity);
+            this.nativeSourceCubeVisibility = NativeSourceCubeVisibility.capture(this);
+            this.nativeSourceCubePresentation = NativeSourceCubeTemplate.capture(this);
         }
     }
 
@@ -83,19 +127,51 @@ final class BattleCubeShockEffects {
         static Placement accepted(Cube cube) { return new Placement(true, cube); }
     }
 
-    record Event(EventKind kind, Cube cube, long targetObjectId,
-                 ActorKind targetKind) {
-        Event {
-            if (kind == null || cube == null
-                    || (kind == EventKind.CUBE_EXPIRED
-                        ? targetObjectId != 0 || targetKind != null
-                        : targetObjectId <= 0 || targetKind == null)) {
+    @AsRecord(components = {"kind", "cube", "targetObjectId", "targetKind"}, finalFields = {"nativeSourceCubeOrigin"})
+    static final class Event {
+        private final EventKind kind;
+        private final Cube cube;
+        private final long targetObjectId;
+        private final ActorKind targetKind;
+        Object nativeSourceCubeOrigin;
+
+        Event(EventKind eventKind, Cube cube, long l, ActorKind actorKind) {
+            if (eventKind == null || cube == null || (eventKind == EventKind.CUBE_EXPIRED ? l != 0L || actorKind != null : l <= 0L || actorKind == null)) {
                 throw new IllegalArgumentException("invalid Cube: Shock event");
             }
+            this.kind = eventKind;
+            this.cube = cube;
+            this.targetObjectId = l;
+            this.targetKind = actorKind;
+            this.nativeSourceCubeOrigin = NativeSourceCubeStatus.baseEvent(this);
         }
 
         static Event cubeExpired(Cube cube) {
             return new Event(EventKind.CUBE_EXPIRED, cube, 0, null);
+        }
+
+
+
+
+        public EventKind kind() {
+            return this.kind;
+        }
+
+        public Cube cube() {
+            return this.cube;
+        }
+
+        public long targetObjectId() {
+            return this.targetObjectId;
+        }
+
+        public ActorKind targetKind() {
+            return this.targetKind;
+        }
+
+        Event(EventKind eventKind, Cube cube, long l, ActorKind actorKind, Object object, Object object2) {
+            this(eventKind, cube, l, actorKind);
+            this.nativeSourceCubeOrigin = NativeSourceCubeStatus.event(this, object, object2);
         }
     }
 
@@ -103,6 +179,16 @@ final class BattleCubeShockEffects {
     private final Map<StatusKey, StatusLease> statuses = new LinkedHashMap<>();
     private final Map<Long, MrLease> mrLeases = new LinkedHashMap<>();
 
+
+    volatile Object nativeSourceCubeEpoch;
+    volatile Object nativeSourceCubeScene;
+    volatile Object nativeSourceCubeInstalling;
+    volatile Object nativeSourceCubeScan;
+    volatile Object nativeSourceCubeIndex;
+
+    BattleCubeShockEffects() {
+        NativeSourceCubeStatus.reset(this);
+    }
     synchronized Placement place(long casterObjectId, int x, int y, long nowNanos) {
         if (casterObjectId <= 0 || casterObjectId > 0xFFFF_FFFFL
                 || x < 0 || x > 0xFFFF || y < 0 || y > 0xFFFF
@@ -114,13 +200,33 @@ final class BattleCubeShockEffects {
         }
         Cube cube = new Cube(nextObjectId(), casterObjectId, x, y,
                 Math.addExact(nowNanos,
-                        TimeUnit.SECONDS.toNanos(DURATION_SECONDS)));
+                        TimeUnit.SECONDS.toNanos(DURATION_SECONDS)), this);
         cubes.add(new CubeLease(cube, nowNanos));
         return Placement.accepted(cube);
     }
 
+
+    synchronized Placement nativeMaterialPlace(long l, int n, int n2, long l2, ClientSession clientSession) {
+        if (l <= 0L || l > 0xFFFFFFFFL || n < 0 || n > 65535 || n2 < 0 || n2 > 65535 || l2 < 0L) {
+            return Placement.rejected();
+        }
+        for (CubeLease cubeLease : this.cubes) {
+            if (l2 >= cubeLease.cube.expiresAtNanos()) continue;
+            if (BattleCubeShockEffects.distance(n, n2, cubeLease.cube.x(), cubeLease.cube.y()) <= 3) {
+                return Placement.rejected();
+            }
+        }
+        if (!NativeCubeCastAction.admit(clientSession, 215)) {
+            return Placement.rejected();
+        }
+        l2 = System.nanoTime();
+        Cube cube = new Cube(BattleCubeShockEffects.nextObjectId(), l, n, n2, Math.addExact(l2, TimeUnit.SECONDS.toNanos(20L)), this);
+        this.cubes.add(new CubeLease(cube, l2));
+        return Placement.accepted(cube);
+    }
     synchronized List<Event> advance(long nowNanos, List<Actor> actors,
                                      Alliance alliance) {
+        NativeSourceCubeStatus.retire(this);
         if (nowNanos < 0 || alliance == null) {
             throw new IllegalArgumentException("invalid Cube: Shock clock");
         }
@@ -153,12 +259,13 @@ final class BattleCubeShockEffects {
                     if (!active) {
                         mrLeases.put(status.targetObjectId, new MrLease(
                                 status.cube, status.targetObjectId,
-                                status.targetKind, expiresAt));
+                                status.targetKind, expiresAt, status));
                         events.add(new Event(EventKind.ENEMY_MR_STARTED,
                                 status.cube, status.targetObjectId,
-                                status.targetKind));
+                                status.targetKind, this, status));
                     } else {
                         existing.cube = status.cube;
+                        NativeSourceCubeStatus.renew(existing, status);
                         existing.expiresAtNanos = Math.max(
                                 existing.expiresAtNanos, expiresAt);
                     }
@@ -171,7 +278,7 @@ final class BattleCubeShockEffects {
             iterator.remove();
             events.add(new Event(status.kind == StatusKind.ALLY
                     ? EventKind.ALLY_EXPIRED : EventKind.ENEMY_EXPIRED,
-                    status.cube, status.targetObjectId, status.targetKind));
+                    status.cube, status.targetObjectId, status.targetKind, this, status));
         }
 
         for (Iterator<Map.Entry<Long, MrLease>> iterator =
@@ -180,12 +287,12 @@ final class BattleCubeShockEffects {
             if (nowNanos < lease.expiresAtNanos) continue;
             iterator.remove();
             events.add(new Event(EventKind.ENEMY_MR_EXPIRED, lease.cube,
-                    lease.targetObjectId, lease.targetKind));
+                    lease.targetObjectId, lease.targetKind, this, lease));
         }
 
-        long scanInterval = TimeUnit.MILLISECONDS.toNanos(SCAN_INTERVAL_MILLIS);
+        long scanInterval = TimeUnit.MILLISECONDS.toNanos(NativeSourceCubePlacement.scanInterval(this));
         for (CubeLease lease : cubes) {
-            if (nowNanos < lease.nextScanAtNanos) continue;
+            if (NativeSourceCubeClock.compare(nowNanos, lease.nextScanAtNanos, this) < 0) continue;
             do {
                 lease.nextScanAtNanos = Math.addExact(
                         lease.nextScanAtNanos, scanInterval);
@@ -193,9 +300,9 @@ final class BattleCubeShockEffects {
             for (Actor actor : liveActors.values()) {
                 if (distance(actor.x(), actor.y(), lease.cube.x(), lease.cube.y())
                         > EFFECT_RADIUS) continue;
-                Relation relation = actor.objectId() == lease.cube.casterObjectId()
-                        ? Relation.ALLY : alliance.relation(
-                                lease.cube.casterObjectId(), actor.objectId());
+                Relation relation = NativeSourceCubeRelation.compare(actor.objectId(), lease.cube.casterObjectId(), lease.cube) == 0
+                        ? Relation.ALLY : NativeSourceCubeRelation.relation(alliance,
+                                lease.cube.casterObjectId(), actor.objectId(), lease.cube, actor);
                 if (relation == null || relation == Relation.IGNORE) continue;
                 boolean ally = relation == Relation.ALLY;
                 StatusKind kind = ally ? StatusKind.ALLY : StatusKind.ENEMY;
@@ -209,28 +316,37 @@ final class BattleCubeShockEffects {
                                 ENEMY_INITIAL_DELAY_MILLIS));
                 statuses.put(key, new StatusLease(
                         lease.cube, actor.objectId(), actor.kind(), kind,
-                        expiresAt, firstEnemyTick));
+                        expiresAt, firstEnemyTick, this));
                 events.add(new Event(ally ? EventKind.ALLY_APPLIED
                         : EventKind.ENEMY_APPLIED, lease.cube,
-                        actor.objectId(), actor.kind()));
+                        actor.objectId(), actor.kind(), this, null));
             }
         }
-        return List.copyOf(events);
+        List<Event> result = List.copyOf(events);
+        NativeSourceCubeStatus.seal(this);
+        return result;
     }
 
     synchronized int windResistance(long targetObjectId, long nowNanos) {
-        if (targetObjectId <= 0 || nowNanos < 0) return 0;
-        StatusLease status = statuses.get(new StatusKey(
-                targetObjectId, StatusKind.ALLY));
-        return status != null && nowNanos < status.expiresAtNanos
-                ? ALLY_WIND_RESISTANCE : 0;
+        if (!NativeSourceCubeStatus.allowRead(this, targetObjectId, 0)) {
+            return 0;
+        }
+        if (targetObjectId <= 0L || nowNanos < 0L) {
+            return 0;
+        }
+        StatusLease statusLease = this.statuses.get(new StatusKey(targetObjectId, StatusKind.ALLY));
+        return statusLease != null && nowNanos < statusLease.expiresAtNanos ? 30 : 0;
     }
 
     synchronized int magicResistanceModifier(long targetObjectId, long nowNanos) {
-        if (targetObjectId <= 0 || nowNanos < 0) return 0;
-        MrLease lease = mrLeases.get(targetObjectId);
-        return lease != null && nowNanos < lease.expiresAtNanos
-                ? ENEMY_MAGIC_RESISTANCE : 0;
+        if (!NativeSourceCubeStatus.allowRead(this, targetObjectId, 3)) {
+            return 0;
+        }
+        if (targetObjectId <= 0L || nowNanos < 0L) {
+            return 0;
+        }
+        MrLease mrLease = this.mrLeases.get(targetObjectId);
+        return mrLease != null && nowNanos < mrLease.expiresAtNanos ? -10 : 0;
     }
 
     synchronized List<Cube> active(long nowNanos) {
@@ -252,9 +368,10 @@ final class BattleCubeShockEffects {
     }
 
     synchronized void clear() {
-        cubes.clear();
-        statuses.clear();
-        mrLeases.clear();
+        NativeSourceCubeStatus.reset(this);
+        this.cubes.clear();
+        this.statuses.clear();
+        this.mrLeases.clear();
     }
 
     private static int distance(int ax, int ay, int bx, int by) {
@@ -278,6 +395,7 @@ final class BattleCubeShockEffects {
 
     private record StatusKey(long targetObjectId, StatusKind kind) {}
 
+    @AsmFinal({"nativeSourceCubeOrigin"})
     private static final class StatusLease {
         final Cube cube;
         final long targetObjectId;
@@ -285,31 +403,40 @@ final class BattleCubeShockEffects {
         final StatusKind kind;
         final long expiresAtNanos;
         long nextMrAtNanos;
+        Object nativeSourceCubeOrigin;
 
-        StatusLease(Cube cube, long targetObjectId, ActorKind targetKind,
-                    StatusKind kind, long expiresAtNanos,
-                    long nextMrAtNanos) {
+        StatusLease(Cube cube, long l, ActorKind actorKind, StatusKind statusKind, long l2, long l3) {
             this.cube = cube;
-            this.targetObjectId = targetObjectId;
-            this.targetKind = targetKind;
-            this.kind = kind;
-            this.expiresAtNanos = expiresAtNanos;
-            this.nextMrAtNanos = nextMrAtNanos;
+            this.targetObjectId = l;
+            this.targetKind = actorKind;
+            this.kind = statusKind;
+            this.expiresAtNanos = l2;
+            this.nextMrAtNanos = l3;
+        }
+
+        StatusLease(Cube cube, long l, ActorKind actorKind, StatusKind statusKind, long l2, long l3, Object object) {
+            this(cube, l, actorKind, statusKind, l2, l3);
+            this.nativeSourceCubeOrigin = NativeSourceCubeOrigin.lease(this, object);
         }
     }
 
     private static final class MrLease {
-        BattleCubeShockEffects.Cube cube;
+        volatile Cube cube;
         final long targetObjectId;
         final ActorKind targetKind;
-        long expiresAtNanos;
+        volatile long expiresAtNanos;
+        volatile Object nativeSourceCubeOrigin;
 
-        MrLease(Cube cube, long targetObjectId, ActorKind targetKind,
-                long expiresAtNanos) {
+        MrLease(Cube cube, long l, ActorKind actorKind, long l2) {
             this.cube = cube;
-            this.targetObjectId = targetObjectId;
-            this.targetKind = targetKind;
-            this.expiresAtNanos = expiresAtNanos;
+            this.targetObjectId = l;
+            this.targetKind = actorKind;
+            this.expiresAtNanos = l2;
+        }
+
+        MrLease(Cube cube, long l, ActorKind actorKind, long l2, Object object) {
+            this(cube, l, actorKind, l2);
+            this.nativeSourceCubeOrigin = NativeSourceCubeStatus.secondary(this, object);
         }
     }
 }

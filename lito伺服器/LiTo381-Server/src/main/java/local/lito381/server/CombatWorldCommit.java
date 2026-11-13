@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 import java.util.*;
@@ -5,7 +6,7 @@ import java.util.*;
 /** WORLD physical commits freeze values after action and join the NPC target lane. */
 final class CombatWorldCommit {
  private static final String P="local/lito381/server/";
- sealed interface Plan permits Physical,Doll,CombatWorldMagic.Spell,CombatWorldMultiMagic.Multi,CombatWorldFreeze.Frozen,NativeCombatAttacker.Reflection,NativeProcHealingWorld.Plan,NativeProcHealingCompanion.Plan,NativeProcHealingEncounter.Plan {}
+ sealed interface Plan permits Physical,Doll,CombatWorldMagic.Spell,CombatWorldMultiMagic.Multi,CombatWorldFreeze.Frozen,NativeCombatAttacker.Reflection,NativeProcHealingWorld.Plan,NativeProcHealingCompanion.Plan,NativeProcHealingEncounter.Plan,NativeSourceCubeNpcQueue.Ticket,NativeSourcePoisonNpc.Ticket,NativeSourcePhysicalNpc.Ticket {}
  record Physical(ClassicWorldMonsterPopulation.Snapshot target,SourceNpcPhysicalStats stats,NativeMagicDollEffects.AttackProc dolls,boolean weapon,boolean hit) implements Plan {}
  record Doll(String source) implements Plan {}
  static final class Attempt {
@@ -45,10 +46,21 @@ final class CombatWorldCommit {
  static int applied(int delta){return Math.max(0,delta);}
  private static long number(Object o,String name){return ((Number)CombatAccess.field(o,name)).longValue();}
  private static CombatMonsterCurseLifecycle.Context context(ClassicWorldMonsterPopulation.PoisonUpdate update,CombatPoisonLifecycle.Scope scope){return CombatMonsterCurseLifecycle.damageContext(update,scope);}
- private static ClientSession owner(CombatMonsterCurseLifecycle.Context c){if(c==null||!c.valid())return null;var signature=new CombatMonsterCurseLifecycle.Recipient(c.event.owner(),c.event.source(),c.event.account(),c.event.name());for(var pc:c.actor.hub().classicWorldMembers(c.actor.map(),c.actor.instance()))if(signature.valid(pc,c.actor.map(),c.actor.instance()))return pc;return null;}
+ private static ClientSession owner(CombatMonsterCurseLifecycle.Context context) {
+        if (context == null || !context.valid()) {
+            return NativeCombatAttacker.owner(null, context);
+        }
+        CombatMonsterCurseLifecycle.Recipient recipient = new CombatMonsterCurseLifecycle.Recipient(context.event.owner(), context.event.source(), context.event.account(), context.event.name());
+        for (ClientSession clientSession : context.actor.hub().classicWorldMembers(context.actor.map(), context.actor.instance())) {
+            if (recipient.valid(clientSession, context.actor.map(), context.actor.instance())) {
+                return NativeCombatAttacker.owner(clientSession, context);
+            }
+        }
+        return NativeCombatAttacker.owner(null, context);
+    }
  static void publish(ClientSession viewer,ClassicWorldMonsterPopulation.PoisonUpdate update,CombatPoisonLifecycle.Scope scope){
   var c=context(update,scope);var plan=c.event.physical();var previous=effects.get();effects.set(c);
-  try{if(plan instanceof Physical p){var pc=owner(c);if(pc!=null&&p.weapon&&p.hit)try{venom(pc,null,null,null,p.target,p.weapon,p.hit,p.target.objectId(),null);}catch(RuntimeException failure){if(c.publicationFailure==null)c.publicationFailure=failure;else c.publicationFailure.addSuppressed(failure);}CombatAccess.call(viewer,"sourceWorldPhysicalCommitted","(L"+P+"ClassicWorldMonsterPopulation$Hit;L"+P+"ClassicWorldMonsterPopulation$Snapshot;L"+P+"SourceNpcPhysicalStats;L"+P+"NativeMagicDollEffects$AttackProc;ZL"+P+"ClassicWorldMonsterPopulation$PoisonUpdate;L"+P+"CombatPoisonLifecycle$Scope;)V",update.hits().get(0),p.target,p.stats,p.dolls,c.sleepBefore,update,scope);}
+  try{if(plan instanceof NativeProcHealingWorld.Plan){NativeProcHealingWorld.publish(viewer,update,scope,(NativeProcHealingWorld.Plan)plan);}else if(plan instanceof NativeCombatAttacker.Reflection){NativeCombatAttacker.publish(viewer,update,scope,(NativeCombatAttacker.Reflection)plan);}else if(plan instanceof Physical p){var pc=owner(c);if(pc!=null&&p.weapon&&p.hit)try{venom(pc,null,null,null,p.target,p.weapon,p.hit,p.target.objectId(),null);}catch(RuntimeException failure){if(c.publicationFailure==null)c.publicationFailure=failure;else c.publicationFailure.addSuppressed(failure);}CombatAccess.call(viewer,"sourceWorldPhysicalCommitted","(L"+P+"ClassicWorldMonsterPopulation$Hit;L"+P+"ClassicWorldMonsterPopulation$Snapshot;L"+P+"SourceNpcPhysicalStats;L"+P+"NativeMagicDollEffects$AttackProc;ZL"+P+"ClassicWorldMonsterPopulation$PoisonUpdate;L"+P+"CombatPoisonLifecycle$Scope;)V",update.hits().get(0),p.target,p.stats,p.dolls,c.sleepBefore,update,scope);}
    else if(plan instanceof Doll d)CombatAccess.call(viewer,"sourceWorldDollCommitted","(L"+P+"ClassicWorldMonsterPopulation$Hit;Ljava/lang/String;JL"+P+"ClassicWorldMonsterPopulation$PoisonUpdate;L"+P+"CombatPoisonLifecycle$Scope;)V",update.hits().get(0),d.source,update.target().objectId(),update,scope);
    else if(plan instanceof CombatWorldMagic.Spell magic)CombatWorldMagic.publish(viewer,update,scope,magic);
    else if(plan instanceof CombatWorldMultiMagic.Multi magic)CombatWorldMultiMagic.publish(viewer,update,scope,magic);

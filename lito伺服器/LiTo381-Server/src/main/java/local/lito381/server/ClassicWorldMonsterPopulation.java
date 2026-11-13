@@ -1,17 +1,68 @@
+// ported from candidate 50635f7e; three-way baseline: base-0.6.71.jar and src/main
 package local.lito381.server;
-
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import local.lito381.server.BattleActionInterval;
+import local.lito381.server.BattleArmBreakerStatus;
+import local.lito381.server.BattleCompanion;
+import local.lito381.server.BattleElementalFallDownStatus;
+import local.lito381.server.BattleEraseMagicStatus;
+import local.lito381.server.BattleInventoryWeight;
+import local.lito381.server.BattleJoyOfPainStatus;
+import local.lito381.server.BattlePanicStatus;
+import local.lito381.server.BattlePotionRecovery;
+import local.lito381.server.BattleSpellCatalog;
+import local.lito381.server.BattleTimedStatus;
+import local.lito381.server.BattleWeaponBreak;
+import local.lito381.server.ClassicWorldCkewMonsterCatalog;
+import local.lito381.server.ClassicWorldDesireCaveCatalog;
+import local.lito381.server.ClassicWorldGroundItems;
+import local.lito381.server.ClassicWorldGuardCatalog;
+import local.lito381.server.ClassicWorldGuardianCatalog;
+import local.lito381.server.ClassicWorldMapCatalog;
+import local.lito381.server.ClassicWorldMobGroupCatalog;
+import local.lito381.server.ClassicWorldMonsterAggressionCatalog;
+import local.lito381.server.ClassicWorldMonsterCatalog;
+import local.lito381.server.ClassicWorldMonsterItemLifecycleCatalog;
+import local.lito381.server.ClassicWorldMonsterMagicSkillCatalog;
+import local.lito381.server.ClassicWorldMonsterPhysicalSkillCatalog;
+import local.lito381.server.ClassicWorldMonsterPickupCatalog;
+import local.lito381.server.ClassicWorldMonsterPoisonAttack;
+import local.lito381.server.ClassicWorldMonsterStatusSkillCatalog;
+import local.lito381.server.ClassicWorldMonsterTeleportCatalog;
+import local.lito381.server.ClassicWorldNpcCatalog;
+import local.lito381.server.ClassicWorldNpcPathfinder;
+import local.lito381.server.ClassicWorldRoyalTrialCatalog;
+import local.lito381.server.CombatMonsterCurseLifecycle;
+import local.lito381.server.CombatMonsterParalysis;
+import local.lito381.server.CombatWorldCommit;
+import local.lito381.server.CombatWorldFreeze;
+import local.lito381.server.DurableCommit;
+import local.lito381.server.InventoryCatalog;
+import local.lito381.server.NativeCombatOrigin;
+import local.lito381.server.NativeEtcItemTypeCatalog;
+import local.lito381.server.NativeStaticNpcMotion;
+import local.lito381.server.NativeTamedWorldLifecycle;
+import local.lito381.server.RuntimeInventory;
+import local.lito381.server.SourcePetTemplate;
+
 
 /** Runtime slots produced from the selected-source classic WORLD spawn groups. */
 final class ClassicWorldMonsterPopulation {
+    volatile java.lang.ref.WeakReference nativeStaticMotionHub;
+    volatile int nativeStaticMotionInstance;
     static final int HIDDEN_STATUS_NONE = 0;
     static final int HIDDEN_STATUS_SINK = 1;
     static final int HIDDEN_STATUS_FLY = 2;
@@ -39,61 +90,172 @@ final class ClassicWorldMonsterPopulation {
     private static final long BLESSED_GREATER_HASTE_POTION = 140018;
     private static final long GREATER_HASTE_POTION = 40018;
     private static final long BLESSED_HASTE_POTION = 140013;
+@AsRecord(components={"mapId","spawnId","spawnNumber","objectId","npcId","x","y","heading","currentHp","maximumHp","currentMp","maximumMp","alive","present","hiddenStatus","actorStatus","definition","gfxId","nameId","title","lawful","passispeed","atkspeed"})
 
-    record Snapshot(
-            int mapId, int spawnId, int spawnNumber, long objectId, int npcId,
-            int x, int y, int heading, int currentHp, int maximumHp,
-            int currentMp, int maximumMp,
-            boolean alive, boolean present, int hiddenStatus, int actorStatus,
-            ClassicWorldMonsterCatalog.SpawnDefinition definition,
-            int gfxId, String nameId, String title, int lawful,
-            int passispeed, int atkspeed) {
-        Snapshot {
-            if (mapId < 0 || spawnId <= 0 || spawnNumber <= 0
-                    || objectId <= 0 || npcId <= 0 || x <= 0 || y <= 0
-                    || heading < 0 || heading > 7 || currentHp < 0
-                    || maximumHp <= 0 || currentHp > maximumHp
-                    || currentMp < 0 || maximumMp < 0 || currentMp > maximumMp
-                    || alive != (currentHp > 0)
-                    || hiddenStatus < HIDDEN_STATUS_NONE
-                    || hiddenStatus > HIDDEN_STATUS_ICE
-                    || actorStatus < 0 || actorStatus > 0xFF
-                    || hiddenStatus == HIDDEN_STATUS_NONE && actorStatus != 0
-                    || definition == null || gfxId < 0 || gfxId > 0xFFFF
-                    || nameId == null || title == null
-                    || lawful < Short.MIN_VALUE || lawful > Short.MAX_VALUE
-                    || passispeed < 0 || atkspeed < 0) {
+    static final class Snapshot
+    {
+        private final int mapId;
+        private final int spawnId;
+        private final int spawnNumber;
+        private final long objectId;
+        private final int npcId;
+        private final int x;
+        private final int y;
+        private final int heading;
+        private final int currentHp;
+        private final int maximumHp;
+        private final int currentMp;
+        private final int maximumMp;
+        private final boolean alive;
+        private final boolean present;
+        private final int hiddenStatus;
+        private final int actorStatus;
+        private final ClassicWorldMonsterCatalog.SpawnDefinition definition;
+        private final int gfxId;
+        private final String nameId;
+        private final String title;
+        private final int lawful;
+        private final int passispeed;
+        private final int atkspeed;
+        private volatile Object sourceCombatOrigin;
+        private volatile Object nativeTamedCapturePreparation;
+
+        Snapshot(int n, int n2, int n3, long l, int n4, int n5, int n6, int n7, int n8, int n9, int n10, int n11, boolean bl, boolean bl2, int n12, int n13, ClassicWorldMonsterCatalog.SpawnDefinition spawnDefinition, int n14, String string, String string2, int n15, int n16, int n17) {
+            block3: {
+                block2: {
+                    if (n < 0 || n2 <= 0 || n3 <= 0 || l <= 0L || n4 <= 0 || n5 <= 0 || n6 <= 0 || n7 < 0 || n7 > 7 || n8 < 0 || n9 <= 0) break block2;
+                    if (n10 < 0 || n11 < 0) break block2;
+                    if (bl == n8 > 0 && n12 >= 0 && n12 <= 3 && n13 >= 0 && n13 <= 255 && (n12 != 0 || n13 == 0) && spawnDefinition != null && n14 >= 0 && n14 <= 65535 && string != null && string2 != null && n15 >= Short.MIN_VALUE && n15 <= Short.MAX_VALUE && n16 >= 0 && n17 >= 0) break block3;
+                }
                 throw new IllegalArgumentException("invalid classic monster snapshot");
             }
+            this.mapId = n;
+            this.spawnId = n2;
+            this.spawnNumber = n3;
+            this.objectId = l;
+            this.npcId = n4;
+            this.x = n5;
+            this.y = n6;
+            this.heading = n7;
+            this.currentHp = n8;
+            this.maximumHp = n9;
+            this.currentMp = n10;
+            this.maximumMp = n11;
+            this.alive = bl;
+            this.present = bl2;
+            this.hiddenStatus = n12;
+            this.actorStatus = n13;
+            this.definition = spawnDefinition;
+            this.gfxId = n14;
+            this.nameId = string;
+            this.title = string2;
+            this.lawful = n15;
+            this.passispeed = n16;
+            this.atkspeed = n17;
         }
 
-        Snapshot(
-                int mapId, int spawnId, int spawnNumber, long objectId, int npcId,
-                int x, int y, int heading, int currentHp, int maximumHp,
-                int currentMp, int maximumMp,
-                boolean alive, boolean present, int hiddenStatus, int actorStatus,
-                ClassicWorldMonsterCatalog.SpawnDefinition definition) {
-            this(mapId, spawnId, spawnNumber, objectId, npcId, x, y, heading,
-                    currentHp, maximumHp, currentMp, maximumMp, alive, present,
-                    hiddenStatus, actorStatus, definition,
-                    definition.template().gfxId(), definition.template().nameId(),
-                    "", definition.template().lawful(),
-                    definition.template().passispeed(),
-                    definition.template().atkspeed());
+        Snapshot(int n, int n2, int n3, long l, int n4, int n5, int n6, int n7, int n8, int n9, int n10, int n11, boolean bl, boolean bl2, int n12, int n13, ClassicWorldMonsterCatalog.SpawnDefinition spawnDefinition) {
+            this(n, n2, n3, l, n4, n5, n6, n7, n8, n9, n10, n11, bl, bl2, n12, n13, spawnDefinition, spawnDefinition.template().gfxId(), spawnDefinition.template().nameId(), "", spawnDefinition.template().lawful(), spawnDefinition.template().passispeed(), spawnDefinition.template().atkspeed());
         }
 
-        Snapshot(
-                int mapId, int spawnId, int spawnNumber, long objectId, int npcId,
-                int x, int y, int heading, int currentHp, int maximumHp,
-                int currentMp, int maximumMp, boolean alive, boolean present,
-                ClassicWorldMonsterCatalog.SpawnDefinition definition) {
-            this(mapId, spawnId, spawnNumber, objectId, npcId, x, y, heading,
-                    currentHp, maximumHp, currentMp, maximumMp, alive, present,
-                    HIDDEN_STATUS_NONE, 0, definition);
+        Snapshot(int n, int n2, int n3, long l, int n4, int n5, int n6, int n7, int n8, int n9, int n10, int n11, boolean bl, boolean bl2, ClassicWorldMonsterCatalog.SpawnDefinition spawnDefinition) {
+            this(n, n2, n3, l, n4, n5, n6, n7, n8, n9, n10, n11, bl, bl2, 0, 0, spawnDefinition);
         }
 
         ClassicWorldMonsterCatalog.MonsterTemplate template() {
-            return definition.template();
+            return this.definition.template();
+        }
+
+        public int mapId() {
+            return this.mapId;
+        }
+
+        public int spawnId() {
+            return this.spawnId;
+        }
+
+        public int spawnNumber() {
+            return this.spawnNumber;
+        }
+
+        public long objectId() {
+            return this.objectId;
+        }
+
+        public int npcId() {
+            return this.npcId;
+        }
+
+        public int x() {
+            return this.x;
+        }
+
+        public int y() {
+            return this.y;
+        }
+
+        public int heading() {
+            return this.heading;
+        }
+
+        public int currentHp() {
+            return this.currentHp;
+        }
+
+        public int maximumHp() {
+            return this.maximumHp;
+        }
+
+        public int currentMp() {
+            return this.currentMp;
+        }
+
+        public int maximumMp() {
+            return this.maximumMp;
+        }
+
+        public boolean alive() {
+            return this.alive;
+        }
+
+        public boolean present() {
+            return this.present;
+        }
+
+        public int hiddenStatus() {
+            return this.hiddenStatus;
+        }
+
+        public int actorStatus() {
+            return this.actorStatus;
+        }
+
+        public ClassicWorldMonsterCatalog.SpawnDefinition definition() {
+            return this.definition;
+        }
+
+        public int gfxId() {
+            return this.gfxId;
+        }
+
+        public String nameId() {
+            return this.nameId;
+        }
+
+        public String title() {
+            return this.title;
+        }
+
+        public int lawful() {
+            return this.lawful;
+        }
+
+        public int passispeed() {
+            return this.passispeed;
+        }
+
+        public int atkspeed() {
+            return this.atkspeed;
         }
     }
 
@@ -308,6 +470,8 @@ final class ClassicWorldMonsterPopulation {
     record TamedRelease(Snapshot hidden, Snapshot released) {
         TamedRelease {
             if (hidden == null || released == null
+                    // #138 approved deviation: candidate 50635f7e compared with == (ifeq -> throw), so the
+                    // two snapshots of the same actor taken by releaseTamed always failed; 0.6.71 uses !=.
                     || hidden.objectId() != released.objectId()
                     || !hidden.alive() || hidden.present()
                     || !released.alive() || !released.present()) {
@@ -670,6 +834,8 @@ final class ClassicWorldMonsterPopulation {
                                   long playerObjectId) {}
 
     private static final class Actor {
+        boolean nativeTamedDropInitialized;
+        long nativeTamedRespawnGeneration;
         final ClassicWorldMonsterCatalog.SpawnDefinition definition;
         final int spawnNumber;
         final long objectId;
@@ -771,14 +937,7 @@ final class ClassicWorldMonsterPopulation {
         }
 
         Snapshot snapshot() {
-            return new Snapshot(
-                    definition.mapId(), definition.spawnId(), spawnNumber,
-                    objectId, definition.template().npcId(), x, y, heading,
-                    currentHp, definition.template().hp(), currentMp,
-                    definition.template().mp(), alive, present,
-                    hiddenStatus, actorStatus, definition,
-                    runtimeGfxId, runtimeNameId, runtimeTitle, runtimeLawful,
-                    runtimePassispeed, runtimeAtkspeed);
+            return NativeCombatOrigin.worldSnapshot(new Snapshot(this.definition.mapId(), this.definition.spawnId(), this.spawnNumber, this.objectId, this.definition.template().npcId(), this.x, this.y, this.heading, this.currentHp, this.definition.template().hp(), this.currentMp, this.definition.template().mp(), this.alive, this.present, this.hiddenStatus, this.actorStatus, this.definition, this.runtimeGfxId, this.runtimeNameId, this.runtimeTitle, this.runtimeLawful, this.runtimePassispeed, this.runtimeAtkspeed), this);
         }
 
         void resetRuntimeAppearance() {
@@ -1990,8 +2149,8 @@ final class ClassicWorldMonsterPopulation {
         return isOccupied(new Cell(mapId, x, y));
     }
 
-    synchronized Hit damage(int mapId, long objectId, int damage) {
-        return damage(mapId, objectId, 0, damage);
+    synchronized Hit damage(int n, long l, int n2) {
+        return this.damage(n, l, 0L, n2);
     }
 
     synchronized Healing heal(int mapId, long objectId, int amount) {
@@ -2042,29 +2201,30 @@ final class ClassicWorldMonsterPopulation {
         return new ManaDrain(before, actor.snapshot(), requestedDrain, actualDrain);
     }
 
-    synchronized Capture captureTamed(int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.alive || !actor.present) return null;
-        Snapshot captured = actor.snapshot();
+    synchronized Capture captureTamed(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.alive || !actor.present) {
+            return null;
+        }
+        Snapshot snapshot = actor.snapshot();
         actor.present = false;
         actor.actived = false;
-        activatedActors.remove(objectId);
-        actor.targetObjectId = 0;
-        clearItemTargets(actor);
-        actor.nextActionNanos = 0;
+        this.activatedActors.remove(l);
+        actor.targetObjectId = 0L;
+        ClassicWorldMonsterPopulation.clearItemTargets(actor);
+        actor.nextActionNanos = 0L;
         actor.skillReadyNanos.clear();
         actor.physicalSkillUseCount.clear();
         actor.weaponBreakStacks = 0;
-        actor.hasteExpiresAtNanos = 0;
-        actor.slowExpiresAtNanos = 0;
-        actor.areaSilenceExpiresAtNanos = 0;
-        actor.windShackleExpiresAtNanos = 0;
-        actor.polluteWaterExpiresAtNanos = 0;
-        actor.strikerGaleExpiresAtNanos = 0;
-        actor.armorBreakExpiresAtNanos = 0;
-        actor.damagePoisonStatus.cancelMagicEffects();
-        clearPoisonSource(actor);
+        actor.hasteExpiresAtNanos = 0L;
+        actor.slowExpiresAtNanos = 0L;
+        actor.areaSilenceExpiresAtNanos = 0L;
+        actor.windShackleExpiresAtNanos = 0L;
+        actor.polluteWaterExpiresAtNanos = 0L;
+        actor.strikerGaleExpiresAtNanos = 0L;
+        actor.armorBreakExpiresAtNanos = 0L;
+        CombatMonsterParalysis.resetMagic(actor.damagePoisonStatus);
+        CombatMonsterCurseLifecycle.clearSource(actor, this);
         actor.elementalFallDownStatus.clear();
         actor.eraseMagicStatus.clear();
         actor.panicStatus.clear();
@@ -2073,8 +2233,8 @@ final class ClassicWorldMonsterPopulation {
         actor.contributionHate.clear();
         actor.pathFailCount = 0;
         actor.firstAttack = false;
-        vacate(new Cell(mapId, actor.x, actor.y));
-        return new Capture(captured, actor.snapshot());
+        this.vacate(new Cell(n, actor.x, actor.y));
+        return new Capture(snapshot, actor.snapshot());
     }
 
     synchronized TamedRelease releaseTamed(
@@ -2120,121 +2280,110 @@ final class ClassicWorldMonsterPopulation {
         return actor.snapshot();
     }
 
-    synchronized Hit damage(
-            int mapId, long objectId, long playerObjectId, int damage) {
-        Contribution source = playerObjectId > 0
-                ? new Contribution(playerObjectId, 1) : null;
-        return damage(mapId, objectId, source, damage);
+    synchronized Hit damage(int n, long l, long l2, int n2) {
+        Contribution contribution = l2 > 0L ? new Contribution(l2, 1L) : null;
+        return this.damage(n, l, contribution, n2);
     }
 
-    synchronized Hit damage(
-            int mapId, long objectId, ContributorKind kind,
-            long sourceObjectId, long playerObjectId, int damage) {
-        return damage(mapId, objectId,
-                new Contribution(kind, sourceObjectId, playerObjectId, 1), damage);
+    synchronized Hit damage(int n, long l, ContributorKind contributorKind, long l2, long l3, int n2) {
+        return this.damage(n, l, new Contribution(contributorKind, l2, l3, 1L), n2);
     }
 
-    private synchronized Hit damage(
-            int mapId, long objectId, Contribution source, int damage) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive || damage <= 0
-                || actor.hiddenStatus == HIDDEN_STATUS_SINK
-                || actor.hiddenStatus == HIDDEN_STATUS_FLY
-                || actor.damagePoisonStatus.earthBindActive(
-                        System.nanoTime())) {
+    private synchronized Hit damage(int n, long l, Contribution contribution, int n2) {
+        Actor actor;
+        block8: {
+            block7: {
+                actor = this.actors.get(l);
+                if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || CombatWorldCommit.input(n2, actor) <= 0) break block7;
+                Actor actor2 = actor;
+                if (CombatMonsterCurseLifecycle.damageHidden(actor2, actor2.hiddenStatus) == 1) break block7;
+                Actor actor3 = actor;
+                if (CombatMonsterCurseLifecycle.damageHidden(actor3, actor3.hiddenStatus) != 2 && !CombatMonsterCurseLifecycle.damageEarthBound(actor.damagePoisonStatus, System.nanoTime())) break block8;
+            }
             return null;
         }
-        Snapshot before = actor.snapshot();
-        int applied = Math.min(actor.currentHp, damage);
-        actor.currentHp -= applied;
-        actor.damagePoisonStatus.cancelSleep();
-        if (source != null) {
-            long hate = damage;
+        Snapshot snapshot = actor.snapshot();
+        int n3 = CombatWorldCommit.delta(actor.currentHp, n2, actor);
+        actor.currentHp -= n3;
+        CombatWorldCommit.sleep(actor.damagePoisonStatus, n2);
+        if (CombatWorldCommit.hate(contribution, n2) != null) {
+            long l2 = n2;
             if (!actor.firstAttack) {
-                hate = Math.addExact(hate,
-                        actor.definition.template().hp() / 10L);
+                l2 = Math.addExact(l2, (long)actor.definition.template().hp() / 10L);
                 actor.firstAttack = true;
             }
-            ContributorKey key = new ContributorKey(
-                    source.kind(), source.sourceObjectId(), source.playerObjectId());
-            actor.contributionHate.merge(key, hate, Math::addExact);
-            actor.combatHate.merge(
-                    source.sourceObjectId(), hate, Math::addExact);
-            actor.targetObjectId = maxCombatHateTarget(actor);
+            ContributorKey contributorKey = new ContributorKey(contribution.kind(), contribution.sourceObjectId(), contribution.playerObjectId());
+            actor.contributionHate.merge(contributorKey, l2, Math::addExact);
+            actor.combatHate.merge(contribution.sourceObjectId(), l2, Math::addExact);
+            actor.targetObjectId = ClassicWorldMonsterPopulation.maxCombatHateTarget(actor);
             actor.pathFailCount = 0;
-            if (source.kind() == ContributorKind.PLAYER) {
-                actor.pendingFamilyTargetObjectId = source.playerObjectId();
+            if (contribution.kind() == ContributorKind.PLAYER) {
+                actor.pendingFamilyTargetObjectId = contribution.playerObjectId();
             }
         }
-        boolean diedNow = actor.currentHp == 0;
-        List<Contribution> contributions = List.of();
-        if (diedNow) {
-            contributions = actor.contributionHate.entrySet().stream()
-                    .map(entry -> new Contribution(
-                            entry.getKey().kind(), entry.getKey().sourceObjectId(),
-                            entry.getKey().playerObjectId(), entry.getValue()))
-                    .toList();
+        boolean bl = actor.currentHp == 0;
+        List<Contribution> list = List.of();
+        if (bl) {
+            list = actor.contributionHate.entrySet().stream().map(entry -> new Contribution(((ContributorKey)entry.getKey()).kind(), ((ContributorKey)entry.getKey()).sourceObjectId(), ((ContributorKey)entry.getKey()).playerObjectId(), (Long)entry.getValue())).toList();
             actor.contributionHate.clear();
             actor.alive = false;
             actor.actived = false;
-            activatedActors.remove(objectId);
-            actor.targetObjectId = 0;
-            clearItemTargets(actor);
-            actor.pendingFamilyTargetObjectId = 0;
-            actor.nextActionNanos = 0;
+            this.activatedActors.remove(l);
+            actor.targetObjectId = 0L;
+            ClassicWorldMonsterPopulation.clearItemTargets(actor);
+            actor.pendingFamilyTargetObjectId = 0L;
+            actor.nextActionNanos = 0L;
             actor.skillReadyNanos.clear();
             actor.physicalSkillUseCount.clear();
             actor.combatHate.clear();
             actor.pathFailCount = 0;
             actor.weaponBreakStacks = 0;
-            actor.hasteExpiresAtNanos = 0;
-            actor.slowExpiresAtNanos = 0;
-            actor.areaSilenceExpiresAtNanos = 0;
-            actor.windShackleExpiresAtNanos = 0;
-            actor.polluteWaterExpiresAtNanos = 0;
-            actor.strikerGaleExpiresAtNanos = 0;
-            actor.armorBreakExpiresAtNanos = 0;
-            actor.damagePoisonStatus.cancelMagicEffects();
-            clearPoisonSource(actor);
+            actor.hasteExpiresAtNanos = 0L;
+            actor.slowExpiresAtNanos = 0L;
+            actor.areaSilenceExpiresAtNanos = 0L;
+            actor.windShackleExpiresAtNanos = 0L;
+            actor.polluteWaterExpiresAtNanos = 0L;
+            actor.strikerGaleExpiresAtNanos = 0L;
+            actor.armorBreakExpiresAtNanos = 0L;
+            CombatMonsterParalysis.resetMagic(actor.damagePoisonStatus);
+            CombatMonsterCurseLifecycle.clearSource(actor, this);
             actor.elementalFallDownStatus.clear();
             actor.eraseMagicStatus.clear();
             actor.panicStatus.clear();
             actor.joyOfPainStatus.clear();
-            vacate(new Cell(mapId, actor.x, actor.y));
+            this.vacate(new Cell(n, actor.x, actor.y));
         }
-        return new Hit(before, actor.snapshot(), applied, diedNow, contributions);
+        return new Hit(snapshot, actor.snapshot(), CombatWorldCommit.applied(n3), bl, list);
     }
 
-    synchronized Snapshot removeCorpse(int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || actor.alive || !actor.present) {
+    synchronized Snapshot removeCorpse(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || actor.alive || !actor.present) {
             return null;
         }
-        detachMobGroup(actor);
+        this.detachMobGroup(actor);
         actor.present = false;
         actor.actived = false;
-        activatedActors.remove(objectId);
-        wanderedActors.remove(objectId);
-        actor.targetObjectId = 0;
-        clearItemTargets(actor);
-        actor.pendingFamilyTargetObjectId = 0;
-        actor.nextActionNanos = 0;
+        this.activatedActors.remove(l);
+        this.wanderedActors.remove(l);
+        actor.targetObjectId = 0L;
+        ClassicWorldMonsterPopulation.clearItemTargets(actor);
+        actor.pendingFamilyTargetObjectId = 0L;
+        actor.nextActionNanos = 0L;
         actor.randomMoveDistance = 0;
         actor.randomMoveDirection = 0;
         actor.skillReadyNanos.clear();
         actor.physicalSkillUseCount.clear();
         actor.weaponBreakStacks = 0;
-        actor.hasteExpiresAtNanos = 0;
-        actor.slowExpiresAtNanos = 0;
-        actor.areaSilenceExpiresAtNanos = 0;
-        actor.windShackleExpiresAtNanos = 0;
-        actor.polluteWaterExpiresAtNanos = 0;
-        actor.strikerGaleExpiresAtNanos = 0;
-        actor.armorBreakExpiresAtNanos = 0;
-        actor.damagePoisonStatus.cancelMagicEffects();
-        clearPoisonSource(actor);
+        actor.hasteExpiresAtNanos = 0L;
+        actor.slowExpiresAtNanos = 0L;
+        actor.areaSilenceExpiresAtNanos = 0L;
+        actor.windShackleExpiresAtNanos = 0L;
+        actor.polluteWaterExpiresAtNanos = 0L;
+        actor.strikerGaleExpiresAtNanos = 0L;
+        actor.armorBreakExpiresAtNanos = 0L;
+        CombatMonsterParalysis.resetMagic(actor.damagePoisonStatus);
+        CombatMonsterCurseLifecycle.clearSource(actor, this);
         actor.elementalFallDownStatus.clear();
         actor.eraseMagicStatus.clear();
         actor.panicStatus.clear();
@@ -2242,76 +2391,80 @@ final class ClassicWorldMonsterPopulation {
         actor.combatHate.clear();
         actor.contributionHate.clear();
         actor.pathFailCount = 0;
-        Snapshot removed = actor.snapshot();
+        Snapshot snapshot = actor.snapshot();
         if (actor.oneShot) {
-            actors.remove(objectId);
-            if (actor.mobGroupMinion) mobGroupMinionCount--;
+            this.actors.remove(l);
+            if (actor.mobGroupMinion) {
+                --this.mobGroupMinionCount;
+            }
         }
-        return removed;
+        return snapshot;
     }
 
-    synchronized Snapshot nativeCancellationDelete(int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId) {
+    synchronized Snapshot nativeCancellationDelete(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || !actor.present || actor.definition.mapId() != n) {
             return null;
         }
-        if (!actor.alive && actor.present) {
-            return this.removeCorpse(mapId, objectId);
+        if (actor.alive) {
+            actor.alive = false;
+            actor.currentHp = 0;
+            this.vacate(new Cell(n, actor.x, actor.y));
         }
-        Snapshot removed = actor.snapshot();
-        actor.present = false;
-        actor.alive = false;
-        actor.actived = false;
-        activatedActors.remove(objectId);
-        wanderedActors.remove(objectId);
-        vacate(new Cell(mapId, actor.x, actor.y));
-        if (actor.oneShot) {
-            actors.remove(objectId);
-        }
-        return removed;
+        actor.releasedItems.clear();
+        actor.digestSeconds.clear();
+        this.digestActors.remove(l);
+        return this.removeCorpse(n, l);
     }
 
-    synchronized Snapshot nativeCancellationSpawn(
-            int mapId, long objectId, ClassicWorldMonsterCatalog.MonsterTemplate template) {
-        Snapshot origin = this.actor(mapId, objectId);
-        if (origin == null || template == null) {
+    synchronized Snapshot nativeCancellationSpawn(int n, long l, ClassicWorldMonsterCatalog.MonsterTemplate monsterTemplate) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || !actor.alive || !actor.present || actor.definition.mapId() != n || monsterTemplate == null || this.nextQuestDynamicObjectId <= 0L || this.nextQuestDynamicObjectId > this.questDynamicObjectEnd || this.actors.containsKey(this.nextQuestDynamicObjectId)) {
             return null;
         }
-        return this.spawnQuestMonsterAt(
-                mapId, template.npcId(), origin.x(), origin.y(), origin.heading(), template);
+        long l2 = this.nextQuestDynamicObjectId;
+        ClassicWorldMonsterCatalog.SpawnDefinition spawnDefinition = new ClassicWorldMonsterCatalog.SpawnDefinition(n, actor.definition.spawnId(), "cancellation-runtime-spawn", 1, 0, actor.x, actor.y, 0, 0, 0, 0, 0, 0, actor.heading, 0, 0, false, 30, false, 0, monsterTemplate);
+        Actor actor2 = new Actor(spawnDefinition, 1, l2, new Random(ClassicWorldMonsterPopulation.mix64(l2)), true, List.of());
+        actor2.x = actor.x;
+        actor2.y = actor.y;
+        actor2.homeX = actor.x;
+        actor2.homeY = actor.y;
+        actor2.heading = actor.heading;
+        Snapshot snapshot = actor2.snapshot();
+        this.occupy(new Cell(n, actor2.x, actor2.y));
+        this.actors.put(l2, actor2);
+        ++this.nextQuestDynamicObjectId;
+        return snapshot;
     }
 
-    synchronized Resurrection resurrect(
-            int mapId, long objectId, int restoredHp) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || actor.alive || !actor.present || restoredHp <= 0
-                || restoredHp > actor.definition.template().hp()) {
+    synchronized Resurrection resurrect(int n, long l, int n2) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || actor.alive || !actor.present || n2 <= 0 || n2 > actor.definition.template().hp()) {
             return null;
         }
-        Snapshot before = actor.snapshot();
-        actor.currentHp = restoredHp;
+        Snapshot snapshot = actor.snapshot();
+        actor.currentHp = n2;
         actor.alive = true;
         actor.actived = false;
-        activatedActors.remove(objectId);
-        actor.targetObjectId = 0;
-        clearItemTargets(actor);
-        actor.pendingFamilyTargetObjectId = 0;
-        actor.nextActionNanos = 0;
+        this.activatedActors.remove(l);
+        actor.targetObjectId = 0L;
+        ClassicWorldMonsterPopulation.clearItemTargets(actor);
+        actor.pendingFamilyTargetObjectId = 0L;
+        actor.nextActionNanos = 0L;
         actor.randomMoveDistance = 0;
         actor.randomMoveDirection = 0;
         actor.skillReadyNanos.clear();
         actor.physicalSkillUseCount.clear();
         actor.weaponBreakStacks = 0;
-        actor.hasteExpiresAtNanos = 0;
-        actor.slowExpiresAtNanos = 0;
-        actor.areaSilenceExpiresAtNanos = 0;
-        actor.windShackleExpiresAtNanos = 0;
-        actor.polluteWaterExpiresAtNanos = 0;
-        actor.strikerGaleExpiresAtNanos = 0;
-        actor.armorBreakExpiresAtNanos = 0;
-        actor.damagePoisonStatus.cancelMagicEffects();
-        clearPoisonSource(actor);
+        actor.hasteExpiresAtNanos = 0L;
+        actor.slowExpiresAtNanos = 0L;
+        actor.areaSilenceExpiresAtNanos = 0L;
+        actor.windShackleExpiresAtNanos = 0L;
+        actor.polluteWaterExpiresAtNanos = 0L;
+        actor.strikerGaleExpiresAtNanos = 0L;
+        actor.armorBreakExpiresAtNanos = 0L;
+        CombatMonsterParalysis.resetMagic(actor.damagePoisonStatus);
+        CombatMonsterCurseLifecycle.clearSource(actor, this);
         actor.elementalFallDownStatus.clear();
         actor.eraseMagicStatus.clear();
         actor.panicStatus.clear();
@@ -2320,48 +2473,44 @@ final class ClassicWorldMonsterPopulation {
         actor.contributionHate.clear();
         actor.pathFailCount = 0;
         actor.firstAttack = false;
-        // Retained L1NpcInstance resurrection does not reject a monster just
-        // because another actor entered the corpse cell. Population occupancy
-        // is therefore reference-counted here rather than relocated.
-        occupy(new Cell(mapId, actor.x, actor.y));
-        return new Resurrection(before, actor.snapshot());
+        this.occupy(new Cell(n, actor.x, actor.y));
+        return new Resurrection(snapshot, actor.snapshot());
     }
 
-    synchronized Respawn respawn(int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || actor.alive || actor.present) {
+    synchronized Respawn respawn(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || actor.alive || actor.present) {
             return null;
         }
-        Snapshot before = actor.snapshot();
+        Snapshot snapshot = actor.snapshot();
         actor.currentHp = actor.definition.template().hp();
         actor.currentMp = actor.definition.template().mp();
         actor.alive = true;
         actor.present = true;
         actor.actived = false;
-        activatedActors.remove(objectId);
+        this.activatedActors.remove(l);
         actor.heading = actor.definition.heading();
-        actor.targetObjectId = 0;
-        clearItemTargets(actor);
+        actor.targetObjectId = 0L;
+        ClassicWorldMonsterPopulation.clearItemTargets(actor);
         actor.releasedItems.clear();
         actor.digestSeconds.clear();
-        digestActors.remove(objectId);
-        actor.pendingFamilyTargetObjectId = 0;
-        actor.nextActionNanos = 0;
+        this.digestActors.remove(l);
+        actor.pendingFamilyTargetObjectId = 0L;
+        actor.nextActionNanos = 0L;
         actor.randomMoveDistance = 0;
         actor.randomMoveDirection = 0;
         actor.skillReadyNanos.clear();
         actor.physicalSkillUseCount.clear();
         actor.weaponBreakStacks = 0;
-        actor.hasteExpiresAtNanos = 0;
-        actor.slowExpiresAtNanos = 0;
-        actor.areaSilenceExpiresAtNanos = 0;
-        actor.windShackleExpiresAtNanos = 0;
-        actor.polluteWaterExpiresAtNanos = 0;
-        actor.strikerGaleExpiresAtNanos = 0;
-        actor.armorBreakExpiresAtNanos = 0;
-        actor.damagePoisonStatus.cancelMagicEffects();
-        clearPoisonSource(actor);
+        actor.hasteExpiresAtNanos = 0L;
+        actor.slowExpiresAtNanos = 0L;
+        actor.areaSilenceExpiresAtNanos = 0L;
+        actor.windShackleExpiresAtNanos = 0L;
+        actor.polluteWaterExpiresAtNanos = 0L;
+        actor.strikerGaleExpiresAtNanos = 0L;
+        actor.armorBreakExpiresAtNanos = 0L;
+        CombatMonsterParalysis.resetMagic(actor.damagePoisonStatus);
+        CombatMonsterCurseLifecycle.clearSource(actor, this);
         actor.elementalFallDownStatus.clear();
         actor.eraseMagicStatus.clear();
         actor.panicStatus.clear();
@@ -2371,15 +2520,17 @@ final class ClassicWorldMonsterPopulation {
         actor.pathFailCount = 0;
         actor.firstAttack = false;
         actor.resetRuntimeAppearance();
-        if (!place(actor)) {
+        actor.nativeTamedDropInitialized = false;
+        NativeTamedWorldLifecycle.retireRespawn(actor);
+        if (!this.place(actor)) {
             actor.currentHp = 0;
             actor.alive = false;
             actor.present = false;
             return null;
         }
         actor.resetInitialHiddenState();
-        List<Snapshot> groupMembers = spawnRespawnMobGroup(actor);
-        return new Respawn(before, actor.snapshot(), groupMembers);
+        List<Snapshot> list = this.spawnRespawnMobGroup(actor);
+        return new Respawn(snapshot, actor.snapshot(), list);
     }
 
     synchronized int nextRespawnDelaySeconds(int mapId, long objectId) {
@@ -2587,48 +2738,36 @@ final class ClassicWorldMonsterPopulation {
      * ordinary WORLD actor and resets the retained NPC weapon-break counter in
      * the same population lock.
      */
-    synchronized MagicCancellation cancelMagicEffects(
-            int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive) return null;
-        Snapshot target = actor.snapshot();
-        boolean haste = actor.hasteExpiresAtNanos != 0;
-        boolean slow = actor.slowExpiresAtNanos != 0;
-        boolean silence = actor.areaSilenceExpiresAtNanos != 0;
-        boolean windShackle = actor.windShackleExpiresAtNanos != 0;
-        boolean polluteWater = actor.polluteWaterExpiresAtNanos != 0;
-        boolean strikerGale = actor.strikerGaleExpiresAtNanos != 0;
-        boolean armorBreak = actor.armorBreakExpiresAtNanos != 0;
-        boolean weaponBreak = actor.weaponBreakStacks != 0;
-        BattleTimedStatus.MagicCancellation timed =
-                actor.damagePoisonStatus.cancelMagicEffects();
-        BattleElementalFallDownStatus.Cancellation elementalFallDown =
-                actor.elementalFallDownStatus.cancel();
-        boolean eraseMagic = actor.eraseMagicStatus.cancel();
+    synchronized MagicCancellation cancelMagicEffects(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive) {
+            return null;
+        }
+        Snapshot snapshot = actor.snapshot();
+        boolean bl = actor.hasteExpiresAtNanos != 0L;
+        boolean bl2 = actor.slowExpiresAtNanos != 0L;
+        boolean bl3 = actor.areaSilenceExpiresAtNanos != 0L;
+        boolean bl4 = actor.windShackleExpiresAtNanos != 0L;
+        boolean bl5 = actor.polluteWaterExpiresAtNanos != 0L;
+        boolean bl6 = actor.strikerGaleExpiresAtNanos != 0L;
+        boolean bl7 = actor.armorBreakExpiresAtNanos != 0L;
+        boolean bl8 = actor.weaponBreakStacks != 0;
+        BattleTimedStatus.MagicCancellation magicCancellation = CombatMonsterParalysis.cancelMagic(actor.damagePoisonStatus);
+        BattleElementalFallDownStatus.Cancellation cancellation = actor.elementalFallDownStatus.cancel();
+        boolean bl9 = actor.eraseMagicStatus.cancel();
         actor.armBreakerStatus.cancel();
-        boolean panic = actor.panicStatus.cancel();
+        boolean bl10 = actor.panicStatus.cancel();
         actor.joyOfPainStatus.cancel();
         actor.weaponBreakStacks = 0;
-        actor.hasteExpiresAtNanos = 0;
-        actor.slowExpiresAtNanos = 0;
-        actor.areaSilenceExpiresAtNanos = 0;
-        actor.windShackleExpiresAtNanos = 0;
-        actor.polluteWaterExpiresAtNanos = 0;
-        actor.strikerGaleExpiresAtNanos = 0;
-        actor.armorBreakExpiresAtNanos = 0;
-        clearPoisonSource(actor);
-        return new MagicCancellation(
-                target, haste, slow, timed.blind(),
-                timed.weakness(), timed.disease(),
-                silence || timed.silence(),
-                timed.decayPotion(),
-                timed.poison(), timed.paralysisCancellation().present(),
-                timed.sleep(), timed.freeze(), timed.earthBind(),
-                timed.thunderGrab(), timed.horrorOfDeath(), windShackle,
-                timed.boneBreak(),
-                polluteWater, strikerGale,
-                elementalFallDown, eraseMagic, armorBreak, weaponBreak, panic);
+        actor.hasteExpiresAtNanos = 0L;
+        actor.slowExpiresAtNanos = 0L;
+        actor.areaSilenceExpiresAtNanos = 0L;
+        actor.windShackleExpiresAtNanos = 0L;
+        actor.polluteWaterExpiresAtNanos = 0L;
+        actor.strikerGaleExpiresAtNanos = 0L;
+        actor.armorBreakExpiresAtNanos = 0L;
+        CombatMonsterCurseLifecycle.clearSource(actor, this);
+        return new MagicCancellation(snapshot, bl, bl2, magicCancellation.blind(), magicCancellation.weakness(), magicCancellation.disease(), bl3 || magicCancellation.silence(), magicCancellation.decayPotion(), magicCancellation.poison(), magicCancellation.paralysisCancellation().present(), magicCancellation.sleep(), magicCancellation.freeze(), magicCancellation.earthBind(), magicCancellation.thunderGrab(), magicCancellation.horrorOfDeath(), bl4, magicCancellation.boneBreak(), bl5, bl6, cancellation, bl9, bl7, bl8, bl10);
     }
 
     synchronized List<Snapshot> expireHastes(int mapId, long nowNanos) {
@@ -2644,14 +2783,14 @@ final class ClassicWorldMonsterPopulation {
         return List.copyOf(expired);
     }
 
-    private static boolean poisonLeaseActive(Actor actor, long nowNanos) {
-        return switch (actor.poisonKind) {
-            case DAMAGE -> actor.damagePoisonStatus.poisonActive(nowNanos);
+    private static boolean poisonLeaseActive(Actor actor, long l) {
+        return CombatMonsterCurseLifecycle.poisonExisting(switch (actor.poisonKind) {
+            default -> throw new IncompatibleClassChangeError();
+            case DAMAGE -> CombatMonsterCurseLifecycle.damageActive(actor.damagePoisonStatus, l);
             case SILENCE -> actor.damagePoisonStatus.poisonSilenceActive();
-            case PARALYSIS -> actor.damagePoisonStatus
-                    .paralysisVisualActive(nowNanos);
+            case PARALYSIS -> CombatMonsterParalysis.poisonVisual(actor.damagePoisonStatus, l);
             case NONE -> false;
-        };
+        }, actor.damagePoisonStatus);
     }
 
     private static void setPoisonSource(
@@ -2671,24 +2810,16 @@ final class ClassicWorldMonsterPopulation {
         actor.poisonKind = ClassicWorldMonsterPoisonAttack.Kind.NONE;
     }
 
-    synchronized boolean poison(
-            int mapId, long objectId, long attackerObjectId, long nowNanos,
-            int durationSeconds, int tickIntervalMillis) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive || attackerObjectId <= 0
-                || attackerObjectId > 0xFFFF_FFFFL || nowNanos < 0
-                || durationSeconds <= 0 || tickIntervalMillis <= 0) {
+    synchronized boolean poison(int n, long l, long l2, long l3, int n2, int n3) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || l2 <= 0L || l2 > 0xFFFFFFFFL || l3 < 0L || n2 <= 0 || n3 <= 0) {
             return false;
         }
-        boolean activated = actor.damagePoisonStatus.activatePoison(
-                nowNanos, durationSeconds, tickIntervalMillis);
-        if (activated) {
-            setPoisonSource(actor, ContributorKind.PLAYER,
-                    attackerObjectId, attackerObjectId,
-                    ClassicWorldMonsterPoisonAttack.Kind.DAMAGE);
+        boolean bl = CombatMonsterCurseLifecycle.damage(actor.damagePoisonStatus, l3, n2, n3);
+        if (bl) {
+            ClassicWorldMonsterPopulation.setPoisonSource(actor, ContributorKind.PLAYER, l2, l2, ClassicWorldMonsterPoisonAttack.Kind.DAMAGE);
         }
-        return activated;
+        return bl;
     }
 
     /**
@@ -2697,43 +2828,25 @@ final class ClassicWorldMonsterPopulation {
      * installed poison object is nevertheless exclusive across damage,
      * silence and paralysis poison kinds.
      */
-    synchronized NpcPoison npcPoison(
-            int mapId, long objectId, ContributorKind contributorKind,
-            long attackerObjectId, long playerObjectId,
-            ClassicWorldMonsterPoisonAttack.Kind kind, long nowNanos) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive || contributorKind == null
-                || attackerObjectId <= 0 || attackerObjectId > 0xFFFF_FFFFL
-                || playerObjectId <= 0 || playerObjectId > 0xFFFF_FFFFL
-                || contributorKind == ContributorKind.PLAYER
-                    && attackerObjectId != playerObjectId
-                || kind == null || nowNanos < 0) {
+    synchronized NpcPoison npcPoison(int n, long l, ContributorKind contributorKind, long l2, long l3, ClassicWorldMonsterPoisonAttack.Kind kind, long l4) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || contributorKind == null || l2 <= 0L || l2 > 0xFFFFFFFFL || l3 <= 0L || l3 > 0xFFFFFFFFL || contributorKind == ContributorKind.PLAYER && l2 != l3 || kind == null || l4 < 0L) {
             return null;
         }
-        boolean existingPoison = poisonLeaseActive(actor, nowNanos);
-        boolean applied = false;
-        if (kind != ClassicWorldMonsterPoisonAttack.Kind.NONE
-                && !existingPoison) {
-            applied = switch (kind) {
-                case DAMAGE -> actor.damagePoisonStatus.activatePoison(
-                        nowNanos,
-                        ClassicWorldMonsterPoisonAttack.DAMAGE_DURATION_SECONDS,
-                        ClassicWorldMonsterPoisonAttack.DAMAGE_TICK_MILLIS);
-                case SILENCE -> actor.damagePoisonStatus
-                        .activatePoisonSilence(nowNanos);
-                case PARALYSIS -> actor.damagePoisonStatus.activateParalysis(
-                        nowNanos,
-                        ClassicWorldMonsterPoisonAttack.PARALYSIS_WARNING_MILLIS,
-                        ClassicWorldMonsterPoisonAttack.PARALYSIS_DURATION_MILLIS);
+        boolean bl = ClassicWorldMonsterPopulation.poisonLeaseActive(actor, l4);
+        boolean bl2 = false;
+        if (kind != ClassicWorldMonsterPoisonAttack.Kind.NONE && !bl) {
+            bl2 = switch (kind) {
+                case DAMAGE -> CombatMonsterCurseLifecycle.damage(actor.damagePoisonStatus, l4, 30, 3000);
+                case SILENCE -> actor.damagePoisonStatus.activatePoisonSilence(l4);
+                case PARALYSIS -> actor.damagePoisonStatus.activateParalysis(l4, 20000, 45000);
                 case NONE -> false;
             };
         }
-        if (applied) {
-            setPoisonSource(actor, contributorKind, attackerObjectId,
-                    playerObjectId, kind);
+        if (bl2) {
+            ClassicWorldMonsterPopulation.setPoisonSource(actor, contributorKind, l2, l3, kind);
         }
-        return new NpcPoison(kind, actor.snapshot(), existingPoison, applied);
+        return new NpcPoison(kind, actor.snapshot(), bl, bl2);
     }
 
     /** Retained DARKNESS status shared by skills 20, 40 and 103. */
@@ -2884,38 +2997,36 @@ final class ClassicWorldMonsterPopulation {
                 && poisonLeaseActive(actor, nowNanos);
     }
 
-    synchronized boolean curePoison(int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive) return false;
-        boolean cured = actor.damagePoisonStatus.curePoison()
-                | actor.damagePoisonStatus.curePoisonSilence();
-        if (actor.poisonKind
-                == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS) {
-            cured |= actor.damagePoisonStatus.cancelParalysis().present();
+    synchronized boolean curePoison(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive) {
+            return false;
         }
-        if (cured || actor.poisonKind
-                != ClassicWorldMonsterPoisonAttack.Kind.NONE) {
-            clearPoisonSource(actor);
+        boolean bl = CombatMonsterCurseLifecycle.cureDamage(actor.damagePoisonStatus) | CombatMonsterCurseLifecycle.cureSilence(actor.damagePoisonStatus);
+        if (actor.poisonKind == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS) {
+            bl |= CombatMonsterCurseLifecycle.curePoisonParalysis(actor.damagePoisonStatus).present();
         }
-        return cured;
+        if (bl || actor.poisonKind != ClassicWorldMonsterPoisonAttack.Kind.NONE) {
+            CombatMonsterCurseLifecycle.clearSource(actor, this);
+        }
+        return bl;
     }
 
-    synchronized int poisonPalette(
-            int mapId, long objectId, long nowNanos) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive || nowNanos < 0) return 0;
-        if (actor.damagePoisonStatus.freezeVisualLockActive(nowNanos)) return 2;
-        if (actor.damagePoisonStatus.paralysisVisualActive(nowNanos)) {
-            if (actor.poisonKind
-                    == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS) {
-                return actor.damagePoisonStatus.paralysisActive(nowNanos) ? 2 : 1;
+    synchronized int poisonPalette(int n, long l, long l2) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || l2 < 0L) {
+            return 0;
+        }
+        if (CombatMonsterParalysis.paletteFirst(CombatWorldFreeze.rawFrozen(actor.damagePoisonStatus.freezeVisualLockActive(l2), actor.damagePoisonStatus), actor.damagePoisonStatus, l2)) {
+            return 2;
+        }
+        if (actor.damagePoisonStatus.paralysisVisualActive(l2)) {
+            if (actor.poisonKind == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS) {
+                return CombatMonsterCurseLifecycle.poisonParalysisColor(actor.damagePoisonStatus, l2) ? 2 : 1;
             }
             return 2;
         }
-        return actor.damagePoisonStatus.poisonActive(nowNanos)
-                || actor.damagePoisonStatus.poisonSilenceActive() ? 1 : 0;
+        return CombatMonsterCurseLifecycle.damageActive(actor.damagePoisonStatus, l2) || actor.damagePoisonStatus.poisonSilenceActive() ? 1 : 0;
     }
 
     synchronized boolean freeze(
@@ -3236,38 +3347,29 @@ final class ClassicWorldMonsterPopulation {
     }
 
     /** Retained player-cast Curse Paralysis is immediate for monster targets. */
-    synchronized boolean paralysis(
-            int mapId, long objectId, long nowNanos, int durationMillis) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive || nowNanos < 0
-                || durationMillis <= 0) return false;
-        return actor.damagePoisonStatus.activateParalysis(
-                nowNanos, 0, durationMillis);
+    synchronized boolean paralysis(int n, long l, long l2, int n2) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || l2 < 0L || n2 <= 0) {
+            return false;
+        }
+        return CombatMonsterParalysis.activate(actor.damagePoisonStatus, l2, 0, n2);
     }
 
-    synchronized boolean paralysisActive(
-            int mapId, long objectId, long nowNanos) {
-        Actor actor = actors.get(objectId);
-        return actor != null && actor.definition.mapId() == mapId
-                && actor.present && actor.alive && nowNanos >= 0
-                && actor.damagePoisonStatus.paralysisVisualActive(nowNanos);
+    synchronized boolean paralysisActive(int n, long l, long l2) {
+        Actor actor = this.actors.get(l);
+        return actor != null && actor.definition.mapId() == n && actor.present && actor.alive && l2 >= 0L && CombatMonsterParalysis.curseVisual(actor.damagePoisonStatus, l2);
     }
 
-    synchronized BattleTimedStatus.ParalysisCancellation cureParalysis(
-            int mapId, long objectId) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive) {
+    synchronized BattleTimedStatus.ParalysisCancellation cureParalysis(int n, long l) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive) {
             return new BattleTimedStatus.ParalysisCancellation(false, false);
         }
-        BattleTimedStatus.ParalysisCancellation cancellation =
-                actor.damagePoisonStatus.cancelParalysis();
-        if (cancellation.present() && actor.poisonKind
-                == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS) {
-            clearPoisonSource(actor);
+        BattleTimedStatus.ParalysisCancellation paralysisCancellation = CombatMonsterParalysis.cancelCurse(actor.damagePoisonStatus);
+        if (CombatMonsterParalysis.legacyPoisonCancellation(paralysisCancellation) && actor.poisonKind == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS) {
+            CombatMonsterCurseLifecycle.clearSource(actor, this);
         }
-        return cancellation;
+        return paralysisCancellation;
     }
 
     synchronized List<Snapshot> expireParalyses(int mapId, long nowNanos) {
@@ -3277,60 +3379,54 @@ final class ClassicWorldMonsterPopulation {
                 .toList();
     }
 
-    synchronized List<ParalysisUpdate> pollParalyses(
-            int mapId, long nowNanos) {
-        if (mapId < 0 || nowNanos < 0) return List.of();
-        List<ParalysisUpdate> updates = new ArrayList<>();
-        for (Actor actor : actors.values()) {
-            if (actor.definition.mapId() != mapId || !actor.present
-                    || !actor.alive) continue;
-            boolean poisonParalysis = actor.poisonKind
-                    == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS;
-            BattleTimedStatus.ParalysisPoll poll =
-                    actor.damagePoisonStatus.pollParalysis(nowNanos);
-            if (poll.expired() && poisonParalysis) clearPoisonSource(actor);
-            if (poll.expired() || poll.activated() && poisonParalysis) {
-                updates.add(new ParalysisUpdate(
-                        actor.snapshot(), poll.activated(), poll.expired(),
-                        poisonParalysis));
-            }
+    synchronized List<ParalysisUpdate> pollParalyses(int n, long l) {
+        if (n < 0 || l < 0L) {
+            return List.of();
         }
-        return List.copyOf(updates);
+        List<ParalysisUpdate> arrayList = new ArrayList<ParalysisUpdate>();
+        for (Actor actor : this.actors.values()) {
+            if (!(actor.definition.mapId() != n || !actor.present || !actor.alive)) {
+            boolean bl = actor.poisonKind == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS;
+            CombatMonsterParalysis.Poll poll = CombatMonsterParalysis.poll(actor.damagePoisonStatus, l);
+            if (poll.poisonExpired() && bl) {
+                CombatMonsterCurseLifecycle.clearSource(actor, this);
+            }
+            if (!poll.expired() && (!poll.activated() || !bl)) continue;
+            arrayList.add(new ParalysisUpdate(actor.snapshot(), poll.activated(), poll.expired(), CombatMonsterParalysis.poisonEvent(bl, poll)));
+
+            }
+}
+        return List.copyOf(arrayList);
     }
 
-    synchronized List<PoisonUpdate> pollPoisons(
-            int mapId, long nowNanos, int tickIntervalMillis, int tickDamage) {
-        if (mapId < 0 || nowNanos < 0 || tickIntervalMillis <= 0
-                || tickDamage <= 0) return List.of();
-        List<PoisonUpdate> updates = new ArrayList<>();
-        for (Actor actor : List.copyOf(actors.values())) {
-            if (actor.definition.mapId() != mapId || !actor.present
-                    || !actor.alive) continue;
-            long attackerObjectId = actor.poisonAttackerObjectId;
-            long playerObjectId = actor.poisonPlayerObjectId;
-            ContributorKind contributorKind = actor.poisonContributorKind;
-            BattleTimedStatus.PoisonPoll poll =
-                    actor.damagePoisonStatus.pollPoison(
-                            nowNanos, tickIntervalMillis);
-            if (attackerObjectId <= 0 || playerObjectId <= 0
-                    || contributorKind == null
-                    || poll.damageTicks() == 0 && !poll.expired()) continue;
-            List<Hit> hits = new ArrayList<>();
-            for (int tick = 0;
-                 tick < poll.damageTicks() && actor.alive; tick++) {
-                Hit hit = damage(
-                        mapId, actor.objectId, contributorKind,
-                        attackerObjectId, playerObjectId, tickDamage);
-                if (hit != null) hits.add(hit);
-            }
-            Snapshot finalTarget = hits.isEmpty()
-                    ? actor.snapshot() : hits.get(hits.size() - 1).after();
-            updates.add(new PoisonUpdate(
-                    contributorKind, attackerObjectId, playerObjectId,
-                    finalTarget, hits, poll.expired()));
-            if (poll.expired()) clearPoisonSource(actor);
+    synchronized List<PoisonUpdate> pollPoisons(int n, long l, int n2, int n3) {
+        if (n < 0 || l < 0L || n2 <= 0 || n3 <= 0) {
+            return List.of();
         }
-        return List.copyOf(updates);
+        List<PoisonUpdate> arrayList = new ArrayList<PoisonUpdate>();
+        for (Actor actor : List.copyOf(this.actors.values())) {
+            if (!(actor.definition.mapId() != n || !actor.present || !actor.alive)) {
+            long l2 = actor.poisonAttackerObjectId;
+            long l3 = actor.poisonPlayerObjectId;
+            ContributorKind contributorKind = actor.poisonContributorKind;
+            BattleTimedStatus.PoisonPoll poisonPoll = CombatMonsterCurseLifecycle.damagePoll(actor.damagePoisonStatus, l, n2);
+            if (l2 <= 0L || l3 <= 0L || contributorKind == null || poisonPoll.damageTicks() == 0 && !poisonPoll.expired()) continue;
+            List<Hit> arrayList2 = new ArrayList<Hit>();
+            for (int i = 0; i < poisonPoll.damageTicks() && actor.alive; ++i) {
+                Hit hit = this.damage(n, actor.objectId, contributorKind, l2, l3, n3);
+                if (!(hit == null)) {
+                arrayList2.add(hit);
+
+                }
+}
+            Snapshot snapshot = arrayList2.isEmpty() ? actor.snapshot() : ((Hit)arrayList2.get(arrayList2.size() - 1)).after();
+            arrayList.add(new PoisonUpdate(contributorKind, l2, l3, snapshot, arrayList2, poisonPoll.expired()));
+            if (!poisonPoll.expired()) continue;
+            CombatMonsterCurseLifecycle.clearSource(actor, this);
+
+            }
+}
+        return List.copyOf(arrayList);
     }
 
     synchronized boolean slowActive(
@@ -3801,8 +3897,8 @@ final class ClassicWorldMonsterPopulation {
             if (!map.standingPassable(landingX, landingY)
                     || isOccupied(new Cell(mapId, landingX, landingY))
                     || occupiedPlayers.contains(landing)
-                    || ClassicWorldNpcCatalog.occupies(
-                            mapId, landingX, landingY)) {
+                    || NativeStaticNpcMotion.occupies(
+                            mapId, landingX, landingY, this)) {
                 continue;
             }
             Snapshot before = actor.snapshot();
@@ -4246,74 +4342,49 @@ final class ClassicWorldMonsterPopulation {
                 ordinaryAttackPosition);
     }
 
-    synchronized Movement moveToward(
-            int mapId, long objectId, long playerObjectId,
-            int playerX, int playerY, Set<GridPoint> occupiedPlayers,
-            long nowNanos) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive
-                || actor.targetObjectId != playerObjectId
-                || nowNanos < actor.nextActionNanos
-                || actionLocked(actor, nowNanos)
-                || actor.runtimePassispeed <= 0) {
+    synchronized Movement moveToward(int n, long l, long l2, int n4, int n5, Set<GridPoint> set, long l3) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || actor.targetObjectId != l2 || l3 < actor.nextActionNanos || ClassicWorldMonsterPopulation.actionLocked(actor, l3) || actor.runtimePassispeed <= 0) {
             return null;
         }
-        ClassicWorldMapCatalog.ClassicMap map = ClassicWorldMapCatalog.forMap(mapId);
-        if (actor.damagePoisonStatus.blindActive(nowNanos)
-                && Math.max(Math.abs(actor.x - playerX),
-                        Math.abs(actor.y - playerY)) >= 2) {
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(n);
+        if (actor.damagePoisonStatus.blindActive(l3) && Math.max(Math.abs(actor.x - n4), Math.abs(actor.y - n5)) >= 2) {
             actor.pathFailCount = 0;
-            actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                    TRANSIENT_PATH_RETRY_MILLIS);
+            actor.nextActionNanos = l3 + TimeUnit.MILLISECONDS.toNanos(200L);
             return null;
         }
-        ClassicWorldNpcPathfinder.Result path =
-                ClassicWorldNpcPathfinder.nextStep(
-                        map, actor.x, actor.y, playerX, playerY,
-                        actor.definition.template().attackRange(),
-                        (x, y) -> isOccupied(new Cell(mapId, x, y))
-                                || occupiedPlayers.contains(new GridPoint(x, y))
-                                || ClassicWorldNpcCatalog.occupies(mapId, x, y));
-        if (!path.moved()) {
-            boolean bossPersistentChase = actor.definition.template().boss();
-            if (path.failure()
-                    != ClassicWorldNpcPathfinder.Failure.UNREACHABLE
-                    || bossPersistentChase) {
+        ClassicWorldNpcPathfinder.Result result = ClassicWorldNpcPathfinder.nextStep(classicMap, actor.x, actor.y, n4, n5, actor.definition.template().attackRange(), (n2, n3) -> this.isOccupied(new Cell(n, n2, n3)) || set.contains(new GridPoint(n2, n3)) || NativeStaticNpcMotion.occupies(n, n2, n3, this));
+        if (!result.moved()) {
+            boolean bl = actor.definition.template().boss();
+            if (result.failure() != ClassicWorldNpcPathfinder.Failure.UNREACHABLE || bl) {
                 actor.pathFailCount = 0;
             } else {
-                actor.pathFailCount++;
-                if (actor.pathFailCount >= PATH_FAIL_GIVE_UP) {
-                    actor.combatHate.remove(playerObjectId);
-                    actor.targetObjectId = maxCombatHateTarget(actor);
-                    if (actor.pendingFamilyTargetObjectId == playerObjectId) {
-                        actor.pendingFamilyTargetObjectId = 0;
+                ++actor.pathFailCount;
+                if (actor.pathFailCount >= 3) {
+                    actor.combatHate.remove(l2);
+                    actor.targetObjectId = ClassicWorldMonsterPopulation.maxCombatHateTarget(actor);
+                    if (actor.pendingFamilyTargetObjectId == l2) {
+                        actor.pendingFamilyTargetObjectId = 0L;
                     }
                     actor.pathFailCount = 0;
                 }
             }
-            actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                    TRANSIENT_PATH_RETRY_MILLIS);
+            actor.nextActionNanos = l3 + TimeUnit.MILLISECONDS.toNanos(200L);
             return null;
         }
-
         actor.pathFailCount = 0;
-        Snapshot before = actor.snapshot();
-        flushDeferredFamilyLink(actor, playerObjectId, playerX, playerY);
-        vacate(new Cell(mapId, actor.x, actor.y));
-        actor.x = path.destinationX();
-        actor.y = path.destinationY();
-        actor.heading = path.heading();
-        occupy(new Cell(mapId, actor.x, actor.y));
-        Snapshot moved = actor.snapshot();
-        applyMovementDistance(actor);
-        updateWandered(actor);
-        actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                BattleActionInterval.npcSourceMillis(
-                        Math.max(100, actor.runtimePassispeed),
-                        hasteActive(mapId, objectId, nowNanos),
-                        slowActive(mapId, objectId, nowNanos)));
-        return new Movement(before, moved, actor.snapshot());
+        Snapshot snapshot = actor.snapshot();
+        this.flushDeferredFamilyLink(actor, l2, n4, n5);
+        this.vacate(new Cell(n, actor.x, actor.y));
+        actor.x = result.destinationX();
+        actor.y = result.destinationY();
+        actor.heading = result.heading();
+        this.occupy(new Cell(n, actor.x, actor.y));
+        Snapshot snapshot2 = actor.snapshot();
+        this.applyMovementDistance(actor);
+        this.updateWandered(actor);
+        actor.nextActionNanos = l3 + TimeUnit.MILLISECONDS.toNanos(BattleActionInterval.npcSourceMillis(Math.max(100, actor.runtimePassispeed), this.hasteActive(n, l, l3), this.slowActive(n, l, l3)));
+        return new Movement(snapshot, snapshot2, actor.snapshot());
     }
 
     /**
@@ -4369,7 +4440,7 @@ final class ClassicWorldMonsterPopulation {
             if (!map.canStep(actor.x, actor.y, x, y)
                     || isOccupied(destination)
                     || occupiedPlayers.contains(new GridPoint(x, y))
-                    || ClassicWorldNpcCatalog.occupies(mapId, x, y)) {
+                    || NativeStaticNpcMotion.occupies(mapId, x, y, this)) {
                 continue;
             }
             Snapshot before = actor.snapshot();
@@ -4588,12 +4659,8 @@ final class ClassicWorldMonsterPopulation {
         return 0;
     }
 
-    synchronized ItemAction itemAction(
-            int mapId, long objectId,
-            List<ClassicWorldGroundItems.Item> visibleGroundItems,
-            Set<GridPoint> occupiedPlayers, long nowNanos) {
-        return itemAction(mapId, objectId, visibleGroundItems,
-                occupiedPlayers, nowNanos, -1);
+    synchronized ItemAction itemAction(int n, long l, List<ClassicWorldGroundItems.Item> list, Set<GridPoint> set, long l2) {
+        return this.itemAction(n, l, list, set, l2, -1);
     }
 
     /**
@@ -4601,90 +4668,58 @@ final class ClassicWorldMonsterPopulation {
      * random visible ground inventory, then either pick from an adjacent tile
      * or take one {@code NpcMove.checkObject} pursuit step.
      */
-    synchronized ItemAction itemAction(
-            int mapId, long objectId,
-            List<ClassicWorldGroundItems.Item> visibleGroundItems,
-            Set<GridPoint> occupiedPlayers, long nowNanos,
-            int groundInventoryFixture) {
-        if (visibleGroundItems == null || occupiedPlayers == null
-                || groundInventoryFixture < -1) {
+    synchronized ItemAction itemAction(int n, long l, List<ClassicWorldGroundItems.Item> list, Set<GridPoint> set, long l2, int n2) {
+        if (list == null || set == null || n2 < -1) {
             throw new IllegalArgumentException("invalid monster item action input");
         }
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive || actor.targetObjectId != 0
-                || actor.hiddenStatus != HIDDEN_STATUS_NONE
-                || nowNanos < actor.nextActionNanos || actionLocked(actor, nowNanos)) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || actor.targetObjectId != 0L || actor.hiddenStatus != 0 || l2 < actor.nextActionNanos || ClassicWorldMonsterPopulation.actionLocked(actor, l2)) {
             return null;
         }
-
-        ClassicWorldGroundItems.Item target = checkTargetItem(
-                actor, visibleGroundItems);
-        if (target == null) {
-            if (!ClassicWorldMonsterPickupCatalog.enabled(
-                    actor.definition.template())) return null;
-            target = searchTargetItem(
-                    actor, visibleGroundItems, groundInventoryFixture);
-        }
-        if (target == null) return null;
-
-        int distance = Math.max(
-                Math.abs(actor.x - target.x()), Math.abs(actor.y - target.y()));
-        if (distance == 1) {
-            return new ItemAction(
-                    ItemActionKind.PICKUP_READY, target.objectId(), null);
-        }
-
-        int preferred = heading(actor.x, actor.y, target.x(), target.y());
-        if (preferred < 0) {
-            abandonCurrentItemTarget(actor, target.objectId());
-            deferIdle(actor, nowNanos);
-            return new ItemAction(
-                    ItemActionKind.ABANDONED, target.objectId(), null);
-        }
-        // Exact retained NpcMove.checkObject order.
-        int[] headings = {
-                preferred, (preferred + 7) & 7, (preferred + 1) & 7,
-                (preferred + 2) & 7, (preferred + 6) & 7,
-                (preferred + 5) & 7, (preferred + 3) & 7,
-                (preferred + 4) & 7
-        };
-        ClassicWorldMapCatalog.ClassicMap map =
-                ClassicWorldMapCatalog.forMap(mapId);
-        for (int candidate : headings) {
-            int x = actor.x + HEADING_X[candidate];
-            int y = actor.y + HEADING_Y[candidate];
-            Cell destination = new Cell(mapId, x, y);
-            if (!map.canStep(actor.x, actor.y, x, y)
-                    || isOccupied(destination)
-                    || occupiedPlayers.contains(new GridPoint(x, y))
-                    || ClassicWorldNpcCatalog.occupies(mapId, x, y)) {
-                continue;
+        ClassicWorldGroundItems.Item item = ClassicWorldMonsterPopulation.checkTargetItem(actor, list);
+        if (item == null) {
+            if (!ClassicWorldMonsterPickupCatalog.enabled(actor.definition.template())) {
+                return null;
             }
-            Snapshot before = actor.snapshot();
-            vacate(new Cell(mapId, actor.x, actor.y));
-            actor.x = x;
-            actor.y = y;
-            actor.heading = candidate;
-            occupy(destination);
-            Snapshot moved = actor.snapshot();
-            applyMovementDistance(actor);
-            updateWandered(actor);
-            actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                    BattleActionInterval.npcSourceMillis(
-                            Math.max(100,
-                                    actor.runtimePassispeed),
-                            hasteActive(mapId, objectId, nowNanos),
-                            slowActive(mapId, objectId, nowNanos),
-                            windShackleActive(mapId, objectId, nowNanos)));
-            return new ItemAction(ItemActionKind.MOVED, target.objectId(),
-                    new Movement(before, moved, actor.snapshot()));
+            item = ClassicWorldMonsterPopulation.searchTargetItem(actor, list, n2);
         }
+        if (item == null) {
+            return null;
+        }
+        int n3 = Math.max(Math.abs(actor.x - item.x()), Math.abs(actor.y - item.y()));
+        if (n3 == 1) {
+            return new ItemAction(ItemActionKind.PICKUP_READY, item.objectId(), null);
+        }
+        int n4 = ClassicWorldMonsterPopulation.heading(actor.x, actor.y, item.x(), item.y());
+        if (n4 < 0) {
+            ClassicWorldMonsterPopulation.abandonCurrentItemTarget(actor, item.objectId());
+            ClassicWorldMonsterPopulation.deferIdle(actor, l2);
+            return new ItemAction(ItemActionKind.ABANDONED, item.objectId(), null);
+        }
+        int[] nArray = new int[]{n4, n4 + 7 & 7, n4 + 1 & 7, n4 + 2 & 7, n4 + 6 & 7, n4 + 5 & 7, n4 + 3 & 7, n4 + 4 & 7};
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(n);
+        for (int n5 : nArray) {
+            int n6 = actor.x + HEADING_X[n5];
+            int n7 = actor.y + HEADING_Y[n5];
+            Cell cell = new Cell(n, n6, n7);
+            if (!(!classicMap.canStep(actor.x, actor.y, n6, n7) || this.isOccupied(cell) || set.contains(new GridPoint(n6, n7)) || NativeStaticNpcMotion.occupies(n, n6, n7, this))) {
+            Snapshot snapshot = actor.snapshot();
+            this.vacate(new Cell(n, actor.x, actor.y));
+            actor.x = n6;
+            actor.y = n7;
+            actor.heading = n5;
+            this.occupy(cell);
+            Snapshot snapshot2 = actor.snapshot();
+            this.applyMovementDistance(actor);
+            this.updateWandered(actor);
+            actor.nextActionNanos = l2 + TimeUnit.MILLISECONDS.toNanos(BattleActionInterval.npcSourceMillis(Math.max(100, actor.runtimePassispeed), this.hasteActive(n, l, l2), this.slowActive(n, l, l2), this.windShackleActive(n, l, l2)));
+            return new ItemAction(ItemActionKind.MOVED, item.objectId(), new Movement(snapshot, snapshot2, actor.snapshot()));
 
-        abandonCurrentItemTarget(actor, target.objectId());
-        deferIdle(actor, nowNanos);
-        return new ItemAction(
-                ItemActionKind.ABANDONED, target.objectId(), null);
+            }
+}
+        ClassicWorldMonsterPopulation.abandonCurrentItemTarget(actor, item.objectId());
+        ClassicWorldMonsterPopulation.deferIdle(actor, l2);
+        return new ItemAction(ItemActionKind.ABANDONED, item.objectId(), null);
     }
 
     synchronized ItemPickup acceptGroundItem(
@@ -5098,10 +5133,8 @@ final class ClassicWorldMonsterPopulation {
         actor.targetItemObjectId = 0;
     }
 
-    synchronized IdleMovement idleMove(
-            int mapId, long objectId, Set<GridPoint> occupiedPlayers,
-            long nowNanos) {
-        return idleMove(mapId, objectId, occupiedPlayers, nowNanos, 0, -1);
+    synchronized IdleMovement idleMove(int n, long l, Set<GridPoint> set, long l2) {
+        return this.idleMove(n, l, set, l2, 0, -1);
     }
 
     /**
@@ -5111,114 +5144,71 @@ final class ClassicWorldMonsterPopulation {
      * delay without moving.  Fixtures are package-private test controls:
      * zero run length and negative direction select the actor's native RNG.
      */
-    synchronized IdleMovement idleMove(
-            int mapId, long objectId, Set<GridPoint> occupiedPlayers,
-            long nowNanos, int runLengthFixture, int directionRollFixture) {
-        if (occupiedPlayers == null || runLengthFixture < 0
-                || runLengthFixture > 3 || directionRollFixture < -1
-                || directionRollFixture > 39) {
+    synchronized IdleMovement idleMove(int n, long l, Set<GridPoint> set, long l2, int n2, int n3) {
+        int n4;
+        if (set == null || n2 < 0 || n2 > 3 || n3 < -1 || n3 > 39) {
             throw new IllegalArgumentException("invalid idle movement input");
         }
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive
-                || actor.targetObjectId != 0
-                || actor.definition.template().guard()
-                || actor.runtimePassispeed <= 0
-                || actor.definition.rest()
-                || nowNanos < actor.nextActionNanos
-                || actionLocked(actor, nowNanos)) {
+        Actor actor2 = this.actors.get(l);
+        if (actor2 == null || actor2.definition.mapId() != n || !actor2.present || !actor2.alive || actor2.targetObjectId != 0L || actor2.definition.template().guard() || actor2.runtimePassispeed <= 0 || actor2.definition.rest() || l2 < actor2.nextActionNanos || ClassicWorldMonsterPopulation.actionLocked(actor2, l2)) {
             return null;
         }
-
-        int preferred;
-        Actor leader = actor.mobGroupMinion
-                ? actors.get(actor.mobGroupLeaderObjectId) : null;
-        if (leader != null && leader != actor && leader.present && leader.alive
-                && leader.definition.mapId() == mapId) {
-            int leaderDistance = Math.max(
-                    Math.abs(actor.x - leader.x), Math.abs(actor.y - leader.y));
-            if (leaderDistance <= 2
-                    || actor.damagePoisonStatus.blindActive(nowNanos)) {
-                deferIdle(actor, nowNanos);
+        Actor actor = actor2.mobGroupMinion ? this.actors.get(actor2.mobGroupLeaderObjectId) : null;
+        if (actor != null && actor != actor2 && actor.present && actor.alive && actor.definition.mapId() == n) {
+            int n5 = Math.max(Math.abs(actor2.x - actor.x), Math.abs(actor2.y - actor.y));
+            if (n5 <= 2 || actor2.damagePoisonStatus.blindActive(l2)) {
+                ClassicWorldMonsterPopulation.deferIdle(actor2, l2);
                 return null;
             }
-            preferred = heading(actor.x, actor.y, leader.x, leader.y);
+            n4 = ClassicWorldMonsterPopulation.heading(actor2.x, actor2.y, actor.x, actor.y);
         } else {
-            if (actor.randomMoveDistance == 0) {
-                actor.randomMoveDistance = runLengthFixture > 0
-                        ? runLengthFixture : actor.random.nextInt(3) + 1;
-                actor.randomMoveDirection = directionRollFixture >= 0
-                        ? directionRollFixture : actor.random.nextInt(40);
+            if (actor2.randomMoveDistance == 0) {
+                actor2.randomMoveDistance = n2 > 0 ? n2 : actor2.random.nextInt(3) + 1;
+                actor2.randomMoveDirection = n3 >= 0 ? n3 : actor2.random.nextInt(40);
             } else {
-                actor.randomMoveDistance--;
+                --actor2.randomMoveDistance;
             }
-            if (actor.randomMoveDirection >= 8) {
-                deferIdle(actor, nowNanos);
+            if (actor2.randomMoveDirection >= 8) {
+                ClassicWorldMonsterPopulation.deferIdle(actor2, l2);
                 return null;
             }
-            // With a source home, noTarget replaces the selected random
-            // direction with moveDirection(home). _targetDirection preserves
-            // the current heading while already standing on that exact cell.
-            if (actor.x == actor.homeX && actor.y == actor.homeY) {
-                preferred = actor.heading;
+            if (actor2.x == actor2.homeX && actor2.y == actor2.homeY) {
+                n4 = actor2.heading;
             } else {
-                double homeDistance = Math.hypot(
-                        actor.x - actor.homeX, actor.y - actor.homeY);
-                if (actor.damagePoisonStatus.blindActive(nowNanos)
-                        && homeDistance >= 2D) {
-                    deferIdle(actor, nowNanos);
+                double d = Math.hypot(actor2.x - actor2.homeX, actor2.y - actor2.homeY);
+                if (actor2.damagePoisonStatus.blindActive(l2) && d >= 2.0) {
+                    ClassicWorldMonsterPopulation.deferIdle(actor2, l2);
                     return null;
                 }
-                preferred = heading(actor.x, actor.y, actor.homeX, actor.homeY);
+                n4 = ClassicWorldMonsterPopulation.heading(actor2.x, actor2.y, actor2.homeX, actor2.homeY);
             }
         }
-        if (preferred < 0) {
-            deferIdle(actor, nowNanos);
+        if (n4 < 0) {
+            ClassicWorldMonsterPopulation.deferIdle(actor2, l2);
             return null;
         }
+        int[] nArray = new int[]{n4, n4 + 7 & 7, n4 + 1 & 7, n4 + 2 & 7, n4 + 6 & 7, n4 + 5 & 7, n4 + 3 & 7, n4 + 4 & 7};
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(n);
+        for (int n6 : nArray) {
+            int n7 = actor2.x + HEADING_X[n6];
+            int n8 = actor2.y + HEADING_Y[n6];
+            Cell cell = new Cell(n, n7, n8);
+            if (!(!classicMap.canStep(actor2.x, actor2.y, n7, n8) || this.isOccupied(cell) || set.contains(new GridPoint(n7, n8)) || NativeStaticNpcMotion.occupies(n, n7, n8, this))) {
+            Snapshot snapshot = actor2.snapshot();
+            this.vacate(new Cell(n, actor2.x, actor2.y));
+            actor2.x = n7;
+            actor2.y = n8;
+            actor2.heading = n6;
+            this.occupy(cell);
+            Snapshot snapshot2 = actor2.snapshot();
+            this.applyMovementDistance(actor2);
+            this.updateWandered(actor2);
+            actor2.nextActionNanos = l2 + TimeUnit.MILLISECONDS.toNanos(BattleActionInterval.npcSourceMillis(Math.max(100, actor2.runtimePassispeed), this.hasteActive(n, l, l2), this.slowActive(n, l, l2)));
+            return new IdleMovement(snapshot, snapshot2, actor2.snapshot());
 
-        // Retained NpcMove.checkObject order: h, -1, +1, +2, -2, -3,
-        // +3, opposite. This applies both to random steps and group pursuit.
-        int[] headings = {
-                preferred, (preferred + 7) & 7, (preferred + 1) & 7,
-                (preferred + 2) & 7, (preferred + 6) & 7,
-                (preferred + 5) & 7, (preferred + 3) & 7,
-                (preferred + 4) & 7
-        };
-        ClassicWorldMapCatalog.ClassicMap map =
-                ClassicWorldMapCatalog.forMap(mapId);
-        for (int candidate : headings) {
-            int x = actor.x + HEADING_X[candidate];
-            int y = actor.y + HEADING_Y[candidate];
-            Cell destination = new Cell(mapId, x, y);
-            if (!map.canStep(actor.x, actor.y, x, y)
-                    || isOccupied(destination)
-                    || occupiedPlayers.contains(new GridPoint(x, y))
-                    || ClassicWorldNpcCatalog.occupies(mapId, x, y)) {
-                continue;
             }
-            Snapshot before = actor.snapshot();
-            vacate(new Cell(mapId, actor.x, actor.y));
-            actor.x = x;
-            actor.y = y;
-            actor.heading = candidate;
-            occupy(destination);
-            Snapshot moved = actor.snapshot();
-
-            // NpcMove.setDirectionMove broadcasts the step first, then applies
-            // movement_distance to L1Monster/L1Guard and teleports home.
-            applyMovementDistance(actor);
-            updateWandered(actor);
-            actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                    BattleActionInterval.npcSourceMillis(
-                            Math.max(100,
-                                    actor.runtimePassispeed),
-                            hasteActive(mapId, objectId, nowNanos),
-                            slowActive(mapId, objectId, nowNanos)));
-            return new IdleMovement(before, moved, actor.snapshot());
-        }
-        deferIdle(actor, nowNanos);
+}
+        ClassicWorldMonsterPopulation.deferIdle(actor2, l2);
         return null;
     }
 
@@ -5304,75 +5294,49 @@ final class ClassicWorldMonsterPopulation {
      * when path selection fails, teleport to the nearest safe home landing
      * within the retained direct-teleport radius and face south-east (1).
      */
-    synchronized GuardHomecoming returnGuardHome(
-            int mapId, long objectId, Set<GridPoint> occupiedPlayers,
-            long nowNanos) {
-        Actor actor = actors.get(objectId);
-        if (actor == null || actor.definition.mapId() != mapId
-                || !actor.present || !actor.alive
-                || !actor.definition.template().guard()
-                || actor.targetObjectId != 0
-                || nowNanos < actor.nextActionNanos
-                || actionLocked(actor, nowNanos)
-                || actor.damagePoisonStatus.blindActive(nowNanos)
-                || actor.runtimePassispeed <= 0) {
+    synchronized GuardHomecoming returnGuardHome(int n, long l, Set<GridPoint> set, long l2) {
+        Actor actor = this.actors.get(l);
+        if (actor == null || actor.definition.mapId() != n || !actor.present || !actor.alive || !actor.definition.template().guard() || actor.targetObjectId != 0L || l2 < actor.nextActionNanos || ClassicWorldMonsterPopulation.actionLocked(actor, l2) || actor.damagePoisonStatus.blindActive(l2) || actor.runtimePassispeed <= 0) {
             return null;
         }
-        int homeX = actor.homeX;
-        int homeY = actor.homeY;
-        if (actor.x == homeX && actor.y == homeY) return null;
-        int preferred = heading(actor.x, actor.y, homeX, homeY);
-        if (preferred >= 0) {
-            int[] headings = {
-                    preferred, (preferred + 7) & 7, (preferred + 1) & 7,
-                    (preferred + 6) & 7, (preferred + 2) & 7
-            };
-            ClassicWorldMapCatalog.ClassicMap map =
-                    ClassicWorldMapCatalog.forMap(mapId);
-            for (int candidate : headings) {
-                int x = actor.x + HEADING_X[candidate];
-                int y = actor.y + HEADING_Y[candidate];
-                Cell destination = new Cell(mapId, x, y);
-                if (!map.canStep(actor.x, actor.y, x, y)
-                        || isOccupied(destination)
-                        || occupiedPlayers.contains(new GridPoint(x, y))
-                        || ClassicWorldNpcCatalog.occupies(mapId, x, y)) {
-                    continue;
-                }
-                Snapshot before = actor.snapshot();
-                vacate(new Cell(mapId, actor.x, actor.y));
-                actor.x = x;
-                actor.y = y;
-                actor.heading = candidate;
-                occupy(destination);
-                actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                        BattleActionInterval.npcSourceMillis(
-                                Math.max(100,
-                                        actor.runtimePassispeed),
-                                hasteActive(mapId, objectId, nowNanos),
-                                slowActive(mapId, objectId, nowNanos)));
-                return new GuardHomecoming(
-                        before, actor.snapshot(), false);
-            }
+        int n2 = actor.homeX;
+        int n3 = actor.homeY;
+        if (actor.x == n2 && actor.y == n3) {
+            return null;
         }
+        int n4 = ClassicWorldMonsterPopulation.heading(actor.x, actor.y, n2, n3);
+        if (n4 >= 0) {
+            int[] headings = new int[]{n4, n4 + 7 & 7, n4 + 1 & 7, n4 + 6 & 7, n4 + 2 & 7};
+            ClassicWorldMapCatalog.ClassicMap map = ClassicWorldMapCatalog.forMap(n);
+            for (int object3 : headings) {
+                int n5 = actor.x + HEADING_X[object3];
+                int n6 = actor.y + HEADING_Y[object3];
+                Cell cell = new Cell(n, n5, n6);
+                if (!(!map.canStep(actor.x, actor.y, n5, n6) || this.isOccupied(cell) || set.contains(new GridPoint(n5, n6)) || NativeStaticNpcMotion.occupies(n, n5, n6, this))) {
+                Snapshot snapshot = actor.snapshot();
+                this.vacate(new Cell(n, actor.x, actor.y));
+                actor.x = n5;
+                actor.y = n6;
+                actor.heading = (int)object3;
+                this.occupy(cell);
+                actor.nextActionNanos = l2 + TimeUnit.MILLISECONDS.toNanos(BattleActionInterval.npcSourceMillis(Math.max(100, actor.runtimePassispeed), this.hasteActive(n, l, l2), this.slowActive(n, l, l2)));
+                return new GuardHomecoming(snapshot, actor.snapshot(), false);
 
-        GridPoint landing = nearestGuardHomeLanding(
-                mapId, homeX, homeY, occupiedPlayers);
+                }
+}
+        }
+        GridPoint landing = this.nearestGuardHomeLanding(n, n2, n3, set);
         if (landing == null) {
-            actor.nextActionNanos = nowNanos + 250_000_000L;
+            actor.nextActionNanos = l2 + 250000000L;
             return null;
         }
         Snapshot before = actor.snapshot();
-        vacate(new Cell(mapId, actor.x, actor.y));
+        this.vacate(new Cell(n, actor.x, actor.y));
         actor.x = landing.x();
         actor.y = landing.y();
         actor.heading = 1;
-        occupy(new Cell(mapId, actor.x, actor.y));
-        actor.nextActionNanos = nowNanos + TimeUnit.MILLISECONDS.toNanos(
-                BattleActionInterval.npcSourceMillis(
-                        Math.max(100, actor.runtimePassispeed),
-                        hasteActive(mapId, objectId, nowNanos),
-                        slowActive(mapId, objectId, nowNanos)));
+        this.occupy(new Cell(n, actor.x, actor.y));
+        actor.nextActionNanos = l2 + TimeUnit.MILLISECONDS.toNanos(BattleActionInterval.npcSourceMillis(Math.max(100, actor.runtimePassispeed), this.hasteActive(n, l, l2), this.slowActive(n, l, l2)));
         return new GuardHomecoming(before, actor.snapshot(), true);
     }
 
@@ -5391,7 +5355,7 @@ final class ClassicWorldMonsterPopulation {
                     if (!map.standingPassable(x, y)
                             || isOccupied(new Cell(mapId, x, y))
                             || occupiedPlayers.contains(point)
-                            || ClassicWorldNpcCatalog.occupies(mapId, x, y)) {
+                            || NativeStaticNpcMotion.occupies(mapId, x, y, this)) {
                         continue;
                     }
                     return point;
@@ -5401,15 +5365,8 @@ final class ClassicWorldMonsterPopulation {
         return null;
     }
 
-    private static boolean actionLocked(Actor actor, long nowNanos) {
-        return actor.hiddenStatus != HIDDEN_STATUS_NONE
-                || actor.damagePoisonStatus.paralysisActive(nowNanos)
-                || actor.damagePoisonStatus.sleepActive(nowNanos)
-                || actor.damagePoisonStatus.freezeActive(nowNanos)
-                || actor.damagePoisonStatus.earthBindActive(nowNanos)
-                || actor.damagePoisonStatus.shockStunActive(nowNanos)
-                || actor.damagePoisonStatus.boneBreakActive(nowNanos)
-                || actor.damagePoisonStatus.thunderGrabActive(nowNanos);
+    private static boolean actionLocked(Actor actor, long l) {
+        return actor.hiddenStatus != 0 || actor.damagePoisonStatus.paralysisActive(l) || actor.damagePoisonStatus.sleepActive(l) || CombatWorldFreeze.rawFrozen(actor.damagePoisonStatus.freezeActive(l), actor.damagePoisonStatus) || actor.damagePoisonStatus.earthBindActive(l) || actor.damagePoisonStatus.shockStunActive(l) || actor.damagePoisonStatus.boneBreakActive(l) || actor.damagePoisonStatus.thunderGrabActive(l);
     }
 
     private static boolean initialSinkStatus(int npcId, int spawnNumber) {
@@ -5523,34 +5480,34 @@ final class ClassicWorldMonsterPopulation {
                 - (int) (random.nextDouble() * range);
     }
 
-    private boolean commitIfAvailable(Actor actor, int x, int y) {
-        int mapId = actor.definition.mapId();
-        Cell cell = new Cell(mapId, x, y);
-        ClassicWorldMapCatalog.ClassicMap map = ClassicWorldMapCatalog.forMap(mapId);
-        if (!map.standingPassable(x, y) || isOccupied(cell)
-                || ClassicWorldNpcCatalog.occupies(mapId, x, y)) {
+    private boolean commitIfAvailable(Actor actor, int n, int n2) {
+        int n3 = actor.definition.mapId();
+        Cell cell = new Cell(n3, n, n2);
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(n3);
+        if (!classicMap.standingPassable(n, n2) || this.isOccupied(cell) || NativeStaticNpcMotion.occupies(n3, n, n2, this)) {
             return false;
         }
-        actor.x = x;
-        actor.y = y;
-        actor.homeX = x;
-        actor.homeY = y;
-        wanderedActors.remove(actor.objectId);
-        occupy(cell);
+        actor.x = n;
+        actor.y = n2;
+        actor.homeX = n;
+        actor.homeY = n2;
+        this.wanderedActors.remove(actor.objectId);
+        this.occupy(cell);
         return true;
     }
 
-    private boolean commitSharedIfWalkable(Actor actor, int x, int y) {
-        int mapId = actor.definition.mapId();
-        ClassicWorldMapCatalog.ClassicMap map = ClassicWorldMapCatalog.forMap(mapId);
-        if (!map.standingPassable(x, y)
-                || ClassicWorldNpcCatalog.occupies(mapId, x, y)) return false;
-        actor.x = x;
-        actor.y = y;
-        actor.homeX = x;
-        actor.homeY = y;
-        wanderedActors.remove(actor.objectId);
-        occupy(new Cell(mapId, x, y));
+    private boolean commitSharedIfWalkable(Actor actor, int n, int n2) {
+        int n3 = actor.definition.mapId();
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(n3);
+        if (!classicMap.standingPassable(n, n2) || NativeStaticNpcMotion.occupies(n3, n, n2, this)) {
+            return false;
+        }
+        actor.x = n;
+        actor.y = n2;
+        actor.homeX = n;
+        actor.homeY = n2;
+        this.wanderedActors.remove(actor.objectId);
+        this.occupy(new Cell(n3, n, n2));
         return true;
     }
 
@@ -5585,5 +5542,23 @@ final class ClassicWorldMonsterPopulation {
             if (dx == HEADING_X[heading] && dy == HEADING_Y[heading]) return heading;
         }
         return -1;
+    }
+    synchronized Snapshot nativeStaticCancellationSpawn(int n, int n2, int n3, int n4, int n5, ClassicWorldMonsterCatalog.MonsterTemplate monsterTemplate) {
+        if (monsterTemplate == null || this.nextQuestDynamicObjectId <= 0L || this.nextQuestDynamicObjectId > this.questDynamicObjectEnd || this.actors.containsKey(this.nextQuestDynamicObjectId)) {
+            return null;
+        }
+        long l = this.nextQuestDynamicObjectId;
+        ClassicWorldMonsterCatalog.SpawnDefinition spawnDefinition = new ClassicWorldMonsterCatalog.SpawnDefinition(n, n2, "cancellation-runtime-spawn", 1, 0, n3, n4, 0, 0, 0, 0, 0, 0, n5, 0, 0, false, 30, false, 0, monsterTemplate);
+        Actor actor = new Actor(spawnDefinition, 1, l, new Random(ClassicWorldMonsterPopulation.mix64(l)), true, List.of());
+        actor.x = n3;
+        actor.y = n4;
+        actor.homeX = n3;
+        actor.homeY = n4;
+        actor.heading = n5;
+        Snapshot snapshot = actor.snapshot();
+        this.occupy(new Cell(n, actor.x, actor.y));
+        this.actors.put(l, actor);
+        ++this.nextQuestDynamicObjectId;
+        return snapshot;
     }
 }

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from candidate-50635f7e.jar (CFR 0.152), TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import local.lito381.server.NativeProcHealingKernel;
+import local.lito381.server.NativeSourceIcons1Policy;
 import local.lito381.server.ServerConfig;
 import local.lito381.server.SharedDatabase;
 import local.lito381.server.UnifiedConfiguration;
@@ -25,19 +26,20 @@ final class NativeProcSkillCatalog {
     }
 
     static Catalog read(Connection connection, String string) throws SQLException {
-        LinkedHashMap<Integer, Skill> linkedHashMap = new LinkedHashMap<Integer, Skill>();
+        Map<Integer, Skill> linkedHashMap = new LinkedHashMap<Integer, Skill>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(QUERY);){
             while (resultSet.next()) {
                 Skill skill = new Skill(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5));
-                if (linkedHashMap.putIfAbsent(skill.id(), skill) == null) continue;
-                throw new SQLException("duplicate Proc skill_id=" + skill.id());
+                if (linkedHashMap.putIfAbsent(skill.id(), skill) != null) {
+                    throw new SQLException("duplicate Proc skill_id=" + skill.id());
+                }
             }
         }
         if (linkedHashMap.isEmpty()) {
             throw new SQLException("empty Proc skills catalog");
         }
-        return new Catalog(string, linkedHashMap);
+        return NativeSourceIcons1Policy.catalog(string, linkedHashMap, connection);
     }
 
     /*
@@ -74,10 +76,18 @@ final class NativeProcSkillCatalog {
 
     record Skill(int id, int type, int castGraphics, int damageValue, int damageDice) {
     }
+@AsRecord(components={"database","skills"}, finalFields={"nativeSourceIcons1Policy"})
 
-    record Catalog(String database, Map<Integer, Skill> skills) {
-        Catalog {
-            skills = Map.copyOf(skills);
+    static final class Catalog
+    {
+        private final String database;
+        private final Map<Integer, Skill> skills;
+        transient Object nativeSourceIcons1Policy;
+
+        Catalog(String string, Map<Integer, Skill> map) {
+            map = Map.copyOf(map);
+            this.database = string;
+            this.skills = map;
         }
 
         Skill find(int n) {
@@ -89,6 +99,19 @@ final class NativeProcSkillCatalog {
                 Skill skill = this.find(n);
                 return skill == null ? 0 : skill.type();
             });
+        }
+
+        public String database() {
+            return this.database;
+        }
+
+        public Map<Integer, Skill> skills() {
+            return this.skills;
+        }
+
+        Catalog(String string, Map map, Object object) {
+            this(string, map);
+            this.nativeSourceIcons1Policy = object;
         }
     }
 }

@@ -29,7 +29,7 @@ final class BattleBoneBreakCatalogTest {
         assertEquals(3, spell.targetTo());
         assertEquals(64, spell.type());
         assertEquals(128, spell.nativeSkillId());
-        assertEquals(45, spell.lawfulDelta());
+        assertEquals(0, spell.lawfulDelta()); // issue #309: 380_db.sql row208 lawful=0
         assertEquals(2, spell.durationSeconds());
         assertEquals(86_123, spell.effectNpcId());
         assertEquals(6_552, spell.effectNpcGfx());

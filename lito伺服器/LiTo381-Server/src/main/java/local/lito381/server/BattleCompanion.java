@@ -1,4 +1,7 @@
+// ported from candidate 50635f7e, integration-lifecycle final frame, issue #67
 package local.lito381.server;
+
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
@@ -130,6 +133,17 @@ final class BattleCompanion {
         }
     }
 
+
+    synchronized int nativeSourceControlledHealingHp(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("invalid companion healing amount");
+        }
+        if (!this.active || this.hp <= 0 || amount == 0) {
+            return this.hp;
+        }
+        this.hp = Math.min(this.profile.maxHp(), NativeSourceControlledHealing.sum(this.hp, amount));
+        return this.hp;
+    }
     record Profile(int npcId, int gfx, int level, int maxHp, int maxMp,
                    int armorClass, int strength, int dexterity,
                    int moveIntervalMillis, int attackIntervalMillis,
@@ -247,15 +261,70 @@ final class BattleCompanion {
         REJECTED
     }
 
-    record Snapshot(long objectId, int npcId, int gfx, String name, Kind kind,
-                    boolean active, Posture posture,
-                    long targetObjectId,
-                    int x, int y, int heading, long nextActionNanos,
-                    int hp, int maxHp, int mp, int maxMp, int level,
-                    int armorClass, int strength, int dexterity,
-                    int moveSpeed, int petCost, long expiresAtNanos,
-                    long collarObjectId, int collarCatalogId,
-                    long experience, int experiencePercentage, int lawful) {
+    @AsRecord(components = {"objectId", "npcId", "gfx", "name", "kind", "active", "posture", "targetObjectId", "x", "y", "heading", "nextActionNanos", "hp", "maxHp", "mp", "maxMp", "level", "armorClass", "strength", "dexterity", "moveSpeed", "petCost", "expiresAtNanos", "collarObjectId", "collarCatalogId", "experience", "experiencePercentage", "lawful"}, finalFields = {"nativeSourceNpcFactoryMemory", "nativeSourceCompanionFirstActor"})
+    static final class Snapshot {
+        private final long objectId;
+        private final int npcId;
+        private final int gfx;
+        private final String name;
+        private final Kind kind;
+        private final boolean active;
+        private final Posture posture;
+        private final long targetObjectId;
+        private final int x;
+        private final int y;
+        private final int heading;
+        private final long nextActionNanos;
+        private final int hp;
+        private final int maxHp;
+        private final int mp;
+        private final int maxMp;
+        private final int level;
+        private final int armorClass;
+        private final int strength;
+        private final int dexterity;
+        private final int moveSpeed;
+        private final int petCost;
+        private final long expiresAtNanos;
+        private final long collarObjectId;
+        private final int collarCatalogId;
+        private final long experience;
+        private final int experiencePercentage;
+        private final int lawful;
+        transient Object nativeSourceNpcFactoryMemory;
+        transient Object nativeSourceCompanionFirstActor;
+
+        Snapshot(long l, int n, int n2, String string, Kind kind, boolean bl, Posture posture, long l2, int n3, int n4, int n5, long l3, int n6, int n7, int n8, int n9, int n10, int n11, int n12, int n13, int n14, int n15, long l4, long l5, int n16, long l6, int n17, int n18) {
+            this.objectId = l;
+            this.npcId = n;
+            this.gfx = n2;
+            this.name = string;
+            this.kind = kind;
+            this.active = bl;
+            this.posture = posture;
+            this.targetObjectId = l2;
+            this.x = n3;
+            this.y = n4;
+            this.heading = n5;
+            this.nextActionNanos = l3;
+            this.hp = n6;
+            this.maxHp = n7;
+            this.mp = n8;
+            this.maxMp = n9;
+            this.level = n10;
+            this.armorClass = n11;
+            this.strength = n12;
+            this.dexterity = n13;
+            this.moveSpeed = n14;
+            this.petCost = n15;
+            this.expiresAtNanos = l4;
+            this.collarObjectId = l5;
+            this.collarCatalogId = n16;
+            this.experience = l6;
+            this.experiencePercentage = n17;
+            this.lawful = n18;
+        }
+
         List<String> anicomArguments() {
             // Same-version classic S_PetMenuPacket contract: status, HP,
             // max HP, MP, max MP, level, name, carrying label, EXP%, lawful.
@@ -271,20 +340,172 @@ final class BattleCompanion {
                     Integer.toString(experiencePercentage),
                     Integer.toString(lawful));
         }
+
+
+
+
+        public long objectId() {
+            return this.objectId;
+        }
+
+        public int npcId() {
+            return this.npcId;
+        }
+
+        public int gfx() {
+            return this.gfx;
+        }
+
+        public String name() {
+            return this.name;
+        }
+
+        public Kind kind() {
+            return this.kind;
+        }
+
+        public boolean active() {
+            return this.active;
+        }
+
+        public Posture posture() {
+            return this.posture;
+        }
+
+        public long targetObjectId() {
+            return this.targetObjectId;
+        }
+
+        public int x() {
+            return this.x;
+        }
+
+        public int y() {
+            return this.y;
+        }
+
+        public int heading() {
+            return this.heading;
+        }
+
+        public long nextActionNanos() {
+            return this.nextActionNanos;
+        }
+
+        public int hp() {
+            return this.hp;
+        }
+
+        public int maxHp() {
+            return this.maxHp;
+        }
+
+        public int mp() {
+            return this.mp;
+        }
+
+        public int maxMp() {
+            return this.maxMp;
+        }
+
+        public int level() {
+            return this.level;
+        }
+
+        public int armorClass() {
+            return this.armorClass;
+        }
+
+        public int strength() {
+            return this.strength;
+        }
+
+        public int dexterity() {
+            return this.dexterity;
+        }
+
+        public int moveSpeed() {
+            return this.moveSpeed;
+        }
+
+        public int petCost() {
+            return this.petCost;
+        }
+
+        public long expiresAtNanos() {
+            return this.expiresAtNanos;
+        }
+
+        public long collarObjectId() {
+            return this.collarObjectId;
+        }
+
+        public int collarCatalogId() {
+            return this.collarCatalogId;
+        }
+
+        public long experience() {
+            return this.experience;
+        }
+
+        public int experiencePercentage() {
+            return this.experiencePercentage;
+        }
+
+        public int lawful() {
+            return this.lawful;
+        }
+
+        Snapshot(long l, int n, int n2, String string, Kind kind, boolean bl, Posture posture, long l2, int n3, int n4, int n5, long l3, int n6, int n7, int n8, int n9, int n10, int n11, int n12, int n13, int n14, int n15, long l4, long l5, int n16, long l6, int n17, int n18, Object object) {
+            this.objectId = l;
+            this.npcId = n;
+            this.gfx = n2;
+            this.name = string;
+            this.kind = kind;
+            this.active = bl;
+            this.posture = posture;
+            this.targetObjectId = l2;
+            this.x = n3;
+            this.y = n4;
+            this.heading = n5;
+            this.nextActionNanos = l3;
+            this.hp = n6;
+            this.maxHp = n7;
+            this.mp = n8;
+            this.maxMp = n9;
+            this.level = n10;
+            this.armorClass = n11;
+            this.strength = n12;
+            this.dexterity = n13;
+            this.moveSpeed = n14;
+            this.petCost = n15;
+            this.expiresAtNanos = l4;
+            this.collarObjectId = l5;
+            this.collarCatalogId = n16;
+            this.experience = l6;
+            this.experiencePercentage = n17;
+            this.lawful = n18;
+            this.nativeSourceNpcFactoryMemory = object;
+        }
+
+        Snapshot(long l, int n, int n2, String string, Kind kind, boolean bl, Posture posture, long l2, int n3, int n4, int n5, long l3, int n6, int n7, int n8, int n9, int n10, int n11, int n12, int n13, int n14, int n15, long l4, long l5, int n16, long l6, int n17, int n18, Object object, Object object2) {
+            this(l, n, n2, string, kind, bl, posture, l2, n3, n4, n5, l3, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, l4, l5, n16, l6, n17, n18, object);
+            this.nativeSourceCompanionFirstActor = object2;
+        }
     }
 
     private final long objectId;
     private final Kind kind;
-    private Profile profile;
+    private volatile Profile profile;
     private String name;
-    private boolean active;
+    private volatile boolean active;
     private Posture posture = Posture.STAY;
     private long targetObjectId;
     private int pathFailCount;
-    private int x;
-    private int y;
+    private volatile int x;
+    private volatile int y;
     private int heading;
-    private int hp;
+    private volatile int hp;
     private int mp;
     private long nextActionNanos;
     private long expiresAtNanos;
@@ -296,9 +517,9 @@ final class BattleCompanion {
      * twice.
      */
     private int moveSpeed;
-    private long hasteExpiresAtNanos;
+    private volatile long hasteExpiresAtNanos;
     private int hasteSkillId;
-    private long slowExpiresAtNanos;
+    private volatile long slowExpiresAtNanos;
     private int slowSkillId;
     private long collarObjectId;
     private int collarCatalogId;
@@ -322,7 +543,7 @@ final class BattleCompanion {
     private BattleTimeAttackEncounter.Snapshot timeAttackTamedOrigin;
     private ClassicWorldMonsterPopulation.Snapshot classicWorldTamedOrigin;
     private int classicWorldTamedInstanceId = -1;
-    private RuntimeInventory carriedItems = new RuntimeInventory();
+    private volatile RuntimeInventory carriedItems = new RuntimeInventory();
     /** Retained L1Character status also applies to L1Pet/L1Summon targets. */
     private final BattleEraseMagicStatus eraseMagicStatus =
             new BattleEraseMagicStatus();
@@ -341,6 +562,17 @@ final class BattleCompanion {
     private final BattleJoyOfPainStatus joyOfPainStatus =
             new BattleJoyOfPainStatus();
 
+    private Object nativeTamedCapturePopulation;
+    private volatile NativeCompanionCallbacks.Stamp nativeSummonTerminalStamp;
+    private volatile Object nativeSummonGroundFallback;
+    private volatile Object nativeWorldCompanionPlacement;
+    private BattleWindShackleStatus nativeCompanionWindStatus;
+    volatile Object nativeSourceElementalLease;
+    volatile Object nativeSourceDollSlowEpoch;
+    final Object nativeSourceNpcFactoryType;
+    /** T135 (#386): actor-owned Source mobskill use counts and reuse delays; see NativeCloseoutCompanionSkills. */
+    volatile Object nativeCloseoutMobSkillState;
+
     BattleCompanion(long objectId) {
         this(objectId, Profile.arenaDefault(), Kind.ARENA);
     }
@@ -358,6 +590,8 @@ final class BattleCompanion {
         mp = profile.maxMp();
         moveSpeed = profile.moveSpeed();
         sourceTemplateLevel = profile.level();
+        this.nativeSourceNpcFactoryType = NativeSourceNpcFactoryType.birth(this, null);
+        NativeCloseoutCompanionSkills.install(this);
     }
 
     static BattleCompanion tamed(long objectId, int npcId, int gfx, String name,
@@ -377,36 +611,24 @@ final class BattleCompanion {
         return result;
     }
 
-    static BattleCompanion tamedFromQuest(
-            long objectId, BattleQuestEncounter.Snapshot captured,
-            SourceNpcPhysicalStats stats) {
+    static BattleCompanion tamedFromQuest(long objectId, BattleQuestEncounter.Snapshot captured, SourceNpcPhysicalStats stats) {
         if (captured == null || stats == null || captured.npcId() != stats.npcId()) {
             throw new IllegalArgumentException("invalid quest tamed source");
         }
-        BattleCompanion result = tamed(
-                objectId, captured.npcId(), captured.gfx(), captured.name(),
-                captured.level(), captured.hp(), captured.maxHp(), stats.maxMp(),
-                stats.armorClass(), Math.max(1, stats.strength()),
-                Math.max(1, stats.dexterity()), captured.x(), captured.y());
-        result.qualifyNpcDefense(stats);
-        result.questTamedOrigin = captured;
-        return result;
+        BattleCompanion battleCompanion = BattleCompanion.tamed(objectId, captured.npcId(), captured.gfx(), captured.name(), captured.level(), NativeBattleTamedLifecycle.initialHp(captured), captured.maxHp(), captured.maximumMp(), stats.armorClass(), Math.max(1, stats.strength()), Math.max(1, stats.dexterity()), captured.x(), captured.y());
+        battleCompanion.qualifyNpcDefense(stats);
+        battleCompanion.questTamedOrigin = captured;
+        return NativeBattleTamedLifecycle.vitals(battleCompanion, captured);
     }
 
-    static BattleCompanion tamedFromTimeAttack(
-            long objectId, BattleTimeAttackEncounter.Snapshot captured,
-            SourceNpcPhysicalStats stats) {
+    static BattleCompanion tamedFromTimeAttack(long objectId, BattleTimeAttackEncounter.Snapshot captured, SourceNpcPhysicalStats stats) {
         if (captured == null || stats == null || captured.npcId() != stats.npcId()) {
             throw new IllegalArgumentException("invalid Time Attack tamed source");
         }
-        BattleCompanion result = tamed(
-                objectId, captured.npcId(), captured.gfx(), captured.name(),
-                captured.level(), captured.hp(), captured.maxHp(), stats.maxMp(),
-                stats.armorClass(), Math.max(1, stats.strength()),
-                Math.max(1, stats.dexterity()), captured.x(), captured.y());
-        result.qualifyNpcDefense(stats);
-        result.timeAttackTamedOrigin = captured;
-        return result;
+        BattleCompanion battleCompanion = BattleCompanion.tamed(objectId, captured.npcId(), captured.gfx(), captured.name(), captured.level(), NativeBattleTamedLifecycle.initialHp(captured), captured.maxHp(), captured.maximumMp(), stats.armorClass(), Math.max(1, stats.strength()), Math.max(1, stats.dexterity()), captured.x(), captured.y());
+        battleCompanion.qualifyNpcDefense(stats);
+        battleCompanion.timeAttackTamedOrigin = captured;
+        return NativeBattleTamedLifecycle.vitals(battleCompanion, captured);
     }
 
     static BattleCompanion tamedFromClassicWorld(
@@ -444,28 +666,18 @@ final class BattleCompanion {
         return classicWorldTamedInstanceId;
     }
 
-    static BattleCompanion zombie(long objectId,
-                                  BattleSpellCatalog.ZombieTemplate template,
-                                  SourceNpcPhysicalStats stats,
-                                  int petCost, int spawnX, int spawnY) {
-        if (template == null || stats == null || template.npcId() != stats.npcId()
-                || petCost <= 0) {
+    static BattleCompanion zombie(long objectId, BattleSpellCatalog.ZombieTemplate template, SourceNpcPhysicalStats stats, int petCost, int spawnX, int spawnY) {
+        if (template == null || stats == null || template.npcId() != stats.npcId() || petCost <= 0) {
             throw new IllegalArgumentException("invalid create-zombie companion source");
         }
-        BattleAnimationCatalog animations = BattleAnimationCatalog.get();
-        int moveMillis = Math.toIntExact(Math.max(40L, animations.requireTimedAction(
-                template.gfx(), BattleActionCodes.WALK).durationMillis()));
-        int attackMillis = Math.toIntExact(Math.max(40L, animations.requireTimedAction(
-                template.gfx(), BattleActionCodes.ATTACK).durationMillis()));
-        Profile profile = new Profile(template.npcId(), template.gfx(), template.level(),
-                template.maxHp(), stats.maxMp(), stats.armorClass(),
-                Math.max(1, stats.strength()), Math.max(1, stats.dexterity()),
-                moveMillis, attackMillis, BattleTimedStatus.NORMAL,
-                petCost, template.name());
-        BattleCompanion result = new BattleCompanion(objectId, profile, Kind.SUMMON);
-        result.qualifyNpcDefense(stats);
-        result.activate(spawnX, spawnY, template.maxHp(), stats.maxMp());
-        return result;
+        BattleAnimationCatalog battleAnimationCatalog = BattleAnimationCatalog.get();
+        int n4 = Math.toIntExact(Math.max(40L, battleAnimationCatalog.requireTimedAction(template.gfx(), 0).durationMillis()));
+        int n5 = Math.toIntExact(Math.max(40L, battleAnimationCatalog.requireTimedAction(template.gfx(), 1).durationMillis()));
+        Profile profile = new Profile(template.npcId(), template.gfx(), template.level(), template.maxHp(), stats.maxMp(), stats.armorClass(), Math.max(1, stats.strength()), Math.max(1, stats.dexterity()), n4, n5, 0, petCost, template.name());
+        BattleCompanion battleCompanion = new BattleCompanion(objectId, profile, Kind.TAMED);
+        battleCompanion.qualifyNpcDefense(stats);
+        battleCompanion.activate(spawnX, spawnY, template.maxHp(), stats.maxMp());
+        return battleCompanion;
     }
 
     static BattleCompanion summoned(long objectId,
@@ -728,47 +940,54 @@ final class BattleCompanion {
         activate(spawnX, spawnY, profile.maxHp(), profile.maxMp());
     }
 
-    private synchronized void activate(int spawnX, int spawnY,
-                                       int currentHp, int currentMp) {
-        requireCoordinate(spawnX, "companion spawn x");
-        requireCoordinate(spawnY, "companion spawn y");
-        if (currentHp <= 0 || currentHp > profile.maxHp()
-                || currentMp < 0 || currentMp > profile.maxMp()) {
+    private synchronized void activate(int spawnX, int spawnY, int currentHp, int currentMp) {
+        BattleCompanion.requireCoordinate(spawnX, "companion spawn x");
+        BattleCompanion.requireCoordinate(spawnY, "companion spawn y");
+        if (currentHp <= 0 || currentHp > this.profile.maxHp() || currentMp < 0 || currentMp > this.profile.maxMp()) {
             throw new IllegalArgumentException("invalid companion current vitals");
         }
-        active = true;
-        posture = Posture.STAY;
-        targetObjectId = 0;
-        pathFailCount = 0;
-        x = spawnX;
-        y = spawnY;
-        heading = 0;
-        hp = currentHp;
-        mp = currentMp;
-        nextActionNanos = 0;
-        clearSpeedEffects();
-        eraseMagicStatus.clear();
-        timedStatus.clear();
-        curseParalysisStatus.clear();
-        clearNpcPoisonLease();
-        panicStatus.clear();
-        joyOfPainStatus.clear();
-        weaponBreakStacks = 0;
+        BattleCompanion recipient = this;
+        boolean updatedValue = true;
+        NativeCompanionCallbacks.advance(this);
+        recipient.active = updatedValue;
+        this.posture = Posture.STAY;
+        this.targetObjectId = 0L;
+        this.pathFailCount = 0;
+        this.x = spawnX;
+        this.y = spawnY;
+        this.heading = 0;
+        this.hp = currentHp;
+        this.mp = currentMp;
+        this.nextActionNanos = 0L;
+        this.clearSpeedEffects();
+        this.eraseMagicStatus.clear();
+        this.timedStatus.clear();
+        NativeCompanionWindState.clear(this);
+        this.curseParalysisStatus.clear();
+        this.clearNpcPoisonLease();
+        this.panicStatus.clear();
+        this.joyOfPainStatus.clear();
+        this.weaponBreakStacks = 0;
     }
 
     synchronized void deactivate() {
-        active = false;
-        targetObjectId = 0;
-        pathFailCount = 0;
-        nextActionNanos = 0;
-        clearSpeedEffects();
-        eraseMagicStatus.clear();
-        timedStatus.clear();
-        curseParalysisStatus.clear();
-        clearNpcPoisonLease();
-        panicStatus.clear();
-        joyOfPainStatus.clear();
-        weaponBreakStacks = 0;
+        BattleCompanion recipient = this;
+        boolean updatedValue = false;
+        NativeCompanionCallbacks.advance(this);
+        recipient.active = updatedValue;
+        NativeCloseoutCompanionSkills.terminal(this);
+        this.targetObjectId = 0L;
+        this.pathFailCount = 0;
+        this.nextActionNanos = 0L;
+        this.clearSpeedEffects();
+        this.eraseMagicStatus.clear();
+        this.timedStatus.clear();
+        NativeCompanionWindState.clear(this);
+        this.curseParalysisStatus.clear();
+        this.clearNpcPoisonLease();
+        this.panicStatus.clear();
+        this.joyOfPainStatus.clear();
+        this.weaponBreakStacks = 0;
     }
 
     synchronized ManaDebit debitManaIfStrictlyAbove(int requested) {
@@ -903,39 +1122,32 @@ final class BattleCompanion {
         return eraseMagicStatus.cancel();
     }
 
-    /**
-     * Atomically applies the subset of retained CANCELLATION state currently
-     * implemented by a controlled actor.  The pre-clear snapshot preserves
-     * the authoritative target identity and coordinates for packet delivery.
-     */
     synchronized MagicCancellation cancelMagicEffects() {
-        if (!active || hp <= 0) return null;
-        Snapshot target = snapshot();
-        boolean haste = cancelHaste() != 0;
-        boolean slow = cancelSlow() != 0;
-        // Retained CANCELLATION always invokes L1NpcInstance.setMoveSpeed(0),
-        // even for templates whose source row is born hasted.  Natural lease
-        // expiry still restores profile.moveSpeed() through clearHaste().
-        moveSpeed = BattleTimedStatus.NORMAL;
-        boolean sleep = timedStatus.cancelSleep();
-        boolean freeze = timedStatus.cancelFreeze();
-        boolean earthBind = timedStatus.cancelEarthBind();
-        boolean thunderGrab = timedStatus.cancelThunderGrab();
-        boolean horrorOfDeath = timedStatus.cancelHorrorOfDeath();
-        boolean boneBreak = timedStatus.cancelBoneBreak();
-        NpcPoisonCancellation poisonCancellation = cancelNpcPoison();
-        boolean curseParalysis = curseParalysisStatus
-                .cancelParalysis().present();
-        boolean eraseMagic = cancelEraseMagic();
-        armBreakerStatus.cancel();
-        boolean panic = panicStatus.cancel();
-        joyOfPainStatus.cancel();
-        clearWeaponBreakStacks();
-        return new MagicCancellation(
-                target, haste, slow, sleep, freeze, earthBind, thunderGrab,
-                horrorOfDeath, boneBreak, poisonCancellation.poison(),
-                poisonCancellation.paralysis() || curseParalysis,
-                eraseMagic, panic);
+        NativeSourceCompanionElemental.cancel(this);
+        if (!this.active || this.hp <= 0) {
+            return null;
+        }
+        Snapshot snapshot = this.snapshot();
+        NativeCompanionForestCancellation.cancel(this);
+        NativeCompanionWindState.cancel(this);
+        NativeBlindSourceState.cancel(this);
+        boolean bl = this.cancelHaste() != 0;
+        boolean bl2 = this.cancelSlow() != 0;
+        this.moveSpeed = 0;
+        boolean bl3 = this.timedStatus.cancelSleep();
+        boolean bl4 = this.timedStatus.cancelFreeze();
+        boolean bl5 = this.timedStatus.cancelEarthBind();
+        boolean bl6 = this.timedStatus.cancelThunderGrab();
+        boolean bl7 = this.timedStatus.cancelHorrorOfDeath();
+        boolean bl8 = this.timedStatus.cancelBoneBreak();
+        NpcPoisonCancellation npcPoisonCancellation = this.cancelNpcPoison();
+        boolean bl9 = this.curseParalysisStatus.cancelParalysis().present();
+        boolean bl10 = this.cancelEraseMagic();
+        this.armBreakerStatus.cancel();
+        boolean bl11 = this.panicStatus.cancel();
+        this.joyOfPainStatus.cancel();
+        this.clearWeaponBreakStacks();
+        return new MagicCancellation(snapshot, bl, bl2, bl3, bl4, bl5, bl6, bl7, bl8, npcPoisonCancellation.poison(), npcPoisonCancellation.paralysis() || bl9, bl10, bl11);
     }
 
     /**
@@ -1275,21 +1487,14 @@ final class BattleCompanion {
     }
 
     synchronized Snapshot snapshot() {
-        int panicModifier = panicStatus.snapshot(System.nanoTime())
-                .abilityScoreModifier();
-        return new Snapshot(objectId, profile.npcId(), profile.gfx(), name, kind,
-                active, posture, targetObjectId,
-                x, y, heading, nextActionNanos,
-                hp, profile.maxHp(), mp, profile.maxMp(), profile.level(),
-                profile.armorClass(), Math.max(1, profile.strength() + panicModifier),
-                Math.max(1, profile.dexterity() + panicModifier),
-                moveSpeed, profile.petCost(), expiresAtNanos,
-                collarObjectId, collarCatalogId, experience,
-                experiencePercentage(profile.level(), experience), lawful);
+        Object object = NativeSourceCompanionFirstActor.capture(this);
+        int n = this.panicStatus.snapshot(System.nanoTime()).abilityScoreModifier();
+        return new Snapshot(this.objectId, this.profile.npcId(), this.profile.gfx(), this.name, this.kind, this.active, this.posture, this.targetObjectId, this.x, this.y, this.heading, this.nextActionNanos, this.hp, this.profile.maxHp(), this.mp, this.profile.maxMp(), this.profile.level(), this.profile.armorClass(), Math.max(1, this.profile.strength() + n), Math.max(1, this.profile.dexterity() + n), this.moveSpeed, this.profile.petCost(), this.expiresAtNanos, this.collarObjectId, this.collarCatalogId, this.experience, BattleCompanion.experiencePercentage(this.profile.level(), this.experience), this.lawful, NativeSourceNpcFactoryMemory.carry(this), object);
     }
 
     synchronized boolean expired(long nowNanos) {
-        return active && expiresAtNanos > 0 && nowNanos >= expiresAtNanos;
+        NativeSourceCompanionElemental.expire(this, nowNanos);
+        return this.active && this.expiresAtNanos > 0L && nowNanos >= this.expiresAtNanos;
     }
 
     synchronized boolean selectTarget(long selectedObjectId) {
@@ -1391,21 +1596,18 @@ final class BattleCompanion {
     }
 
     synchronized Strike beginStrike(int targetX, int targetY, long nowNanos) {
-        return beginStrike(targetX, targetY, 1, nowNanos);
+        return this.beginStrike(targetX, targetY, 1, nowNanos);
     }
 
-    synchronized Strike beginStrike(
-            int targetX, int targetY, int allowedRange, long nowNanos) {
-        int distance = Math.max(Math.abs(targetX - x), Math.abs(targetY - y));
-        if (!ready(nowNanos) || allowedRange < 1
-                || distance < 1 || distance > allowedRange) {
+    synchronized Strike beginStrike(int targetX, int targetY, int allowedRange, long nowNanos) {
+        int n4 = Math.max(Math.abs(targetX - this.x), Math.abs(targetY - this.y));
+        if (!this.ready(nowNanos) || allowedRange < 1 || n4 < 1 || n4 > allowedRange) {
             return null;
         }
-        heading = heading(x, y, targetX, targetY);
-        pathFailCount = 0;
-        nextActionNanos = nowNanos
-                + effectiveAttackIntervalMillis() * 1_000_000L;
-        return new Strike(heading);
+        this.heading = BattleCompanion.heading(this.x, this.y, targetX, targetY);
+        this.pathFailCount = 0;
+        this.nextActionNanos = nowNanos + (long)NativeCompanionWindState.interval(this.effectiveAttackIntervalMillis(), this, nowNanos) * 1000000L;
+        return new Strike(this.heading);
     }
 
     private int effectiveMoveIntervalMillis() {
@@ -1456,73 +1658,97 @@ final class BattleCompanion {
     }
 
     synchronized Damage applyDamage(int amount) {
-        if (amount < 0) throw new IllegalArgumentException("invalid companion damage amount");
-        Snapshot before = snapshot();
-        if (!active || hp <= 0 || amount == 0) {
-            return new Damage(before, before, 0, false);
+        boolean bl;
+        if (amount < 0) {
+            throw new IllegalArgumentException("invalid companion damage amount");
         }
-        int applied = Math.min(hp, amount);
-        hp -= applied;
-        timedStatus.cancelSleep();
-        boolean diedNow = hp == 0;
-        if (diedNow) {
-            clearSpeedEffects();
-            eraseMagicStatus.clear();
-            timedStatus.clear();
-            curseParalysisStatus.clear();
-            clearNpcPoisonLease();
-            panicStatus.clear();
-            joyOfPainStatus.clear();
-            weaponBreakStacks = 0;
-            if (kind != Kind.PET) {
-                active = false;
-                targetObjectId = 0;
-                nextActionNanos = 0;
+        Snapshot snapshot = this.snapshot();
+        if (!this.active || this.hp <= 0 || amount == 0) {
+            return new Damage(snapshot, snapshot, 0, false);
+        }
+        int n2 = Math.min(this.hp, amount);
+        this.hp -= n2;
+        NativeCloseoutCompanionSkills.terminal(this);
+        this.timedStatus.cancelSleep();
+        boolean bl2 = bl = this.hp == 0;
+        if (bl) {
+            this.clearSpeedEffects();
+            this.eraseMagicStatus.clear();
+            this.timedStatus.clear();
+            NativeCompanionWindState.clear(this);
+            this.curseParalysisStatus.clear();
+            this.clearNpcPoisonLease();
+            this.panicStatus.clear();
+            this.joyOfPainStatus.clear();
+            this.weaponBreakStacks = 0;
+            if (this.kind != Kind.PET) {
+                BattleCompanion recipient = this;
+                boolean updatedValue = false;
+                NativeCompanionCallbacks.advance(this);
+                recipient.active = updatedValue;
+                NativeCloseoutCompanionSkills.terminal(this);
+                this.targetObjectId = 0L;
+                this.nextActionNanos = 0L;
             }
         }
-        return new Damage(before, snapshot(), applied, diedNow);
+        return new Damage(snapshot, this.snapshot(), n2, bl);
     }
 
     synchronized CommandResult apply(String action) {
-        if (!active || hp <= 0 || action == null
-                || !action.equals(action.toLowerCase(Locale.ROOT))) {
+        if (!this.active || this.hp <= 0 || action == null || !action.equals(action.toLowerCase(Locale.ROOT))) {
             return CommandResult.REJECTED;
         }
         switch (action) {
-            case "aggressive" -> posture = Posture.AGGRESSIVE;
-            case "defensive" -> posture = Posture.DEFENSIVE;
-            case "stay" -> {
-                posture = Posture.STAY;
-                // Classic pet status 3 calls allTargetClear(). This must also
-                // stop an explicit setMasterSelectTarget chase already in flight.
-                targetObjectId = 0;
-                nextActionNanos = 0;
+            case "aggressive": {
+                this.posture = Posture.AGGRESSIVE;
+                break;
             }
-            case "extend" -> posture = Posture.EXTEND;
-            case "alert" -> posture = Posture.ALERT;
-            case "dismiss" -> {
-                active = false;
-                targetObjectId = 0;
-                nextActionNanos = 0;
-                clearSpeedEffects();
-                timedStatus.clear();
-                curseParalysisStatus.clear();
-                clearNpcPoisonLease();
-                panicStatus.clear();
-                joyOfPainStatus.clear();
-                weaponBreakStacks = 0;
+            case "defensive": {
+                this.posture = Posture.DEFENSIVE;
+                break;
+            }
+            case "stay": {
+                this.posture = Posture.STAY;
+                this.targetObjectId = 0L;
+                this.nextActionNanos = 0L;
+                break;
+            }
+            case "extend": {
+                this.posture = Posture.EXTEND;
+                break;
+            }
+            case "alert": {
+                this.posture = Posture.ALERT;
+                break;
+            }
+            case "dismiss": {
+                BattleCompanion recipient = this;
+                boolean updatedValue = false;
+                NativeCompanionCallbacks.advance(this);
+                recipient.active = updatedValue;
+                NativeCloseoutCompanionSkills.terminal(this);
+                this.targetObjectId = 0L;
+                this.nextActionNanos = 0L;
+                this.clearSpeedEffects();
+                this.timedStatus.clear();
+                NativeCompanionWindState.clear(this);
+                this.curseParalysisStatus.clear();
+                this.clearNpcPoisonLease();
+                this.panicStatus.clear();
+                this.joyOfPainStatus.clear();
+                this.weaponBreakStacks = 0;
                 return CommandResult.DISMISSED;
             }
-            case "attackchr" -> {
+            case "attackchr": {
                 return CommandResult.TARGET_SELECTION_PENDING;
             }
-            case "getitem" -> {
+            case "getitem": {
                 return CommandResult.COLLECTION_REQUESTED;
             }
-            case "changename" -> {
+            case "changename": {
                 return CommandResult.RENAME_PENDING;
             }
-            default -> {
+            default: {
                 return CommandResult.REJECTED;
             }
         }
@@ -1551,108 +1777,80 @@ final class BattleCompanion {
                 item, quantity, System.nanoTime(), commit) != null;
     }
 
-    /**
-     * Exact retained L1Pet/L1Summon onGetItem specialization: no ordinary
-     * refine/shuffle call; a received healing or haste potion triggers one
-     * immediate highest-priority bag consumption at 100 percent chance.
-     */
-    synchronized GivenItemReceipt receiveItemAndOnGetItemPersisted(
-            RuntimeInventory.Item item, long quantity, long nowNanos,
-            DurableCommit commit) throws java.io.IOException {
-        RuntimeInventory staged = carriedItems.copy();
-        RuntimeInventory.Item destination = item == null ? null
-                : staged.addTransferredResult(item, quantity);
-        if (!active || hp <= 0 || nowNanos < 0 || commit == null
-                || destination == null) {
+    synchronized GivenItemReceipt receiveItemAndOnGetItemPersisted(RuntimeInventory.Item item, long quantity, long nowNanos, DurableCommit commit) throws IOException {
+        RuntimeInventory.Item item2;
+        RuntimeInventory runtimeInventory = this.carriedItems.copy();
+        RuntimeInventory.Item item3 = item2 = item == null ? null : runtimeInventory.addTransferredResult(item, quantity);
+        if (!this.active || this.hp <= 0 || nowNanos < 0L || commit == null || item2 == null) {
             return null;
         }
         commit.commit();
-        carriedItems = staged;
-        Snapshot before = snapshot();
-        GivenItemUseKind useKind = GivenItemUseKind.NONE;
-        long consumedCatalogId = 0;
-        int effectGfx = 0;
-        int durationSeconds = 0;
-        int appliedHp = 0;
-        long receivedCatalogId = item.definition().catalogId();
-
-        if (!timedStatus.decayPotionActive(nowNanos)
-                && healingPotion(receivedCatalogId)
-                && hp != profile.maxHp()) {
-            consumedCatalogId = firstCarriedConsumable(
-                    InventoryCatalog.GREATER_HEALING_POTION,
-                    InventoryCatalog.EXTRA_HEALING_POTION,
-                    InventoryCatalog.NATIVE_HEALING_POTION);
-            if (consumedCatalogId != 0) {
-                int baseHealing = switch ((int) consumedCatalogId) {
-                    case (int) InventoryCatalog.GREATER_HEALING_POTION -> 75;
-                    case (int) InventoryCatalog.EXTRA_HEALING_POTION -> 45;
+        this.carriedItems = runtimeInventory;
+        Snapshot snapshot = this.snapshot();
+        GivenItemUseKind givenItemUseKind = GivenItemUseKind.NONE;
+        long l3 = 0L;
+        int n = 0;
+        int n2 = 0;
+        int n3 = 0;
+        long l4 = item.definition().catalogId();
+        if (!this.timedStatus.decayPotionActive(nowNanos) && BattleCompanion.healingPotion(l4) && this.hp != this.profile.maxHp()) {
+            l3 = this.firstCarriedConsumable(40012L, 40011L, 40010L);
+            if (l3 != 0L) {
+                int n4 = switch ((int)l3) {
+                    case 40012 -> 75;
+                    case 40011 -> 45;
                     default -> 15;
                 };
-                effectGfx = switch ((int) consumedCatalogId) {
-                    case (int) InventoryCatalog.GREATER_HEALING_POTION -> 197;
-                    case (int) InventoryCatalog.EXTRA_HEALING_POTION -> 194;
+                n = switch ((int)l3) {
+                    case 40012 -> 197;
+                    case 40011 -> 194;
                     default -> 189;
                 };
-                int requested = BattlePotionRecovery.adjustedAmount(
-                        baseHealing, 0, 0,
-                        timedStatus.polluteWaterActive(nowNanos),
-                        timedStatus.waterDragonDirtyCurrentActive(nowNanos),
-                        timedStatus.waterDragonPotionErosionActive(nowNanos));
-                int previousHp = hp;
-                hp = Math.max(0, Math.min(profile.maxHp(),
-                        Math.addExact(hp, requested)));
-                appliedHp = hp - previousHp;
-                useKind = GivenItemUseKind.HEAL;
-                if (hp == 0) {
-                    clearSpeedEffects();
-                    eraseMagicStatus.clear();
-                    timedStatus.clear();
-                    curseParalysisStatus.clear();
-                    clearNpcPoisonLease();
-                    panicStatus.clear();
-                    joyOfPainStatus.clear();
-                    if (kind != Kind.PET) {
-                        active = false;
-                        targetObjectId = 0;
-                        nextActionNanos = 0;
+                int n5 = BattlePotionRecovery.adjustedAmount(n4, 0, 0, this.timedStatus.polluteWaterActive(nowNanos), this.timedStatus.waterDragonDirtyCurrentActive(nowNanos), this.timedStatus.waterDragonPotionErosionActive(nowNanos));
+                int n6 = this.hp;
+                this.hp = Math.max(0, Math.min(this.profile.maxHp(), Math.addExact(this.hp, n5)));
+                n3 = this.hp - n6;
+                givenItemUseKind = GivenItemUseKind.HEAL;
+                if (this.hp == 0) {
+                    this.clearSpeedEffects();
+                    this.eraseMagicStatus.clear();
+                    this.timedStatus.clear();
+                    NativeCompanionWindState.clear(this);
+                    this.curseParalysisStatus.clear();
+                    this.clearNpcPoisonLease();
+                    this.panicStatus.clear();
+                    this.joyOfPainStatus.clear();
+                    if (this.kind != Kind.PET) {
+                        BattleCompanion recipient = this;
+                        boolean updatedValue = false;
+                        NativeCompanionCallbacks.advance(this);
+                        recipient.active = updatedValue;
+                        this.targetObjectId = 0L;
+                        this.nextActionNanos = 0L;
                     }
                 }
             }
-        } else if (!timedStatus.decayPotionActive(nowNanos)
-                && hastePotion(receivedCatalogId)) {
-            if (hasteSkillId != 0 && nowNanos >= hasteExpiresAtNanos) {
-                clearHaste();
+        } else if (!this.timedStatus.decayPotionActive(nowNanos) && BattleCompanion.hastePotion(l4)) {
+            if (this.hasteSkillId != 0 && nowNanos >= this.hasteExpiresAtNanos) {
+                this.clearHaste();
             }
-            if (hasteSkillId == 0) {
-                consumedCatalogId = firstCarriedConsumable(
-                        BLESSED_GREATER_HASTE_POTION,
-                        GREATER_HASTE_POTION,
-                        BLESSED_HASTE_POTION,
-                        InventoryCatalog.SELF_HASTE_POTION);
-                if (consumedCatalogId != 0) {
-                    durationSeconds = switch ((int) consumedCatalogId) {
-                        case (int) BLESSED_GREATER_HASTE_POTION -> 2100;
-                        case (int) GREATER_HASTE_POTION -> 1800;
-                        case (int) BLESSED_HASTE_POTION -> 350;
-                        default -> 300;
-                    };
-                    slowExpiresAtNanos = 0;
-                    slowSkillId = 0;
-                    moveSpeed = BattleTimedStatus.HASTE;
-                    hasteExpiresAtNanos = Math.addExact(
-                            nowNanos, durationSeconds * 1_000_000_000L);
-                    hasteSkillId = BattleSpellCatalog.HASTE;
-                    effectGfx = 191;
-                    useKind = GivenItemUseKind.HASTE;
-                }
+            if (this.hasteSkillId == 0 && (l3 = this.firstCarriedConsumable(140018L, 40018L, 140013L, 40013L)) != 0L) {
+                n2 = switch ((int)l3) {
+                    case 140018 -> 2100;
+                    case 40018 -> 1800;
+                    case 140013 -> 350;
+                    default -> 300;
+                };
+                this.slowExpiresAtNanos = 0L;
+                this.slowSkillId = 0;
+                this.moveSpeed = 1;
+                this.hasteExpiresAtNanos = Math.addExact(nowNanos, (long)n2 * 1000000000L);
+                this.hasteSkillId = 43;
+                n = 191;
+                givenItemUseKind = GivenItemUseKind.HASTE;
             }
         }
-        return new GivenItemReceipt(
-                before, snapshot(), destination.objectId(), receivedCatalogId,
-                Math.toIntExact(quantity), useKind, consumedCatalogId,
-                effectGfx, durationSeconds, appliedHp,
-                carriedItems.activeLightRange());
+        return new GivenItemReceipt(snapshot, this.snapshot(), item2.objectId(), l4, Math.toIntExact(quantity), givenItemUseKind, l3, n, n2, n3, this.carriedItems.activeLightRange());
     }
 
     synchronized List<RuntimeInventory.Item> carriedItems() {
@@ -1683,52 +1881,33 @@ final class BattleCompanion {
                 || catalogId == InventoryCatalog.SELF_HASTE_POTION;
     }
 
-    /** Retained evolvePet: same world object, new collar/template, level 1 and empty bag. */
-    synchronized Snapshot evolve(
-            GameStateStore.PetState evolved, SourcePetTemplate targetTemplate) {
-        if (kind != Kind.PET || !active || hp <= 0 || evolved == null
-                || targetTemplate == null || evolved.objectId() != objectId
-                || evolved.npcId() != targetTemplate.npcId()
-                || evolved.collarCatalogId() != targetTemplate.collarCatalogId()
-                || evolved.collarObjectId() == collarObjectId
-                || !evolved.sourceKey().equals(petSourceKey)
-                || evolved.level() != 1 || evolved.experience() != 0) {
+    synchronized Snapshot evolve(GameStateStore.PetState evolved, SourcePetTemplate targetTemplate) {
+        if (this.kind != Kind.PET || !this.active || this.hp <= 0 || evolved == null || targetTemplate == null || evolved.objectId() != this.objectId || evolved.npcId() != targetTemplate.npcId() || evolved.collarCatalogId() != targetTemplate.collarCatalogId() || evolved.collarObjectId() == this.collarObjectId || !evolved.sourceKey().equals(this.petSourceKey) || evolved.level() != 1 || evolved.experience() != 0L) {
             throw new IllegalArgumentException("invalid persistent pet evolution");
         }
-        BattleAnimationCatalog.get().requireBattleCapableSprite(
-                targetTemplate.gfx(), BattleActionCodes.WALK);
-        profile = new Profile(targetTemplate.npcId(), targetTemplate.gfx(),
-                evolved.level(), evolved.maxHp(), evolved.maxMp(),
-                targetTemplate.armorClass(), targetTemplate.strength(),
-                targetTemplate.dexterity(),
-                hasteInterval(targetTemplate.moveIntervalMillis()),
-                hasteInterval(targetTemplate.attackIntervalMillis()),
-                BattleTimedStatus.HASTE, targetTemplate.charismaCost(),
-                targetTemplate.name());
-        qualifyNpcDefense(targetTemplate.npcId(),
-                targetTemplate.sourceLevel(), targetTemplate.undead(),
-                targetTemplate.magicResistance(), targetTemplate.boss(),
-                targetTemplate.ranged(), targetTemplate.bowActionId(),
-                targetTemplate.poisonAttack(), targetTemplate.paralysisAttack());
-        name = evolved.name();
-        collarObjectId = evolved.collarObjectId();
-        collarCatalogId = evolved.collarCatalogId();
-        experience = evolved.experience();
-        lawful = evolved.lawful();
-        hp = evolved.maxHp();
-        mp = evolved.maxMp();
-        posture = Posture.STAY;
-        targetObjectId = 0;
-        nextActionNanos = 0;
-        clearSpeedEffects();
-        timedStatus.clear();
-        curseParalysisStatus.clear();
-        clearNpcPoisonLease();
-        panicStatus.clear();
-        joyOfPainStatus.clear();
-        weaponBreakStacks = 0;
-        carriedItems.clear();
-        return snapshot();
+        BattleAnimationCatalog.get().requireBattleCapableSprite(targetTemplate.gfx(), 0);
+        this.profile = new Profile(targetTemplate.npcId(), targetTemplate.gfx(), evolved.level(), evolved.maxHp(), evolved.maxMp(), targetTemplate.armorClass(), targetTemplate.strength(), targetTemplate.dexterity(), BattleCompanion.hasteInterval(targetTemplate.moveIntervalMillis()), BattleCompanion.hasteInterval(targetTemplate.attackIntervalMillis()), 1, targetTemplate.charismaCost(), targetTemplate.name());
+        this.qualifyNpcDefense(targetTemplate.npcId(), targetTemplate.sourceLevel(), targetTemplate.undead(), targetTemplate.magicResistance(), targetTemplate.boss(), targetTemplate.ranged(), targetTemplate.bowActionId(), targetTemplate.poisonAttack(), targetTemplate.paralysisAttack());
+        this.name = evolved.name();
+        this.collarObjectId = evolved.collarObjectId();
+        this.collarCatalogId = evolved.collarCatalogId();
+        this.experience = evolved.experience();
+        this.lawful = evolved.lawful();
+        this.hp = evolved.maxHp();
+        this.mp = evolved.maxMp();
+        this.posture = Posture.STAY;
+        this.targetObjectId = 0L;
+        this.nextActionNanos = 0L;
+        this.clearSpeedEffects();
+        this.timedStatus.clear();
+        NativeCompanionWindState.clear(this);
+        this.curseParalysisStatus.clear();
+        this.clearNpcPoisonLease();
+        this.panicStatus.clear();
+        this.joyOfPainStatus.clear();
+        this.weaponBreakStacks = 0;
+        this.carriedItems.clear();
+        return this.snapshot();
     }
 
     synchronized void clearCarriedItems() {
@@ -1763,15 +1942,20 @@ final class BattleCompanion {
     }
 
     synchronized boolean resurrect(int restoredHp) {
-        if (!active || hp != 0
-                || restoredHp <= 0 || restoredHp > profile.maxHp()) return false;
-        hp = restoredHp;
-        targetObjectId = 0;
-        nextActionNanos = 0;
-        posture = Posture.STAY;
-        timedStatus.clear();
-        curseParalysisStatus.clear();
-        clearNpcPoisonLease();
+        if (!this.active || this.hp != 0 || restoredHp <= 0 || restoredHp > this.profile.maxHp()) {
+            return false;
+        }
+        BattleCompanion recipient = this;
+        int updatedValue = restoredHp;
+        NativeCompanionCallbacks.advance(this);
+        recipient.hp = updatedValue;
+        this.targetObjectId = 0L;
+        this.nextActionNanos = 0L;
+        this.posture = Posture.STAY;
+        this.timedStatus.clear();
+        NativeCompanionWindState.clear(this);
+        this.curseParalysisStatus.clear();
+        this.clearNpcPoisonLease();
         return true;
     }
 

@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionLitoRoomInvitationTest {
     @TempDir Path temporary;
 
@@ -105,7 +107,7 @@ final class ClientSessionLitoRoomInvitationTest {
             assertEquals("ROOM", field(target, "phase").toString());
             assertNull(field(target, "acceptedLitoRoomInvitation"));
             assertTrue(hub.roomMembers(roomId).contains(target));
-            ModernCaptureLog targetCapture = (ModernCaptureLog) field(target, "capture");
+            CaptureLog targetCapture = (CaptureLog) field(target, "capture");
             assertTrue(Files.readString(targetCapture.path()).contains(
                     "S_LITO_JOIN_RESULT accepted room=" + roomId
                             + " trigger=invite-accept"));
@@ -177,7 +179,7 @@ final class ClientSessionLitoRoomInvitationTest {
                                   GameStateStore state, GameHub hub,
                                   String captureDirectory) throws Exception {
         return new ClientSession(socket, ClientSession.Endpoint.GAME, config, null, state,
-                new ModernCaptureLog(temporary.resolve(captureDirectory)), hub);
+                new CaptureLog(temporary.resolve(captureDirectory)), hub);
     }
 
     private static ServerSocket listener() throws Exception {

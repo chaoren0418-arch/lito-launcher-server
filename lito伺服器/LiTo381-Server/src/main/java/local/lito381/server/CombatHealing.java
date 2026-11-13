@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 package local.lito381.server;
 
 /** Source TYPE_HEAL order at native group-heal boundaries; no retained actor state. */
@@ -10,7 +11,7 @@ final class CombatHealing {
         int base=water.active(now)?lawful<<1:lawful;water.cancel();return base;
     }
     static int owned(BattleCompanion actor,int lawful,ClientSession caster,int skill,long now) {
-        if(!CombatRules.loaded())return actor.heal(lawful);
+        if(!CombatRules.loaded())return NativeSourceControlledHealing.heal(actor,lawful);
         var before=actor.snapshot();if(!before.active()||before.hp()<=0)return before.hp();
         // The selected-source NPC-ID cache is the same immutable template used by single-target healing.
         var accounts=(AccountRepository)CombatAccess.call(caster,"selectedSourceAccounts","()L"+P+"AccountRepository;");
@@ -19,8 +20,8 @@ final class CombatHealing {
         if(stats==null)throw new IllegalStateException("group healing source NPC missing="+before.npcId());
         int adjusted=CombatNpcDebuffs.healingOwned(lawful,actor,now);
         if(skill==164)adjusted=CombatRules.naturesBlessing(adjusted);
-        int delta=stats.undead()==1?-adjusted:stats.undead()==3?0:adjusted;
-        if(delta>0)actor.heal(delta);
+        int delta=NativeSourceNpcFactoryType.ownedDelta(NativeSourceHealingType.undead(stats,actor)==1?-adjusted:NativeSourceHealingType.undead(stats,actor)==3?0:adjusted,actor,adjusted);
+        if(delta>0)NativeSourceControlledHealing.heal(actor,delta);
         else if(delta<0){
             if(CombatWorldPhysical.world(caster))CombatAccess.call(caster,"applyClassicWorldMonsterCompanionDamage","(L"+P+"BattleCompanion;L"+P+"BattleCompanion$Snapshot;IJLjava/lang/String;)V",actor,before,-delta,caster.playerObjectId(),"group-healing-source-"+skill);
             else {

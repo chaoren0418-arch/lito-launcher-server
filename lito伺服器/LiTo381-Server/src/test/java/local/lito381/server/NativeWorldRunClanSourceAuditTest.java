@@ -63,7 +63,8 @@ final class NativeWorldRunClanSourceAuditTest {
         assertTrue(method.contains("target.classicWorldMapId != 4"));
         assertTrue(method.contains("target.classicWorldMapId != 304"));
         assertTrue(method.contains("callClanClassicWorldCastleId("));
-        assertTrue(method.contains("target.hub.classicCastleWarActive("));
+        // T117: RUN_CLAN.java checkInAllWarArea has no war-time exception.
+        assertTrue(!method.contains("target.hub.classicCastleWarActive("));
         assertTrue(method.contains("new PendingRunClanPortal("));
         assertTrue(method.contains("sourceMapId, sourceInstanceId"));
         assertTrue(method.contains("targetMapId, targetInstanceId"));

@@ -188,9 +188,71 @@ jobs:
           name: server-source-gap
           path: docs/server-source-gap.md
 
+  # Issue #357 / T126: reproducible packaging. Build the same commit twice
+  # (clean in between so nothing is reused from target/) and require every
+  # JAR to have the same SHA-256. Relies on project.build.outputTimestamp.
+  server-reproducible:
+    name: Server reproducible JAR (build twice, compare SHA-256)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Build twice and compare
+        working-directory: lito伺服器/LiTo381-Server
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/repro"
+          mkdir -p "$out/1" "$out/2"
+          for round in 1 2; do
+            echo "::group::mvn package round $round"
+            mvn -B -DskipTests clean package
+            echo "::endgroup::"
+            cp target/*.jar "$out/$round/"
+            # sleep so any wall-clock timestamp leak would show up as a diff
+            if [ "$round" = 1 ]; then sleep 3; fi
+          done
+          (cd "$out/1" && sha256sum *.jar | sort -k2) | tee "$out/round1.sha256"
+          (cd "$out/2" && sha256sum *.jar | sort -k2) | tee "$out/round2.sha256"
+          count=$(wc -l < "$out/round1.sha256")
+          if [ "$count" -lt 3 ]; then
+            echo "::error::expected at least 3 JARs (main, modern, as-record-tests), got $count"
+            exit 1
+          fi
+          if ! diff -u "$out/round1.sha256" "$out/round2.sha256"; then
+            echo "::error::JAR SHA-256 differs between two builds of the same commit"
+            for jar in "$out"/1/*.jar; do
+              name=$(basename "$jar")
+              if ! cmp -s "$jar" "$out/2/$name"; then
+                echo "--- $name entries (name/size/date) round1 vs round2"
+                diff <(unzip -lv "$jar") <(unzip -lv "$out/2/$name") || true
+              fi
+            done
+            exit 1
+          fi
+          echo "reproducible: $count JARs identical across two builds"
+          mkdir -p target
+          cp "$out/round1.sha256" target/reproducible-jars.sha256
+          git rev-parse HEAD > target/reproducible-revision.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-reproducible-jars
+          path: |
+            lito伺服器/LiTo381-Server/target/reproducible-jars.sha256
+            lito伺服器/LiTo381-Server/target/reproducible-revision.txt
+          if-no-files-found: warn
+
   server-test:
     name: Server tests
     runs-on: ubuntu-latest
+    # T131 (#382): a normal run takes about 10 minutes. Without a limit a hung
+    # test holds the job until GitHub's 6 hour cap and blocks the merge gate.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -200,12 +262,21 @@ jobs:
           cache: maven
       - name: Test (MySQL and local-file tests skipped)
         working-directory: lito伺服器/LiTo381-Server
+        # Step limit below the job limit: a timed-out step fails (not "cancelled"),
+        # so the summary and evidence upload steps still run.
+        timeout-minutes: 25
         shell: bash
         run: |
           set -o pipefail
           mkdir -p target
           git rev-parse HEAD | tee target/test-revision.txt
           mvn -B test 2>&1 | tee target/mvn-test.log
+      - name: Summarise skips (baseline without MySQL)
+        if: always()
+        run: |
+          python3 .github/workflows/scripts/surefire_summary.py \
+            lito伺服器/LiTo381-Server/target/surefire-reports \
+            lito伺服器/LiTo381-Server/target/surefire-summary.json no-mysql
       - name: Upload complete test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -214,6 +285,109 @@ jobs:
           path: |
             lito伺服器/LiTo381-Server/target/test-revision.txt
             lito伺服器/LiTo381-Server/target/mvn-test.log
+            lito伺服器/LiTo381-Server/target/surefire-summary.json
+            lito伺服器/LiTo381-Server/target/surefire-reports/
+
+  # Issue #334 / T119: same `mvn -B test`, but with a disposable MySQL and a
+  # CI-only config/server.properties, so tests guarded by
+  # LocalResources.assumeServerProperties() actually run.
+  # MySQL 5.7: every dump in db/ and 1-伺服器/db/*.sql is "Source Server
+  # Version 50522 (5.5.22)" with MyISAM tables and 5.5-era defaults; 5.7 is the
+  # closest maintained image (8.0 changes default auth, reserved words and
+  # utf8 handling). sql_mode is cleared to match the 5.5 server default.
+  # Credentials below are fixed, non-secret test values for this throwaway
+  # container only; they are not used by any real deployment.
+  # Non-blocking until the follow-up of #334 fixes the 73 cases listed in
+  # docs/reports/issue-334.md; Maven still exits non-zero so the job shows red.
+  server-integration-test:
+    name: Server tests (CI MySQL fixture, non-blocking until #334 follow-up)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    # T131 (#382): normal run about 10 minutes; runs 43264734337 / 43264755522 /
+    # 43264993090 hung for 6 hours behind a JVM-wide deadlock and ended "cancelled".
+    timeout-minutes: 30
+    env:
+      LITO_CI_DB_ROOT_PASSWORD: lito_ci_root_test_only
+      LITO_CI_DB_USER: lito_ci
+      LITO_CI_DB_PASSWORD: lito_ci_test_only
+      LITO_CI_DB_PORT: '33306'
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: lito_ci_root_test_only
+        ports:
+          - 33306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -uroot -plito_ci_root_test_only"
+          --health-interval 5s --health-timeout 5s --health-retries 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Build CI database fixture (schema + fake rows, runner temp only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 lito伺服器/LiTo381-Server/db/ci/build_ci_database.py \
+            --out "$RUNNER_TEMP/lito-ci/sql" \
+            --user "$LITO_CI_DB_USER" --password "$LITO_CI_DB_PASSWORD"
+      - name: Load fixture into MySQL
+        shell: bash
+        run: |
+          set -euo pipefail
+          container='${{ job.services.mysql.id }}'
+          sql() { docker exec -i "$container" mysql --default-character-set=utf8mb4 -uroot -p"$LITO_CI_DB_ROOT_PASSWORD" "$@"; }
+          sql -e "SET GLOBAL sql_mode=''; SELECT VERSION(), @@GLOBAL.sql_mode;"
+          for file in "$RUNNER_TEMP"/lito-ci/sql/*.sql; do
+            echo "::group::load $(basename "$file")"
+            start=$(date +%s)
+            sql < "$file"
+            echo "loaded in $(( $(date +%s) - start ))s"
+            echo "::endgroup::"
+          done
+          sql -e "SELECT table_schema, COUNT(*) AS tables FROM information_schema.TABLES WHERE table_schema IN ('380_db','380_lito','380_ac','380_ac_1','380_ac_2') GROUP BY table_schema; SELECT * FROM \`380_lito\`.lito_source_server; SELECT COUNT(*) AS fake_characters FROM \`380_ac\`.characters;"
+      - name: Generate CI-only config/server.properties (runner temp, symlinked)
+        working-directory: lito伺服器/LiTo381-Server
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 db/ci/make_ci_server_properties.py \
+            --out "$RUNNER_TEMP/lito-ci/config/server.properties" \
+            --jdbc-base-url "jdbc:mysql://127.0.0.1:${LITO_CI_DB_PORT}/" \
+            --user "$LITO_CI_DB_USER" --password "$LITO_CI_DB_PASSWORD"
+          test ! -e config/server.properties
+          ln -s "$RUNNER_TEMP/lito-ci/config/server.properties" config/server.properties
+          git check-ignore -q config/server.properties
+      - name: Test with CI MySQL fixture
+        working-directory: lito伺服器/LiTo381-Server
+        # Step limit below the job limit: a timed-out step fails (not "cancelled"),
+        # so the summary and evidence upload steps still run.
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p target
+          git rev-parse HEAD | tee target/test-revision.txt
+          mvn -B test 2>&1 | tee target/mvn-test.log
+      - name: Summarise skips (with CI MySQL)
+        if: always()
+        run: |
+          python3 .github/workflows/scripts/surefire_summary.py \
+            lito伺服器/LiTo381-Server/target/surefire-reports \
+            lito伺服器/LiTo381-Server/target/surefire-summary.json ci-mysql
+      - name: Upload complete test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-integration-test-evidence
+          path: |
+            lito伺服器/LiTo381-Server/target/test-revision.txt
+            lito伺服器/LiTo381-Server/target/mvn-test.log
+            lito伺服器/LiTo381-Server/target/surefire-summary.json
             lito伺服器/LiTo381-Server/target/surefire-reports/
 
   semantic-gap:

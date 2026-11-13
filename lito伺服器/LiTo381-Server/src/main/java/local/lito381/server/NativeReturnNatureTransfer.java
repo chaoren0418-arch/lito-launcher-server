@@ -1,3 +1,4 @@
+// ported from candidate 50635f7e; three-way baseline: base-0.6.71.jar and src/main
 // ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/return-nature-transfer/NativeReturnNatureTransfer.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
 import java.io.*;import java.util.*;
@@ -29,7 +30,7 @@ final class NativeReturnNatureTransfer {
     NativeDeItemTransaction.Operation<Boolean> operation=()->{
      if(!NativeCastMaterial.active(owner,cast)||!scope.binding.matches(owner))throw new IOException("companion return owner retired");
      synchronized(pet){
-      if(NativeReturnNatureMaterialAction.caster(owner,pet)!=caster||!pet.snapshot().active())return false;
+      if(NativeReturnNatureMaterialAction.caster(owner,pet)!=caster||!NativeSummonTerminalLifecycle.transferable(owner,pet))return false;
       transfer(owner,pet,cast);
       return original(owner,pet,expected,effect);
      }
@@ -73,16 +74,16 @@ final class NativeReturnNatureTransfer {
   for(int i=0;i<overflow.size();i++){
    var reason=world?"classic-world-pet-collect":"companion-collect";
    CombatAccess.call(owner,overflow.get(i).capacity?"sendInventoryWeightOver":"sendInventoryCapacityOver","(Ljava/lang/String;)V",reason);
-   CombatAccess.call(owner,world?"broadcastClassicWorldGroundItem":"broadcastGroundItem",world?"(Llocal/lito381/server/ClassicWorldGroundItems$Item;Ljava/lang/String;)V":"(Llocal/lito381/server/BattleGroundItems$Item;Ljava/lang/String;)V",grounds[i],world?"classic-world-pet-collect-overflow":"companion-getitem-overflow");
+   CombatAccess.call(owner,world?"nativePlacementGroundPublication":"broadcastGroundItem",world?"(Llocal/lito381/server/ClassicWorldGroundItems$Item;Ljava/lang/String;)V":"(Llocal/lito381/server/BattleGroundItems$Item;Ljava/lang/String;)V",grounds[i],world?"classic-world-pet-collect-overflow":"companion-getitem-overflow");
   }
  }
  private static void reserveGround(ClientSession owner,BattleCompanion.Snapshot pet,List<Overflow> overflow,Object[] grounds,int index,DurableCommit commit)throws IOException{
   if(index==overflow.size()){commit.commit();return;}
-  var hub=(GameHub)CombatAccess.field(owner,"hub");var item=overflow.get(index).item;
+  var hub=(GameHub)NativeCompanionPlacement.groundField(owner,"hub");var item=overflow.get(index).item;
   DurableCommit rest=()->reserveGround(owner,pet,overflow,grounds,index+1,commit);
-  Object ground=String.valueOf(CombatAccess.field(owner,"phase")).equals("WORLD")
-   ?hub.putClassicWorldGroundItemPersisted((int)CombatAccess.field(owner,"classicWorldMapId"),(int)CombatAccess.field(owner,"classicWorldInstanceId"),item,item.quantity(),pet.x(),pet.y(),pet.npcId(),rest)
-   :hub.putGroundItemPersisted((long)CombatAccess.field(owner,"currentRoomId"),owner,item,item.quantity(),pet.x(),pet.y(),rest);
+  Object ground=String.valueOf(NativeCompanionPlacement.groundField(owner,"phase")).equals("WORLD")
+   ?hub.putClassicWorldGroundItemPersisted((int)NativeCompanionPlacement.groundField(owner,"classicWorldMapId"),(int)NativeCompanionPlacement.groundField(owner,"classicWorldInstanceId"),item,item.quantity(),pet.x(),pet.y(),pet.npcId(),rest)
+   :hub.putGroundItemPersisted((long)NativeCompanionPlacement.groundField(owner,"currentRoomId"),owner,item,item.quantity(),pet.x(),pet.y(),rest);
   if(ground==null)throw new IOException("companion return ground reservation rejected");grounds[index]=ground;
  }
  private NativeReturnNatureTransfer(){}
