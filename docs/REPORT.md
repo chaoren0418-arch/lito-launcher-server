@@ -119,3 +119,4 @@
 - 2026-11-14 — #387 T136: 結算待寫入結果的作廢工具與 .tmp 殘檔清理（#355 移交）（code，claude-local，PR 已合併）→ [報告](reports/issue-387.md)
 - 2026-11-14 — #404 T140: 登入器連外部實驗伺服器（不自啟、不覆寫埠）——#284 項目 08（code，claude-local，PR 已合併）→ [報告](reports/issue-404.md)
 - 2026-11-14 — #407 T141: 回歸工具收據寫入的重複 keyword TypeError（#341 項 11）（code，claude-local，PR 已合併）→ [報告](reports/issue-407.md)
+- 2026-11-14 — #409 分流：lito-launcher-server#284 實機驗收的失敗項目 → 修正任務＋重測（design，claude-local，PR #411 已合併）→ [報告](reports/issue-409.md)
