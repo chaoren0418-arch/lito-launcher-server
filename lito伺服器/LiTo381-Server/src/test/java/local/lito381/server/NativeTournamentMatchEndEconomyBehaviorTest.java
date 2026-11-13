@@ -24,6 +24,8 @@ import org.junit.jupiter.api.io.TempDir;
  * source-bound equipment and Tournament rewards retained).  Runs on the CI self-test profile
  * with {@code native.tournament.economy.enabled=true}.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class NativeTournamentMatchEndEconomyBehaviorTest {
     private static final Path CONFIG = Path.of(
             "src/test/resources/server-config/config/server.matchmaking-consumable-selftest.properties");

@@ -24,6 +24,8 @@ import org.junit.jupiter.api.io.TempDir;
  * (S_RESURRECT, never an S_MOVE_OBJECT spawn teleport), and the deferred path is
  * limited to Honor Match rooms.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class NativeHonorRespawnBehaviorTest {
     private static final Path CONFIG = Path.of(
             "src/test/resources/server-config/config/server.selftest.properties");

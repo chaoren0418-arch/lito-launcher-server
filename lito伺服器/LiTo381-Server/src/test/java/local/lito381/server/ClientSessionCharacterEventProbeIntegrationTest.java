@@ -16,6 +16,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionCharacterEventProbeIntegrationTest {
     private static final int SEED = 0x0404_C8C8;
     private static final long LOOPBACK_127_0_0_2 = 0x0200_007FL;

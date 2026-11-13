@@ -34,6 +34,8 @@ import org.junit.jupiter.api.io.TempDir;
  * consumption; they now pin the official behaviour: death action, war/siege/kill-feed/PK
  * handling unchanged, and no item, skill or experience penalty, no death-safe debit/notice.
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
     private static final long SOURCE_EXP = 244_276;
     /** The old src/main level-22 penalty result; 0.6.71 must never publish or store it. */

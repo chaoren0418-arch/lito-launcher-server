@@ -34,6 +34,8 @@ import org.junit.jupiter.api.io.TempDir;
  *   <li>the one-shot capability cannot be replayed into a second claim.</li>
  * </ul>
  */
+@org.junit.jupiter.api.Timeout(value = 120, unit = java.util.concurrent.TimeUnit.SECONDS,
+        threadMode = org.junit.jupiter.api.Timeout.ThreadMode.SEPARATE_THREAD) // T131 (#382): real GameHub
 final class PcActionRewardBehaviorTest {
     private static final Path CONFIG = Path.of(
             "src/test/resources/server-config/config/server.selftest.properties");
