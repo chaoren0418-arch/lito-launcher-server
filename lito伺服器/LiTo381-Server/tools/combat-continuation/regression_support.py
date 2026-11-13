@@ -185,7 +185,8 @@ def _record_identity(receipt, mode, entry):
     value['entries'].append(entry)
     # Only assert_class_identity entries gate here; component entries are judged by the
     # driver's own allowlist assertion right after class_identity_changed returns.
-    value['status'] = 'failed' if any(not e['identical'] for e in value['entries'] if e['gating'] == 'assert') else 'recorded'
+    gating = [e['identical'] for e in value['entries'] if e['gating'] == 'assert']
+    value['status'] = 'recorded' if not gating else 'passed' if all(gating) else 'failed'
     write(receipt, value)
 
 
