@@ -110,3 +110,4 @@
 - 2026-11-13 — #381 T130: G27：map 12000 資產查核（PakViewer 查遍客戶端 pak，唯讀）（resource，claude-local，PR #391 已合併）→ [報告](reports/issue-381.md)
 - 2026-11-13 — #380 T129: M4 驗收準備：M3／M3b／M3c 與 #366–#371 的實機待驗證項目彙整成操作手冊 C 部（code，claude-local，PR 已合併）→ [報告](reports/issue-380.md)
 - 2026-11-13 — #382 T131: 開戰與斷線同時發生的鎖順序死結（DurableBattleSettlement.context）＋CI MySQL job 逾時（code，claude-local，PR 已合併）→ [報告](reports/issue-382.md)
+- 2026-11-13 — #383 T132: 競技場 PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話、多人時換目標（#353 剩餘 1–3）（code，claude-local，PR 已合併）→ [報告](reports/issue-383.md)
