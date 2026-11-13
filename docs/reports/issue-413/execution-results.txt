@@ -1,0 +1,26 @@
+GUI 第一次完整指令：
+powershell.exe -NoProfile -STA -File scratch/issue-413/gui-probe.ps1
+
+工具回應（exit_code=1）：
+File D:\lineage開發\3-lito開發\scratch\wt\task-413\scratch\issue-413\gui-probe.ps1 cannot be loaded because running scripts
+ is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?Link
+ID=135170.
+    + CategoryInfo          : SecurityError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+GUI 第二次完整指令見 gui-command.txt。
+工具回應（exit_code=0）：
+{
+    "started_utc": "2026-11-13T22:05:51.3853227Z",
+    "pid": 19548,
+    "shown": true,
+    "hwnd": 14025832,
+    "closed": true,
+    "finished_utc": "2026-11-13T22:05:52.0064798Z"
+}
+
+P24Lab 完整指令見 p24-command.txt；tools.exec_command 沒有回傳程序 exit_code，建立程序前就遭拒。
+工具回傳為 Script failed / Script error / exec_command failed: CreateProcess，Rejected 訊息的結尾：
+rejected: blocked by policy
+工具回應的命令轉義表示本身含「4097 chars truncated」，故此處保留完整原始 cmd 為獨立證據，沒有補造被工具省略的轉義片段。未提供比 blocked by policy 更詳細的拒絕原因。
+未以其他 shell、工具、指令拆分或其他途徑重試 P24Lab 被拒的操作。

@@ -1,0 +1,46 @@
+以下是被自動核准審查拒絕的完整原始 cmd，未執行；使用 tools.exec_command，cwd=task-413，yield_time_ms=1000。憑證僅透過既有 private-root.cnf 路徑提供給 MySQL，沒有讀出、複製或輸出其內容。
+本命令原擬使用既有 P24Lab datadir（啟停會有 MySQL 內部持久化）；log/pid/tmp 指向本 worktree。實際整組在 CreateProcess 前被拒，故這些動作全未執行。
+
+$ErrorActionPreference='Stop'
+$taskRoot=(Get-Location).Path
+$lab='D:\BinEngine\environments\p24'
+$ev=Join-Path $taskRoot 'docs\reports\issue-413'
+$runtime=Join-Path $taskRoot 'scratch\issue-413\mysql-runtime'
+New-Item -ItemType Directory -Force -Path $runtime | Out-Null
+$lease=@((Invoke-RestMethod 'http://localhost:8787/api/state').leases | Where-Object name -eq 'p24lab')
+if($lease.Count -ne 1 -or $lease[0].holder -ne 'chaoren0418-arch/lito-launcher-server#413' -or $lease[0].exp -le [DateTimeOffset]::UtcNow.ToUnixTimeSeconds() -or [Math]::Abs($lease[0].exp-1794612793.4398348) -gt 1){throw 'Lease mismatch'}
+@{checked_utc=[DateTime]::UtcNow.ToString('o');lease=$lease[0];expires_utc=[DateTimeOffset]::FromUnixTimeSeconds([long][Math]::Floor($lease[0].exp)).ToString('o')}|ConvertTo-Json -Depth 5|Set-Content -Encoding UTF8 "$ev\lease.json"
+if(@(Get-NetTCPConnection -State Listen -LocalPort 43324 -ErrorAction SilentlyContinue).Count){throw '43324 already occupied'}
+if(Get-CimInstance Win32_Process -Filter "Name='mysqld.exe'" | Where-Object ExecutablePath -eq "$lab\mysql\bin\mysqld.exe"){throw 'P24 already running'}
+if((Get-Content -LiteralPath "$lab\db-data\auto.cnf" -Raw) -notmatch 'server-uuid=e3443e40-d090-11f1-8040-4cedfb679789'){throw 'Offline UUID mismatch'}
+$serverArgs=@("--defaults-file=$lab\mysql.ini",'--console','--read-only=ON','--super-read-only=ON',('"--log-error={0}\mysql.err"' -f $runtime),('"--pid-file={0}\mysql.pid"' -f $runtime),('"--tmpdir={0}"' -f $runtime))
+$owned=Start-Process "$lab\mysql\bin\mysqld.exe" -ArgumentList $serverArgs -WorkingDirectory $runtime -WindowStyle Hidden -RedirectStandardOutput "$ev\p24-stdout.log" -RedirectStandardError "$ev\p24-stderr.log" -PassThru
+@{pid=$owned.Id;start_time=$owned.StartTime.ToUniversalTime().ToString('o');executable=$owned.Path;arguments=$serverArgs}|ConvertTo-Json|Set-Content -Encoding UTF8 "$ev\p24-owned.json"
+try {
+  $ready=$false
+  for($i=0;$i -lt 30;$i++){
+    $owned.Refresh()
+    if($owned.HasExited){throw 'P24 exited during startup'}
+    if(Get-NetTCPConnection -State Listen -LocalPort 43324 -ErrorAction SilentlyContinue|Where-Object OwningProcess -eq $owned.Id){$ready=$true;break}
+    Start-Sleep -Seconds 1
+  }
+  if(-not $ready){throw 'P24 startup timeout'}
+  python scratch/issue-413/query_sources.py
+  if($LASTEXITCODE -ne 0){throw 'Source query failed'}
+} finally {
+  $owned.Refresh()
+  if(-not $owned.HasExited){
+    $listener=@(Get-NetTCPConnection -State Listen -LocalPort 43324 -ErrorAction SilentlyContinue)
+    if($listener.Count -ne 1 -or $listener[0].OwningProcess -ne $owned.Id){throw 'Cannot safely shut down: owned listener mismatch'}
+    $mysqlArgs=@("--defaults-file=$lab\private-root.cnf",'--protocol=TCP','--host=127.0.0.1','--port=43324','--connect-timeout=5','--batch','--raw','--skip-column-names')
+    $identity=& "$lab\mysql\bin\mysql.exe" @mysqlArgs '--execute=SELECT @@port,@@datadir,@@server_uuid;'
+    if($LASTEXITCODE -ne 0 -or $identity -ne "43324`tD:\BinEngine\environments\p24\db-data\`te3443e40-d090-11f1-8040-4cedfb679789"){throw 'Shutdown identity mismatch'}
+    $others=& "$lab\mysql\bin\mysql.exe" @mysqlArgs "--execute=SELECT COUNT(*) FROM information_schema.PROCESSLIST WHERE ID<>CONNECTION_ID() AND USER<>'event_scheduler' AND COMMAND<>'Daemon';"
+    if($LASTEXITCODE -ne 0 -or $others -ne '0'){throw 'Other clients exist'}
+    & "$lab\mysql\bin\mysql.exe" @mysqlArgs '--execute=SHUTDOWN;'
+    if($LASTEXITCODE -ne 0){throw 'Shutdown command failed'}
+    if(-not $owned.WaitForExit(30000)){throw 'P24 shutdown pending'}
+  }
+  $remaining=@(Get-NetTCPConnection -State Listen -LocalPort 43324 -ErrorAction SilentlyContinue)
+  @{utc=[DateTime]::UtcNow.ToString('o');owned_pid=$owned.Id;owned_exited=$owned.HasExited;exit_code=$owned.ExitCode;remaining_listeners=$remaining.Count}|ConvertTo-Json|Tee-Object -FilePath "$ev\shutdown.json"
+}

@@ -1,0 +1,19 @@
+執行工具：functions.exec → tools.exec_command；cwd 為 task-413 worktree。
+以下為通過的完整 cmd（使用工具預設 PowerShell；沒有變更執行政策）：
+
+Add-Type -AssemblyName System.Windows.Forms
+$probeForm = New-Object System.Windows.Forms.Form
+$probeForm.Text = 'Issue 413 GUI permission probe'
+$probeForm.Width = 320
+$probeForm.Height = 100
+$probeTimer = New-Object System.Windows.Forms.Timer
+$probeTimer.Interval = 500
+$probeEvidence = [ordered]@{started_utc=[DateTime]::UtcNow.ToString('o');pid=$PID;shown=$false;hwnd=0;closed=$false}
+$probeForm.Add_Shown({$probeEvidence.shown=$true; $probeEvidence.hwnd=$probeForm.Handle.ToInt64(); $probeTimer.Start()})
+$probeTimer.Add_Tick({$probeTimer.Stop(); $probeForm.Close()})
+try { [void]$probeForm.ShowDialog(); $probeEvidence.closed=$true } finally { $probeTimer.Dispose(); $probeForm.Dispose() }
+$probeEvidence.finished_utc=[DateTime]::UtcNow.ToString('o')
+$probeJson=$probeEvidence|ConvertTo-Json
+[IO.File]::WriteAllText((Join-Path (Get-Location) 'docs/reports/issue-413/gui-probe.json'),$probeJson,(New-Object Text.UTF8Encoding $false))
+$probeJson
+if(-not $probeEvidence.shown -or $probeEvidence.hwnd -eq 0 -or -not $probeEvidence.closed){throw 'GUI probe failed'}

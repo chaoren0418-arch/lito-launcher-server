@@ -1,0 +1,36 @@
+{
+  "started_utc": "2026-11-13T22:04:47.172222+00:00",
+  "finished_utc": "2026-11-13T22:06:17.422859+00:00",
+  "scope": "0-客戶端頂層所有檔案（含隱藏檔）＋ LiTo 子樹所有檔案；其他子目錄不遞迴",
+  "files": 669,
+  "total_bytes": 9607667880,
+  "skipped_links": [],
+  "special_files": [
+    [
+      "D:\\lineage開發\\0-客戶端\\lito381-compat.ini",
+      121,
+      "2026-10-22T20:00:04.557697+00:00",
+      "E8D601C1AF08383FA15296824A67BFA49DD62209C47206E4C6454A5A395E25FD"
+    ],
+    [
+      "D:\\lineage開發\\0-客戶端\\lito381-compat.log",
+      0,
+      "2026-10-24T18:33:38.479292+00:00",
+      "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    ],
+    [
+      "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+      269824,
+      "2026-10-22T20:00:04.556700+00:00",
+      "E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A"
+    ],
+    [
+      "D:\\lineage開發\\0-客戶端\\LiToError.txt",
+      16095,
+      "2026-10-22T19:36:43.144727+00:00",
+      "02FB33565EF849FE1846FF035315A85CD231F455B7D996614C12E2DFCDC8395A"
+    ]
+  ],
+  "compat_ini": "[Window]\nWidth=640\nHeight=480\nScalePercent=200\n[Diagnostics]\nLogging=1\n[NumericBreakthrough]\nEnabled=1\nSchema=4\n",
+  "dll_expected_sha256": "E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A"
+}

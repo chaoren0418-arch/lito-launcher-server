@@ -1,0 +1,13 @@
+{
+  "verified_utc": "2026-11-13T22:09:34.613637+00:00",
+  "passed": true,
+  "checks": [
+    "TSV 669 列、唯一路徑、總大小與範圍完整",
+    "完成後各檔大小／修改時間未變",
+    "SHA-256 欄位格式與 DLL 釘選值",
+    "ScalePercent=200",
+    "GUI shown/closed/HWND",
+    "無自有 GUI/P24 程序殘留",
+    "未產生假 source TSV 或 profile"
+  ]
+}
