@@ -16,9 +16,21 @@ def driver(name):
  if not options.args.jar:args+=['--jar',runtime['path']]
  return subprocess.run([sys.executable,'-B','-X','utf8',str(CODE/name),'--stage',stage,*args],cwd=CODE.parents[1]).returncode
 
+def failure_summary():
+ # Root cause of the failed qualification (first non-zero driver, its log, manifest error),
+ # so a later reconciliation assertion never hides it (#341 item 08, #407).
+ try:
+  q=read(D/'qualification-current.json');m=read(Path(q['manifest']['path']))
+ except Exception as error:
+  return 'qualification manifest unreadable: '+repr(error)
+ results=m.get('results') or [];failed=[r for r in results if r.get('exit_code')]
+ row=failed[0] if failed else None
+ return 'status='+str(m.get('status'))+'; error='+str(m.get('error'))+'; failed_driver='+str(row and row.get('name'))+'; log='+str(row and row.get('log',{}).get('path'))+'; manifest='+str(q['manifest']['path'])
+
 def reconcile():
  # Only the known historical formal guard can be reconciled; all behavior must already pass.
- q=read(D/'qualification-current.json');assert sha(Path(q['manifest']['path']))==q['manifest']['sha256'];m=read(Path(q['manifest']['path']));assert m['results'][-1]['name']=='replay-native-de-item-state.py'
+ q=read(D/'qualification-current.json');assert sha(Path(q['manifest']['path']))==q['manifest']['sha256'];m=read(Path(q['manifest']['path']))
+ assert m['results'] and m['results'][-1]['name']=='replay-native-de-item-state.py','Not reconcilable (only the replay-native-de-item-state.py formal guard is); root cause: '+failure_summary()
  manifests=sorted((D/'replays').glob('*/manifest.json'),key=lambda p:p.parent.name);assert manifests;mp=manifests[-1];fv=read(mp);formal=S.parent.parent/'lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar';assert fv['runtime']==runtime and fv['status']=='failed' and fv['error']==str(formal)
  if options.out:
   subprocess.run([sys.executable,'-B','-X','utf8',str(CODE/'reconcile_replay.py'),'--stage',stage,'--manifest',str(mp),*options.child_args()],cwd=S,check=True)
@@ -32,6 +44,7 @@ if not options.out and (D/'qualification-current.json').exists() and read(D/'qua
  if old['results'] and old['results'][-1]['name']=='replay-native-de-item-state.py':reconcile()
 rc=driver('full_regression.py')
 if rc:
+ print('FULL REGRESSION FAILED before reconciliation: '+failure_summary(),file=sys.stderr,flush=True)
  reconcile()
  assert driver('full_regression.py')==0
 assert driver('affected_regressions.py')==0
