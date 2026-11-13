@@ -24,6 +24,10 @@ import java.util.stream.Collectors;
  * {@code mp/UserMprBlue.java:88-102}). Only the consume-the-item mode is supported:
  * a row configured {@code false} (charge another item instead) keeps the built-in value,
  * because LiTo always removes the potion itself.</p>
+ *
+ * <p>T134 (#385): the same SELECT also reads {@code delay_id, delay_time} for the 14 LiTo
+ * potions (shared use cooldown, enforced per character by {@link ItemUseDelays}). Missing
+ * columns retry the classname-only query; any unreadable cooldown keeps its built-in value.</p>
  */
 final class ConsumableItemParameters {
     enum Executor {
@@ -66,10 +70,33 @@ final class ConsumableItemParameters {
         }
     }
 
-    record Snapshot(Map<Long, Value> values, List<String> fallbacks, String source) {
+    /**
+     * T134 (#385): shared use cooldown, {@code etcitem.delay_id} / {@code delay_time} (ms).
+     * 1-伺服器 {@code L1ItemDelay.java:87-90} ignores a zero group or zero time, and
+     * {@code :99} clamps a negative time to zero, so only positive pairs are active.
+     */
+    record Delay(int id, int millis) {
+        static final Delay NONE = new Delay(0, 0);
+
+        boolean active() {
+            return id > 0 && millis > 0;
+        }
+    }
+
+    /** One etcitem row; a {@code null} delay means the columns could not be read. */
+    record Row(String classname, Integer delayId, Integer delayTime) {
+        static Row classnameOnly(String classname) {
+            return new Row(classname, null, null);
+        }
+    }
+
+    record Snapshot(Map<Long, Value> values, List<String> fallbacks, String source,
+            Map<Long, Delay> delays, List<String> delayFallbacks) {
         Snapshot {
             values = Map.copyOf(values);
             fallbacks = List.copyOf(fallbacks);
+            delays = Map.copyOf(delays);
+            delayFallbacks = List.copyOf(delayFallbacks);
         }
     }
 
@@ -102,7 +129,31 @@ final class ConsumableItemParameters {
         BUILT_IN = java.util.Collections.unmodifiableMap(m);
     }
 
-    private static final Snapshot BUILT_IN_SNAPSHOT = new Snapshot(BUILT_IN, List.of(), "built-in");
+    /**
+     * T134 (#385): built-in cooldowns for every LiTo potion, equal to 1-伺服器
+     * {@code db/380_db.sql} etcitem rows (line numbers in docs/design/items-consumables.md).
+     * Only the healing potions share group 2; the other ten have no cooldown.
+     */
+    static final Map<Long, Delay> BUILT_IN_DELAYS;
+
+    static {
+        Map<Long, Delay> d = new LinkedHashMap<>();
+        d.put(InventoryCatalog.NATIVE_HEALING_POTION, new Delay(2, 500));
+        d.put(InventoryCatalog.EXTRA_HEALING_POTION, new Delay(2, 1000));
+        d.put(InventoryCatalog.GREATER_HEALING_POTION, new Delay(2, 1000));
+        d.put(InventoryCatalog.ENT_FRUIT, new Delay(2, 1000));
+        for (long id : new long[] {InventoryCatalog.SELF_HASTE_POTION, InventoryCatalog.BRAVE_POTION,
+                InventoryCatalog.WISDOM_POTION, InventoryCatalog.ELVEN_WAFER, InventoryCatalog.BLUE_POTION,
+                InventoryCatalog.BLESSED_BLUE_POTION, InventoryCatalog.WISDOM_COIN,
+                InventoryCatalog.CURE_POISON_POTION, InventoryCatalog.BLINDNESS_POTION,
+                InventoryCatalog.BLESS_OF_EVA}) {
+            d.put(id, Delay.NONE);
+        }
+        BUILT_IN_DELAYS = java.util.Collections.unmodifiableMap(d);
+    }
+
+    private static final Snapshot BUILT_IN_SNAPSHOT =
+            new Snapshot(BUILT_IN, List.of(), "built-in", BUILT_IN_DELAYS, List.of());
     private static volatile Snapshot current = BUILT_IN_SNAPSHOT;
     private static volatile boolean loaded;
 
@@ -110,6 +161,11 @@ final class ConsumableItemParameters {
 
     static Value value(long catalogId) {
         return current.values().get(catalogId);
+    }
+
+    /** Shared cooldown for a supported potion, or {@code null} for any other catalog id. */
+    static Delay delay(long catalogId) {
+        return current.delays().get(catalogId);
     }
 
     static Snapshot snapshot() {
@@ -123,12 +179,12 @@ final class ConsumableItemParameters {
         try {
             var p = UnifiedConfiguration.read(config.source());
             String db = SharedDatabase.identifier(p.getProperty("database.static.database"));
-            Map<Long, String> rows;
+            Map<Long, Row> rows;
             try (var c = DriverManager.getConnection(p.getProperty("database.jdbc.base.url") + db
                     + p.getProperty("database.jdbc.options"), p.getProperty("database.user"),
                     p.getProperty("database.password"))) {
                 c.setReadOnly(true);
-                rows = read(c);
+                rows = read(c, ConsumableItemParameters::log);
             }
             install(resolve(rows, db + ".etcitem", ConsumableItemParameters::log));
         } catch (Exception | LinkageError e) {
@@ -138,26 +194,51 @@ final class ConsumableItemParameters {
         }
     }
 
-    /** Read-only lookup of the classname column for every supported item. */
-    static Map<Long, String> read(Connection connection) throws SQLException {
-        String ids = BUILT_IN.keySet().stream().map(String::valueOf).collect(Collectors.joining(","));
-        Map<Long, String> rows = new HashMap<>();
+    /**
+     * Read-only lookup of classname, delay_id and delay_time for every supported item.
+     * If the delay columns cannot be selected (older schema), the classname-only query
+     * is retried so the T111 parameters still load; every cooldown then keeps its
+     * built-in value and is logged by {@link #resolve}.
+     */
+    static Map<Long, Row> read(Connection connection, Consumer<String> log) throws SQLException {
+        String ids = BUILT_IN_DELAYS.keySet().stream().map(String::valueOf)
+                .collect(Collectors.joining(","));
+        Map<Long, Row> rows = new HashMap<>();
+        try (var st = connection.createStatement(); var r = st.executeQuery(
+                "SELECT item_id,classname,delay_id,delay_time FROM etcitem WHERE item_id IN ("
+                        + ids + ")")) {
+            while (r.next()) {
+                long id = r.getLong(1);
+                String classname = r.getString(2);
+                int delayId = r.getInt(3);
+                Integer delayIdValue = r.wasNull() ? null : delayId;
+                int delayTime = r.getInt(4);
+                Integer delayTimeValue = r.wasNull() ? null : delayTime;
+                rows.put(id, new Row(classname, delayIdValue, delayTimeValue));
+            }
+            return rows;
+        } catch (SQLException e) {
+            log.accept("[LiTo] consumable parameters: etcitem delay_id/delay_time unavailable ("
+                    + e + "); using built-in cooldowns");
+        }
+        rows.clear();
         try (var st = connection.createStatement(); var r = st.executeQuery(
                 "SELECT item_id,classname FROM etcitem WHERE item_id IN (" + ids + ")")) {
-            while (r.next()) rows.put(r.getLong(1), r.getString(2));
+            while (r.next()) rows.put(r.getLong(1), Row.classnameOnly(r.getString(2)));
         }
         return rows;
     }
 
-    /** Resolves SQL classname rows against the built-in table; unresolvable rows fall back. */
-    static Snapshot resolve(Map<Long, String> rows, String source, Consumer<String> log) {
+    /** Resolves SQL rows against the built-in tables; unresolvable values fall back. */
+    static Snapshot resolve(Map<Long, Row> rows, String source, Consumer<String> log) {
         Map<Long, Value> values = new LinkedHashMap<>();
         List<String> fallbacks = new java.util.ArrayList<>();
         int changed = 0;
         for (var entry : BUILT_IN.entrySet()) {
             long id = entry.getKey();
             Value builtIn = entry.getValue();
-            String classname = rows == null ? null : rows.get(id);
+            Row row = rows == null ? null : rows.get(id);
+            String classname = row == null ? null : row.classname();
             Value parsed;
             String problem;
             if (classname == null) {
@@ -186,9 +267,36 @@ final class ConsumableItemParameters {
                 values.put(id, parsed);
             }
         }
-        log.accept("[LiTo] consumable parameters loaded from " + source + ": items=" + values.size()
+        Map<Long, Delay> delays = new LinkedHashMap<>();
+        List<String> delayFallbacks = new java.util.ArrayList<>();
+        int delayChanged = 0;
+        for (var entry : BUILT_IN_DELAYS.entrySet()) {
+            long id = entry.getKey();
+            Delay builtIn = entry.getValue();
+            Row row = rows == null ? null : rows.get(id);
+            String problem = row == null ? "row missing"
+                    : row.delayId() == null || row.delayTime() == null ? "delay columns unavailable"
+                    : row.delayId() < 0 ? "negative delay_id" : null;
+            if (problem != null) {
+                delayFallbacks.add(id + ": " + problem);
+                log.accept("[LiTo] consumable parameters: item " + id + " cooldown " + problem
+                        + "; using built-in " + builtIn);
+                delays.put(id, builtIn);
+                continue;
+            }
+            Delay parsed = new Delay(row.delayId(), row.delayTime());
+            if (!parsed.equals(builtIn)) {
+                delayChanged++;
+                log.accept("[LiTo] consumable parameters: item " + id + " cooldown from " + source
+                        + " " + parsed + " (built-in " + builtIn + ")");
+            }
+            delays.put(id, parsed);
+        }
+        log.accept("[LiTo] consumable parameters loaded from " + source + ": cooldowns=" + delays.size()
+                + " cooldown-differing=" + delayChanged + " cooldown-fallbacks=" + delayFallbacks.size()
+                + "; items=" + values.size()
                 + " differing-from-built-in=" + changed + " fallbacks=" + fallbacks.size());
-        return new Snapshot(values, fallbacks, source);
+        return new Snapshot(values, fallbacks, source, delays, delayFallbacks);
     }
 
     /** Mirrors the 1-伺服器 {@code set_set} parsing of one classname string. */
