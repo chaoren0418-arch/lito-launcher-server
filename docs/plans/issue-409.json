@@ -1,0 +1,34 @@
+[
+  {
+    "id": "T139",
+    "title": "外部伺服器驗收入口：登入器不寫 0-客戶端、收據可改寫到 worktree（#284 08 寫入邊界）",
+    "stage": "code",
+    "priority": "P1",
+    "runner": "claude-local",
+    "text": "runner: claude-local\n\n**背景**：#284（T014）第 5 輪只剩 08 未過（⚠️）。#404 新入口 `LiTo381Launcher.exe --external-server-profile <profile.json>` 的 helper 指紋正確，但 Codex 讀原始碼發現啟動流程會寫入驗收明文禁止修改的位置，因此沒有按下啟動。分流 #409 判定為程式缺陷（入口本身違反 `docs/acceptance/launcher-external-server.md:27`「客戶端不得改任何檔」）。\n\n**證據**（`task/284` 分支，`docs/reports/issue-284/retest08-write-boundary.txt`，摘錄含行號與 SHA）：\n1. `lito登入器/LiTo381-Launcher/src/external_server_startup.py:216–219`（SHA `D0FE39EB…1D32`）在端點通過後無條件 `shutil.copyfile(dev.DLL, dev.CLIENT / 'litoddraw.dll')`，並重寫 `dev.CLIENT / 'lito381-compat.ini'`；`dev.CLIENT` 寫死 `D:\\lineage開發\\0-客戶端`（`development_startup.py:13`）。\n2. `ExternalServerStartup.cs:112`（SHA `03CA58FB…16CB`）把收據放在 `DevelopmentStartup.Root/gui-runs/external-*`，`Root` 寫死原始專案 `D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app`（`DevelopmentStartup.cs:8`）；helper 另在 `dev.DELIVERY / 'runs' / run_id` 建目錄（`external_server_startup.py:175–176`）。`LITO_LAUNCHER_SETTINGS_DIRECTORY` 只搬設定檔，搬不走這兩處。\n3. #409 唯讀觀察（2026-11-14）：`0-客戶端\\litoddraw.dll` 目前 SHA-256 `E47BD6C6…6A8A`，與 `app\\compat\\litoddraw.dll` 及 `development_startup.py:36` 的釘選**完全相同**；`0-客戶端\\lito381-compat.ini` 現有內容等於 helper 在 `--scale 200` 時要寫的內容。也就是說這兩個寫入在正常情況下是「同內容覆寫」，可以改成「核對相同就不寫」。\n\n**重現**：讀上述三處原始碼即可，不需執行；`git show origin/task/284:docs/reports/issue-284/retest08-write-boundary.txt`。\n\n**做**（範圍只限 `lito登入器/LiTo381-Launcher/src/ExternalServerStartup.cs`、`external_server_startup.py`、必要時 `DevelopmentStartup.cs` 的常數讀取、對應測試、`docs/acceptance/launcher-external-server.md`）：\n1. **外部伺服器入口不寫 0-客戶端**：把第 1 點的複製／重寫改成核對——`0-客戶端\\litoddraw.dll` SHA 等於釘選、`lito381-compat.ini` 內容等於本次要用的內容時直接沿用；不相同就**拒絕啟動**並回報差異（檔名、現有 SHA／內容、預期值），不得自動覆寫。縮放值與現有 ini 不符時同樣拒絕，訊息要寫出現有 ScalePercent 讓操作者改選相同縮放。0.6.71 正式流程（`development_startup.py`、`--legacy-formal-mode`）**不改**。\n2. **收據與 helper run 目錄可指定**：新增一個明確開關（例如命令列 `--run-root <dir>` 或環境變數 `LITO_LAUNCHER_RUN_ROOT`，擇一並寫進文件）；指定時 `gui-runs/external-*` 與 helper 的 `runs/external-*` 都改寫到該目錄；未指定時行為不變。目錄不存在、是 junction／reparse point、或位於 `0-客戶端` 底下時拒絕。\n3. helper 內容改了，`ExternalServerStartup.cs`／`DevelopmentStartup.cs` 內的 helper SHA 釘選要依新檔重算（照現有釘選寫法，不手動拼 hash；在報告列出新舊 SHA）。\n4. 更新 `docs/acceptance/launcher-external-server.md`：寫明此入口對 `0-客戶端` 的唯一互動是讀取與核對；列出啟動遊戲後**由 LiTo.bin／litoddraw.dll 本身**可能寫出的執行期檔（至少 `lito381-compat.log`（`native/ddraw_proxy.cpp:180`，ini 的 `Logging=1`）與 `LiToError.txt`），這些不是登入器寫的，交由 T141 以前後快照記錄；補上 run-root 的用法與 Codex 重測 08 的完整命令。\n5. 測試：C#／python 單元測試覆蓋「DLL 相同→不寫」「DLL 不同→拒絕且檔案未變」「ini 縮放不同→拒絕」「run-root 生效／拒絕 junction 與 0-客戶端」；用暫存目錄模擬客戶端，不碰真實 `0-客戶端`。\n\n**本機限制**：只可 `dotnet build`、python 靜態檢查；不得執行登入器、helper、遊戲或測試程式，測試交給 CI。\n\n**驗收**：CI 綠燈；`grep` 確認 external 路徑不再有對 `dev.CLIENT` 的 `copyfile`／`write_text`／`open(...,'w')`；新 helper SHA 與釘選一致；報告分已驗證／推測／待驗證，並給 T141 可直接照抄的啟動命令。",
+    "depends_on": []
+  },
+  {
+    "id": "T140",
+    "title": "#284 08 重測前置：實驗庫 display_name 填 profile、確認 codex-local 可啟動 GUI、0-客戶端基準快照",
+    "stage": "resource",
+    "priority": "P1",
+    "runner": "codex-local",
+    "runner_lock": true,
+    "real_machine": true,
+    "text": "runner: codex-local\nrunner_lock: true\nreal_machine: true\n\n**背景**：#284 第 5 輪 08（⚠️）除了 T139 的程式問題，另有兩個環境／資料缺口：(1) 外部 profile 的 `sources[].name` 尚未依實驗庫 `lito_source_server.display_name` 填寫（`issue-284.md` 05 列：本輪未連 DB，display_name 尚未查詢；本輪 R 目錄只有未查證的 `external-profile.template.json`）；(2) codex-local 的自動核准審查拒絕登入器 GUI 啟動指令，只回 `blocked by policy`（`issue-284.md`「08 的具體阻礙」第 3 點；`docs/reports/issue-284/retest08-execution.json`）。本張只做資料與環境前置，**不啟動登入器或遊戲**。\n\n**做**：\n1. 取得 `p24lab` lease 後，啟動 P24Lab 實驗 MySQL（127.0.0.1:43324），唯讀執行 `SELECT source_id, display_name, character_database FROM p24_lito_lito_exp.lito_source_server WHERE enabled=1;`（`docs/acceptance/launcher-external-server.md:75–76`），結果存 `docs/reports/issue-<本號>/source-server.tsv`。依結果從範本 `lito登入器/LiTo381-Launcher/server-profiles/external/p24-experiment-42083.json` 產生 `scratch/t014/profile/p24-experiment-42083.json`（不含帳密，可提交副本到報告目錄）。查完關閉自有 P24 程序。不碰正式 2000／3306。\n2. 確認 codex-local 執行器能啟動 GUI 程式：以**不寫任何受保護目錄**的最小 GUI 指令（例如啟動後立即關閉的 `notepad.exe`）測試自動核准是否放行；若仍 `blocked by policy`，記錄完整指令與回應，標 `needs:orchestrator` 請調度器調整 codex-local 對 `LiTo381Launcher.exe --external-server-profile` 的核准規則，本張以「阻塞」結束。\n3. 唯讀建立 `D:\\lineage開發\\0-客戶端` 的基準快照：頂層所有檔案（含子目錄 `LiTo\\`）的路徑、大小、修改時間、SHA-256，存 `docs/reports/issue-<本號>/client-baseline.tsv`；特別列出 `litoddraw.dll`（預期 SHA `E47BD6C6…6A8A`）、`lito381-compat.ini`（記下 ScalePercent）、`lito381-compat.log`、`LiToError.txt`。只讀，不改任何檔。\n\n**驗收**：`source-server.tsv` 與填好的 profile 存在；GUI 放行結論明確（可／不可＋證據）；`client-baseline.tsv` 存在；報告分已驗證／推測／待驗證。",
+    "depends_on": []
+  },
+  {
+    "id": "T141",
+    "title": "#284 T014 重測：只重測 08（外部伺服器入口登入到大廳＋PNG），附帶回歸 06／07／10",
+    "stage": "test",
+    "priority": "P1",
+    "runner": "codex-local",
+    "runner_lock": true,
+    "real_machine": true,
+    "milestone_smoke": true,
+    "text": "runner: codex-local\nrunner_lock: true\nreal_machine: true\nmilestone_smoke: true\n\n**背景**：#284（T014）第 5 輪結果 ✅ 9／❌ 0／⚠️ 1，只有 08 未完成。分流 #409 開出 T139（登入器不寫 0-客戶端、收據可改寫到 worktree）與 T140（display_name、GUI 放行、客戶端基準快照）。兩張完成後只做本張。\n\n**只重測這些編號**：\n- **08**（⚠️→待重測）：照 T139 更新後的 `docs/acceptance/launcher-external-server.md`，用最新 main 建置的登入器 `LiTo381Launcher.exe --external-server-profile <T140 填好的 profile>`，加上 T139 的 run-root 指向本 worktree `scratch/t014/run-<UTC>/`；**不加 `--legacy-formal-mode`**；縮放選與 `0-客戶端\\lito381-compat.ini` 相同的值（T140 快照記錄）。選服 → #83 測試帳號登入 → 角色選擇 → 大廳，存 `08-lobby.png`（含登入器視窗與遊戲視窗）。\n- **06、07**（回歸，原因：本張需要實際啟動實驗伺服器，且 #284 第 5 輪 R 目錄的新 JAR `84BA0CDE…EDCC` 從未啟動過；第 4 輪通過的是舊 SHA）：用最新 main 的 Maven 產物啟動到 ready、`m4-listen-check` 確認只有 `127.0.0.1:42083` 與 `127.0.0.2:(42083+source_id)`。\n- **10**（回歸，原因：本張會啟動自有 Java／P24／登入器／遊戲程序）：結束後只關自有 PID，埠釋放。\n- **0-客戶端完整性**（T139 新增的驗收邊界）：結束後重做 T140 的快照並逐檔比對；除 `lito381-compat.log`、`LiToError.txt` 兩個由遊戲本身寫的執行期日誌外，任何檔案的 SHA／大小有變動即判 08 失敗。兩個日誌的變化（大小前後）照實記錄。\n\n**沿用、不重測**：01、02、03、04、05、09 照 #284 第 5 輪結果（`docs/reports/issue-284.md`）沿用；只執行重測必須的建置、P24 冷備份與自有程序清理。若本輪會寫實驗庫（登入可能寫 `character_lito`），照 #284 前例在結束後重做 09 的筆數與原三庫 checksum 比對作為資料保護檢查，但不改變 09 的沿用判定。\n\n**停止條件**：T140 判定 GUI 不放行、或 T139 的核對拒絕啟動（客戶端 DLL／ini 與釘選不符）時，停止並回報，不得自行覆寫 `0-客戶端`、改釘選或改用 `--legacy-formal-mode`。\n\n**驗收**：08 有大廳 PNG 與 run-root 內的 `request.json`／`server-ready.json`／`native-created.json`／`terminal.json`；原始專案 `app\\gui-runs`、`app\\runs` 沒有新增目錄；06／07／10 證據齊全；報告逐項列 01–10 結果並標示沿用或重測。",
+    "depends_on": ["T139", "T140"]
+  }
+]
