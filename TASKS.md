@@ -122,7 +122,7 @@ T127–T130 是 M4 的準備，優先做（Codex 2026-11-13 18:11 恢復）。�
 | T127 | #378 | B 準備 | CHECKLIST 改新 JAR 版＋`M4-RUNBOOK.md` A 部（01–21）、B 部（G19–G27、G02 封包）；發現正式登入器不能接外部伺服器（RUNBOOK §P5），需 T128 或另開任務補客戶端啟動腳本 | review |
 | T128 | 待建 | B 準備 | 實驗環境預檢與腳本：存取清單重產、schema／授權靜態比對、資料前置 SQL、`tools/acceptance/` | todo |
 | T129 | 待建 | B 準備 | M3／M3b／M3c、#366–#371 的實機待驗證項目彙整成 RUNBOOK C 部（依賴 T127） | todo |
-| T130 | 待建 | B 準備 | G27：map 12000 資產查核（PakViewer，唯讀） | todo |
+| T130 | #381 | B 準備 | G27：map 12000 資產查核（PakViewer，唯讀）；結論：客戶端資產齊全、房間模式不會進 12000，缺口在伺服器 JAR 內建地形（不含 12000／12004），修法待主控決定（`docs/reports/issue-381.md`） | review |
 | T131 | 待建 | A 開發 | 開戰與斷線同時發生的鎖順序死結（`DurableBattleSettlement.context`）＋CI MySQL job 逾時（#369、#370 移交） | todo |
 | T132 | 待建 | A 開發 | PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話、多人換目標（#353 剩餘 1–3） | todo |
 | T133 | 待建 | A 開發 | 凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7） | todo |
