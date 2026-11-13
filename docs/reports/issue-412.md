@@ -57,8 +57,12 @@
 - `LiToError.txt` 由 `LiTo.bin` 本身寫出（沿用 #409 的判斷，沒有逆向確認）；其他原版客戶端可能產生的執行期檔沒有逐一列舉。
 - 依 #409 的唯讀觀察，現有 `0-客戶端\litoddraw.dll` 等於釘選、ini 等於 200% 內容，所以選 200% 縮放時核對應該直接通過。
 
+### 已驗證（CI，PR #415，run 43505861070，整體 success）
+- Launcher job：`dotnet test` 52/52 通過（含 `ExternalRunRootTests` 全部與 `HelperArgumentsCarryRunRootWhenSet`）；Python helper 測試 18 項通過（含 `ClientCompatTests`、`RunRootTests`）。
+- 「Server tests (CI MySQL fixture, non-blocking…)」失敗，屬非阻擋 job，main 最新一次 run 同樣失敗，與本變更無關（本 PR 沒改伺服器）。
+- 本機依規定沒有執行任何測試、登入器、helper 或遊戲。
+
 ### 待驗證
-- CI（Launcher job：`dotnet test`＋Python 單元測試）。依規定本機沒有執行任何測試、登入器、helper 或遊戲。
 - 實機（T141，Codex）：用下方命令重測 08，確認日誌、收據位置、`0-客戶端` 前後快照。
 
 ## 給 T141 照抄的啟動命令
