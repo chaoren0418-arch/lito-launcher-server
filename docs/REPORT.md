@@ -112,3 +112,4 @@
 - 2026-11-13 — #382 T131: 開戰與斷線同時發生的鎖順序死結（DurableBattleSettlement.context）＋CI MySQL job 逾時（code，claude-local，PR 已合併）→ [報告](reports/issue-382.md)
 - 2026-11-13 — #383 T132: 競技場 PvE 怪物魔法收尾：反制魔法擋 NPC 魔法、安息喊話、多人時換目標（#353 剩餘 1–3）（code，claude-local，PR 已合併）→ [報告](reports/issue-383.md)
 - 2026-11-13 — #384 T133: 凍結中的 Quest／Time Attack 怪物仍會受傷（#338 Z7）（code，claude-local，PR 已合併）→ [報告](reports/issue-384.md)
+- 2026-11-13 — #386 T135: 受控 NPC（寵物、召喚物）恢復節奏與自身技能：移植候選 046c58c5 的 G15 前兩組並補測試（code，claude-local，PR 已合併）→ [報告](reports/issue-386.md)
