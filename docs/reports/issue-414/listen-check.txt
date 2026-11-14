@@ -1,0 +1,13 @@
+M4-LISTEN-CHECK: PASS
+
+utc=2026-11-14T03:05:12.3111896Z pid=14640 process=java legacy_two_only=False
+
+expected=127.0.0.1:42083, 127.0.0.2:42083, 127.0.0.1:42084, 127.0.0.2:42084
+
+actual=127.0.0.1:42083, 127.0.0.1:42084, 127.0.0.2:42083, 127.0.0.2:42084
+
+missing=
+
+unexpected=
+
+violations=

@@ -1,0 +1,87 @@
+[
+  {
+    "table": "裝備_weapon_屬性",
+    "columns": 16,
+    "rows": 40
+  },
+  {
+    "table": "裝備_weapon_bless_類型",
+    "columns": 39,
+    "rows": 32
+  },
+  {
+    "table": "裝備_armor_bless_類型",
+    "columns": 49,
+    "rows": 26
+  },
+  {
+    "table": "裝備_weapon_enchant_類型",
+    "columns": 39,
+    "rows": 320
+  },
+  {
+    "table": "裝備_armor_enchant_類型",
+    "columns": 49,
+    "rows": 91
+  },
+  {
+    "table": "裝備_weapon_enchant_指定",
+    "columns": 39,
+    "rows": 1
+  },
+  {
+    "table": "裝備_armor_enchant_指定",
+    "columns": 49,
+    "rows": 49
+  },
+  {
+    "table": "裝備_weapon_greater_類型",
+    "columns": 40,
+    "rows": 176
+  },
+  {
+    "table": "裝備_armor_greater_類型",
+    "columns": 50,
+    "rows": 143
+  },
+  {
+    "table": "裝備_weapon_bless_指定",
+    "columns": 42,
+    "rows": 0
+  },
+  {
+    "table": "裝備_armor_bless_指定",
+    "columns": 49,
+    "rows": 0
+  },
+  {
+    "table": "裝備_特殊_魔石_魔法",
+    "columns": 25,
+    "rows": 324
+  },
+  {
+    "table": "裝備_特殊_卡片_能力",
+    "columns": 70,
+    "rows": 117
+  },
+  {
+    "table": "裝備_weapon_魔法",
+    "columns": 23,
+    "rows": 50
+  },
+  {
+    "table": "裝備_armor_魔法",
+    "columns": 1,
+    "rows": 54
+  },
+  {
+    "table": "weapon",
+    "columns": 73,
+    "rows": 364
+  },
+  {
+    "table": "armor",
+    "columns": 78,
+    "rows": 1422
+  }
+]

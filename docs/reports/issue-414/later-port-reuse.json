@@ -1,0 +1,18 @@
+{
+    "parent":  {
+                   "ProcessId":  20388,
+                   "ParentProcessId":  8264,
+                   "Name":  "mysqld.exe",
+                   "ExecutablePath":  "D:\\BinEngine\\environments\\p24\\mysql\\bin\\mysqld.exe",
+                   "CreationDate":  "\/Date(1794625724344)\/"
+               },
+    "observed_utc":  "2026-11-14T03:09:11.8681786Z",
+    "note":  "After own SHUTDOWN and all experiment ports released at 03:07:16Z, another P24 process reused 43324. Not started or stopped by task 414; no further DB connection.",
+    "new_listener":  {
+                         "ProcessId":  4452,
+                         "ParentProcessId":  20388,
+                         "Name":  "mysqld.exe",
+                         "ExecutablePath":  "D:\\BinEngine\\environments\\p24\\mysql\\bin\\mysqld.exe",
+                         "CreationDate":  "\/Date(1794625724684)\/"
+                     }
+}

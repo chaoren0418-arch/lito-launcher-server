@@ -1,0 +1,30 @@
+{
+  "before_count": 669,
+  "after_count": 669,
+  "bytes": 9607667880,
+  "changes": [],
+  "t140_baseline_sha256": "31fae8c14713f5e3d4c8ec4bd75b2ccac0c9b2ce608cf20a80031d0bfd41949f",
+  "t140_size_sha_differences": [],
+  "runtime_logs": [
+    {
+      "path": "lito381-compat.log",
+      "before_bytes": 0,
+      "after_bytes": 0
+    },
+    {
+      "path": "LiToError.txt",
+      "before_bytes": 16095,
+      "after_bytes": 16095
+    }
+  ],
+  "app_directory_changes": {
+    "runs": {
+      "added": [],
+      "removed": []
+    },
+    "gui-runs": {
+      "added": [],
+      "removed": []
+    }
+  }
+}

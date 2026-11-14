@@ -1,0 +1,12 @@
+mysqld: Can't open shared library 'D:\BinEngine\environments\p24\mysql\lib\plugin\component_reference_cache.dll' (errno: 126 找不到指定的模組。)
+mysqld: Cannot load component from specified URN: 'file://component_reference_cache'.
+2026-11-14T03:04:19.432037Z 0 [System] [MY-010116] [Server] D:\BinEngine\environments\p24\mysql\bin\mysqld.exe (mysqld 8.0.40) starting as process 18856
+2026-11-14T03:04:19.601261Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-11-14T03:04:22.765205Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-11-14T03:04:25.986944Z 0 [Warning] [MY-013829] [Server] Missing data directory for ICU regular expressions: D:\BinEngine\environments\p24\mysql\lib\private\.
+2026-11-14T03:04:26.293959Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-11-14T03:04:26.298090Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-11-14T03:04:26.442150Z 0 [System] [MY-010931] [Server] D:\BinEngine\environments\p24\mysql\bin\mysqld.exe: ready for connections. Version: '8.0.40'  socket: ''  port: 43324  MySQL Community Server - GPL.
+2026-11-14T03:07:14.287806Z 123 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.40).
+2026-11-14T03:07:14.288669Z 0 [System] [MY-013105] [Server] D:\BinEngine\environments\p24\mysql\bin\mysqld.exe: Normal shutdown.
+2026-11-14T03:07:15.676366Z 0 [System] [MY-010910] [Server] D:\BinEngine\environments\p24\mysql\bin\mysqld.exe: Shutdown complete (mysqld 8.0.40)  MySQL Community Server - GPL.

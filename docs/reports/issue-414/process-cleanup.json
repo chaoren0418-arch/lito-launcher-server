@@ -1,0 +1,34 @@
+{
+    "OwnedPidsAbsent":  [
+                            {
+                                "absent":  true,
+                                "pid":  7536
+                            },
+                            {
+                                "absent":  true,
+                                "pid":  14640
+                            },
+                            {
+                                "absent":  true,
+                                "pid":  1060
+                            },
+                            {
+                                "absent":  true,
+                                "pid":  18856
+                            }
+                        ],
+    "OwnTaskProcesses":  [
+
+                         ],
+    "Utc":  "2026-11-14T03:09:01.2483559Z",
+    "NativeProcesses":  [
+
+                        ],
+    "ExperimentListeners":  [
+                                {
+                                    "LocalAddress":  "127.0.0.1",
+                                    "LocalPort":  43324,
+                                    "OwningProcess":  4452
+                                }
+                            ]
+}
