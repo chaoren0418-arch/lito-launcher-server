@@ -446,6 +446,7 @@ class CaseRunnerTests(unittest.TestCase):
         self.assertEqual('entry-prerequisite-failed', cases.fields(support.PrerequisiteFailed('x'))['failure_kind'])
 
     def test_failure_helpers(self):
+        SCRATCH.mkdir(exist_ok=True)
         tmp = Path(tempfile.mkdtemp(prefix='test-case-runner-', dir=SCRATCH))
         self.addCleanup(shutil.rmtree, tmp, True)
         log = tmp / 'case.log'
