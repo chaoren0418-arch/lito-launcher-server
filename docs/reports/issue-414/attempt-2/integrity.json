@@ -1,0 +1,19 @@
+{
+  "before_files": 669,
+  "after_files": 669,
+  "before_bytes": 9607667880,
+  "after_bytes": 9607667880,
+  "differences": [],
+  "logs": {
+    "lito381-compat.log": {
+      "before_bytes": 0,
+      "after_bytes": 0
+    },
+    "LiToError.txt": {
+      "before_bytes": 16095,
+      "after_bytes": 16095
+    }
+  },
+  "original_app_directories_unchanged": true,
+  "scope": "T140: client top-level files and all files under LiTo; other subdirectories excluded"
+}

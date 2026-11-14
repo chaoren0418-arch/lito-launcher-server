@@ -1,0 +1,2 @@
+Error: FrameArrived timed out: timed out waiting on channel
+Retry: Error: window capture timed out: timed out waiting on channel

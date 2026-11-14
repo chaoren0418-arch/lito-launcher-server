@@ -1,0 +1,15 @@
+{
+  "integrity_unchanged": true,
+  "refusal_stage": "check_source",
+  "cleanup_qualified": true,
+  "ready_receipt_exists": false,
+  "native_receipt_exists": false,
+  "png_exists": false,
+  "own_launcher_absent": true,
+  "previous_client_snapshot_equal": true,
+  "json_parse": "PASS",
+  "ten_rows": "PASS",
+  "report_evidence_paths": "PASS",
+  "report_index_untouched": true,
+  "text_encoding": "UTF-8/LF"
+}

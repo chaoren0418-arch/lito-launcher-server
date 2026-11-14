@@ -1,0 +1,49 @@
+Window: "LiTo 3.81C 啟動器 0.6.71（外部伺服器驗收模式）", App: LiTo381Launcher.exe.
+	0 視窗 LiTo 3.81C 啟動器 0.6.71（外部伺服器驗收模式） Secondary Actions: Raise
+		1 窗格
+			2 文字 LiTo 3.81C 專屬啟動器
+			3 窗格 LiTo 3.81C 專屬啟動器
+				4 文字 LiTo 客戶端：
+				5 編輯 (settable, string) LiTo 客戶端： Value: D:\lineage開發\0-客戶端
+				6 按鈕 瀏覽…
+				7 文字 顯示模式：
+				8 下拉式方塊 (settable, string) 顯示模式： Value: 視窗化（建議）
+					9 文字 顯示模式：
+					10 按鈕 開啟
+				11 文字 視窗縮放：
+				12 下拉式方塊 (settable, string) 視窗縮放： Value: 200%（1280×960）
+					13 文字 視窗縮放：
+					14 按鈕 開啟
+				15 文字 遊戲模式：
+				16 下拉式方塊 (settable, string) 遊戲模式： Value: 一般無界擂台（預設；無額外參數）
+					17 文字 遊戲模式：
+					18 按鈕 開啟
+				19 文字 來源伺服器：
+				20 文字 啟動後於原生伺服器選單選擇
+				21 文字 啟動後先選伺服器，再輸入該服帳密，進入角色選單。 角色選單：「返回」登出至帳密頁；「伺服器」登出至選服頁。
+			22 窗格 啟動後先選伺服器，再輸入該服帳密，進入角色選單。 角色選單：「返回」登出至帳密頁；「伺服器」登出至選服頁。
+				23 按鈕 重新檢查
+				24 按鈕 啟動 LiTo.bin
+				25 按鈕 (disabled) 新增遊戲視窗
+				26 按鈕 (disabled) 結束全部遊戲（外部伺服器保持執行）
+			27 群組 Server 完整素質（不受 LiTo.bin 原生欄寬限制）
+				28 文字 可先調整本次遊戲設定。
+			29 文件 LiTo 3.81C 專屬啟動器 Value: [外部伺服器] 外部伺服器驗收模式：T014 P24 實驗伺服器（外部，已在執行）（127.0.0.1:42083、127.0.0.1:42084）；不啟動內建伺服器、不覆寫埠；0-客戶端只讀取核對、不寫入。 ID: 8783066
+				30 捲軸 (settable, float) 垂直 Value: 100 ID: NonClientVerticalScrollBar
+					31 按鈕 上移一行 ID: UpButton
+					32 按鈕 向上翻頁 ID: UpPageButton
+					33 捲動方塊 位置 ID: ScrollbarThumb
+					34 按鈕 下移一行 ID: DownButton
+			35 文字 外部伺服器驗收模式：T014 P24 實驗伺服器（外部，已在執行）（127.0.0.1:42083、127.0.0.1:42084）；不啟動內建伺服器、不覆寫埠；0-客戶端只讀取核對、不寫入。收據寫到 D:\lineage開發\3-lito開發\scratch\wt\task-414\scratch\t014\run-20261114T035218Z\launcher-runs。
+		36 標題列 (settable, string) Value: LiTo 3.81C 啟動器 0.6.71（外部伺服器驗收模式）
+			37 功能表列 系統 ID: MenuBar
+				38 功能表項目 系統
+			39 按鈕 最小化
+			40 按鈕 最大化
+			41 按鈕 關閉
+
+Selected text: ```
+D:\lineage開發\0-客戶端
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

@@ -1,0 +1,33 @@
+{
+  "runs": [
+    "buff-schema-native-20261018-a",
+    "buff-schema-native-20261018-b",
+    "buff-schema-native-20261018-c",
+    "buff-schema-native-20261018-d",
+    "class-icons-20261023-01",
+    "class-icons-20261023-02",
+    "class-icons-20261023-03",
+    "class-icons-20261023-04",
+    "cleanup-smoke-1791871695227627600",
+    "cleanup-smoke-1791987296108635300",
+    "cleanup-smoke-1791988184367316300",
+    "cleanup-smoke-1792330077323434800",
+    "cleanup-smoke-1792698115852892800",
+    "cleanup-smoke-1792698175013332000",
+    "cleanup-smoke-1792699200066100000",
+    "development-06cf14ab148a441b9473b9d115a76835",
+    "development-cb57d4d73d6a4029ad31d8de101e5915",
+    "development-f022810e10294764bc09a4f7f2686fdc",
+    "named-ddraw-20261021-01",
+    "npc-area-native-aae91ba8-20261020",
+    "room-state-fixture-1791870232016224000",
+    "world-selection-test-20261020-03",
+    "world-shared-test-20261020-01",
+    "world-shared-test-20261020-02"
+  ],
+  "gui-runs": [
+    "development-06cf14ab148a441b9473b9d115a76835",
+    "development-cb57d4d73d6a4029ad31d8de101e5915",
+    "development-f022810e10294764bc09a4f7f2686fdc"
+  ]
+}
