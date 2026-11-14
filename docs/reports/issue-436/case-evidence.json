@@ -1,0 +1,77 @@
+{
+  "case": "composed/water-life-material/Material/false-false-false-0",
+  "scope": "原案例斷言結果；尚未到達整個 probe 最後的 golden 比較",
+  "proof": [
+    {
+      "group": "composed/water-life-material/Material",
+      "label": "candidate",
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-436\\scratch\\issue-436\\resources\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\WaterLifeMaterialProbe.java",
+        "sha256": "45448ac79ec439aed7bf4301bd20a90c546b2817d6a8d7ac779834519bb83235"
+      },
+      "frozen_source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build\\tests\\frozen\\45448ac79ec439aed7bf4301bd20a90c546b2817d6a8d7ac779834519bb83235-WaterLifeMaterialProbe.java",
+        "sha256": "45448ac79ec439aed7bf4301bd20a90c546b2817d6a8d7ac779834519bb83235"
+      },
+      "source_receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build\\tests\\result.json",
+        "sha256": "73b503edbd78f1943309c6f90e122c1382c8a694d0d10b7da77bdcbc8f6198b1"
+      },
+      "loop_body": "{\n   var r=root.resolve(flag+\"-\"+world+\"-\"+app+\"-\"+mode);Files.createDirectories(r);\n   var cfg=copy(base,Map.of(\"battleNaturalHpRegenEnabled\",false,\"battleNaturalMpRegenEnabled\",false,\"statePersistenceEnabled\",flag,\"stateFile\",r.resolve(\"must-not-write.properties\")));\n   var state=new GameStateStore(r.resolve(\"must-not-write.properties\"),false,true);var accounts=new MemoryAccountRepository(\"fixture\",\"fixture\",\"\",0,1,40,52);\n   try(var capture=new CaptureLog(r.resolve(\"capture\"));var hub=new GameHub(cfg,state,accounts);\n    var f=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);\n    var p=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);\n    var m=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);\n    var o=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME)){\n    var clock=(ScheduledExecutorService)get(hub,\"battleClock\");clock.shutdownNow();need(clock.awaitTermination(2,TimeUnit.SECONDS),\"unrelated clock stopped\");\n    var fixtures=List.of(f,p,m,o);init(fixtures,cfg);FlowRegression.setup(hub,f.session,p.session,m.session,o.session);if(world)world(fixtures,hub);if(app)NativeDeItemApplication.install(hub,templates,definitions);\n    exercise(p.session,m.session,hub,world,mode);\n   }need(!Files.exists(r.resolve(\"must-not-write.properties\")),\"both settings memory-only\");\n  }",
+      "rule": "One synchronous exercise per directory in a sequential for-body, no catch/continue/break/return; a next directory proves the previous iteration returned through its assertions and resource closes.",
+      "log": {
+        "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-436\\scratch\\issue-436\\results\\candidate\\composed-replay\\20261114T024744588279Z\\WaterLifeMaterial\\probe.log",
+        "sha256": "2a8670ca3737d3855a52a26eb400a97cda7c7b027bfc8e4bf7fa1e7d54e54f8b"
+      },
+      "main_assertion": "Source resources and no HP change",
+      "main_stack": "\n\tat local.lito381.server.NativeLightCastProbe.need(Unknown Source)\n\tat local.lito381.server.WaterLifeMaterialProbe.exercise(Unknown Source)\n\tat local.lito381.server.WaterLifeMaterialProbe.main(Unknown Source)\n",
+      "case_directories": [
+        {
+          "case": "false-false-false-0",
+          "created_ns": 1794624467495021800
+        },
+        {
+          "case": "false-false-false-1",
+          "created_ns": 1794624468692265600
+        }
+      ],
+      "values": {
+        "false-false-false-0": "通過",
+        "false-false-false-1": "失敗：Source resources and no HP change"
+      }
+    },
+    {
+      "group": "composed/water-life-material/Material",
+      "label": "maven",
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-436\\scratch\\issue-436\\resources\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\WaterLifeMaterialProbe.java",
+        "sha256": "45448ac79ec439aed7bf4301bd20a90c546b2817d6a8d7ac779834519bb83235"
+      },
+      "frozen_source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build\\tests\\frozen\\45448ac79ec439aed7bf4301bd20a90c546b2817d6a8d7ac779834519bb83235-WaterLifeMaterialProbe.java",
+        "sha256": "45448ac79ec439aed7bf4301bd20a90c546b2817d6a8d7ac779834519bb83235"
+      },
+      "source_receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build\\tests\\result.json",
+        "sha256": "73b503edbd78f1943309c6f90e122c1382c8a694d0d10b7da77bdcbc8f6198b1"
+      },
+      "loop_body": "{\n   var r=root.resolve(flag+\"-\"+world+\"-\"+app+\"-\"+mode);Files.createDirectories(r);\n   var cfg=copy(base,Map.of(\"battleNaturalHpRegenEnabled\",false,\"battleNaturalMpRegenEnabled\",false,\"statePersistenceEnabled\",flag,\"stateFile\",r.resolve(\"must-not-write.properties\")));\n   var state=new GameStateStore(r.resolve(\"must-not-write.properties\"),false,true);var accounts=new MemoryAccountRepository(\"fixture\",\"fixture\",\"\",0,1,40,52);\n   try(var capture=new CaptureLog(r.resolve(\"capture\"));var hub=new GameHub(cfg,state,accounts);\n    var f=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);\n    var p=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);\n    var m=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);\n    var o=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME)){\n    var clock=(ScheduledExecutorService)get(hub,\"battleClock\");clock.shutdownNow();need(clock.awaitTermination(2,TimeUnit.SECONDS),\"unrelated clock stopped\");\n    var fixtures=List.of(f,p,m,o);init(fixtures,cfg);FlowRegression.setup(hub,f.session,p.session,m.session,o.session);if(world)world(fixtures,hub);if(app)NativeDeItemApplication.install(hub,templates,definitions);\n    exercise(p.session,m.session,hub,world,mode);\n   }need(!Files.exists(r.resolve(\"must-not-write.properties\")),\"both settings memory-only\");\n  }",
+      "rule": "One synchronous exercise per directory in a sequential for-body, no catch/continue/break/return; a next directory proves the previous iteration returned through its assertions and resource closes.",
+      "log": {
+        "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-436\\scratch\\issue-436\\results\\maven\\composed-replay\\20261114T024749300102Z\\WaterLifeMaterial\\probe.log",
+        "sha256": "5cfb612ced1ffe91d6cbf0c962564c8f7738edac9b1282ee5ca4ed969c00981d"
+      },
+      "main_assertion": "Source resources and no HP change",
+      "main_stack": "\n\tat local.lito381.server.NativeLightCastProbe.need(Unknown Source)\n\tat local.lito381.server.WaterLifeMaterialProbe.exercise(Unknown Source)\n\tat local.lito381.server.WaterLifeMaterialProbe.main(Unknown Source)\n",
+      "case_directories": [
+        {
+          "case": "false-false-false-0",
+          "created_ns": 1794624472095324400
+        }
+      ],
+      "values": {
+        "false-false-false-0": "失敗：Source resources and no HP change"
+      }
+    }
+  ]
+}
