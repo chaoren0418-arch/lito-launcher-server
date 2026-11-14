@@ -125,7 +125,8 @@ PROBE_OWNERS = ('local/lito381/server/DeItemTransactionProbe',)
 CLASS_IDENTITY_RULE = ('exact: bytes equal to the historical class (unchanged legacy guard). '
                        'maven-normalized: observer overlays are generated from the runtime under test and may '
                        'differ from its own class only by probe hook calls; other historical class guards compare '
-                       'the constant-pool independent, debug-free normalized class and fail on any remaining difference.')
+                       'the constant-pool independent, debug-free normalized class and fail on any remaining difference, '
+                       'except: ' + class_identity.INNER_CLASS_FLAG_RULE + '.')
 
 
 def adapt_class_identity(text):
@@ -204,7 +205,7 @@ def assert_class_identity(base, runtime, name, build, receipt, overlay=None):
     if mode == class_identity.EXACT:
         assert base.read(name) == runtime.read(name), name + ' differs from the historical base (exact bytes)'
         return
-    historical = class_identity.compare(name, base.read(name), runtime.read(name), mode)
+    historical = class_identity.compare(name, base.read(name), runtime.read(name), mode, runtime=runtime)
     if overlay is None:
         entry = historical
     else:
@@ -225,17 +226,19 @@ def assert_class_identity(base, runtime, name, build, receipt, overlay=None):
                                 + ''.join('; ' + d for d in entry.get('differences', [])) + '; receipt ' + str(receipt))
 
 
-def class_identity_changed(current, historical, expected_sha256, name, mode, receipt):
+def class_identity_changed(current, historical, expected_sha256, name, mode, receipt, runtime=None):
     """Legacy ``changed=sha256(current)!=row['sha256']`` with an explicit Maven mode.
 
     Maven: ``changed`` means the normalized class differs from the qualified
     historical class; the caller's original allowlist assertion still applies.
+    ``runtime`` (the open runtime ZipFile) lets an InnerClasses flag-only
+    difference be checked against the inner class the runtime really ships.
     """
     assert mode in class_identity.MODES, mode
     if mode == class_identity.EXACT:
         return hashlib.sha256(current).hexdigest() != expected_sha256
     assert hashlib.sha256(historical).hexdigest() == expected_sha256, name + ' qualified class is not the historical fixture'
-    entry = class_identity.compare(name, historical, current, mode)
+    entry = class_identity.compare(name, historical, current, mode, runtime=runtime)
     entry.update(gating='caller-allowlist', changed=not entry['identical'])
     _record_identity(receipt, mode, entry)
     return not entry['identical']
@@ -255,7 +258,7 @@ def adapt_components_identity(text, mode, receipt):
     assert text.count(COMPONENTS_GUARD) == 1, 'Unexpected ' + COMPONENTS_DRIVER + ' class guard'
     return text.replace(COMPONENTS_GUARD, "current=hashlib.sha256(native.read(name)).hexdigest();"
                         "changed=class_identity_changed(native.read(name),qualified.read(name),row['sha256'],name,"
-                        + repr(mode) + ',Path(' + repr(str(receipt)) + '))')
+                        + repr(mode) + ',Path(' + repr(str(receipt)) + '),runtime=native)')
 
 
 def portable_command(command, config):

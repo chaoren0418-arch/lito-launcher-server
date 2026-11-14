@@ -24,6 +24,14 @@ form is a pure-Python decode of the class file (no JVM):
   attribute (raw bytes if not decoded) stay in the comparison.
 
 Any remaining difference fails and is reported per field/method.
+
+One narrow exception (#428 / T146): when the *only* remaining difference is the
+``InnerClasses`` table, a row that describes *another* class may differ in
+ACC_FINAL alone, provided the runtime under test contains that class and it
+declares exactly the compared flags.  Such a row is javac's copy of the other
+class's declaration (the JVM does not use it for this class); ASM-patched
+candidates keep the stale copy, recompiled Maven classes refresh it.  Same row
+set, same visibility, and this class's own row must still match exactly.
 """
 import hashlib
 import json
@@ -369,11 +377,85 @@ def differences(left, right):
     return result
 
 
-def compare(name, reference, compared, mode):
+ACC_FINAL = 0x0010
+INNER_CLASS_FLAG_RULE = ('InnerClasses rows describing another class (inner != this) may differ only in ACC_FINAL, '
+                         'with the same inner/outer/simple-name set, and the compared flags must equal the flags '
+                         'that inner class declares for itself in the runtime under test')
+
+
+def _single_table(form, attribute):
+    tables = form['attributes'].get(attribute, [])
+    if len(tables) > 1:
+        raise ClassFormatError('repeated ' + attribute + ' attribute')
+    return tables[0] if tables else []
+
+
+def declared_inner_flags(runtime, inner):
+    """Flags ``inner`` (``class:pkg/Outer$Inner``) declares in its own InnerClasses row, or None."""
+    name = inner.removeprefix('class:') + '.class'
+    try:
+        rows = _single_table(normalize(runtime.read(name)), 'InnerClasses')
+    except (KeyError, ClassFormatError):
+        return None
+    flags = [row[3] for row in rows if row[0] == inner]
+    return flags[0] if len(flags) == 1 else None
+
+
+def inner_class_flag_evidence(left, right, runtime):
+    """Prove an InnerClasses-only difference is the javac/ASM representation of another class's flags.
+
+    Returns ``(evidence, None)`` when every differing row is accepted, else
+    ``(None, reason)``.  Accepted only if: both tables name the same set of
+    (inner, outer, simple name) rows; each differing row describes a class
+    other than this one; the flags differ in ACC_FINAL only (visibility,
+    static, interface, abstract, synthetic, annotation and enum bits are
+    identical); and the runtime under test contains that inner class declaring
+    exactly the compared flags.  The class's own row is never tolerated.
+    """
+    try:
+        rows = _single_table(left, 'InnerClasses'), _single_table(right, 'InnerClasses')
+    except ClassFormatError as error:
+        return None, str(error)
+    keyed = []
+    for table in rows:
+        index = {canonical(row[:3]): row for row in table}
+        if len(index) != len(table):
+            return None, 'duplicate InnerClasses rows'
+        keyed.append(index)
+    reference, compared = keyed
+    if set(reference) != set(compared):
+        return None, 'inner class set differs'
+    evidence = []
+    for key in sorted(reference):
+        inner, outer, simple, was = reference[key]
+        now = compared[key][3]
+        if was == now:
+            continue
+        if inner == left['this']:
+            return None, 'own InnerClasses flags differ for ' + inner
+        if (was ^ now) & ~ACC_FINAL:
+            return None, 'flags of %s differ beyond ACC_FINAL (0x%04x vs 0x%04x)' % (inner, was, now)
+        if runtime is None:
+            return None, 'no runtime available to verify flags of ' + inner
+        declared = declared_inner_flags(runtime, inner)
+        if declared != now:
+            return None, '%s declares %s in the runtime, compared row says 0x%04x' % (
+                inner, 'nothing' if declared is None else '0x%04x' % declared, now)
+        evidence.append(dict(inner_class=inner, outer_class=outer, simple_name=simple, reference_flags=was,
+                             compared_flags=now, runtime_declared_flags=declared))
+    if not evidence:
+        return None, 'no differing InnerClasses row'
+    return evidence, None
+
+
+def compare(name, reference, compared, mode, runtime=None):
     """Compare one class; returns a receipt entry with ``identical`` set.
 
     ``reference`` is the historical class (base JAR / qualified fixture),
-    ``compared`` the class packaged in the runtime under test.
+    ``compared`` the class packaged in the runtime under test.  ``runtime``
+    (an open ZipFile of the runtime under test) is only consulted when the
+    single remaining difference is ``InnerClasses``; see
+    ``inner_class_flag_evidence``.
     """
     if mode not in MODES:
         raise ValueError('unknown class identity mode: %r' % (mode,))
@@ -392,6 +474,13 @@ def compare(name, reference, compared, mode):
         return entry
     entry.update(reference_normalized_sha256=normalized_sha256(left), compared_normalized_sha256=normalized_sha256(right))
     diff = differences(left, right)
+    if diff == ['class attribute InnerClasses']:
+        evidence, reason = inner_class_flag_evidence(left, right, runtime)
+        if evidence:
+            entry.update(identical=True, result='normalized-identical-inner-class-flags', rule=INNER_CLASS_FLAG_RULE,
+                         inner_class_flag_evidence=evidence, dropped_attributes=sorted(DROPPED_ATTRIBUTES))
+            return entry
+        entry['inner_class_flag_check'] = reason
     if diff:
         entry.update(identical=False, result='normalized-differ', differences=diff)
     else:

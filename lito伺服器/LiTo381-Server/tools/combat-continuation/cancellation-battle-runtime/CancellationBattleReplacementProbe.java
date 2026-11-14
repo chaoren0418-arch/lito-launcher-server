@@ -58,7 +58,11 @@ public class CancellationBattleReplacementProbe extends CancellationMaterialProb
     if(mode==14){set(room,"battleStarted",false);clock.fire();need(state.leases.isEmpty()&&!actors.contains(replacement),"battle end releases runtime actor");}
     if(mode==15){hub.close();need(state.closed&&state.leases.isEmpty()&&state.pending.isEmpty()&&!actors.contains(replacement)&&clock.scheduled.isCancelled(),"hub close removes runtime actor and queue");NativeCancellationBattleRuntime.close(hub);clock.fire();}
     if(mode==17){clock.fire();need(state.pending.isEmpty(),"caster retirement does not discard peer output");}
-    if(mode==18){long until=System.nanoTime()+TimeUnit.SECONDS.toNanos(4);while(System.nanoTime()<until){synchronized(hub){if(state.leases.isEmpty())break;}Thread.sleep(10);}synchronized(hub){need(state.leases.isEmpty()&&!actors.contains(replacement)&&clock.scheduled.isCancelled(),"real scheduled expiry");}}
+    if(mode==18){long until=System.nanoTime()+TimeUnit.SECONDS.toNanos(4);while(System.nanoTime()<until){synchronized(hub){if(state.leases.isEmpty())break;}Thread.sleep(10);}synchronized(hub){need(state.leases.isEmpty()&&!actors.contains(replacement)&&clock.scheduled.isCancelled(),"real scheduled expiry");}
+     // #428 F8: tick() drops the lease under the hub lock, then publishes the remove frame after releasing it
+     // (Notice.publish refuses to run under scene ownership). Wait for that clock-thread task to finish before
+     // reading the wires: the single-thread clock runs this barrier only after the expiring tick returned.
+     need(clock.submit(()->{}).get(4,TimeUnit.SECONDS)==null,"real expiry publication drained before collecting wires");}
     if(mode==19){Object corpse=time?hub.timeAttackCorpse(roomId,pc,id,System.nanoTime()):hub.questCorpse(roomId,pc,id,System.nanoTime());need(corpse==null,"deleted original cannot be resurrected");}
     var a=collect(self);var b=collect(other);String removed=HexFormat.of().formatHex(Protocol.removeObject(id));need(a.contains(removed)==(mode!=17),"old remove packet guarded by caster role");boolean peerEligible=time||hub.battleRecipients(roomId,force).contains(peer);if(mode!=13&&mode!=15)need(b.contains(removed)==(mode!=16&&peerEligible),"peer output respects lane and retirement mode="+mode);
    }else if(accepted){need((boolean)call(actor,"alive",new Class[]{})&&!(boolean)call(actor,"hasteActive",new Class[]{long.class},System.nanoTime()),"unsupported spawn keeps original and ordinary cancellation");need(state==null||state.leases.isEmpty(),"fallback leaves no lease");}
