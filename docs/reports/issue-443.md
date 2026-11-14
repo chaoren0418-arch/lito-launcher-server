@@ -56,7 +56,7 @@
   - `check_source` 通過時才會走到 ini／DLL 比對（順序與正式流程一致）；
   - 錯誤 run id、錯誤 profile 也都正常結束；
   - 原始碼層確認外部入口呼叫的就是正式 helper 的 `check_source`，正式 helper 仍釘選 `0-客戶端\TW13081901.txt`。
-- `dotnet build`（Release）：成功，0 警告 0 錯誤。Python 檔以 `py_compile` 檢查語法通過。
+- `dotnet build`（Release）：成功，0 警告 0 錯誤。依本機規定沒有在本機跑 unittest；PR #444 第一個 commit 的 CI「Launcher (.NET 10 / WinForms)」通過，`test_external_server_startup.py` 共 22 個測試全過（含新增的 4 個 `PreStartRefusalTests`）。非阻擋的「Server tests (CI MySQL fixture)」失敗，main 最新 run 的同一個 job 也失敗，與本變更（只改登入器）無關。
 
 ## 推測
 
@@ -66,7 +66,6 @@
 
 ## 待驗證
 
-- CI（GitHub Actions `test_external_server_startup.py`、`dotnet build`）的結果：依本機規定沒有在本機執行 unittest，以 PR 的 CI 為準。
 - 實機：目前客戶端狀態下，正式 0.6.71 standard 模式按啟動是否真的顯示 `Startup file changed`（依程式碼推斷會）。需要使用者或 Codex 實測確認。
 - 實機：外部入口在指紋不符時，GUI 是否顯示失敗原因、且不再出現「清理尚未確認」。
 
