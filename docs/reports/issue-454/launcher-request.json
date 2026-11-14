@@ -1,0 +1,45 @@
+{
+  "run_id": "external-365de368a9a44290b59433a39a9eaa19",
+  "launcher_identity": {
+    "pid": 20248,
+    "filetime": "134391131368298666",
+    "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\LiTo381Launcher.exe",
+    "image_sha256": "8F82C64CE1DAA5643426CF1CF0CB0DCF3DFC74929870AFCBB729CAB3D1EF1439",
+    "command_sha256": "46C827323D1E8AD969905ACC3697DFF00988754EB3B430409DB1BD4E674FBB7C",
+    "command_argv_digest": "22049EC691B9C7C0D7A8CCAC14343FB781B1A389E1328F1437249A5CAC120C92",
+    "parent_pid": 12536
+  },
+  "selected_preferences": {
+    "client_directory": "D:\\lineage開發\\0-客戶端",
+    "display_mode": "Windowed",
+    "window_scale_percent": 200,
+    "native_service": "StandardArena"
+  },
+  "selected_source_id": 1,
+  "created_at_utc": "2026-11-14T07:00:40.4587056+00:00",
+  "source_entry": {
+    "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\external_server_startup.py",
+    "bytes": 27431,
+    "sha256": "BDCE29438DBABA7BAF498841870023D5E3A8493D491C23EC555ABD8D89B7C3D6"
+  },
+  "external_profile_path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\scratch\\t014\\run-20261114T065600Z\\external-profile.json",
+  "external_profile": {
+    "schema_version": 1,
+    "kind": "external",
+    "profile_id": "t014-p24-external",
+    "display_name": "T014 P24 實驗伺服器（外部，已在執行）",
+    "host": "127.0.0.1",
+    "port": 42083,
+    "static_database": "p24_380db_lito_exp",
+    "sources": [
+      {
+        "id": 1,
+        "name": "P24LiToExp",
+        "database": "p24_accounts_lito_exp"
+      }
+    ]
+  },
+  "server_owned": false,
+  "run_root": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\scratch\\t014\\run-20261114T065600Z\\launcher-runs",
+  "client_writes_by_launcher": 0
+}

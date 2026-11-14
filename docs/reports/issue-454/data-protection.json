@@ -1,0 +1,9 @@
+{
+  "run_root": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\scratch\\t014\\run-20261114T065600Z",
+  "original_270_tables_checksums_identical": true,
+  "experimental_counts_identical": true,
+  "app_run_directories_identical": true,
+  "manual_sql_changes": false,
+  "private_restore_sql": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\scratch\\t014\\run-20261114T065600Z\\private-character-lito-restore.sql",
+  "private_backup_manifest": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\scratch\\t014\\run-20261114T065600Z\\private-backup-manifest.json"
+}

@@ -1,0 +1,17 @@
+  正在判斷要還原的專案...
+
+  已還原 D:\lineage開發\3-lito開發\scratch\wt\task-454\lito登入器\LiTo381-Launcher\src\LiTo381Launcher.csproj (90 毫秒 內)。
+
+  LiTo381Launcher -> D:\lineage開發\3-lito開發\scratch\wt\task-454\lito登入器\LiTo381-Launcher\src\bin\Release\net10.0-windows\LiTo381Launcher.dll
+
+
+
+建置成功。
+
+    0 個警告
+
+    0 個錯誤
+
+
+
+經過時間 00:00:03.69
