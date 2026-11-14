@@ -1,0 +1,9 @@
+﻿group	probe	field	candidate	maven
+targeted/area-sleep-slow/battle-npc	after	actual_frames	366	383
+targeted/area-sleep-slow/battle-npc	after	checks	795	812
+composed/negative-material/WorldNpc	probe	frames	390	399
+composed/negative-material/WorldNpc	probe	checks	1197	1206
+composed/weakness-material/WorldNpc	probe	frames	280	304
+composed/weakness-material/WorldNpc	probe	checks	827	851
+composed/target-negative-material/WorldNpc	probe	frames	251	250
+composed/target-negative-material/WorldNpc	probe	checks	790	789
