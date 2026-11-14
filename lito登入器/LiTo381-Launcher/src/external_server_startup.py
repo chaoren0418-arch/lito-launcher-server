@@ -24,7 +24,7 @@ import argparse, hashlib, importlib.util, ipaddress, json, os, queue, socket, st
 HERE = Path(__file__).resolve().parent
 FORMAL_HELPER = HERE / 'development_startup.py'
 # Same value as DevelopmentStartup.EntrySha: only the reviewed formal helper is reused.
-FORMAL_HELPER_SHA = '56532A2FF06DFCF2C1569681D997E84410C8EA68CB4F65B4ED9BCA0D7CDA8189'
+FORMAL_HELPER_SHA = 'E30E88C3485F12A97F1D59C74205D6DD40D5014DA7779C1574B6B251A2BB0402'
 PROFILE_KIND = 'external'
 LOCAL_CONFIG_PLACEHOLDER = 'external-server.properties'
 # Same pin as development_startup.PINS[app/compat/litoddraw.dll]; checked against the formal table at run time.

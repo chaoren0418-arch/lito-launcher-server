@@ -46,7 +46,7 @@ PINS = {
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\lito_runtime_probe_named.py'): '16311C07DDA9FD06118D628609E58FAA20D352FDF5EC65CFF29A16CF3C78F136',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\world\\inputs\\effectlist2.xml.extraction.json'): '12F86969AD93C69E13AF0A0A871CE655B9F82AE1FA403F5387BE053B22716AD0',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\world\\icon-assets.json'): 'BBFE020CEF51B190E0B0CF996320640BEDB86EE06C28308A84543C501BC17889',
-    Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\world_resource_preflight.py'): '353C362EC12D3443C790D707FBC26B50944081BC2D1DA9967A75D471CB289F34',
+    Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\world_resource_preflight.py'): 'D8AB4990D1AA40AC366B47DC9CE90D96351B2ED518B56BBE18BE3BE0C4B83EEA',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\Start-Shared-World.py'): '971A99971F52BDFAA7E7BB916AB325EA8500E79C8F5F03C237E171F5A8BBE3C5',
 }
 
@@ -54,6 +54,8 @@ PINS = {
 # action/rate data file and may be updated under the agreed rules, so its content is
 # NOT pinned. Only existence + readability is checked. Do not add it back to PINS.
 UNPINNED = (CLIENT/'TW13081901.txt',)
+# Issue #453 (T155): Tile.idx, Sprite*.idx and Tile.pak/effectlist2.xml follow the same rule;
+# world_resource_preflight checks their format and only the rows/payloads LiTo consumes.
 
 BIN_SHA = 'CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292'
 

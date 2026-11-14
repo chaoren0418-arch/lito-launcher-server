@@ -26,6 +26,9 @@
 |---|---|---|
 | `LiTo.bin` | 讀取比對 SHA（同正式 helper 的 `check_source`） | 拒絕啟動 |
 | `TW13081901.txt` | **只檢查存在且可讀，不比對內容 SHA**（T153／#448，見下節） | 不存在、是目錄或讀不到才拒絕啟動 |
+| `Tile.idx`、`Sprite.idx`、`Sprite00～15.idx` | **不比對整檔 SHA**（T155／#453，見下節）：只查 28-byte 紀錄格式、每筆都落在對應 `.pak` 內，以及 LiTo 用到的 161 個狀態圖示與 `list.ico` 仍指向已驗證的位置 | 格式壞掉或圖示定位改變才拒絕啟動 |
+| `Tile.pak` 內 `effectlist2.xml` | **不比對加密內容 SHA**（T155／#453）：解碼＋解析，只比對相容層用到的 95 筆狀態列 | 讀不出來，或那 95 筆變了才拒絕（需重建 `shared_status.bin`／相容層） |
+| `Sprite*.pak` 內 219 份圖示、2 份 `list.ico` 的位元組 | 比對 SHA（這些是 LiTo 實際載入的內容，沒放寬） | 拒絕啟動 |
 | `litoddraw.dll` | 讀取比對 SHA-256 = `E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A`（與 `app\compat\litoddraw.dll` 的正式釘選相同） | 拒絕啟動，訊息列出檔名、現有 SHA、預期 SHA；**不覆寫** |
 | `lito381-compat.ini` | 讀取比對內容 = 正式流程在本次縮放下會寫的內容（CRLF／LF 視為相同） | 縮放不同：訊息寫出現有 `ScalePercent`，請在登入器改選同一縮放再按啟動；其他內容不同：列出現有與預期內容。**都不覆寫** |
 | `lito381-compat.log` | 啟動前記下大小、結束後讀取新增部分複製到 run 目錄的 `native-render.log` | — |
@@ -38,6 +41,15 @@
 - **原因**：這個檔是客戶端的 sprite 動作與速率資料表，依既定規則可以更新（2026-11-03 客戶端換成新版 `28C4FC60…8DB8`，新增 30 個原本空白的 sprite 定義，見 `docs/reports/issue-443.md`）。使用者 2026-11-14 在 #447 裁定選項 C：登入器忽略它的內容；不還原客戶端、不重產 `common_catalog.bin`、不發新版。
 - **影響範圍**：LiTo 的共用動畫目錄 `common_catalog.bin`／`common_catalog_manifest.json` 仍是從 07-21 版（`7EBE…`）產生並**照舊釘選**；新版多出的 sprite 不會進 LiTo 的共用目錄，這是裁定接受的結果。
 - **其他檔一律不放寬**：`LiTo.bin`（`CE6EE68A…`）、`app\` 下其餘 32 個正式交付檔、`litoddraw.dll`、`lito381-compat.ini` 的檢查都和以前相同，內容不同照樣拒絕。
+
+### 共用索引與 `effectlist2.xml` 不釘選整檔（T155／Issue #453）
+
+- **規則**：`app\world_resource_preflight.py`（`check_source` 最後一步呼叫，正式 standard 模式與外部入口共用）不再比對 `Tile.idx`、`Sprite.idx`、`Sprite00～15.idx` 的整檔 SHA，也不再比對 `Tile.pak` 內 `effectlist2.xml` 加密內容的 SHA。改為：
+  - 索引：長度必須是 `4 + 28×筆數`，每筆 `offset+size` 不超過對應 `.pak` 大小；
+  - `effectlist2.xml`：在 `Tile.idx` 只出現一次、≤ 2 MB、能解碼並通過與 `catalog.parse_effects` 相同的格式檢查；相容層用到的 95 筆（效果 0～75 與 19 筆擴充）內容與「第一個使用同一 graphic 的效果」必須和編譯 `shared_status.bin` 時相同（指紋 `5b3e6bb0…a8e0`）；
+  - 圖示：161 個狀態圖示與 `list.ico` 在 17 個 Sprite 索引中的位置集合必須和 `icon-assets.json` 相同，且 219 份圖示、2 份 `list.ico` 的位元組 SHA 不變。
+- **原因**：這些都是 TW 共用客戶端依既定規則會更新的資料（#449 被 `Tile.idx` 擋下；`Sprite00～15.idx` 也早已換新），和 #448 的 `TW13081901.txt` 同一類。2026-11-14 盤點（`docs/reports/issue-453.md`）確認換新後 LiTo 實際用到的部分完全沒變。
+- **仍會拒絕**：索引格式壞掉、圖示被搬位置或內容變了、`effectlist2.xml` 那 95 筆有變（表示 `shared_status.bin` 與相容層要重建，交主控）。
 
 0.6.71 正式流程每次啟動都會把 `0-客戶端` 的這兩個檔寫成正確內容，所以只要之前用正式流程開過一次同縮放的遊戲，外部入口就會直接沿用。若要換縮放，請在登入器改選與現有 `ScalePercent` 相同的縮放，不要手改客戶端。
 
@@ -78,8 +90,8 @@ dotnet build "lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj" -c Rele
 
 | 檔案 | SHA-256 |
 |---|---|
-| `development_startup.py` | `56532A2FF06DFCF2C1569681D997E84410C8EA68CB4F65B4ED9BCA0D7CDA8189`（正式 helper；T153／#448 移除 `TW13081901.txt` 釘選，舊版 `ADFF1EDC…C9CD` 已作廢） |
-| `external_server_startup.py` | `BCB588542BDD3D9D1BD52806389F2A0ECD5F661347155F1FDC4CBC360D56F3DD`（T153／#448；舊版 `7E9EE3D8…7C2F`、`3CAE67C0…28B9`、`D0FE39EB…1D32` 已作廢） |
+| `development_startup.py` | `E30E88C3485F12A97F1D59C74205D6DD40D5014DA7779C1574B6B251A2BB0402`（正式 helper；T155／#453 更新 `world_resource_preflight.py` 釘選；舊版 `56532A2F…8189`（#448）、`ADFF1EDC…C9CD` 已作廢） |
+| `external_server_startup.py` | `BDCE29438DBABA7BAF498841870023D5E3A8493D491C23EC555ABD8D89B7C3D6`（T155／#453；舊版 `BCB58854…F3DD`、`7E9EE3D8…7C2F`、`3CAE67C0…28B9`、`D0FE39EB…1D32` 已作廢） |
 
 ```powershell
 Get-FileHash "<輸出目錄>\development_startup.py","<輸出目錄>\external_server_startup.py"
@@ -171,6 +183,9 @@ $env:LITO_LAUNCHER_RUN_ROOT = "$run\launcher-runs"
 | `外部伺服器 helper 指紋不符`／`開發啟動 helper 指紋不符` | 輸出目錄的 `.py` 與釘選不同；重建，不要手改 |
 | `Startup file changed: …`、`Reparse startup path refused` | 正式交付檔（`app\…`）或 `LiTo.bin` 與正式釘選不符，或路徑含 junction；回報，不要修改（`TW13081901.txt` 已不釘選，不會再因內容出現這個訊息） |
 | `Startup file missing: …TW13081901.txt`、`Startup file unreadable: …` | 客戶端缺 `TW13081901.txt`、它變成目錄，或檔案被鎖定／無權限讀取；回報，不要從別處複製 |
+| `shared index layout changed`／`shared index member outside archive`／`shared index unreadable` | 某個 `Tile／Sprite*.idx` 格式壞掉或與 `.pak` 不配對；回報（索引內容換新本身**不會**再出現這類訊息，T155） |
+| `shared effectlist2.xml status rows changed; rebuild …` | `effectlist2.xml` 中相容層用到的 95 筆變了，`shared_status.bin`／相容層要重建；回報主控 |
+| `shared status icon routing changed: …`／`shared status icon changed: …`／`shared TBT cache capacity changed` | LiTo 用到的狀態圖示或 `list.ico` 被搬位置或改內容；回報主控重新驗證圖示 |
 | `指定客戶端的 LiTo.bin 指紋不符`、`共用資源版請選擇 D:\lineage開發\0-客戶端` | 客戶端目錄選錯 |
 | `外部伺服器入口只讀取、不改 0-客戶端；…已拒絕啟動` ＋ `litoddraw.dll SHA-256 …，預期 E47BD6C6…` | `0-客戶端\litoddraw.dll` 不是正式版本；回報，不要手動覆寫（由使用者決定是否以 0.6.71 正式流程開一次遊戲讓它恢復） |
 | `… 現有 ScalePercent=200，本次選擇 150；請在登入器改選 200% 縮放後再試` | 在登入器改選訊息中的縮放即可 |
