@@ -135,7 +135,10 @@
 - 新版 `verify_resource_sources()` 對真實客戶端唯讀通過（1.05 秒）。
 - `dotnet build …LiTo381Launcher.csproj -c Release`：成功，0 警告 0 錯誤；輸出目錄 `development_startup.py` = `E30E88C3…0402`、`external_server_startup.py` = `BDCE2943…C3D6`，與 C# 常數一致。
 - `python -m py_compile`：四個 .py 通過。
-- 依本機規定**沒有在本機跑單元測試**，交 PR 的 CI。
+- 依本機規定**沒有在本機跑單元測試**，由 PR #455 的 CI（build run `43564837732`）驗證：
+  - 「Launcher (.NET 10 / WinForms)」成功：`dotnet build`、`dotnet test`（Total tests: 52）通過；`test_external_server_startup.py` **Ran 30 tests … OK**；新增 `test_world_resource_preflight.py` **Ran 20 tests … OK**。
+  - 「Server (Java 17 / Maven)」、「Server tests」、「Server reproducible JAR」、「Combat regression tools」、「Semantic gap」、「Build-Package.ps1 zip」成功。
+  - 「Server tests (CI MySQL fixture, non-blocking)」寫報告時仍在等待；與本變更（只改登入器）無關，#448 時 main 上同一 job 也是失敗。
 
 ## 推測
 
@@ -145,7 +148,6 @@
 
 ## 待驗證
 
-- CI：PR 的「Launcher (.NET 10 / WinForms)」job（`dotnet test`、`test_external_server_startup.py`、新增的 `test_world_resource_preflight.py`）。
 - 實機（交 Codex／使用者）：以本分支建置的登入器重測 #414 項 08（登入器 → 大廳），確認不再出現 `shared Tile index changed`／`shared effectlist2.xml changed`／`shared icon index changed`，並確認狀態圖示（含魔法娃娃、龍之護鎧）顯示正常。
 
 ## 產出路徑
