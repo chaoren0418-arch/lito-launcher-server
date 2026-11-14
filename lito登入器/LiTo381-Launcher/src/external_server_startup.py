@@ -283,7 +283,21 @@ def _formal_helper():
     return _load('lito_formal_development_startup', FORMAL_HELPER)
 
 
-def main():
+def refuse_before_start(error, stage):
+    """T152 / Issue #443: every refusal before anything is created ends with the same failed + finished events.
+
+    Nothing was started or created (no run directory, no JVM, no native), so cleanup is
+    trivially complete and the launcher must not report "清理尚未確認".
+    """
+    print(str(error), file=sys.stderr, flush=True)
+    emit({'event': 'failed', 'reason': str(error), 'stage': stage, 'writes': 0,
+          'differences': getattr(error, 'differences', [])})
+    emit({'event': 'finished', 'exit_code': 1, 'accepted': False, 'cleanup_verified': True,
+          'server_owned': False, 'result': None, 'product_complete': False})
+    return 1
+
+
+def main(argv=None, formal_helper=None):
     parser = argparse.ArgumentParser(description='Connect the original LiTo.bin flow to an already running loopback LiTo Server.')
     parser.add_argument('--serve', action='store_true', required=True)
     parser.add_argument('--run-id', required=True)
@@ -293,26 +307,31 @@ def main():
     parser.add_argument('--source-id', type=int, choices=range(1, 9), required=True)
     parser.add_argument('--external-profile', required=True)
     parser.add_argument('--run-root', help='Write runs/<run-id> under this directory instead of the delivery app directory.')
-    args = parser.parse_args()
-    if not args.run_id.startswith('external-') or any(not (c.isascii() and (c.isalnum() or c == '-')) for c in args.run_id):
-        raise ValueError('external run id must start with "external-"')
-    profile = load_profile(args.external_profile)
-    dev = _formal_helper()
-    if dev.PINS.get(dev.DLL) != CLIENT_DDRAW_SHA:
-        raise ValueError('litoddraw.dll pin differs from the reviewed formal helper')
-    dev.check_source(args.client_directory)
-    # Read-only: refuse before anything is created if the client is not already prepared.
+    args = parser.parse_args(argv)
+    # Everything up to run.mkdir() is read-only: no run directory, JVM or native exists yet.
+    # T152 / Issue #443: the formal resource check (check_source, same pins as the formal
+    # standard flow) used to raise outside this guard, so the launcher saw no finished event
+    # and reported "清理尚未確認".  Any refusal here now ends with failed + finished.
+    stage = 'arguments'
     try:
+        if not args.run_id.startswith('external-') or any(not (c.isascii() and (c.isalnum() or c == '-')) for c in args.run_id):
+            raise ValueError('external run id must start with "external-"')
+        stage = 'external_profile'
+        profile = load_profile(args.external_profile)
+        stage = 'formal_helper'
+        dev = (formal_helper or _formal_helper)()
+        if dev.PINS.get(dev.DLL) != CLIENT_DDRAW_SHA:
+            raise ValueError('litoddraw.dll pin differs from the reviewed formal helper')
+        # Exactly the formal standard flow's resource check (development_startup.main calls the same function).
+        stage = 'check_source'
+        dev.check_source(args.client_directory)
+        # Read-only: refuse before anything is created if the client is not already prepared.
+        stage = 'client_compat'
         client_compat = verify_client_compat(dev.CLIENT, args.scale)
+        stage = 'run_root'
         run_root = resolve_run_root(args.run_root, dev.CLIENT) if args.run_root is not None else dev.DELIVERY
-    except (ClientCompatMismatch, RunRootError) as error:
-        print(str(error), file=sys.stderr, flush=True)
-        emit({'event': 'failed', 'reason': str(error), 'writes': 0,
-              'differences': getattr(error, 'differences', [])})
-        # Nothing was started or created, so cleanup is trivially complete.
-        emit({'event': 'finished', 'exit_code': 1, 'accepted': False, 'cleanup_verified': True,
-              'server_owned': False, 'result': None, 'product_complete': False})
-        return 1
+    except Exception as error:
+        return refuse_before_start(error, stage)
     # Identity helpers only; importing Start-Shared-World.py does not start a JVM.
     module = _load('lito_shared_world_identity', dev.ENTRY)
     effective = effective_from_profile(profile)
