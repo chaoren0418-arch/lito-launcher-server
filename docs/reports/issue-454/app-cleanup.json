@@ -1,0 +1,14 @@
+[
+  {
+    "Method": "CUA Alt+F4; window disappeared, PID already absent before cleanup script",
+    "Pid": 20248,
+    "Name": "launcher",
+    "Absent": true
+  },
+  {
+    "Method": "Stop-Process after executable and creation-time match",
+    "Pid": 19916,
+    "Name": "server",
+    "Absent": true
+  }
+]

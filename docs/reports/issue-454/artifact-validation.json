@@ -1,0 +1,13 @@
+{
+  "client_snapshots_equal": true,
+  "baseline_comparisons_pass": true,
+  "json_artifacts_valid": true,
+  "expected_preflight_failure_preserved": true,
+  "owned_processes_and_ports_clear": true,
+  "screenshot_png_dimensions": [
+    3840,
+    2080
+  ],
+  "experiment_database_password_not_present": true,
+  "lobby_png_created": false
+}

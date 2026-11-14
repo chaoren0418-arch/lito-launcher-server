@@ -1,0 +1,14 @@
+[
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\LiTo381Launcher.exe",
+    "sha256": "8f82c64ce1daa5643426cf1cf0cb0dcf3dfc74929870afcbb729cab3d1ef1439"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\development_startup.py",
+    "sha256": "e30e88c3485f12a97f1d59c74205d6dd40d5014da7779c1574b6b251a2bb0402"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-454\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\external_server_startup.py",
+    "sha256": "bdce29438dbaba7baf498841870023d5e3a8493d491c23ec555abd8d89b7c3d6"
+  }
+]

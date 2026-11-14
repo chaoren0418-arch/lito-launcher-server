@@ -1,0 +1,12 @@
+{
+  "deployed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\world_resource_preflight.py",
+  "deployed_sha256": "353C362EC12D3443C790D707FBC26B50944081BC2D1DA9967A75D471CB289F34",
+  "expected_sha256": "D8AB4990D1AA40AC366B47DC9CE90D96351B2ED518B56BBE18BE3BE0C4B83EEA",
+  "deployed_bytes": 3705,
+  "expected_bytes": 11044,
+  "deployed_crlf": 0,
+  "expected_crlf": 0,
+  "deployed_lf_normalized_sha256": "353C362EC12D3443C790D707FBC26B50944081BC2D1DA9967A75D471CB289F34",
+  "same_after_lf_normalization": false,
+  "read_only": true
+}
