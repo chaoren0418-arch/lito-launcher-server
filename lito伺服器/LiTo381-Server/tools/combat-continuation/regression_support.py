@@ -14,7 +14,9 @@ import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
+import zipfile
 
 ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
@@ -70,6 +72,10 @@ class Options:
         parser.add_argument('--class-identity', choices=class_identity.MODES, default=class_identity.EXACT,
                             help='Historical class guards: exact bytes (default, patched candidates) or the '
                                  'receipted maven-normalized compatibility mode for a recompiled Maven --jar (#418)')
+        parser.add_argument('--continue-per-case', action='store_true',
+                            help='Run every case (driver/probe/test) of this entry even after a failure and record '
+                                 'each result and first failure; assertions are unchanged and the receipt still fails '
+                                 'unless every case passed (#435). Default: stop at the first failure.')
         if reconcile:
             parser.add_argument('--manifest', type=Path, help='Failed replay manifest inside --out')
         self.args = parser.parse_args()
@@ -113,6 +119,8 @@ class Options:
                 result += ['--' + name, str(value.resolve())]
         if self.args.class_identity != class_identity.EXACT:
             result += ['--class-identity', self.args.class_identity]
+        if self.args.continue_per_case:
+            result.append('--continue-per-case')
         return result
 
 
@@ -161,7 +169,8 @@ def adapt_driver(text, config, runtime_dir=None):
         text = re.sub(r"S\s*/\s*['\"]runtime/([^'\"]+)['\"]", lambda m: 'Path(' + repr(str(runtime_dir / m[1])) + ')', text)
     prelude = ('import sys\nfrom pathlib import Path\nsys.path.insert(0, ' + repr(str(ROOT)) + ')\n'
                'from regression_support import java_tool, portable_command, overlay_source, '
-               'assert_class_identity, class_identity_changed\n')
+               'assert_class_identity, class_identity_changed, deferred_class_guard, runtime_overlay_jobs, '
+               'runtime_overlay, assert_runtime_overlays, assert_normalized_class, regenerate_frozen_overlay\n')
     # Some legacy replays execute command arrays frozen in historical JSON.
     text = text.replace('subprocess.run(updated,', 'subprocess.run(portable_command(updated, ' + repr(str(config)) + '),')
     prelude += '# regression_support sha256=' + pin(Path(__file__))['sha256'] + '\n'
@@ -259,6 +268,340 @@ def adapt_components_identity(text, mode, receipt):
     return text.replace(COMPONENTS_GUARD, "current=hashlib.sha256(native.read(name)).hexdigest();"
                         "changed=class_identity_changed(native.read(name),qualified.read(name),row['sha256'],name,"
                         + repr(mode) + ',Path(' + repr(str(receipt)) + '),runtime=native)')
+
+
+# --- #435 / T149: the remaining historical class guards (existing 13/15/16, affected 04/05/07/12/16) ---
+#
+# Static analysis (docs/reports/issue-435.md) shows that every guarded
+# GameStateStore of these drivers differs from the Maven class by real methods
+# (rankingPeriodKeyAt/validRankingPeriodKey), so a normalized comparison with
+# the historical class can never pass.  The guards exist because an observer
+# overlay produced from the historical class would replace the runtime's own
+# class.  Maven mode therefore removes the swap instead of the guard: each
+# runtime gets an overlay produced from its *own* class by the same observer,
+# and each overlay must be exactly that class plus the same probe hooks.
+# Exact mode never rewrites the drivers (candidates keep the original bytes check).
+
+GAME_STATE_STORE = 'local/lito381/server/GameStateStore.class'
+RUNTIME_INVENTORY = 'local/lito381/server/RuntimeInventory.class'
+_PREFLIGHT_PROBE = 'local/lito381/server/NativeCastMaterialPreflightProbe'
+_INVENTORY = 'Llocal/lito381/server/RuntimeInventory;'
+# Observer tools (untracked, under --resources) -> probe owner and the classes they write.
+OBSERVERS = {
+    'ObserveDeItemTransaction': dict(owner='local/lito381/server/DeItemTransactionProbe', classes=(GAME_STATE_STORE,)),
+    'ObservePlayerActionAuthority': dict(owner='local/lito381/server/PlayerActionAuthorityProbe',
+                                         classes=(GAME_STATE_STORE,)),
+    # afterCopy is inserted as ``aload_0; invokestatic`` before RuntimeInventory.copy()'s areturn.
+    'ObserveNativeMaterialPreflight': dict(
+        owner=_PREFLIGHT_PROBE, classes=(GAME_STATE_STORE, RUNTIME_INVENTORY),
+        receiver_hooks=('method:' + _PREFLIGHT_PROBE + '.afterCopy:(' + _INVENTORY + _INVENTORY + ')' + _INVENTORY,)),
+}
+# The frozen transaction overlay (existing 16) was written by this observer source (stage receipt input).
+OBSERVE_DE_ITEM_TRANSACTION_SHA256 = 'f50b3f6ef13792d78a8fe6ab1660487ecb8394f44077b12d90346d9fb3364578'
+
+RUNTIME_GUARD = re.compile(r"with zipfile\.ZipFile\(old\)as a,zipfile\.ZipFile\(jar\)as b:"
+                           r"assert a\.read\('([^']+\.class)'\)==b\.read\('\1'\)")
+OBSERVER_CALL = re.compile(r"invoke\(\[J/'java\.exe','-Xverify:all','-cp',tcp,'(Observe\w+)',old,overlay\]\)")
+BRANCH_OVERLAY = "runtimecp=str(classes)+';'+str(overlay)+';'"
+LIST_GUARD = re.compile(r"for name in (\[[^\]]+\]):assert old\.read\(name\)==new\.read\(name\)")
+FROZEN_GUARD = re.compile(r"with zipfile\.ZipFile\(Path\(parent\['runtime'\]\['path'\]\)\)as prior:"
+                          r"assert prior\.read\('([^']+\.class)'\)==z\.read\('\1'\)")
+# Drivers that must be adapted in Maven mode (a silent no-op would hide a changed fixture).
+MAVEN_GUARD_DRIVERS = frozenset({
+    'probe-player-action-authority.py', 'replay-player-action-main-owned.py', 'replay-player-action-transaction.py',
+    'timed-weapon-probe-native-cast-material-preflight.py', 'timed-weapon-probe-native-cast-material-authority.py',
+    'timed-weapon-probe-native-cast-material-fault.py', 'timed-weapon-probe-native-cube-material-fault.py',
+    'timed-probe-native-item-weapon-fault.py'})
+RUNTIME_OVERLAY_RULE = ('maven-normalized observer overlays: every runtime (parent/before and the JAR under test) runs '
+                        'with an overlay the same observer wrote from that runtime\'s own class; each overlay must '
+                        'contain exactly the observer\'s classes, each equal to the runtime class plus probe hooks '
+                        'only, and both overlays must carry the same probe hooks. The historical-base comparison '
+                        'is recorded, not gating.')
+
+
+def adapt_class_guards(name, text, mode, receipt):
+    """Route the #433 class guards of one untracked driver copy through Maven-compatible checks.
+
+    Exact mode returns ``text`` unchanged.  Maven mode rewrites only the
+    guard, the observer invocation and the per-branch overlay choice; every
+    probe, assertion and deadline stays verbatim.
+    """
+    assert mode in class_identity.MODES, mode
+    if mode == class_identity.EXACT:
+        return text
+    receipt = 'Path(' + repr(str(receipt)) + ')'
+    runtime, listed, frozen = (len(p.findall(text)) for p in (RUNTIME_GUARD, LIST_GUARD, FROZEN_GUARD))
+    assert runtime <= 1 and listed <= 1 and frozen <= 1, 'Ambiguous class guards in ' + name
+    if name in MAVEN_GUARD_DRIVERS:
+        assert runtime + listed + frozen == 1, 'Expected one known class guard in ' + name
+    if runtime:
+        observers = OBSERVER_CALL.findall(text)
+        assert len(observers) == 1 and observers[0] in OBSERVERS, 'Unknown observer overlay in ' + name
+        observer = observers[0]
+        assert RUNTIME_GUARD.search(text)[1] in OBSERVERS[observer]['classes'], 'Guarded class is not observed'
+        assert text.count(BRANCH_OVERLAY) == 1, 'Expected one per-branch overlay classpath in ' + name
+        text = RUNTIME_GUARD.sub(lambda m: 'deferred_class_guard(' + repr(m[1]) + ')', text)
+        text = OBSERVER_CALL.sub(
+            lambda m: ("[invoke([J/'java.exe','-Xverify:all','-cp',tcp," + repr(m[1]) + ",source,target]) "
+                       "for source,target in runtime_overlay_jobs(old,jar,overlay)];"
+                       "assert_runtime_overlays(old,jar,overlay," + repr(m[1]) + ',' + receipt + ')'), text)
+        text = text.replace(BRANCH_OVERLAY, "runtimecp=str(classes)+';'+str(runtime_overlay(runtime,old,jar,overlay))+';'")
+    if listed:
+        text = LIST_GUARD.sub(lambda m: 'for name in ' + m[1] + ':assert_normalized_class(old,new,name,' + receipt + ')',
+                              text)
+    if frozen:
+        text = FROZEN_GUARD.sub(
+            lambda m: ("with zipfile.ZipFile(Path(parent['runtime']['path']))as prior:regenerate_frozen_overlay("
+                       "prior,z,overlay,jar,'ObserveDeItemTransaction',B/'ObserveDeItemTransaction.java',"
+                       "[x['path']for x in read(Path(build['manifest']['path']))['asm']],run/'observer-tools',"
+                       + receipt + ',' + repr(OBSERVE_DE_ITEM_TRANSACTION_SHA256) + ',' + repr(m[1]) + ')'), text)
+    return text
+
+
+def deferred_class_guard(name):
+    """Placeholder left where the exact guard stood; the Maven check runs once the overlays exist."""
+    return name
+
+
+def parent_overlay(overlay):
+    overlay = Path(overlay)
+    return overlay.with_name(overlay.name + '-parent')
+
+
+def runtime_overlay_jobs(old, jar, overlay):
+    """(source runtime, overlay directory) pairs for the observer: the JAR under test and the parent."""
+    return [(jar, overlay), (old, parent_overlay(overlay))]
+
+
+def runtime_overlay(runtime, old, jar, overlay):
+    """The overlay written from ``runtime`` itself."""
+    runtime = Path(runtime).resolve()
+    if runtime == Path(jar).resolve():
+        return overlay
+    if runtime == Path(old).resolve():
+        return parent_overlay(overlay)
+    raise AssertionError('No observer overlay was written from ' + str(runtime))
+
+
+def observer_overlay_check(observer, overlay, runtime):
+    """``overlay`` must hold exactly the observer's classes, each = ``runtime`` class + probe hooks."""
+    spec = OBSERVERS[observer]
+    files = _overlay_files(overlay) if Path(overlay).is_dir() else []
+    entries = [class_identity.compare_overlay(n, (Path(overlay) / n).read_bytes() if n in files else b'',
+                                              runtime.read(n), (spec['owner'],), spec.get('receiver_hooks', ()))
+               for n in spec['classes']]
+    return dict(overlay=str(overlay), files=files, classes=entries,
+                identical=files == sorted(spec['classes']) and all(e['identical'] for e in entries),
+                hooks={e['name']: sorted(e.get('removed_probe_calls', [])) for e in entries})
+
+
+def _gate(receipt, entry, message):
+    entry['gating'] = 'assert'
+    _record_identity(receipt, class_identity.MAVEN, entry)
+    assert entry['identical'], message + '; receipt ' + str(receipt)
+
+
+def _overlay_failure(check):
+    return '; '.join(e['name'] + ': ' + e['result'] + ''.join(' / ' + d for d in e.get('differences', []))
+                     for e in check['classes'] if not e['identical']) or 'files ' + str(check['files'])
+
+
+def assert_runtime_overlays(old, jar, overlay, observer, receipt):
+    with zipfile.ZipFile(old) as a, zipfile.ZipFile(jar) as b:
+        runtime = observer_overlay_check(observer, overlay, b)
+        parent = observer_overlay_check(observer, parent_overlay(overlay), a)
+        historical = [class_identity.compare(n, a.read(n), b.read(n), class_identity.MAVEN, runtime=b)
+                      for n in OBSERVERS[observer]['classes']]
+    same = runtime['hooks'] == parent['hooks']
+    entry = dict(name=observer, mode='maven-runtime-overlays', rule=RUNTIME_OVERLAY_RULE, runtime_jar=pin(jar),
+                 parent_jar=pin(old), runtime_overlay=runtime, parent_overlay=parent, same_probe_hooks=same,
+                 historical_base_comparison=historical,
+                 identical=runtime['identical'] and parent['identical'] and same)
+    entry['result'] = ('runtime-overlays-hooks-only' if entry['identical'] else
+                       'runtime-overlay: ' + _overlay_failure(runtime) if not runtime['identical'] else
+                       'parent-overlay: ' + _overlay_failure(parent) if not parent['identical'] else
+                       'probe hooks differ between overlays')
+    _gate(receipt, entry, observer + ' overlay class identity (maven-normalized) failed: ' + entry['result'])
+
+
+def assert_normalized_class(base, runtime, name, receipt):
+    """Legacy ``assert old.read(name)==new.read(name)`` in Maven mode (normalized, no overlay involved)."""
+    entry = class_identity.compare(name, base.read(name), runtime.read(name), class_identity.MAVEN, runtime=runtime)
+    _gate(receipt, entry, name + ' class identity (maven-normalized) failed: ' + entry['result']
+          + ''.join('; ' + d for d in entry.get('differences', [])))
+
+
+def write_observer_overlay(observer, source, asm, runtime_jar, target, work):
+    """Compile the observer tool and let it write ``target`` from ``runtime_jar`` (as the drivers do)."""
+    work = Path(work)
+    work.mkdir(parents=True, exist_ok=True)
+    tcp = os.pathsep.join(map(str, [work, *asm]))
+    with (work / (observer + '.log')).open('a', encoding='utf-8') as out:
+        for command in ([java_tool('javac'), '-encoding', 'UTF-8', '-implicit:none', '-sourcepath', '', '-cp', tcp,
+                         '-d', work, source],
+                        [java_tool('java'), '-Xverify:all', '-cp', tcp, observer, runtime_jar, target]):
+            subprocess.run(list(map(str, command)), check=True, stdout=out, stderr=subprocess.STDOUT, timeout=180)
+
+
+def regenerate_frozen_overlay(prior, runtime, overlay, runtime_jar, observer, source, asm, work, receipt,
+                              source_sha256=None, name=GAME_STATE_STORE):
+    """Maven replacement for ``assert prior.read(n)==z.read(n)`` guarding a *frozen* observer overlay.
+
+    The frozen overlay must be the qualified parent class plus probe hooks; it
+    is kept beside (``<overlay>-historical``) and ``overlay`` is rewritten by
+    the same observer from the runtime under test, which must again be that
+    runtime's class plus the same probe hooks.
+    """
+    assert name in OBSERVERS[observer]['classes'], name
+    overlay = Path(overlay)
+    frozen = observer_overlay_check(observer, overlay, prior)
+    entry = dict(name=observer, mode='maven-frozen-overlay-regenerated', rule=RUNTIME_OVERLAY_RULE,
+                 runtime_jar=pin(runtime_jar), observer_source=pin(source), frozen_overlay=frozen,
+                 historical_base_comparison=[class_identity.compare(n, prior.read(n), runtime.read(n),
+                                                                    class_identity.MAVEN, runtime=runtime)
+                                             for n in OBSERVERS[observer]['classes']])
+    if source_sha256 and entry['observer_source']['sha256'] != source_sha256:
+        entry.update(identical=False, result='observer source is not the one that wrote the frozen overlay')
+    elif not frozen['identical']:
+        entry.update(identical=False, result='frozen overlay is not the parent class plus hooks: ' + _overlay_failure(frozen))
+    else:
+        historical = overlay.with_name(overlay.name + '-historical')
+        assert not historical.exists(), 'Frozen overlay already moved: ' + str(historical)
+        overlay.rename(historical)
+        entry['frozen_overlay_kept_at'] = str(historical)
+        write_observer_overlay(observer, source, asm, runtime_jar, overlay, work)
+        regenerated = observer_overlay_check(observer, overlay, runtime)
+        same = regenerated['hooks'] == frozen['hooks']
+        entry.update(regenerated_overlay=regenerated, same_probe_hooks=same, identical=regenerated['identical'] and same,
+                     result='regenerated-overlay-hooks-only' if regenerated['identical'] and same else
+                     'regenerated overlay: ' + _overlay_failure(regenerated) if not regenerated['identical'] else
+                     'probe hooks differ from the frozen overlay')
+    _gate(receipt, entry, observer + ' frozen overlay class identity (maven-normalized) failed: ' + entry['result'])
+
+
+# --- #435: --continue-per-case ---
+
+class CaseFailures(SystemExit):
+    """Every case ran; some failed.  Exit status 2 (an aborted entry exits 1 with a traceback)."""
+
+    def __init__(self, summary):
+        super().__init__(2)
+        self.summary = summary
+
+    def __str__(self):
+        return 'case failures (entry completed): ' + json.dumps(self.summary, sort_keys=True)
+
+
+class PrerequisiteFailed(AssertionError):
+    """Every case ran, but an entry-level prerequisite recorded in the receipt did not hold."""
+
+
+_FAILURE_LINE = re.compile(r'(Error|Exception|failure=|FAILED)')
+
+
+def log_failure(log, since=None):
+    """First-failure text from a case log: its last error-looking line (else its last line)."""
+    log = Path(log)
+    if not log.is_file() or (since is not None and log.stat().st_mtime < since):
+        return None
+    lines = [line.strip() for line in log.read_text('utf-8', errors='replace').splitlines() if line.strip()]
+    matches = [line for line in lines if _FAILURE_LINE.search(line)]
+    return (matches or lines or [None])[-1]
+
+
+def result_failure(result, since=None):
+    """``error`` of a driver result.json written by this attempt."""
+    result = Path(result)
+    if not result.is_file() or (since is not None and result.stat().st_mtime < since):
+        return None
+    try:
+        value = read(result)
+    except ValueError:
+        return None
+    return value.get('error') if not str(value.get('status', '')).startswith('passed') else None
+
+
+class CaseRunner:
+    """Runs the cases of one entry.
+
+    Disabled (default): ``run`` simply calls the case, so the first failure
+    aborts the entry exactly as before.  Enabled (``--continue-per-case``):
+    each case runs on its own; an ``Exception`` from it is recorded as that
+    case's failure and the next case still runs.  KeyboardInterrupt/SystemExit
+    and anything outside a case abort the entry.  Assertions are not touched.
+    """
+
+    def __init__(self, enabled, planned):
+        self.enabled = bool(enabled)
+        self.planned = list(planned)
+        self.cases = []
+
+    def status(self, case):
+        return next((row['status'] for row in self.cases if row['case'] == case), None)
+
+    def run(self, case, body, evidence=None):
+        if not self.enabled:
+            return body()
+        started = datetime.now(timezone.utc)
+        try:
+            value = body()
+        except Exception as error:
+            message = None
+            if evidence:
+                try:
+                    message = evidence(started.timestamp() - 1)
+                except Exception as problem:  # evidence is best-effort; never hides the failure itself
+                    message = 'evidence unreadable: ' + repr(problem)
+            row = dict(case=case, status='failed', error_type=type(error).__name__,
+                       first_failure=(message or (type(error).__name__ + ': ' + str(error)))[:4000],
+                       started_utc=started.isoformat(), finished_utc=datetime.now(timezone.utc).isoformat())
+            self.cases.append(row)
+            print('CASE FAILED ' + case + ': ' + row['first_failure'], flush=True)
+            return None
+        self.cases.append(dict(case=case, status='passed', started_utc=started.isoformat(),
+                               finished_utc=datetime.now(timezone.utc).isoformat()))
+        return value
+
+    def block(self, case, reason, hint):
+        """A case whose prerequisite did not hold in this invocation; recorded, never counted as passed."""
+        assert self.enabled
+        self.cases.append(dict(case=case, status='blocked-prerequisite', first_failure=reason, hint=hint))
+        print('CASE BLOCKED ' + case + ': ' + reason + ' -- ' + hint, flush=True)
+
+    def summary(self):
+        done = [row['case'] for row in self.cases]
+        counts = dict(planned=len(self.planned), passed=0, failed=0, **{'blocked-prerequisite': 0})
+        for row in self.cases:
+            counts[row['status']] += 1
+        counts['not_run'] = len([case for case in self.planned if case not in done])
+        return counts
+
+    def finish(self):
+        """Inside the entry, after the last case: all passed, or CaseFailures (exit 2)."""
+        if not self.enabled:
+            return
+        summary = self.summary()
+        if summary['passed'] != summary['planned']:
+            print('CASE SUMMARY ' + json.dumps(summary), flush=True)
+            raise CaseFailures(summary)
+
+    def fields(self, error=None):
+        """Receipt fields: case results plus whether the entry completed or aborted."""
+        if not self.enabled:
+            return {}
+        if error is None:
+            kind = None
+        elif isinstance(error, CaseFailures):
+            kind = 'case-failures'
+        elif isinstance(error, PrerequisiteFailed):
+            kind = 'entry-prerequisite-failed'
+        else:
+            kind = 'entry-aborted'
+        value = dict(case_mode='continue-per-case', cases=self.cases, case_summary=self.summary(),
+                     entry_outcome='aborted' if kind == 'entry-aborted' else 'completed', failure_kind=kind)
+        if kind == 'entry-aborted':
+            value['entry_error'] = type(error).__name__ + ': ' + str(error)
+        return value
 
 
 def portable_command(command, config):

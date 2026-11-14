@@ -3,6 +3,8 @@ from pathlib import Path
 import json,hashlib,subprocess,sys
 from regression_support import Options, prepare_regression
 options=Options(stage=True)
+# Reconciliation below interprets the first failing driver; per-case runs belong to the two entries themselves.
+assert not options.args.continue_per_case,'--continue-per-case: run full_regression.py / affected_regressions.py directly (#435)'
 CODE=Path(__file__).resolve().parent;R=options.root;S=options.server;stage=options.args.stage
 assert stage in ['pet-material','polymorph-source','return-nature-transfer','npc-physical-source','npc-physical-size','cancellation-probability','cancellation-npc','area-sleep-slow','combat-config-origin','call-nature-material','cancellation-battle-runtime']
 read=lambda p:json.loads(p.read_text('utf-8'));sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();pin=lambda p:dict(path=str(p.resolve()),sha256=sha(p));write=lambda p,v:p.write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf-8')

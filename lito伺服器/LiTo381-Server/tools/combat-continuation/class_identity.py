@@ -32,6 +32,10 @@ declares exactly the compared flags.  Such a row is javac's copy of the other
 class's declaration (the JVM does not use it for this class); ASM-patched
 candidates keep the stale copy, recompiled Maven classes refresh it.  Same row
 set, same visibility, and this class's own row must still match exactly.
+
+Overlay checks (#435 / T149) may name *receiver hooks*: probe calls that an
+observer inserted together with an ``aload_0`` directly before them.  Only that
+one load is removed with the call; everything else still has to match.
 """
 import hashlib
 import json
@@ -125,6 +129,7 @@ class _Pool:
             i += 1
         self.bootstrap = []
         self.drop_owners = ()
+        self.receiver_hooks = frozenset()
         self.dropped = []
 
     def utf8(self, index):
@@ -225,10 +230,20 @@ def _code(pool, data):
         raw.append((offset, _FOLD.get(name, name), operands))
     # Probe hooks (invokestatic into an explicitly named probe owner) are removed
     # before labels are assigned; a jump to a hook lands on the next instruction.
+    # A hook listed in ``receiver_hooks`` was inserted together with the
+    # ``aload_0`` right before it (#435: ObserveNativeMaterialPreflight passes
+    # ``this`` to afterCopy); that load is part of the hook and goes with it.
+    # Such a hook without ``aload_0`` directly before it is rejected.
     index, kept = {}, []
     for offset, name, operands in raw:
         index[offset] = len(kept)
         if name == 'invokestatic' and any(str(operands[0]).startswith('method:' + owner + '.') for owner in pool.drop_owners):
+            if operands[0] in pool.receiver_hooks:
+                if not kept or kept[-1][1:] != ('aload_0', []):
+                    raise ClassFormatError('receiver hook without aload_0: ' + str(operands[0]))
+                kept.pop()
+                index[offset] = len(kept)
+                pool.dropped.append('aload_0')
             pool.dropped.append(operands[0])
             continue
         kept.append((offset, name, operands))
@@ -316,12 +331,13 @@ def _skip_members(r):
             r.take(r.u4())
 
 
-def normalize(data, drop_owners=(), dropped=None):
+def normalize(data, drop_owners=(), dropped=None, receiver_hooks=()):
     """Return the normalized, constant-pool independent form of one class file.
 
     ``drop_owners`` lists internal class names whose static calls are probe
     hooks to ignore (used only for overlay checks); removed calls are appended
-    to ``dropped``.
+    to ``dropped``.  ``receiver_hooks`` lists resolved hook methods
+    (``method:owner.name:desc``) that were inserted with an ``aload_0``.
     """
     r = _Reader(bytes(data))
     if r.u4() != 0xCAFEBABE:
@@ -329,6 +345,7 @@ def normalize(data, drop_owners=(), dropped=None):
     minor, major = r.u2(), r.u2()
     pool = _Pool(r)
     pool.drop_owners = tuple(drop_owners)
+    pool.receiver_hooks = frozenset(receiver_hooks)
     if dropped is not None:
         pool.dropped = dropped
     header = r.pos
@@ -496,19 +513,22 @@ def _without_max_stack(form):
     return form
 
 
-def compare_overlay(name, overlay, runtime, probe_owners):
+def compare_overlay(name, overlay, runtime, probe_owners, receiver_hooks=()):
     """Overlay built from the runtime under test: only probe hooks may differ.
 
     The overlay class must normalize to the runtime's own class once static
-    calls into ``probe_owners`` are removed.  ``max_stack`` is excluded because
-    the overlay writer (ASM COMPUTE_MAXS) recomputes it; ``max_locals``, every
-    instruction, operand, branch target and handler still has to match.
+    calls into ``probe_owners`` (and the ``aload_0`` of ``receiver_hooks``) are
+    removed.  ``max_stack`` is excluded because the overlay writer (ASM
+    COMPUTE_MAXS) recomputes it; ``max_locals``, every instruction, operand,
+    branch target and handler still has to match.
     """
     entry = dict(name=name, mode='maven-overlay-from-runtime', overlay_sha256=hashlib.sha256(overlay).hexdigest(),
                  runtime_sha256=hashlib.sha256(runtime).hexdigest(), probe_owners=sorted(probe_owners))
+    if receiver_hooks:
+        entry['receiver_hooks'] = sorted(receiver_hooks)
     dropped = []
     try:
-        left = _without_max_stack(normalize(overlay, probe_owners, dropped))
+        left = _without_max_stack(normalize(overlay, probe_owners, dropped, receiver_hooks))
         right = _without_max_stack(normalize(runtime))
     except ClassFormatError as error:
         entry.update(identical=False, result='unparseable', error=str(error))

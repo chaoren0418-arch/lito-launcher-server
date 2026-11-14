@@ -3,7 +3,9 @@ from pathlib import Path
 from datetime import datetime, timezone
 import hashlib, json, os, shutil, subprocess, sys, zipfile
 
-from regression_support import formal_protection, Options, java_tool
+from regression_support import (formal_protection, Options, java_tool, CaseRunner, log_failure, regenerate_frozen_overlay,
+                                OBSERVE_DE_ITEM_TRANSACTION_SHA256, GAME_STATE_STORE)
+import class_identity
 options = Options(stage=True)
 R = options.root
 S = R.parents[1]
@@ -62,10 +64,8 @@ if not options.out and (D/'current.json').exists():
     if old['runtime']==build['runtime'] and old['driver']['sha256']==v['driver']['sha256']:
         previous={row['probe']:row for row in old['results']}
 log = None
-try:
-    with formal_protection(options,v):
-        for directory, prefix, material, fault, lifecycle in specs:
-            source = R/directory
+plan = []
+for directory, prefix, material, fault, lifecycle in specs:
             probes = [('Material', material, 'tests'), ('Fault', fault, 'boundaries'), ('Lifecycle', lifecycle, 'boundaries')]
             if prefix == 'Resurrection':
                 probes += [('Numeric', 48, 'numeric'), ('WorldNpc', 64, 'world-npc'), ('Companion', 80, 'companions'), ('AnswerLifetime', 64, 'answers'), ('AnswerRace', 112, 'answer-races'), ('CompanionAudit', 20, 'companion-audit')]
@@ -87,7 +87,38 @@ try:
                 probes += [('WorldNpc', 32, 'world-npcs')]
             if prefix == 'Ground':
                 probes += [('Clock', 48, 'clock'), ('Placement', 32, 'placement'), ('Numeric', 48, 'numeric')]
-            for name, count, folder in probes:
+            plan += [(directory, prefix, name, count, folder, fault) for name, count, folder in probes]
+# #435: each probe is one case under --continue-per-case.
+cases = CaseRunner(options.args.continue_per_case, [prefix + name for _, prefix, name, _, _, _ in plan])
+maven = options.args.class_identity != class_identity.EXACT
+identity = run/'class-identity.json'
+
+
+def observer_overlay(prefix, name, source, source_jar):
+    """GameStateStore memory-observer overlay for Fault/Ground Clock probes.
+
+    Exact (default): the frozen fixture overlay, guarded by the original byte
+    comparison.  Maven (#435): a copy whose GameStateStore is rewritten by the
+    same observer from the JAR under test (regression_support.regenerate_frozen_overlay).
+    """
+    frozen = source/'build/boundaries/memory-observer'
+    if not maven:
+        with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
+            assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
+        return frozen
+    target = run/(prefix+name+'.memory-observer')
+    shutil.copytree(frozen, target)
+    asm = [x['path'] for x in read(R/'build/integration-regression/preparation.json')['asm']]
+    with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
+        regenerate_frozen_overlay(a, b, target, jar, 'ObserveDeItemTransaction', B/'ObserveDeItemTransaction.java', asm,
+                                  run/(prefix+name+'.observer-tools'), identity, OBSERVE_DE_ITEM_TRANSACTION_SHA256,
+                                  GAME_STATE_STORE)
+    return target
+
+
+def probe_case(directory, prefix, name, count, folder, fault):
+                global log
+                source = R/directory
                 receipt = source/'build'/folder/'result.json'
                 if prefix == 'PoisonScope' and name == 'Consumer':
                     receipt = R/'earth-bind-material/build/consumer-completion/result.json'
@@ -108,14 +139,8 @@ try:
                     if name == 'CurseConsumer': overlays.insert(1, source/'build/timers/classes')
                 if prefix == 'Ground' and name in ('Clock', 'Placement', 'Numeric'):
                     overlays.append(source/'build/boundaries/classes')
-                if prefix == 'Ground' and name == 'Clock':
-                    overlays.append(source/'build/boundaries/memory-observer')
-                    with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
-                        assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
-                if name == 'Fault':
-                    overlays.append(source/'build/boundaries/memory-observer')
-                    with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
-                        assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
+                if (prefix == 'Ground' and name == 'Clock') or name == 'Fault':
+                    overlays.append(observer_overlay(prefix, name, source, source_jar))
                 if name in ('Target', 'StateLock', 'Companion', 'WorldNpc'):
                     overlays.append(source/'build/tests/classes')
                 inputs = [pin(p) for d in overlays for p in ([d] if d.is_file() else d.rglob('*.class'))]
@@ -126,7 +151,7 @@ try:
                         assert sha(Path(ref['path']))==ref['sha256']
                     v['results'].append(old)
                     print('REUSE',prefix+name,'same candidate, driver, compiled inputs and results',flush=True)
-                    continue
+                    return
                 dest = run/(prefix+name)
                 dest.mkdir()
                 log = dest/'probe.log'
@@ -154,12 +179,24 @@ try:
                     assert result['actual_memory_faults'] == fault and result['failed_material_casts_with_partial_commit'] == 0
                 v['results'].append(dict(probe=prefix+name, results=result, observations=pin(dest/'observations.json'), log=pin(log), compiled_inputs=inputs))
                 print('PASS', prefix+name, count, flush=True)
+
+
+try:
+    with formal_protection(options,v):
+        for item in plan:
+            cases.run(item[1]+item[2], lambda item=item: probe_case(*item),
+                      lambda since, item=item: log_failure(run/(item[1]+item[2])/'probe.log', since))
+        cases.finish()
         v['status'] = 'passed'
 except BaseException as error:
-    v.update(status='failed', error=str(error))
+    v.update(status='failed', error=str(error), **cases.fields(error))
     if log and log.exists():
         print(log.read_text('utf-8', errors='replace')[-6500:])
     raise
 finally:
+    if v['status'] != 'failed':
+        v.update(cases.fields())
+    if identity.exists():
+        v['class_identity'] = pin(identity)
     (run/'result.json').write_text(json.dumps(v, ensure_ascii=False, indent=2), encoding='utf-8')
     (D/'current.json').write_text(json.dumps(dict(status=v['status'], runtime=build['runtime'], receipt=pin(run/'result.json')), indent=2), encoding='utf-8')

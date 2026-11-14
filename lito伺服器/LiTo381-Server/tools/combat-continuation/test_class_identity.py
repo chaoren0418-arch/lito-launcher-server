@@ -63,7 +63,7 @@ class Pool:
 
 
 def make_class(text='hello', hook=False, debug=False, shuffle=False, wide=False, extra=False, value=1, this=NAME,
-               inner=()):
+               inner=(), hook_name='beforeSave'):
     """A class with run()V: ldc text; pop; [hook]; goto L; L: return  and get()I: iconst_<value>; ireturn.
 
     ``inner`` rows (inner, outer, simple name, flags) form an InnerClasses attribute, in the given order.
@@ -77,7 +77,7 @@ def make_class(text='hello', hook=False, debug=False, shuffle=False, wide=False,
     this_index, super_index = pool.cls(this_name), pool.cls('java/lang/Object')
     code_name = pool.utf8('Code')
     string = pool.string(text)
-    hook_index = pool.method(HOOK, 'beforeSave', '()V') if hook else None
+    hook_index = pool.method(HOOK, hook_name, '()V') if hook else None
     lines = pool.utf8('LineNumberTable') if debug else None
     source = pool.utf8('SourceFile') if debug else None
     source_value = pool.utf8('Synthetic.java') if debug else None
@@ -421,6 +421,264 @@ class OptionTests(unittest.TestCase):
     def test_unknown_mode_is_rejected(self):
         with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             self.options('--class-identity', 'loose')
+
+
+# ---------------------------------------------------------------- #435 / T149
+INVENTORY = 'local/lito381/server/RuntimeInventory'
+PREFLIGHT = 'local/lito381/server/NativeCastMaterialPreflightProbe'
+AFTER_COPY = '(L' + INVENTORY + ';L' + INVENTORY + ';)L' + INVENTORY + ';'
+
+
+def inventory_class(hook=False, receiver=True, extra_load=False):
+    """RuntimeInventory with copy(): aload_0; [aload_0;] [invokestatic afterCopy]; areturn."""
+    pool = Pool()
+    this_index, super_index = pool.cls(INVENTORY), pool.cls('java/lang/Object')
+    code_name = pool.utf8('Code')
+    hook_index = pool.method(PREFLIGHT, 'afterCopy', AFTER_COPY) if hook else None
+    body = b'\x2a'
+    if hook:
+        body += (b'\x2a' if receiver else b'') + b'\xb8' + u2(hook_index)
+    if extra_load:
+        body += b'\x2a\x57'  # aload_0; pop: an unrelated change next to the hook
+    body += b'\xb0'
+    payload = u2(2) + u2(1) + u4(len(body)) + body + u2(0) + u2(0)
+    method = (u2(0x0001) + u2(pool.utf8('copy')) + u2(pool.utf8('()L' + INVENTORY + ';')) + u2(1) + u2(code_name)
+              + u4(len(payload)) + payload)
+    tail = u2(0x0021) + u2(this_index) + u2(super_index) + u2(0) + u2(0) + u2(1) + method + u2(0)
+    return b'\xca\xfe\xba\xbe' + u2(0) + u2(61) + pool.bytes() + tail
+
+
+class ReceiverHookTests(unittest.TestCase):
+    """ObserveNativeMaterialPreflight inserts ``aload_0; invokestatic afterCopy`` before copy()'s areturn."""
+    HOOKS = support.OBSERVERS['ObserveNativeMaterialPreflight']['receiver_hooks']
+
+    def compare(self, overlay, hooks=None):
+        return ci.compare_overlay(INVENTORY + '.class', overlay, inventory_class(), (PREFLIGHT,),
+                                  self.HOOKS if hooks is None else hooks)
+
+    def test_receiver_load_is_part_of_the_hook(self):
+        entry = self.compare(inventory_class(hook=True))
+        self.assertTrue(entry['identical'], entry)
+        self.assertEqual(entry['removed_probe_calls'], ['aload_0', 'method:' + PREFLIGHT + '.afterCopy:' + AFTER_COPY])
+
+    def test_undeclared_receiver_load_stays_a_difference(self):
+        entry = self.compare(inventory_class(hook=True), hooks=())
+        self.assertEqual(entry['result'], 'overlay-differs-beyond-probe-hooks')
+
+    def test_receiver_hook_without_its_load_is_rejected(self):
+        # The method's own aload_0 would be consumed as the hook's: the remaining code no longer matches.
+        entry = self.compare(inventory_class(hook=True, receiver=False))
+        self.assertFalse(entry['identical'], entry)
+        self.assertEqual(entry['result'], 'overlay-differs-beyond-probe-hooks')
+
+    def test_other_change_beside_the_hook_fails(self):
+        self.assertEqual(self.compare(inventory_class(hook=True, extra_load=True))['result'],
+                         'overlay-differs-beyond-probe-hooks')
+
+
+# Synthetic driver texts with the exact guard shapes of the #433 drivers.
+RUNTIME_DRIVER = (
+    "with log.open('w')as out:\n"
+    "  overlay=run/'memory-observer'\n"
+    "  with zipfile.ZipFile(old)as a,zipfile.ZipFile(jar)as b:assert a.read('" + NAME + "')==b.read('" + NAME + "')\n"
+    "  invoke([J/'java.exe','-Xverify:all','-cp',tcp,'ObserveDeItemTransaction',old,overlay]);invoke([J/'javac.exe'])\n"
+    "  for mode,runtime in [('before',old),('after',jar)]:\n"
+    "   branch=run/mode;runtimecp=str(classes)+';'+str(overlay)+';'+cp;invoke([J/'java.exe','-cp',runtimecp])\n"
+    "   assert result['cases']==8\n")
+LIST_DRIVER = ("with zipfile.ZipFile(Path(parent['runtime']['path']))as old,zipfile.ZipFile(jar)as new:\n"
+               " for name in ['local/lito381/server/Main.class','local/lito381/server/SourceLogin.class']:"
+               "assert old.read(name)==new.read(name)\n")
+FROZEN_DRIVER = ("with zipfile.ZipFile(jar)as z:\n"
+                 " with zipfile.ZipFile(Path(parent['runtime']['path']))as prior:assert prior.read('" + NAME
+                 + "')==z.read('" + NAME + "')\n")
+
+
+class GuardAdaptationTests(unittest.TestCase):
+    RECEIPT = Path('/tmp/run/driver.class-identity.json')
+
+    def adapt(self, name, text, mode=ci.MAVEN):
+        return support.adapt_class_guards(name, text, mode, self.RECEIPT)
+
+    def test_exact_mode_leaves_every_driver_verbatim(self):
+        for text in (RUNTIME_DRIVER, LIST_DRIVER, FROZEN_DRIVER):
+            self.assertEqual(self.adapt('probe-player-action-authority.py', text, ci.EXACT), text)
+
+    def test_runtime_overlay_driver(self):
+        adapted = self.adapt('timed-weapon-probe-native-cast-material-fault.py', RUNTIME_DRIVER)
+        compile(support.adapt_driver(adapted, '/tmp/isolated.properties'), 'adapted', 'exec')
+        self.assertNotIn('assert a.read', adapted)
+        self.assertIn("deferred_class_guard('" + NAME + "')", adapted)
+        self.assertIn("for source,target in runtime_overlay_jobs(old,jar,overlay)];"
+                      "assert_runtime_overlays(old,jar,overlay,'ObserveDeItemTransaction',Path(", adapted)
+        self.assertIn("str(runtime_overlay(runtime,old,jar,overlay))", adapted)
+        self.assertIn("assert result['cases']==8", adapted)  # behavioral assertions verbatim
+
+    def test_list_and_frozen_guards(self):
+        listed = self.adapt('replay-player-action-main-owned.py', LIST_DRIVER)
+        self.assertIn('assert_normalized_class(old,new,name,Path(', listed)
+        frozen = self.adapt('replay-player-action-transaction.py', FROZEN_DRIVER)
+        self.assertIn("regenerate_frozen_overlay(prior,z,overlay,jar,'ObserveDeItemTransaction'", frozen)
+        self.assertIn(support.OBSERVE_DE_ITEM_TRANSACTION_SHA256, frozen)
+        for text in (listed, frozen):
+            compile(support.adapt_driver(text, '/tmp/isolated.properties'), 'adapted', 'exec')
+
+    def test_known_driver_without_its_guard_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'Expected one known class guard'):
+            self.adapt('probe-player-action-authority.py', 'print(1)\n')
+        self.assertEqual(self.adapt('other-driver.py', 'print(1)\n'), 'print(1)\n')
+
+    def test_unknown_observer_or_ambiguous_guard_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'Unknown observer'):
+            self.adapt('x.py', RUNTIME_DRIVER.replace('ObserveDeItemTransaction', 'ObserveSomethingElse'))
+        with self.assertRaisesRegex(AssertionError, 'Ambiguous'):
+            self.adapt('x.py', LIST_DRIVER + LIST_DRIVER)
+        with self.assertRaisesRegex(AssertionError, 'per-branch overlay'):
+            self.adapt('x.py', RUNTIME_DRIVER.replace("str(overlay)+';'+cp", "str(overlay)+cp"))
+
+
+class TmpJarCase(unittest.TestCase):
+    """Scratch directory, receipt path and zip helper (no tests of its own)."""
+
+    def setUp(self):
+        SCRATCH.mkdir(exist_ok=True)
+        self.tmp = Path(tempfile.mkdtemp(prefix='test-class-identity-', dir=SCRATCH))
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        self.receipt = self.tmp / 'class-identity.json'
+
+    jar = GuardTests.jar
+
+
+class RuntimeOverlayTests(TmpJarCase):
+    """Parent and JAR under test each run with an overlay of their own class (#435)."""
+    PARENT, MAVEN = make_class(), make_class(extra=True, debug=True, shuffle=True)
+
+    def jars(self):
+        return self.jar('old', {NAME: self.PARENT}), self.jar('new', {NAME: self.MAVEN})
+
+    def overlays(self, runtime, parent, extra=None):
+        root = self.tmp / 'memory-observer'
+        for directory, data in ((root, runtime), (support.parent_overlay(root), parent)):
+            if data is not None:
+                (directory / NAME).parent.mkdir(parents=True, exist_ok=True)
+                (directory / NAME).write_bytes(data)
+        if extra:
+            (root / OTHER).parent.mkdir(parents=True, exist_ok=True)
+            (root / OTHER).write_bytes(extra)
+        return root
+
+    def check(self, runtime, parent, extra=None):
+        old, new = self.jars()
+        support.assert_runtime_overlays(old, new, self.overlays(runtime, parent, extra), 'ObserveDeItemTransaction',
+                                        self.receipt)
+        return json.loads(self.receipt.read_text('utf-8'))['entries'][-1]
+
+    def test_each_runtime_with_its_own_overlay_passes(self):
+        entry = self.check(make_class(hook=True, extra=True), make_class(hook=True, shuffle=True))
+        self.assertEqual(entry['result'], 'runtime-overlays-hooks-only')
+        self.assertTrue(entry['same_probe_hooks'])
+        self.assertEqual(entry['historical_base_comparison'][0]['result'], 'normalized-differ')  # recorded only
+        self.assertEqual(json.loads(self.receipt.read_text('utf-8'))['status'], 'passed')
+
+    def test_historical_overlay_swapped_into_the_maven_runtime_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'runtime-overlay: .*overlay-differs-beyond-probe-hooks'):
+            self.check(make_class(hook=True), make_class(hook=True))
+
+    def test_parent_overlay_from_the_wrong_class_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'parent-overlay'):
+            self.check(make_class(hook=True, extra=True), make_class(hook=True, extra=True))
+
+    def test_missing_parent_overlay_or_extra_class_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'parent-overlay'):
+            self.check(make_class(hook=True, extra=True), None)
+        with self.assertRaisesRegex(AssertionError, 'runtime-overlay'):
+            self.check(make_class(hook=True, extra=True), make_class(hook=True), extra=make_class(this=OTHER))
+
+    def test_overlays_without_the_same_hooks_fail(self):
+        with self.assertRaisesRegex(AssertionError, 'parent-overlay: .*overlay-has-no-probe-hook'):
+            self.check(make_class(hook=True, extra=True), make_class())
+        with self.assertRaisesRegex(AssertionError, 'probe hooks differ between overlays'):
+            self.check(make_class(hook=True, extra=True), make_class(hook=True, hook_name='beforeFlush'))
+
+    def test_branch_overlay_selection(self):
+        old, new = self.jars()
+        root = self.tmp / 'memory-observer'
+        self.assertEqual(support.runtime_overlay(new, old, new, root), root)
+        self.assertEqual(support.runtime_overlay(old, old, new, root), support.parent_overlay(root))
+        with self.assertRaisesRegex(AssertionError, 'No observer overlay'):
+            support.runtime_overlay(self.tmp / 'other.jar', old, new, root)
+        self.assertEqual(support.runtime_overlay_jobs(old, new, root), [(new, root), (old, support.parent_overlay(root))])
+
+
+class NormalizedListGuardTests(TmpJarCase):
+    """existing 15: Main/SourceLogin compared normalized; any code difference still fails."""
+
+    def run_guard(self, base, runtime):
+        a, z = self.jar('old', {NAME: base}), self.jar('new', {NAME: runtime})
+        with zipfile.ZipFile(a) as old, zipfile.ZipFile(z) as new:
+            support.assert_normalized_class(old, new, NAME, self.receipt)
+
+    def test_representation_only_passes(self):
+        self.run_guard(make_class(), make_class(debug=True, shuffle=True, wide=True))
+        self.assertEqual(json.loads(self.receipt.read_text('utf-8'))['entries'][0]['result'], 'normalized-identical')
+
+    def test_code_difference_fails(self):
+        with self.assertRaisesRegex(AssertionError, r'normalized-differ; method get\(\)I differs'):
+            self.run_guard(make_class(), make_class(value=2))
+        self.assertEqual(json.loads(self.receipt.read_text('utf-8'))['status'], 'failed')
+
+
+class FrozenOverlayTests(TmpJarCase):
+    """existing 16 / composed Fault+Clock: frozen parent overlay regenerated from the JAR under test."""
+
+    def setUp(self):
+        super().setUp()
+        self.source = self.tmp / 'ObserveDeItemTransaction.java'
+        self.source.write_text('// observer source stand-in\n', encoding='utf-8')
+        self.calls = []
+
+    def regenerate(self, frozen, written, sha=None, parent=None, runtime=None):
+        overlay = self.tmp / 'memory-observer'
+        (overlay / NAME).parent.mkdir(parents=True, exist_ok=True)
+        (overlay / NAME).write_bytes(frozen)
+        old = self.jar('old', {NAME: parent or make_class()})
+        new = self.jar('new', {NAME: runtime or make_class(extra=True)})
+
+        def writer(observer, source, asm, runtime_jar, target, work):
+            self.calls.append((observer, Path(runtime_jar)))
+            (Path(target) / NAME).parent.mkdir(parents=True, exist_ok=True)
+            (Path(target) / NAME).write_bytes(written)
+
+        with patch.object(support, 'write_observer_overlay', side_effect=writer), \
+                zipfile.ZipFile(old) as prior, zipfile.ZipFile(new) as z:
+            support.regenerate_frozen_overlay(prior, z, overlay, new, 'ObserveDeItemTransaction', self.source, [],
+                                              self.tmp / 'tools', self.receipt, sha)
+        return overlay, json.loads(self.receipt.read_text('utf-8'))['entries'][-1]
+
+    def test_frozen_overlay_is_replaced_by_the_runtime_overlay(self):
+        overlay, entry = self.regenerate(make_class(hook=True), make_class(hook=True, extra=True),
+                                         sha=hashlib.sha256(self.source.read_bytes()).hexdigest())
+        self.assertEqual(entry['result'], 'regenerated-overlay-hooks-only')
+        self.assertEqual((overlay / NAME).read_bytes(), make_class(hook=True, extra=True))
+        self.assertEqual((Path(str(overlay) + '-historical') / NAME).read_bytes(), make_class(hook=True))
+        self.assertEqual(len(self.calls), 1)
+
+    def test_frozen_overlay_that_is_not_the_parent_plus_hooks_fails_before_regeneration(self):
+        with self.assertRaisesRegex(AssertionError, 'frozen overlay is not the parent class plus hooks'):
+            self.regenerate(make_class(hook=True, value=2), make_class(hook=True, extra=True))
+        self.assertEqual(self.calls, [])
+
+    def test_regenerated_overlay_that_swaps_the_class_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'regenerated overlay: .*overlay-differs-beyond-probe-hooks'):
+            self.regenerate(make_class(hook=True), make_class(hook=True))
+
+    def test_regenerated_overlay_without_hooks_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'overlay-has-no-probe-hook'):
+            self.regenerate(make_class(hook=True), make_class(extra=True))
+
+    def test_other_observer_source_fails(self):
+        with self.assertRaisesRegex(AssertionError, 'observer source is not the one'):
+            self.regenerate(make_class(hook=True), make_class(hook=True, extra=True), sha='0' * 64)
+        self.assertEqual(self.calls, [])
 
 
 if __name__ == '__main__':
