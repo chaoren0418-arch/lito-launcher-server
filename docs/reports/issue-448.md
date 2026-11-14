@@ -34,7 +34,10 @@
 - `dotnet build lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj -c Release`：建置成功，0 警告 0 錯誤。輸出目錄的 `development_startup.py` SHA = `56532A2F…8189`、`external_server_startup.py` SHA = `BCB58854…F3DD`，與 C# 常數一致（`Get-FileHash`）。
 - `python -m py_compile` 三個 .py（兩個 helper＋測試）通過。
 - 換行：`development_startup.py` 維持 CRLF（`git ls-files --eol`：`i/crlf w/crlf`），`external_server_startup.py` 維持 LF＋`-text`，指紋在 CI checkout 後不會變。
-- 依本機規定**沒有在本機執行單元測試**；結果以 PR 的 CI「Launcher (.NET 10 / WinForms)」為準（見下方 CI 結果，push 後補）。
+- 依本機規定**沒有在本機執行單元測試**；改由 PR #450 的 CI（build run `43559743634`）驗證：
+  - 「Launcher (.NET 10 / WinForms)」成功：`dotnet build`、`dotnet test` 通過；`test_external_server_startup.py` **Ran 30 tests … OK**（原 22 個，含改寫斷言後的 #443 原始碼測試＋新增 `FormalCheckSourceTests` 8 個）。
+  - 「Server (Java 17 / Maven)」、「Server tests」（`mvn -B test`）、「Server reproducible JAR」、「Combat regression tools」、「Semantic gap」成功。
+  - 「Server tests (CI MySQL fixture, non-blocking)」失敗；main 最新 build run `43553710184` 的同一個 job 也失敗，與本變更（只改登入器）無關。
 
 ### 新增單元測試 `FormalCheckSourceTests`（載入真正的 `development_startup.py`，把 PINS／CLIENT 等指到暫存目錄）
 
@@ -52,7 +55,6 @@
 
 ## 待驗證
 
-- PR CI：「Launcher (.NET 10 / WinForms)」的 Python 單元測試（含新增 `FormalCheckSourceTests`）與 `dotnet build`／`dotnet test`；「Server」相關 job（`mvn -B test`）本變更未改伺服器，預期與 main 相同。
 - 實機（交 Codex／使用者）：#414 項 08 重測——以本分支建置的登入器 `--external-server-profile` 啟動，確認不再出現 `Startup file changed: …TW13081901.txt`，並能進大廳。
 
 ## 產出路徑
