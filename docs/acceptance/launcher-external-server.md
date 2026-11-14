@@ -24,12 +24,20 @@
 
 | 客戶端檔案 | 外部入口做什麼 | 不符時 |
 |---|---|---|
-| `LiTo.bin`、`TW13081901.txt` | 讀取比對 SHA（同正式 helper 的 `check_source`） | 拒絕啟動 |
+| `LiTo.bin` | 讀取比對 SHA（同正式 helper 的 `check_source`） | 拒絕啟動 |
+| `TW13081901.txt` | **只檢查存在且可讀，不比對內容 SHA**（T153／#448，見下節） | 不存在、是目錄或讀不到才拒絕啟動 |
 | `litoddraw.dll` | 讀取比對 SHA-256 = `E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A`（與 `app\compat\litoddraw.dll` 的正式釘選相同） | 拒絕啟動，訊息列出檔名、現有 SHA、預期 SHA；**不覆寫** |
 | `lito381-compat.ini` | 讀取比對內容 = 正式流程在本次縮放下會寫的內容（CRLF／LF 視為相同） | 縮放不同：訊息寫出現有 `ScalePercent`，請在登入器改選同一縮放再按啟動；其他內容不同：列出現有與預期內容。**都不覆寫** |
 | `lito381-compat.log` | 啟動前記下大小、結束後讀取新增部分複製到 run 目錄的 `native-render.log` | — |
 
 核對在 helper 啟動時做一次（任何目錄都還沒建立前），開 `LiTo.bin` 前再做一次。拒絕時 helper 送出 `failed`（含 `differences` 與 `writes: 0`）與 `finished`（`cleanup_verified: true`，因為什麼都沒啟動），登入器日誌會顯示完整原因。
+
+### `TW13081901.txt` 不釘選（T153／Issue #448）
+
+- **規則**：正式 helper `development_startup.py` 的 `check_source`（正式 standard 模式與外部入口共用）對 `0-客戶端\TW13081901.txt` 只做「存在、是一般檔案、可開啟讀取、路徑不含 junction／symlink」檢查，**不比對內容 SHA**。它已從 `PINS` 移到 `UNPINNED`，`app\runtime-pins.json` 也不再列它。
+- **原因**：這個檔是客戶端的 sprite 動作與速率資料表，依既定規則可以更新（2026-11-03 客戶端換成新版 `28C4FC60…8DB8`，新增 30 個原本空白的 sprite 定義，見 `docs/reports/issue-443.md`）。使用者 2026-11-14 在 #447 裁定選項 C：登入器忽略它的內容；不還原客戶端、不重產 `common_catalog.bin`、不發新版。
+- **影響範圍**：LiTo 的共用動畫目錄 `common_catalog.bin`／`common_catalog_manifest.json` 仍是從 07-21 版（`7EBE…`）產生並**照舊釘選**；新版多出的 sprite 不會進 LiTo 的共用目錄，這是裁定接受的結果。
+- **其他檔一律不放寬**：`LiTo.bin`（`CE6EE68A…`）、`app\` 下其餘 32 個正式交付檔、`litoddraw.dll`、`lito381-compat.ini` 的檢查都和以前相同，內容不同照樣拒絕。
 
 0.6.71 正式流程每次啟動都會把 `0-客戶端` 的這兩個檔寫成正確內容，所以只要之前用正式流程開過一次同縮放的遊戲，外部入口就會直接沿用。若要換縮放，請在登入器改選與現有 `ScalePercent` 相同的縮放，不要手改客戶端。
 
@@ -70,8 +78,8 @@ dotnet build "lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj" -c Rele
 
 | 檔案 | SHA-256 |
 |---|---|
-| `development_startup.py` | `ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD`（正式 helper，未改） |
-| `external_server_startup.py` | `3CAE67C05697510CA3B35C8354D7C14E362D4F19A145750A472FD665139428B9`（T139／#412；舊版 `D0FE39EB…1D32` 已作廢） |
+| `development_startup.py` | `56532A2FF06DFCF2C1569681D997E84410C8EA68CB4F65B4ED9BCA0D7CDA8189`（正式 helper；T153／#448 移除 `TW13081901.txt` 釘選，舊版 `ADFF1EDC…C9CD` 已作廢） |
+| `external_server_startup.py` | `BCB588542BDD3D9D1BD52806389F2A0ECD5F661347155F1FDC4CBC360D56F3DD`（T153／#448；舊版 `7E9EE3D8…7C2F`、`3CAE67C0…28B9`、`D0FE39EB…1D32` 已作廢） |
 
 ```powershell
 Get-FileHash "<輸出目錄>\development_startup.py","<輸出目錄>\external_server_startup.py"
@@ -161,7 +169,8 @@ $env:LITO_LAUNCHER_RUN_ROOT = "$run\launcher-runs"
 | `External Server is not listening on: 127.0.0.1:4208x` | 實驗服沒起來或埠不同；先跑 `m4-listen-check.ps1`，或修正設定的 `port` |
 | `外部伺服器只允許 loopback`、`port 必須介於 1024 到 65527` 等 | 設定檔不合規，依訊息修正 |
 | `外部伺服器 helper 指紋不符`／`開發啟動 helper 指紋不符` | 輸出目錄的 `.py` 與釘選不同；重建，不要手改 |
-| `Startup file changed: …`、`Reparse startup path refused` | 正式交付檔（`app\…`、`0-客戶端\TW13081901.txt`）與正式釘選不符或路徑含 junction；回報，不要修改 |
+| `Startup file changed: …`、`Reparse startup path refused` | 正式交付檔（`app\…`）或 `LiTo.bin` 與正式釘選不符，或路徑含 junction；回報，不要修改（`TW13081901.txt` 已不釘選，不會再因內容出現這個訊息） |
+| `Startup file missing: …TW13081901.txt`、`Startup file unreadable: …` | 客戶端缺 `TW13081901.txt`、它變成目錄，或檔案被鎖定／無權限讀取；回報，不要從別處複製 |
 | `指定客戶端的 LiTo.bin 指紋不符`、`共用資源版請選擇 D:\lineage開發\0-客戶端` | 客戶端目錄選錯 |
 | `外部伺服器入口只讀取、不改 0-客戶端；…已拒絕啟動` ＋ `litoddraw.dll SHA-256 …，預期 E47BD6C6…` | `0-客戶端\litoddraw.dll` 不是正式版本；回報，不要手動覆寫（由使用者決定是否以 0.6.71 正式流程開一次遊戲讓它恢復） |
 | `… 現有 ScalePercent=200，本次選擇 150；請在登入器改選 200% 縮放後再試` | 在登入器改選訊息中的縮放即可 |
