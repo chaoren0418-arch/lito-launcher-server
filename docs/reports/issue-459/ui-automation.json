@@ -1,0 +1,35 @@
+{
+    "StartedUtc":  "2026-11-14T12:13:10.3918624Z",
+    "ProductCodeChanged":  false,
+    "Errors":  [
+                   {
+                       "Retries":  1,
+                       "Result":  "failed to activate captured window",
+                       "Tool":  "sky.press_key"
+                   },
+                   {
+                       "Result":  "failed to activate captured window",
+                       "Tool":  "cua.performSecondaryAction(Raise)"
+                   },
+                   {
+                       "Result":  "coordinate input geometry is unavailable",
+                       "Tool":  "cua.click(24)"
+                   },
+                   {
+                       "Result":  "FrameArrived timed out: timed out waiting on channel",
+                       "Tool":  "cua.getScreenshot"
+                   },
+                   {
+                       "Result":  "failed to activate captured window",
+                       "Tool":  "cua.pressKey after maximized launcher restart"
+                   },
+                   {
+                       "Result":  "failed to activate captured window",
+                       "Tool":  "cua.pressKey after js_reset and fresh binding"
+                   }
+               ],
+    "SessionState":  "console CHAOREN session 6 Active",
+    "ScreenshotFallback":  "PowerShell System.Drawing.CopyFromScreen",
+    "SourcePreflight":  "PASS via actual read-only helper functions; no GUI receipt",
+    "ClosedUtc":  "2026-11-14T12:20:43.7420046Z"
+}

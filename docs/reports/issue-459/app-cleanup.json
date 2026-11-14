@@ -1,0 +1,14 @@
+[
+    {
+        "Method":  "CloseMainWindow after executable and creation-time match; exited before cleanup script",
+        "Pid":  8724,
+        "Name":  "launcher",
+        "Absent":  true
+    },
+    {
+        "Method":  "Stop-Process after executable and creation-time match",
+        "Pid":  19048,
+        "Name":  "server",
+        "Absent":  true
+    }
+]

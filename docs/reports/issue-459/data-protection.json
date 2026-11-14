@@ -1,0 +1,13 @@
+{
+  "client_files_before": 669,
+  "client_files_after": 669,
+  "client_bytes": 9607667880,
+  "client_differences": [],
+  "baseline_before_identical": true,
+  "baseline_after_identical": true,
+  "original_app_run_directories_unchanged": true,
+  "original_database_checksum_unchanged": true,
+  "original_database_tables": 270,
+  "experiment_counts_unchanged": true,
+  "launcher_receipts": []
+}
