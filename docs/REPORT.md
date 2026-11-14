@@ -124,3 +124,4 @@
 - 2026-11-14 — #416 分流：lito-launcher-server#341 實機驗收的失敗項目 → 修正任務＋重測（design，claude-local，PR #417 已合併）→ [報告](reports/issue-416.md)
 - 2026-11-14 — #418 T142: 回歸工具的歷史 class 位元組守門改成 Maven 相容（#341 D1 GameStateStore、D2 NativeDeCorpseClock$1）（code，claude-local，PR 已合併）→ [報告](reports/issue-418.md)
 - 2026-11-14 — #420 T144: #341 F1–F5 根因定位與修正（依 T143 取證；禁止放寬斷言）（code，claude-local，PR 已合併）→ [報告](reports/issue-420.md)
+- 2026-11-14 — #428 T146: #421 中「只有 Maven 失敗」的兩項：D2 class 守門、F8 probe 陣列越界（code，claude-local，PR 已合併）→ [報告](reports/issue-428.md)
