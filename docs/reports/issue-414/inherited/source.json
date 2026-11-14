@@ -1,0 +1,13 @@
+{
+  "report": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-284\\docs\\reports\\issue-284.md",
+  "report_sha256": "2280829f850b4053634a0a0c3de6bdb914b100538cf14fda1f7efba5545fa165",
+  "git_commit": "c34b83e64ca46ff19cf566afe0768769be12a219",
+  "only_inherited_items": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "09"
+  ]
+}

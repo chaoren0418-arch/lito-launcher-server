@@ -1,0 +1,25 @@
+[LiTo] resource-profile=lito-legacy
+[LiTo] settlement journal=D:\lineage開發\3-lito開發\scratch\wt\task-414\scratch\t014\run-20261114T030157Z\runtime\battle-settlements
+[LiTo development] shared static armor Proc rows=54; per-hit SQL=0
+[LiTo] Storm_Walk item cores loaded: [42501]
+[LiTo] source combat controls loaded: 69; coverage is limited to installed consumers (see combat coverage audit)
+[LiTo] source loader defaults used: [MORTAL_BODY_ROM, NATURES_BLESSING_HEAL]
+[LiTo] common combat skills loaded: 807; columns=consumption,cooldown,duration,damage,dice,materials; skill208 time=2 source executor
+[LiTo] source control snapshots: probabilities=34 bosses=48 ability-skills=45 npc-attributes=4138 source-coexist=true cancellation-immune=12 source-eyes=7; probability actor bindings partial; configured primary/special BUFF fields installed; other types/producers/paths pending
+[LiTo] consumable parameters loaded from p24_380db_lito_exp.etcitem: cooldowns=14 cooldown-differing=0 cooldown-fallbacks=0; items=11 differing-from-built-in=0 fallbacks=0
+[LiTo] SQL resources loaded: skill-fields=364 buffs=11 maps=47 town-portals=56 npc-identities=13; unresolved fields remain disabled
+[LiTo] shared-source=p24_accounts_lito_exp controls=p24_lito_lito_exp source-read-only=true write-table=character_lito
+LiTo381 Server 0.6.71
+[LiTo] login-listen=127.0.0.1:42083
+[LiTo] game-listen=127.0.0.2:[42083] shared-channel-endpoint
+[LiTo] database=legacy_mysql(dynamic-database=p24_accounts_lito_exp, resource-database=p24_380db_lito_exp, read-only=true)
+[LiTo] maps=native-litmap-embedded(active=47, resource-directories=62)
+[LiTo] origin-source=lito-shared name=LiTo T014 P24 Experiment
+[LiTo] state=memory(non-persistent) source-profiles=ephemeral
+[LiTo] rental-handoff=process-local
+[LiTo] battle-ai=false tick=900ms damage=5
+[LiTo] battle-control=lito_static(rules=40, objects=26, npc-spawn-rows=25, player-spawn-rows=380)
+[LiTo] battle-animations=/battle/spr-action-380.csv sprites=6423 actions=30812
+[LiTo] capture=D:\lineage開發\3-lito開發\scratch\wt\task-414\scratch\t014\run-20261114T030157Z\captures\20261114-030450-p14640-1\frames.jsonl
+[LiTo] source-login id=1 name=P24LiToExp port=42084 auth=selected-source-only
+[LiTo] ready

@@ -1,0 +1,14 @@
+[
+    {
+        "Method":  "Stop-Process after executable and creation-time match",
+        "Pid":  7536,
+        "Name":  "launcher",
+        "Absent":  true
+    },
+    {
+        "Method":  "Stop-Process after executable and creation-time match",
+        "Pid":  14640,
+        "Name":  "server",
+        "Absent":  true
+    }
+]

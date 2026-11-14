@@ -1,0 +1,8 @@
+{
+    "Absent":  true,
+    "Pid":  18420,
+    "Method":  "Stop-Process after identity match",
+    "ServerStarted":  false,
+    "GameStarted":  false,
+    "P24Started":  false
+}

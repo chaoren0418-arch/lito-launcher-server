@@ -1,0 +1,13 @@
+{
+  "run_root": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\scratch\\t014\\run-20261114T030157Z\\launcher-runs",
+  "files": [
+    "launcher-runs\\gui-runs\\external-6e70fe9662a740c0a6ddddbd828c8c02\\request.json",
+    "launcher-runs\\gui-runs\\external-6e70fe9662a740c0a6ddddbd828c8c02\\terminal.json"
+  ],
+  "missing": [
+    "server-ready.json",
+    "native-created.json",
+    "08-lobby.png"
+  ],
+  "reason": "check_source rejected TW13081901.txt before endpoint checks and native creation"
+}

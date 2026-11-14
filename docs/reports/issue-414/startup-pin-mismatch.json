@@ -1,0 +1,9 @@
+{
+  "file": "D:\\lineage開發\\0-客戶端\\TW13081901.txt",
+  "expected_sha256": "7EBE2B464C8B1EA9C58AC985DD8FF4C823784D8231894262EDDCD7691CA94008",
+  "actual_sha256": "28C4FC600833FB8C609AB195A67FF926E8FFA571100D8D4B389A23BE8C2C8DB8",
+  "same_as_t140": true,
+  "launcher_attempts": 1,
+  "native_started": false,
+  "overwritten": false
+}

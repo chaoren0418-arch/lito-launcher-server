@@ -1,0 +1,22 @@
+[
+  {
+    "file": "LiTo381Launcher.exe",
+    "sha256": "6c2971610c4f0f5fa4a6dc0eb959f97a7ea52c69f24ad03562610ae3da8d4b43",
+    "bytes": 162816
+  },
+  {
+    "file": "LiTo381Launcher.dll",
+    "sha256": "bbd422dadeb49f20b9f7984e40e12bb8d15415bcca1225ad08cdcbef9d9d1148",
+    "bytes": 430592
+  },
+  {
+    "file": "development_startup.py",
+    "sha256": "adff1edc784b6f54803a050d32e3d6d3ee06eb9242da0af1b4b227dcb3eac9cd",
+    "bytes": 29572
+  },
+  {
+    "file": "external_server_startup.py",
+    "sha256": "7e9ee3d832c594e4f31d8ff4cafd4cf1600b6a4978cf392f2569bed09d547c2f",
+    "bytes": 27431
+  }
+]

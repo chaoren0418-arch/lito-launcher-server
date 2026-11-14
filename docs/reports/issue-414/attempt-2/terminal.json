@@ -1,0 +1,16 @@
+{
+  "run_id": "external-031b358819c34224ab0cb7a19d54e798",
+  "cleanup_qualified": true,
+  "ownership_retained": false,
+  "server_owned": false,
+  "failure": "System.InvalidOperationException: Owned startup ended before ready: {\"event\": \"failed\", \"reason\": \"Startup file changed: D:\\\\lineage開發\\\\0-客戶端\\\\TW13081901.txt\", \"stage\": \"check_source\", \"writes\": 0, \"differences\": []}\r\n   at LiTo381Launcher.OwnedMemoryStartupProcess.AwaitEventAsync(String expected, TimeSpan remaining, CancellationToken cancellation) in D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\lito登入器\\LiTo381-Launcher\\src\\OwnedMemoryStartupProcess.cs:line 194\r\n   at LiTo381Launcher.ExternalServerStartup.RunAsync(LauncherMenuPreferences preferences, CancellationToken cancellation, Int32 sourceId) in D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\lito登入器\\LiTo381-Launcher\\src\\ExternalServerStartup.cs:line 186",
+  "helper_result": {
+    "event": "finished",
+    "exit_code": 1,
+    "accepted": false,
+    "cleanup_verified": true,
+    "server_owned": false,
+    "result": null,
+    "product_complete": false
+  }
+}

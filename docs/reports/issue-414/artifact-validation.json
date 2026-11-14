@@ -1,0 +1,9 @@
+{
+  "public_files": 53,
+  "json_parse": "PASS",
+  "report_links": "PASS",
+  "private_password_scan": "PASS",
+  "ten_rows": "PASS",
+  "evidence_consistency": "PASS",
+  "report_index_untouched": true
+}

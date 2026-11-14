@@ -1,0 +1,2 @@
+{"event": "failed", "reason": "Startup file changed: D:\\lineage開發\\0-客戶端\\TW13081901.txt", "stage": "check_source", "writes": 0, "differences": []}
+{"event": "finished", "exit_code": 1, "accepted": false, "cleanup_verified": true, "server_owned": false, "result": null, "product_complete": false}

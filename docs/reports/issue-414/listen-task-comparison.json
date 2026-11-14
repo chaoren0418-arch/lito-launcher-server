@@ -1,0 +1,19 @@
+{
+  "task_expected": [
+    "127.0.0.1:42083",
+    "127.0.0.2:42084"
+  ],
+  "actual": [
+    "127.0.0.1:42083",
+    "127.0.0.1:42084",
+    "127.0.0.2:42083",
+    "127.0.0.2:42084"
+  ],
+  "unexpected_vs_task": [
+    "127.0.0.1:42084",
+    "127.0.0.2:42083"
+  ],
+  "task_verdict": "FAIL",
+  "current_m4_default_verdict": "PASS",
+  "note": "No listener implementation or checker was modified; no LegacyTwoOnly switch used."
+}

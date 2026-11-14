@@ -1,0 +1,72 @@
+{
+  "observed_utc": "2026-11-14T04:20:17.114408+00:00",
+  "run": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\scratch\\t014\\run-20261114T041827Z",
+  "main": "81b3a2fae37b8ed06f39b3cafae06018d8f2c2f4",
+  "command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\external_server_startup.py",
+    "--serve",
+    "--run-id",
+    "external-1683575cbd3e4ada859438edaf6762db",
+    "--client-directory",
+    "D:\\lineage開發\\0-客戶端",
+    "--scale",
+    "200",
+    "--service",
+    "StandardArena",
+    "--source-id",
+    "1",
+    "--external-profile",
+    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\scratch\\t014\\run-20261114T041827Z\\external-profile.json",
+    "--run-root",
+    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\scratch\\t014\\run-20261114T041827Z\\launcher-runs"
+  ],
+  "helper_exit_code": 1,
+  "events": [
+    {
+      "event": "failed",
+      "reason": "Startup file changed: D:\\lineage開發\\0-客戶端\\TW13081901.txt",
+      "stage": "check_source",
+      "writes": 0,
+      "differences": []
+    },
+    {
+      "event": "finished",
+      "exit_code": 1,
+      "accepted": false,
+      "cleanup_verified": true,
+      "server_owned": false,
+      "result": null,
+      "product_complete": false
+    }
+  ],
+  "expected_sha256": "7EBE2B464C8B1EA9C58AC985DD8FF4C823784D8231894262EDDCD7691CA94008",
+  "actual_sha256": "28C4FC600833FB8C609AB195A67FF926E8FFA571100D8D4B389A23BE8C2C8DB8",
+  "before_files": 669,
+  "after_files": 669,
+  "before_bytes": 9607667880,
+  "after_bytes": 9607667880,
+  "differences": [],
+  "logs": {
+    "lito381-compat.log": {
+      "before_bytes": 0,
+      "after_bytes": 0
+    },
+    "LiToError.txt": {
+      "before_bytes": 16095,
+      "after_bytes": 16095
+    }
+  },
+  "original_app_directories_unchanged": true,
+  "launched_gui": false,
+  "launched_server": false,
+  "launched_p24": false,
+  "launched_game": false,
+  "database_connected": false,
+  "helper_exited": true,
+  "run_root_files": [],
+  "snapshot_scope": "T140: top-level files and LiTo subtree; other subdirectories excluded"
+}

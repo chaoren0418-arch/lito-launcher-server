@@ -1,0 +1,8 @@
+{
+  "counts_equal": true,
+  "original_checksum_equal": true,
+  "original_table_count": 270,
+  "restore_sql": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\scratch\\t014\\run-20261114T030157Z\\private-character-lito-restore.sql",
+  "restore_sql_executed": false,
+  "cold_backup": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-414\\scratch\\t014\\run-20261114T030157Z\\private-cold-backup\\db-data"
+}
