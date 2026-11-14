@@ -128,3 +128,4 @@
 - 2026-11-14 — #435 T149: 回歸工具——其餘 8 組 class 守門改 Maven 相容，加逐案獨立執行選項（#433）（code，claude-local，PR 已合併）→ [報告](reports/issue-435.md)
 - 2026-11-14 — #443 T152: 登入器外部入口的 TW13081901.txt 釘選不符——查明正式模式的資源檢查並對齊（#414 項 08）（code，claude-local，PR 已合併）→ [報告](reports/issue-443.md)
 - 2026-11-14 — #448 T153: 登入器資源預檢不再釘選 TW13081901.txt 的 SHA（使用者 2026-11-14 裁定 C：忽略）（code，claude-local，PR 已合併）→ [報告](reports/issue-448.md)
+- 2026-11-14 — #453 T155: 登入器資源釘選總盤點——一次找出所有與現行客戶端不符的檔案，可變資料不再用 SHA 擋（#449 Tile.idx）（code，claude-local，PR 已合併）→ [報告](reports/issue-453.md)
