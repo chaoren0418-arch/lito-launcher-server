@@ -11,7 +11,7 @@ internal sealed class ExternalServerStartup(ExternalServerProfile profile, strin
     Action<ExtendedCharacterStatsSnapshot>? extendedStats = null)
 {
     internal const string HelperFileName = "external_server_startup.py";
-    private const string HelperSha = "3CAE67C05697510CA3B35C8354D7C14E362D4F19A145750A472FD665139428B9";
+    private const string HelperSha = "7E9EE3D832C594E4F31D8FF4CAFD4CF1600B6A4978CF392F2569BED09D547C2F";
     private OwnedMemoryStartupProcess? helper;
     internal ExternalServerProfile Profile => profile;
     internal bool CanAddClient { get; private set; }

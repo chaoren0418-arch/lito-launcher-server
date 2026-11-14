@@ -1,6 +1,6 @@
 """T140 / Issue #404: pure checks for src/external_server_startup.py (no Server, no LiTo.bin, no Windows APIs)."""
 from pathlib import Path
-import contextlib, copy, hashlib, importlib.util, json, os, tempfile, unittest
+import contextlib, copy, hashlib, importlib.util, io, json, os, tempfile, unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('external_server_startup', ROOT / 'src' / 'external_server_startup.py')
@@ -202,6 +202,82 @@ class RunRootTests(unittest.TestCase):
             self.skipTest('symlink not permitted here: ' + str(error))
         with self.assertRaises(helper.RunRootError):
             helper.resolve_run_root(str(link), self.client)
+
+
+class FakeFormalHelper:
+    """Stand-in for development_startup: same attributes main() reads before anything is created."""
+
+    def __init__(self, client, error=None):
+        self.CLIENT = Path(client); self.DELIVERY = Path(client) / 'delivery'; self.DLL = 'dll'
+        self.PINS = {self.DLL: helper.CLIENT_DDRAW_SHA}; self.error = error; self.checked = []
+
+    def check_source(self, source):
+        self.checked.append(source)
+        if self.error: raise self.error
+
+
+class PreStartRefusalTests(unittest.TestCase):
+    """T152 / Issue #443: refusals before run creation must end with failed + finished(cleanup_verified)."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.base = Path(self.temp.name)
+        self.client = self.base / 'client'; self.client.mkdir()
+        self.profile = self.base / 'profile.json'
+        self.profile.write_text(json.dumps(VALID), encoding='utf-8')
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def run_main(self, fake, run_id='external-test'):
+        argv = ['--serve', '--run-id', run_id, '--client-directory', str(self.client), '--scale', '200',
+                '--service', 'StandardArena', '--source-id', '1', '--external-profile', str(self.profile),
+                '--run-root', str(self.base)]
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = helper.main(argv, formal_helper=lambda: fake)
+        events = [json.loads(line) for line in out.getvalue().splitlines() if line.strip()]
+        return code, events, err.getvalue()
+
+    def assert_refused(self, code, events, stage):
+        self.assertEqual(code, 1)
+        self.assertEqual([e['event'] for e in events], ['failed', 'finished'])
+        self.assertEqual(events[0]['stage'], stage)
+        self.assertEqual(events[0]['writes'], 0)
+        self.assertTrue(events[1]['cleanup_verified'])
+        self.assertFalse(events[1]['accepted'])
+        self.assertFalse((self.base / 'runs').exists())
+        self.assertEqual(snapshot(self.client), {})
+
+    def test_formal_pin_mismatch_ends_with_finished_event(self):
+        error = ValueError('Startup file changed: D:\\lineage開發\\0-客戶端\\TW13081901.txt')
+        fake = FakeFormalHelper(self.client, error)
+        code, events, stderr = self.run_main(fake)
+        self.assert_refused(code, events, 'check_source')
+        self.assertEqual(fake.checked, [str(self.client)])
+        self.assertIn('TW13081901.txt', events[0]['reason'])
+        self.assertIn('TW13081901.txt', stderr)
+
+    def test_check_source_runs_before_client_compat(self):
+        fake = FakeFormalHelper(self.client)  # check passes; client has no litoddraw.dll / ini
+        code, events, _ = self.run_main(fake)
+        self.assert_refused(code, events, 'client_compat')
+        self.assertEqual(fake.checked, [str(self.client)])
+        self.assertTrue(events[0]['differences'])
+
+    def test_bad_run_id_and_profile_also_finish(self):
+        code, events, _ = self.run_main(FakeFormalHelper(self.client), run_id='development-x')
+        self.assert_refused(code, events, 'arguments')
+        self.profile.write_text(json.dumps(changed(kind='formal')), encoding='utf-8')
+        code, events, _ = self.run_main(FakeFormalHelper(self.client))
+        self.assert_refused(code, events, 'external_profile')
+
+    def test_formal_check_is_the_same_function_as_standard_flow(self):
+        source = (ROOT / 'src' / 'external_server_startup.py').read_text(encoding='utf-8')
+        formal = (ROOT / 'src' / 'development_startup.py').read_text(encoding='utf-8')
+        self.assertIn('check_source(args.client_directory)', formal)
+        self.assertIn('dev.check_source(args.client_directory)', source)
+        self.assertIn("\\\\0-客戶端\\\\TW13081901.txt'): '", formal)
 
 
 if __name__ == '__main__':
