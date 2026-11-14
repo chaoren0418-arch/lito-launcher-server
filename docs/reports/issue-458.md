@@ -1,74 +1,106 @@
-# Issue #458／T157：原始 checkout 同步前檢查（阻擋）
-
-## 結論
-
-原始 checkout 位於 `main`，但有 9 個未追蹤檔案，觸發 Issue #458 第 2 步的停止條件。本輪未執行原始 checkout 的 fast-forward，未 stash、覆寫或清理檔案；已將 Issue #458 加上 `needs:claude`。此報告完成的是阻擋取證，不代表 T157 同步成功。
+# Issue #458 — T157 原始 checkout 同步最新 main
 
 ## 已驗證
 
-- 檢查日期：2026-11-14（本輪重查 UTC 08:41–08:42）。原有阻擋仍存在。
-- 任務 worktree：`D:\lineage開發\3-lito開發\scratch\wt\task-458`，分支 `task/458`，本輪起始 HEAD 為 `49b69780d9d32090a2ae681246b7012a5879916a`，起始狀態乾淨；已有本報告與 PR #460，沿用更新，未 checkout 或建立分支。
-- 已讀取 worktree 的 `AGENTS.md`、`docs/REPORT.md`，以及原始 checkout 的 `AGENTS.md`；未修改規範或報告索引。
-- 本輪指令宣告資源鎖 `none`，持有人 `chaoren0418-arch/lito-launcher-server#458`，到期 `2026-11-14T10:11:13Z`。UTC 08:41 查詢 `http://localhost:8787/api/state`，`leases` 僅回傳 `p24lab`／`chaoren0418-arch/tw-bin-engine#1211`（`exp: 1794650583.927328`），未出現本任務的 lease，故不能確認宣告的鎖有效；本輪未進行原始 checkout 寫入。
+2026-11-14 完成原始 checkout 的 fast-forward；先前因未追蹤檔案／lease 停止的報告由本次結果取代。依本輪明確裁定處理 9 個未追蹤檔案，本張不使用 P24Lab，也不以 lease API 的列舉結果阻擋。
 
-### 原始 checkout 前後狀態
+### 做了什麼與前後 HEAD
 
-目錄：`D:\lineage開發\3-lito開發`。
+- 原始 checkout：`D:\lineage開發\3-lito開發`，前後皆為 `main`。
+- 同步前 HEAD：`6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f`。
+- 執行 `git fetch origin` 後，以 `git merge-base --is-ancestor` 確認可快轉，再執行 `git merge --ff-only origin/main`，exit code 0。
+- 同步後 HEAD／本次取得的 `origin/main`：`b972e23df7a6ad787c7cf9e3b12e641806df3df1`。
+- 任務 worktree 維持 `task/458`，未 checkout、未新建分支；`git merge --ff-only origin/main` 回覆 Already up to date。
+- 初始 `git status --porcelain --untracked-files=all` 無已追蹤檔案變更，只有下表 9 個 `??` 檔案，沒有額外未追蹤檔案。
+- 先核對更新範圍既有路徑，未發現 junction、symlink 或多重硬連結；未遞迴刪除、未移除 worktree。
 
-| 項目 | 檢查結果 |
-|---|---|
-| 分支 | `main` |
-| 操作前 HEAD | `6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f` |
-| 停止後 HEAD | `6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f`（未變動） |
-| `git status --porcelain` | `?? tools/` |
-| 已追蹤檔案的未提交變更 | 本次 status 未列出 |
-| 未追蹤檔案 | 9 個，完整清單如下 |
-| 本次 fast-forward 改動檔案數 | 0（未執行 fast-forward） |
+### 備份與未追蹤檔處置
 
-使用 `git -c core.quotepath=false status --porcelain --untracked-files=all` 展開的清單：
+備份根目錄：`D:\lineage開發\3-lito開發\scratch\t157-local-agent-backup`。9 個檔案均先複製到此根目錄下的 `tools/local-agent/...`，逐檔核對 SHA-256。3 個內容不同的原檔再移至 `originals/tools/local-agent/...`，不覆寫第一次備份，移動後再次核對 SHA。
+
+| 相對原始 repo 路徑 | 原始 bytes | 原始／備份 SHA-256 | 處置 |
+|---|---:|---|---|
+| `tools/local-agent/README.md` | 2797 | `AD4412A5F9B93F813027C46CE363B6229DEFFF612F0F918A6063E9AD9DE6DFC3` | 備份核對後移除未追蹤原檔 |
+| `tools/local-agent/local-agent.ps1` | 6328 | `D2F809CF59D42F4505A662723E56B2D78BC6F266104A56C15AE3673436572084` | 原檔移至 originals/ 下相對路徑 |
+| `tools/local-agent/local-agent2.ps1` | 6842 | `616E973D4D207748B8B2BDD617774F3F97223BBC740E2CD77D27FD8905419814` | 保留原地 |
+| `tools/local-agent/logs/tw-bin-engine-2.comment.md` | 461 | `40819CFD3DFF177298FA7096FC82DEACB837D11DDB6D01FEE04E17A1912A8BB2` | 保留原地 |
+| `tools/local-agent/logs/tw-bin-engine-2.prompt.md` | 1717 | `FD2BA4E91547681098DF0609F4EA8499C1E8DF09FB896DF0FBBCF04E10C2B861` | 保留原地 |
+| `tools/local-agent/setup-labels.cmd` | 408 | `EDD1DF252AD49CB5AC702F74287B9D582B270A6C621604DB4FD9FDB5A54283FF` | 原檔移至 originals/ 下相對路徑 |
+| `tools/local-agent/setup-labels2.cmd` | 391 | `D5A1561C7D623B941B694324DD93CC7F72DC21A80CB227B4084B4A8C4429A9AD` | 保留原地 |
+| `tools/local-agent/start-local-agent.cmd` | 124 | `09D8B91B0B79113181BA2AE94CB0CC28D6E3DB443D504FC85408ADCC021965D1` | 原檔移至 originals/ 下相對路徑 |
+| `tools/local-agent/start-local-agent2.cmd` | 124 | `09D8B91B0B79113181BA2AE94CB0CC28D6E3DB443D504FC85408ADCC021965D1` | 保留原地 |
+
+以 `git show origin/main:tools/local-agent/<檔名>` 的原始 bytes 計算 SHA，未經 PowerShell 文字重編碼：
+
+| 路徑 | origin/main bytes | origin/main SHA-256 | 比較 |
+|---|---:|---|---|
+| `tools/local-agent/README.md` | 2797 | `AD4412A5F9B93F813027C46CE363B6229DEFFF612F0F918A6063E9AD9DE6DFC3` | 相同 |
+| `tools/local-agent/local-agent.ps1` | 6842 | `616E973D4D207748B8B2BDD617774F3F97223BBC740E2CD77D27FD8905419814` | 不同 |
+| `tools/local-agent/setup-labels.cmd` | 391 | `D5A1561C7D623B941B694324DD93CC7F72DC21A80CB227B4084B4A8C4429A9AD` | 不同 |
+| `tools/local-agent/start-local-agent.cmd` | 195 | `8FC0C27C5073F9FB5D49A43249C4CEBA11677483323F4C1BB78546DF26BBBE71` | 不同 |
+
+差異摘要：
+
+- `README.md`：bytes 與 SHA 完全一致，備份核對後移除原本的未追蹤檔，再由 Git 放入追蹤版本。
+- `local-agent.ps1`：遠端改用 `${n}` 插值、調整 Codex 呼叫參數與 stdin 提示詞輸入、增加 last-message 檔案擷取／摘要選擇，並替 `--json` 參數加引號。
+- `setup-labels.cmd`：原始 bytes／SHA 不同，但分別以 UTF-8／CP950 解碼後的逐行文字相同，屬編碼差異。
+- `start-local-agent.cmd`：遠端由單次執行加 pause 改為 `-Once` 輪詢、60 秒間隔與 `chcp 950`。
+- 保留的 5 個檔案在同步後 SHA 均與備份一致。兩個 logs 仍存在，只因新版 `tools/local-agent/.gitignore:1` 的 `logs/` 規則而不再出現在一般 status；其餘 3 個仍為未追蹤。
+
+### helper SHA 核對
+
+路徑：`lito登入器/LiTo381-Launcher/app/world_resource_preflight.py`（核對的是原始 checkout 絕對路徑中的實體檔案）。
+
+| 階段 | bytes | SHA-256 |
+|---|---:|---|
+| 同步前 | 3705 | `353C362EC12D3443C790D707FBC26B50944081BC2D1DA9967A75D471CB289F34` |
+| 同步後 | 11044 | `D8AB4990D1AA40AC366B47DC9CE90D96351B2ED518B56BBE18BE3BE0C4B83EEA` |
+
+同步後內容與 `git show origin/main:<路徑>` 完全一致，符合任務要求的 **11,044 bytes、D8AB4990…**。
+
+### fast-forward 檔案清單摘要
+
+`git diff --name-status <同步前 HEAD> <同步後 HEAD>` 共 **3,048 筆檔案變更**：新增 2,429、修改 615、刪除 3、重新命名 1（重新命名以一筆計算）。Git 更新進度顯示 3,049 個路徑，包含重新命名的兩端。
+
+| 頂層路徑 | 變更筆數 |
+|---|---:|
+| `.cursor` | 1 |
+| `.gitattributes` | 1 |
+| `.github` | 5 |
+| `.gitignore` | 1 |
+| `AGENTS.md` | 1 |
+| `CLAUDE.md` | 1 |
+| `PLAN.md` | 1 |
+| `TASKS.md` | 1 |
+| `docs` | 196 |
+| `lito伺服器` | 2781 |
+| `lito登入器` | 20 |
+| `packaging` | 5 |
+| `tools` | 34 |
+
+完整清單可用上述兩個固定 HEAD 重建；本機取證檔為任務 worktree 的 `scratch/t157-changed-files.txt`。`docs/REPORT.md` 僅隨原始 checkout 快轉取得上游版本，本任務沒有編輯或提交其索引。
+
+同步後原始 checkout 的 status：
 
 ```text
-?? tools/local-agent/README.md
-?? tools/local-agent/local-agent.ps1
 ?? tools/local-agent/local-agent2.ps1
-?? tools/local-agent/logs/tw-bin-engine-2.comment.md
-?? tools/local-agent/logs/tw-bin-engine-2.prompt.md
-?? tools/local-agent/setup-labels.cmd
 ?? tools/local-agent/setup-labels2.cmd
-?? tools/local-agent/start-local-agent.cmd
 ?? tools/local-agent/start-local-agent2.cmd
 ```
 
-僅取得路徑清單，未修改上述檔案。原始 checkout 的 Git 唯讀命令使用 `GIT_OPTIONAL_LOCKS=0`，避免 status 更新索引。
-
-### 預檢檔 SHA 核對
-
-相對路徑：`lito登入器/LiTo381-Launcher/app/world_resource_preflight.py`。以 `Get-Item` 與 `Get-FileHash -Algorithm SHA256` 讀取實際檔案。
-
-| 位置 | 大小（bytes） | SHA-256 | 核對 |
-|---|---:|---|---|
-| 原始 checkout（停止後仍相同） | 3,705 | `353C362EC12D3443C790D707FBC26B50944081BC2D1DA9967A75D471CB289F34` | 符合背景所述舊版，不符合目標 |
-| 任務 worktree | 11,044 | `D8AB4990D1AA40AC366B47DC9CE90D96351B2ED518B56BBE18BE3BE0C4B83EEA` | 符合目標大小及 SHA 前綴 |
-
-為提交本報告，在任務 worktree 執行 `git fetch origin`；隨後 `origin/main` 為 `b972e23df7a6ad787c7cf9e3b12e641806df3df1`，報告修改前的 `git rev-list --left-right --count HEAD...origin/main` 為 `1 0`（僅多出前輪報告提交）。在任務 worktree 執行 `git merge --ff-only origin/main` 回覆 `Already up to date.`。該 fetch 更新共用 Git 遠端資訊，沒有更新原始 checkout 的 `main` 或工作檔案。原始 checkout 未執行 fetch／merge 流程。
-
-另以 Git 樹差異唯讀確認：目前 `origin/main` 已追蹤 `tools/local-agent/README.md`、`local-agent.ps1`、`setup-labels.cmd`、`start-local-agent.cmd` 四個同名路徑；未比較其內容，不能直接認定可覆寫。
+已追蹤檔案的 index／worktree 均乾淨。未執行 helper、登入器、遊戲、伺服器、本機測試或建置產物；未連 DB、未啟停正式程序、未變更客戶端／封存／機密設定。
 
 ## 推測
 
-原始 checkout 的舊版預檢檔與任務描述的 helper 版本不一致相符；本輪只核對靜態檔案，沒有重現 #454 的 08，不能據此宣稱登入流程已修復。
+絕對路徑 helper 讀到舊版本的前置原因已排除；這只能證明檔案版本一致，不能據此宣稱 #454 的 08 已通過。
 
-## 待驗證／未完成
+## 待驗證
 
-- 9 個未追蹤檔案的來源、保留方式，以及同名檔案是否有需保留的本機修改，待 Claude 裁定。
-- 未執行原始 checkout 的 `git merge --ff-only origin/main`，故未驗證 fast-forward 可行性及同步後完整檔案差異。
-- 原始預檢檔尚未達到 11,044 bytes／`D8AB4990…`。
-- 本輪僅文件與唯讀取證，未建置、未執行測試程式，未啟動登入器／遊戲／伺服器，未連接 DB，也未操作客戶端、P24Lab、正式 2000／3306、封存或 junction。
-- PR #460 前輪提交 `49b69780` 的 GitHub Actions 有 7 項成功、1 項失敗（`Server tests (CI MySQL fixture, non-blocking until`）；僅核對檢查狀態，未判定失敗根因。本輪新提交的 CI 需另行核對；不能以文件檢查代替 #454 的 08 實機驗收。
+- #454 的 08 尚未重跑；由調度器交回後續驗收流程，遵守本機程式執行限制。
+- 本次報告提交的 GitHub Actions 結果於 push 後在既有 PR #460 核對；前輪 CI 結果不當作本次結果。
 
-## 產出與給下一棒的提示
+## 產出路徑與給下一棒的提示
 
-- 唯一提交產出：`docs/reports/issue-458.md`；不修改 `docs/REPORT.md`。
-- Claude 先處理 `needs:claude`：裁定上述未追蹤檔案的保留方式。執行器不可自行 stash、刪除、覆寫或忽略這些檔案。調度器另需釐清宣告的 `none` lease 未出現在 `leases` 的原因。
-- 阻擋解除後，由本機執行器在有效資源鎖下重新檢查 main／乾淨狀態，再依任務執行 fetch → ff-only；記錄前後 HEAD、實際變更檔案數及完整 SHA。
-- 同步與 SHA 核對成功後，再交原 #454 驗收流程重測 08；本報告不可當作該項通過證據。
+- 版本化產出：`docs/reports/issue-458.md`；PR：<https://github.com/chaoren0418-arch/lito-launcher-server/pull/460>。
+- 非版本化備份：`D:\lineage開發\3-lito開發\scratch\t157-local-agent-backup`；不得把 local-agent logs／提示詞備份加入 Git。
+- Claude 審查本報告與 PR；調度器可解除本張先前的未追蹤檔阻擋，接續安排 #454 的 08。此任務已按明確處置規則完成，不再需要等待未追蹤檔案或 lease 裁定。
