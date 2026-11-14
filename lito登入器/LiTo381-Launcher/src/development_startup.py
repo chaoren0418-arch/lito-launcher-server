@@ -32,7 +32,6 @@ PINS = {
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\common_catalog.bin'): 'B64ED920792805C3380AD0E50B1AE089A8779B4ADDDEC2FBF3780C2FA88A3C01',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\common_catalog_manifest.json'): '94D31E15E4556E590DA9E22A49794AC89D044B6B6F5762AE90C1EEDC0721C2E1',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar'): 'E1498871C7BE6B287821C57EF5D95933DB1740D9B4D4A80F6C3465F21D99D498',
-    Path('D:\\lineage開發\\0-客戶端\\TW13081901.txt'): '7EBE2B464C8B1EA9C58AC985DD8FF4C823784D8231894262EDDCD7691CA94008',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\litoddraw.dll'): 'E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\shared_status.bin'): 'BA91B436034CE04C5A77BC626AF1355EDE8766DD72A353B0AD0EC5AAF069B198',
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\lib\\mysql-connector-j-8.0.33.jar'): 'E2A3B2FC726A1AC64E998585DB86B30FA8BF3F706195B78BB77C5F99BF877BD9',
@@ -51,14 +50,30 @@ PINS = {
     Path('D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\Start-Shared-World.py'): '971A99971F52BDFAA7E7BB916AB325EA8500E79C8F5F03C237E171F5A8BBE3C5',
 }
 
+# Issue #448 (user ruling 2026-11-14, option C): TW13081901.txt is the client's sprite
+# action/rate data file and may be updated under the agreed rules, so its content is
+# NOT pinned. Only existence + readability is checked. Do not add it back to PINS.
+UNPINNED = (CLIENT/'TW13081901.txt',)
+
 BIN_SHA = 'CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292'
 
-def exact(path, sha):
-    import hashlib
+def no_reparse(path):
     path = Path(path)
     for node in (path, *path.parents):
         if node.is_symlink() or node.is_junction(): raise ValueError('Reparse startup path refused: '+str(node))
+    return path
+
+def exact(path, sha):
+    import hashlib
+    path = no_reparse(path)
     if hashlib.sha256(path.read_bytes()).hexdigest().upper() != sha: raise ValueError('Startup file changed: '+str(path))
+
+def readable(path):
+    path = no_reparse(path)
+    if not path.is_file(): raise ValueError('Startup file missing: '+str(path))
+    try:
+        with path.open('rb') as stream: stream.read(1)
+    except OSError as error: raise ValueError('Startup file unreadable: '+str(path)+' ('+str(error)+')') from error
 
 def emit(value): print(json.dumps(value, ensure_ascii=False), flush=True)
 def save(path, value):
@@ -67,6 +82,7 @@ def save(path, value):
 def check_source(source):
     if Path(source).resolve() != SELECTED.resolve(): raise ValueError('共用資源版只接受 D:/lineage開發/0-客戶端。')
     for path, sha in PINS.items(): exact(path, sha)
+    for path in UNPINNED: readable(path)
     exact(SELECTED/'LiTo.bin', BIN_SHA); exact(CLIENT/'LiTo.bin', BIN_SHA)
     if str(DELIVERY) not in sys.path: sys.path.insert(0,str(DELIVERY))
     import world_resource_preflight

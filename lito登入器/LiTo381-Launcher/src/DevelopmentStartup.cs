@@ -7,7 +7,7 @@ internal sealed class DevelopmentStartup(Action<string> log, Action<ExtendedChar
 {
     internal const string Root = @"D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app";
     private const string ServerRuns = @"D:\lineage開發\3-lito開發\lito登入器\LiTo381-Launcher\app\server\runs";
-    internal const string EntrySha ="ADFF1EDC784B6F54803A050D32E3D6D3EE06EB9242DA0AF1B4B227DCB3EAC9CD";
+    internal const string EntrySha ="56532A2FF06DFCF2C1569681D997E84410C8EA68CB4F65B4ED9BCA0D7CDA8189";
     private OwnedMemoryStartupProcess? helper;
     internal bool CanAddClient { get; private set; }
     internal async Task AddClientAsync(CancellationToken cancellation)

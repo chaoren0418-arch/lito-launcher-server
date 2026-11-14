@@ -1,6 +1,6 @@
 """T140 / Issue #404: pure checks for src/external_server_startup.py (no Server, no LiTo.bin, no Windows APIs)."""
 from pathlib import Path
-import contextlib, copy, hashlib, importlib.util, io, json, os, tempfile, unittest
+import contextlib, copy, hashlib, importlib.util, io, json, os, sys, tempfile, unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('external_server_startup', ROOT / 'src' / 'external_server_startup.py')
@@ -277,7 +277,114 @@ class PreStartRefusalTests(unittest.TestCase):
         formal = (ROOT / 'src' / 'development_startup.py').read_text(encoding='utf-8')
         self.assertIn('check_source(args.client_directory)', formal)
         self.assertIn('dev.check_source(args.client_directory)', source)
-        self.assertIn("\\\\0-客戶端\\\\TW13081901.txt'): '", formal)
+        # Issue #448: TW13081901.txt is no longer SHA-pinned by the formal helper.
+        self.assertNotIn("\\\\0-客戶端\\\\TW13081901.txt'): '", formal)
+        self.assertIn("UNPINNED = (CLIENT/'TW13081901.txt',)", formal)
+
+
+def load_formal_helper():
+    spec = importlib.util.spec_from_file_location('development_startup_under_test', ROOT / 'src' / 'development_startup.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)  # module level only binds kernel32 (Windows CI); nothing is started
+    return module
+
+
+class FormalCheckSourceTests(unittest.TestCase):
+    """T153 / Issue #448: check_source ignores TW13081901.txt content but still refuses every other pinned change."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.dev = load_formal_helper()
+
+    def setUp(self):
+        dev = self.dev
+        self.saved = {name: getattr(dev, name) for name in ('PINS', 'UNPINNED', 'CLIENT', 'SELECTED', 'BIN_SHA', 'DELIVERY', 'DLL')}
+        self.temp = tempfile.TemporaryDirectory()
+        base = Path(os.path.realpath(self.temp.name))
+        self.client = base / 'client'; self.client.mkdir()
+        self.app = base / 'app'; self.app.mkdir()
+        self.tw = self.client / 'TW13081901.txt'; self.tw.write_bytes(b'#0 original sprite table\r\n')
+        (self.client / 'LiTo.bin').write_bytes(b'fake-bin')
+        self.catalog = self.app / 'common_catalog.bin'; self.catalog.write_bytes(b'catalog-v1')
+        self.jar = self.app / 'LiTo381-SharedResources-candidate.jar'; self.jar.write_bytes(b'jar-v1')
+        dev.PINS = {self.catalog: sha(b'catalog-v1'), self.jar: sha(b'jar-v1')}
+        dev.CLIENT = dev.SELECTED = self.client
+        dev.UNPINNED = (self.client / 'TW13081901.txt',)
+        dev.BIN_SHA = sha(b'fake-bin'); dev.DELIVERY = self.app; dev.DLL = self.app / 'litoddraw.dll'
+        self.configured = []
+        fake = type(sys)('world_resource_preflight')
+        fake.configure = lambda client, dll: self.configured.append((client, dll))
+        self.saved_module = sys.modules.get('world_resource_preflight')
+        sys.modules['world_resource_preflight'] = fake
+
+    def tearDown(self):
+        for name, value in self.saved.items(): setattr(self.dev, name, value)
+        if self.saved_module is None: sys.modules.pop('world_resource_preflight', None)
+        else: sys.modules['world_resource_preflight'] = self.saved_module
+        if str(self.app) in sys.path: sys.path.remove(str(self.app))
+        self.temp.cleanup()
+
+    def test_real_pin_table_no_longer_contains_tw_txt_but_keeps_the_rest(self):
+        saved = self.saved
+        self.assertFalse([p for p in saved['PINS'] if Path(p).name.lower() == 'tw13081901.txt'])
+        self.assertEqual(tuple(saved['UNPINNED']), (saved['CLIENT'] / 'TW13081901.txt',))
+        names = {Path(p).name for p in saved['PINS']}
+        for kept in ('common_catalog.bin', 'common_catalog_manifest.json', 'litoddraw.dll',
+                     'LiTo381-SharedResources-candidate.jar', 'world_resource_preflight.py'):
+            self.assertIn(kept, names)
+        self.assertEqual(len(saved['PINS']), 32)
+        self.assertEqual(saved['BIN_SHA'], 'CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292')
+
+    def test_baseline_passes(self):
+        self.dev.check_source(str(self.client))
+        self.assertEqual(self.configured, [(self.client, self.app / 'litoddraw.dll')])
+
+    def test_tw_txt_content_change_still_passes(self):
+        for content in (b'#0 new sprite table with 30 more ids\r\n' * 3, b'', bytes(range(256))):
+            with self.subTest(size=len(content)):
+                self.tw.write_bytes(content)
+                self.dev.check_source(str(self.client))
+
+    def test_tw_txt_missing_is_refused(self):
+        self.tw.unlink()
+        with self.assertRaises(ValueError) as caught:
+            self.dev.check_source(str(self.client))
+        self.assertIn('Startup file missing', str(caught.exception))
+        self.assertIn('TW13081901.txt', str(caught.exception))
+
+    def test_tw_txt_directory_is_refused(self):
+        self.tw.unlink(); self.tw.mkdir()
+        with self.assertRaises(ValueError):
+            self.dev.check_source(str(self.client))
+
+    def test_other_pinned_file_change_still_refused(self):
+        for path in (self.catalog, self.jar):
+            with self.subTest(path=path.name):
+                original = path.read_bytes()
+                path.write_bytes(original + b'-changed')
+                try:
+                    with self.assertRaises(ValueError) as caught:
+                        self.dev.check_source(str(self.client))
+                    self.assertIn('Startup file changed', str(caught.exception))
+                    self.assertIn(path.name, str(caught.exception))
+                finally:
+                    path.write_bytes(original)
+        self.assertEqual(self.configured, [])
+
+    def test_lito_bin_change_still_refused(self):
+        (self.client / 'LiTo.bin').write_bytes(b'other-bin')
+        with self.assertRaises(ValueError) as caught:
+            self.dev.check_source(str(self.client))
+        self.assertIn('LiTo.bin', str(caught.exception))
+
+    def test_other_client_directory_still_refused(self):
+        other = self.client.parent / 'other-client'; other.mkdir()
+        with self.assertRaises(ValueError):
+            self.dev.check_source(str(other))
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest().upper()
 
 
 if __name__ == '__main__':
