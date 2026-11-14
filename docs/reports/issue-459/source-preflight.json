@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-14T12:15:36.614676+00:00",
+  "helper": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-459\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\external_server_startup.py",
+  "kind": "read-only actual check_source and verify_client_compat; not a GUI acceptance receipt",
+  "check_source": "PASS",
+  "client_compat": {
+    "client_directory": "D:\\lineage開發\\0-客戶端",
+    "writes": 0,
+    "litoddraw_dll": {
+      "path": "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+      "sha256": "E47BD6C6EC9979C8747A523E4457133802D19F673C8DC1E67707ABFA96216A8A",
+      "matches_pin": true
+    },
+    "compat_ini": {
+      "path": "D:\\lineage開發\\0-客戶端\\lito381-compat.ini",
+      "sha256": "E8D601C1AF08383FA15296824A67BFA49DD62209C47206E4C6454A5A395E25FD",
+      "scale_percent": 200,
+      "matches_expected": true
+    }
+  }
+}

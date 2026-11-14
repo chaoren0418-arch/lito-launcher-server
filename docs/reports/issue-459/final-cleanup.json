@@ -1,0 +1,24 @@
+{
+    "AllReleased":  true,
+    "RemainingOwnedPids":  [
+
+                           ],
+    "LauncherReceiptFiles":  [
+
+                             ],
+    "RemainingListeners":  [
+
+                           ],
+    "RemainingRelevantProcesses":  [
+
+                                   ],
+    "Lease":  [
+                  {
+                      "name":  "p24lab",
+                      "holder":  "chaoren0418-arch/lito-launcher-server#459",
+                      "since":  1794658086.2424502,
+                      "exp":  1794661686.2424502
+                  }
+              ],
+    "Utc":  "2026-11-14T12:20:41.5270904Z"
+}

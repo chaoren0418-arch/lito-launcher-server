@@ -1,0 +1,9 @@
+{
+  "json_and_png_valid": true,
+  "known_passwords_excluded": true,
+  "no_fake_lobby_png": true,
+  "no_gui_start_receipt": true,
+  "public_files": 42,
+  "client_metadata_unchanged_through_cleanup": true,
+  "own_processes_and_experiment_ports_released": true
+}
