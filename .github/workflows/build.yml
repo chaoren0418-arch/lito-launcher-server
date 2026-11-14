@@ -532,3 +532,6 @@ jobs:
           python-version: '3.12'
       - name: Unit tests (external server helper, Python)
         run: python -B -X utf8 "lito登入器/LiTo381-Launcher/tests/test_external_server_startup.py" -v
+      # T155 / Issue #453: shared index / effectlist2.xml are checked by format + consumed rows, not whole-file SHA.
+      - name: Unit tests (world resource preflight, Python)
+        run: python -B -X utf8 "lito登入器/LiTo381-Launcher/tests/test_world_resource_preflight.py" -v
