@@ -1,0 +1,45 @@
+{
+  "utc": "2026-11-14T05:45:20.819645+00:00",
+  "command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\external_server_startup.py",
+    "--serve",
+    "--run-id",
+    "external-fc8477cd0eb3484e90f472faa86e1929",
+    "--client-directory",
+    "D:/lineage開發/0-客戶端",
+    "--scale",
+    "200",
+    "--service",
+    "StandardArena",
+    "--source-id",
+    "1",
+    "--external-profile",
+    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\scratch\\issue-449\\run\\external-profile.json",
+    "--run-root",
+    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\scratch\\issue-449\\run\\launcher-runs"
+  ],
+  "stdin": "{\"command\":\"stop\"}\n",
+  "exit_code": 1,
+  "events": [
+    {
+      "event": "failed",
+      "reason": "shared Tile index changed; re-export and qualify resources",
+      "stage": "check_source",
+      "writes": 0,
+      "differences": []
+    },
+    {
+      "event": "finished",
+      "exit_code": 1,
+      "accepted": false,
+      "cleanup_verified": true,
+      "server_owned": false,
+      "result": null,
+      "product_complete": false
+    }
+  ]
+}

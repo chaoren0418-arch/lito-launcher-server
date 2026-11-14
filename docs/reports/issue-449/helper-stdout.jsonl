@@ -1,0 +1,2 @@
+{"event": "failed", "reason": "shared Tile index changed; re-export and qualify resources", "stage": "check_source", "writes": 0, "differences": []}
+{"event": "finished", "exit_code": 1, "accepted": false, "cleanup_verified": true, "server_owned": false, "result": null, "product_complete": false}

@@ -1,0 +1,8 @@
+{
+  "utc": "2026-11-14T05:45:02.479454+00:00",
+  "method": "Read-only real helper functions; no native launch; not GUI acceptance",
+  "stage": "check_source",
+  "passed": false,
+  "error": "shared Tile index changed; re-export and qualify resources",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\scratch\\issue-449\\preflight.py\", line 10, in <module>\n    result['stage']='check_source';dev.check_source('D:/lineage開發/0-客戶端')\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\development_startup.py\", line 89, in check_source\n    world_resource_preflight.configure(CLIENT,DLL)\n  File \"D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\world_resource_preflight.py\", line 69, in configure\n    verify_resource_sources()\n  File \"D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\world_resource_preflight.py\", line 25, in verify_resource_sources\n    raise ValueError(\"shared Tile index changed; re-export and qualify resources\")\nValueError: shared Tile index changed; re-export and qualify resources\n"
+}

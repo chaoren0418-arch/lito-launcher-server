@@ -1,0 +1,117 @@
+[INFO] Scanning for projects...
+
+[INFO]
+
+[INFO] --------------------< local.lito381:lito381-server >--------------------
+
+[INFO] Building LiTo 3.81C local arena server 0.6.71
+
+[INFO]   from pom.xml
+
+[INFO] --------------------------------[ jar ]---------------------------------
+
+[INFO]
+
+[INFO] --- build-helper:3.5.0:add-source (compile-only-legacy-stubs) @ lito381-server ---
+
+[INFO] Source directory: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\compile-stubs added.
+
+[INFO]
+
+[INFO] --- resources:3.4.0:resources (default-resources) @ lito381-server ---
+
+[INFO] Copying 1366 resources from src\main\resources to target\classes
+
+[INFO]
+
+[INFO] --- compiler:3.11.0:compile (default-compile) @ lito381-server ---
+
+[INFO] Changes detected - recompiling the module! :source
+
+[INFO] Compiling 1185 source files with javac [debug release 17] to target\classes
+
+[INFO] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-449/lito���A��/LiTo381-Server/src/main/java/local/lito381/server/RuntimeInventory.java: Some input files use unchecked or unsafe operations.
+
+[INFO] /D:/lineage�}�o/3-lito�}�o/scratch/wt/task-449/lito���A��/LiTo381-Server/src/main/java/local/lito381/server/RuntimeInventory.java: Recompile with -Xlint:unchecked for details.
+
+[INFO]
+
+[INFO] --- antrun:3.1.0:run (as-record-main) @ lito381-server ---
+
+[INFO] Executing tasks
+
+[INFO]     [mkdir] Created dir: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\as-record-tool
+
+[INFO]     [javac] Compiling 2 source files to D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\as-record-tool
+
+[INFO]      [java] as-record: scanned=4473 converted=54
+
+[INFO] Executed tasks
+
+[INFO]
+
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ lito381-server ---
+
+[INFO] Not copying test resources
+
+[INFO]
+
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ lito381-server ---
+
+[INFO] Not compiling test sources
+
+[INFO]
+
+[INFO] --- antrun:3.1.0:run (as-record-test) @ lito381-server ---
+
+[INFO] Executing tasks
+
+[INFO] Executed tasks
+
+[INFO]
+
+[INFO] --- surefire:3.2.5:test (default-test) @ lito381-server ---
+
+[INFO] Tests are skipped.
+
+[INFO]
+
+[INFO] --- jar:3.3.0:jar (default-jar) @ lito381-server ---
+
+[INFO] Building jar: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\LiTo381-Server.jar
+
+[INFO]
+
+[INFO] --- jar:3.3.0:test-jar (as-record-test-fixture) @ lito381-server ---
+
+[INFO] Skipping packaging of the test-jar
+
+[INFO]
+
+[INFO] --- jar:3.3.0:jar (modern-server) @ lito381-server ---
+
+[INFO] Building jar: D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\LiTo381-Server-modern.jar
+
+[INFO]
+
+[INFO] --- dependency:3.6.0:copy-dependencies (copy-runtime) @ lito381-server ---
+
+[INFO] Copying mysql-connector-j-8.0.33.jar to D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\lib\mysql-connector-j-8.0.33.jar
+
+[INFO] Copying protobuf-java-3.21.9.jar to D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\lib\protobuf-java-3.21.9.jar
+
+[INFO] Copying HikariCP-5.1.0.jar to D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\lib\HikariCP-5.1.0.jar
+
+[INFO] Copying slf4j-api-1.7.36.jar to D:\lineage�}�o\3-lito�}�o\scratch\wt\task-449\lito���A��\LiTo381-Server\target\lib\slf4j-api-1.7.36.jar
+
+[INFO] ------------------------------------------------------------------------
+
+[INFO] BUILD SUCCESS
+
+[INFO] ------------------------------------------------------------------------
+
+[INFO] Total time:  01:58 min
+
+[INFO] Finished at: 2026-11-14T13:42:00+08:00
+
+[INFO] ------------------------------------------------------------------------

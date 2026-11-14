@@ -1,0 +1,34 @@
+{
+  "launcher_pid": 6572,
+  "window_id": 6490616,
+  "window_title": "LiTo 3.81C 啟動器 0.6.71（外部伺服器驗收模式）",
+  "observations": [
+    {
+      "api": "sky.get_window_state(include_screenshot=false,include_text=true)",
+      "result": "success; external mode; scale 200; start button enabled"
+    },
+    {
+      "api": "sky.click(element_index=24)",
+      "error": "coordinate input geometry is unavailable"
+    },
+    {
+      "api": "sky.get_window_state(include_screenshot=true,include_text=true)",
+      "error": "FrameArrived timed out: timed out waiting on channel"
+    },
+    {
+      "api": "sky.press_key(Tab)",
+      "result": "focus remained on client-directory edit; no game launch observed"
+    },
+    {
+      "api": "cua launcherApp.click(24)",
+      "error": "coordinate input geometry is unavailable"
+    },
+    {
+      "api": "cua launcherApp.getScreenshot()",
+      "error": "window capture timed out: timed out waiting on channel"
+    }
+  ],
+  "screenshot_saved": false,
+  "game_launched": false,
+  "credentials_entered": false
+}
