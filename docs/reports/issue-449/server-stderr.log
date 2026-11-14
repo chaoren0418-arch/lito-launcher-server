@@ -1,0 +1,51 @@
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+11月 14, 2026 1:42:34 下午 local.lito381.server.NativeDeNpcTemplateResources lambda$load$4
+資訊: 載入MOB技能資料數量: 480(160ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeNpcTemplateResources load
+資訊: Source NPC templates=4138 mobSkills=480 required constructor kinds=28 unresolved executor classes=56; source name UPDATE suppressed; full NPC factory remains unqualified
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeTerrainResources lambda$load$3
+資訊: 載入 mapids ok: 731 (16ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeShopResources lambda$load$2
+資訊: 載入 mapids_shop ok: {} maps, {} ranges ({}ms) [7, 9, 4]
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeChatResources lambda$load$4
+資訊: 載入 npcchat ok: 26 (5ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemTemplatesResources$Owner lambda$reload$1
+資訊: 載入 etcitem ok: 3321 (256ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemTemplatesResources$Owner lambda$reload$1
+資訊: 載入 weapon ok: 364 (258ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemTemplatesResources$Owner lambda$reload$1
+資訊: 載入 armor ok: 1422 (260ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_屬性 ok: 40 (2ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_bless_類型 ok: 2 (17ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_bless_類型 ok: 2 (18ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_enchant_類型 ok: 320 (81ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_enchant_類型 ok: 91 (83ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_enchant_指定 ok: 1 (11ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_enchant_指定 ok: 49 (12ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_greater_類型 ok: 11 (37ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_greater_類型 ok: 11 (39ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_bless_指定 ok: 0 (2ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_bless_指定 ok: 0 (2ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_bless_指定 總計 ok: 0 (5ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 {} ok: {} ({}ms) [裝備_特殊_魔石_魔法, 324, 10]
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_特殊_卡片_能力 ok: 117 (7ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_weapon_魔法 ok: 50 (4ms) []
+11月 14, 2026 1:42:35 下午 local.lito381.server.NativeDeItemDefinitionsResources$Owner lambda$reload$1
+資訊: 載入 裝備_armor_魔法 ok: 54 (1ms) []

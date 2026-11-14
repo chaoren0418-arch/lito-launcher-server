@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-14T05:47:47.223428+00:00",
+  "main": "a9bf83696be91b4792ba5aae55ad57b59a90b954",
+  "head": "a9bf83696be91b4792ba5aae55ad57b59a90b954",
+  "branch": "task/449",
+  "server_command": "mvn -B -DskipTests -Dmaven.test.skip=true package",
+  "launcher_command": "dotnet build lito登入器/LiTo381-Launcher/src/LiTo381Launcher.csproj -c Release",
+  "server_sha256": "84ba0cde7abace28456232b86922b22dd7fbff98e8b44e8b7bec5f995a79edcc",
+  "launcher_artifacts": {
+    "LiTo381Launcher.exe": "c3ead30d13a662d7f85436b507baa8577001a76243023470451d4334d471e5c2",
+    "LiTo381Launcher.dll": "3a9d9c47975572e727c0fe19f2cc9b73af20973b5f64889f071df0ee1e25995c",
+    "development_startup.py": "56532a2ff06dfcf2c1569681d997e84410c8ea68cb4f65b4ed9bca0d7cda8189",
+    "external_server_startup.py": "bcb588542bdd3d9d1bd52806389f2a0ecd5f661347155f1fdc4cbc360d56f3dd"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "full_cold_backup": {
+    "files": 1722,
+    "bytes": 279504637,
+    "sha256_verified": true,
+    "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\scratch\\issue-449\\run\\private-cold-backup\\db-data"
+  },
+  "checksums_before_sha256": "929329e01f88ecf0f8a43f1111b56e20840244086b91dfd626506ce99da7afd0",
+  "checksums_after_sha256": "929329e01f88ecf0f8a43f1111b56e20840244086b91dfd626506ce99da7afd0",
+  "all_experiment_table_checksums_identical": true,
+  "table_count": 270,
+  "character_lito_sql_identical": true,
+  "restore_sql": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-449\\scratch\\issue-449\\run\\experiment-before.sql",
+  "restore_executed": false,
+  "ddl_or_dml_executed": false,
+  "note": "Read-only SQL and P24 SHUTDOWN only; production DB never connected.",
+  "raw_checksums_before_sha256": "1666e82f62b59438b95d6a2d89e73672d66e1d1e1d6bb9c31e0eef1e8facc2b5",
+  "raw_checksums_after_sha256": "1666e82f62b59438b95d6a2d89e73672d66e1d1e1d6bb9c31e0eef1e8facc2b5",
+  "public_text_format": "UTF-8 LF; raw logs retained in local scratch"
+}

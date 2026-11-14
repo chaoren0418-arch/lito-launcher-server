@@ -1,0 +1,10 @@
+{
+  "receipt": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\world\\inputs\\effectlist2.xml.extraction.json",
+  "receipt_sha256": "12f86969ad93c69e13af0a0a871ce655b9f82ae1fa403f5387be053b22716ad0",
+  "archive_index": "D:\\lineage開發\\0-客戶端\\Tile.idx",
+  "expected_sha256": "d35a7e3b5b9d4bb432e7b8db3ff5d9b0a79eb638672c5e025b900f9de53b0be6",
+  "actual_sha256": "9291fd800ac8cae6dc355c1d8bbb965880561de169fbc7ea22d174fff9ad24db",
+  "bytes": 152492,
+  "baseline_413_same": true,
+  "note": "baseline equality is independently checked in client-comparison.json; no changes made"
+}
